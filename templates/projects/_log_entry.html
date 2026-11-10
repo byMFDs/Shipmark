@@ -1,0 +1,14 @@
+{% load i18n ui %}{# One build log entry. Also returned as JSON "html" by the add view. Needs: entry, project, is_owner. #}
+<li class="log-entry{% if entry.is_launch %} log-entry--launch{% endif %}" id="log-{{ entry.pk }}" data-log-entry>
+  <p class="log-entry__meta">
+    {% if entry.is_launch %}<strong class="log-entry__kind">{% translate "Launched" %}</strong>{% endif %}
+    <time datetime="{{ entry.created_at|date:'c' }}" title="{{ entry.created_at|date:'DATETIME_FORMAT' }}">{{ entry.created_at|ago }}</time>
+  </p>
+  <div class="log-entry__text">{{ entry.text_html|safe }}</div>
+  {% if is_owner %}
+    <form class="log-entry__delete" method="post" action="{% url 'projects:log_delete' project.owner.username project.slug entry.pk %}" data-log-delete>
+      {% csrf_token %}
+      <button class="btn btn--quiet" type="submit">{% translate "Delete entry" %}<span class="visually-hidden"> · {{ entry.created_at|date:'DATETIME_FORMAT' }}</span></button>
+    </form>
+  {% endif %}
+</li>

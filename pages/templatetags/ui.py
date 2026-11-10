@@ -13,7 +13,8 @@ from django.urls import NoReverseMatch, reverse
 from django.utils import timezone
 from django.utils.html import escape, format_html
 from django.utils.safestring import mark_safe
-from django.utils.translation import get_language
+from django.utils.timesince import timesince
+from django.utils.translation import get_language, gettext
 from django.utils.translation import gettext_lazy as _
 
 register = template.Library()
@@ -60,6 +61,19 @@ def inline_svg(path, css_class="", label=""):
 def icon(name, css_class="", label=""):
     """An icon from static/icons/<name>.svg. Decorative unless a label is given."""
     return inline_svg(f"icons/{name}.svg", f"icon {css_class}".strip(), label)
+
+
+# ---------- Relative dates ----------
+
+@register.filter
+def ago(value):
+    """ "3 days ago", "just now": one unit only, localized. For <time> elements with the exact date nearby."""
+    if not value:
+        return ""
+    now = timezone.now()
+    if (now - value).total_seconds() < 60:  # also covers small clock differences into the future
+        return gettext("just now")
+    return gettext("%(time)s ago") % {"time": timesince(value, now, depth=1)}
 
 
 # ---------- Avatar ----------
@@ -193,6 +207,13 @@ def _url(name, *args):
         return reverse(name, args=args)
     except NoReverseMatch:
         return ""
+
+
+@register.simple_tag(takes_context=True)
+def absolute_url(context, url):
+    """{% absolute_url cover.image.url %}: full URL for Open Graph. Already absolute URLs (a CDN) stay as they are."""
+    request = context.get("request")
+    return request.build_absolute_uri(url) if request else url
 
 
 @register.simple_tag

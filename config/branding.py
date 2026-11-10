@@ -18,3 +18,8 @@ LOGO_MARK = "brand/logo-mark.svg"
 FAVICON = "brand/favicon.svg"
 APPLE_TOUCH_ICON = "brand/apple-touch-icon.png"
 OG_DEFAULT_IMAGE = "brand/og-default.png"
+
+# Name of the domain verification record: TXT "shipmark-verify=<token>" and
+# <meta name="shipmark-verify">. Do NOT change it after launch: every verified domain
+# would fail its next re-check and lose the Live hallmark.
+VERIFY_TOKEN_NAME = "shipmark-verify"

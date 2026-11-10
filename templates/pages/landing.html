@@ -1,8 +1,99 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static ui %}
+
+{% block title %}{{ brand.SITE_NAME }}: {{ brand.TAGLINE }}{% endblock %}
+{% block og_title %}{{ brand.SITE_NAME }}: {{ brand.TAGLINE }}{% endblock %}
+{% block og_description %}{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns hallmarks from facts that are checked: who wrote the code, who controls the domain, and whether the site stays up.{% endblocktranslate %}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}"><link rel="stylesheet" href="{% static 'css/pages/landing.css' %}">{% endblock %}
+{% block meta %}
+  <meta name="description" content="{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns hallmarks from facts that are checked: who wrote the code, who controls the domain, and whether the site stays up.{% endblocktranslate %}">
+{% endblock %}
 
 {% block content %}
-  <div class="container page">
-    <h1>{% blocktranslate with name=brand.SITE_NAME %}{{ name }} is under construction{% endblocktranslate %}</h1>
-  </div>
+  {% url 'pages:explore' as explore_url %}
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <h1 class="display" id="hero-title">{% translate "Proof that you shipped it" %}</h1>
+        <p class="hero__lede">{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns hallmarks from facts that are checked: who wrote the code, who controls the domain, and whether the site stays up.{% endblocktranslate %}</p>
+        <div class="hero__actions">
+          {% include "pages/_sign_in.html" %}
+          <a class="btn btn--quiet" href="{{ explore_url }}">{% translate "Explore projects" %}</a>
+        </div>
+        <p class="hero__note">{% translate "We ask GitHub only for your public profile and your email address. We never get access to your code." %}</p>
+      </div>
+
+      {# The one bold moment (CLAUDE.md section 9): the marks are struck in sequence on load. Pure CSS; reduced motion shows the final state. #}
+      <figure class="hero__specimen">
+        <figcaption class="specimen__caption">{% translate "Example project" %}</figcaption>
+        <article class="plate plate--featured strike specimen">
+          <div class="plate__head">
+            <p class="plate__title">Tallyhook</p>
+            <p class="plate__tagline">{% translate "Inspect and replay webhooks without a tunnel" %}</p>
+          </div>
+          <dl class="specimen__facts">
+            <dt>{% translate "Repository" %}</dt><dd class="mono">tallyhook/tallyhook</dd>
+            <dt>{% translate "Domain" %}</dt><dd class="mono">tallyhook.dev</dd>
+            <dt>{% translate "Built with" %}</dt><dd>Claude Code, Cursor <span class="muted">({% translate "self-declared" %})</span></dd>
+          </dl>
+          <div class="plate__strip">
+            {% translate "Repository owned by the author" as fact_authored %}
+            {% translate "Domain control confirmed" as fact_live %}
+            {% blocktranslate with percent="99.6%" checks=240 asvar fact_steady %}{{ percent }} of {{ checks }} checks in 30 days{% endblocktranslate %}
+            {% hallmark "authored" "l" True fact_authored %}
+            {% hallmark "live" "l" True fact_live %}
+            {% hallmark "steady" "l" True fact_steady %}
+          </div>
+        </article>
+      </figure>
+    </div>
+  </section>
+
+  <section class="landing-section" aria-labelledby="proof-title">
+    <div class="container">
+      <div class="landing-section__head">
+        <h2 id="proof-title">{% translate "How proof works" %}</h2>
+        {% maybe_url "pages:how_proof_works" as proof_url %}
+        {% if proof_url %}<a href="{{ proof_url }}">{% translate "Read the full rules" %}</a>{% endif %}
+      </div>
+      <p class="landing-section__intro">{% translate "A hallmark is struck only when the facts behind it are there, and it is removed when they stop being true. Nobody can buy one or add it by hand." %}</p>
+      <ol class="proof-steps">
+        {% for step in proof %}
+          <li class="proof-step">
+            <h3 class="proof-step__title">{% hallmark step.kind "l" True %}</h3>
+            <p>{{ step.rule }}</p>
+          </li>
+        {% endfor %}
+      </ol>
+      <p class="landing-section__note">{% translate "The AI tools a project was built with are declared by its author and labeled as self-declared." %}</p>
+    </div>
+  </section>
+
+  <section class="landing-section" aria-labelledby="recent-title">
+    <div class="container">
+      <div class="landing-section__head">
+        <h2 id="recent-title">{% translate "Recently launched" %}</h2>
+        {% if recent %}<a href="{{ explore_url }}">{% translate "See all projects" %}</a>{% endif %}
+      </div>
+      {% if recent %}
+        <ul class="recent-list">
+          {% for project in recent %}{% include "pages/_project_row.html" with with_like=False %}{% endfor %}
+        </ul>
+      {% else %}
+        <div class="empty landing-empty">
+          <div class="empty__marks">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
+          <p class="empty__text">{% translate "Nothing has been launched here yet. Published projects appear in this list as soon as their authors publish them." %}</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="landing-section landing-cta" aria-labelledby="cta-title">
+    <div class="container">
+      <h2 id="cta-title">{% translate "Bring in something you shipped" %}</h2>
+      <p class="landing-cta__text">{% translate "Sign in, add the project, then link its repository and verify its domain. The hallmarks follow from the checks." %}</p>
+      <div class="hero__actions">{% include "pages/_sign_in.html" %}</div>
+    </div>
+  </section>
 {% endblock %}

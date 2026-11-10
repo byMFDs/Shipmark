@@ -25,7 +25,6 @@ class LandingTests(TestCase):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, branding.SITE_NAME)
-        self.assertContains(response, f"{branding.SITE_NAME} is under construction")
 
     def test_viewport_meta(self):
         response = self.client.get("/")
@@ -108,11 +107,12 @@ class InlineSvgTests(SimpleTestCase):
 class LanguageDetectionTests(TestCase):
     """CLAUDE.md section 8: saved preference, then cookie, then Accept-Language, then English."""
 
-    UK_TEXT = "ще в розробці"
-    EN_TEXT = "is under construction"
+    # /explore/: the same page for everyone (signed-in visitors of / are redirected to the feed).
+    UK_TEXT = "Показати проєкти"
+    EN_TEXT = "Show projects"
 
     def get(self, **extra):
-        return self.client.get("/", **extra).content.decode()
+        return self.client.get("/explore/", **extra).content.decode()
 
     def test_accept_language_uk_gives_ukrainian(self):
         html = self.get(headers={"Accept-Language": "uk"})
@@ -120,7 +120,7 @@ class LanguageDetectionTests(TestCase):
         self.assertIn('<html lang="uk">', html)
 
     def test_unknown_language_falls_back_to_english(self):
-        for header in ("ru", "fr-FR,de;q=0.8", "zz"):
+        for header in ("ru", "ja-JP,ar;q=0.8", "zz"):
             html = self.get(headers={"Accept-Language": header})
             self.assertIn(self.EN_TEXT, html, header)
             self.assertIn('<html lang="en">', html)

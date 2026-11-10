@@ -1,0 +1,167 @@
+/* Landing. Mobile first: one column; from 64em the hero text and the example plate sit side by side. */
+
+.inline-form { display: contents; }
+
+/* ---------- Hero ---------- */
+
+.hero { padding-block: var(--s-6) var(--s-8); }
+
+.hero__grid {
+  display: grid;
+  gap: var(--s-7);
+}
+
+.hero__text { min-width: 0; }
+
+.hero__lede {
+  max-width: 44ch;
+  margin-top: var(--s-5);
+  font-size: var(--fs-1);
+  line-height: 1.45;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-6);
+}
+
+.hero__note {
+  max-width: 44ch;
+  margin-top: var(--s-4);
+  color: var(--steel);
+  font-size: var(--fs--1);
+}
+
+.hero__specimen { min-width: 0; }
+
+.specimen__caption {
+  margin-bottom: var(--s-3);
+  color: var(--steel);
+  font-size: var(--fs--1);
+}
+
+.specimen .plate__title { font-size: var(--fs-3); }
+
+.specimen__facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-5);
+  font-size: var(--fs--1);
+}
+
+.specimen__facts dt { color: var(--steel); }
+.specimen__facts dd { overflow-wrap: anywhere; }
+
+/* Three large marks in a column on phones, in a row once there is room. */
+.specimen .plate__strip {
+  display: grid;
+  gap: var(--s-4);
+}
+
+@media (min-width: 30em) {
+  .specimen .plate__strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .specimen .hallmark--l { flex-direction: column; gap: var(--s-2); }
+}
+
+@media (min-width: 48em) {
+  .specimen { padding: var(--s-7); }
+  .specimen .plate__title { font-size: var(--fs-4); }
+}
+
+@media (min-width: 64em) {
+  .hero { padding-block: var(--s-8) var(--s-9); }
+  .hero__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--s-5);
+    align-items: center;
+  }
+  .hero__text { grid-column: 1 / span 5; }
+  .hero__specimen { grid-column: 7 / span 6; }
+}
+
+/* ---------- Sections ---------- */
+
+.landing-section {
+  padding-block: var(--s-7);
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 64em) {
+  .landing-section { padding-block: var(--s-8); }
+}
+
+.landing-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-5);
+}
+
+/* Link beside a heading: a 44px tap target, not a 25px line of text. */
+.landing-section__head a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-h);
+}
+
+.landing-section__intro {
+  max-width: var(--measure);
+  margin-top: var(--s-4);
+}
+
+.landing-section__note {
+  max-width: var(--measure);
+  margin-top: var(--s-6);
+  color: var(--steel);
+  font-size: var(--fs--1);
+}
+
+/* How proof works: three steps, numbered by the list, side by side from 48em. */
+.proof-steps {
+  display: grid;
+  gap: var(--s-6);
+  margin-top: var(--s-6);
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48em) {
+  .proof-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-5); }
+}
+
+.proof-step {
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+}
+
+.proof-step__title { font-size: var(--fs-1); }
+.proof-step__title .hallmark__label { font-weight: 600; }
+.proof-step p { max-width: 40ch; color: var(--steel); }
+
+/* Recently launched: hairline rows, in 2 then 3 columns. */
+.recent-list {
+  display: grid;
+  margin: var(--s-5) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 48em) {
+  .recent-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-6); }
+}
+
+@media (min-width: 64em) {
+  .recent-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.landing-empty { margin-top: var(--s-5); }
+
+/* Closing call to action. */
+.landing-cta { padding-bottom: var(--s-9); }
+.landing-cta__text { max-width: 52ch; margin-top: var(--s-4); }

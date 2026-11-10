@@ -1,0 +1,33 @@
+{% load i18n ui %}{# Build log on the project page. Visitors see it only when there are entries. #}
+{% if is_owner or log_entries %}
+  <section class="build-log" id="build-log" aria-labelledby="build-log-title" data-build-log>
+    <h2 id="build-log-title" class="build-log__title" tabindex="-1">{% translate "Build log" %}</h2>
+
+    {% if log_form %}
+      <form class="log-form" method="post" action="{% url 'projects:log_add' person.username project.slug %}" data-log-form>
+        {% csrf_token %}
+        {% for error in log_form.non_field_errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
+        <div class="field">
+          <label class="field__label" for="{{ log_form.text.id_for_label }}">{{ log_form.text.label }}</label>
+          <p class="field__hint" id="{{ log_form.text.auto_id }}_hint">{{ log_form.text.help_text }}</p>
+          {{ log_form.text }}
+          {% if log_form.text.errors %}<div id="{{ log_form.text.auto_id }}_error">{% for error in log_form.text.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}</div>{% endif %}
+        </div>
+        <div class="field" data-launch-field{% if not can_launch and not log_form.is_launch.errors %} hidden{% endif %}>
+          <label class="check">{{ log_form.is_launch }}<span>{{ log_form.is_launch.label }}
+            <span class="field__hint" id="{{ log_form.is_launch.auto_id }}_hint">{{ log_form.is_launch.help_text }}</span></span></label>
+          {% if log_form.is_launch.errors %}<div id="{{ log_form.is_launch.auto_id }}_error">{% for error in log_form.is_launch.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}</div>{% endif %}
+        </div>
+        <div><button class="btn btn--primary" type="submit" data-busy-label="{% translate 'Posting…' %}">{% translate "Post update" %}</button></div>
+      </form>
+    {% endif %}
+
+    <ol class="log" data-log-list{% if not log_entries %} hidden{% endif %}>
+      {% for entry in log_entries %}{% include "projects/_log_entry.html" %}{% endfor %}
+    </ol>
+    {% if is_owner %}
+      <p class="muted" data-log-empty{% if log_entries %} hidden{% endif %}>{% translate "No entries yet. Post what you shipped, fixed or learned. Visitors see the log once it has an entry." %}</p>
+    {% endif %}
+    {% if log_has_more %}<p class="muted">{% blocktranslate count n=log_entries|length trimmed %}Showing the latest {{ n }} entry.{% plural %}Showing the latest {{ n }} entries.{% endblocktranslate %}</p>{% endif %}
+  </section>
+{% endif %}

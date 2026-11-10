@@ -1,0 +1,13 @@
+{% load i18n ui %}{# Status of the domain verification. Also returned as JSON "html" by the verify view. #}
+{% if domain_row.status == "verified" and domain_live %}
+  <p class="domain-status is-ok">{% icon "check" %}<span>{% blocktranslate with domain=domain_row.domain %}Verified: {{ domain }}. Live earned.{% endblocktranslate %}
+    <span class="muted">{% blocktranslate with date=domain_row.last_confirmed_at|date:"DATE_FORMAT" %}Last confirmed {{ date }}. Checked again every 30 days.{% endblocktranslate %}</span></span></p>
+{% elif domain_needs_confirm %}
+  <p class="domain-status is-error">{% icon "alert" %}<span>{% blocktranslate with date=domain_row.last_confirmed_at|date:"DATE_FORMAT" %}Last confirmed {{ date }}. Live is paused until the domain is confirmed again.{% endblocktranslate %}{% if domain_error %} {{ domain_error }}{% endif %}</span></p>
+{% elif domain_row.status == "failed" %}
+  <p class="domain-status is-error">{% icon "alert" %}<span>{% translate "Verification lost. The last automatic check did not find your token, so Live was removed." %}{% if domain_error %} {{ domain_error }}{% endif %} {% translate "Fix it and verify again." %}</span></p>
+{% elif domain_error %}
+  <p class="domain-status is-error">{% icon "alert" %}<span>{% translate "Not verified yet." %} {{ domain_error }}</span></p>
+{% else %}
+  <p class="domain-status muted">{% blocktranslate with domain=domain_row.domain %}Not verified yet. Prove that you control {{ domain }} with one of the methods below.{% endblocktranslate %}</p>
+{% endif %}

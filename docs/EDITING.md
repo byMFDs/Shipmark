@@ -7,6 +7,25 @@ cd ~/shipmark
 source .venv/bin/activate
 ```
 
+## Глосарій (єдині терміни в усіх мовах)
+
+Назви позначок **Authored, Live, Steady** не перекладаємо: вони так само написані на SVG-бейджах (бейджі завжди англійські).
+У нових мовах так само лишаємо англійською слова *Authored / Live / Steady*; решту термінів перекладаємо однаково скрізь.
+
+| EN | uk | pl | de | es | fr | pt-br |
+|---|---|---|---|---|---|---|
+| hallmark | позначка | znak | Prüfzeichen | sello | poinçon | selo |
+| plate (картка проєкту) | пластина | tabliczka | Plakette | placa | plaque | placa |
+| build log | журнал розробки | dziennik rozwoju | Build-Log | registro de desarrollo | journal de développement | diário de desenvolvimento |
+| project | проєкт | projekt | Projekt | proyecto | projet | projeto |
+| verify (підтвердити домен) | підтвердити | zweryfikować | verifizieren | verificar | vérifier | verificar |
+| check (перевірити репозиторій) | перевірити | sprawdzić | prüfen | comprobar | contrôler | verificar |
+| self-declared | зазначено автором | deklaracja autora | selbst angegeben | declarado por el autor | déclaré par l'auteur | declarado pelo autor |
+| badge | бейдж | plakietka | Badge | insignia | badge | badge |
+
+Звертання: uk «ви», pl безособово/«Ty», de «du», es «tú», fr «vous», pt-br «você».
+Слово «verify» (домен, DNS) і «check» (репозиторій, uptime) не змішуємо.
+
 ## 1. Назва сайту, контакти, гасло
 
 Файл: `config/branding.py`.
@@ -15,6 +34,7 @@ source .venv/bin/activate
 - `TAGLINE` — гасло. Воно в `_("...")`, тобто перекладається (див. розділ 3).
 - `CONTACT_EMAIL`, `LEGAL_OWNER_NAME` — пошта та імʼя власника для юридичних сторінок і футера.
 - `SOCIAL_LINKS` — посилання на соцмережі у футері. Приклад: `{"GitHub": "https://github.com/..."}`.
+- `VERIFY_TOKEN_NAME` — назва TXT-запису й метатегу для підтвердження домену (`shipmark-verify`). **Після запуску не змінюй**: усі підтверджені домени не пройдуть наступну перевірку й втратять Live.
 
 Після зміни перезапусти `runserver` (Ctrl+C і знову `python manage.py runserver`).
 
@@ -66,13 +86,18 @@ source .venv/bin/activate
 
 Файл `django.mo` — це результат компіляції. Його теж коміть у git, щоб сервер не потребував `gettext`.
 
-## 4. Довгі сторінки (про проєкт, пізніше — юридичні, FAQ)
+## 4. Довгі сторінки (про проєкт, юридичні, FAQ)
 
 Це звичайні Markdown-файли:
 
 ```
 content/en/about.md     — англійська версія
 content/uk/about.md     — українська версія
+content/pl|de|es|fr|pt-br/about.md — інші мови (папка `pt-br` — з дефісом)
+content/<мова>/how-proof-works.md — «Як працюють підтвердження» (/how-proof-works/)
+content/<мова>/privacy.md — Політика конфіденційності (/legal/privacy/)
+content/<мова>/terms.md   — Умови користування (/legal/terms/)
+content/<мова>/cookies.md — Політика cookies (/legal/cookies/)
 ```
 
 Відкриваєш файл, міняєш текст, зберігаєш, оновлюєш сторінку в браузері. Перезапуск не потрібен.
@@ -81,8 +106,29 @@ content/uk/about.md     — українська версія
 - Якщо українського файлу немає, показується англійський.
 - Дозволено: заголовки, списки, **жирний**, *курсив*, посилання, цитати, код, таблиці.
   Сирий HTML і `<script>` видаляються автоматично.
+- Якір для посилання на розділ: `## Заголовок {#anchor}` (латиницею). Сторінка проєкту посилається
+  на `/how-proof-works/#authored`, `#live`, `#steady`, тож ці три якорі не перейменовуй.
+- Сторінка «Як працюють підтвердження» має описувати те, що реально робить код. Якщо змінюєш правила
+  в коді (наприклад, 35 днів чи 95%), онови й обидва файли.
 - Нова сторінка: створи `content/en/<назва>.md` (латиниця, цифри, дефіс) і додай маршрут
   у `pages/urls.py` за зразком `/about/`. Поки що це робить Claude Code окремим завданням.
+- У тексті можна писати підстановки, вони беруться з `config/branding.py` і налаштувань:
+  `{{ site_name }}`, `{{ contact_email }}`, `{{ legal_owner_name }}`, `{{ terms_version }}`.
+  Пиши їх точно так, з пробілами всередині дужок.
+
+### Юридичні сторінки
+
+- Вони мають описувати **те, що реально робить код**. Основа для них — `docs/DATA_INVENTORY.md`
+  (усі персональні дані: що, звідки, навіщо, скільки зберігаємо, хто бачить). Якщо код починає
+  зберігати щось нове, спершу онови інвентар, потім тексти.
+- Вгорі кожної сторінки є примітка «Draft, last updated …». Після перевірки юристом прибери слово
+  «Draft» і фразу про юриста, а дату міняй при кожній зміні тексту.
+- Перед запуском заповни в `config/branding.py` справжні `CONTACT_EMAIL` і `LEGAL_OWNER_NAME`.
+
+**Змінилися Умови (terms.md)?** Відкрий `config/settings/base.py` і зміни `TERMS_VERSION` на дату
+зміни, наприклад `"2027-03-01"`. Після перезапуску кожен, хто увійшов, при наступному візиті побачить
+сторінку «Ми оновили Умови» і має їх прийняти. До прийняття відкриті лише юридичні сторінки,
+вихід, завантаження даних і видалення акаунта. Для дрібних виправлень (опечатка) версію не міняй.
 
 ## 5. Як працює вибір мови
 
@@ -90,8 +136,18 @@ content/uk/about.md     — українська версія
 мова браузера (`Accept-Language`) → англійська. За IP мова не визначається.
 
 Перемикач у футері працює і без JavaScript, і повертає на ту саму сторінку.
+Мови зараз: en, uk, pl, de, es, fr, pt-br. Російську не додаємо.
+
 Додати нову мову: у `config/settings/base.py` допиши її в `LANGUAGES`, потім
-`makemessages -l <код>`, переклади, `compilemessages`. Російську не додаємо.
+`makemessages -l <код>` (для pt-br: `-l pt_BR`), переклади, `compilemessages`.
+У `.po` вистав `Plural-Forms` для мови. Створи `content/<код>/` з усіма п'ятьма .md файлами
+(about, how-proof-works, privacy, terms, cookies). Для польської потрібен шрифт latin-ext (вже підключений в `base.css`);
+для інших алфавітів (грецька, турецька тощо) перевір, чи є потрібні гліфи.
+
+Юридичні сторінки в нових мовах починаються з примітки «Translation for convenience;
+the English version prevails» (другий абзац у блоці `>` угорі файлу). Не видаляй її.
+Тест `pages/test_languages.py` перевіряє: усі файли на місці, плейсхолдери `{{ ... }}`, якорі `{#...}`
+і посилання збігаються з англійською, а `.po` без порожніх перекладів.
 
 ## 6. Швидка перевірка після змін
 

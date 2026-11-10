@@ -38,6 +38,21 @@
         </dl>
         <div><a class="btn btn--secondary" href="{% url 'account_logout' %}">{% translate "Sign out" %}</a></div>
       </section>
+
+      <section class="settings__section stack">
+        <h2>{% translate "Your data" %}</h2>
+        <p>{% translate "A JSON file with your profile, projects, build log, likes and follows." %}</p>
+        <form method="post" action="{% url 'accounts:export' %}">
+          {% csrf_token %}
+          <button class="btn btn--secondary" type="submit">{% translate "Download my data" %}</button>
+        </form>
+      </section>
+
+      <section class="settings__section stack">
+        <h2>{% translate "Delete account" %}</h2>
+        <p>{% translate "Removes your profile and all your projects. This cannot be undone." %}</p>
+        <div><a class="btn btn--danger" href="{% url 'accounts:delete' %}">{% translate "Delete account" %}</a></div>
+      </section>
     </div>
   </div>
 {% endblock %}

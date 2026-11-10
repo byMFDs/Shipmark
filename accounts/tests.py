@@ -223,7 +223,7 @@ class AuthPageTests(TestCase):
 
     def test_header_shows_account_menu_when_signed_in(self):
         self.client.force_login(make_user("sam", display_name="Sam Lee"))
-        html = self.client.get("/").content.decode()
+        html = self.client.get("/explore/").content.decode()  # / redirects signed-in users to the feed
         self.assertIn(reverse("accounts:settings"), html)
         self.assertIn(reverse("account_logout"), html)
         self.assertIn("user-menu", html)
@@ -259,6 +259,18 @@ class SettingsTests(TestCase):
         self.assertEqual(self.alice.bio, "new bio")
         self.assertEqual(self.alice.website, "https://example.com")
         self.assertEqual(self.alice.preferred_language, "uk")
+
+    def test_invalid_form_shows_error_summary_for_screen_readers(self):
+        # The summary is role="alert", links to the bad field, and the field points at its error.
+        self.client.force_login(self.alice)
+        response = self.client.post(self.url, {"display_name": "Alice", "bio": "x" * 400, "preferred_language": "en"})
+        html = response.content.decode()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("data-error-summary", html)
+        self.assertIn('role="alert"', html)
+        self.assertIn('href="#id_bio"', html)
+        self.assertIn('aria-invalid="true"', html)
+        self.assertIn("id_bio_error", html)
 
     def test_cannot_edit_another_users_settings(self):
         self.client.force_login(self.alice)
@@ -311,3 +323,61 @@ class SettingsTests(TestCase):
         self.assertContains(response, "Too many changes")
         self.alice.refresh_from_db()
         self.assertEqual(self.alice.display_name, "A")
+
+
+class PublicProfileTests(TestCase):
+    def setUp(self):
+        self.alice = make_user(
+            "alice", email="alice-private@example.com", display_name="Alice A", bio="I build things",
+            website="https://alice.example.org", github_login="alice-gh",
+        )
+
+    def url(self, name="alice"):
+        return reverse("accounts:profile", args=[name])
+
+    def test_public_page_shows_profile_data(self):
+        response = self.client.get(self.url())
+        self.assertContains(response, "Alice A")
+        self.assertContains(response, "I build things")
+        self.assertContains(response, "https://github.com/alice-gh")
+        self.assertContains(response, 'rel="nofollow ugc noopener"')
+        self.assertContains(response, 'property="og:title"')
+        self.assertContains(response, "og-default.png")
+
+    def test_unknown_user_is_404(self):
+        self.assertEqual(self.client.get(self.url("nobody")).status_code, 404)
+
+    def test_suspended_user_is_404_for_everyone(self):
+        self.alice.is_suspended = True
+        self.alice.save()
+        self.assertEqual(self.client.get(self.url()).status_code, 404)
+        self.client.force_login(self.alice)
+        self.assertEqual(self.client.get(self.url()).status_code, 404)
+        # Same answer as for a name that never existed.
+        self.assertEqual(self.client.get(self.url("nobody")).status_code, 404)
+
+    def test_email_never_appears(self):
+        for viewer in (None, self.alice, make_user("bob", email="bob-private@example.com")):
+            if viewer:
+                self.client.force_login(viewer)
+            html = self.client.get(self.url()).content.decode()
+            self.assertNotIn("alice-private@example.com", html)
+            self.assertNotIn("bob-private@example.com", html)
+
+    def test_non_http_website_is_not_a_link(self):
+        User.objects.filter(pk=self.alice.pk).update(website="javascript:alert(1)")
+        self.assertNotContains(self.client.get(self.url()), "javascript:")
+
+    def test_uppercase_url_redirects_to_canonical(self):
+        response = self.client.get(self.url("Alice"))
+        self.assertRedirects(response, self.url(), status_code=301)
+
+    def test_empty_state_differs_for_owner(self):
+        self.assertNotContains(self.client.get(self.url()), "Add something you shipped")
+        self.client.force_login(self.alice)
+        self.assertContains(self.client.get(self.url()), "Add something you shipped")
+
+    def test_user_text_is_escaped(self):
+        User.objects.filter(pk=self.alice.pk).update(display_name="<script>x</script>")
+        response = self.client.get(self.url())
+        self.assertNotContains(response, "<script>x</script>")

@@ -85,3 +85,35 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
 
     def clean_display_name(self):
         return " ".join(self.cleaned_data["display_name"].split())
+
+
+class AcceptTermsForm(StyledFormMixin, forms.Form):
+    """Shown after settings.TERMS_VERSION is bumped."""
+
+    terms = forms.BooleanField(
+        required=True,
+        error_messages={"required": _("Accept the updated Terms to keep using your account.")},
+    )
+
+    def save(self, user):
+        user.terms_version_accepted = settings.TERMS_VERSION
+        user.terms_accepted_at = timezone.now()
+        user.save(update_fields=["terms_version_accepted", "terms_accepted_at"])
+
+
+class DeleteAccountForm(StyledFormMixin, forms.Form):
+    """The user types their username to confirm. Case and surrounding spaces do not matter."""
+
+    confirm = forms.CharField(label=_("Type your username to confirm"), max_length=60)
+
+    def __init__(self, *args, user, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+        widget = self.fields["confirm"].widget
+        widget.attrs.update({"autocomplete": "off", "autocapitalize": "none", "autocorrect": "off", "spellcheck": "false"})
+
+    def clean_confirm(self):
+        value = self.cleaned_data["confirm"].strip().lower()
+        if value != self.user.username:
+            raise ValidationError(_("This is not your username. Type it exactly as shown."), code="mismatch")
+        return value

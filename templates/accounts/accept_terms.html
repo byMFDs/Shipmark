@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% translate "Updated Terms" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <section class="auth plate plate--featured">
+      <h1>{% translate "We updated the Terms" %}</h1>
+      <p>{% translate "To keep using your account, read the new version and accept it." %}</p>
+      {% maybe_url "pages:legal" "terms" as terms_url %}
+      {% maybe_url "pages:legal" "privacy" as privacy_url %}
+      <p><a href="{{ terms_url }}" target="_blank" rel="noopener">{% translate "Read the Terms" %}</a> · <a href="{{ privacy_url }}" target="_blank" rel="noopener">{% translate "Read the Privacy policy" %}</a></p>
+      <form method="post" class="stack" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {% include "includes/form_errors.html" %}
+        {% translate "I accept the updated Terms" as terms_label %}
+        {% include "includes/form_field.html" with field=form.terms label_html=terms_label %}
+        <button class="btn btn--primary btn--block" type="submit">{% translate "Accept and continue" %}</button>
+      </form>
+      <p class="field__hint">{% translate "If you do not accept, you can sign out, or download your data and delete your account." %}</p>
+      <form method="post" action="{% url 'accounts:export' %}" class="auth__actions">
+        {% csrf_token %}
+        <button class="btn btn--secondary" type="submit">{% translate "Download my data" %}</button>
+        <a class="btn btn--quiet" href="{% url 'accounts:delete' %}">{% translate "Delete account" %}</a>
+        <a class="btn btn--quiet" href="{% url 'account_logout' %}">{% translate "Sign out" %}</a>
+      </form>
+    </section>
+  </div>
+{% endblock %}

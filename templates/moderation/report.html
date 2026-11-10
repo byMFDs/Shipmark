@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ title }} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <form method="post" class="auth" novalidate>
+      {% csrf_token %}
+      <h1>{{ title }}</h1>
+      <p>{% translate "Reports go to the moderators. The person you report does not see who reported them." %}</p>
+      {% include "includes/form_errors.html" %}
+      {% include "includes/form_field.html" with field=form.reason %}
+      {% include "includes/form_field.html" with field=form.details %}
+      <div class="auth__actions">
+        <button class="btn btn--primary" type="submit">{% translate "Send report" %}</button>
+        <a class="btn btn--secondary" href="{{ back_url }}">{% translate "Cancel" %}</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

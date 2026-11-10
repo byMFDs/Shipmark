@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{{ person.display_name|default:person.username }} (@{{ person.username }}) · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{{ person.display_name|default:person.username }} (@{{ person.username }}) · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/profile.css' %}">{% if embed %}<link rel="stylesheet" href="{% static 'css/pages/embed.css' %}">{% endif %}{% endblock %}
+{% block og_type %}profile{% endblock %}
+{% block og_description %}{% if person.bio %}{{ person.bio }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}{% endblock %}
+{% block meta %}
+  <meta name="description" content="{% if person.bio %}{{ person.bio }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}">
+  <meta property="profile:username" content="{{ person.username }}">
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <header class="profile-head">
+      {% avatar person.display_name|default:person.username 96 %}
+      <div class="profile-head__text">
+        <h1 class="profile-head__name">{{ person.display_name|default:person.username }}</h1>
+        <p class="profile-head__handle muted">@{{ person.username }}</p>
+        {% if person.bio %}<p class="profile-head__bio">{{ person.bio }}</p>{% endif %}
+        <ul class="profile-head__links">
+          {% if website %}<li><a href="{{ website }}" rel="nofollow ugc noopener">{{ website|cut:"https://"|cut:"http://"|cut:"www."|truncatechars:40 }}</a></li>{% endif %}
+          {% if person.github_login %}<li><a class="with-icon" href="https://github.com/{{ person.github_login }}" rel="noopener">{% icon "github" %}{{ person.github_login }}</a></li>{% endif %}
+          <li class="muted">{% blocktranslate with date=person.date_joined|date:"F Y" %}Joined {{ date }}{% endblocktranslate %}</li>
+        </ul>
+        {% if is_me %}
+          <p><a class="btn btn--secondary" href="{% url 'accounts:settings' %}">{% translate "Edit profile" %}</a></p>
+        {% else %}
+          <div class="profile-head__actions">{% include "social/_follow.html" with count_target="followers-count" %}<a class="btn btn--quiet" href="{% url 'moderation:report_user' person.username %}">{% translate "Report" %}</a></div>
+        {% endif %}
+      </div>
+    </header>
+
+    <dl class="profile-stats">
+      <div><dt>{% translate "Projects" %}</dt><dd>{{ stats.projects }}</dd></div>
+      <div><dt>{% translate "Hallmarks" %}</dt><dd>{{ stats.hallmarks }}</dd></div>
+      <div><dt>{% translate "Followers" %}</dt><dd id="followers-count">{{ stats.followers }}</dd></div>
+    </dl>
+
+    <section class="profile-projects" aria-labelledby="projects-title">
+      <h2 id="projects-title" class="profile-projects__title">{% translate "Projects" %}</h2>
+      {% if projects %}
+        <ul class="plate-list">
+          {% for project in projects %}
+            <li class="plate-row">
+              {% include "projects/_thumb.html" with project=project %}
+              <div>
+                <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></p>
+                <p class="plate-row__tagline">{{ project.tagline }}</p>
+              </div>
+              <div class="plate-row__marks">{% for h in project.hallmarks %}{% hallmark h.kind "s" h.earned %}{% endfor %}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="empty">
+          <div class="empty__marks">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
+          {% if is_me %}
+            <h3>{% translate "No projects yet" %}</h3>
+            <p class="empty__text">{% translate "Add something you shipped. It gets its first hallmark when you link the repository." %}</p>
+            {% maybe_url "projects:new" as new_url %}
+            {% if new_url %}<a class="btn btn--primary" href="{{ new_url }}">{% icon "plus" %}{% translate "Add your first project" %}</a>{% endif %}
+          {% else %}
+            <h3>{% translate "No projects yet" %}</h3>
+            <p class="empty__text">{% blocktranslate with name=person.display_name|default:person.username %}{{ name }} has not published a project yet.{% endblocktranslate %}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </section>
+
+    {% if drafts %}
+      <section class="profile-projects" aria-labelledby="drafts-title">
+        <h2 id="drafts-title" class="profile-projects__title">{% translate "Your drafts" %}</h2>
+        <p class="muted profile-projects__note">{% translate "Only you see these." %}</p>
+        <ul class="plate-list">
+          {% for project in drafts %}
+            <li class="plate-row">
+              {% include "projects/_thumb.html" with project=project %}
+              <div>
+                <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a> <span class="muted">· {{ project.get_status_display }}</span></p>
+                <p class="plate-row__tagline">{{ project.tagline }}</p>
+              </div>
+              <div><a class="btn btn--secondary" href="{% url 'projects:edit' person.username project.slug %}">{% translate "Edit project" %}</a></div>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    {% if embed %}{% include "projects/_embed_badge.html" %}{% endif %}
+  </div>
+{% endblock %}
+{% block scripts %}{% if not is_me %}<script type="module" src="{% static 'js/social.js' %}"></script>{% else %}<script type="module" src="{% static 'js/copy.js' %}"></script>{% endif %}{% endblock %}

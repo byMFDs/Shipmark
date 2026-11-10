@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% translate "Delete account" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <div class="settings stack">
+      <h1>{% translate "Delete account" %}</h1>
+      <p><strong>{% translate "This cannot be undone." %}</strong> {% translate "We cannot restore a deleted account, not even on request." %}</p>
+
+      <h2>{% translate "What is deleted" %}</h2>
+      <ul class="settings__list">
+        <li>{% translate "Your profile: username, display name, bio, website, language, the email address and GitHub details we received at sign-in." %}</li>
+        <li>{% translate "All your projects, drafts included, with their screenshots, build log, hallmarks, domain and repository checks, uptime history and likes." %}</li>
+        <li>{% translate "Your likes and follows." %}</li>
+        <li>{% translate "Your badges stop showing hallmarks, and links to your profile and projects stop working." %}</li>
+      </ul>
+
+      <h2>{% translate "What is kept" %}</h2>
+      <ul class="settings__list">
+        <li>{% translate "Reports you made stay for moderation, without your name." %}</li>
+        <li>{% translate "Our audit log records that an account was deleted, without your username or email." %}</li>
+        <li>{% translate "Your username becomes free, and someone else can take it." %}</li>
+      </ul>
+
+      <form method="post" action="{% url 'accounts:export' %}">
+        {% csrf_token %}
+        <p>{% translate "Want a copy first?" %} <button class="btn btn--secondary" type="submit">{% translate "Download my data" %}</button></p>
+      </form>
+
+      <form method="post" class="settings__section stack" novalidate>
+        {% csrf_token %}
+        {% include "includes/form_errors.html" %}
+        <p>{% blocktranslate with username=user.username %}To confirm, type your username: <strong class="mono">{{ username }}</strong>{% endblocktranslate %}</p>
+        {% include "includes/form_field.html" with field=form.confirm %}
+        <div class="auth__actions">
+          <button class="btn btn--danger-solid" type="submit">{% translate "Delete my account" %}</button>
+          <a class="btn btn--quiet" href="{% url 'accounts:settings' %}">{% translate "Cancel" %}</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

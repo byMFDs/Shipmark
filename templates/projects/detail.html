@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{{ project.name }} · @{{ person.username }} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{{ project.name }} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/project.css' %}">{% if embed %}<link rel="stylesheet" href="{% static 'css/pages/embed.css' %}">{% endif %}{% endblock %}
+{% block og_description %}{{ project.tagline }}{% endblock %}
+{% block og_image %}{% with cover=project.cover %}{% if cover %}
+  <meta property="og:image" content="{% absolute_url cover.image.url %}">
+  {% if cover.width and cover.height %}<meta property="og:image:width" content="{{ cover.width }}">
+  <meta property="og:image:height" content="{{ cover.height }}">{% endif %}
+  <meta property="og:image:alt" content="{% blocktranslate with name=project.name %}Screenshot of {{ name }}{% endblocktranslate %}">
+{% else %}{{ block.super }}{% endif %}{% endwith %}{% endblock %}
+{% block meta %}
+  <meta name="description" content="{{ project.tagline }}">
+  {% if project.status != "published" %}<meta name="robots" content="noindex">{% else %}<link rel="canonical" href="{{ request.build_absolute_uri }}">{% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    {% if is_owner %}
+      <div class="owner-bar" role="region" aria-label="{% translate 'Owner controls' %}">
+        <p class="owner-bar__state">
+          {% if project.status == "published" %}{% translate "Published" %}
+          {% elif project.status == "hidden" %}{% translate "Hidden by moderators. Only you can see this page." %}
+          {% else %}{% translate "Draft. Only you can see this page." %}{% endif %}
+        </p>
+        <div class="owner-bar__actions">
+          <a class="btn btn--secondary" href="{% url 'projects:edit' person.username project.slug %}">{% translate "Edit project" %}</a>
+          {% if project.status == "draft" %}
+            <form method="post" action="{% url 'projects:publish' person.username project.slug %}">{% csrf_token %}<button class="btn btn--primary" type="submit">{% translate "Publish project" %}</button></form>
+          {% elif project.status == "published" %}
+            <form method="post" action="{% url 'projects:unpublish' person.username project.slug %}">{% csrf_token %}<button class="btn btn--secondary" type="submit">{% translate "Unpublish project" %}</button></form>
+          {% endif %}
+          <a class="btn btn--danger" href="{% url 'projects:delete' person.username project.slug %}">{% translate "Delete project" %}</a>
+        </div>
+      </div>
+    {% endif %}
+
+    <article class="plate plate--featured project">
+      <div class="plate__head">
+        <p class="plate__owner">
+          {% avatar person.display_name|default:person.username 24 %}
+          <a href="{% url 'accounts:profile' person.username %}">@{{ person.username }}</a>
+          <span data-launched>{% include "projects/_launched.html" %}</span>
+        </p>
+        <h1 class="plate__title">{{ project.name }}</h1>
+        <p class="plate__tagline">{{ project.tagline }}</p>
+      </div>
+
+      {% if project.status == "published" %}
+        <div class="project__social">
+          {% include "social/_like.html" with count=like_count liked=liked %}
+          {% if not is_owner %}<a class="btn btn--quiet" href="{% url 'moderation:report_project' person.username project.slug %}">{% translate "Report" %}</a>{% endif %}
+        </div>
+      {% endif %}
+
+      {% if project.safe_live_url or project.repo_url %}
+        <ul class="project__links">
+          {% if project.safe_live_url %}<li><a class="btn btn--primary" href="{{ project.safe_live_url }}" rel="nofollow ugc noopener">{% translate "Open live site" %}</a></li>{% endif %}
+          {% if project.repo_url %}<li><a class="btn btn--secondary with-icon" href="{{ project.repo_url }}" rel="nofollow ugc noopener">{% icon "github" %}{{ project.repo_full_name }}</a></li>{% endif %}
+        </ul>
+      {% endif %}
+
+      {% if screenshots %}
+        <div class="plate__media">
+          <img src="{{ screenshots.0.image.url }}" width="{{ screenshots.0.width }}" height="{{ screenshots.0.height }}" alt="{% blocktranslate with name=project.name %}Screenshot 1 of {{ name }}{% endblocktranslate %}">
+        </div>
+        {% if screenshots|length > 1 %}
+          <ul class="project__shots">
+            {% for shot in screenshots|slice:"1:" %}
+              <li><img src="{{ shot.image.url }}" width="{{ shot.width }}" height="{{ shot.height }}" alt="{% blocktranslate with n=forloop.counter|add:1 name=project.name %}Screenshot {{ n }} of {{ name }}{% endblocktranslate %}" loading="lazy"></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endif %}
+
+      <div class="plate__strip project__hallmarks">
+        {% for h in hallmarks %}{% include "projects/_hallmark_info.html" %}{% endfor %}
+      </div>
+
+      {% if uptime %}
+        <section class="uptime" aria-labelledby="uptime-title">
+          <h2 id="uptime-title" class="uptime__title">{% translate "Uptime" %}</h2>
+          {% if uptime.total %}
+            <p class="uptime__figure">
+              <strong class="uptime__percent">{{ uptime.percent|floatformat:"-1" }}%</strong>
+              {% blocktranslate count n=uptime.total trimmed %}of {{ n }} check in the last 30 days{% plural %}of {{ n }} checks in the last 30 days{% endblocktranslate %}
+            </p>
+          {% else %}
+            <p class="uptime__figure">{% translate "No checks in the last 30 days yet. The site is checked every few hours." %}</p>
+          {% endif %}
+          {% if uptime.last_checked_at %}
+            <p class="uptime__last">{% blocktranslate with time=uptime.last_checked_at|timesince trimmed %}Last checked {{ time }} ago{% endblocktranslate %}</p>
+          {% endif %}
+          <ol class="uptime-strip" aria-label="{% translate 'Daily results, last 30 days' %}">
+            {% for day in uptime.days %}
+              <li class="uptime-strip__day is-{{ day.state }}"><span class="visually-hidden">{{ day.date|date:"j M" }}:
+                {% if not day.total %}{% translate "no checks" %}{% else %}{% blocktranslate with ok=day.ok total=day.total trimmed %}{{ ok }} of {{ total }} checks up{% endblocktranslate %}{% endif %}</span></li>
+            {% endfor %}
+          </ol>
+          <div class="uptime-strip__axis" aria-hidden="true"><span>{% translate "30 days ago" %}</span><span>{% translate "Today" context "uptime" %}</span></div>
+          <ul class="uptime-legend" aria-hidden="true">
+            <li><span class="uptime-strip__day is-up"></span>{% translate "Up" context "uptime" %}</li>
+            <li><span class="uptime-strip__day is-partial"></span>{% translate "Some checks failed" %}</li>
+            <li><span class="uptime-strip__day is-down"></span>{% translate "Down" context "uptime" %}</li>
+            <li><span class="uptime-strip__day is-none"></span>{% translate "No checks" %}</li>
+          </ul>
+        </section>
+      {% endif %}
+
+      {% if project.description %}
+        <section class="project__description" aria-labelledby="about-title">
+          <h2 id="about-title" class="visually-hidden">{% translate "About this project" %}</h2>
+          <div class="prose">{{ project.description_html|safe }}</div>
+        </section>
+      {% endif %}
+
+      {% if project_tags or tools %}
+        <div class="plate__meta">
+          {% if project_tags %}
+            <ul class="chip-list" aria-label="{% translate 'Tags' %}">
+              {% for tag in project_tags %}<li><span class="chip">{{ tag.name }}</span></li>{% endfor %}
+            </ul>
+          {% endif %}
+          {% if tools %}
+            <p class="declared">{% translate "Built with (self-declared)" %}: {% for tool in tools %}{{ tool.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </article>
+
+    {% include "projects/_build_log.html" %}
+    {% if embed %}{% include "projects/_embed_badge.html" %}{% endif %}
+  </div>
+{% endblock %}
+{% block scripts %}{% if embed %}<script type="module" src="{% static 'js/copy.js' %}"></script>{% endif %}{% if log_form %}<script type="module" src="{% static 'js/build-log.js' %}"></script>{% endif %}<script type="module" src="{% static 'js/social.js' %}"></script>{% endblock %}

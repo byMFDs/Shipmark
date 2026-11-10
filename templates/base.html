@@ -10,23 +10,33 @@
   {# Runs before the first paint: applies the saved theme (no flash) and marks that JS works. #}
   <script>(function(){var r=document.documentElement;r.classList.add("js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")r.setAttribute("data-theme",t)}catch(e){}})();</script>
   <link rel="preload" href="{% static 'fonts/ibm-plex-sans-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
-  {% if LANGUAGE_CODE == "uk" %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-cyrillic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>{% endif %}
+  {# Headings (h1, h2) use the condensed 600 face; preloading it keeps the swap from the fallback font short. #}
+  {% if LANGUAGE_CODE == "uk" %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-cyrillic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{% static 'fonts/ibm-plex-sans-condensed-cyrillic-600-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+  {% else %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-condensed-latin-600-normal.woff2' %}" as="font" type="font/woff2" crossorigin>{% endif %}
   <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="{% static 'css/components.css' %}">
   {% block styles %}{% endblock %}
   <link rel="icon" href="{% static brand.FAVICON %}" type="image/svg+xml">
   <link rel="apple-touch-icon" href="{% static brand.APPLE_TOUCH_ICON %}">
+  {# Open Graph: pages override the blocks they know better. #}
   <meta property="og:site_name" content="{{ brand.SITE_NAME }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
   <meta property="og:title" content="{% block og_title %}{{ brand.SITE_NAME }}{% endblock %}">
-  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static brand.OG_DEFAULT_IMAGE %}">
+  <meta property="og:description" content="{% block og_description %}{{ brand.TAGLINE }}{% endblock %}">
+  {% block og_image %}{% static brand.OG_DEFAULT_IMAGE as og_default %}
+  <meta property="og:image" content="{% absolute_url og_default %}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  {% endblock %}
   <meta name="twitter:card" content="summary_large_image">
   {% block meta %}{% endblock %}
   <script type="module" src="{% static 'js/theme.js' %}"></script>
   <script type="module" src="{% static 'js/menu.js' %}"></script>
   <script type="module" src="{% static 'js/toast.js' %}"></script>
+  <script type="module" src="{% static 'js/form-errors.js' %}"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">{% translate "Skip to content" %}</a>

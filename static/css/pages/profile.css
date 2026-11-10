@@ -1,0 +1,56 @@
+/* Public profile: mobile first. Avatar above the text on phones, beside it from 48em. */
+
+.profile-head {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+}
+
+.profile-head__text { min-width: 0; display: grid; gap: var(--s-2); justify-items: start; }
+.profile-head__name { font-size: var(--fs-3); overflow-wrap: anywhere; }
+.profile-head__handle { margin: 0; }
+.profile-head__bio { max-width: 52ch; overflow-wrap: anywhere; }
+
+.profile-head__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--fs--1);
+}
+
+.profile-head__links a,
+.profile-head__links li { overflow-wrap: anywhere; }
+.profile-head .with-icon { display: inline-flex; align-items: center; gap: var(--s-1); min-height: var(--control-h); }
+
+.profile-head .btn { margin-top: var(--s-2); }
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin: var(--s-6) 0;
+  padding-block: var(--s-4);
+  border-block: 1px solid var(--line);
+}
+
+.profile-stats dt { color: var(--steel); font-size: var(--fs--1); }
+.profile-stats dd { margin: 0; font-size: var(--fs-2); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.profile-projects__title { font-size: var(--fs-1); margin-bottom: var(--s-4); }
+.profile-projects { padding-bottom: var(--s-8); }
+.profile-projects__note { margin: calc(-1 * var(--s-2)) 0 var(--s-4); }
+
+.plate-row__name { overflow-wrap: anywhere; }
+
+@media (min-width: 48em) {
+  .profile-head { grid-template-columns: auto minmax(0, 1fr); gap: var(--s-6); align-items: start; }
+  .profile-head__name { font-size: var(--fs-4); }
+  .profile-stats { max-width: 28rem; }
+  .profile-stats dd { font-size: var(--fs-3); }
+}
+
+.profile-head__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+.profile-head__actions .btn { margin-top: 0; }

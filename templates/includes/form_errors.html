@@ -1,6 +1,11 @@
-{% load ui %}
-{% if form.non_field_errors %}
-  <div class="form-errors" role="alert">
-    {% for error in form.non_field_errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
+{% load i18n ui %}
+{# Summary of everything that went wrong. role="alert" + form-errors.js (focus on load) make screen readers read it first. #}
+{% if form.errors %}
+  <div class="form-errors" role="alert" tabindex="-1" data-error-summary>
+    <p class="field__error">{% icon "alert" %}<span>{% translate "Please fix these problems and try again." %}</span></p>
+    <ul class="form-errors__list">
+      {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
+      {% for field in form %}{% if field.errors %}<li><a href="#{{ field.id_for_label }}">{{ field.label }}</a>: {{ field.errors.0 }}</li>{% endif %}{% endfor %}
+    </ul>
   </div>
 {% endif %}

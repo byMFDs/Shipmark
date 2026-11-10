@@ -1,0 +1,13 @@
+{% load i18n ui %}{# A large hallmark that opens its explanation. <details>: works on touch and keyboard without JS; menu.js closes it on Escape or a tap outside. #}
+<details class="hallmark-info" data-menu>
+  <summary class="hallmark-info__summary">
+    {% hallmark h.kind "l" h.earned h.reason %}
+    <span class="hallmark-info__toggle">{% icon "chevron-down" %}<span class="visually-hidden">{% translate "What this means" %}</span></span>
+  </summary>
+  <div class="hallmark-info__panel">
+    <p>{{ h.rule }}</p>
+    {% if h.earned_at %}<p class="hallmark-info__since">{% blocktranslate with date=h.earned_at|date:"j M Y" trimmed %}Earned {{ date }}{% endblocktranslate %}</p>{% endif %}
+    {% maybe_url "pages:how_proof_works" as proof_url %}
+    {% if proof_url %}<p><a href="{{ proof_url }}#{{ h.kind }}">{% translate "How it is checked and how it can be lost" %}</a></p>{% endif %}
+  </div>
+</details>

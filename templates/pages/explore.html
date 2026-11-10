@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% if params.q %}“{{ params.q }}” · {% endif %}{% translate "Explore" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{% translate "Explore" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_description %}{% translate "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark." %}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}"><link rel="stylesheet" href="{% static 'css/pages/explore.css' %}">{% endblock %}
+{% block meta %}
+  <meta name="description" content="{% translate 'Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark.' %}">
+  {% if params.q or params.page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="container page explore">
+    <h1 class="explore__title">{% translate "Explore" %}</h1>
+
+    {# A plain GET form: every filter ends up in the URL, so a view can be shared and works without JS. #}
+    <form class="explore-filters" method="get" action="{% url 'pages:explore' %}" role="search" aria-label="{% translate 'Search and filter projects' %}">
+      <div class="field explore-filters__search">
+        <label class="field__label" for="explore-q">{% translate "Search" %}</label>
+        <input class="input" type="search" id="explore-q" name="q" value="{{ params.q }}" maxlength="100"
+               placeholder="{% translate 'Project name or tagline' %}" enterkeyhint="search" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="explore-tag">{% translate "Tag" %}</label>
+        <span class="select-wrap">
+          <select class="select" id="explore-tag" name="tag">
+            <option value="">{% translate "Any tag" %}</option>
+            {% for tag in tags %}<option value="{{ tag.slug }}"{% if tag.slug == params.tag %} selected{% endif %}>{{ tag.name }}</option>{% endfor %}
+          </select>{% icon "chevron-down" %}
+        </span>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="explore-tool">{% translate "Built with" %}</label>
+        <span class="select-wrap">
+          <select class="select" id="explore-tool" name="tool">
+            <option value="">{% translate "Any tool" %}</option>
+            {% for tool in tools %}<option value="{{ tool.slug }}"{% if tool.slug == params.tool %} selected{% endif %}>{{ tool.name }}</option>{% endfor %}
+          </select>{% icon "chevron-down" %}
+        </span>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="explore-hallmark">{% translate "Hallmark" %}</label>
+        <span class="select-wrap">
+          <select class="select" id="explore-hallmark" name="hallmark">
+            {% for value, label in hallmarks %}<option value="{{ value }}"{% if value == params.hallmark %} selected{% endif %}>{{ label }}</option>{% endfor %}
+          </select>{% icon "chevron-down" %}
+        </span>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="explore-sort">{% translate "Sort by" %}</label>
+        <span class="select-wrap">
+          <select class="select" id="explore-sort" name="sort">
+            {% for value, label in sorts %}<option value="{{ value }}"{% if value == params.sort %} selected{% endif %}>{{ label }}</option>{% endfor %}
+          </select>{% icon "chevron-down" %}
+        </span>
+      </div>
+
+      <div class="explore-filters__actions">
+        <button class="btn btn--primary" type="submit">{% translate "Show projects" %}</button>
+        {% if filtered %}<a class="btn btn--quiet" href="{% url 'pages:explore' %}">{% translate "Clear filters" %}</a>{% endif %}
+      </div>
+    </form>
+
+    <p class="explore__count muted">{% blocktranslate count n=total trimmed %}{{ n }} project{% plural %}{{ n }} projects{% endblocktranslate %}{% if params.sort == "proven" %} · {% translate "most hallmarks first, then newest" %}{% endif %}</p>
+
+    {% if projects %}
+      <ul class="plate-list explore__list">
+        {% for project in projects %}{% include "pages/_project_row.html" with with_like=True %}{% endfor %}
+      </ul>
+      {% if params.page > 1 or has_next %}
+        <nav class="pager" aria-label="{% translate 'Pages' %}">
+          {% if params.page > 1 %}<a class="btn btn--secondary" href="{% querystring page=prev_page %}" rel="prev">{% translate "Previous page" %}</a>{% endif %}
+          {% if has_next %}<a class="btn btn--secondary" href="{% querystring page=next_page %}" rel="next">{% translate "Next page" %}</a>{% endif %}
+        </nav>
+      {% endif %}
+    {% elif filtered %}
+      <div class="empty">
+        <p class="empty__text">{% translate "No published projects match these filters." %}</p>
+        <a class="btn btn--secondary" href="{% url 'pages:explore' %}">{% translate "Clear filters" %}</a>
+      </div>
+    {% else %}
+      <div class="empty">
+        <div class="empty__marks">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
+        <p class="empty__text">{% translate "Nothing has been published yet." %}</p>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block scripts %}<script type="module" src="{% static 'js/social.js' %}"></script>{% endblock %}

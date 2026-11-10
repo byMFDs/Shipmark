@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% translate "Feed" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{% translate "Feed" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}">{% endblock %}
+{% block meta %}<meta name="description" content="{% translate 'Recently launched projects with verified proof.' %}">{% if page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
+
+{% block content %}
+  <div class="container page feed">
+    <h1 class="feed__title">{% translate "Feed" %}</h1>
+
+    {% if user.is_authenticated %}
+      <nav class="tabs" aria-label="{% translate 'Feed sections' %}">
+        <ul class="tabs__list">
+          <li><a class="tabs__link" href="{{ following_url }}"{% if tab == "following" %} aria-current="page"{% endif %}>{% translate "Following" %}</a></li>
+          <li><a class="tabs__link" href="{{ latest_url }}"{% if tab == "latest" %} aria-current="page"{% endif %}>{% translate "Latest launches" %}</a></li>
+        </ul>
+      </nav>
+    {% else %}
+      <h2 class="feed__subtitle">{% translate "Latest launches" %}</h2>
+    {% endif %}
+
+    {% if items %}
+      <ul class="plate-list feed__list" data-feed-list>
+        {% include "social/_items.html" %}
+      </ul>
+    {% elif tab == "following" %}
+      <div class="empty">
+        <h3>{% translate "Nothing here yet" %}</h3>
+        <p class="empty__text">{% translate "Projects and updates from people you follow show up here. Follow someone from their profile." %}</p>
+        <a class="btn btn--primary" href="{{ latest_url }}">{% translate "See latest launches" %}</a>
+      </div>
+    {% else %}
+      <div class="empty">
+        <h3>{% translate "No launches yet" %}</h3>
+        <p class="empty__text">{% translate "Published projects appear here, newest first." %}</p>
+      </div>
+    {% endif %}
+
+    {% if prev_url or next_url %}
+      <nav class="pager" aria-label="{% translate 'Pages' %}" data-feed-pager>
+        {% if prev_url %}<a class="btn btn--secondary" rel="prev" href="{{ prev_url }}" data-prev>{% translate "Newer" %}</a>{% endif %}
+        {% if next_url %}<a class="btn btn--secondary" rel="next" href="{{ next_url }}" data-load-more data-error="{% translate 'Could not load more. Try again.' %}">{% translate "Load more" %}</a>{% endif %}
+      </nav>
+    {% endif %}
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script type="module" src="{% static 'js/social.js' %}"></script>
+  <script type="module" src="{% static 'js/feed.js' %}"></script>
+{% endblock %}

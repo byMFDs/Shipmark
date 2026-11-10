@@ -1,0 +1,46 @@
+{% extends 'admin/base.html' %}
+{% load i18n unfold %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block branding %}{% include "unfold/helpers/site_branding.html" %}{% endblock %}
+
+{% block content %}
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-col lg:flex-row gap-6">
+      {% for item in stats %}
+        {% component "unfold/components/card.html" with href=item.link class="lg:w-1/4" %}
+          {% component "unfold/components/text.html" with class="text-subtle" %}{{ item.label }}{% endcomponent %}
+          {% component "unfold/components/title.html" %}{{ item.value }}{% endcomponent %}
+        {% endcomponent %}
+      {% endfor %}
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-6">
+      {% component "unfold/components/card.html" with title=_("Hallmarks earned") class="lg:w-1/2" %}
+        <div class="flex flex-row gap-6">
+          {% for item in hallmark_stats %}
+            <div class="flex flex-col">
+              {% component "unfold/components/text.html" with class="text-subtle" %}{{ item.label }}{% endcomponent %}
+              {% component "unfold/components/title.html" %}{{ item.value }}{% endcomponent %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endcomponent %}
+
+      {% component "unfold/components/card.html" with title=_("Latest open reports") class="lg:w-1/2" %}
+        {% if latest_reports %}
+          <ul class="flex flex-col gap-3">
+            {% for report in latest_reports %}
+              <li>
+                <a class="text-primary-600 dark:text-primary-400" href="{% url 'admin:moderation_report_change' report.pk %}">{{ report }}</a>
+                <span class="text-subtle text-sm">· {{ report.created_at|timesince }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          {% component "unfold/components/text.html" with class="text-subtle" %}{% translate "No open reports." %}{% endcomponent %}
+        {% endif %}
+      {% endcomponent %}
+    </div>
+  </div>
+{% endblock %}

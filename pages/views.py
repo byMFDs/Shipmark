@@ -1,12 +1,44 @@
 from django.conf import settings
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+
+from projects.models import Tool
+from projects.proof import RULES
+from social.queries import project_rows, published_projects
 
 from .content import load_page
+from .explore import HALLMARK_CHOICES, SORTS, ExploreForm, explore, tag_options
+
+RECENT_ON_LANDING = 6
 
 
 def landing(request):
-    return render(request, "pages/landing.html")
+    """Signed-out visitors only: people with an account go straight to their feed."""
+    if request.user.is_authenticated:
+        return redirect("social:feed")
+    recent = list(project_rows(published_projects(), request.user).order_by("-event_at", "-pk")[:RECENT_ON_LANDING])
+    proof = [{"kind": kind, "rule": RULES[kind]} for kind in ("authored", "live", "steady")]
+    return render(request, "pages/landing.html", {
+        "recent": recent, "proof": proof, "github_configured": settings.GITHUB_OAUTH_CONFIGURED,
+    })
+
+
+def explore_view(request):
+    params = ExploreForm(request.GET).values()
+    result = explore(params, request.user)
+    if params["page"] > 1 and not result["projects"]:
+        raise Http404  # past the last page
+    return render(request, "pages/explore.html", {
+        **result,
+        "params": params,
+        "prev_page": params["page"] - 1 if params["page"] > 2 else None,  # page 1 has no "page" parameter
+        "next_page": params["page"] + 1,
+        "filtered": any(params[k] for k in ("q", "tag", "tool", "hallmark")),
+        "tags": tag_options(params["tag"]),
+        "tools": Tool.objects.all(),
+        "hallmarks": HALLMARK_CHOICES,
+        "sorts": SORTS,
+    })
 
 
 # Shown on the styleguide. Values must match static/css/tokens.css.
@@ -35,3 +67,13 @@ def content_page(request, slug):
     if page is None:
         raise Http404
     return render(request, "pages/content_page.html", {"page": page})
+
+
+LEGAL_PAGES = ("privacy", "terms", "cookies")
+
+
+def legal_page(request, slug):
+    """/legal/privacy/, /legal/terms/, /legal/cookies/. Only these: other content pages have their own URLs."""
+    if slug not in LEGAL_PAGES:
+        raise Http404
+    return content_page(request, slug)

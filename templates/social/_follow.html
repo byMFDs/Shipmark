@@ -1,0 +1,19 @@
+{% load i18n %}{# Follow button. Needs: person, following. count_target: id of the element that shows the follower count. #}
+{% if user.is_authenticated and user.pk == person.pk %}
+{% elif user.is_authenticated %}
+  <form class="social-form" method="post" data-social-form data-follow-style
+        action="{% if following %}{% url 'social:unfollow' person.username %}{% else %}{% url 'social:follow' person.username %}{% endif %}"
+        data-url-on="{% url 'social:follow' person.username %}"
+        data-url-off="{% url 'social:unfollow' person.username %}"
+        {% if count_target %}data-count-target="{{ count_target }}"{% endif %}
+        data-error="{% translate 'Could not save. Try again.' %}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    <button class="btn {% if following %}btn--secondary{% else %}btn--primary{% endif %} social-btn" type="submit" aria-pressed="{% if following %}true{% else %}false{% endif %}">
+      <span data-label data-label-on="{% translate 'Following' %}" data-label-off="{% translate 'Follow' %}">{% if following %}{% translate "Following" %}{% else %}{% translate "Follow" %}{% endif %}</span>
+      <span class="visually-hidden">@{{ person.username }}</span>
+    </button>
+  </form>
+{% else %}
+  <a class="btn btn--primary social-btn" href="{% url 'account_login' %}?next={% url 'accounts:profile' person.username as profile_url %}{{ profile_url|urlencode }}">{% translate "Follow" %}<span class="visually-hidden"> @{{ person.username }}</span></a>
+{% endif %}

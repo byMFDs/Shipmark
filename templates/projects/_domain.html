@@ -1,0 +1,61 @@
+{% load i18n ui %}
+<section class="editor__section stack" aria-labelledby="domain-title">
+  <h2 id="domain-title">{% translate "Domain verification" %}</h2>
+  {% if not project.live_url %}
+    <p class="muted">{% translate "Add a live URL above and save to verify its domain." %}</p>
+  {% elif not domain_row %}
+    <p class="muted">{% translate "This address cannot be verified. Use a domain name, not an IP address or a local name." %}</p>
+  {% else %}
+    <p class="field__hint">{% translate "Live is earned when you prove that you control the domain of your live URL. www is ignored: example.com and www.example.com are the same domain." %}</p>
+    <div data-domain-status aria-live="polite">{% include "projects/_domain_status.html" %}</div>
+
+    <form method="post" class="stack" action="{% url 'projects:domain_verify' project.owner.username project.slug %}" data-domain-form>
+      {% csrf_token %}
+      <fieldset class="field fieldset">
+        <legend class="field__label">{% translate "Method" %}</legend>
+
+        <label class="check" for="method-dns"><input class="radio" type="radio" id="method-dns" name="method" value="dns"{% if domain_row.method != "meta" %} checked{% endif %}><span>{% translate "DNS TXT record" %} <span class="muted">{% translate "(works for any site)" %}</span></span></label>
+        <div class="method" data-method-panel="dns">
+          <ol class="method__steps">
+            <li>{% translate "Open the DNS settings where you bought the domain or where its DNS is hosted (Cloudflare, Namecheap, GoDaddy and so on)." %}</li>
+            <li>{% translate "Add a new record of type TXT:" %}
+              <dl class="record">
+                <div><dt>{% translate "Name (Host)" %}</dt><dd><code class="code-value" id="dns-name">{{ domain_row.domain }}</code>
+                  <button type="button" class="btn btn--quiet btn--copy needs-js" data-copy="dns-name" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd></div>
+                <div><dt>{% translate "Value" %}</dt><dd><code class="code-value" id="dns-value">{{ domain_record }}</code>
+                  <button type="button" class="btn btn--quiet btn--copy needs-js" data-copy="dns-value" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd></div>
+              </dl>
+            </li>
+            <li>{% translate "Save, wait a few minutes, then press Verify now." %}</li>
+          </ol>
+          <details class="method__help">
+            <summary>{% translate "Common DNS mistakes" %}</summary>
+            <ul>
+              <li>{% translate "Many providers add your domain to the name for you. Then type only the part before it (app for app.example.com), or @ for the domain itself. Otherwise you get a doubled name like app.example.com.example.com." %}</li>
+              <li>{% translate "Add a new TXT record. Do not edit or replace existing ones (for example SPF records for email)." %}</li>
+              <li>{% translate "Paste the value exactly. Quotes around it are fine; spaces or a missing part are not." %}</li>
+              <li>{% translate "If this name is a CNAME (common for subdomains on Vercel, Netlify or GitHub Pages), DNS does not allow a TXT record on it. Use the meta tag instead." %}</li>
+              <li>{% translate "Changes can take from a few minutes up to an hour to appear, depending on the provider." %}</li>
+              <li>{% translate "Keep the record after verifying. It is checked again every 30 days." %}</li>
+            </ul>
+          </details>
+        </div>
+
+        <label class="check" for="method-meta"><input class="radio" type="radio" id="method-meta" name="method" value="meta"{% if domain_row.method == "meta" %} checked{% endif %}><span>{% translate "Meta tag on the homepage" %} <span class="muted">{% translate "(if you can edit the site's HTML)" %}</span></span></label>
+        <div class="method" data-method-panel="meta">
+          <ol class="method__steps">
+            <li>{% blocktranslate with url=domain_home %}Add this tag inside &lt;head&gt; of {{ url }}:{% endblocktranslate %}
+              <div class="record record--single"><code class="code-value" id="meta-value">{{ domain_meta }}</code>
+                <button type="button" class="btn btn--quiet btn--copy needs-js" data-copy="meta-value" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></div>
+            </li>
+            <li>{% translate "Publish the site, then press Verify now." %}</li>
+          </ol>
+          <p class="field__hint">{% translate "The homepage must be public (no login), answer with 200 OK within 5 seconds and be smaller than 512 KB. Redirects within the same domain are fine. The tag must be in the HTML from the server: a tag added later by JavaScript is not seen." %}</p>
+        </div>
+      </fieldset>
+
+      <div><button class="btn btn--primary" type="submit" data-busy-label="{% translate "Checking…" %}">{% translate "Verify now" %}</button></div>
+      <p class="field__hint">{% translate "Up to 5 checks per 10 minutes." %}</p>
+    </form>
+  {% endif %}
+</section>

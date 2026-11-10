@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% if project %}{% translate "Edit project" %}{% else %}{% translate "New project" %}{% endif %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/project.css' %}">{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <div class="editor">
+      <h1>{% if project %}{% translate "Edit project" %}{% else %}{% translate "New project" %}{% endif %}</h1>
+      {% if project %}
+        <p class="muted editor__status">
+          {% if project.status == "published" %}{% translate "Published" %}{% elif project.status == "hidden" %}{% translate "Hidden by moderators" %}{% else %}{% translate "Draft. Only you can see it." %}{% endif %}
+          · <a href="{{ project.get_absolute_url }}">{% translate "View page" %}</a>
+        </p>
+      {% else %}
+        <p class="muted editor__status">{% translate "It starts as a draft. Nobody sees it until you publish." %}</p>
+      {% endif %}
+
+      <form method="post" class="editor__section stack" novalidate data-project-form data-preview-url="{% url 'projects:preview' %}">
+        {% csrf_token %}
+        {% include "includes/form_errors.html" %}
+        {% include "includes/form_field.html" with field=form.name %}
+        {% include "includes/form_field.html" with field=form.tagline %}
+
+        <div class="field">
+          <label class="field__label" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+          <p class="field__hint" id="{{ form.description.auto_id }}_hint">{{ form.description.help_text }}</p>
+          {{ form.description }}
+          {% if form.description.errors %}
+            <div id="{{ form.description.auto_id }}_error">
+              {% for error in form.description.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
+            </div>
+          {% endif %}
+          <div class="needs-js">
+            <button type="button" class="btn btn--secondary" data-preview-toggle data-error="{% translate "Preview is not available right now." %}" aria-expanded="false" aria-controls="description-preview">{% translate "Preview" %}</button>
+          </div>
+          <div id="description-preview" class="prose preview" data-preview hidden aria-live="polite"></div>
+        </div>
+
+        {% include "includes/form_field.html" with field=form.live_url %}
+        {% include "includes/form_field.html" with field=form.repo_full_name %}
+        {% include "includes/form_field.html" with field=form.tags_text %}
+
+        <fieldset class="field fieldset">
+          <legend class="field__label">{% translate "Built with (self-declared)" %}</legend>
+          <p class="field__hint" id="{{ form.built_with.auto_id }}_hint">{{ form.built_with.help_text }}</p>
+          <div class="tool-grid">
+            {% for checkbox in form.built_with %}
+              <label class="check" for="{{ checkbox.id_for_label }}">{{ checkbox.tag }}<span>{{ checkbox.choice_label }}</span></label>
+            {% endfor %}
+          </div>
+          {% for error in form.built_with.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
+        </fieldset>
+
+        <div><button class="btn btn--primary" type="submit">{% if project %}{% translate "Save changes" %}{% else %}{% translate "Save draft" %}{% endif %}</button></div>
+      </form>
+
+      {% if project %}
+        <section class="editor__section stack" aria-labelledby="repo-title">
+          <h2 id="repo-title">{% translate "Repository check" %}</h2>
+          {% if project.repo_full_name %}
+            {% if repo_link %}
+              <p>{% blocktranslate with name=repo_link.repo_full_name count counter=repo_link.user_commit_count %}Authored: {{ name }}, {{ counter }} commit by you.{% plural %}Authored: {{ name }}, {{ counter }} commits by you.{% endblocktranslate %}
+                <span class="muted">{% blocktranslate with date=repo_link.checked_at|date:"DATE_FORMAT" %}Checked {{ date }}.{% endblocktranslate %}</span></p>
+            {% else %}
+              <p class="muted">{% translate "Not checked yet. Authored is earned if the public repository is yours, or you have at least 10 commits in it." %}</p>
+            {% endif %}
+            <form method="post" action="{% url 'projects:repo_check' project.owner.username project.slug %}">
+              {% csrf_token %}<button class="btn btn--secondary" type="submit">{% translate "Check repository" %}</button>
+            </form>
+            <p class="field__hint">{% translate "Uses the repository saved above. Once every 10 minutes." %}</p>
+          {% else %}
+            <p class="muted">{% translate "Add a GitHub repository above and save to check it." %}</p>
+          {% endif %}
+        </section>
+
+        {% include "projects/_domain.html" %}
+
+        <section class="editor__section stack" aria-labelledby="shots-title">
+          <h2 id="shots-title">{% translate "Screenshots" %}</h2>
+          <p class="field__hint">{% blocktranslate with max=max_screenshots %}Up to {{ max }} images, PNG, JPEG or WebP, 5 MB each. The first one is the cover.{% endblocktranslate %}</p>
+          {% if screenshots %}
+            <ol class="shot-list">
+              {% for shot in screenshots %}
+                <li class="shot">
+                  <img src="{{ shot.image.url }}" width="{{ shot.width }}" height="{{ shot.height }}" alt="{% blocktranslate with n=forloop.counter %}Screenshot {{ n }}{% endblocktranslate %}" loading="lazy">
+                  <div class="shot__actions">
+                    <form method="post" action="{% url 'projects:screenshot_move' project.owner.username project.slug shot.pk %}">
+                      {% csrf_token %}<input type="hidden" name="direction" value="up">
+                      <button class="btn btn--quiet" type="submit"{% if forloop.first %} disabled{% endif %}>{% translate "Move up" %}</button>
+                    </form>
+                    <form method="post" action="{% url 'projects:screenshot_move' project.owner.username project.slug shot.pk %}">
+                      {% csrf_token %}<input type="hidden" name="direction" value="down">
+                      <button class="btn btn--quiet" type="submit"{% if forloop.last %} disabled{% endif %}>{% translate "Move down" %}</button>
+                    </form>
+                    <form method="post" action="{% url 'projects:screenshot_delete' project.owner.username project.slug shot.pk %}">
+                      {% csrf_token %}
+                      <button class="btn btn--danger" type="submit">{% translate "Remove" %}</button>
+                    </form>
+                  </div>
+                </li>
+              {% endfor %}
+            </ol>
+          {% endif %}
+          {% if screenshots|length < max_screenshots %}
+            <form method="post" enctype="multipart/form-data" class="stack" action="{% url 'projects:screenshot_add' project.owner.username project.slug %}">
+              {% csrf_token %}
+              <div class="field">
+                <label class="field__label" for="screenshot-file">{% translate "Add a screenshot" %}</label>
+                <input class="input" id="screenshot-file" type="file" name="image" accept="image/png,image/jpeg,image/webp" required>
+              </div>
+              <div><button class="btn btn--secondary" type="submit">{% translate "Upload screenshot" %}</button></div>
+            </form>
+          {% else %}
+            <p class="muted">{% translate "You have reached the limit of 4 screenshots. Remove one to add another." %}</p>
+          {% endif %}
+        </section>
+
+        <section class="editor__section stack" aria-labelledby="status-title">
+          <h2 id="status-title">{% translate "Visibility" %}</h2>
+          {% if project.status == "draft" %}
+            <p class="muted">{% translate "This project is a draft. Publishing makes the page public." %}</p>
+            <form method="post" action="{% url 'projects:publish' project.owner.username project.slug %}">
+              {% csrf_token %}<button class="btn btn--primary" type="submit">{% translate "Publish project" %}</button>
+            </form>
+          {% elif project.status == "published" %}
+            <p class="muted">{% translate "This project is public." %}</p>
+            <form method="post" action="{% url 'projects:unpublish' project.owner.username project.slug %}">
+              {% csrf_token %}<button class="btn btn--secondary" type="submit">{% translate "Unpublish project" %}</button>
+            </form>
+          {% else %}
+            <p class="muted">{% translate "Moderators hid this project. Contact support if you think this is a mistake." %}</p>
+          {% endif %}
+        </section>
+
+        <section class="editor__section stack" aria-labelledby="delete-title">
+          <h2 id="delete-title">{% translate "Delete project" %}</h2>
+          <p class="muted">{% translate "This removes the project and its screenshots for good." %}</p>
+          <div><a class="btn btn--danger" href="{% url 'projects:delete' project.owner.username project.slug %}">{% translate "Delete project" %}</a></div>
+        </section>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}<script type="module" src="{% static 'js/project-form.js' %}"></script>
+{% if domain_row %}<script type="module" src="{% static 'js/domain-verify.js' %}"></script>{% endif %}{% endblock %}
