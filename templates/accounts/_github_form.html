@@ -1,0 +1,12 @@
+{% load i18n ui %}
+{# Starts GitHub OAuth. Must be a POST (CSRF-protected); allauth reads "next" from it. #}
+{% if configured %}
+  <form method="post" action="{% url 'github_login' %}">
+    {% csrf_token %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    <input type="hidden" name="process" value="login">
+    <button class="btn btn--primary btn--block" type="submit">{% icon "github" %}{% translate "Continue with GitHub" %}</button>
+  </form>
+{% else %}
+  <p class="field__error" role="alert">{% icon "alert" %}<span>{% translate "GitHub sign-in is not set up on this server yet." %}</span></p>
+{% endif %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% translate "Create your account" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <section class="auth plate plate--featured">
+      <h1>{% translate "Create your account" %}</h1>
+      <p>{% blocktranslate with login=account.extra_data.login %}You signed in with GitHub as <strong>{{ login }}</strong>. Confirm your username and accept the Terms to finish.{% endblocktranslate %}</p>
+      <form method="post" action="{% url 'socialaccount_signup' %}" class="stack" novalidate>
+        {% csrf_token %}
+        {{ redirect_field }}
+        {% include "includes/form_errors.html" %}
+        {% include "includes/form_field.html" with field=form.username %}
+        {% maybe_url "pages:legal" "terms" as terms_url %}
+        {% maybe_url "pages:legal" "privacy" as privacy_url %}
+        {% translate "I accept the Terms" as terms_label %}
+        {% include "includes/form_field.html" with field=form.terms label_html=terms_label %}
+        {% if terms_url %}
+          <p class="field__hint"><a href="{{ terms_url }}" target="_blank" rel="noopener">{% translate "Read the Terms" %}</a>{% if privacy_url %} · <a href="{{ privacy_url }}" target="_blank" rel="noopener">{% translate "Read the Privacy policy" %}</a>{% endif %}</p>
+        {% endif %}
+        <button class="btn btn--primary btn--block" type="submit">{% translate "Create account" %}</button>
+      </form>
+    </section>
+  </div>
+{% endblock %}

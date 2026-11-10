@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% translate "Settings" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <div class="settings">
+      <h1>{% translate "Settings" %}</h1>
+
+      <form method="post" class="settings__section stack" novalidate>
+        {% csrf_token %}
+        <h2>{% translate "Profile" %}</h2>
+        {% include "includes/form_errors.html" %}
+        {% include "includes/form_field.html" with field=form.display_name %}
+        {% include "includes/form_field.html" with field=form.bio %}
+        {% include "includes/form_field.html" with field=form.website %}
+        {% include "includes/form_field.html" with field=form.preferred_language %}
+        <div><button class="btn btn--primary" type="submit">{% translate "Save settings" %}</button></div>
+      </form>
+
+      <section class="settings__section stack needs-js">
+        <h2>{% translate "Theme" %}</h2>
+        <p class="field__hint">{% translate "Saved in this browser only." %}</p>
+        <div class="theme-switch" role="group" aria-label="{% translate 'Theme' %}">
+          <button type="button" class="theme-switch__option" data-theme-choice="system" aria-pressed="true">{% icon "monitor" %}{% translate "System" %}</button>
+          <button type="button" class="theme-switch__option" data-theme-choice="light" aria-pressed="false">{% icon "sun" %}{% translate "Light" %}</button>
+          <button type="button" class="theme-switch__option" data-theme-choice="dark" aria-pressed="false">{% icon "moon" %}{% translate "Dark" %}</button>
+        </div>
+      </section>
+
+      <section class="settings__section stack">
+        <h2>{% translate "Account" %}</h2>
+        <dl class="settings__facts">
+          <div><dt>{% translate "Username" %}</dt><dd>{{ user.username }}</dd></div>
+          {% if user.github_login %}<div><dt>GitHub</dt><dd><a href="https://github.com/{{ user.github_login }}" rel="noopener">{{ user.github_login }}</a></dd></div>{% endif %}
+        </dl>
+        <div><a class="btn btn--secondary" href="{% url 'account_logout' %}">{% translate "Sign out" %}</a></div>
+      </section>
+    </div>
+  </div>
+{% endblock %}

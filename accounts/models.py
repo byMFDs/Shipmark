@@ -2,9 +2,19 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
+
+from .usernames import MAX_LENGTH, validate_username
 
 
 class User(AbstractUser):
+    # Lowercase, URL-safe, not reserved (see usernames.py). Replaces Django's default rules.
+    username = models.CharField(
+        max_length=MAX_LENGTH,
+        unique=True,
+        validators=[validate_username],
+        error_messages={"unique": _("This username is already taken.")},
+    )
     display_name = models.CharField(max_length=80, blank=True)
     bio = models.CharField(max_length=280, blank=True)
     website = models.URLField(blank=True)

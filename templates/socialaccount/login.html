@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% translate "Sign in" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <section class="auth plate plate--featured">
+      <h1>{% translate "Sign in with GitHub" %}</h1>
+      <p>{% translate "You are about to continue to GitHub to confirm your sign-in." %}</p>
+      <form method="post">
+        {% csrf_token %}
+        {{ redirect_field }}
+        <button class="btn btn--primary btn--block" type="submit">{% icon "github" %}{% translate "Continue with GitHub" %}</button>
+      </form>
+    </section>
+  </div>
+{% endblock %}

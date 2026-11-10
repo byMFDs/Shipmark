@@ -1,0 +1,20 @@
+{% load i18n ui %}
+{# One form field: label, hint, input, errors. Use: {% include "includes/form_field.html" with field=form.name %} #}
+<div class="field">
+  {% if field.widget_type == "checkbox" %}
+    <label class="check" for="{{ field.id_for_label }}">{{ field }}<span>{% if label_html %}{{ label_html }}{% else %}{{ field.label }}{% endif %}</span></label>
+  {% else %}
+    <label class="field__label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% if field.help_text %}<p class="field__hint" id="{{ field.auto_id }}_hint">{{ field.help_text }}</p>{% endif %}
+    {% if field.widget_type == "select" %}
+      <span class="select-wrap">{{ field }}{% icon "chevron-down" %}</span>
+    {% else %}
+      {{ field }}
+    {% endif %}
+  {% endif %}
+  {% if field.errors %}
+    <div id="{{ field.auto_id }}_error">
+      {% for error in field.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
+    </div>
+  {% endif %}
+</div>

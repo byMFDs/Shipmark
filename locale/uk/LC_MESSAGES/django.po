@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 17:21+0000\n"
+"POT-Creation-Date: 2026-11-10 17:43+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -16,6 +16,59 @@ msgstr ""
 "11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: accounts/forms.py:42
+msgid "You need to accept the Terms to create an account."
+msgstr "Щоб створити акаунт, потрібно прийняти Умови."
+
+#: accounts/forms.py:49
+msgid ""
+"Your profile will be at /u/username/. Lowercase letters, digits, - and _."
+msgstr "Ваш профіль буде за адресою /u/імʼя/. Малі латинські літери, цифри, - та _."
+
+#: accounts/forms.py:72
+msgid "Automatic (browser language)"
+msgstr "Автоматично (мова браузера)"
+
+#: accounts/forms.py:83
+msgid "Enter a link that starts with http:// or https://."
+msgstr "Введіть посилання, що починається з http:// або https://."
+
+#: accounts/models.py:16
+msgid "This username is already taken."
+msgstr "Це імʼя користувача вже зайняте."
+
+#: accounts/usernames.py:26
+#, python-format
+msgid "Use %(min)d to %(max)d characters."
+msgstr "Використайте від %(min)d до %(max)d символів."
+
+#: accounts/usernames.py:31
+msgid ""
+"Use only lowercase letters, digits, hyphens and underscores, starting with a "
+"letter or digit."
+msgstr "Лише малі латинські літери, цифри, дефіси та підкреслення; починати з літери або цифри."
+
+#: accounts/usernames.py:35
+msgid "This username is reserved. Please choose another."
+msgstr "Це імʼя зарезервоване. Оберіть інше."
+
+#: accounts/views.py:40
+msgid "You are signed out."
+msgstr "Ви вийшли з акаунта."
+
+#: accounts/views.py:52
+msgid "Your account is suspended."
+msgstr "Ваш акаунт призупинено."
+
+#: accounts/views.py:55
+msgid "Too many changes in a short time. Try again in a few minutes."
+msgstr "Забагато змін за короткий час. Спробуйте за кілька хвилин."
+
+#: accounts/views.py:60
+msgid "Settings saved."
+msgstr "Налаштування збережено."
+
 #: config/branding.py:9
 msgid "Proof of what you actually shipped"
 msgstr "Докази того, що ви справді випустили"
@@ -32,33 +85,121 @@ msgstr "Працює"
 msgid "Steady"
 msgstr "Стабільний"
 
-#: pages/templatetags/ui.py:199
+#: pages/templatetags/ui.py:205
 msgid "Feed"
 msgstr "Стрічка"
 
-#: pages/templatetags/ui.py:199
+#: pages/templatetags/ui.py:205
 msgid "Explore"
 msgstr "Огляд"
 
-#: pages/templatetags/ui.py:201
+#: pages/templatetags/ui.py:207
 msgid "About"
 msgstr "Про проєкт"
 
-#: pages/templatetags/ui.py:202
+#: pages/templatetags/ui.py:208
 msgid "How proof works"
 msgstr "Як працюють підтвердження"
 
-#: pages/templatetags/ui.py:203
+#: pages/templatetags/ui.py:209
 msgid "Privacy"
 msgstr "Приватність"
 
-#: pages/templatetags/ui.py:204
+#: pages/templatetags/ui.py:210
 msgid "Terms"
 msgstr "Умови"
 
-#: pages/templatetags/ui.py:205
+#: pages/templatetags/ui.py:211
 msgid "Cookies"
 msgstr "Файли cookie"
+
+#: templates/accounts/_github_form.html:8 templates/socialaccount/login.html:15
+msgid "Continue with GitHub"
+msgstr "Продовжити через GitHub"
+
+#: templates/accounts/_github_form.html:11
+msgid "GitHub sign-in is not set up on this server yet."
+msgstr "Вхід через GitHub на цьому сервері ще не налаштовано."
+
+#: templates/accounts/login.html:4 templates/accounts/login.html:10
+#: templates/socialaccount/login.html:4
+msgid "Sign in"
+msgstr "Вхід"
+
+#: templates/accounts/login.html:11
+#, python-format
+msgid ""
+"%(name)s uses your GitHub account to sign in. There are no passwords to "
+"remember."
+msgstr "%(name)s використовує ваш акаунт GitHub для входу. Паролі запамʼятовувати не потрібно."
+
+#: templates/accounts/login.html:13
+msgid ""
+"We ask GitHub only for your public profile and your email address. We never "
+"get access to your code."
+msgstr "Ми просимо в GitHub лише ваш публічний профіль і адресу пошти. Доступу до вашого коду ми не отримуємо."
+
+#: templates/accounts/logout.html:4 templates/accounts/logout.html:14
+#: templates/accounts/settings.html:39 templates/includes/site_nav.html:20
+#: templates/includes/site_nav.html:32
+msgid "Sign out"
+msgstr "Вийти"
+
+#: templates/accounts/logout.html:10
+msgid "Sign out?"
+msgstr "Вийти з акаунта?"
+
+#: templates/accounts/logout.html:11
+#, python-format
+msgid "You are signed in as %(name)s."
+msgstr "Ви увійшли як %(name)s."
+
+#: templates/accounts/logout.html:15
+msgid "Stay signed in"
+msgstr "Залишитися в акаунті"
+
+#: templates/accounts/settings.html:4 templates/accounts/settings.html:10
+#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:31
+msgid "Settings"
+msgstr "Налаштування"
+
+#: templates/accounts/settings.html:14
+msgid "Profile"
+msgstr "Профіль"
+
+#: templates/accounts/settings.html:20
+msgid "Save settings"
+msgstr "Зберегти налаштування"
+
+#: templates/accounts/settings.html:24 templates/accounts/settings.html:26
+#: templates/includes/site_footer.html:34
+#: templates/includes/site_footer.html:35
+msgid "Theme"
+msgstr "Тема"
+
+#: templates/accounts/settings.html:25
+msgid "Saved in this browser only."
+msgstr "Зберігається лише в цьому браузері."
+
+#: templates/accounts/settings.html:27 templates/includes/site_footer.html:36
+msgid "System"
+msgstr "Системна"
+
+#: templates/accounts/settings.html:28 templates/includes/site_footer.html:37
+msgid "Light"
+msgstr "Світла"
+
+#: templates/accounts/settings.html:29 templates/includes/site_footer.html:38
+msgid "Dark"
+msgstr "Темна"
+
+#: templates/accounts/settings.html:34
+msgid "Account"
+msgstr "Акаунт"
+
+#: templates/accounts/settings.html:36
+msgid "Username"
+msgstr "Імʼя користувача"
 
 #: templates/base.html:32
 msgid "Skip to content"
@@ -79,23 +220,6 @@ msgstr "Мова"
 #: templates/includes/site_footer.html:29
 msgid "Change"
 msgstr "Змінити"
-
-#: templates/includes/site_footer.html:34
-#: templates/includes/site_footer.html:35
-msgid "Theme"
-msgstr "Тема"
-
-#: templates/includes/site_footer.html:36
-msgid "System"
-msgstr "Системна"
-
-#: templates/includes/site_footer.html:37
-msgid "Light"
-msgstr "Світла"
-
-#: templates/includes/site_footer.html:38
-msgid "Dark"
-msgstr "Темна"
 
 #: templates/includes/site_header.html:6
 #, python-format
@@ -118,11 +242,16 @@ msgstr "Головна навігація"
 msgid "New project"
 msgstr "Новий проєкт"
 
-#: templates/includes/site_nav.html:15
+#: templates/includes/site_nav.html:18 templates/includes/site_nav.html:30
 msgid "Your profile"
 msgstr "Ваш профіль"
 
-#: templates/includes/site_nav.html:20
+#: templates/includes/site_nav.html:25
+#, python-format
+msgid "Account menu for %(name)s"
+msgstr "Меню акаунта: %(name)s"
+
+#: templates/includes/site_nav.html:37 templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Увійти через GitHub"
 
@@ -134,3 +263,63 @@ msgstr "Закрити повідомлення"
 #, python-format
 msgid "%(name)s is under construction"
 msgstr "%(name)s ще в розробці"
+
+#: templates/socialaccount/authentication_error.html:4
+#: templates/socialaccount/authentication_error.html:10
+msgid "Sign-in failed"
+msgstr "Не вдалося увійти"
+
+#: templates/socialaccount/authentication_error.html:11
+msgid ""
+"GitHub did not complete the sign-in, or the request expired. Nothing was "
+"changed. Please try again."
+msgstr "GitHub не завершив вхід, або запит застарів. Нічого не змінено. Спробуйте ще раз."
+
+#: templates/socialaccount/authentication_error.html:12
+msgid "Try again"
+msgstr "Спробувати ще раз"
+
+#: templates/socialaccount/login.html:11
+msgid "You are about to continue to GitHub to confirm your sign-in."
+msgstr "Зараз ви перейдете на GitHub, щоб підтвердити вхід."
+
+#: templates/socialaccount/login_cancelled.html:4
+#: templates/socialaccount/login_cancelled.html:10
+msgid "Sign-in cancelled"
+msgstr "Вхід скасовано"
+
+#: templates/socialaccount/login_cancelled.html:11
+msgid ""
+"You cancelled the sign-in on GitHub. You can try again whenever you like."
+msgstr "Ви скасували вхід на GitHub. Можна спробувати знову будь-коли."
+
+#: templates/socialaccount/login_cancelled.html:12
+msgid "Back to sign in"
+msgstr "Назад до входу"
+
+#: templates/socialaccount/signup.html:4 templates/socialaccount/signup.html:10
+msgid "Create your account"
+msgstr "Створіть акаунт"
+
+#: templates/socialaccount/signup.html:11
+#, python-format
+msgid ""
+"You signed in with GitHub as <strong>%(login)s</strong>. Confirm your "
+"username and accept the Terms to finish."
+msgstr "Ви увійшли через GitHub як <strong>%(login)s</strong>. Підтвердьте імʼя користувача та прийміть Умови, щоб завершити."
+
+#: templates/socialaccount/signup.html:19
+msgid "I accept the Terms"
+msgstr "Я приймаю Умови"
+
+#: templates/socialaccount/signup.html:22
+msgid "Read the Terms"
+msgstr "Прочитати Умови"
+
+#: templates/socialaccount/signup.html:22
+msgid "Read the Privacy policy"
+msgstr "Прочитати Політику конфіденційності"
+
+#: templates/socialaccount/signup.html:24
+msgid "Create account"
+msgstr "Створити акаунт"

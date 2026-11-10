@@ -11,10 +11,27 @@
 <div class="site-header__actions">
   {% if signed_in %}
     {% if new_url %}<a class="btn btn--primary" href="{{ new_url }}">{% icon "plus" %}{% translate "New project" %}</a>{% endif %}
-    {% if profile_url %}
-      <a class="site-header__me" href="{{ profile_url }}">{% avatar me.name 32 %}<span class="site-header__me-label">{% translate "Your profile" %}</span></a>
+    {% if in_panel %}
+      {# Phone menu: the account links are listed openly. #}
+      <ul class="user-links">
+        <li class="user-links__who">{% avatar me.name 32 %}<span>{{ me.name }}</span></li>
+        {% if profile_url %}<li><a href="{{ profile_url }}">{% translate "Your profile" %}</a></li>{% endif %}
+        {% if settings_url %}<li><a href="{{ settings_url }}">{% translate "Settings" %}</a></li>{% endif %}
+        {% if logout_url %}<li><a href="{{ logout_url }}">{% translate "Sign out" %}</a></li>{% endif %}
+      </ul>
     {% else %}
-      {% avatar me.name 32 %}
+      {# Desktop: avatar button opens a small menu. A <details>, so it works without JS; menu.js adds Escape and outside click. #}
+      <details class="user-menu" data-menu>
+        <summary class="user-menu__button" aria-label="{% blocktranslate with name=me.name %}Account menu for {{ name }}{% endblocktranslate %}">
+          {% avatar me.name 32 %}{% icon "chevron-down" %}
+        </summary>
+        <ul class="user-menu__panel">
+          <li class="user-menu__who">{{ me.name }}</li>
+          {% if profile_url %}<li><a class="user-menu__item" href="{{ profile_url }}">{% translate "Your profile" %}</a></li>{% endif %}
+          {% if settings_url %}<li><a class="user-menu__item" href="{{ settings_url }}">{% translate "Settings" %}</a></li>{% endif %}
+          {% if logout_url %}<li><a class="user-menu__item" href="{{ logout_url }}">{% translate "Sign out" %}</a></li>{% endif %}
+        </ul>
+      </details>
     {% endif %}
   {% elif login_url %}
     <a class="btn btn--secondary" href="{{ login_url }}">{% icon "github" %}{% translate "Sign in with GitHub" %}</a>

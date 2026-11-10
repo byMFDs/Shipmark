@@ -1,4 +1,4 @@
-"""Settings shared by all environments. Values come from env vars (see .env.example)."""
+"""Settings shared by all environments. Values come from .env vars (see .env.example)."""
 from pathlib import Path
 
 import environ
@@ -22,6 +22,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # GitHub sign-in (django-allauth). No "sites" app: the host comes from the request.
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
     # Local apps
     "accounts",
     "projects",
@@ -42,6 +47,7 @@ MIDDLEWARE = [
     "config.middleware.UserLocaleMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -67,6 +73,49 @@ TEMPLATES = [
 DATABASES = {"default": env.db("DATABASE_URL", default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")}
 
 AUTH_USER_MODEL = "accounts.User"
+
+# ModelBackend stays for the admin (staff accounts made with createsuperuser).
+# Everyone else signs in with GitHub only.
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+LOGIN_URL = "account_login"
+LOGIN_REDIRECT_URL = "pages:landing"
+LOGOUT_REDIRECT_URL = "pages:landing"
+
+# Bump when the Terms change. Saved on the user at signup (terms_version_accepted).
+TERMS_VERSION = "2026-11-10"
+
+# --- django-allauth: GitHub is the only login method ---
+GITHUB_CLIENT_ID = env.str("GITHUB_CLIENT_ID", default="")
+GITHUB_CLIENT_SECRET = env.str("GITHUB_CLIENT_SECRET", default="")
+GITHUB_OAUTH_CONFIGURED = bool(GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET)
+
+SOCIALACCOUNT_PROVIDERS = {
+    "github": {
+        # Only these two scopes. Never "repo" (CLAUDE.md section 6).
+        "SCOPE": ["read:user", "user:email"],
+        "APPS": (
+            [{"client_id": GITHUB_CLIENT_ID, "secret": GITHUB_CLIENT_SECRET}]
+            if GITHUB_OAUTH_CONFIGURED
+            else []
+        ),
+    },
+}
+SOCIALACCOUNT_ADAPTER = "accounts.adapters.SocialAccountAdapter"
+ACCOUNT_ADAPTER = "accounts.adapters.AccountAdapter"
+SOCIALACCOUNT_FORMS = {"signup": "accounts.forms.SignupConfirmForm"}
+SOCIALACCOUNT_AUTO_SIGNUP = False  # always show the "confirm username + accept Terms" step
+SOCIALACCOUNT_QUERY_EMAIL = True  # ask GitHub for the email list (private, never shown)
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = False  # never log in to an old account just by matching email
+SOCIALACCOUNT_STORE_TOKENS = False  # we do not keep GitHub access tokens
+SOCIALACCOUNT_LOGIN_ON_GET = False  # starting OAuth needs a POST (CSRF-protected)
+# "email" is listed only because allauth's social form requires it; our form removes the field.
+ACCOUNT_SIGNUP_FIELDS = ["username*", "email"]
+ACCOUNT_EMAIL_VERIFICATION = "none"  # GitHub already verified it
+ACCOUNT_USERNAME_MIN_LENGTH = 3
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},

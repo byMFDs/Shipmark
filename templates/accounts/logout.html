@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% translate "Sign out" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <section class="auth plate plate--featured">
+      <h1>{% translate "Sign out?" %}</h1>
+      <p>{% blocktranslate with name=request.user.username %}You are signed in as {{ name }}.{% endblocktranslate %}</p>
+      <form method="post" class="auth__actions">
+        {% csrf_token %}
+        <button class="btn btn--primary" type="submit">{% translate "Sign out" %}</button>
+        <a class="btn btn--secondary" href="{% url 'pages:landing' %}">{% translate "Stay signed in" %}</a>
+      </form>
+    </section>
+  </div>
+{% endblock %}

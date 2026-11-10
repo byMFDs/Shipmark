@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% translate "Sign in" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <section class="auth plate plate--featured">
+      <h1>{% translate "Sign in" %}</h1>
+      <p>{% blocktranslate with name=brand.SITE_NAME %}{{ name }} uses your GitHub account to sign in. There are no passwords to remember.{% endblocktranslate %}</p>
+      {% include "accounts/_github_form.html" %}
+      <p class="field__hint">{% translate "We ask GitHub only for your public profile and your email address. We never get access to your code." %}</p>
+    </section>
+  </div>
+{% endblock %}
