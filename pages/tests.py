@@ -1,11 +1,15 @@
 import re
+import tempfile
 from pathlib import Path
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.template import Context, Template
 from django.test import SimpleTestCase, TestCase, override_settings
 
 from config import branding
+
+from .content import load_page, render_markdown
 
 # Tags that make the browser download something from another site. Plain <a href> links are fine.
 EXTERNAL_RESOURCE = re.compile(
@@ -99,3 +103,99 @@ class InlineSvgTests(SimpleTestCase):
         html = Template('{% load ui %}{% icon "close" label="Close" %}').render(Context())
         self.assertIn('role="img" aria-label="Close"', html)
         self.assertNotIn("aria-hidden", html)
+
+
+class LanguageDetectionTests(TestCase):
+    """CLAUDE.md section 8: saved preference, then cookie, then Accept-Language, then English."""
+
+    UK_TEXT = "ще в розробці"
+    EN_TEXT = "is under construction"
+
+    def get(self, **extra):
+        return self.client.get("/", **extra).content.decode()
+
+    def test_accept_language_uk_gives_ukrainian(self):
+        html = self.get(headers={"Accept-Language": "uk"})
+        self.assertIn(self.UK_TEXT, html)
+        self.assertIn('<html lang="uk">', html)
+
+    def test_unknown_language_falls_back_to_english(self):
+        for header in ("ru", "fr-FR,de;q=0.8", "zz"):
+            html = self.get(headers={"Accept-Language": header})
+            self.assertIn(self.EN_TEXT, html, header)
+            self.assertIn('<html lang="en">', html)
+
+    def test_no_header_gives_english(self):
+        self.assertIn(self.EN_TEXT, self.get())
+
+    def test_cookie_overrides_header(self):
+        self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = "en"
+        self.assertIn(self.EN_TEXT, self.get(headers={"Accept-Language": "uk"}))
+        self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = "uk"
+        self.assertIn(self.UK_TEXT, self.get(headers={"Accept-Language": "en"}))
+
+    def test_saved_user_preference_overrides_cookie_and_header(self):
+        user = get_user_model().objects.create_user("danylo", preferred_language="uk")
+        self.client.force_login(user)
+        self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = "en"
+        self.assertIn(self.UK_TEXT, self.get(headers={"Accept-Language": "en"}))
+
+    def test_switcher_sets_cookie_and_returns_to_same_page(self):
+        response = self.client.post("/i18n/set-language/", {"language": "uk", "next": "/about/"})
+        self.assertRedirects(response, "/about/", fetch_redirect_response=False)
+        self.assertEqual(response.cookies[settings.LANGUAGE_COOKIE_NAME].value, "uk")
+        self.assertIn("Про проєкт", self.client.get("/about/").content.decode())
+
+    def test_switcher_ignores_unsafe_redirect_and_unknown_language(self):
+        response = self.client.post("/i18n/set-language/", {"language": "ru", "next": "https://evil.example/"})
+        self.assertEqual(response["Location"], "/")
+        self.assertNotIn(settings.LANGUAGE_COOKIE_NAME, response.cookies)
+
+    def test_switcher_saves_choice_on_signed_in_account(self):
+        user = get_user_model().objects.create_user("danylo", preferred_language="uk")
+        self.client.force_login(user)
+        self.client.post("/i18n/set-language/", {"language": "en"})
+        user.refresh_from_db()
+        self.assertEqual(user.preferred_language, "en")
+        self.assertIn(self.EN_TEXT, self.get(headers={"Accept-Language": "uk"}))
+
+    def test_switcher_requires_post(self):
+        self.assertEqual(self.client.get("/i18n/set-language/").status_code, 405)
+
+    def test_footer_has_switcher_form(self):
+        html = self.get()
+        self.assertIn('action="/i18n/set-language/"', html)
+        self.assertIn('name="language"', html)
+
+
+class ContentPageTests(TestCase):
+    def test_about_in_each_language(self):
+        self.assertContains(self.client.get("/about/"), "<h1>About</h1>")
+        uk = self.client.get("/about/", headers={"Accept-Language": "uk"})
+        self.assertContains(uk, "<h1>Про проєкт</h1>")
+
+    def test_falls_back_to_english_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "en").mkdir()
+            (Path(tmp) / "en" / "only-en.md").write_text("# Hello\n\nText")
+            with override_settings(CONTENT_DIR=Path(tmp)):
+                page = load_page("only-en", "uk")
+        self.assertEqual(page["language"], "en")
+        self.assertEqual(page["title"], "Hello")
+
+    def test_missing_page_and_bad_slugs_are_404_or_none(self):
+        self.assertIsNone(load_page("nope", "en"))
+        for slug in ("../CLAUDE", "a/b", "A", ""):
+            self.assertIsNone(load_page(slug, "en"), slug)
+
+    def test_output_is_sanitized(self):
+        html = render_markdown(
+            "# T\n\n<script>alert(1)</script>\n\n[x](javascript:alert(1)) [ok](https://example.com)\n\n"
+            "<img src=x onerror=alert(1)>"
+        )
+        self.assertNotIn("<script", html)
+        self.assertNotIn("javascript:", html)
+        self.assertNotIn("onerror", html)
+        self.assertNotIn("<img", html)
+        self.assertIn('href="https://example.com"', html)
+        self.assertIn('rel="noopener"', html)

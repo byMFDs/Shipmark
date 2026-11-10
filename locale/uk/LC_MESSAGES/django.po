@@ -1,0 +1,136 @@
+# Ukrainian translation.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Shipmark\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-10 17:21+0000\n"
+"PO-Revision-Date: 2026-11-10 18:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Ukrainian\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+#: config/branding.py:9
+msgid "Proof of what you actually shipped"
+msgstr "Докази того, що ви справді випустили"
+
+#: pages/templatetags/ui.py:94
+msgid "Authored"
+msgstr "Авторство"
+
+#: pages/templatetags/ui.py:95
+msgid "Live"
+msgstr "Працює"
+
+#: pages/templatetags/ui.py:96
+msgid "Steady"
+msgstr "Стабільний"
+
+#: pages/templatetags/ui.py:199
+msgid "Feed"
+msgstr "Стрічка"
+
+#: pages/templatetags/ui.py:199
+msgid "Explore"
+msgstr "Огляд"
+
+#: pages/templatetags/ui.py:201
+msgid "About"
+msgstr "Про проєкт"
+
+#: pages/templatetags/ui.py:202
+msgid "How proof works"
+msgstr "Як працюють підтвердження"
+
+#: pages/templatetags/ui.py:203
+msgid "Privacy"
+msgstr "Приватність"
+
+#: pages/templatetags/ui.py:204
+msgid "Terms"
+msgstr "Умови"
+
+#: pages/templatetags/ui.py:205
+msgid "Cookies"
+msgstr "Файли cookie"
+
+#: templates/base.html:32
+msgid "Skip to content"
+msgstr "Перейти до вмісту"
+
+#: templates/includes/hallmark.html:1
+msgid "Not yet"
+msgstr "Ще ні"
+
+#: templates/includes/site_footer.html:5
+msgid "Footer"
+msgstr "Футер"
+
+#: templates/includes/site_footer.html:19
+msgid "Language"
+msgstr "Мова"
+
+#: templates/includes/site_footer.html:29
+msgid "Change"
+msgstr "Змінити"
+
+#: templates/includes/site_footer.html:34
+#: templates/includes/site_footer.html:35
+msgid "Theme"
+msgstr "Тема"
+
+#: templates/includes/site_footer.html:36
+msgid "System"
+msgstr "Системна"
+
+#: templates/includes/site_footer.html:37
+msgid "Light"
+msgstr "Світла"
+
+#: templates/includes/site_footer.html:38
+msgid "Dark"
+msgstr "Темна"
+
+#: templates/includes/site_header.html:6
+#, python-format
+msgid "%(name)s home"
+msgstr "%(name)s: на головну"
+
+#: templates/includes/site_header.html:15
+msgid "Menu"
+msgstr "Меню"
+
+#: templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Закрити"
+
+#: templates/includes/site_nav.html:3
+msgid "Main"
+msgstr "Головна навігація"
+
+#: templates/includes/site_nav.html:13
+msgid "New project"
+msgstr "Новий проєкт"
+
+#: templates/includes/site_nav.html:15
+msgid "Your profile"
+msgstr "Ваш профіль"
+
+#: templates/includes/site_nav.html:20
+msgid "Sign in with GitHub"
+msgstr "Увійти через GitHub"
+
+#: templates/includes/toast.html:1
+msgid "Dismiss"
+msgstr "Закрити повідомлення"
+
+#: templates/pages/landing.html:6
+#, python-format
+msgid "%(name)s is under construction"
+msgstr "%(name)s ще в розробці"

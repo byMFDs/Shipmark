@@ -38,6 +38,8 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    # Needs request.user, so it sits after auth. Safe because URLs have no language prefix.
+    "config.middleware.UserLocaleMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -77,6 +79,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en"
 LANGUAGES = [("en", "English"), ("uk", "Українська")]
 LOCALE_PATHS = [BASE_DIR / "locale"]
+LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
+CONTENT_DIR = BASE_DIR / "content"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True

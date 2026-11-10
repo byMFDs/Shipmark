@@ -2,6 +2,8 @@ from django.conf import settings
 from django.http import Http404
 from django.shortcuts import render
 
+from .content import load_page
+
 
 def landing(request):
     return render(request, "pages/landing.html")
@@ -26,3 +28,10 @@ def styleguide(request):
         raise Http404
     tokens = [{"name": n, "light": light, "dark": dark, "use": use} for n, light, dark, use in STYLEGUIDE_TOKENS]
     return render(request, "pages/styleguide.html", {"themes": ["light", "dark"], "tokens": tokens})
+
+
+def content_page(request, slug):
+    page = load_page(slug)
+    if page is None:
+        raise Http404
+    return render(request, "pages/content_page.html", {"page": page})

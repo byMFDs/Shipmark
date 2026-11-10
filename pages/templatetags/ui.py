@@ -198,6 +198,7 @@ def _url(name, *args):
 # Links appear by themselves once these URL names exist.
 NAV_LINKS = [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore"))]
 FOOTER_LINKS = [
+    ("pages:about", (), _("About")),
     ("pages:how_proof_works", (), _("How proof works")),
     ("pages:legal", ("privacy",), _("Privacy")),
     ("pages:legal", ("terms",), _("Terms")),

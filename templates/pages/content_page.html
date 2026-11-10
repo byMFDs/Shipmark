@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% if page.title %}{{ page.title }} · {% endif %}{{ brand.SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <article class="prose"{% if page.language != LANGUAGE_CODE %} lang="{{ page.language }}"{% endif %}>
+      {{ page.html|safe }}
+    </article>
+  </div>
+{% endblock %}
