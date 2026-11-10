@@ -16,7 +16,7 @@
           <span class="site-menu__shut">{% icon "close" %} {% translate "Close" %}</span>
         </summary>
         <div class="site-menu__panel">
-          {% include "includes/site_nav.html" %}
+          {% include "includes/site_nav.html" with in_panel=True %}
         </div>
       </details>
     {% endif %}

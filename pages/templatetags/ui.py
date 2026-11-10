@@ -195,6 +195,12 @@ def _url(name, *args):
         return ""
 
 
+@register.simple_tag
+def maybe_url(name, *args):
+    """{% maybe_url "pages:legal" "terms" as terms_url %}: the URL, or "" if the page does not exist yet."""
+    return _url(name, *args)
+
+
 # Links appear by themselves once these URL names exist.
 NAV_LINKS = [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore"))]
 FOOTER_LINKS = [
@@ -225,13 +231,15 @@ def site_header(context, demo="", compact=False):
     if demo:
         signed_in = demo == "signed-in"
         me = DEMO_USER if signed_in else None
-        profile_url = new_url = login_url = "#"
+        profile_url = new_url = login_url = settings_url = logout_url = "#"
     else:
         signed_in = bool(user and user.is_authenticated)
         me = {"name": user.display_name or user.username, "username": user.username} if signed_in else None
         profile_url = _url("accounts:profile", user.username) if signed_in else ""
         new_url = _url("projects:new")
-        login_url = _url("github_login")
+        login_url = _url("account_login")
+        settings_url = _url("accounts:settings")
+        logout_url = _url("account_logout")
 
     return {
         "brand": context.get("brand"),
@@ -242,6 +250,8 @@ def site_header(context, demo="", compact=False):
         "profile_url": profile_url,
         "new_url": new_url,
         "login_url": login_url,
+        "settings_url": settings_url,
+        "logout_url": logout_url,
         "has_menu": bool(links or signed_in or login_url),
         "compact": compact,
         "demo": bool(demo),
