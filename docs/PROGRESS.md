@@ -63,3 +63,6 @@
 
 - 2026-11-10: Task 20 done (production readiness). `prod.py`: DB connections kept 60 s with health checks, `MEDIA_ROOT` from env (+ 4-step note for S3-compatible storage later), `SECRET_KEY_FALLBACKS` for rotation, JSON logs on stdout (`config/jsonlog.py`, no IPs/user agents). `gunicorn.conf.py` (localhost, 3 workers, JSON access log). Smoke-tested prod settings + gunicorn + WhiteNoise (hashed, gzip, immutable) on SQLite. `docs/DEPLOY_NOTES.md` rewritten: env table, release steps, local PostgreSQL on Pop!_OS, cron, pg_dump + media backups with restore test, key rotation, pre-launch checklist. 4 tests in `config/tests.py`.
   Not verified: migrations/tests on real PostgreSQL (needs `sudo apt install postgresql`; commands are in DEPLOY_NOTES). Next: run them, then pick hosting together.
+
+- 2026-11-11: Legal sync. `docs/DATA_INVENTORY.md` and `content/*/privacy.md` (7 languages) now match the code: rate-limit counters live in the DB cache (up to 24 h, not "memory, 1 h"), app logs have no IP, backups kept 14 days. Reverse-proxy and app log retention, and off-server backup retention, are marked TODO (visible in the privacy draft).
+  Next: decide those retentions, then replace the TODOs; lawyer review.

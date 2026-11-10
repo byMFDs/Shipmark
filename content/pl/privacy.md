@@ -1,6 +1,6 @@
 # Polityka prywatności
 
-> **Wersja robocza**, ostatnia aktualizacja: 10 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
+> **Wersja robocza**, ostatnia aktualizacja: 11 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
 >
 > Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
@@ -37,7 +37,15 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 **Dziennik audytu.** Prowadzimy wewnętrzny zapis zmian znaków, działań moderacyjnych i usunięć kont, aby decyzje dało się później sprawdzić. Widzi go tylko nasz zespół.
 
-**Czego nie przechowujemy.** Serwis nie zapisuje Twojego adresu IP. Aby ograniczać nadużycia, liczymy działania na konto (na przykład polubienia na godzinę) w pamięci tymczasowej, najwyżej przez godzinę. Nie ma analityki, reklam ani skryptów śledzących. Czcionki są serwowane z naszego własnego serwera.
+**Adresy IP i dzienniki.** Aplikacja nie zapisuje Twojego adresu IP, a jej własne dzienniki go nie zawierają. Przy każdym żądaniu strony dzienniki zapisują tylko metodę, adres strony (bez tego, co następuje po `?`), status odpowiedzi, rozmiar i czas obsługi oraz błędy. Nie ma w nich danych o Twojej przeglądarce. Adresy stron zawierają nazwy użytkowników (`/u/<username>/`), więc wiersz dziennika może pokazać, który profil otwarto, ale nie kto to zrobił.
+
+> **TODO przed uruchomieniem:** serwer WWW przed aplikacją prowadzi własny dziennik dostępu, który domyślnie zawiera adresy IP. Co dokładnie zapisuje i jak długo to przechowuje (oraz jak długo przechowywane są dzienniki aplikacji), nie zostało jeszcze ustalone. Trzeba to uzupełnić albo wyłączyć zapisywanie IP, zanim ta strona stanie się publiczna.
+
+**Ochrona przed nadużyciami.** Aby ograniczać nadużycia, liczymy niektóre działania (na przykład polubienia na godzinę) w bazie danych serwisu. Każdy licznik to liczba przypisana do Twojego konta lub projektu, bez adresu IP, obowiązująca najwyżej 24 godziny. Potem nie jest już używany, ale wiersz może zostać w bazie, dopóki nie zostanie wyczyszczony.
+
+**Analityka i śledzenie.** Nie ma ich: ani analityki, ani reklam, ani skryptów śledzących. Czcionki są serwowane z naszego własnego serwera.
+
+**Kopie zapasowe.** Codziennie robimy kopię bazy danych i wysłanych zrzutów ekranu i przechowujemy każdą kopię 14 dni. Jeśli usuniesz konto, Twoje dane zostają w tych kopiach, dopóki nie zostanie zastąpiona ostatnia, która je zawiera – do 14 dni.
 
 ## Jak długo to przechowujemy {#retention}
 
@@ -46,6 +54,9 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 - Sesje logowania: 2 tygodnie lub do wylogowania.
 - Zgłoszenia, które wysłano z Twojego konta: zostają po rozpatrzeniu. Jeśli usuniesz konto, zostają bez Twojego imienia.
 - Dziennik audytu: jest zachowywany. Wpisy o usuniętym koncie nie zawierają nazwy użytkownika ani adresu e-mail.
+- Liczniki ochrony przed nadużyciami: najwyżej 24 godziny.
+- Kopie zapasowe: 14 dni. Usunięte konto znika z nich w ciągu 14 dni.
+- Dzienniki serwera WWW i aplikacji: **TODO**, jeszcze nie ustalono.
 
 ## Kto jeszcze otrzymuje dane {#recipients}
 

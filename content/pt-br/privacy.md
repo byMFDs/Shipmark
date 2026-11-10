@@ -1,6 +1,6 @@
 # Política de privacidade
 
-> **Rascunho**, última atualização em 10 de novembro de 2026. Este texto ainda não foi revisado por um advogado.
+> **Rascunho**, última atualização em 11 de novembro de 2026. Este texto ainda não foi revisado por um advogado.
 >
 > Tradução por conveniência; a versão em inglês prevalece.
 
@@ -37,7 +37,15 @@ Os resultados aparecem na página pública do seu projeto.
 
 **Registro de auditoria.** Mantemos um registro interno de mudanças de selos, ações de moderação e exclusões de contas, para que as decisões possam ser conferidas depois. Só a nossa equipe pode vê-lo.
 
-**O que não guardamos.** O site não registra seu endereço IP. Para limitar abusos, contamos ações por conta (por exemplo, curtidas por hora) em memória temporária por no máximo uma hora. Não há análise de uso, publicidade nem scripts de rastreamento. As fontes são servidas pelo nosso próprio servidor.
+**Endereços IP e registros.** O aplicativo não guarda seu endereço IP, e os registros dele não o contêm. De cada requisição de página, os registros anotam apenas o método, o endereço da página (sem o que vem depois de um `?`), o status da resposta, o tamanho e o tempo gasto, além dos erros. Não há dados do seu navegador. Os endereços de página incluem nomes de usuário (`/u/<username>/`), então uma linha de registro pode mostrar qual perfil foi aberto, mas não por quem.
+
+> **TODO antes do lançamento:** o servidor web na frente do aplicativo mantém seu próprio registro de acessos, que por padrão inclui endereços IP. O que ele registra e por quanto tempo guarda (e por quanto tempo os registros do aplicativo são guardados) ainda não foi decidido. É preciso preencher isso, ou desativar o registro de IP, antes de esta página se tornar pública.
+
+**Proteção contra abusos.** Para limitar abusos, contamos algumas ações (por exemplo, curtidas por hora) no banco de dados do site. Cada contador é um número ligado à sua conta ou a um projeto, sem endereço IP, e vale por no máximo 24 horas. Depois disso deixa de ser usado, mas a linha pode ficar no banco até ser limpa.
+
+**Análise de uso e rastreamento.** Não há: nem análise de uso, nem publicidade, nem scripts de rastreamento. As fontes são servidas pelo nosso próprio servidor.
+
+**Backups.** Todos os dias fazemos uma cópia do banco de dados e das capturas de tela enviadas e guardamos cada cópia por 14 dias. Se você excluir a conta, seus dados ficam nessas cópias até a última que os contém ser substituída, em até 14 dias.
 
 ## Por quanto tempo guardamos {#retention}
 
@@ -46,6 +54,9 @@ Os resultados aparecem na página pública do seu projeto.
 - Sessões de login: 2 semanas, ou até você sair da conta.
 - Denúncias que você fez: permanecem depois de tratadas. Se você excluir sua conta, ficam sem o seu nome.
 - Registro de auditoria: é mantido. As entradas sobre uma conta excluída não contêm o nome de usuário nem o e-mail.
+- Contadores de proteção contra abusos: no máximo 24 horas.
+- Backups: 14 dias. Uma conta excluída some deles em até 14 dias.
+- Registros do servidor web e do aplicativo: **TODO**, ainda não decidido.
 
 ## Quem mais recebe dados {#recipients}
 

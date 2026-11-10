@@ -1,6 +1,6 @@
 # Privacy policy
 
-> **Draft**, last updated 10 November 2026. This text has not been reviewed by a lawyer yet.
+> **Draft**, last updated 11 November 2026. This text has not been reviewed by a lawyer yet.
 
 This page explains what {{ site_name }} stores about you, why, for how long, and what you can do about it. It describes what the site actually does.
 
@@ -35,7 +35,15 @@ The results are shown on your public project page.
 
 **Audit log.** We keep an internal record of hallmark changes, moderation actions and account deletions, so that decisions can be checked later. Only staff can see it.
 
-**What we do not store.** The site does not record your IP address. To limit abuse we count actions per account (for example, likes per hour) in temporary memory for at most one hour. There are no analytics, no advertising and no tracking scripts. Fonts are served from our own server.
+**IP addresses and logs.** The application does not store your IP address, and its own logs do not contain it. For each page request the logs record only the method, the page address (without anything after a `?`), the response status, size and time taken, plus errors. They hold no browser details. Page addresses include usernames (`/u/<username>/`), so a log line can show which profile was opened, but not by whom.
+
+> **TODO before launch:** the web server in front of the application keeps its own access log, which by default includes IP addresses. What it records and how long it keeps it (and how long the application logs are kept) has not been decided yet. Fill this in, or switch IP logging off, before this page goes public.
+
+**Abuse protection.** To limit abuse we count some actions (for example, likes per hour) in the site's database. Each counter is a number tied to your account or to a project, without any IP address, and applies for at most 24 hours. After that it is no longer used, but the row may stay in the database until it is cleaned up.
+
+**Analytics and tracking.** There are none: no analytics, no advertising and no tracking scripts. Fonts are served from our own server.
+
+**Backups.** Every day we back up the database and the uploaded screenshots and keep each backup for 14 days. If you delete your account, your data stays in those backups until the last one that contains it is replaced, up to 14 days later.
 
 ## How long we keep it {#retention}
 
@@ -44,6 +52,9 @@ The results are shown on your public project page.
 - Sign-in sessions: 2 weeks, or until you sign out.
 - Reports you made: kept after they are handled. If you delete your account, they stay without your name.
 - Audit log: kept. Entries about a deleted account do not contain the username or email.
+- Abuse-protection counters: at most 24 hours.
+- Backups: 14 days. A deleted account disappears from them within 14 days.
+- Web server and application logs: **TODO**, not decided yet.
 
 ## Who else receives data {#recipients}
 

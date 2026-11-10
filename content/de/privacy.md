@@ -1,6 +1,6 @@
 # Datenschutzerklärung
 
-> **Entwurf**, zuletzt aktualisiert am 10. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
+> **Entwurf**, zuletzt aktualisiert am 11. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
 >
 > Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
@@ -37,7 +37,15 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 **Audit-Log.** Wir führen intern Buch über Änderungen an Prüfzeichen, Moderationsmaßnahmen und Kontolöschungen, damit Entscheidungen später nachvollziehbar sind. Nur unser Team kann es sehen.
 
-**Was wir nicht speichern.** Die Seite speichert deine IP-Adresse nicht. Um Missbrauch zu begrenzen, zählen wir Aktionen pro Konto (zum Beispiel Likes pro Stunde) höchstens eine Stunde lang im temporären Speicher. Es gibt keine Analyse, keine Werbung und keine Tracking-Skripte. Schriften werden von unserem eigenen Server ausgeliefert.
+**IP-Adressen und Logs.** Die Anwendung speichert deine IP-Adresse nicht, und ihre eigenen Logs enthalten sie nicht. Zu jeder Seitenanfrage halten die Logs nur die Methode, die Seitenadresse (ohne alles nach einem `?`), den Antwortstatus, die Größe und die Antwortzeit fest, dazu Fehler. Angaben zu deinem Browser sind nicht darin. Seitenadressen enthalten Benutzernamen (`/u/<username>/`); eine Logzeile kann also zeigen, welches Profil geöffnet wurde, aber nicht von wem.
+
+> **TODO vor dem Start:** Der Webserver vor der Anwendung führt ein eigenes Zugriffslog, das standardmäßig IP-Adressen enthält. Was er aufzeichnet und wie lange er es aufbewahrt (und wie lange die Logs der Anwendung aufbewahrt werden), ist noch nicht entschieden. Das muss ergänzt oder die IP-Protokollierung abgeschaltet werden, bevor diese Seite öffentlich wird.
+
+**Schutz vor Missbrauch.** Um Missbrauch zu begrenzen, zählen wir einige Aktionen (zum Beispiel Likes pro Stunde) in der Datenbank der Seite. Jeder Zähler ist eine Zahl, die an dein Konto oder an ein Projekt gebunden ist, ohne IP-Adresse, und gilt höchstens 24 Stunden. Danach wird er nicht mehr verwendet, die Zeile kann aber in der Datenbank bleiben, bis sie bereinigt wird.
+
+**Analyse und Tracking.** Gibt es nicht: keine Analyse, keine Werbung und keine Tracking-Skripte. Schriften werden von unserem eigenen Server ausgeliefert.
+
+**Backups.** Jeden Tag sichern wir die Datenbank und die hochgeladenen Screenshots und bewahren jede Sicherung 14 Tage auf. Wenn du dein Konto löschst, bleiben deine Daten in diesen Sicherungen, bis die letzte, die sie enthält, ersetzt ist – bis zu 14 Tage.
 
 ## Wie lange wir es aufbewahren {#retention}
 
@@ -46,6 +54,9 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 - Anmelde-Sitzungen: 2 Wochen oder bis zum Abmelden.
 - Meldungen, die du gemacht hast: bleiben nach der Bearbeitung erhalten. Wenn du dein Konto löschst, bleiben sie ohne deinen Namen.
 - Audit-Log: bleibt erhalten. Einträge zu einem gelöschten Konto enthalten weder Benutzername noch E-Mail-Adresse.
+- Zähler zum Schutz vor Missbrauch: höchstens 24 Stunden.
+- Backups: 14 Tage. Ein gelöschtes Konto verschwindet innerhalb von 14 Tagen daraus.
+- Logs von Webserver und Anwendung: **TODO**, noch nicht entschieden.
 
 ## Wer sonst Daten erhält {#recipients}
 

@@ -1,6 +1,6 @@
 # Politique de confidentialité
 
-> **Brouillon**, dernière mise à jour le 10 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
+> **Brouillon**, dernière mise à jour le 11 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
 >
 > Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
@@ -37,7 +37,15 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 **Journal d’audit.** Nous tenons un registre interne des changements de poinçons, des actions de modération et des suppressions de comptes, afin de pouvoir vérifier les décisions plus tard. Seule notre équipe peut le consulter.
 
-**Ce que nous ne conservons pas.** Le site n’enregistre pas votre adresse IP. Pour limiter les abus, nous comptons les actions par compte (par exemple les mentions J’aime par heure) en mémoire temporaire pendant une heure au plus. Il n’y a ni analyse, ni publicité, ni script de suivi. Les polices sont servies depuis notre propre serveur.
+**Adresses IP et journaux.** L’application ne conserve pas votre adresse IP et ses propres journaux ne la contiennent pas. Pour chaque requête de page, les journaux notent seulement la méthode, l’adresse de la page (sans ce qui suit un `?`), le statut de la réponse, la taille et le temps de traitement, ainsi que les erreurs. Ils ne contiennent aucune information sur votre navigateur. Les adresses de page contiennent des noms d’utilisateur (`/u/<username>/`) : une ligne de journal peut donc montrer quel profil a été ouvert, mais pas par qui.
+
+> **TODO avant le lancement :** le serveur web placé devant l’application tient son propre journal d’accès, qui contient par défaut des adresses IP. Ce qu’il enregistre et combien de temps il le conserve (ainsi que la durée de conservation des journaux de l’application) n’est pas encore décidé. Il faut le compléter, ou désactiver l’enregistrement des IP, avant que cette page ne devienne publique.
+
+**Protection contre les abus.** Pour limiter les abus, nous comptons certaines actions (par exemple les mentions J’aime par heure) dans la base de données du site. Chaque compteur est un nombre lié à votre compte ou à un projet, sans adresse IP, valable 24 heures au plus. Ensuite il n’est plus utilisé, mais la ligne peut rester dans la base jusqu’à son nettoyage.
+
+**Analyse et suivi.** Il n’y en a pas : ni analyse, ni publicité, ni script de suivi. Les polices sont servies depuis notre propre serveur.
+
+**Sauvegardes.** Chaque jour, nous sauvegardons la base de données et les captures d’écran envoyées, et nous conservons chaque sauvegarde 14 jours. Si vous supprimez votre compte, vos données restent dans ces sauvegardes jusqu’au remplacement de la dernière qui les contient, soit 14 jours au plus.
 
 ## Combien de temps nous les conservons {#retention}
 
@@ -46,6 +54,9 @@ Les résultats sont affichés sur la page publique de votre projet.
 - Sessions de connexion : 2 semaines, ou jusqu’à la déconnexion.
 - Signalements que vous avez faits : conservés après traitement. Si vous supprimez votre compte, ils restent sans votre nom.
 - Journal d’audit : conservé. Les entrées concernant un compte supprimé ne contiennent ni le nom d’utilisateur ni l’e-mail.
+- Compteurs de protection contre les abus : 24 heures au plus.
+- Sauvegardes : 14 jours. Un compte supprimé en disparaît dans ce délai de 14 jours.
+- Journaux du serveur web et de l’application : **TODO**, pas encore décidé.
 
 ## Qui d’autre reçoit des données {#recipients}
 

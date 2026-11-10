@@ -1,6 +1,6 @@
 # Política de privacidad
 
-> **Borrador**, última actualización el 10 de noviembre de 2026. Este texto aún no ha sido revisado por un abogado.
+> **Borrador**, última actualización el 11 de noviembre de 2026. Este texto aún no ha sido revisado por un abogado.
 >
 > Traducción de cortesía; prevalece la versión en inglés.
 
@@ -37,7 +37,15 @@ Los resultados se muestran en la página pública de tu proyecto.
 
 **Registro de auditoría.** Llevamos un registro interno de los cambios de sellos, las acciones de moderación y las eliminaciones de cuentas, para poder revisar las decisiones más adelante. Solo nuestro equipo puede verlo.
 
-**Lo que no guardamos.** El sitio no registra tu dirección IP. Para limitar los abusos contamos las acciones por cuenta (por ejemplo, me gusta por hora) en memoria temporal durante una hora como máximo. No hay analítica, ni publicidad, ni scripts de seguimiento. Las fuentes se sirven desde nuestro propio servidor.
+**Direcciones IP y registros.** La aplicación no guarda tu dirección IP y sus propios registros no la contienen. De cada petición de página los registros anotan solo el método, la dirección de la página (sin lo que va después de un `?`), el estado de la respuesta, el tamaño y el tiempo empleado, además de los errores. No contienen datos de tu navegador. Las direcciones de página incluyen nombres de usuario (`/u/<username>/`), así que una línea del registro puede mostrar qué perfil se abrió, pero no quién lo abrió.
+
+> **TODO antes del lanzamiento:** el servidor web que está delante de la aplicación lleva su propio registro de accesos, que por defecto incluye direcciones IP. Aún no se ha decidido qué anota ni cuánto tiempo lo conserva (ni cuánto se conservan los registros de la aplicación). Hay que completarlo, o desactivar el registro de IP, antes de que esta página sea pública.
+
+**Protección contra abusos.** Para limitar los abusos contamos algunas acciones (por ejemplo, me gusta por hora) en la base de datos del sitio. Cada contador es un número asociado a tu cuenta o a un proyecto, sin dirección IP, y se aplica durante 24 horas como máximo. Después deja de usarse, pero la fila puede permanecer en la base de datos hasta que se limpie.
+
+**Analítica y seguimiento.** No hay: ni analítica, ni publicidad, ni scripts de seguimiento. Las fuentes se sirven desde nuestro propio servidor.
+
+**Copias de seguridad.** Cada día hacemos una copia de la base de datos y de las capturas de pantalla subidas, y conservamos cada copia 14 días. Si eliminas tu cuenta, tus datos permanecen en esas copias hasta que se sustituya la última que los contiene, como máximo 14 días después.
 
 ## Cuánto tiempo lo conservamos {#retention}
 
@@ -46,6 +54,9 @@ Los resultados se muestran en la página pública de tu proyecto.
 - Sesiones de inicio de sesión: 2 semanas, o hasta que cierres sesión.
 - Denuncias que hiciste: se conservan una vez tramitadas. Si eliminas tu cuenta, quedan sin tu nombre.
 - Registro de auditoría: se conserva. Las entradas sobre una cuenta eliminada no contienen el nombre de usuario ni el correo.
+- Contadores contra abusos: 24 horas como máximo.
+- Copias de seguridad: 14 días. Una cuenta eliminada desaparece de ellas en un plazo de 14 días.
+- Registros del servidor web y de la aplicación: **TODO**, aún sin decidir.
 
 ## Quién más recibe datos {#recipients}
 

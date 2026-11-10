@@ -5,7 +5,7 @@ Every piece of personal data the code stores or processes. The privacy, terms an
 **When a model gets a new personal field, or data goes somewhere new, update this file, the legal
 pages and `accounts/export.py`.**
 
-Last checked against the code: 2026-11-10.
+Last checked against the code: 2026-11-11.
 
 "Public" means anyone on the internet, signed in or not. "Staff" means people with admin access
 (`is_staff`) at `ADMIN_URL`. Every record below is in the export unless the "Export" column says no.
@@ -93,10 +93,11 @@ Only strictly necessary ones. No analytics, no ads, no third-party scripts or fo
 | Data | Where | Purpose | Retention |
 |---|---|---|---|
 | Session rows (user id, auth hash, allauth state, messages) | `django_session` table | Sign-in | Expire after 2 weeks. Expired rows stay until `manage.py clearsessions` runs (not scheduled yet, see `docs/DEPLOY_NOTES.md`) |
-| Rate-limit counters `rl:<action>:<user id or project id>` | Django cache (memory) | Abuse protection | At most 1 hour. **No IP addresses** |
-| IP addresses | The app does not store them | n/a | n/a |
-| Web server / proxy access logs | Hosting, outside this code | Depends on the host | **To decide at deploy**, then add to the privacy page |
-| Backups | Hosting, outside this code | Depends on the host | **To decide at deploy**, then add to the privacy page |
+| Rate-limit counters: key `rl:<action>:<user id or project id>`, value = a number. Admin login: `rl:admin_login:<truncated SHA-256 of the username>` | Django cache (`config/ratelimit.py`). **Production: database cache, table `django_cache`** (`createcachetable`). Dev: process memory | Abuse protection | Each counter counts for its window: 10 minutes, 1 hour, or 24 hours (`buildlog_add`); the admin-login counter 15 minutes. **After that the row is not deleted on a schedule**: Django removes expired rows only when the key is read again or the table passes 1,000,000 rows. **No IP addresses** |
+| IP addresses | The app does not store them: not in models, not in the cache, not in the app logs | n/a | n/a |
+| Application logs (JSON on stdout, `config/jsonlog.py`, `gunicorn.conf.py`) | gunicorn access line: method, path without query string, status, bytes, milliseconds. Django `django.request` for 4xx/5xx, and exceptions | Operations, debugging | **No IP address, no user agent, no query string.** Paths contain usernames and project slugs (`/u/<username>/`), so a line shows which page was opened, not by whom. **TODO: retention is set by whatever collects stdout (systemd journal, log service); not decided.** |
+| Reverse proxy access log (nginx, Caddy, …) | Hosting, outside this code. Normally logs the client IP | Depends on the host | **TODO: not decided.** Choose what it records (consider switching IP logging off) and how long it is kept, then replace the TODO in the privacy page |
+| Backups | Cron lines in `docs/DEPLOY_NOTES.md`: `pg_dump` of the database (03:15) and `tar` of `MEDIA_ROOT` (03:30), daily | Recovery | **14 days** on the server (`find … -mtime +14 -delete`). A deleted account stays in them until the last backup containing it is rotated out. **TODO: the off-server copy that `DEPLOY_NOTES.md` recommends has no retention yet; it must also be ≤14 days, or the privacy page must say otherwise** |
 
 ## 9. Third parties
 
