@@ -1,0 +1,45 @@
+{% load i18n ui %}
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    {% if links or social_links %}
+      <nav aria-label="{% translate 'Footer' %}">
+        <ul class="site-footer__links">
+          {% for link in links %}<li><a href="{{ link.url }}">{{ link.label }}</a></li>{% endfor %}
+          {% for label, url in social_links.items %}<li><a href="{{ url }}" rel="me noopener">{{ label }}</a></li>{% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
+
+    <div class="site-footer__controls">
+      {% if set_language_url %}
+        <form class="lang-form" action="{{ set_language_url }}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ next_url }}">
+          <label class="field">
+            <span class="field__label">{% translate "Language" %}</span>
+            <span class="select-wrap">
+              <select class="select" name="language">
+                {% for code, name in languages %}
+                  <option value="{{ code }}" lang="{{ code }}"{% if code == current_language %} selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+              </select>
+              {% icon "chevron-down" %}
+            </span>
+          </label>
+          <button class="btn btn--secondary" type="submit">{% translate "Change" %}</button>
+        </form>
+      {% endif %}
+
+      <div class="field needs-js">
+        <span class="field__label" aria-hidden="true">{% translate "Theme" %}</span>
+        <div class="theme-switch" role="group" aria-label="{% translate 'Theme' %}">
+          <button type="button" class="theme-switch__option" data-theme-choice="system" aria-pressed="true">{% icon "monitor" %}{% translate "System" %}</button>
+          <button type="button" class="theme-switch__option" data-theme-choice="light" aria-pressed="false">{% icon "sun" %}{% translate "Light" %}</button>
+          <button type="button" class="theme-switch__option" data-theme-choice="dark" aria-pressed="false">{% icon "moon" %}{% translate "Dark" %}</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="site-footer__legal">&copy; {{ year }} {{ brand.LEGAL_OWNER_NAME }}</p>
+  </div>
+</footer>

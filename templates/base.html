@@ -1,24 +1,43 @@
-{% load i18n static %}{% get_current_language as LANGUAGE_CODE %}<!DOCTYPE html>
+{% load i18n static ui %}{% get_current_language as LANGUAGE_CODE %}<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{% block title %}{{ brand.SITE_NAME }}{% endblock %}</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#F1F2EF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)">
+  {# Runs before the first paint: applies the saved theme (no flash) and marks that JS works. #}
+  <script>(function(){var r=document.documentElement;r.classList.add("js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")r.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <link rel="preload" href="{% static 'fonts/ibm-plex-sans-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+  {% if LANGUAGE_CODE == "uk" %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-cyrillic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>{% endif %}
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
+  {% block styles %}{% endblock %}
+  <link rel="icon" href="{% static brand.FAVICON %}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{% static brand.APPLE_TOUCH_ICON %}">
+  <meta property="og:site_name" content="{{ brand.SITE_NAME }}">
+  <meta property="og:title" content="{% block og_title %}{{ brand.SITE_NAME }}{% endblock %}">
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static brand.OG_DEFAULT_IMAGE %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   {% block meta %}{% endblock %}
+  <script type="module" src="{% static 'js/theme.js' %}"></script>
+  <script type="module" src="{% static 'js/menu.js' %}"></script>
+  <script type="module" src="{% static 'js/toast.js' %}"></script>
 </head>
 <body>
-  <header>
-    <a href="{% url 'pages:landing' %}">{{ brand.SITE_NAME }}</a>
-  </header>
+  <a class="skip-link" href="#main">{% translate "Skip to content" %}</a>
+  {% site_header %}
+  {% include "includes/messages.html" %}
 
-  <main>
+  <main id="main" class="site-main">
     {% block content %}{% endblock %}
   </main>
 
-  <footer>
-    <p>&copy; {{ brand.SITE_NAME }}</p>
-  </footer>
-
+  {% site_footer %}
   {% block scripts %}{% endblock %}
 </body>
 </html>

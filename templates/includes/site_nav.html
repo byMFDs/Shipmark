@@ -1,0 +1,22 @@
+{% load i18n ui %}
+{% if links %}
+  <nav class="site-nav" aria-label="{% translate 'Main' %}">
+    <ul class="site-nav__list">
+      {% for link in links %}
+        <li><a class="site-nav__link" href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.label }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}
+<div class="site-header__actions">
+  {% if signed_in %}
+    {% if new_url %}<a class="btn btn--primary" href="{{ new_url }}">{% icon "plus" %}{% translate "New project" %}</a>{% endif %}
+    {% if profile_url %}
+      <a class="site-header__me" href="{{ profile_url }}">{% avatar me.name 32 %}<span class="site-header__me-label">{% translate "Your profile" %}</span></a>
+    {% else %}
+      {% avatar me.name 32 %}
+    {% endif %}
+  {% elif login_url %}
+    <a class="btn btn--secondary" href="{{ login_url }}">{% icon "github" %}{% translate "Sign in with GitHub" %}</a>
+  {% endif %}
+</div>

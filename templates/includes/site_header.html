@@ -1,0 +1,24 @@
+{% load i18n ui %}
+<header class="site-header{% if compact %} site-header--compact{% endif %}">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="{{ home_url }}">
+      {% inline_svg brand.LOGO "site-logo" %}
+      <span class="visually-hidden">{% blocktranslate with name=brand.SITE_NAME %}{{ name }} home{% endblocktranslate %}</span>
+    </a>
+    {% if has_menu %}
+      <div class="site-header__bar">
+        {% include "includes/site_nav.html" %}
+      </div>
+      {# Phone menu: <details> opens and closes without JS. menu.js adds Escape and outside click. #}
+      <details class="site-menu"{% if compact %} open{% else %} data-menu{% endif %}>
+        <summary class="btn btn--quiet">
+          <span class="site-menu__open">{% icon "menu" %} {% translate "Menu" %}</span>
+          <span class="site-menu__shut">{% icon "close" %} {% translate "Close" %}</span>
+        </summary>
+        <div class="site-menu__panel">
+          {% include "includes/site_nav.html" %}
+        </div>
+      </details>
+    {% endif %}
+  </div>
+</header>

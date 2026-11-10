@@ -196,9 +196,12 @@ Palette (light / dark):
 - Paper `#F1F2EF` / Night `#15171A` (page background)
 - Plate `#FAFAF8` / `#1F2226` (raised object surfaces)
 - Graphite `#1E2126` / `#E6E7E9` (text)
-- Steel `#6E747C` / `#9AA0A8` (secondary text)
-- Hairline `#D5D8DB` / `#2E3237` (borders)
-- Hallmark ink `#2A3FCF` / `#8C9BFF` (the only accent: proof marks, links, focus, primary action)
+- Steel `#666C74` / `#9AA0A8` (secondary text; was #6E747C, failed AA on Paper)
+- Hairline `#D5D8DB` / `#2E3237` (dividers)
+- Line-strong `#868C93` / `#6B7179` (borders of inputs and controls, 3:1)
+- Hallmark ink `#2A3FCF` / `#8EA8F1` (the only accent: proof marks, links, focus, primary action)
+- Danger `#A8322D` / `#F08A80` (errors and destructive actions only; a status color, not an accent)
+Full tokens and rules: `docs/DESIGN.md`, `static/css/tokens.css`.
 
 Type (self-hosted, OFL, Latin + Cyrillic): **IBM Plex Sans** for body and UI,
 **IBM Plex Sans Condensed** for display headings (tight tracking, large sizes),

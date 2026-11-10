@@ -1,0 +1,252 @@
+{% load static ui %}
+{# Rendered once per theme; `theme` keeps element ids unique. #}
+
+<section class="sg-block">
+  <h3>Logo</h3>
+  <div class="sg-row sg-row--wide">
+    {% inline_svg brand.LOGO "site-logo sg-logo-l" %}
+    {% inline_svg brand.LOGO "site-logo" %}
+  </div>
+  <div class="sg-row sg-row--wide">
+    {% inline_svg brand.LOGO_MARK "sg-mark sg-mark--16" %}
+    {% inline_svg brand.LOGO_MARK "sg-mark sg-mark--24" %}
+    {% inline_svg brand.LOGO_MARK "sg-mark sg-mark--32" %}
+    {% inline_svg brand.LOGO_MARK "sg-mark sg-mark--64" %}
+    <img src="{% static brand.APPLE_TOUCH_ICON %}" alt="Apple touch icon" width="60" height="60">
+  </div>
+  <p class="sg-label">Open Graph image (1200×630)</p>
+  <img class="sg-og" src="{% static brand.OG_DEFAULT_IMAGE %}" alt="Default sharing image" width="1200" height="630" loading="lazy">
+</section>
+
+<section class="sg-block">
+  <h3>Color</h3>
+  <ul class="sg-swatches">
+    {% for t in tokens %}
+      <li class="sg-swatch">
+        <span class="sg-chip" data-token="{{ t.name }}"></span>
+        <span><code>--{{ t.name }}</code> {% if theme == "dark" %}{{ t.dark }}{% else %}{{ t.light }}{% endif %}<br>
+          <span class="muted">{{ t.use }}</span></span>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="sg-block sg-type">
+  <h3>Type</h3>
+  <p class="display">Proof of what you shipped</p>
+  <h1>Heading 1, condensed</h1>
+  <h2>Heading 2 · Доказ того, що ви випустили</h2>
+  <h3>Heading 3, sans semibold</h3>
+  <h4>Heading 4</h4>
+  <p>Body text is IBM Plex Sans at 16px on phones and 17px on desktop, line height 1.55, lines up to 68 characters.
+    Українською: кожен проєкт отримує позначки за перевіреними фактами, а не за словами.</p>
+  <p class="muted">Secondary text in steel. <em>Italic for emphasis.</em> <strong>Semibold for strong.</strong></p>
+  <p class="sg-meta muted numeric">Meta · 99.8% uptime · 41 checks · 3 Nov 2026</p>
+  <pre class="sg-code"><code>_shipmark-verify.tallyhook.dev  TXT  "shipmark-verify=4f1c9a2e7b"</code></pre>
+</section>
+
+<section class="sg-block">
+  <h3>Buttons</h3>
+  <div class="sg-row">
+    <button class="btn btn--primary" type="button">Publish project</button>
+    <button class="btn btn--secondary" type="button">Verify domain</button>
+    <button class="btn btn--quiet" type="button">Cancel</button>
+  </div>
+  <div class="sg-row">
+    <button class="btn btn--danger" type="button">Delete project</button>
+    <button class="btn btn--danger-solid" type="button">Delete for good</button>
+    <button class="btn btn--primary" type="button" disabled>Disabled</button>
+  </div>
+  <div class="sg-row">
+    <a class="btn btn--secondary" href="#components">{% icon "github" %}Sign in with GitHub</a>
+    <button class="btn btn--primary" type="button">{% icon "plus" %}New project</button>
+    <button class="btn btn--quiet btn--icon" type="button" aria-label="Close">{% icon "close" %}</button>
+  </div>
+</section>
+
+<section class="sg-block">
+  <h3>Fields</h3>
+  <div class="sg-fields">
+    <div class="field">
+      <label class="field__label" for="sg-{{ theme }}-name">Project name</label>
+      <input class="input" id="sg-{{ theme }}-name" name="name" value="Tallyhook" autocomplete="off">
+    </div>
+    <div class="field">
+      <label class="field__label" for="sg-{{ theme }}-tagline">Tagline</label>
+      <input class="input" id="sg-{{ theme }}-tagline" placeholder="What it does, in plain words" aria-describedby="sg-{{ theme }}-tagline-hint">
+      <p class="field__hint" id="sg-{{ theme }}-tagline-hint">One line, up to 120 characters.</p>
+    </div>
+    <div class="field">
+      <label class="field__label" for="sg-{{ theme }}-url">Live URL</label>
+      <input class="input" id="sg-{{ theme }}-url" type="url" value="tallyhook" aria-invalid="true" aria-describedby="sg-{{ theme }}-url-error">
+      <p class="field__error" id="sg-{{ theme }}-url-error">{% icon "alert" %}Enter the full address, starting with https://</p>
+    </div>
+    <div class="field">
+      <label class="field__label" for="sg-{{ theme }}-desc">Description</label>
+      <textarea class="textarea" id="sg-{{ theme }}-desc">Tallyhook records incoming webhooks and lets you replay them against localhost.</textarea>
+    </div>
+    <div class="field">
+      <label class="field__label" for="sg-{{ theme }}-status">Status</label>
+      <span class="select-wrap">
+        <select class="select" id="sg-{{ theme }}-status"><option>Draft</option><option selected>Published</option><option>Hidden</option></select>
+        {% icon "chevron-down" %}
+      </span>
+    </div>
+    <div class="field">
+      <label class="field__label" for="sg-{{ theme }}-repo">Repository</label>
+      <input class="input mono" id="sg-{{ theme }}-repo" value="olena/tallyhook" disabled>
+    </div>
+    <fieldset>
+      <legend class="field__label">Visibility</legend>
+      <label class="check"><input class="checkbox" type="checkbox" checked><span>List this project in Explore</span></label>
+      <label class="check"><input class="checkbox" type="checkbox"><span>Show the build log on my profile</span></label>
+      <label class="check"><input class="checkbox" type="checkbox" aria-invalid="true" aria-describedby="sg-{{ theme }}-terms-error"><span>I accept the terms</span></label>
+      <p class="field__error" id="sg-{{ theme }}-terms-error">{% icon "alert" %}Accept the terms to continue.</p>
+    </fieldset>
+  </div>
+</section>
+
+<section class="sg-block">
+  <h3>Plate, featured</h3>
+  <article class="plate plate--featured">
+    <div class="plate__head">
+      <p class="plate__owner">{% avatar "Olena Marchenko" 24 %}<a href="#components">olena</a> · Launched 3 Nov 2026</p>
+      <h4 class="plate__title"><a href="#components">Tallyhook</a></h4>
+      <p class="plate__tagline">Inspect and replay webhooks without a tunnel</p>
+    </div>
+    <div class="plate__media">
+      <img src="{% static brand.OG_DEFAULT_IMAGE %}" alt="Tallyhook screenshot" width="1200" height="630" loading="lazy">
+    </div>
+    <div class="plate__strip">
+      {% hallmark "authored" "l" True "Owner of olena/tallyhook" %}
+      {% hallmark "live" "l" True "tallyhook.dev · checked 2 days ago" %}
+      {% hallmark "steady" "l" False %}
+    </div>
+    <div class="plate__meta">
+      <ul class="chip-list">
+        <li><a class="chip" href="#components">devtools</a></li>
+        <li><a class="chip" href="#components">webhooks</a></li>
+        <li><a class="chip" href="#components">open source</a></li>
+      </ul>
+      <p class="declared">Built with Claude Code and Cursor · self-declared</p>
+    </div>
+  </article>
+</section>
+
+<section class="sg-block">
+  <h3>Plate, compact list</h3>
+  <ul class="plate-list">
+    <li class="plate-row">
+      {% avatar "Olena Marchenko" 32 %}
+      <div>
+        <p class="plate-row__name"><a href="#components">Tallyhook</a></p>
+        <p class="plate-row__tagline">Inspect and replay webhooks without a tunnel</p>
+      </div>
+      <div class="plate-row__marks">{% hallmark "authored" "s" %}{% hallmark "live" "s" %}{% hallmark "steady" "s" %}</div>
+    </li>
+    <li class="plate-row">
+      {% avatar "Marco Ruiz" 32 %}
+      <div>
+        <p class="plate-row__name"><a href="#components">Quietpage</a></p>
+        <p class="plate-row__tagline">A status page that stays silent until your users notice something</p>
+      </div>
+      <div class="plate-row__marks">{% hallmark "authored" "s" %}{% hallmark "live" "s" %}</div>
+    </li>
+    <li class="plate-row">
+      {% avatar "Taras Bondar" 32 %}
+      <div>
+        <p class="plate-row__name"><a href="#components">Розклад</a></p>
+        <p class="plate-row__tagline">Розклад занять для невеликих шкіл, без реєстрації</p>
+      </div>
+      <div class="plate-row__marks">{% hallmark "authored" "s" %}</div>
+    </li>
+  </ul>
+</section>
+
+<section class="sg-block">
+  <h3>Hallmarks</h3>
+  <p class="sg-label">S · lists, earned only, label for screen readers</p>
+  <div class="sg-row">{% hallmark "authored" "s" %}{% hallmark "live" "s" %}{% hallmark "steady" "s" %}</div>
+  <p class="sg-label">M · earned and not yet</p>
+  <div class="sg-row">{% hallmark "authored" "m" %}{% hallmark "live" "m" %}{% hallmark "steady" "m" %}</div>
+  <div class="sg-row">{% hallmark "authored" "m" False %}{% hallmark "live" "m" False %}{% hallmark "steady" "m" False %}</div>
+  <p class="sg-label">L · project page</p>
+  <div class="sg-marks-l">
+    {% hallmark "authored" "l" True "Owner of olena/tallyhook" %}
+    {% hallmark "live" "l" True "tallyhook.dev · checked 2 days ago" %}
+    {% hallmark "steady" "l" True "99.8% of 41 checks in 30 days" %}
+    {% hallmark "steady" "l" False "Needs Live and 40 checks" %}
+  </div>
+</section>
+
+<section class="sg-block">
+  <h3>The strike</h3>
+  <p class="muted">Plays once on load. With reduced motion you see the final state.</p>
+  <article class="plate plate--featured strike" id="strike-{{ theme }}">
+    <div class="plate__head">
+      <h4 class="plate__title">Tallyhook</h4>
+      <p class="plate__tagline">Inspect and replay webhooks without a tunnel</p>
+    </div>
+    <div class="plate__strip">
+      {% hallmark "authored" "l" True "Owns the repo" %}
+      {% hallmark "live" "l" True "Controls the domain" %}
+      {% hallmark "steady" "l" True "Up for 30 days" %}
+    </div>
+  </article>
+  <div class="sg-row sg-row--after">
+    <button class="btn btn--secondary needs-js" type="button" data-replay="strike-{{ theme }}">Replay</button>
+  </div>
+</section>
+
+<section class="sg-block">
+  <h3>Tag chips</h3>
+  <ul class="chip-list">
+    <li><a class="chip" href="#components">devtools</a></li>
+    <li><a class="chip" href="#components" aria-current="true">webhooks</a></li>
+    <li><a class="chip" href="#components">ai agents</a></li>
+    <li><a class="chip" href="#components">для школи</a></li>
+    <li><span class="chip">not a link</span></li>
+  </ul>
+</section>
+
+<section class="sg-block">
+  <h3>Avatars</h3>
+  <div class="sg-row">
+    {% avatar "Olena Marchenko" 24 %}{% avatar "Olena Marchenko" 32 %}{% avatar "Olena Marchenko" 48 %}{% avatar "Olena Marchenko" 96 %}
+    {% static brand.APPLE_TOUCH_ICON as sample_avatar %}{% avatar "Sample image" 48 sample_avatar %}
+  </div>
+</section>
+
+<section class="sg-block">
+  <h3>Toast</h3>
+  <div class="sg-toasts">
+    {% include "includes/toast.html" with text="Published" kind="info" %}
+    {% include "includes/toast.html" with text="Could not find the TXT record on tallyhook.dev. DNS changes can take up to an hour." kind="error" %}
+  </div>
+  <div class="sg-row sg-row--after needs-js">
+    <button class="btn btn--secondary" type="button" data-demo-toast="Published">Show a toast</button>
+    <button class="btn btn--secondary" type="button" data-kind="error" data-demo-toast="Verification failed. The TXT record was not found.">Show an error</button>
+  </div>
+</section>
+
+<section class="sg-block">
+  <h3>Empty state</h3>
+  <div class="empty">
+    <div class="empty__marks">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
+    <h4>No projects yet</h4>
+    <p class="empty__text">Add something you shipped. It gets its first hallmark when you link the repository.</p>
+    <a class="btn btn--primary" href="#components">{% icon "plus" %}Add a project</a>
+  </div>
+</section>
+
+<section class="sg-block">
+  <h3>Tabs</h3>
+  <nav class="tabs" aria-label="Profile sections">
+    <ul class="tabs__list">
+      <li><a class="tabs__link" href="#components" aria-current="page">Projects <span class="tabs__count">4</span></a></li>
+      <li><a class="tabs__link" href="#components">Build log <span class="tabs__count">12</span></a></li>
+      <li><a class="tabs__link" href="#components">Liked <span class="tabs__count">31</span></a></li>
+      <li><a class="tabs__link" href="#components">Following <span class="tabs__count">8</span></a></li>
+    </ul>
+  </nav>
+</section>

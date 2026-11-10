@@ -1,0 +1,139 @@
+/* Design tokens. The rules behind these values are in docs/DESIGN.md. */
+
+/* Theme-independent tokens. */
+:root {
+  --font-sans: "IBM Plex Sans", "Plex Sans Fallback", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "IBM Plex Sans Condensed", "Plex Condensed Fallback", "Arial Narrow", sans-serif;
+  --font-mono: "IBM Plex Mono", "Plex Mono Fallback", ui-monospace, Menlo, Consolas, monospace;
+
+  /* Type scale, ratio 1.25. Root is 16px, 17px from 64em (see base.css). */
+  --fs--1: 0.8rem;
+  --fs-0: 1rem;
+  --fs-1: 1.25rem;
+  --fs-2: 1.5625rem;
+  --fs-3: 1.953rem;
+  --fs-4: 2.441rem;
+  --fs-5: 3.052rem;
+  --fs-6: 3.815rem;
+  --lh-body: 1.55;
+  --lh-snug: 1.25;
+  --lh-tight: 1.05;
+
+  /* Space, 4px base. */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+
+  /* Radii by object size. */
+  --r-plate: 10px;
+  --r-control: 8px;
+  --r-chip: 4px;
+  --r-mark: 2px;
+
+  /* Layout. --pad is the side padding of .container. */
+  --container: 1200px;
+  --measure: 68ch;
+  --pad: 1rem;
+  --control-h: 2.75rem;
+
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (min-width: 48em) {
+  :root { --pad: 1.5rem; }
+}
+
+@media (min-width: 64em) {
+  :root { --pad: 2rem; }
+}
+
+/* Light theme: the default, and any element with data-theme="light". */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --paper: #F1F2EF;
+  --plate: #FAFAF8;
+  --text: #1E2126;
+  --steel: #666C74;
+  --line: #D5D8DB;
+  --line-strong: #868C93;
+  --ink: #2A3FCF;
+  --ink-hover: #2030B1;
+  --on-ink: #FAFAF8;
+  --danger: #A8322D;
+  --danger-hover: #941C1C;
+  --on-danger: #FAFAF8;
+  --tint: rgb(30 33 38 / 0.06);
+  --danger-tint: rgb(168 50 45 / 0.08);
+
+  --bevel: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 1px 0 rgb(30 33 38 / 0.06), 0 2px 3px -1px rgb(30 33 38 / 0.12);
+  --bevel-featured: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 1px 0 rgb(30 33 38 / 0.06), 0 3px 4px -2px rgb(30 33 38 / 0.16);
+  --bevel-ink: inset 0 1px 0 rgb(255 255 255 / 0.16), 0 1px 0 rgb(30 33 38 / 0.1), 0 2px 3px -1px rgb(30 33 38 / 0.2);
+  --press: inset 0 1px 2px rgb(30 33 38 / 0.1);
+  --press-ink: inset 0 1px 2px rgb(0 0 0 / 0.3);
+  --mark-shade: rgb(0 0 0 / 0.35);
+  --mark-lip: rgb(255 255 255 / 0.9);
+}
+
+/* Dark theme. The same values appear twice: keep both blocks in sync.
+   1) chosen with the toggle (or on any element with data-theme="dark"); */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #15171A;
+  --plate: #1F2226;
+  --text: #E6E7E9;
+  --steel: #9AA0A8;
+  --line: #2E3237;
+  --line-strong: #6B7179;
+  --ink: #8EA8F1;
+  --ink-hover: #A4BCFC;
+  --on-ink: #15171A;
+  --danger: #F08A80;
+  --danger-hover: #FB9E94;
+  --on-danger: #15171A;
+  --tint: rgb(255 255 255 / 0.06);
+  --danger-tint: rgb(240 138 128 / 0.1);
+
+  --bevel: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 0 rgb(0 0 0 / 0.45), 0 2px 3px -1px rgb(0 0 0 / 0.5);
+  --bevel-featured: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 0 rgb(0 0 0 / 0.45), 0 3px 4px -2px rgb(0 0 0 / 0.6);
+  --bevel-ink: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 1px 0 rgb(0 0 0 / 0.45), 0 2px 3px -1px rgb(0 0 0 / 0.5);
+  --press: inset 0 1px 2px rgb(0 0 0 / 0.35);
+  --press-ink: inset 0 1px 2px rgb(0 0 0 / 0.3);
+  --mark-shade: rgb(0 0 0 / 0.4);
+  --mark-lip: rgb(255 255 255 / 0.07);
+}
+
+/* 2) from the operating system, unless the person chose light. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #15171A;
+    --plate: #1F2226;
+    --text: #E6E7E9;
+    --steel: #9AA0A8;
+    --line: #2E3237;
+    --line-strong: #6B7179;
+    --ink: #8EA8F1;
+    --ink-hover: #A4BCFC;
+    --on-ink: #15171A;
+    --danger: #F08A80;
+    --danger-hover: #FB9E94;
+    --on-danger: #15171A;
+    --tint: rgb(255 255 255 / 0.06);
+    --danger-tint: rgb(240 138 128 / 0.1);
+
+    --bevel: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 0 rgb(0 0 0 / 0.45), 0 2px 3px -1px rgb(0 0 0 / 0.5);
+    --bevel-featured: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 0 rgb(0 0 0 / 0.45), 0 3px 4px -2px rgb(0 0 0 / 0.6);
+    --bevel-ink: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 1px 0 rgb(0 0 0 / 0.45), 0 2px 3px -1px rgb(0 0 0 / 0.5);
+    --press: inset 0 1px 2px rgb(0 0 0 / 0.35);
+    --press-ink: inset 0 1px 2px rgb(0 0 0 / 0.3);
+    --mark-shade: rgb(0 0 0 / 0.4);
+    --mark-lip: rgb(255 255 255 / 0.07);
+  }
+}

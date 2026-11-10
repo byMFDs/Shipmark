@@ -1,0 +1,154 @@
+/* Styleguide page only (development). */
+
+.sg-intro { margin-bottom: var(--s-7); }
+
+.sg-section + .sg-section { margin-top: var(--s-8); }
+
+.sg-note { margin-top: var(--s-4); color: var(--steel); }
+
+.sg-pair {
+  display: grid;
+  gap: var(--s-5);
+  margin-top: var(--s-5);
+}
+
+@media (min-width: 64em) {
+  .sg-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+/* Each panel carries its own data-theme, so tokens resolve per panel. */
+.sg-panel {
+  min-width: 0;
+  padding: var(--s-5);
+  background: var(--paper);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--r-plate);
+}
+
+.sg-panel__theme {
+  margin-bottom: var(--s-4);
+  color: var(--steel);
+  font-size: var(--fs--1);
+}
+
+.sg-block + .sg-block {
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+}
+
+.sg-block > h3 { margin-bottom: var(--s-4); }
+
+.sg-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.sg-row + .sg-row,
+.sg-row--after { margin-top: var(--s-3); }
+
+.sg-row--wide { gap: var(--s-5); margin-bottom: var(--s-4); }
+
+.sg-label {
+  margin: var(--s-4) 0 var(--s-2);
+  color: var(--steel);
+  font-size: var(--fs--1);
+}
+
+.sg-fields { display: grid; gap: var(--s-5); }
+
+.sg-marks-l { display: grid; gap: var(--s-4); }
+
+.sg-type > * + * { margin-top: var(--s-4); }
+
+.sg-code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: var(--s-3) var(--s-4);
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+}
+
+.sg-og {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--r-chip);
+}
+
+.sg-logo-l { height: 3rem; }
+
+.sg-mark .logo-mark { fill: var(--ink); }
+.sg-mark--16 { width: 16px; height: 16px; }
+.sg-mark--24 { width: 24px; height: 24px; }
+.sg-mark--32 { width: 32px; height: 32px; }
+.sg-mark--64 { width: 64px; height: 64px; }
+
+.sg-swatches {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs--1);
+}
+
+.sg-swatch {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.sg-chip {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--r-chip);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+.sg-chip[data-token="paper"] { background: var(--paper); }
+.sg-chip[data-token="plate"] { background: var(--plate); }
+.sg-chip[data-token="text"] { background: var(--text); }
+.sg-chip[data-token="steel"] { background: var(--steel); }
+.sg-chip[data-token="line"] { background: var(--line); }
+.sg-chip[data-token="line-strong"] { background: var(--line-strong); }
+.sg-chip[data-token="ink"] { background: var(--ink); }
+.sg-chip[data-token="danger"] { background: var(--danger); }
+
+.sg-frame {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+}
+
+.sg-frame .site-footer { margin-top: 0; }
+
+.sg-panel--wide { margin-top: var(--s-5); }
+
+/* The phone menu demo is shown at phone width. */
+.sg-chrome-phone > div { max-width: 390px; }
+
+/* The open phone menu hangs below its header; leave room for it. */
+.sg-frame--menu {
+  position: relative;
+  overflow: visible;
+  min-height: 21rem;
+}
+
+.sg-toasts {
+  display: grid;
+  gap: var(--s-2);
+}
+
+/* Shows the focus ring without focusing the button. */
+.sg-focus {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}

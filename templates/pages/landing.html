@@ -2,5 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>{% blocktranslate with name=brand.SITE_NAME %}{{ name }} is under construction{% endblocktranslate %}</h1>
+  <div class="container page">
+    <h1>{% blocktranslate with name=brand.SITE_NAME %}{{ name }} is under construction{% endblocktranslate %}</h1>
+  </div>
 {% endblock %}

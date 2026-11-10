@@ -1,0 +1,15 @@
+{% load ui %}
+{# Header and footer at full width: the desktop bar needs real page width. #}
+<p class="sg-panel__theme">{{ theme|capfirst }} theme</p>
+<p class="sg-label">Header, signed out</p>
+<div class="sg-frame">{% site_header demo="signed-out" %}</div>
+<p class="sg-label">Header, signed in (current page: Feed)</p>
+<div class="sg-frame">{% site_header demo="signed-in" %}</div>
+<div class="sg-chrome-phone">
+  <div>
+    <p class="sg-label">Phone menu, open</p>
+    <div class="sg-frame sg-frame--menu">{% site_header demo="signed-in" compact=True %}</div>
+  </div>
+</div>
+<p class="sg-label">Footer</p>
+<div class="sg-frame">{% site_footer demo=True %}</div>

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static ui %}
+{# Development tool, so its own text is not translated. Components inside use their real templates. #}
+
+{% block title %}Styleguide · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/styleguide.css' %}">{% endblock %}
+
+{% block content %}
+<div class="container page sg">
+  <div class="sg-intro stack">
+    <h1>Styleguide</h1>
+    <p class="muted prose">Every component in the light and the dark theme, side by side. This page exists only while
+      <code>DEBUG</code> is on. The rules behind it are in <code>docs/DESIGN.md</code>.</p>
+  </div>
+
+  <section class="sg-section" id="components" aria-labelledby="components-title">
+    <h2 id="components-title">Components</h2>
+    <div class="sg-pair">
+      {% for theme in themes %}
+        <div class="sg-panel" data-theme="{{ theme }}">
+          <p class="sg-panel__theme">{{ theme|capfirst }} theme</p>
+          {% include "pages/styleguide/_components.html" %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="sg-section" id="chrome" aria-labelledby="chrome-title">
+    <h2 id="chrome-title">Header and footer</h2>
+    <p class="muted prose sg-note">The bar layout starts at 768px; narrower screens get the menu button.
+      Links appear by themselves once their pages exist (see <code>NAV_LINKS</code> in <code>pages/templatetags/ui.py</code>).</p>
+    {% for theme in themes %}
+      <div class="sg-panel sg-panel--wide" data-theme="{{ theme }}">
+        {% include "pages/styleguide/_chrome.html" %}
+      </div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}<script type="module" src="{% static 'js/styleguide.js' %}"></script>{% endblock %}
