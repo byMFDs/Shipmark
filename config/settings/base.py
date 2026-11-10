@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # Before sessions and CSRF: a flood of admin login attempts is refused early.
+    "config.middleware.AdminLoginThrottleMiddleware",
+    "config.middleware.SecurityHeadersMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -58,6 +61,27 @@ MIDDLEWARE = [
 ADMIN_URL = env.str("ADMIN_URL", default="admin/").strip().lstrip("/") or "admin/"
 if ADMIN_URL and not ADMIN_URL.endswith("/"):
     ADMIN_URL += "/"
+
+# --- Browser security headers (HSTS and secure cookies are in prod.py) ---
+X_FRAME_OPTIONS = "DENY"
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+SECURE_REFERRER_POLICY = "same-origin"
+SECURE_CONTENT_TYPE_NOSNIFF = True
+# Templates have no inline scripts, styles or event handlers, so nothing needs 'unsafe-inline'.
+# GitHub avatars are not shown (CLAUDE.md: no remote images). If uploads move to a CDN, add its host to img-src.
+CONTENT_SECURITY_POLICY = "; ".join([
+    "default-src 'self'",
+    "script-src 'self'",
+    "style-src 'self'",
+    "img-src 'self' data:",
+    "font-src 'self'",
+    "connect-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "frame-ancestors 'none'",
+])
+PERMISSIONS_POLICY = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
 
 ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"

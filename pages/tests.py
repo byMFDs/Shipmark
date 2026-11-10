@@ -31,9 +31,11 @@ class LandingTests(TestCase):
         self.assertContains(response, "width=device-width, initial-scale=1, viewport-fit=cover")
 
     def test_saved_theme_is_applied_before_stylesheets(self):
-        # Prevents a flash of the wrong theme: the inline script must run before CSS paints.
+        # Prevents a flash of the wrong theme: the (blocking, non-module) script must come before the CSS.
         html = self.client.get("/").content.decode()
-        self.assertLess(html.index('localStorage.getItem("theme")'), html.index('rel="stylesheet"'))
+        script = html.index('js/theme-init')
+        self.assertLess(script, html.index('rel="stylesheet"'))
+        self.assertNotIn("type=\"module\"", html[html.rindex("<script", 0, script):script + 60])
 
 
 class StyleguideTests(TestCase):

@@ -1,9 +1,14 @@
+import hashlib
+
 from django.conf import settings
+from django.http import HttpResponse
 from django.middleware.locale import LocaleMiddleware
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils import translation
 from django.utils.http import urlencode
+
+from .ratelimit import is_limited
 
 
 BADGE_PREFIX = "/badge/"
@@ -77,3 +82,44 @@ class TermsAcceptanceMiddleware:
             or path.startswith(self.OPEN_PREFIXES)
             or path.startswith("/" + settings.ADMIN_URL)
         )
+
+
+class SecurityHeadersMiddleware:
+    """Adds Content-Security-Policy and Permissions-Policy to every page.
+
+    The policy comes from settings.CONTENT_SECURITY_POLICY. The admin is skipped: django-unfold
+    needs inline scripts and styles. A header a view already set (the SVG badges) is left alone.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        if not request.path_info.startswith("/" + settings.ADMIN_URL):
+            if settings.CONTENT_SECURITY_POLICY:
+                response.headers.setdefault("Content-Security-Policy", settings.CONTENT_SECURITY_POLICY)
+            response.headers.setdefault("Permissions-Policy", settings.PERMISSIONS_POLICY)
+        return response
+
+
+class AdminLoginThrottleMiddleware:
+    """Slows down password guessing on the admin login: 10 attempts per username per 15 minutes.
+
+    Counted per username (not per IP): behind the reverse proxy every request has the proxy's address.
+    The cost is that someone can lock a known staff username out for 15 minutes; they still need the secret ADMIN_URL.
+    """
+
+    LIMIT, WINDOW = 10, 15 * 60
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.method == "POST" and request.path_info == f"/{settings.ADMIN_URL}login/":
+            username = request.POST.get("username", "").strip().lower()
+            key = hashlib.sha256(username.encode()).hexdigest()[:32]  # the cache never sees the name itself
+            if is_limited("admin_login", key, limit=self.LIMIT, window=self.WINDOW):
+                return HttpResponse("Too many sign-in attempts. Try again in a few minutes.", status=429,
+                                    content_type="text/plain; charset=utf-8")
+        return self.get_response(request)

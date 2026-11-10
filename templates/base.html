@@ -7,8 +7,8 @@
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#F1F2EF" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#15171A" media="(prefers-color-scheme: dark)">
-  {# Runs before the first paint: applies the saved theme (no flash) and marks that JS works. #}
-  <script>(function(){var r=document.documentElement;r.classList.add("js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")r.setAttribute("data-theme",t)}catch(e){}})();</script>
+  {# Blocking on purpose: applies the saved theme before the first paint (no flash). A file, not inline, for the CSP. #}
+  <script src="{% static 'js/theme-init.js' %}"></script>
   <link rel="preload" href="{% static 'fonts/ibm-plex-sans-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
   {# Headings (h1, h2) use the condensed 600 face; preloading it keeps the swap from the fallback font short. #}
   {% if LANGUAGE_CODE == "uk" %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-cyrillic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
