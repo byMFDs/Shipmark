@@ -16,6 +16,7 @@ Set them in the real environment or in `/srv/shipmark/.env` (gitignored; real va
 | `DATABASE_URL` | yes | `postgres://USER:PASSWORD@HOST:5432/DBNAME` (percent-encode special characters in the password) |
 | `ALLOWED_HOSTS` | yes | Comma-separated host names, e.g. `example.com,www.example.com` |
 | `CSRF_TRUSTED_ORIGINS` | yes | With scheme, e.g. `https://example.com` |
+| `SITE_URL` | no | Public address used in embed snippets, Open Graph, canonical links and the data export. Default `https://shipmark.me` (from `SITE_DOMAIN`); must be https. Dev default `http://localhost:8000` |
 | `ADMIN_URL` | yes | Private admin address, e.g. `staff-4f8k2/`. `admin/` is refused at startup |
 | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | yes | OAuth App. Callback URL: `https://YOUR.DOMAIN/accounts/github/login/callback/` |
 | `GITHUB_API_TOKEN` | recommended | Token with **no scopes**; lifts the repo check limit from 60 to 5000 requests/hour |

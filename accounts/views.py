@@ -16,6 +16,7 @@ from projects.badges import embed_snippets
 from social.queries import is_following
 
 from config import branding
+from config.site import absolute_url
 
 from .deletion import delete_account
 from .export import build_export
@@ -98,7 +99,7 @@ def export_data(request):
     if is_limited("export", user.pk, limit=10, window=3600):
         messages.error(request, _("Too many downloads in a short time. Try again later."))
         return redirect("accounts:settings")
-    data = build_export(user, absolute=request.build_absolute_uri)
+    data = build_export(user, absolute=absolute_url)
     filename = f"{branding.SITE_NAME.lower()}-{user.username}-{timezone.now():%Y-%m-%d}.json"
     response = HttpResponse(
         json.dumps(data, ensure_ascii=False, indent=2), content_type="application/json; charset=utf-8",
@@ -148,5 +149,5 @@ def profile(request, username):
         "projects": projects,
         "following": is_following(request.user, person),
         "drafts": profile_drafts(person) if is_me else [],  # drafts are private to the owner
-        "embed": embed_snippets(request, person) if is_me else None,
+        "embed": embed_snippets(person) if is_me else None,
     })

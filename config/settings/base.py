@@ -16,6 +16,9 @@ SECRET_KEY = env.str("SECRET_KEY", default="")
 DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
+# The public address of the site, used for everything shared outside it (embed snippets, Open Graph, canonical
+# links, data export): config/site.py. Scheme + host, no trailing slash. dev.py and prod.py set the defaults.
+SITE_URL = env.str("SITE_URL", default="").rstrip("/")
 
 INSTALLED_APPS = [
     # Admin theme. Must come before django.contrib.admin so its templates win.

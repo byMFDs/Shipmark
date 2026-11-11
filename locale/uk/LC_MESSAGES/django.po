@@ -2550,3 +2550,9 @@ msgstr "Цей репозиторій уже прив'язано до іншог
 #~ msgstr ""
 #~ "Щось зламалося з нашого боку, і це не через ваші дії. Спробуйте ще раз за "
 #~ "кілька хвилин."
+
+msgid "for a GitHub README: open README.md, paste it at the top, commit."
+msgstr "для README на GitHub: відкрийте README.md, вставте на початку й зробіть коміт."
+
+msgid "for a website: paste it where the badge should appear, for example in the footer."
+msgstr "для сайту: вставте там, де має бути бейдж, наприклад у футері."

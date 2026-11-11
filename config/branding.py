@@ -22,6 +22,8 @@ LOGO_MARK = "brand/logo-mark.svg"
 LOGO_DARK = "brand/logo-dark.svg"
 LOGO_MARK_DARK = "brand/logo-mark-dark.svg"
 FAVICON = "brand/favicon.svg"
+# For browsers without SVG icons (older Safari) and for /favicon.ico. Made from logo C by `python manage.py make_icons` (pages/brand_icons.py).
+FAVICON_ICO = "brand/favicon.ico"
 APPLE_TOUCH_ICON = "brand/apple-touch-icon.png"
 OG_DEFAULT_IMAGE = "brand/og-default.png"
 

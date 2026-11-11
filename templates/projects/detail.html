@@ -13,7 +13,7 @@
 {% else %}{{ block.super }}{% endif %}{% endwith %}{% endblock %}
 {% block meta %}
   <meta name="description" content="{{ project.tagline }}">
-  {% if project.status != "published" %}<meta name="robots" content="noindex">{% else %}<link rel="canonical" href="{{ request.build_absolute_uri }}">{% endif %}
+  {% if project.status != "published" %}<meta name="robots" content="noindex">{% else %}<link rel="canonical" href="{% canonical_url %}">{% endif %}
 {% endblock %}
 
 {% block content %}

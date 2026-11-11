@@ -1954,3 +1954,9 @@ msgstr "Referência:"
 
 msgid "If it keeps happening, write to <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the reference."
 msgstr "Se continuar acontecendo, escreva para <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> e informe a referência."
+
+msgid "for a GitHub README: open README.md, paste it at the top, commit."
+msgstr "para um README do GitHub: abra o README.md, cole no topo e faça commit."
+
+msgid "for a website: paste it where the badge should appear, for example in the footer."
+msgstr "para um site: cole onde o badge deve aparecer, por exemplo no rodapé."

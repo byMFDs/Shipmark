@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils import timezone
 from django.urls import reverse
 
@@ -122,10 +122,29 @@ class EmbedPanelTests(TestCase):
         self.client.force_login(self.ana)
         page = self.client.get(self.project.get_absolute_url())
         self.assertContains(page, "Embed badge")
-        self.assertContains(page, "http://testserver/badge/ana/%s.svg" % self.project.slug)
+        self.assertContains(page, "http://localhost:8000/badge/ana/%s.svg" % self.project.slug)  # dev SITE_URL
         self.assertEqual(page.context["embed"]["markdown"].count("["), 2)  # only the link and image openers: brackets in the name are dropped
         profile = self.client.get(reverse("accounts:profile", args=["ana"]))
-        self.assertContains(profile, "http://testserver/badge/ana.svg")
+        self.assertContains(profile, "http://localhost:8000/badge/ana.svg")
+
+    @override_settings(SITE_URL="https://shipmark.me")
+    def test_snippets_use_the_canonical_site_url_not_the_request_host(self):
+        self.client.force_login(self.ana)
+        page = self.client.get(self.project.get_absolute_url(), HTTP_HOST="localhost:8000")
+        embed = page.context["embed"]
+        badge = "https://shipmark.me/badge/ana/%s.svg" % self.project.slug
+        self.assertEqual(embed["badge_url"], badge)
+        self.assertIn(f"]({badge})](https://shipmark.me{self.project.get_absolute_url()})", embed["markdown"])
+        self.assertIn(f'<a href="https://shipmark.me{self.project.get_absolute_url()}"><img src="{badge}"', embed["html"])
+        for text in (embed["markdown"], embed["html"]):
+            self.assertNotIn("localhost", text)
+        html = page.content.decode()
+        # The preview on our own page loads the badge from this server (CSP img-src 'self').
+        self.assertIn(f'<img src="/badge/ana/{self.project.slug}.svg"', html)
+        self.assertIn(f'<link rel="canonical" href="https://shipmark.me{self.project.get_absolute_url()}">', html)
+        self.assertIn(f'<meta property="og:url" content="https://shipmark.me{self.project.get_absolute_url()}">', html)
+        self.assertIn('<meta property="og:image" content="https://shipmark.me/static/brand/og-default.png?v=', html)
+        self.assertIn("for a GitHub README", html)
 
     def test_others_and_drafts_get_no_panel(self):
         other = make_user("bob")

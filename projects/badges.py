@@ -219,9 +219,15 @@ def not_found_badge():
 
 # ---------- Embed snippets ----------
 
-def embed_snippets(request, person, project=None):
-    """Markdown and HTML snippets plus the badge URL, for the "Embed badge" panel."""
+def embed_snippets(person, project=None):
+    """Markdown and HTML snippets plus the badge URL, for the "Embed badge" panel.
+
+    Absolute URLs come from settings.SITE_URL (config/site.py), never from the request's host, so a snippet copied
+    on localhost or a preview server still points to the real site. `badge_path` is for the preview on our own page.
+    """
     from django.urls import reverse
+
+    from config.site import absolute_url
     site = clean_text(branding.SITE_NAME)
     if project is None:
         badge_path = reverse("projects:badge_profile", args=[person.username])
@@ -231,11 +237,12 @@ def embed_snippets(request, person, project=None):
         badge_path = reverse("projects:badge_project", args=[person.username, project.slug])
         page_path = project.get_absolute_url()
         alt = f"{site}: {clean_text(project.name)}"
-    badge_url = request.build_absolute_uri(badge_path)
-    page_url = request.build_absolute_uri(page_path)
+    badge_url = absolute_url(badge_path)
+    page_url = absolute_url(page_path)
     md_alt = re.sub(r"[\[\]\\]", "", alt)  # brackets would end the Markdown image text early
     return {
         "badge_url": badge_url,
+        "badge_path": badge_path,
         "alt": alt,
         "markdown": f"[![{md_alt}]({badge_url})]({page_url})",
         "html": f'<a href="{escape(page_url)}"><img src="{escape(badge_url)}" alt="{escape(alt)}" height="{HEIGHT}"></a>',

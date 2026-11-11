@@ -1961,3 +1961,9 @@ msgstr "Numer referencyjny:"
 
 msgid "If it keeps happening, write to <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the reference."
 msgstr "Jeśli to się powtarza, napisz na <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> i podaj numer referencyjny."
+
+msgid "for a GitHub README: open README.md, paste it at the top, commit."
+msgstr "do README na GitHubie: otwórz README.md, wklej na początku i zrób commit."
+
+msgid "for a website: paste it where the badge should appear, for example in the footer."
+msgstr "na stronę internetową: wklej tam, gdzie ma się pojawić plakietka, na przykład w stopce."

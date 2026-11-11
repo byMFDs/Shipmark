@@ -95,7 +95,7 @@ def _project(project, absolute):
 
 
 def build_export(user, absolute=lambda url: url):
-    """A JSON-ready dict. `absolute` turns site paths into full URLs (request.build_absolute_uri)."""
+    """A JSON-ready dict. `absolute` turns site paths into full URLs (config.site.absolute_url: SITE_URL)."""
     projects = (
         Project.objects.filter(owner=user)
         .select_related("owner", "repo_link")

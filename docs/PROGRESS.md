@@ -107,3 +107,4 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 8. Deploy (see `docs/DEPLOY_NOTES.md`).
 
 - 2026-11-11: Fix pass after manual test (branch `redesign`). 1) Custom 400/403/404/500/CSRF views (`config/errors.py`; 500/400/CSRF without DB), new copy + "mark fails to stamp", `X-Request-ID` + "Reference" on 500/403/CSRF, JSON error files `errors.jsonl`/`notfound.jsonl` (scrubbed, rotating, `LOG_DIR`), `show_errors` command, `/_dev/errors/<code>/` previews.
+  2) `SITE_URL` (dev localhost:8000, prod https://shipmark.me) for embed snippets, OG, canonical, export; favicon: files were already logo C, the tab showed a stale browser favicon cache (same URL since phase 1) and there was no favicon.ico -> content-versioned icon URLs, `favicon.ico` + `/favicon.ico`, `make_icons`; embed "how to use" hint.

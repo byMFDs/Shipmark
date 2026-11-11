@@ -1,6 +1,7 @@
 """Landing, explore (search, filters, sorts, hallmark rules), Open Graph tags."""
 from datetime import timedelta
 
+from django.conf import settings
 from django.db import connection
 from django.test import TestCase, override_settings
 from django.test.utils import CaptureQueriesContext
@@ -252,7 +253,7 @@ class OpenGraphTests(TestCase):
         shot = make_shot(self.project)
         make_shot(self.project, order=1)
         html = self.og(self.project.get_absolute_url(), "og:image")
-        self.assertIn(f'<meta property="og:image" content="http://testserver{shot.image.url}">', html)
+        self.assertIn(f'<meta property="og:image" content="{settings.SITE_URL}{shot.image.url}">', html)
         self.assertIn(f'<meta property="og:image:width" content="{shot.width}">', html)
 
     def test_project_without_screenshot_uses_default(self):

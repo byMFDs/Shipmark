@@ -14,6 +14,7 @@ handler500 = "config.errors.server_error"
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path("i18n/set-language/", views.set_language, name="set_language"),
+    path("favicon.ico", views.favicon, name="favicon"),
     path("", include("accounts.auth_urls")),
     # Only GitHub's OAuth routes (not allauth.urls: that would add email/password pages).
     # Callback: /accounts/github/login/callback/

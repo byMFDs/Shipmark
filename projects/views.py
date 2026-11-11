@@ -409,5 +409,5 @@ def _render_detail(request, project, log_form=None, status=200):
         "like_count": like_count,
         "liked": liked,
         # The badge panel is for the author, and only once there is a public page to link to.
-        "embed": embed_snippets(request, project.owner, project) if is_owner and project.status == Project.Status.PUBLISHED else None,
+        "embed": embed_snippets(project.owner, project) if is_owner and project.status == Project.Status.PUBLISHED else None,
     }, status=status)

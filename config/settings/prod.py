@@ -19,6 +19,13 @@ SECRET_KEY_FALLBACKS = env.list("SECRET_KEY_FALLBACKS", default=[])  # noqa: F40
 # and replaced before use (e.g. after a database restart).
 DATABASES = {"default": {**env.db("DATABASE_URL"), "CONN_MAX_AGE": 60, "CONN_HEALTH_CHECKS": True}}  # noqa: F405
 
+# Canonical public address (embed snippets, Open Graph, canonical links). Must be https.
+from config import branding  # noqa: E402
+
+SITE_URL = (SITE_URL or f"https://{branding.SITE_DOMAIN}").rstrip("/")  # noqa: F405
+if not SITE_URL.startswith("https://"):
+    raise ImproperlyConfigured(f"SITE_URL must start with https:// in production (got {SITE_URL!r}).")
+
 # The admin must not sit at the guessable /admin/. Set ADMIN_URL in the environment to something private.
 if ADMIN_URL.lower() in ("", "admin/"):  # noqa: F405
     raise ImproperlyConfigured(

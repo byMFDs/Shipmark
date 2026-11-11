@@ -3,7 +3,11 @@
   <div class="record__head"><h2 id="embed-title" class="label">{% translate "Embed badge" %}</h2></div>
   <div class="record__body">
     <p class="embed__hint muted">{% translate "Paste it into a README or a website. It shows the hallmarks you have now and refreshes within an hour." %}</p>
-    <p class="embed__preview"><img src="{{ embed.badge_url }}" alt="{{ embed.alt }}" height="28"></p>
+    <p class="embed__preview"><img src="{{ embed.badge_path }}" alt="{{ embed.alt }}" height="28"></p>
+    <ul class="embed__how">
+      <li><span class="label">{% translate "Markdown" %}</span> {% translate "for a GitHub README: open README.md, paste it at the top, commit." %}</li>
+      <li><span class="label">HTML</span> {% translate "for a website: paste it where the badge should appear, for example in the footer." %}</li>
+    </ul>
     <dl class="embed__snippets">
       <div>
         <dt class="label">{% translate "Markdown" %}</dt>

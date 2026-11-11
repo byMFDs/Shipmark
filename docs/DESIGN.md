@@ -165,7 +165,9 @@ white/proof 7.96, line/plate 3.49 (border).
 - Mark C, "struck slash": a square with a slash and a full stop cut out. Path
   `M0 0H32V32H0ZM4 26H12L22 6H14ZM20 18H28V26H20Z` (even-odd). Files: `logo.svg`, `logo-mark.svg`, `favicon.svg`,
   PNGs for the touch icon and OG image; `logo-dark.svg` and `logo-mark-dark.svg` are light copies for the dark
-  admin. Options A and B live in `static/brand/options/` (styleguide only).
+  admin. `favicon.ico` (16/32/48, opaque: dark square, paper slash and stop, readable on light and dark tab bars) and
+  `apple-touch-icon.png` are drawn from `logo-mark.svg` by `manage.py make_icons`; `favicon.svg` switches to the light
+  mark under `prefers-color-scheme: dark`. Icon links use `{% static_v %}` (content hash), so a new logo is a new URL. Options A and B live in `static/brand/options/` (styleguide only).
 - Wordmark: lowercase "shipmark" in Manrope 700 as outlines. Header and footer inline the SVG so it follows the theme.
   `SITE_NAME` stays "Shipmark" (capitalised in running text and page titles); only the logo files and the OG image spell
   it lowercase. `SITE_DOMAIN = "shipmark.me"` is shown in the footer, badges and embed snippets. The OG image

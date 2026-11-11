@@ -1,6 +1,18 @@
 from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.templatetags.static import static
 from django.views.decorators.http import require_POST
 from django.views.i18n import set_language as django_set_language
+
+
+def favicon(request):
+    """/favicon.ico: browsers and feed readers ask for it without reading the page. Temporary redirect to the
+    hashed static file, so a new logo is picked up (a permanent redirect would be cached forever)."""
+    from config import branding
+
+    response = HttpResponseRedirect(static(branding.FAVICON_ICO))
+    response["Cache-Control"] = "public, max-age=86400"
+    return response
 
 
 @require_POST

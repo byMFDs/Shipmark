@@ -9,7 +9,7 @@
 {% block meta %}
   <meta name="description" content="{% if person.bio %}{{ person.bio }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}">
   <meta property="profile:username" content="{{ person.username }}">
-  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  <link rel="canonical" href="{% canonical_url %}">
 {% endblock %}
 
 {% block content %}

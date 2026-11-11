@@ -2,6 +2,7 @@
 
 Load with {% load ui %}.
 """
+import hashlib
 import math
 import re
 from functools import lru_cache
@@ -9,6 +10,8 @@ from functools import lru_cache
 from django import template
 from django.conf import settings
 from django.contrib.staticfiles import finders
+from django.contrib.staticfiles.storage import ManifestFilesMixin, staticfiles_storage
+from django.templatetags.static import static
 from django.urls import NoReverseMatch, reverse
 from django.utils import timezone
 from django.utils.html import escape, format_html
@@ -16,6 +19,8 @@ from django.utils.safestring import mark_safe
 from django.utils.timesince import timesince
 from django.utils.translation import get_language, gettext
 from django.utils.translation import gettext_lazy as _
+
+from config.site import absolute_url as site_absolute_url
 
 register = template.Library()
 
@@ -217,11 +222,35 @@ def _url(name, *args):
         return ""
 
 
+@register.simple_tag
+def absolute_url(url):
+    """{% absolute_url cover.image.url %}: full URL on SITE_URL for Open Graph. Already absolute URLs (a CDN) stay."""
+    return site_absolute_url(url)
+
+
 @register.simple_tag(takes_context=True)
-def absolute_url(context, url):
-    """{% absolute_url cover.image.url %}: full URL for Open Graph. Already absolute URLs (a CDN) stay as they are."""
+def canonical_url(context):
+    """{% canonical_url %}: this page on SITE_URL, without the query string (og:url, rel=canonical)."""
     request = context.get("request")
-    return request.build_absolute_uri(url) if request else url
+    return site_absolute_url(request.path if request else "/")
+
+
+@register.simple_tag
+def static_v(path):
+    """{% static_v brand.FAVICON %}: a static URL that changes when the file changes.
+
+    In production the name is already hashed (favicon.3f2a1c.svg). Without the manifest storage (development,
+    tests) "?v=<content hash>" is added, so browsers that keep icons in their own cache fetch the new file.
+    """
+    url = static(path)
+    if isinstance(staticfiles_storage, ManifestFilesMixin):
+        return url
+    full_path = finders.find(path)
+    if not full_path:
+        return url
+    with open(full_path, "rb") as fh:
+        version = hashlib.sha256(fh.read()).hexdigest()[:10]
+    return f"{url}?v={version}"
 
 
 @register.simple_tag
