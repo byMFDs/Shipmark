@@ -1160,7 +1160,7 @@ a.chip::after {
   justify-items: start;
 }
 
-.site-footer__brand a { color: var(--text); }
+.site-footer__brand a { display: inline-flex; align-items: center; min-height: var(--control-h); color: var(--text); }
 
 .site-footer__meta {
   display: grid;
@@ -1344,6 +1344,17 @@ html:not(.js) .toasts:not(:empty) {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-2);
+}
+
+/* An h2 (it follows the page h1) that looks like the old h3. */
+.empty__title {
+  font-size: var(--fs-1);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 48em) {
+  .empty__title { font-size: var(--fs-2); }
 }
 
 .empty__text {

@@ -27,6 +27,10 @@
 .profile-head__links li { overflow-wrap: anywhere; }
 .profile-head .with-icon { display: inline-flex; align-items: center; gap: var(--s-1); }
 
+@media (pointer: coarse) {
+  .profile-head .with-icon { min-height: var(--control-h); }
+}
+
 .profile-head__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
 
 /* Three counts in one framed row, split by hairlines. */

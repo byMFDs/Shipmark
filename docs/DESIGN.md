@@ -15,8 +15,10 @@ Warm paper, hairline frames, square corners, one action color. Rules:
 Dark theme is used by the toggle, by the OS setting, and always inside `.band`. Both blocks in
 `tokens.css` must stay in sync. Old token names (`--steel`, `--ink`, `--plate`) are only aliases now.
 
-### Measured contrast (WCAG 2.x; AA = 4.5:1 text, 3:1 large text and UI). Checked 2026-11-11.
-Recheck after any token change; every pair below must stay at or above its minimum.
+### Measured contrast (WCAG 2.x; AA = 4.5:1 text, 3:1 large text and UI). Checked 2026-11-11 (phase 4b).
+Recheck after any token change; every pair below must stay at or above its minimum. Two checks: the token pairs below
+(computed from `tokens.css`), and every text node on 13 signed-in/public pages x 360/390/768/1440 px x light/dark in
+Firefox (computed color over the real background chain): 0 failures. Disabled controls are exempt (WCAG 1.4.3).
 
 | Pair (text / background) | Light | Dark | Min | Where |
 |---|---|---|---|---|
@@ -24,12 +26,15 @@ Recheck after any token change; every pair below must stay at or above its minim
 | `--text` / `--surface` | 15.46 | 13.70 | 4.5 | cards, inputs |
 | `--text` / `--tint` over paper | 12.81 | 12.80 | 4.5 | quiet button hover |
 | `--muted` / `--paper` | 5.57 | 7.40 | 4.5 | secondary text |
-| `--muted` / `--surface` | 6.14 | 6.73 | 4.5 | secondary text on cards |
+| `--muted` / `--surface` | 6.14 | 6.73 | 4.5 | secondary text on cards, placeholders |
+| `--muted` / `--tint` over paper | 5.08 | 6.31 | 4.5 | disabled-field text, quiet hover |
+| `--muted` / `--proof-bg` | 5.06 | 5.40 | 4.5 | muted text on a proof note |
 | `--accent-text` / `--paper` | 5.29 | 7.26 | 4.5 | accent words, labels |
 | `--accent-text` / `--surface` | 5.82 | 6.61 | 4.5 | accent words on cards |
 | `--on-accent` / `--accent` | 4.96 | **6.76** | 4.5 | primary button |
 | `--on-accent` / `--accent-hover` | 6.50 | **8.29** | 4.5 | primary button, hover |
 | `--proof` / `--proof-bg` | 6.51 | 7.65 | 4.5 | hallmark chip, proof note |
+| `--proof` / `--paper`, `--surface` | 7.17 / 7.89 | 10.48 / 9.54 | 4.5 | proof-colored text outside a chip |
 | `--danger` / `--paper` | 5.98 | 7.27 | 4.5 | error text |
 | `--danger` / `--surface` | 6.59 | 6.62 | 4.5 | error text on cards |
 | `--danger` / `--danger-tint` over paper | 5.32 | 6.24 | 4.5 | danger button hover |
@@ -41,8 +46,12 @@ Recheck after any token change; every pair below must stay at or above its minim
 | `--accent` / `--paper` | 4.50 | 6.76 | 3 | UI: primary button edge |
 | `--accent` / `--surface` | 4.96 | 6.15 | 3 | UI: primary button edge on cards |
 | `--focus` / `--paper` | 14.04 | 15.05 | 3 | UI: focus ring |
+| `--focus` / `--surface` | 15.46 | 13.70 | 3 | UI: focus ring on cards and inputs |
 | `--proof` / `--surface` | 7.89 | 9.54 | 3 | UI: tick strip cells |
 | `--line` / `--paper` | 1.29 | 1.39 | none | dividers only (decorative, never a control edge) |
+
+Decorative exception: the landing specimen's tick strip is `aria-hidden` and illustrative; its cells are 55% proof green
+(2.67:1 light / 3.88:1 dark on the record surface). The real uptime strip on project pages uses full `--proof` (7.89 / 9.54).
 
 `.band` (dark strip; dark tokens on `--band-bg` #212721 in the light page / #0D1310 in the dark page):
 text 13.00 / 16.02 · muted 6.39 / 7.87 · accent-text 6.27 / 7.73 · accent edge 5.84 / 7.19 ·

@@ -30,13 +30,13 @@
       </ul>
     {% elif tab == "following" %}
       <div class="empty">
-        <h3>{% translate "Nothing here yet" %}</h3>
+        <h2 class="empty__title">{% translate "Nothing here yet" %}</h2>
         <p class="empty__text">{% translate "Projects and updates from people you follow show up here. Follow someone from their profile." %}</p>
         <a class="btn btn--primary" href="{{ latest_url }}">{% translate "See latest launches" %}</a>
       </div>
     {% else %}
       <div class="empty">
-        <h3>{% translate "No launches yet" %}</h3>
+        <h2 class="empty__title">{% translate "No launches yet" %}</h2>
         <p class="empty__text">{% translate "Published projects appear here, newest first." %}</p>
       </div>
     {% endif %}

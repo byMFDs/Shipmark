@@ -354,7 +354,10 @@ hr {
   z-index: 100;
   left: max(var(--s-4), env(safe-area-inset-left));
   top: var(--s-2);
-  padding: var(--s-2) var(--s-4);
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-h);
+  padding: 0 var(--s-4);
   background: var(--text);
   color: var(--paper);
   text-decoration: none;
