@@ -89,3 +89,19 @@
 
 - 2026-11-11: Redesign phase 4b (accessibility, devices, copy). Scripted Firefox (Marionette) audit: 13 pages x 360/390/768/1440 x light/dark (uk; de at 360 for clipping): no horizontal scroll, no unlabeled fields/missing alt, inputs >= 16px, visible focus on every focusable element, skip link first, no positive tabindex, one h1; contrast 0 failures (DOM check + token table in `docs/DESIGN.md`). Fixed: feed empty-state headings h3 -> h2 (h1>h3 skip), footer logo link 44px, skip link 44px, profile GitHub link 44px on touch, owner-bar buttons full width on phones. Copy: the OG image still said "Authored" -> regenerated with "Repo owner"; no other claim about who wrote code (grep of templates, .po, content, docs, brand); hero example stays labelled illustrative.
   Not tested: real iOS/Android (safe-area, dvh, touch targets only by CSS reading; 360/390 emulated by zoom in a 540/585px window); screen readers; error pages 500/400/403_csrf only as rendered HTML. Next: 4c docs and cleanup.
+
+- 2026-11-11: Redesign phase 4c (cleanup and docs). `docs/DESIGN.md` and CLAUDE.md section 9 now match the shipped design (tokens, fonts, palette, logo C, components, motion rules incl. the hover-colour exception, performance numbers, accessibility, contrast table); `docs/EDITING.md` (SITE_DOMAIN, dark logo files, OG image text, fonts and tokens paths); `docs/REDESIGN_PLAN.md` marked completed. Decision: `SITE_NAME` stays "Shipmark" (used in sentences and titles); only the logo files and OG image are lowercase.
+
+## Redesign done (phases 0-4, branch `redesign`, not merged)
+Warm-paper design with terracotta action, green proof, square corners; Manrope + Inter + Plex Mono; logo C; every page rebuilt; motion audited; contrast 0 failures; copy says "Repo owner", never code authorship.
+Before merging: look at the final manual checklist (real phone, keyboard, reduced motion) and replace the footer placeholders `LEGAL_OWNER_NAME = "Your Name"` and `CONTACT_EMAIL = hello@example.com` in `config/branding.py`.
+
+## Next
+1. Single feed page with a filter (following / latest in one place).
+2. Avatar and profile customization.
+3. About page content.
+4. Achievements.
+5. Verification fixes (forks, link a repository to its domain).
+6. `seed_demo` command (demo users and projects for screenshots and local work).
+7. Project type adapters (web app, CLI, library, mobile: what "Live" means for each).
+8. Deploy (see `docs/DEPLOY_NOTES.md`).

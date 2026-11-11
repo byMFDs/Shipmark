@@ -207,14 +207,21 @@ eyebrows; that is part of the style now. Do not put mono caps on long sentences.
 Objects: **records** (`.record`: frame + mono header row) hold a project's proof, build log, embed badge and
 filters; **panels** (`.panel`) are form sections; list rows (`.plate-row`) and landing cards are quieter.
 Hallmarks are flat chips (check + mono label, "Repo owner" / "Live" / "Steady"), pale green when earned,
-dashed outline + "Not yet" when not. Depth = surface color + hairlines; no bevels, shadows or gradients.
+dashed outline + "Not yet" when not. Depth = surface color + hairlines; no bevels or gradients, one shadow only on floating menus and toasts.
 Radius 0 (avatars stay round). Icons: own inline SVG set, 1.5px stroke. No icon fonts, no emoji as icons.
-Layout: left-aligned text, max width 1200px, 12-column grid on desktop, one column on mobile.
+Layout: left-aligned text, max width 1200px; pages declare their own 12-column grids from 64em (no global grid
+class), one column on phones. Logo: mark C "struck slash" + lowercase wordmark "shipmark" (Manrope 700, outlined);
+`SITE_NAME` stays "Shipmark" in running text, `SITE_DOMAIN` is `shipmark.me`.
 
-Motion (`motion.css`, `motion.js`): transform and opacity only; loops run only while on screen and pause in
-a hidden tab; at most 3 loops visible at once; `prefers-reduced-motion` shows the final state. Landing: the
-hero strike, pulse, tick, drift, closing cursor, section reveal. Project page: marks strike in order on load,
-one tick over the uptime strip. Elsewhere only hover/press/focus answers and a page cross-fade.
+Motion (`motion.css`, `motion.js`): animations are transform and opacity only (plus hover colour/border fades, no
+layout); loops run only while on screen and pause in a hidden tab (pause rules need `.js`, so without JS nothing
+freezes); at most 3 loops visible at once; `prefers-reduced-motion` shows the final state everywhere. Landing: the
+hero strike, pulse, tick, drift (3 loops), closing cursor, section reveal. Project page: marks strike in order on
+load, one tick over the uptime strip. Elsewhere only hover/press/focus answers, menu/toast fades and a page
+cross-fade (`@view-transition`, ignored where unsupported).
+
+Contrast (measured both themes, table in `docs/DESIGN.md`): every text pair >= 4.5:1, every control edge and
+focus ring >= 3:1. Recheck after any token change. Performance and accessibility numbers are in the same file.
 
 Avoid: coloring or italicizing one word in a headline; gradient washes; identical card grids with the same
 soft shadow; `→` glued to button text (use the inline arrow icon); neon accents; Bootstrap look; filler copy.

@@ -2,8 +2,8 @@
 
 A public record of shipped work: each project is a framed record, and proof is a flat mark on it.
 Warm paper, hairline frames, square corners, one action color. Rules:
-- Depth comes from surface color (paper < surface) and hairlines. No bevels, shadows, gradients,
-  glow or tinted sections. Square corners everywhere; only people (avatars) are round.
+- Depth comes from surface color (paper < surface) and hairlines. No bevels, gradients, glow or tinted
+  sections; the only shadow is `--shadow-pop`, on floating menus and toasts. Square corners everywhere; only people (avatars) are round.
 - Terracotta (`--accent`) is the one action color: the primary button, nothing else.
   Green (`--proof`) means proof only: earned marks, the uptime strip, "public" status.
   Danger red is for errors and destructive actions only.
@@ -13,7 +13,8 @@ Warm paper, hairline frames, square corners, one action color. Rules:
 
 ## Color (light / dark)
 Dark theme is used by the toggle, by the OS setting, and always inside `.band`. Both blocks in
-`tokens.css` must stay in sync. Old token names (`--steel`, `--ink`, `--plate`) are only aliases now.
+`tokens.css` must stay in sync (three places: light, `[data-theme="dark"]` + `.band`, and the `prefers-color-scheme` block).
+There are no legacy token aliases any more; use the names in the table below.
 
 ### Measured contrast (WCAG 2.x; AA = 4.5:1 text, 3:1 large text and UI). Checked 2026-11-11 (phase 4b).
 Recheck after any token change; every pair below must stay at or above its minimum. Two checks: the token pairs below
@@ -78,12 +79,15 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 - Frames: 1px `--line` hairline; control edges use `--line-strong` (3:1). Press: buttons scale .98.
 
 ## Layout
-- Content max 1200px; side padding max(1rem, safe-area inset) -> 1.5rem at 48em -> 2rem at 64em.
-- Grid 1 -> 6 (48em) -> 12 columns (64em), gap 1.5rem / 2rem.
+- Content max 1200px; side padding max(1rem, safe-area inset) -> 1.5rem at 48em -> 2rem at 64em (`.container`).
+- There is no global grid class. Pages that need columns declare them in their own CSS: 12 columns from 64em
+  (project page, landing, `.sheet`), one column on phones.
 - Project page: head across the top, then main (8: cover, about, build log) and proof column (4: marks,
   uptime, built with, tags, embed). On phones the order is head, cover, marks, about, log, facts, embed.
 - Form pages (`.sheet`): title left (4), framed `.panel` sections right (8) from 64em; one column below.
-- Targets >= 44px on `pointer: coarse`; chips and small controls may be 32px on `pointer: fine`.
+- Owner bar on phones: one column, every button full width.
+- Targets >= 44px (`--control-h`); on `pointer: fine` only chips, tag links and the theme switch may be smaller
+  (theme switch is 44px on `pointer: coarse`). Inline links inside sentences are exempt (WCAG 2.5.8).
 
 ## Hallmark
 - Flat chip: check glyph + mono label ("Repo owner", "Live", "Steady"); names stay English in every language.
@@ -108,13 +112,46 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 - Tabs: plain links with `aria-current`; active = text color + 2px bar.
 
 ## Motion (`motion.css`, `motion.js`)
-- Transform and opacity only. Loops run only while their block is on screen (`.is-inview`) and stop in a
-  hidden tab (`html.is-paused`). At most 3 loops visible at once. Reduced motion: final state, no loops,
-  no reveal, no page transition. Without JS nothing is hidden.
-- Landing: strike (once), live pulse, uptime tick, drift, closing cursor, section reveal.
+- Animations use transform and opacity only. Exception, on purpose: hover/focus colour and border-colour fades
+  (120-200 ms, paint only, no layout). Nothing animates width, height, margin, top/left or font size.
+- Loops run only while their block is on screen (`.is-inview`, IntersectionObserver) and stop in a hidden tab
+  (`html.is-paused`, which also reaches `::before/::after`). At most 3 loops visible at once. These pause rules
+  apply only when JS runs (`.js` is set in `<head>`); without JS nothing loops, nothing is hidden, and the strike
+  shows its final state.
+- Reduced motion: `base.css` turns off every animation and transition, so each element shows its final state;
+  no reveal, no page transition, the tick head is hidden.
+- Landing: strike (once), live pulse + uptime tick + drift in the hero (3 loops, the maximum), closing cursor
+  (far below the hero, never visible together with it), section reveal (once). Drift is desktop + hover only.
 - Project page: marks strike in order on load (300 / 650 / 1000 ms), one tick highlight over the 30 uptime
-  cells (loop 1). Elsewhere: hover, press and focus answers, like/follow pop, page cross-fade
-  (`@view-transition`, 180ms).
+  cells (1 loop). Elsewhere: hover, press and focus answers, like/follow pop, menu and toast fades, page
+  cross-fade.
+- Page cross-fade is `@view-transition` (180 ms) inside `prefers-reduced-motion: no-preference`. Browsers
+  without view transitions ignore the rule and navigate normally; `view-transition-name: site-header` is
+  harmless there.
+
+## Performance
+- Self-hosted woff2 only (Latin set per page ~88 KB: Inter 48, Manrope 25, Plex Mono 15; Cyrillic and Latin-ext
+  load only when the text needs them, by `unicode-range`). Inter + Manrope Latin (and Cyrillic for `uk`) are
+  preloaded. Fallback fonts are size-adjusted, so the swap does not move the layout.
+- Core CSS per page (tokens, base, components, motion): 55 KB raw, 14 KB gzip; one page file on top. Core JS
+  (5 small ES modules, deferred by `type="module"`): 5.9 KB raw, 2.7 KB gzip. Only `theme-init.js` is blocking
+  (it sets the theme and `.js` before first paint).
+- Images carry width/height and `loading="lazy"` (the first project screenshot is not lazy). Production
+  `collectstatic` hashes every file (`CompressedManifestStaticFilesStorage`).
+- Dead CSS check: a class that no template, JS or Python file mentions is removed (dynamic names such as
+  `avatar--{size}` and `is-{status}` are the exceptions; search before deleting).
+
+## Accessibility
+- Skip link first in the tab order (44px, shown on focus), one `<main id="main">`, one `h1` per page, headings
+  in order (an empty state under the page title is an `h2`).
+- Focus: 2px `--focus` outline, offset 2px, on every control. No positive `tabindex`.
+- Menus are native `<details>` (work without JS; `menu.js` adds Escape and outside click). Tabs are plain links
+  with `aria-current`. The theme switch is a group of buttons with `aria-pressed`. The language switch is a
+  labelled `<select>` in a POST form. Toasts live in an `aria-live="polite"` region; errors use `role="alert"`.
+- Form fields have visible labels, `aria-invalid` and `aria-describedby` for errors; a failed form shows an
+  error summary that takes focus.
+- Checked 2026-11-11 in Firefox at 360/390/768/1024/1440 px, light and dark, `uk` (and `de` at 360 for long
+  words): no horizontal scroll. Not checked: real iOS/Android, screen readers.
 
 ## Badge (`projects/badges.py`)
 Drawn in Python with fixed colors from the light tokens (plate, graphite, steel, line) and green for stamps and
@@ -127,6 +164,9 @@ white/proof 7.96, line/plate 3.49 (border).
   PNGs for the touch icon and OG image; `logo-dark.svg` and `logo-mark-dark.svg` are light copies for the dark
   admin. Options A and B live in `static/brand/options/` (styleguide only).
 - Wordmark: lowercase "shipmark" in Manrope 700 as outlines. Header and footer inline the SVG so it follows the theme.
+  `SITE_NAME` stays "Shipmark" (capitalised in running text and page titles); only the logo files and the OG image spell
+  it lowercase. `SITE_DOMAIN = "shipmark.me"` is shown in the footer, badges and embed snippets. The OG image
+  (`og-default.png`) has the headline and the three marks baked in, with "Repo owner" as the first mark.
 
 ## Admin
 django-unfold, colors from the same palette (`UNFOLD["COLORS"]`: primary = terracotta, base = warm green-black),

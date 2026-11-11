@@ -1,4 +1,12 @@
-# Redesign plan (phase 0, waiting for approval)
+# Redesign plan: COMPLETED (phases 0-4 done, 2026-11-11)
+
+> **Status: done.** This file is the history of the plan. The final design is in `docs/DESIGN.md` and
+> CLAUDE.md section 9. Where the final result differs from the plan below, the final result wins:
+> display font is **Manrope** (not Geologica); the logo is **C "struck slash"** (not A); the dark
+> palette is the one in `tokens.css` (the table in section 3 is the first draft); the old token aliases
+> and the unused `.grid` utility were deleted in phase 4a; the OG image says "Repo owner".
+
+# Redesign plan (written in phase 0)
 
 Source: `docs/new_design/{white,dark}_version/` (landing only, 1440px). Everything else is inferred.
 
@@ -7,7 +15,7 @@ Source: `docs/new_design/{white,dark}_version/` (landing only, 1440px). Everythi
 - Square corners, 1px hairline frames, no shadows or bevels. Depth comes from surface color only.
 - Terracotta as the one action color; green only for proof (chips, check, notes).
 - Big geometric two-sentence headlines; mono uppercase eyebrows and meta lines; `↗` in buttons.
-- Hallmarks as flat mono chips "✓ Authored", pale green when earned.
+- Hallmarks as flat mono chips (the images say "✓ Authored"; we ship "✓ Repo owner"), pale green when earned.
 - Landing order: header · hero (text + project record) · statement band · 01 The standard ·
   02 Out in the world · 03 The work behind the mark · closing band · footer.
 
