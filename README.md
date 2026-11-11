@@ -19,7 +19,10 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Open http://127.0.0.1:8000/.
+Always open **http://localhost:8000/**, not 127.0.0.1. GitHub sign-in works only there (the OAuth
+app's callback is a localhost URL), and a browser keeps cache, theme and cookies per address, so the
+two can look different. In development `127.0.0.1` is redirected to `localhost` automatically, and
+static files are sent with `Cache-Control: no-cache`, so CSS and JS edits show on a normal reload.
 
 ## Everyday commands
 

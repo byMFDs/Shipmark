@@ -25,7 +25,7 @@
         <p class="sg-panel__theme">{{ theme|capfirst }} theme</p>
         <div class="sg-logos">
           {% for option in "abc" %}
-            <figure class="sg-logo-option{% if option == 'b' %} is-chosen{% endif %}">
+            <figure class="sg-logo-option{% if option == 'c' %} is-chosen{% endif %}">
               <div class="sg-logo-option__sizes">
                 {% with "brand/options/mark-"|add:option|add:".svg" as path %}
                   {% inline_svg path "sg-mark sg-mark--16" %}{% inline_svg path "sg-mark sg-mark--24" %}{% inline_svg path "sg-mark sg-mark--32" %}{% inline_svg path "sg-mark sg-mark--64" %}
@@ -37,13 +37,14 @@
                   <p class="muted">A check cut out of a square, its long arm running out through the corner. The most literal
                     “verified”, but at 16px the notch disappears and it reads as a ticked checkbox.</p>
                 {% elif option == "b" %}
-                  <p class="sg-logo-option__name">B · Corner stamp <span class="label sg-pick">Recommended, in use</span></p>
+                  <p class="sg-logo-option__name">B · Corner stamp</p>
                   <p class="muted">A plate (the project) with a smaller square struck into its corner (the mark of proof),
                     split by a clean gap. Abstract, nothing like a checkbox, and the gap still shows at 16px.</p>
                 {% else %}
-                  <p class="sg-logo-option__name">C · Struck slash</p>
-                  <p class="muted">The “s/” of the sketches reduced to a slash and a full stop. Ties to the terminal and the
-                    record numbers, but says less about proof and is close to many dev-tool logos.</p>
+                  <p class="sg-logo-option__name">C · Struck slash <span class="label sg-pick">In use</span></p>
+                  <p class="muted">A slash and a full stop cut out of a square with one 8-unit punch. The slash leans 2:1,
+                    lower and heavier than a typed “/”, so it reads as a struck mark, not a path. The stop is 8×8 units on
+                    even edges: a crisp 4×4 px square at 16px.</p>
                 {% endif %}
               </figcaption>
             </figure>

@@ -49,7 +49,7 @@ STYLEGUIDE_TOKENS = [
     ("muted", "#5C635B", "#A2AAA1", "Secondary text"),
     ("line", "#D9D8D0", "#2B3530", "Hairlines, frames"),
     ("line-strong", "#868A80", "#6D7771", "Borders of controls (3:1)"),
-    ("accent", "#BD4B27", "#E5835C", "The one primary action"),
+    ("accent", "#BD4B27", "#F5803F", "The one primary action (dark: dark text on it)"),
     ("accent-text", "#AE411D", "#EC8E68", "Eyebrows, numbers"),
     ("proof-bg", "#E3EBDA", "#22362A", "Earned marks, proof notes"),
     ("proof", "#2B5A3F", "#A9D1B4", "Text on proof"),

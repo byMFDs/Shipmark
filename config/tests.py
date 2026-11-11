@@ -179,3 +179,47 @@ class JsonLoggingTests(SimpleTestCase):
             SECRET_KEY_FALLBACKS="old-one,older-one",
         )
         self.assertIn("['old-one', 'older-one']", result.stdout, result.stderr)
+
+
+# ---------- Local development: one origin, no stale static files (redesign phase 1 fixes) ----------
+
+class LocalhostRedirectTests(TestCase):
+    def test_middleware_is_on_in_dev_settings(self):
+        self.assertEqual(settings.MIDDLEWARE[0], "config.middleware.LocalhostRedirectMiddleware")
+
+    @override_settings(DEBUG=True)
+    def test_127_0_0_1_redirects_to_localhost_with_path_and_query(self):
+        response = Client().get("/explore/?q=a%20b&sort=new", HTTP_HOST="127.0.0.1:8000")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["Location"], "http://localhost:8000/explore/?q=a%20b&sort=new")
+
+    @override_settings(DEBUG=True)
+    def test_static_files_redirect_too(self):
+        response = Client().get("/static/css/tokens.css", HTTP_HOST="127.0.0.1:8000")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["Location"], "http://localhost:8000/static/css/tokens.css")
+
+    @override_settings(DEBUG=True)
+    def test_localhost_and_lookalike_hosts_are_not_redirected(self):
+        for host in ("localhost:8000", "127.0.0.10:8000", "127.0.0.1.evil.test"):
+            response = Client().get("/static/css/tokens.css", HTTP_HOST=host)
+            self.assertNotEqual(response.status_code, 302, host)
+
+    def test_no_redirect_when_debug_is_off(self):
+        response = Client().get("/", HTTP_HOST="127.0.0.1:8000")
+        self.assertNotEqual(response.status_code, 302)
+
+    @override_settings(DEBUG=True)
+    def test_static_files_are_not_cached_in_debug(self):
+        response = Client().get("/static/css/tokens.css", HTTP_HOST="localhost:8000")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Cache-Control"], "no-cache")
+
+    def test_production_settings_have_neither(self):
+        result = ProductionSettingsTests._manage(
+            self, "shell", "-c",
+            "from django.conf import settings as s; "
+            "print('LR' in str(s.MIDDLEWARE).replace('LocalhostRedirect', 'LR'), 'runserver_nostatic' in s.INSTALLED_APPS, "
+            "hasattr(s, 'WHITENOISE_ADD_HEADERS_FUNCTION'))",
+        )
+        self.assertIn("False False False", result.stdout, result.stderr)

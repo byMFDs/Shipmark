@@ -1,4 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Shipmark">
-  <!-- Option C, struck slash: a slash and a full stop cut out of a square. -->
-  <path class="logo-mark" fill="#20251F" fill-rule="evenodd" d="M0 0L32 0L32 32L0 32ZM7 26L12.5 26L21 6L15.5 6ZM20 21L25 21L25 26L20 26Z"/>
+  <!-- Option C, struck slash: a slash and a full stop cut out of a square with one 8-unit punch. -->
+  <path class="logo-mark" fill="#20251F" fill-rule="evenodd" d="M0 0H32V32H0ZM4 26H12L22 6H14ZM20 18H28V26H20Z"/>
 </svg>

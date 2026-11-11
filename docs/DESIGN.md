@@ -6,16 +6,46 @@ An assay office for software: projects are plates, proof is struck into them. Ru
   glow, gradient or tinted section. People are round (avatars); objects are cut (plates, marks).
 - Text left-aligned. Motion only answers an action, except the hero strike. No hover lifts.
 
-## Color (light / dark; contrast on paper)
-- `--paper` #F1F2EF / #15171A page · `--plate` #FAFAF8 / #1F2226 raised surfaces and inputs.
-- `--text` #1E2126 / #E6E7E9 (14.4 / 14.5) · `--steel` **#666C74** / #9AA0A8 (4.7 / 6.8) secondary.
-  Spec value #6E747C is 4.2:1 on paper (fails AA); #666C74 is the closest one that passes.
-- `--line` #D5D8DB / #2E3237 dividers only · `--line-strong` #868C93 / #6B7179 (3.2 / 3.6) borders
-  of inputs, checkboxes, secondary buttons (WCAG 1.4.11 needs 3:1; `--line` is 1.3:1).
-- `--ink` #2A3FCF / #8EA8F1 (6.9 / 7.7; dark keeps the light hue, less chroma) · `--on-ink` #FAFAF8 / #15171A.
-- `--danger` #A8322D / #F08A80 (5.9 / 7.4). No green "success": results are said in words.
-- Light on `:root`; dark via `prefers-color-scheme` unless `[data-theme=light]`, or on any
-  `[data-theme=dark]` element (styleguide shows both). Inline `<head>` script: no flash.
+## Color (light / dark)
+Values: `static/css/tokens.css` (the redesign tokens; old names like `--ink`, `--steel` are aliases
+until phase 3). Dark theme is used by the toggle, by the OS setting, and always inside `.band`.
+
+### Measured contrast (WCAG 2.x; AA = 4.5:1 text, 3:1 large text and UI). Checked 2026-11-11.
+Recheck after any token change; every pair below must stay at or above its minimum.
+
+| Pair (text / background) | Light | Dark | Min | Where |
+|---|---|---|---|---|
+| `--text` / `--paper` | 14.04 | 15.05 | 4.5 | body text |
+| `--text` / `--surface` | 15.46 | 13.70 | 4.5 | cards, inputs |
+| `--text` / `--tint` over paper | 12.81 | 12.80 | 4.5 | quiet button hover |
+| `--muted` / `--paper` | 5.57 | 7.40 | 4.5 | secondary text |
+| `--muted` / `--surface` | 6.14 | 6.73 | 4.5 | secondary text on cards |
+| `--accent-text` / `--paper` | 5.29 | 7.26 | 4.5 | accent words, labels |
+| `--accent-text` / `--surface` | 5.82 | 6.61 | 4.5 | accent words on cards |
+| `--on-accent` / `--accent` | 4.96 | **6.76** | 4.5 | primary button |
+| `--on-accent` / `--accent-hover` | 6.50 | **8.29** | 4.5 | primary button, hover |
+| `--proof` / `--proof-bg` | 6.51 | 7.65 | 4.5 | hallmark chip, proof note |
+| `--danger` / `--paper` | 5.98 | 7.27 | 4.5 | error text |
+| `--danger` / `--surface` | 6.59 | 6.62 | 4.5 | error text on cards |
+| `--danger` / `--danger-tint` over paper | 5.32 | 6.24 | 4.5 | danger button hover |
+| `--on-danger` / `--danger` | 6.59 | 7.27 | 4.5 | solid danger button |
+| `--on-danger` / `--danger-hover` | 8.49 | 8.76 | 4.5 | solid danger button, hover |
+| `--paper` / `--text` | 14.04 | 15.05 | 4.5 | inverted: chosen theme option, skip link |
+| `--line-strong` / `--paper` | 3.17 | 3.80 | 3 | UI: input and control borders |
+| `--line-strong` / `--surface` | 3.49 | 3.46 | 3 | UI: borders on cards |
+| `--accent` / `--paper` | 4.50 | 6.76 | 3 | UI: primary button edge |
+| `--accent` / `--surface` | 4.96 | 6.15 | 3 | UI: primary button edge on cards |
+| `--focus` / `--paper` | 14.04 | 15.05 | 3 | UI: focus ring |
+| `--proof` / `--surface` | 7.89 | 9.54 | 3 | UI: tick strip cells |
+| `--line` / `--paper` | 1.29 | 1.39 | none | dividers only (decorative, never a control edge) |
+
+`.band` (dark strip; dark tokens on `--band-bg` #212721 in the light page / #0D1310 in the dark page):
+text 13.00 / 16.02 · muted 6.39 / 7.87 · accent-text 6.27 / 7.73 · accent edge 5.84 / 7.19 ·
+line-strong 3.29 / 4.05 · focus 13.00 / 16.02. The primary button inside a band is the dark one.
+
+**Dark primary button.** Was `#E5835C`, a pale orange that looked weak; it is now `#F5803F`
+(more saturated) with dark text `#141A17` (6.76:1), hover `#FA9A63` (8.29:1). White text on any light
+orange fails (≈2.6:1), so in dark the label is always dark. In light it stays white on `#BD4B27`.
 
 ## Type
 - Plex Sans 400, 400 italic, 600 (body, UI, h3-h4) · Plex Sans Condensed 600 (h1-h2 only) ·
@@ -74,7 +104,13 @@ An assay office for software: projects are plates, proof is struck into them. Ru
 - Tabs: plain links with `aria-current`; active = text color + 2px ink bar.
 
 ## Logo
-- Mark: square cartouche (cut 2/16; a bigger cut reads as a stop sign), ink, cut-out ⊥. Not a letter,
-  not a check mark: survives a rename, does not read as a checkbox at 16px.
-- Wordmark: name in Plex Sans Condensed 600, outlined to paths. Header inlines the SVG file so it
-  follows the theme; favicon.svg swaps ink for dark browser tabs with its own media query.
+- Mark C, "struck slash": a square with a slash and a full stop cut out of it. Both cuts use one
+  8-unit punch on the 32-unit grid. The slash leans 2:1 (about 63°), lower and heavier than a typed
+  "/" (~70°), so it reads as a struck mark, not a path separator or a terminal prompt. The stop is an
+  8×8 square on even units: exactly 4×4 px at 16px, so it stays visible in a browser tab.
+- Path: `M0 0H32V32H0ZM4 26H12L22 6H14ZM20 18H28V26H20Z` (even-odd). Used in `logo.svg`,
+  `logo-mark.svg`, `favicon.svg`; the PNGs (`apple-touch-icon.png`, `og-default.png`) draw the same shape.
+- Options A (notch check) and B (corner stamp) are kept in `static/brand/options/` and shown only on
+  `/styleguide/`.
+- Wordmark: lowercase "shipmark" in Manrope 700, outlined to paths. Header and footer inline the SVG
+  so it follows the theme; favicon.svg switches color with its own `prefers-color-scheme` query.

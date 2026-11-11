@@ -1,7 +1,8 @@
 import hashlib
+import re
 
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.middleware.locale import LocaleMiddleware
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -12,6 +13,28 @@ from .ratelimit import is_limited
 
 
 BADGE_PREFIX = "/badge/"
+
+
+class LocalhostRedirectMiddleware:
+    """Development only (listed in settings/dev.py): http://127.0.0.1:8000/x?y -> http://localhost:8000/x?y.
+
+    A browser keeps its cache, localStorage (theme) and cookies (session, language) per origin, so the two
+    addresses can show different things; and the GitHub OAuth app knows only the localhost callback.
+    """
+
+    HOST = re.compile(r"127\.0\.0\.1(:\d{1,5})?")
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if settings.DEBUG:
+            # Raw header, not get_host(): nothing here is trusted, it only has to match exactly.
+            match = self.HOST.fullmatch(request.META.get("HTTP_HOST", ""))
+            if match:
+                port = match.group(1) or ""
+                return HttpResponseRedirect(f"{request.scheme}://localhost{port}{request.get_full_path()}")
+        return self.get_response(request)
 
 
 class UserLocaleMiddleware(LocaleMiddleware):
