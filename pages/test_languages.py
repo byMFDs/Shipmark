@@ -152,3 +152,20 @@ class NewLanguagePagesTests(TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(response, f'<html lang="{code}">')
                 self.assertNotContains(response, "Privacy policy")
+
+
+class AboutPageTests(TestCase):
+    def test_about_is_real_content_in_every_language(self):
+        from config import branding
+
+        for code in CODES:
+            with self.subTest(code=code):
+                html = self.client.get("/about/", headers={"Accept-Language": code}).content.decode()
+                self.assertIn(f'href="mailto:{branding.CONTACT_EMAIL}"', html)  # contact comes from branding.py
+                self.assertIn('href="/how-proof-works/"', html)
+                self.assertTrue("Danylo Rudenko" in html or "Данило Руденко" in html)
+                self.assertIn("TODO", html)  # things the developer must confirm stay visible until edited
+                for anchor in ("problem", "proof", "not-verified", "builders", "who", "next", "contact"):
+                    self.assertIn(f'id="{anchor}"', html)
+                for leftover in ("This page is a placeholder", "Ta strona jest tymczasowa", "Це тимчасова сторінка", "{{"):
+                    self.assertNotIn(leftover, html.split("<main", 1)[1])

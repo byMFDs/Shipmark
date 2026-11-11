@@ -176,9 +176,9 @@ class LanguageDetectionTests(TestCase):
 
 class ContentPageTests(TestCase):
     def test_about_in_each_language(self):
-        self.assertContains(self.client.get("/about/"), "<h1>About</h1>")
+        self.assertContains(self.client.get("/about/"), "<h1>About Shipmark</h1>")
         uk = self.client.get("/about/", headers={"Accept-Language": "uk"})
-        self.assertContains(uk, "<h1>Про проєкт</h1>")
+        self.assertContains(uk, "<h1>Про Shipmark</h1>")
 
     def test_falls_back_to_english_file(self):
         with tempfile.TemporaryDirectory() as tmp:
