@@ -20,7 +20,7 @@
   <div class="container page">
     {% if is_owner %}
       <div class="owner-bar" role="region" aria-label="{% translate 'Owner controls' %}">
-        <p class="owner-bar__state">
+        <p class="owner-bar__state is-{{ project.status }}">
           {% if project.status == "published" %}{% translate "Published" %}
           {% elif project.status == "hidden" %}{% translate "Hidden by moderators. Only you can see this page." %}
           {% else %}{% translate "Draft. Only you can see this page." %}{% endif %}
@@ -37,101 +37,125 @@
       </div>
     {% endif %}
 
-    <article class="plate plate--featured project">
-      <div class="plate__head">
-        <p class="plate__owner">
+    {# On phones the blocks follow the order set in project.css (marks right after the cover); from 64em: main column + proof column. #}
+    <article class="project">
+      <header class="project__head">
+        <p class="project__by">
           {% avatar person.display_name|default:person.username 24 %}
           <a href="{% url 'accounts:profile' person.username %}">@{{ person.username }}</a>
           <span data-launched>{% include "projects/_launched.html" %}</span>
         </p>
-        <h1 class="plate__title">{{ project.name }}</h1>
-        <p class="plate__tagline">{{ project.tagline }}</p>
-      </div>
+        <h1 class="project__title">{{ project.name }}</h1>
+        <p class="lede project__tagline">{{ project.tagline }}</p>
 
-      {% if project.status == "published" %}
-        <div class="project__social">
-          {% include "social/_like.html" with count=like_count liked=liked %}
-          {% if not is_owner %}<a class="btn btn--quiet" href="{% url 'moderation:report_project' person.username project.slug %}">{% translate "Report" %}</a>{% endif %}
-        </div>
-      {% endif %}
-
-      {% if project.safe_live_url or project.repo_url %}
-        <ul class="project__links">
-          {% if project.safe_live_url %}<li><a class="btn btn--primary" href="{{ project.safe_live_url }}" rel="nofollow ugc noopener">{% translate "Open live site" %}</a></li>{% endif %}
-          {% if project.repo_url %}<li><a class="btn btn--secondary with-icon" href="{{ project.repo_url }}" rel="nofollow ugc noopener">{% icon "github" %}{{ project.repo_full_name }}</a></li>{% endif %}
-        </ul>
-      {% endif %}
-
-      {% if screenshots %}
-        <div class="plate__media">
-          <img src="{{ screenshots.0.image.url }}" width="{{ screenshots.0.width }}" height="{{ screenshots.0.height }}" alt="{% blocktranslate with name=project.name %}Screenshot 1 of {{ name }}{% endblocktranslate %}">
-        </div>
-        {% if screenshots|length > 1 %}
-          <ul class="project__shots">
-            {% for shot in screenshots|slice:"1:" %}
-              <li><img src="{{ shot.image.url }}" width="{{ shot.width }}" height="{{ shot.height }}" alt="{% blocktranslate with n=forloop.counter|add:1 name=project.name %}Screenshot {{ n }} of {{ name }}{% endblocktranslate %}" loading="lazy"></li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      {% endif %}
-
-      <div class="plate__strip project__hallmarks">
-        {% for h in hallmarks %}{% include "projects/_hallmark_info.html" %}{% endfor %}
-      </div>
-
-      {% if uptime %}
-        <section class="uptime" aria-labelledby="uptime-title">
-          <h2 id="uptime-title" class="uptime__title">{% translate "Uptime" %}</h2>
-          {% if uptime.total %}
-            <p class="uptime__figure">
-              <strong class="uptime__percent">{{ uptime.percent|floatformat:"-1" }}%</strong>
-              {% blocktranslate count n=uptime.total trimmed %}of {{ n }} check in the last 30 days{% plural %}of {{ n }} checks in the last 30 days{% endblocktranslate %}
-            </p>
-          {% else %}
-            <p class="uptime__figure">{% translate "No checks in the last 30 days yet. The site is checked every few hours." %}</p>
-          {% endif %}
-          {% if uptime.last_checked_at %}
-            <p class="uptime__last">{% blocktranslate with time=uptime.last_checked_at|timesince trimmed %}Last checked {{ time }} ago{% endblocktranslate %}</p>
-          {% endif %}
-          <ol class="uptime-strip" aria-label="{% translate 'Daily results, last 30 days' %}">
-            {% for day in uptime.days %}
-              <li class="uptime-strip__day is-{{ day.state }}"><span class="visually-hidden">{{ day.date|date:"j M" }}:
-                {% if not day.total %}{% translate "no checks" %}{% else %}{% blocktranslate with ok=day.ok total=day.total trimmed %}{{ ok }} of {{ total }} checks up{% endblocktranslate %}{% endif %}</span></li>
-            {% endfor %}
-          </ol>
-          <div class="uptime-strip__axis" aria-hidden="true"><span>{% translate "30 days ago" %}</span><span>{% translate "Today" context "uptime" %}</span></div>
-          <ul class="uptime-legend" aria-hidden="true">
-            <li><span class="uptime-strip__day is-up"></span>{% translate "Up" context "uptime" %}</li>
-            <li><span class="uptime-strip__day is-partial"></span>{% translate "Some checks failed" %}</li>
-            <li><span class="uptime-strip__day is-down"></span>{% translate "Down" context "uptime" %}</li>
-            <li><span class="uptime-strip__day is-none"></span>{% translate "No checks" %}</li>
-          </ul>
-        </section>
-      {% endif %}
-
-      {% if project.description %}
-        <section class="project__description" aria-labelledby="about-title">
-          <h2 id="about-title" class="visually-hidden">{% translate "About this project" %}</h2>
-          <div class="prose">{{ project.description_html|safe }}</div>
-        </section>
-      {% endif %}
-
-      {% if project_tags or tools %}
-        <div class="plate__meta">
-          {% if project_tags %}
-            <ul class="chip-list" aria-label="{% translate 'Tags' %}">
-              {% for tag in project_tags %}<li><span class="chip">{{ tag.name }}</span></li>{% endfor %}
+        <div class="project__actions">
+          {% if project.safe_live_url or project.repo_url %}
+            <ul class="project__links">
+              {% if project.safe_live_url %}<li><a class="btn btn--primary" href="{{ project.safe_live_url }}" rel="nofollow ugc noopener">{% translate "Open live site" %}{% icon "arrow-up-right" "arrow" %}</a></li>{% endif %}
+              {% if project.repo_url %}<li><a class="btn btn--secondary with-icon" href="{{ project.repo_url }}" rel="nofollow ugc noopener">{% icon "github" %}<span>{{ project.repo_full_name }}</span></a></li>{% endif %}
             </ul>
           {% endif %}
-          {% if tools %}
-            <p class="declared">{% translate "Built with (self-declared)" %}: {% for tool in tools %}{{ tool.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+          {% if project.status == "published" %}
+            <div class="project__social">
+              {% include "social/_like.html" with count=like_count liked=liked %}
+              {% if not is_owner %}<a class="btn btn--quiet" href="{% url 'moderation:report_project' person.username project.slug %}">{% translate "Report" %}</a>{% endif %}
+            </div>
           {% endif %}
         </div>
-      {% endif %}
-    </article>
+      </header>
 
-    {% include "projects/_build_log.html" %}
-    {% if embed %}{% include "projects/_embed_badge.html" %}{% endif %}
+      <div class="project__col project__col--main">
+        {% if screenshots %}
+          <figure class="project__cover">
+            <img src="{{ screenshots.0.image.url }}" width="{{ screenshots.0.width }}" height="{{ screenshots.0.height }}" alt="{% blocktranslate with name=project.name %}Screenshot 1 of {{ name }}{% endblocktranslate %}">
+            {% if screenshots|length > 1 %}
+              <ul class="project__shots">
+                {% for shot in screenshots|slice:"1:" %}
+                  <li><img src="{{ shot.image.url }}" width="{{ shot.width }}" height="{{ shot.height }}" alt="{% blocktranslate with n=forloop.counter|add:1 name=project.name %}Screenshot {{ n }} of {{ name }}{% endblocktranslate %}" loading="lazy"></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </figure>
+        {% endif %}
+
+        {% if project.description %}
+          <section class="project__about" aria-labelledby="about-title">
+            <h2 id="about-title" class="label">{% translate "About this project" %}</h2>
+            <div class="prose">{{ project.description_html|safe }}</div>
+          </section>
+        {% endif %}
+
+        {% include "projects/_build_log.html" %}
+      </div>
+
+      <div class="project__col project__col--side">
+        {# The marks: the reason the page exists. Struck once on load (motion.css); the uptime strip ticks while it is on screen. #}
+        <section class="record proofs strike" aria-labelledby="proofs-title" data-loop>
+          <div class="record__head"><h2 class="label" id="proofs-title">{% translate "Checked, not self-reported" %}</h2></div>
+          <div class="record__body">
+            <div class="project__hallmarks">
+              {% for h in hallmarks %}{% include "projects/_hallmark_info.html" %}{% endfor %}
+            </div>
+
+            {% if uptime %}
+              <section class="uptime" aria-labelledby="uptime-title">
+                <h3 id="uptime-title" class="uptime__title label">{% translate "Uptime" %}</h3>
+                {% if uptime.total %}
+                  <p class="uptime__figure">
+                    <strong class="uptime__percent numeric">{{ uptime.percent|floatformat:"-1" }}%</strong>
+                    <span class="uptime__of">{% blocktranslate count n=uptime.total trimmed %}of {{ n }} check in the last 30 days{% plural %}of {{ n }} checks in the last 30 days{% endblocktranslate %}</span>
+                  </p>
+                {% else %}
+                  <p class="uptime__figure uptime__of">{% translate "No checks in the last 30 days yet. The site is checked every few hours." %}</p>
+                {% endif %}
+                {% if uptime.last_checked_at %}
+                  <p class="uptime__last">{% blocktranslate with time=uptime.last_checked_at|timesince trimmed %}Last checked {{ time }} ago{% endblocktranslate %}</p>
+                {% endif %}
+                <div class="uptime-strip">
+                  <ol class="uptime-strip__days" aria-label="{% translate 'Daily results, last 30 days' %}">
+                    {% for day in uptime.days %}
+                      <li class="uptime-strip__day is-{{ day.state }}"><span class="visually-hidden">{{ day.date|date:"j M" }}:
+                        {% if not day.total %}{% translate "no checks" %}{% else %}{% blocktranslate with ok=day.ok total=day.total trimmed %}{{ ok }} of {{ total }} checks up{% endblocktranslate %}{% endif %}</span></li>
+                    {% endfor %}
+                  </ol>
+                  <span class="uptime-strip__head" aria-hidden="true"></span>
+                </div>
+                <div class="uptime-strip__axis label" aria-hidden="true"><span>{% translate "30 days ago" %}</span><span>{% translate "Today" context "uptime" %}</span></div>
+                <ul class="uptime-legend" aria-hidden="true">
+                  <li><span class="uptime-strip__day is-up"></span>{% translate "Up" context "uptime" %}</li>
+                  <li><span class="uptime-strip__day is-partial"></span>{% translate "Some checks failed" %}</li>
+                  <li><span class="uptime-strip__day is-down"></span>{% translate "Down" context "uptime" %}</li>
+                  <li><span class="uptime-strip__day is-none"></span>{% translate "No checks" %}</li>
+                </ul>
+              </section>
+            {% endif %}
+          </div>
+        </section>
+
+        {% if project_tags or tools %}
+          <div class="record facts">
+            {% if tools %}
+              <div class="facts__group">
+                <h2 class="label">{% translate "Built with (self-declared)" %}</h2>
+                <ul class="chip-list">
+                  {% for tool in tools %}<li><span class="chip">{{ tool.name }}</span></li>{% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+            {% if project_tags %}
+              <div class="facts__group">
+                <h2 class="label">{% translate "Tags" %}</h2>
+                <ul class="chip-list">
+                  {% for tag in project_tags %}<li><span class="chip">{{ tag.name }}</span></li>{% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if embed %}{% include "projects/_embed_badge.html" %}{% endif %}
+      </div>
+    </article>
   </div>
 {% endblock %}
 {% block scripts %}{% if embed %}<script type="module" src="{% static 'js/copy.js' %}"></script>{% endif %}{% if log_form %}<script type="module" src="{% static 'js/build-log.js' %}"></script>{% endif %}<script type="module" src="{% static 'js/social.js' %}"></script>{% endblock %}

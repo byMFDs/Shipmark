@@ -291,6 +291,56 @@
   .checkbox::before { background: CanvasText; }
 }
 
+/* Radio: the round twin of the checkbox (a chosen option is filled with the text color). */
+.radio {
+  appearance: none;
+  flex: none;
+  display: grid;
+  place-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.15em 0 0;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.radio::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--paper);
+  transform: scale(0);
+  transition: transform var(--t-fast) var(--ease-out);
+}
+
+.radio:checked { background: var(--text); border-color: var(--text); }
+.radio:checked::before { transform: scale(1); }
+
+@media (forced-colors: active) {
+  .radio::before { background: CanvasText; }
+}
+
+/* A literal value to paste (DNS record, meta tag, embed snippet): mono, selectable in one tap.
+   Sits next to a .btn--copy button; the text stays selectable when JS is off. */
+.code-value {
+  flex: 1 1 14rem;
+  min-width: 0;
+  padding: var(--s-2) var(--s-3);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--fs--1);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  user-select: all;
+  -webkit-user-select: all;
+}
+
+.btn--copy { flex: none; gap: var(--s-2); }
+
 /* ---------- Record: a framed surface with a mono header row ---------- */
 /* "Shipmark / Project record   № 0042", "Relay / Build log". */
 

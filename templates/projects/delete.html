@@ -7,7 +7,7 @@
 
 {% block content %}
   <div class="container page">
-    <div class="editor stack">
+    <div class="confirm">
       <h1>{% translate "Delete this project?" %}</h1>
       <p>{% blocktranslate with name=project.name %}“{{ name }}” and its screenshots will be removed for good. This cannot be undone.{% endblocktranslate %}</p>
       <form method="post" class="confirm-actions">

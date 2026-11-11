@@ -1,18 +1,20 @@
 {% load i18n ui %}
-<section class="embed" aria-labelledby="embed-title">
-  <h2 id="embed-title" class="embed__title">{% translate "Embed badge" %}</h2>
-  <p class="embed__hint muted">{% translate "Paste it into a README or a website. It shows the hallmarks you have now and refreshes within an hour." %}</p>
-  <p class="embed__preview"><img src="{{ embed.badge_url }}" alt="{{ embed.alt }}" height="28"></p>
-  <dl class="embed__snippets">
-    <div>
-      <dt>{% translate "Markdown" %}</dt>
-      <dd><code class="embed__code" id="embed-markdown">{{ embed.markdown }}</code>
-        <button type="button" class="btn btn--quiet needs-js embed__copy" data-copy="embed-markdown" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd>
-    </div>
-    <div>
-      <dt>HTML</dt>
-      <dd><code class="embed__code" id="embed-html">{{ embed.html }}</code>
-        <button type="button" class="btn btn--quiet needs-js embed__copy" data-copy="embed-html" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd>
-    </div>
-  </dl>
+<section class="record embed" aria-labelledby="embed-title">
+  <div class="record__head"><h2 id="embed-title" class="label">{% translate "Embed badge" %}</h2></div>
+  <div class="record__body">
+    <p class="embed__hint muted">{% translate "Paste it into a README or a website. It shows the hallmarks you have now and refreshes within an hour." %}</p>
+    <p class="embed__preview"><img src="{{ embed.badge_url }}" alt="{{ embed.alt }}" height="28"></p>
+    <dl class="embed__snippets">
+      <div>
+        <dt class="label">{% translate "Markdown" %}</dt>
+        <dd><code class="code-value" id="embed-markdown">{{ embed.markdown }}</code>
+          <button type="button" class="btn btn--secondary btn--copy needs-js" data-copy="embed-markdown" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd>
+      </div>
+      <div>
+        <dt class="label">HTML</dt>
+        <dd><code class="code-value" id="embed-html">{{ embed.html }}</code>
+          <button type="button" class="btn btn--secondary btn--copy needs-js" data-copy="embed-html" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd>
+      </div>
+    </dl>
+  </div>
 </section>

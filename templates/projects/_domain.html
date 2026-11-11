@@ -19,11 +19,11 @@
           <ol class="method__steps">
             <li>{% translate "Open the DNS settings where you bought the domain or where its DNS is hosted (Cloudflare, Namecheap, GoDaddy and so on)." %}</li>
             <li>{% translate "Add a new record of type TXT:" %}
-              <dl class="record">
+              <dl class="dns-record">
                 <div><dt>{% translate "Name (Host)" %}</dt><dd><code class="code-value" id="dns-name">{{ domain_row.domain }}</code>
-                  <button type="button" class="btn btn--quiet btn--copy needs-js" data-copy="dns-name" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd></div>
+                  <button type="button" class="btn btn--secondary btn--copy needs-js" data-copy="dns-name" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd></div>
                 <div><dt>{% translate "Value" %}</dt><dd><code class="code-value" id="dns-value">{{ domain_record }}</code>
-                  <button type="button" class="btn btn--quiet btn--copy needs-js" data-copy="dns-value" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd></div>
+                  <button type="button" class="btn btn--secondary btn--copy needs-js" data-copy="dns-value" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></dd></div>
               </dl>
             </li>
             <li>{% translate "Save, wait a few minutes, then press Verify now." %}</li>
@@ -45,8 +45,8 @@
         <div class="method" data-method-panel="meta">
           <ol class="method__steps">
             <li>{% blocktranslate with url=domain_home %}Add this tag inside &lt;head&gt; of {{ url }}:{% endblocktranslate %}
-              <div class="record record--single"><code class="code-value" id="meta-value">{{ domain_meta }}</code>
-                <button type="button" class="btn btn--quiet btn--copy needs-js" data-copy="meta-value" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></div>
+              <div class="dns-record dns-record--single"><code class="code-value" id="meta-value">{{ domain_meta }}</code>
+                <button type="button" class="btn btn--secondary btn--copy needs-js" data-copy="meta-value" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></div>
             </li>
             <li>{% translate "Publish the site, then press Verify now." %}</li>
           </ol>

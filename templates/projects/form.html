@@ -8,6 +8,7 @@
 {% block content %}
   <div class="container page">
     <div class="editor">
+      <header class="editor__intro">
       <h1>{% if project %}{% translate "Edit project" %}{% else %}{% translate "New project" %}{% endif %}</h1>
       {% if project %}
         <p class="muted editor__status">
@@ -17,6 +18,9 @@
       {% else %}
         <p class="muted editor__status">{% translate "It starts as a draft. Nobody sees it until you publish." %}</p>
       {% endif %}
+      </header>
+
+      <div class="editor__body">
 
       <form method="post" class="editor__section stack" novalidate data-project-form data-preview-url="{% url 'projects:preview' %}">
         {% csrf_token %}
@@ -141,6 +145,7 @@
           <div><a class="btn btn--danger" href="{% url 'projects:delete' project.owner.username project.slug %}">{% translate "Delete project" %}</a></div>
         </section>
       {% endif %}
+      </div>
     </div>
   </div>
 {% endblock %}

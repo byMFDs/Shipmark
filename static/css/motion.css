@@ -57,6 +57,11 @@ html.is-paused [data-loop] *,
 .strike .hallmark.is-earned:nth-child(2) { --strike-at: 650ms; }
 .strike .hallmark.is-earned:nth-child(3) { --strike-at: 1000ms; }
 
+/* Marks wrapped one per block (project page proof column) strike in the same order. */
+.strike .hallmark-info:nth-child(1) .hallmark.is-earned { --strike-at: 300ms; }
+.strike .hallmark-info:nth-child(2) .hallmark.is-earned { --strike-at: 650ms; }
+.strike .hallmark-info:nth-child(3) .hallmark.is-earned { --strike-at: 1000ms; }
+
 .strike .hallmark.is-earned .hallmark__chip {
   animation: hm-press 260ms var(--ease-press) var(--strike-at, 0ms) both;
 }

@@ -1,7 +1,8 @@
 {% load i18n ui %}{# Build log on the project page. Visitors see it only when there are entries. #}
 {% if is_owner or log_entries %}
-  <section class="build-log" id="build-log" aria-labelledby="build-log-title" data-build-log>
-    <h2 id="build-log-title" class="build-log__title" tabindex="-1">{% translate "Build log" %}</h2>
+  <section class="record build-log" id="build-log" aria-labelledby="build-log-title" data-build-log>
+    <div class="record__head"><h2 id="build-log-title" class="build-log__title label" tabindex="-1">{% translate "Build log" %}</h2></div>
+    <div class="record__body">
 
     {% if log_form %}
       <form class="log-form" method="post" action="{% url 'projects:log_add' person.username project.slug %}" data-log-form>
@@ -29,5 +30,6 @@
       <p class="muted" data-log-empty{% if log_entries %} hidden{% endif %}>{% translate "No entries yet. Post what you shipped, fixed or learned. Visitors see the log once it has an entry." %}</p>
     {% endif %}
     {% if log_has_more %}<p class="muted">{% blocktranslate count n=log_entries|length trimmed %}Showing the latest {{ n }} entry.{% plural %}Showing the latest {{ n }} entries.{% endblocktranslate %}</p>{% endif %}
+    </div>
   </section>
 {% endif %}

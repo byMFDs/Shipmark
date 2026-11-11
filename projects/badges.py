@@ -28,12 +28,13 @@ FONT_SIZE = 12
 MAX_NAME_WIDTH = 170  # px; longer names are cut with an ellipsis
 FONT_STACK = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"
 
-# Design tokens from CLAUDE.md section 9 (light values, the badge is the same everywhere).
-GRAPHITE = "#1E2126"
-PLATE = "#FAFAF8"
-STEEL = "#666C74"
-LINE = "#868C93"
-INK = "#2A3FCF"
+# Design tokens from static/css/tokens.css (light values, the badge is the same everywhere).
+# Green is proof only, so it is the color of the stamps; the badge has no accent.
+GRAPHITE = "#20251F"
+PLATE = "#FFFEFA"
+STEEL = "#5C635B"
+LINE = "#868A80"
+INK = "#2B5A3F"
 
 HALLMARK_ORDER = ("authored", "live", "steady")
 HALLMARK_LABELS = {"authored": "Repo owner", "live": "Live", "steady": "Steady"}  # English only, see docs
@@ -151,9 +152,9 @@ class _Badge:
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{total}" height="{HEIGHT}" viewBox="0 0 {total} {HEIGHT}" '
             f'role="img" aria-label="{escape(self.title)}" font-family="{FONT_STACK}" font-size="{FONT_SIZE}">'
             f'<title>{escape(self.title)}</title>'
-            f'<clipPath id="r"><rect width="{total}" height="{HEIGHT}" rx="6"/></clipPath>'
+            f'<clipPath id="r"><rect width="{total}" height="{HEIGHT}"/></clipPath>'
             f'<g clip-path="url(#r)"><rect width="{total}" height="{HEIGHT}" fill="{PLATE}"/>{backgrounds}{"".join(self.parts)}</g>'
-            f'<rect x=".5" y=".5" width="{_n(self.x - 1)}" height="{HEIGHT - 1}" rx="5.5" fill="none" stroke="{LINE}"/>'
+            f'<rect x=".5" y=".5" width="{_n(self.x - 1)}" height="{HEIGHT - 1}" fill="none" stroke="{LINE}"/>'
             '</svg>\n'
         )
 

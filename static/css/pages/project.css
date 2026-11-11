@@ -1,25 +1,99 @@
-/* Project page, editor and screenshot manager. Mobile first. */
+/* Project page, editor, screenshot manager, delete confirmation. Mobile first.
+   Frames are .record (components.css); values to paste are .code-value; marks are .hallmark. */
 
 /* ---------- Project page ---------- */
+/* One column on phones, in this order: head, cover, marks, about, build log, facts, embed.
+   The two columns are display: contents there, so every block is a grid item with its own order.
+   From 64em: head across the top, then a main column (8) and a proof column (4). */
 
-.project { margin-bottom: var(--s-8); }
-.project .plate__title { font-size: var(--fs-3); overflow-wrap: anywhere; }
-.project .plate__tagline { overflow-wrap: anywhere; }
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-6);
+  padding-bottom: var(--s-8);
+}
+
+.project__col { display: contents; }
+
+.project__head { order: 0; }
+.project__cover { order: 1; }
+.proofs { order: 2; }
+.project__about { order: 3; }
+.build-log { order: 4; }
+.facts { order: 5; }
+.embed { order: 6; }
+
+@media (min-width: 64em) {
+  .project {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--s-6);
+    row-gap: var(--s-7);
+    align-items: start;
+  }
+
+  .project__head { grid-column: 1 / -1; }
+
+  .project__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-6);
+    min-width: 0;
+  }
+
+  .project__col--main { grid-column: 1 / span 8; }
+  .project__col--side { grid-column: 9 / span 4; }
+}
+
+/* Head: by-line, name, tagline, actions. */
+
+.project__by {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-1) var(--s-2);
+  margin-bottom: var(--s-4);
+  color: var(--muted);
+  font-size: var(--fs--1);
+}
+
+.project__by a { color: var(--text); }
+
+.project__title {
+  max-width: 22ch;
+  font-size: var(--fs-4);
+  overflow-wrap: anywhere;
+}
+
+.project__tagline {
+  margin-top: var(--s-4);
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 48em) {
+  .project__title { font-size: var(--fs-5); }
+}
+
+.project__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3) var(--s-5);
+  margin-top: var(--s-5);
+}
 
 .project__links {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-3);
   list-style: none;
-  margin: var(--s-5) 0 0;
+  margin: 0;
   padding: 0;
 }
 
-.project__links .with-icon { display: inline-flex; align-items: center; gap: var(--s-2); }
-
 /* A repository name can be 140 characters: let the button wrap instead of widening the page. */
 .project__links li { min-width: 0; max-width: 100%; }
-.project__links .btn {
+
+.project__links .with-icon {
   max-width: 100%;
   padding-block: var(--s-2);
   white-space: normal;
@@ -28,111 +102,242 @@
   justify-content: flex-start;
 }
 
+.project__social {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+/* Cover and the other screenshots. */
+
+.project__cover { margin: 0; }
+
+.project__cover img,
+.project__shots img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
 .project__shots {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
   gap: var(--s-3);
   list-style: none;
   margin: var(--s-3) 0 0;
   padding: 0;
 }
 
-.project__shots img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border: 1px solid var(--line);
-  border-radius: var(--r-chip);
-  background: var(--paper);
+/* About: a mono label, then the author's text (markdown, sanitized). */
+
+.project__about {
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
 }
 
-.project__description { margin-top: var(--s-5); }
-.project__description .prose { overflow-wrap: anywhere; }
-.project__description .prose :is(h3, h4) { font-size: var(--fs-1); }
-.project__description .prose :is(ul, ol) { padding-left: 1.4em; }
-.project__description .prose pre {
-  overflow-x: auto;
-  padding: var(--s-3);
+.project__about .prose {
+  margin-top: var(--s-4);
+  overflow-wrap: anywhere;
+}
+
+.project__about .prose :is(h3, h4) { font-size: var(--fs-1); }
+.project__about .prose :is(ul, ol) { padding-left: 1.4em; }
+.project__about .prose blockquote { margin-left: 0; color: var(--muted); }
+
+/* ---------- Marks and uptime (the proof column) ---------- */
+
+.proofs .record__head { padding-bottom: 0; }
+.proofs .record__body { padding-top: 0; }
+
+/* Each large mark is a <details>: the panel opens in place under it, so nothing is clipped on phones. */
+.project__hallmarks { display: grid; }
+
+.hallmark-info + .hallmark-info { border-top: 1px solid var(--line); }
+
+.hallmark-info__summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-3);
+  min-height: var(--control-h);
+  padding-block: var(--s-4);
+  list-style: none;
+  cursor: pointer;
+}
+
+.hallmark-info__summary::-webkit-details-marker { display: none; }
+
+.hallmark-info__summary .hallmark { min-width: 0; }
+.hallmark-info__summary .hallmark__fact { overflow-wrap: anywhere; }
+
+.hallmark-info__toggle {
+  display: inline-flex;
+  flex: none;
+  padding-top: var(--s-1);
+  color: var(--muted);
+}
+
+.hallmark-info__toggle .icon { width: 1rem; height: 1rem; transition: transform var(--t-base) var(--ease-out); }
+.hallmark-info[open] .hallmark-info__toggle .icon { transform: rotate(180deg); }
+
+@media (hover: hover) {
+  .hallmark-info__summary:hover .hallmark-info__toggle { color: var(--text); }
+}
+
+.hallmark-info__panel {
+  display: grid;
+  gap: var(--s-2);
+  margin-bottom: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
   border: 1px solid var(--line);
-  border-radius: var(--r-chip);
-  font-family: var(--font-mono);
   font-size: var(--fs--1);
 }
-.project__description .prose code { font-family: var(--font-mono); font-size: 0.9em; }
-.project__description .prose blockquote {
-  margin-left: 0;
-  padding-left: var(--s-4);
-  border-left: 2px solid var(--line-strong);
-  color: var(--steel);
+
+.hallmark-info__since { color: var(--muted); }
+
+.uptime {
+  margin-top: var(--s-2);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
 }
 
-@media (min-width: 48em) {
-  .project .plate__title { font-size: var(--fs-4); }
-}
-
-/* Uptime block: figure, last check and a 30-day strip (one cell per day). */
-.uptime { margin-top: var(--s-5); padding-top: var(--s-4); border-top: 1px solid var(--line); }
-.uptime__title { margin: 0 0 var(--s-2); font-size: var(--fs-1); }
-.uptime__figure { margin: 0; }
-.uptime__percent { font-family: var(--font-display); font-size: var(--fs-2); letter-spacing: -0.01em; }
-.uptime__last { margin: var(--s-1) 0 0; color: var(--steel); font-size: var(--fs--1); }
-
-.uptime-strip {
+.uptime__figure {
   display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-1) var(--s-3);
+  margin: var(--s-3) 0 0;
+}
+
+.uptime__percent {
+  font-family: var(--font-display);
+  font-size: var(--fs-3);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-display);
+}
+
+.uptime__of,
+.uptime__last {
+  color: var(--muted);
+  font-size: var(--fs--1);
+}
+
+.uptime__last { margin: var(--s-1) 0 0; }
+
+/* 30 cells, one per day. A highlight steps across them while the block is on screen (loop 1 on this page). */
+.uptime-strip {
+  --cells: 30;
+  position: relative;
+  margin-top: var(--s-4);
+}
+
+.uptime-strip__days {
+  display: grid;
+  grid-template-columns: repeat(var(--cells), minmax(0, 1fr));
   gap: 2px;
-  margin: var(--s-4) 0 0;
+  height: 1.75rem;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
-.uptime-strip > .uptime-strip__day { flex: 1 1 0; height: 1.75rem; }
 
-/* Up: full ink. Partial: half filled, so it differs by shape too, not only by color.
+/* Up: full proof green. Partial: half filled, so it differs by shape too, not only by color.
    Down: full danger. No checks: hairline outline. Text alternative is inside each cell. */
 .uptime-strip__day {
   display: block;
   min-width: 0;
   border: 1px solid var(--line-strong);
-  border-radius: 1px;
 }
-.uptime-strip__day.is-up { background: var(--ink); border-color: var(--ink); }
+
+.uptime-strip__day.is-up { background: var(--proof); border-color: var(--proof); }
 .uptime-strip__day.is-partial {
-  border-color: var(--ink);
-  background: linear-gradient(var(--ink), var(--ink)) bottom / 100% 50% no-repeat;
+  border-color: var(--proof);
+  background: linear-gradient(var(--proof), var(--proof)) bottom / 100% 50% no-repeat;
 }
 .uptime-strip__day.is-down { background: var(--danger); border-color: var(--danger); }
-.uptime-strip__day.is-none { border-color: var(--line); }
+.uptime-strip__day.is-none { border-color: var(--line-strong); }
+
+.uptime-strip__head {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: 0;
+  width: calc((100% - (var(--cells) - 1) * 2px) / var(--cells));
+  border: 1px solid var(--text);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.js [data-loop].is-inview .uptime-strip__head {
+  opacity: 1;
+  animation: tick 6s steps(30, jump-none) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uptime-strip__head { display: none; }
+}
 
 .uptime-strip__axis {
   display: flex;
   justify-content: space-between;
-  margin-top: var(--s-1);
-  color: var(--steel);
-  font-size: var(--fs--1);
+  gap: var(--s-3);
+  margin-top: var(--s-2);
 }
 
 .uptime-legend {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-2) var(--s-4);
-  margin: var(--s-3) 0 0;
+  margin: var(--s-4) 0 0;
   padding: 0;
   list-style: none;
-  color: var(--steel);
+  color: var(--muted);
   font-size: var(--fs--1);
 }
+
 .uptime-legend li { display: inline-flex; align-items: center; gap: var(--s-2); }
 .uptime-legend .uptime-strip__day { width: 0.625rem; height: 0.875rem; }
 
-/* Owner strip above the plate. */
+/* Built with, tags. */
+
+.facts__group { padding: var(--s-4) var(--s-5) var(--s-5); }
+.facts__group + .facts__group { border-top: 1px solid var(--line); }
+.facts__group .chip-list { margin-top: var(--s-3); }
+
+/* ---------- Owner strip above the page ---------- */
+
 .owner-bar {
   display: grid;
   gap: var(--s-3);
-  margin-bottom: var(--s-5);
-  padding-bottom: var(--s-4);
-  border-bottom: 1px solid var(--line);
+  margin-bottom: var(--s-6);
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
 
-.owner-bar__state { margin: 0; color: var(--steel); }
+.owner-bar__state {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* A square, not a dot: green = public, hollow = only you. Shape differs too, not only color. */
+.owner-bar__state::before {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid var(--line-strong);
+}
+
+.owner-bar__state.is-published::before { background: var(--proof); border-color: var(--proof); }
 
 .owner-bar__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 
@@ -140,20 +345,108 @@
   .owner-bar { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
 }
 
-/* ---------- Editor ---------- */
+/* ---------- Build log ----------
+   A record under the about text: a hairline on the left, a small square per entry.
+   The launch entry gets a filled square, so it differs by shape and weight, not only color. */
 
-.editor { max-width: 40rem; padding-bottom: var(--s-8); }
-.editor > h1 { margin-bottom: var(--s-2); }
-.editor__status { margin-bottom: var(--s-6); }
+.build-log__title:focus { outline: none; }
+.build-log__title:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 
-.editor__section {
-  margin-top: var(--s-6);
-  padding-top: var(--s-6);
-  border-top: 1px solid var(--line);
+.log-form { display: grid; gap: var(--s-4); margin-bottom: var(--s-6); }
+.log-form .check .field__hint { display: block; margin-top: var(--s-1); }
+.log-form [hidden] { display: none; } /* .field sets display: grid, which would win over [hidden] */
+
+.log {
+  margin: 0 0 0 4px;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--line-strong);
 }
 
-form.editor__section { margin-top: 0; padding-top: 0; border-top: 0; }
-.editor__section h2 { font-size: var(--fs-1); }
+.log-entry {
+  position: relative;
+  padding: 0 0 var(--s-5) var(--s-5);
+}
+
+.log-entry:last-child { padding-bottom: 0; }
+
+.log-entry::before {
+  content: "";
+  position: absolute;
+  top: 0.4em;
+  left: -5px;
+  width: 9px;
+  height: 9px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+}
+
+.log-entry--launch::before {
+  left: -7px;
+  top: 0.3em;
+  width: 13px;
+  height: 13px;
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.log-entry__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.log-entry__kind { color: var(--accent-text); font-weight: 400; }
+
+.log-entry__text { margin-top: var(--s-1); overflow-wrap: anywhere; }
+.log-entry__text > * + * { margin-top: 0.5em; }
+.log-entry__text code { padding: 0.1em 0.3em; background: var(--tint); }
+
+.log-entry__delete { margin-top: var(--s-2); }
+.log-entry__delete .btn { margin-left: calc(-1 * var(--s-3)); color: var(--muted); font-size: var(--fs--1); }
+
+@media (forced-colors: active) {
+  .log-entry--launch::before { background: CanvasText; }
+}
+
+/* ---------- Editor ---------- */
+/* Phones: one column. From 64em: the title and status on the left (4), the sections on the right (8). */
+
+.editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-6);
+  padding-bottom: var(--s-8);
+}
+
+.editor__intro { display: grid; gap: var(--s-3); align-content: start; }
+
+@media (min-width: 64em) {
+  .editor { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s-6); }
+  .editor__intro { grid-column: 1 / span 4; position: sticky; top: var(--s-5); }
+  .editor__body { grid-column: 5 / span 8; max-width: 46rem; }
+}
+
+.editor__body { display: grid; gap: var(--s-5); min-width: 0; }
+
+.editor__section {
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+@media (min-width: 48em) {
+  .editor__section { padding: var(--s-6); }
+}
+
+.editor__section > h2 { font-size: var(--fs-2); }
 
 .fieldset { border: 0; padding: 0; min-width: 0; } /* no margin reset: .stack spaces it */
 
@@ -168,8 +461,8 @@ form.editor__section { margin-top: 0; padding-top: 0; border-top: 0; }
 .preview {
   max-width: none;
   padding: var(--s-4);
+  background: var(--paper);
   border: 1px dashed var(--line-strong);
-  border-radius: var(--r-control);
   overflow-wrap: anywhere;
 }
 
@@ -182,8 +475,8 @@ form.editor__section { margin-top: 0; padding-top: 0; border-top: 0; }
   gap: var(--s-3);
   align-items: center;
   padding: var(--s-3);
+  background: var(--paper);
   border: 1px solid var(--line);
-  border-radius: var(--r-control);
 }
 
 .shot img {
@@ -192,14 +485,33 @@ form.editor__section { margin-top: 0; padding-top: 0; border-top: 0; }
   height: auto;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-  border-radius: var(--r-chip);
-  background: var(--paper);
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
 
 .shot__actions { display: flex; flex-wrap: wrap; gap: var(--s-2); }
 
 @media (min-width: 48em) {
   .shot { grid-template-columns: 14rem minmax(0, 1fr); gap: var(--s-4); }
+}
+
+/* ---------- Delete confirmation ---------- */
+/* A plate with a danger rule on top: danger color is only for destructive actions. */
+
+.confirm {
+  display: grid;
+  gap: var(--s-4);
+  max-width: 36rem;
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--danger);
+}
+
+.confirm h1 { font-size: var(--fs-3); }
+
+@media (min-width: 48em) {
+  .confirm { padding: var(--s-6); }
 }
 
 .confirm-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
@@ -215,222 +527,34 @@ form.editor__section { margin-top: 0; padding-top: 0; border-top: 0; }
 }
 
 .domain-status .icon { flex: none; margin-top: 0.2em; }
-.domain-status.is-ok .icon { color: var(--ink); }
+.domain-status.is-ok .icon { color: var(--proof); }
 .domain-status.is-error .icon { color: var(--danger); }
-
-/* Radio: same 20px control as .checkbox, round. */
-.radio {
-  appearance: none;
-  flex: none;
-  display: grid;
-  place-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin: 0.15em 0 0;
-  background: var(--plate);
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-  box-shadow: var(--press);
-  cursor: pointer;
-}
-
-.radio::before {
-  content: "";
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--on-ink);
-  transform: scale(0);
-}
-
-.radio:checked { background: var(--ink); border-color: var(--ink); box-shadow: none; }
-.radio:checked::before { transform: scale(1); }
-
-@media (forced-colors: active) {
-  .radio::before { background: CanvasText; }
-}
 
 .method {
   margin: 0 0 var(--s-4) calc(1.25rem + var(--s-3));
   padding-left: var(--s-4);
-  border-left: 1px solid var(--line);
+  border-left: 1px solid var(--line-strong);
 }
 
 .method[hidden] { display: none; }
 
 .method__steps { margin: 0; padding-left: 1.2em; display: grid; gap: var(--s-3); }
 
-.record { display: grid; gap: var(--s-3); margin: var(--s-3) 0 0; }
-.record dt { font-size: var(--fs--1); color: var(--steel); }
-.record dd { margin: var(--s-1) 0 0; }
+/* The record to add at the DNS host: name and value, each with a copy button. */
+.dns-record { display: grid; gap: var(--s-3); margin: var(--s-3) 0 0; }
+.dns-record dt { color: var(--muted); font-size: var(--fs--1); }
 
-.record dd,
-.record--single {
+.dns-record dd,
+.dns-record--single {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--s-2);
 }
 
-.record--single { margin-top: var(--s-3); }
-
-/* Literal values to paste: Plex Mono, selectable in one tap. */
-.code-value {
-  flex: 1 1 14rem;
-  min-width: 0;
-  padding: var(--s-2) var(--s-3);
-  font-family: var(--font-mono);
-  font-size: var(--fs--1);
-  line-height: 1.5;
-  overflow-wrap: anywhere;
-  user-select: all;
-  -webkit-user-select: all;
-  background: var(--plate);
-  border: 1px solid var(--line);
-  border-radius: var(--r-chip);
-}
-
-.btn--copy { flex: none; gap: var(--s-2); }
+.dns-record dd { margin: var(--s-1) 0 0; }
+.dns-record--single { margin-top: var(--s-3); }
 
 .method__help { margin-top: var(--s-4); }
-.method__help summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; }
+.method__help summary { cursor: pointer; min-height: var(--control-h); display: flex; align-items: center; font-weight: 600; }
 .method__help ul { margin: var(--s-2) 0 0; padding-left: 1.2em; display: grid; gap: var(--s-2); }
-
-/* ---------- Hallmarks with explanations ---------- */
-/* Each large mark is a <details>: the panel opens in place under it, so nothing is clipped on phones. */
-
-.project__hallmarks {
-  display: grid;
-  gap: var(--s-3);
-}
-
-@media (min-width: 48em) {
-  .project__hallmarks {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: start;
-    gap: var(--s-4) var(--s-5);
-  }
-}
-
-.hallmark-info__summary {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--s-3);
-  min-height: 44px;
-  padding: var(--s-1);
-  margin: calc(-1 * var(--s-1));
-  border-radius: var(--r-control);
-  list-style: none;
-  cursor: pointer;
-}
-
-.hallmark-info__summary::-webkit-details-marker { display: none; }
-
-.hallmark-info__summary .hallmark { min-width: 0; }
-.hallmark-info__summary .hallmark__fact { overflow-wrap: anywhere; }
-
-.hallmark-info__toggle {
-  display: inline-flex;
-  flex: none;
-  padding-top: var(--s-2);
-  color: var(--steel);
-}
-
-.hallmark-info__toggle .icon { transition: transform 150ms var(--ease-out); }
-.hallmark-info[open] .hallmark-info__toggle .icon { transform: rotate(180deg); }
-
-@media (hover: hover) {
-  .hallmark-info__summary:hover .hallmark-info__toggle { color: var(--text); }
-}
-
-.hallmark-info__panel {
-  display: grid;
-  gap: var(--s-2);
-  margin-top: var(--s-3);
-  padding: var(--s-3) var(--s-4);
-  border: 1px solid var(--line);
-  border-radius: var(--r-control);
-  background: var(--paper);
-  font-size: var(--fs--1);
-  max-width: var(--measure);
-}
-
-.hallmark-info__since { color: var(--steel); }
-
-@media (prefers-reduced-motion: reduce) {
-  .hallmark-info__toggle .icon { transition: none; }
-}
-
-/* ---------- Build log ----------
-   A quiet timeline under the plate: a hairline on the left, a small mark per entry.
-   The launch entry gets a filled ink mark, so it differs by shape and weight, not only color. */
-
-.build-log { max-width: var(--measure); margin-bottom: var(--s-8); }
-.build-log__title { margin: 0 0 var(--s-4); font-size: var(--fs-2); }
-.build-log__title:focus { outline: none; }
-.build-log__title:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
-
-.log-form { display: grid; gap: var(--s-4); margin-bottom: var(--s-6); }
-.log-form .check .field__hint { display: block; margin-top: var(--s-1); }
-.log-form [hidden] { display: none; } /* .field sets display: grid, which would win over [hidden] */
-
-.log {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-left: 1px solid var(--line);
-}
-
-.log-entry {
-  position: relative;
-  padding: 0 0 var(--s-5) var(--s-5);
-}
-.log-entry:last-child { padding-bottom: 0; }
-
-.log-entry::before {
-  content: "";
-  position: absolute;
-  top: 0.45em;
-  left: -5px;
-  width: 9px;
-  height: 9px;
-  background: var(--paper);
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-}
-
-.log-entry--launch::before {
-  left: -7px;
-  width: 13px;
-  height: 13px;
-  top: 0.35em;
-  background: var(--ink);
-  border-color: var(--ink);
-  border-radius: var(--r-mark);
-}
-
-.log-entry__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--s-2);
-  margin: 0;
-  color: var(--steel);
-  font-size: var(--fs--1);
-}
-
-.log-entry__kind { color: var(--ink); font-weight: 600; }
-
-.log-entry__text { margin-top: var(--s-1); overflow-wrap: anywhere; }
-.log-entry__text > * + * { margin-top: 0.5em; }
-.log-entry__text code { font-family: var(--font-mono); font-size: 0.9em; }
-
-.log-entry__delete { margin-top: var(--s-2); }
-.log-entry__delete .btn { margin-left: calc(-1 * var(--s-3)); color: var(--steel); font-size: var(--fs--1); }
-
-@media (forced-colors: active) {
-  .log-entry--launch::before { background: CanvasText; }
-}
-
-.project__social { margin-top: var(--s-4); display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
