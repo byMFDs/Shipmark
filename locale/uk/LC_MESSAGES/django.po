@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 21:05+0000\n"
+"POT-Creation-Date: 2026-11-11 14:56+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Profile"
 msgstr "Профіль"
 
-#: accounts/admin.py:42 config/settings/base.py:229
+#: accounts/admin.py:42 config/settings/base.py:253
 msgid "Moderation"
 msgstr "Модерація"
 
@@ -147,66 +147,66 @@ msgstr "Забагато спроб. Спробуйте пізніше."
 msgid "Your account and everything in it were deleted."
 msgstr "Ваш акаунт і все, що в ньому було, видалено."
 
-#: config/branding.py:9
-msgid "Proof of what you actually shipped"
-msgstr "Докази того, що ви справді випустили"
+#: config/branding.py:12
+msgid "Proof, not promises."
+msgstr "Докази, а не обіцянки."
 
-#: config/settings/base.py:176
+#: config/settings/base.py:200
 msgid "Admin"
 msgstr "Адмінка"
 
-#: config/settings/base.py:206 config/settings/base.py:208
+#: config/settings/base.py:230 config/settings/base.py:232
 #: moderation/dashboard.py:44
 msgid "Users"
 msgstr "Користувачі"
 
-#: config/settings/base.py:212 config/settings/base.py:214
+#: config/settings/base.py:236 config/settings/base.py:238
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:215 templates/projects/_build_log.html:4
+#: config/settings/base.py:239 templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
-#: config/settings/base.py:216 projects/forms.py:26
+#: config/settings/base.py:240 projects/forms.py:26
 #: templates/projects/detail.html:122
 msgid "Tags"
 msgstr "Теги"
 
-#: config/settings/base.py:217
+#: config/settings/base.py:241
 msgid "Tools"
 msgstr "Інструменти"
 
-#: config/settings/base.py:221
+#: config/settings/base.py:245
 msgid "Verification"
 msgstr "Підтвердження"
 
-#: config/settings/base.py:223
+#: config/settings/base.py:247
 msgid "Repositories"
 msgstr "Репозиторії"
 
-#: config/settings/base.py:224
+#: config/settings/base.py:248
 msgid "Domains"
 msgstr "Домени"
 
-#: config/settings/base.py:225
+#: config/settings/base.py:249
 msgid "Uptime checks"
 msgstr "Перевірки доступності"
 
-#: config/settings/base.py:231
+#: config/settings/base.py:255
 msgid "Reports"
 msgstr "Скарги"
 
-#: config/settings/base.py:233
+#: config/settings/base.py:257
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:234 projects/admin.py:44
+#: config/settings/base.py:258 projects/admin.py:44
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:238 config/settings/base.py:240
+#: config/settings/base.py:262 config/settings/base.py:264
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
@@ -396,6 +396,19 @@ msgstr "Умови"
 #: pages/templatetags/ui.py:232
 msgid "Cookies"
 msgstr "Файли cookie"
+
+#: pages/test_languages.py:38 templates/pages/explore.html:64
+msgid "Show projects"
+msgstr "Показати проєкти"
+
+#: pages/test_languages.py:65 templates/pages/explore.html:69
+#, python-format
+msgid "%(n)s project"
+msgid_plural "%(n)s projects"
+msgstr[0] "%(n)s проєкт"
+msgstr[1] "%(n)s проєкти"
+msgstr[2] "%(n)s проєктів"
+msgstr[3] "%(n)s проєкту"
 
 #: projects/admin.py:33
 msgid "Content"
@@ -853,7 +866,7 @@ msgstr "Видалити акаунт"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
 #: templates/accounts/logout.html:14 templates/accounts/settings.html:39
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:32
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:33
 msgid "Sign out"
 msgstr "Вийти"
 
@@ -1034,7 +1047,7 @@ msgid "Edit project"
 msgstr "Редагувати проєкт"
 
 #: templates/accounts/settings.html:4 templates/accounts/settings.html:10
-#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:31
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:32
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -1043,8 +1056,8 @@ msgid "Save settings"
 msgstr "Зберегти налаштування"
 
 #: templates/accounts/settings.html:24 templates/accounts/settings.html:26
-#: templates/includes/site_footer.html:34
-#: templates/includes/site_footer.html:35
+#: templates/includes/site_footer.html:42
+#: templates/includes/site_footer.html:43
 msgid "Theme"
 msgstr "Тема"
 
@@ -1052,15 +1065,15 @@ msgstr "Тема"
 msgid "Saved in this browser only."
 msgstr "Зберігається лише в цьому браузері."
 
-#: templates/accounts/settings.html:27 templates/includes/site_footer.html:36
+#: templates/accounts/settings.html:27 templates/includes/site_footer.html:44
 msgid "System"
 msgstr "Системна"
 
-#: templates/accounts/settings.html:28 templates/includes/site_footer.html:37
+#: templates/accounts/settings.html:28 templates/includes/site_footer.html:45
 msgid "Light"
 msgstr "Світла"
 
-#: templates/accounts/settings.html:29 templates/includes/site_footer.html:38
+#: templates/accounts/settings.html:29 templates/includes/site_footer.html:46
 msgid "Dark"
 msgstr "Темна"
 
@@ -1101,30 +1114,34 @@ msgstr "Останні відкриті скарги"
 msgid "No open reports."
 msgstr "Відкритих скарг немає."
 
-#: templates/base.html:38
+#: templates/base.html:44
 msgid "Skip to content"
 msgstr "Перейти до вмісту"
+
+#: templates/includes/form_errors.html:5
+msgid "Please fix these problems and try again."
+msgstr "Виправте ці помилки та спробуйте ще раз."
 
 #: templates/includes/hallmark.html:1
 msgid "Not yet"
 msgstr "Ще ні"
 
-#: templates/includes/site_footer.html:5
-msgid "Footer"
-msgstr "Футер"
-
-#: templates/includes/site_footer.html:19
-msgid "Language"
-msgstr "Мова"
-
-#: templates/includes/site_footer.html:29
-msgid "Change"
-msgstr "Змінити"
-
-#: templates/includes/site_header.html:6
+#: templates/includes/site_footer.html:7 templates/includes/site_header.html:6
 #, python-format
 msgid "%(name)s home"
 msgstr "%(name)s: на головну"
+
+#: templates/includes/site_footer.html:13
+msgid "Footer"
+msgstr "Футер"
+
+#: templates/includes/site_footer.html:27
+msgid "Language"
+msgstr "Мова"
+
+#: templates/includes/site_footer.html:37
+msgid "Change"
+msgstr "Змінити"
 
 #: templates/includes/site_header.html:15
 msgid "Menu"
@@ -1138,21 +1155,21 @@ msgstr "Закрити"
 msgid "Main"
 msgstr "Головна навігація"
 
-#: templates/includes/site_nav.html:13 templates/projects/form.html:4
+#: templates/includes/site_nav.html:14 templates/projects/form.html:4
 #: templates/projects/form.html:11
 msgid "New project"
 msgstr "Новий проєкт"
 
-#: templates/includes/site_nav.html:18 templates/includes/site_nav.html:30
+#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:31
 msgid "Your profile"
 msgstr "Ваш профіль"
 
-#: templates/includes/site_nav.html:25
+#: templates/includes/site_nav.html:26
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Меню акаунта: %(name)s"
 
-#: templates/includes/site_nav.html:37 templates/pages/_sign_in.html:6
+#: templates/includes/site_nav.html:38 templates/pages/_sign_in.html:6
 #: templates/pages/_sign_in.html:9 templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Увійти через GitHub"
@@ -1217,22 +1234,9 @@ msgstr "Позначка"
 msgid "Sort by"
 msgstr "Сортувати"
 
-#: templates/pages/explore.html:64
-msgid "Show projects"
-msgstr "Показати проєкти"
-
 #: templates/pages/explore.html:65 templates/pages/explore.html:84
 msgid "Clear filters"
 msgstr "Скинути фільтри"
-
-#: templates/pages/explore.html:69
-#, python-format
-msgid "%(n)s project"
-msgid_plural "%(n)s projects"
-msgstr[0] "%(n)s проєкт"
-msgstr[1] "%(n)s проєкти"
-msgstr[2] "%(n)s проєктів"
-msgstr[3] "%(n)s проєкту"
 
 #: templates/pages/explore.html:69
 msgid "most hallmarks first, then newest"
@@ -2157,10 +2161,9 @@ msgstr "Цей репозиторій приватний. Перевіряти �
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."
 
+#~ msgid "Proof of what you actually shipped"
+#~ msgstr "Докази того, що ви справді випустили"
+
 #, python-format
 #~ msgid "%(name)s is under construction"
 #~ msgstr "%(name)s ще в розробці"
-
-#: templates/includes/form_errors.html
-msgid "Please fix these problems and try again."
-msgstr "Виправте ці помилки та спробуйте ще раз."

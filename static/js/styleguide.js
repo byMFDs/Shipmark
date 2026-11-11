@@ -14,3 +14,13 @@ document.querySelectorAll("[data-demo-toast]").forEach((button) => {
     showToast(button.dataset.demoToast, { kind: button.dataset.kind || "info" });
   });
 });
+
+// Demo of the "pop" answer: the icon pops once when the state turns on.
+document.querySelectorAll("[data-pop]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const icon = button.querySelector(".icon");
+    icon.classList.remove("pop");
+    void icon.offsetWidth; // restart the animation
+    icon.classList.add("pop");
+  });
+});

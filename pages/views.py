@@ -43,13 +43,17 @@ def explore_view(request):
 
 # Shown on the styleguide. Values must match static/css/tokens.css.
 STYLEGUIDE_TOKENS = [
-    ("paper", "#F1F2EF", "#15171A", "Page background"),
-    ("plate", "#FAFAF8", "#1F2226", "Raised surfaces, fields"),
-    ("text", "#1E2126", "#E6E7E9", "Text"),
-    ("steel", "#666C74", "#9AA0A8", "Secondary text"),
-    ("line", "#D5D8DB", "#2E3237", "Dividers"),
-    ("line-strong", "#868C93", "#6B7179", "Borders of controls"),
-    ("ink", "#2A3FCF", "#8EA8F1", "Proof marks, links, focus, primary action"),
+    ("paper", "#F4F3EE", "#141A17", "Page background"),
+    ("surface", "#FFFEFA", "#1B231F", "Records, cards, fields"),
+    ("text", "#20251F", "#EFEDE4", "Text, focus ring"),
+    ("muted", "#5C635B", "#A2AAA1", "Secondary text"),
+    ("line", "#D9D8D0", "#2B3530", "Hairlines, frames"),
+    ("line-strong", "#868A80", "#6D7771", "Borders of controls (3:1)"),
+    ("accent", "#BD4B27", "#E5835C", "The one primary action"),
+    ("accent-text", "#AE411D", "#EC8E68", "Eyebrows, numbers"),
+    ("proof-bg", "#E3EBDA", "#22362A", "Earned marks, proof notes"),
+    ("proof", "#2B5A3F", "#A9D1B4", "Text on proof"),
+    ("band-bg", "#212721", "#0D1310", "Dark statement strips"),
     ("danger", "#A8322D", "#F08A80", "Errors, destructive actions"),
 ]
 

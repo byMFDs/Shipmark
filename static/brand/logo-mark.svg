@@ -1,3 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32" role="img" aria-label="Shipmark">
-  <path class="logo-mark" fill="#2A3FCF" fill-rule="evenodd" d="M2 0 14 0 16 2 16 14 14 16 2 16 0 14 0 2ZM7 3 9 3 9 10 13 10 13 12 3 12 3 10 7 10Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Shipmark">
+  <!-- Corner stamp: a plate (the project) with a smaller mark struck into its corner (the proof). -->
+  <path class="logo-mark" fill="#20251F" fill-rule="evenodd" d="M0 0L32 0L32 15L15 15L15 32L0 32ZM19 19L32 19L32 32L19 32Z"/>
 </svg>

@@ -8,10 +8,107 @@
 {% block content %}
 <div class="container page sg">
   <div class="sg-intro stack">
+    <p class="eyebrow">Development only</p>
     <h1>Styleguide</h1>
-    <p class="muted prose">Every component in the light and the dark theme, side by side. This page exists only while
+    <p class="lede">Every component in the light and the dark theme, side by side. This page exists only while
       <code>DEBUG</code> is on. The rules behind it are in <code>docs/DESIGN.md</code>.</p>
+    <p class="sg-jump"><a href="#logo">Logo</a> · <a href="#motion">Motion</a> · <a href="#components">Components</a> · <a href="#chrome">Header and footer</a></p>
   </div>
+
+  <section class="sg-section" id="logo" aria-labelledby="logo-title">
+    <h2 id="logo-title">Logo: three options</h2>
+    <p class="muted prose sg-note">Each mark is one color (it takes the text color, so it works in both themes),
+      square, built on a 32-unit grid with whole-unit edges so it stays sharp at 16px. No letters, so it survives a rename.
+      The wordmark is lowercase “shipmark” in Manrope 700, converted to outlines. Files: <code>static/brand/options/</code>.</p>
+    {% for theme in themes %}
+      <div class="sg-panel sg-panel--wide" data-theme="{{ theme }}">
+        <p class="sg-panel__theme">{{ theme|capfirst }} theme</p>
+        <div class="sg-logos">
+          {% for option in "abc" %}
+            <figure class="sg-logo-option{% if option == 'b' %} is-chosen{% endif %}">
+              <div class="sg-logo-option__sizes">
+                {% with "brand/options/mark-"|add:option|add:".svg" as path %}
+                  {% inline_svg path "sg-mark sg-mark--16" %}{% inline_svg path "sg-mark sg-mark--24" %}{% inline_svg path "sg-mark sg-mark--32" %}{% inline_svg path "sg-mark sg-mark--64" %}
+                {% endwith %}
+              </div>
+              <figcaption>
+                {% if option == "a" %}
+                  <p class="sg-logo-option__name">A · Notch check</p>
+                  <p class="muted">A check cut out of a square, its long arm running out through the corner. The most literal
+                    “verified”, but at 16px the notch disappears and it reads as a ticked checkbox.</p>
+                {% elif option == "b" %}
+                  <p class="sg-logo-option__name">B · Corner stamp <span class="label sg-pick">Recommended, in use</span></p>
+                  <p class="muted">A plate (the project) with a smaller square struck into its corner (the mark of proof),
+                    split by a clean gap. Abstract, nothing like a checkbox, and the gap still shows at 16px.</p>
+                {% else %}
+                  <p class="sg-logo-option__name">C · Struck slash</p>
+                  <p class="muted">The “s/” of the sketches reduced to a slash and a full stop. Ties to the terminal and the
+                    record numbers, but says less about proof and is close to many dev-tool logos.</p>
+                {% endif %}
+              </figcaption>
+            </figure>
+          {% endfor %}
+        </div>
+        <p class="sg-label">In use: logo, favicon, Apple touch icon, Open Graph image</p>
+        <div class="sg-row sg-row--wide">
+          {% inline_svg brand.LOGO "site-logo sg-logo-l" %}
+          <img src="{% static brand.FAVICON %}" alt="Favicon" width="32" height="32">
+          <img src="{% static brand.APPLE_TOUCH_ICON %}" alt="Apple touch icon" width="60" height="60">
+        </div>
+        {% if theme == "light" %}<img class="sg-og" src="{% static brand.OG_DEFAULT_IMAGE %}" alt="Default sharing image" width="1200" height="630" loading="lazy">{% endif %}
+      </div>
+    {% endfor %}
+  </section>
+
+  <section class="sg-section" id="motion" aria-labelledby="motion-title">
+    <h2 id="motion-title">Motion</h2>
+    <p class="muted prose sg-note">Transform and opacity only. Loops run only while on screen and stop when the tab is hidden
+      (<code>static/js/motion.js</code>); at most three in view at once. With reduced motion every block below shows its final state.</p>
+    <div class="sg-pair">
+      {% for theme in themes %}
+        <div class="sg-panel" data-theme="{{ theme }}">
+          <p class="sg-panel__theme">{{ theme|capfirst }} theme</p>
+
+          <p class="sg-label">The strike · once, on load · marks pressed in at 300, 650, 1000 ms</p>
+          <div class="plate__strip strike sg-strike" id="strike-{{ theme }}">
+            {% hallmark "authored" "m" %}{% hallmark "live" "m" %}{% hallmark "steady" "m" %}
+          </div>
+          <button class="btn btn--secondary needs-js sg-row--after" type="button" data-replay="strike-{{ theme }}">Replay</button>
+
+          <div class="sg-loops" data-loop>
+            <p class="sg-label">Loop · live pulse, 2.4 s</p>
+            <p class="hallmark__chip sg-inline"><span class="pulse-dot" aria-hidden="true"></span>Live</p>
+
+            <p class="sg-label">Loop · uptime cells ticking, 6 s</p>
+            <div class="tick-strip" aria-hidden="true">
+              {% for i in "012345678901234567890123456789" %}<span class="tick-strip__cell{% if forloop.counter == 12 %} is-miss{% endif %}"></span>{% endfor %}
+              <span class="tick-strip__head"></span>
+            </div>
+
+            <p class="sg-label">Loop · blinking cursor on a mono label, 1.1 s</p>
+            <p class="label cursor">Less talk. More receipts.</p>
+          </div>
+
+          <p class="sg-label">Loop · slow drift, 10 s (desktop only; counts as one of the three)</p>
+          <div data-loop><div class="record drift sg-drift"><div class="record__head"><span class="label">Shipmark / Project record</span><span class="label">№ 0042</span></div></div></div>
+
+          <p class="sg-label">Reveal on scroll · once, children 60 ms apart</p>
+          <div class="sg-reveal" data-reveal>
+            <p class="eyebrow">02 / Out in the world</p>
+            <hr class="rule">
+            <p>Each child fades in and rises 12px.</p>
+          </div>
+
+          <p class="sg-label">Answers to actions · hover and press the controls</p>
+          <div class="sg-row">
+            <button class="btn btn--primary" type="button">Press me{% icon "arrow-up-right" "arrow" %}</button>
+            <a class="link-arrow" href="#motion"><span>Hover me</span>{% icon "arrow-up-right" "arrow" %}</a>
+            <button class="btn btn--secondary" type="button" data-pop>{% icon "check" %}<span>Pop</span></button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
 
   <section class="sg-section" id="components" aria-labelledby="components-title">
     <h2 id="components-title">Components</h2>
@@ -25,9 +122,23 @@
     </div>
   </section>
 
+  <section class="sg-section" id="bands" aria-labelledby="bands-title">
+    <h2 id="bands-title">Band</h2>
+    <p class="muted prose sg-note">A dark strip for statements. It uses the dark tokens in both themes, so everything inside stays AA.</p>
+    {% for theme in themes %}
+      <div class="sg-panel sg-panel--wide sg-panel--flush" data-theme="{{ theme }}">
+        <div class="band sg-band">
+          <p class="label cursor">Less talk. More receipts.</p>
+          <p class="sg-band__title">You shipped it. Now put your mark on it.</p>
+          <div class="sg-row"><a class="btn btn--primary btn--lg" href="#bands">Submit your project{% icon "arrow-up-right" "arrow" %}</a><a class="link-arrow" href="#bands"><span>Explore projects</span>{% icon "arrow-up-right" "arrow" %}</a></div>
+        </div>
+      </div>
+    {% endfor %}
+  </section>
+
   <section class="sg-section" id="chrome" aria-labelledby="chrome-title">
     <h2 id="chrome-title">Header and footer</h2>
-    <p class="muted prose sg-note">The bar layout starts at 768px; narrower screens get the menu button.
+    <p class="muted prose sg-note">The bar layout starts at 768px, the tagline at 1024px; narrower screens get the menu button.
       Links appear by themselves once their pages exist (see <code>NAV_LINKS</code> in <code>pages/templatetags/ui.py</code>).</p>
     {% for theme in themes %}
       <div class="sg-panel sg-panel--wide" data-theme="{{ theme }}">

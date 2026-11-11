@@ -1,10 +1,11 @@
 /* Styleguide page only (development). */
 
 .sg-intro { margin-bottom: var(--s-7); }
+.sg-jump { font-family: var(--font-mono); font-size: var(--fs--1); }
 
 .sg-section + .sg-section { margin-top: var(--s-8); }
 
-.sg-note { margin-top: var(--s-4); color: var(--steel); }
+.sg-note { margin-top: var(--s-4); color: var(--muted); }
 
 .sg-pair {
   display: grid;
@@ -26,13 +27,17 @@
   background: var(--paper);
   color: var(--text);
   border: 1px solid var(--line);
-  border-radius: var(--r-plate);
 }
+
+.sg-panel--flush { padding: 0; overflow: hidden; }
 
 .sg-panel__theme {
   margin-bottom: var(--s-4);
-  color: var(--steel);
-  font-size: var(--fs--1);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
 }
 
 .sg-block + .sg-block {
@@ -56,8 +61,8 @@
 .sg-row--wide { gap: var(--s-5); margin-bottom: var(--s-4); }
 
 .sg-label {
-  margin: var(--s-4) 0 var(--s-2);
-  color: var(--steel);
+  margin: var(--s-5) 0 var(--s-2);
+  color: var(--muted);
   font-size: var(--fs--1);
 }
 
@@ -71,24 +76,82 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   padding: var(--s-3) var(--s-4);
-  background: var(--plate);
+  background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: var(--r-control);
 }
 
 .sg-og {
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: var(--r-chip);
 }
 
-.sg-logo-l { height: 3rem; }
+.sg-card { max-width: 24rem; }
 
-.sg-mark .logo-mark { fill: var(--ink); }
+/* ---------- Logo options ---------- */
+
+.sg-logos {
+  display: grid;
+  gap: var(--s-5);
+}
+
+@media (min-width: 64em) {
+  .sg-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.sg-logo-option {
+  display: grid;
+  align-content: start;
+  gap: var(--s-4);
+  margin: 0;
+  padding: var(--s-5);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.sg-logo-option.is-chosen { border-color: var(--text); }
+
+.sg-logo-option__sizes {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-4);
+  color: var(--text);
+}
+
+.sg-logo-option__name { font-weight: 600; margin-bottom: var(--s-2); }
+.sg-logo-option figcaption p + p { font-size: var(--fs--1); }
+.sg-pick { color: var(--proof); margin-left: var(--s-2); }
+
+.sg-logo-l { height: 2.5rem; color: var(--text); }
+
+.sg-mark .logo-mark { fill: currentColor; }
 .sg-mark--16 { width: 16px; height: 16px; }
 .sg-mark--24 { width: 24px; height: 24px; }
 .sg-mark--32 { width: 32px; height: 32px; }
 .sg-mark--64 { width: 64px; height: 64px; }
+
+/* ---------- Motion demos ---------- */
+
+.sg-strike { margin-top: 0; }
+.sg-inline { display: inline-flex; }
+.sg-drift { max-width: 22rem; }
+.sg-reveal { display: grid; gap: var(--s-3); }
+
+.sg-band {
+  display: grid;
+  gap: var(--s-5);
+  padding: var(--s-7) var(--s-5);
+}
+
+.sg-band__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-4);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: var(--track-display);
+  max-width: 16ch;
+}
+
+/* ---------- Swatches ---------- */
 
 .sg-swatches {
   display: grid;
@@ -109,23 +172,27 @@
 .sg-chip {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: var(--r-chip);
   box-shadow: inset 0 0 0 1px var(--line-strong);
 }
 
 .sg-chip[data-token="paper"] { background: var(--paper); }
-.sg-chip[data-token="plate"] { background: var(--plate); }
+.sg-chip[data-token="surface"] { background: var(--surface); }
 .sg-chip[data-token="text"] { background: var(--text); }
-.sg-chip[data-token="steel"] { background: var(--steel); }
+.sg-chip[data-token="muted"] { background: var(--muted); }
 .sg-chip[data-token="line"] { background: var(--line); }
 .sg-chip[data-token="line-strong"] { background: var(--line-strong); }
-.sg-chip[data-token="ink"] { background: var(--ink); }
+.sg-chip[data-token="accent"] { background: var(--accent); }
+.sg-chip[data-token="accent-text"] { background: var(--accent-text); }
+.sg-chip[data-token="proof-bg"] { background: var(--proof-bg); }
+.sg-chip[data-token="proof"] { background: var(--proof); }
+.sg-chip[data-token="band-bg"] { background: var(--band-bg); }
 .sg-chip[data-token="danger"] { background: var(--danger); }
+
+/* ---------- Header and footer frames ---------- */
 
 .sg-frame {
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: var(--r-control);
 }
 
 .sg-frame .site-footer { margin-top: 0; }
@@ -139,7 +206,7 @@
 .sg-frame--menu {
   position: relative;
   overflow: visible;
-  min-height: 21rem;
+  min-height: 30rem;
 }
 
 .sg-toasts {
@@ -149,6 +216,6 @@
 
 /* Shows the focus ring without focusing the button. */
 .sg-focus {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }

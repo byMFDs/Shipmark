@@ -1,6 +1,14 @@
 {% load i18n ui %}
 <footer class="site-footer">
   <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <a href="{{ home_url }}">
+        {% inline_svg brand.LOGO "site-logo" %}
+        <span class="visually-hidden">{% blocktranslate with name=brand.SITE_NAME %}{{ name }} home{% endblocktranslate %}</span>
+      </a>
+      <p class="site-footer__meta"><span class="mono">{{ brand.SITE_DOMAIN }}</span><span class="label">&copy; {{ year }} {{ brand.LEGAL_OWNER_NAME }}</span></p>
+    </div>
+
     {% if links or social_links %}
       <nav aria-label="{% translate 'Footer' %}">
         <ul class="site-footer__links">
@@ -33,13 +41,11 @@
       <div class="field needs-js">
         <span class="field__label" aria-hidden="true">{% translate "Theme" %}</span>
         <div class="theme-switch" role="group" aria-label="{% translate 'Theme' %}">
-          <button type="button" class="theme-switch__option" data-theme-choice="system" aria-pressed="true">{% icon "monitor" %}{% translate "System" %}</button>
-          <button type="button" class="theme-switch__option" data-theme-choice="light" aria-pressed="false">{% icon "sun" %}{% translate "Light" %}</button>
-          <button type="button" class="theme-switch__option" data-theme-choice="dark" aria-pressed="false">{% icon "moon" %}{% translate "Dark" %}</button>
+          <button type="button" class="theme-switch__option" data-theme-choice="system" aria-pressed="true">{% translate "System" %}</button>
+          <button type="button" class="theme-switch__option" data-theme-choice="light" aria-pressed="false">{% translate "Light" %}</button>
+          <button type="button" class="theme-switch__option" data-theme-choice="dark" aria-pressed="false">{% translate "Dark" %}</button>
         </div>
       </div>
     </div>
-
-    <p class="site-footer__legal">&copy; {{ year }} {{ brand.LEGAL_OWNER_NAME }}</p>
   </div>
 </footer>

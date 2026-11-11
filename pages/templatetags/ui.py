@@ -110,7 +110,8 @@ HALLMARK_LABELS = {
     "steady": _("Steady"),
 }
 
-# Cartouche height in px per size; width is 5/4 of it. One extra px below for the lip line.
+# Sizes of the {% hallmark %} chip (s: lists, m: default, l: project page with a fact).
+# The cartouche geometry below is still used by the SVG badges (projects/badges.py).
 HALLMARK_HEIGHTS = {"s": 16, "m": 24, "l": 40}
 GLYPH_STROKE = {"s": 1.5, "m": 1.5, "l": 2}
 
@@ -195,7 +196,6 @@ def hallmark(kind, size="m", earned=True, fact=""):
         "earned": bool(earned),
         "label": HALLMARK_LABELS[kind],
         "fact": fact,
-        "geo": hallmark_geometry(kind, size),
     }
 
 
@@ -290,6 +290,7 @@ def site_footer(context, demo=False):
     brand = context.get("brand")
     return {
         "brand": brand,
+        "home_url": "#" if demo else reverse("pages:landing"),
         "links": links,
         "social_links": getattr(brand, "SOCIAL_LINKS", {}),
         "set_language_url": "#" if demo else _url("set_language"),

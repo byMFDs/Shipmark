@@ -1,71 +1,56 @@
 /* Fonts, element defaults, layout and utilities. Tokens live in tokens.css. */
 
 /* ---------- Fonts (self-hosted, OFL: static/fonts/OFL.txt) ---------- */
-/* Each face is split in two files; the browser downloads Cyrillic only when a page uses it. */
+/* Inter and Manrope are variable (one file per script covers every weight). The browser
+   downloads Cyrillic or Latin Extended only when a page uses those letters. */
 
 @font-face {
-  font-family: "IBM Plex Sans";
+  font-family: "Inter";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   font-display: swap;
-  src: url("../fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2");
+  src: url("../fonts/inter-latin-wght.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "IBM Plex Sans";
+  font-family: "Inter";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   font-display: swap;
-  src: url("../fonts/ibm-plex-sans-cyrillic-400-normal.woff2") format("woff2");
+  src: url("../fonts/inter-cyrillic-wght.woff2") format("woff2");
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 @font-face {
-  font-family: "IBM Plex Sans";
-  font-style: italic;
-  font-weight: 400;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
   font-display: swap;
-  src: url("../fonts/ibm-plex-sans-latin-400-italic.woff2") format("woff2");
+  src: url("../fonts/inter-latin-ext-wght.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../fonts/manrope-latin-wght.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "IBM Plex Sans";
-  font-style: italic;
-  font-weight: 400;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 200 800;
   font-display: swap;
-  src: url("../fonts/ibm-plex-sans-cyrillic-400-italic.woff2") format("woff2");
+  src: url("../fonts/manrope-cyrillic-wght.woff2") format("woff2");
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 @font-face {
-  font-family: "IBM Plex Sans";
+  font-family: "Manrope";
   font-style: normal;
-  font-weight: 600;
+  font-weight: 200 800;
   font-display: swap;
-  src: url("../fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "IBM Plex Sans";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("../fonts/ibm-plex-sans-cyrillic-600-normal.woff2") format("woff2");
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-@font-face {
-  font-family: "IBM Plex Sans Condensed";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("../fonts/ibm-plex-sans-condensed-latin-600-normal.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "IBM Plex Sans Condensed";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("../fonts/ibm-plex-sans-condensed-cyrillic-600-normal.woff2") format("woff2");
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  src: url("../fonts/manrope-latin-ext-wght.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "IBM Plex Mono";
@@ -83,40 +68,6 @@
   src: url("../fonts/ibm-plex-mono-cyrillic-400-normal.woff2") format("woff2");
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
-
-/* Latin Extended (Polish ą ę ł ś ż ź ć ń, Turkish etc.). Only downloaded by pages that use these letters. */
-@font-face {
-  font-family: "IBM Plex Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("../fonts/ibm-plex-sans-latin-ext-400-normal.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: "IBM Plex Sans";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("../fonts/ibm-plex-sans-latin-ext-400-italic.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: "IBM Plex Sans";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("../fonts/ibm-plex-sans-latin-ext-600-normal.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: "IBM Plex Sans Condensed";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("../fonts/ibm-plex-sans-condensed-latin-ext-600-normal.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
 @font-face {
   font-family: "IBM Plex Mono";
   font-style: normal;
@@ -126,34 +77,33 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* Fallbacks shown until Plex loads. Arial (Liberation Sans on Linux) is scaled to Plex
-   metrics, so text keeps its size and line breaks when the real font swaps in.
-   Values computed with fontTools from the font files (weighted average glyph width). */
+/* Fallbacks shown until the real fonts load. Arial (Liberation Sans on Linux) is scaled to the
+   metrics of each font, so text keeps its size and line breaks when the real font swaps in.
+   Values computed with fontTools from the font files (frequency-weighted average glyph width). */
 @font-face {
-  font-family: "Plex Sans Fallback";
-  font-weight: 400;
+  font-family: "Inter Fallback";
+  font-weight: 100 549;
   src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans");
-  size-adjust: 101.05%;
-  ascent-override: 101.43%;
-  descent-override: 27.21%;
+  size-adjust: 107.33%;
+  ascent-override: 90.26%;
+  descent-override: 22.47%;
   line-gap-override: 0%;
 }
 @font-face {
-  font-family: "Plex Sans Fallback";
-  font-weight: 600;
+  font-family: "Inter Fallback";
+  font-weight: 550 900;
   src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold");
-  size-adjust: 96.71%;
-  ascent-override: 105.99%;
-  descent-override: 28.44%;
+  size-adjust: 101.4%;
+  ascent-override: 95.54%;
+  descent-override: 23.79%;
   line-gap-override: 0%;
 }
 @font-face {
-  font-family: "Plex Condensed Fallback";
-  font-weight: 600;
-  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold");
-  size-adjust: 87.47%;
-  ascent-override: 117.18%;
-  descent-override: 31.44%;
+  font-family: "Manrope Fallback";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans");
+  size-adjust: 104.98%;
+  ascent-override: 101.55%;
+  descent-override: 28.58%;
   line-gap-override: 0%;
 }
 @font-face {
@@ -195,6 +145,8 @@ body {
   font-family: var(--font-sans);
   font-size: var(--fs-0);
   line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -202,16 +154,20 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure, blockquote, pre {
   margin: 0;
 }
 
-h1, h2 {
+/* Headlines: Manrope, medium weight, tight. h4 and smaller stay in Inter. */
+h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: var(--lh-tight);
-  letter-spacing: -0.02em;
+  font-weight: 500;
+  letter-spacing: var(--track-display);
   text-wrap: balance;
 }
 
+h1, h2 { line-height: var(--lh-tight); }
+h3 { line-height: var(--lh-snug); letter-spacing: -0.02em; }
+
 h1 { font-size: var(--fs-4); }
-h2 { font-size: var(--fs-2); }
+h2 { font-size: var(--fs-3); }
+h3 { font-size: var(--fs-1); }
 
 /* Long words (German "Nutzungsbedingungen", Polish "odpowiedzialność") must never push the page
    wider than a 360px phone. Hyphenation needs <html lang>, which base.html sets. */
@@ -222,35 +178,37 @@ h1, h2, h3, .prose {
 
 @media (min-width: 48em) {
   h1 { font-size: var(--fs-5); }
-  h2 { font-size: var(--fs-3); }
+  h2 { font-size: var(--fs-4); }
+  h3 { font-size: var(--fs-2); }
 }
 
-h3, h4 {
+h4 {
+  font-size: var(--fs-0);
   font-weight: 600;
   line-height: var(--lh-snug);
 }
 
-h3 { font-size: var(--fs-1); }
-h4 { font-size: var(--fs-0); }
-
 p { text-wrap: pretty; }
 
+/* Links are text with a quiet underline that firms up on hover. Color is never the only cue. */
 a {
-  color: var(--ink);
+  color: inherit;
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 0.22em;
+  transition: text-decoration-color var(--t-fast);
 }
 
 @media (hover: hover) {
-  a:hover { text-decoration-thickness: 2px; }
+  a:hover { text-decoration-color: currentColor; }
 }
 
 strong, b { font-weight: 600; }
 
 code, kbd, samp, pre {
   font-family: var(--font-mono);
-  font-size: 0.9375em;
+  font-size: 0.9em;
 }
 
 img, video {
@@ -264,6 +222,7 @@ svg { flex-shrink: 0; }
 button, input, select, textarea {
   font: inherit;
   color: inherit;
+  letter-spacing: inherit;
 }
 
 fieldset {
@@ -282,16 +241,16 @@ hr {
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
 ::selection {
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--paper);
 }
 
-/* Motion only answers actions; with reduced motion every element shows its final state. */
+/* Reduced motion: every element shows its final, static state. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -340,32 +299,68 @@ hr {
 }
 
 @media (min-width: 64em) {
-  .grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .grid { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-6); }
   .grid > * { grid-column: span 12; }
   .col-3 { grid-column: span 3; }
   .col-4 { grid-column: span 4; }
+  .col-5 { grid-column: span 5; }
   .col-6 { grid-column: span 6; }
+  .col-7 { grid-column: span 7; }
   .col-8 { grid-column: span 8; }
 }
 
 /* ---------- Utilities ---------- */
 
-/* Largest headline (landing hero). */
+/* Largest headline (landing hero, closing band). */
 .display {
   font-family: var(--font-display);
-  font-size: clamp(var(--fs-4), 1.5rem + 4vw, var(--fs-6));
-  font-weight: 600;
-  line-height: var(--lh-tight);
-  letter-spacing: -0.02em;
+  font-size: var(--fs-hero);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-display);
   text-wrap: balance;
+}
+
+/* Mono label: uppercase meta lines ("Built with AI. Backed by evidence."). */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Eyebrow above a section headline ("01 / The standard"). */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  line-height: 1.5;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+/* Lead paragraph under a headline. */
+.lede {
+  max-width: 52ch;
+  color: var(--muted);
+  font-size: var(--fs-1);
+  line-height: 1.45;
+}
+
+@media (max-width: 47.99em) {
+  .lede { font-size: 1.125rem; }
 }
 
 .prose { max-width: var(--measure); }
 .prose > * + * { margin-top: 1em; }
+.prose h2, .prose h3 { margin-top: 1.6em; }
 
 .stack > * + * { margin-top: var(--stack, var(--s-4)); }
 
-.muted { color: var(--steel); }
+.muted { color: var(--muted); }
 .mono { font-family: var(--font-mono); }
 .numeric { font-variant-numeric: tabular-nums; }
 
@@ -387,10 +382,9 @@ hr {
   left: max(var(--s-4), env(safe-area-inset-left));
   top: var(--s-2);
   padding: var(--s-2) var(--s-4);
-  background: var(--plate);
-  color: var(--text);
-  border-radius: var(--r-control);
-  box-shadow: var(--bevel);
+  background: var(--text);
+  color: var(--paper);
+  text-decoration: none;
   transform: translateY(-200%);
 }
 
@@ -403,9 +397,22 @@ html:not(.js) .needs-js { display: none !important; }
 .prose blockquote {
   padding: var(--s-3) var(--s-4);
   border-left: 2px solid var(--line-strong);
-  background: var(--plate);
-  border-radius: 0 var(--r-control) var(--r-control) 0;
+  background: var(--surface);
 }
+
+.prose code {
+  padding: 0.1em 0.3em;
+  background: var(--tint);
+}
+
+.prose pre {
+  padding: var(--s-3) var(--s-4);
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.prose pre code { padding: 0; background: none; }
 
 /* Tables in long pages (cookie list). Scroll inside the table on narrow screens, never the page. */
 .prose table {
@@ -413,7 +420,7 @@ html:not(.js) .needs-js { display: none !important; }
   max-width: 100%;
   overflow-x: auto;
   border-collapse: collapse;
-  font-size: var(--fs--1, 0.9em);
+  font-size: var(--fs--1);
 }
 
 .prose th,
@@ -424,5 +431,13 @@ html:not(.js) .needs-js { display: none !important; }
   vertical-align: top;
 }
 
-.prose th { color: var(--steel); font-weight: 500; }
+.prose th {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  font-weight: 400;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
 .prose th:first-child, .prose td:first-child { padding-left: 0; }

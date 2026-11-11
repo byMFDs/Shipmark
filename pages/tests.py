@@ -82,10 +82,14 @@ class HallmarkTagTests(SimpleTestCase):
         self.assertIn("is-unearned", unearned)
         self.assertIn("Not yet", unearned)
 
-    def test_small_mark_keeps_label_for_screen_readers(self):
-        html = self.render('{% hallmark "steady" "s" %}')
-        self.assertIn("visually-hidden", html)
-        self.assertIn("Steady", html)
+    def test_small_mark_shows_label_and_hides_only_the_state(self):
+        # Chips show the name at every size; small unearned marks keep "Not yet" for screen readers only.
+        earned = self.render('{% hallmark "steady" "s" %}')
+        self.assertIn('<span class="hallmark__label">Steady</span>', earned)
+        self.assertIn('aria-hidden="true"', earned)  # the check glyph is decorative
+
+        unearned = self.render('{% hallmark "steady" "s" False %}')
+        self.assertIn('hallmark__state visually-hidden">Not yet', unearned)
 
     def test_unknown_kind_is_an_error(self):
         with self.assertRaises(ValueError):

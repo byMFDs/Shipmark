@@ -5,8 +5,11 @@ Logo paths are relative to the static folder: replace the files to change the lo
 """
 from django.utils.translation import gettext_lazy as _
 
+# SITE_NAME is used in running text ("Shipmark"). The logo files spell it lowercase ("shipmark").
 SITE_NAME = "Shipmark"
-TAGLINE = _("Proof of what you actually shipped")
+# Shown where a URL is natural: footer, badges, profile URL, embed snippets. No scheme, no slash.
+SITE_DOMAIN = "shipmark.me"
+TAGLINE = _("Proof, not promises.")
 CONTACT_EMAIL = "hello@example.com"
 LEGAL_OWNER_NAME = "Your Name"
 

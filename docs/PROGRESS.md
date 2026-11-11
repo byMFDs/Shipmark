@@ -69,3 +69,6 @@
 
 - 2026-11-11: Redesign phase 0. `docs/REDESIGN_PLAN.md`: what is taken from the Figma images, deviations, tokens, fonts (Geologica + Inter + Plex Mono), components, 3 logo options, motion plan, phases, open points.
   Next: developer approves the plan (and the 5 open points), then phase 1 (foundation + styleguide).
+
+- 2026-11-11: Redesign phase 1 (foundation). New tokens (warm paper, square corners, terracotta action, green proof, dark `.band`), fonts Manrope (headlines) + Inter (body) + Plex Mono (labels), size-adjusted fallbacks; components rewritten with the same class names (hallmark is now a flat chip, new: record, card, proof note, section head, link-arrow); `motion.css` + `motion.js` (strike, pulse, tick strip, drift, cursor, reveal, view transitions, pause offscreen/hidden tab). Logo: 3 options in `static/brand/options/`, B "corner stamp" in use (A read as a checkbox at 16px); favicon, touch icon, OG image regenerated. `SITE_DOMAIN`, new TAGLINE. Styleguide shows logos, motion and both themes.
+  Next: phase 2 (landing). Old token names are aliased in tokens.css until phase 3.

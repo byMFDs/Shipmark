@@ -2,12 +2,13 @@
 
 /* Theme-independent tokens. */
 :root {
-  --font-sans: "IBM Plex Sans", "Plex Sans Fallback", "Helvetica Neue", Arial, sans-serif;
-  --font-display: "IBM Plex Sans Condensed", "Plex Condensed Fallback", "Arial Narrow", sans-serif;
+  --font-sans: "Inter", "Inter Fallback", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Manrope", "Manrope Fallback", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", "Plex Mono Fallback", ui-monospace, Menlo, Consolas, monospace;
 
   /* Type scale, ratio 1.25. Root is 16px, 17px from 64em (see base.css). */
-  --fs--1: 0.8rem;
+  --fs--2: 0.75rem;   /* mono labels only: the smallest text on the site (12px) */
+  --fs--1: 0.8125rem;
   --fs-0: 1rem;
   --fs-1: 1.25rem;
   --fs-2: 1.5625rem;
@@ -15,9 +16,12 @@
   --fs-4: 2.441rem;
   --fs-5: 3.052rem;
   --fs-6: 3.815rem;
+  --fs-hero: clamp(2.75rem, 1.4rem + 5.6vw, 5.5rem);
   --lh-body: 1.55;
-  --lh-snug: 1.25;
+  --lh-snug: 1.3;
   --lh-tight: 1.05;
+  --track-display: -0.03em;
+  --track-label: 0.06em;
 
   /* Space, 4px base. */
   --s-1: 0.25rem;
@@ -29,24 +33,27 @@
   --s-7: 3rem;
   --s-8: 4rem;
   --s-9: 6rem;
+  --section: var(--s-8);
 
-  /* Radii by object size. */
-  --r-plate: 10px;
-  --r-control: 8px;
-  --r-chip: 4px;
-  --r-mark: 2px;
+  /* Square corners everywhere: records are cut, not rounded. People (avatars) stay round. */
+  --radius: 0;
 
   /* Layout. --pad is the side padding of .container. */
   --container: 1200px;
   --measure: 68ch;
   --pad: 1rem;
   --control-h: 2.75rem;
+  --control-h-lg: 3.25rem;
 
+  /* Motion. Durations are short; loops are slow. See motion.css. */
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-press: cubic-bezier(0.3, 0, 0.2, 1);
+  --t-fast: 120ms;
+  --t-base: 200ms;
 }
 
 @media (min-width: 48em) {
-  :root { --pad: 1.5rem; }
+  :root { --pad: 1.5rem; --section: var(--s-9); }
 }
 
 @media (min-width: 64em) {
@@ -57,83 +64,100 @@
 :root,
 [data-theme="light"] {
   color-scheme: light;
-  --paper: #F1F2EF;
-  --plate: #FAFAF8;
-  --text: #1E2126;
-  --steel: #666C74;
-  --line: #D5D8DB;
-  --line-strong: #868C93;
-  --ink: #2A3FCF;
-  --ink-hover: #2030B1;
-  --on-ink: #FAFAF8;
+  --paper: #F4F3EE;
+  --surface: #FFFEFA;
+  --text: #20251F;
+  --muted: #5C635B;
+  --line: #D9D8D0;
+  --line-strong: #868A80;
+  --accent: #BD4B27;
+  --accent-hover: #A13D1C;
+  --on-accent: #FFFEFA;
+  --accent-text: #AE411D;
+  --proof-bg: #E3EBDA;
+  --proof: #2B5A3F;
   --danger: #A8322D;
-  --danger-hover: #941C1C;
-  --on-danger: #FAFAF8;
-  --tint: rgb(30 33 38 / 0.06);
+  --danger-hover: #8E2622;
+  --on-danger: #FFFEFA;
+  --tint: rgb(32 37 31 / 0.05);
   --danger-tint: rgb(168 50 45 / 0.08);
-
-  --bevel: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 1px 0 rgb(30 33 38 / 0.06), 0 2px 3px -1px rgb(30 33 38 / 0.12);
-  --bevel-featured: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 1px 0 rgb(30 33 38 / 0.06), 0 3px 4px -2px rgb(30 33 38 / 0.16);
-  --bevel-ink: inset 0 1px 0 rgb(255 255 255 / 0.16), 0 1px 0 rgb(30 33 38 / 0.1), 0 2px 3px -1px rgb(30 33 38 / 0.2);
-  --press: inset 0 1px 2px rgb(30 33 38 / 0.1);
-  --press-ink: inset 0 1px 2px rgb(0 0 0 / 0.3);
-  --mark-shade: rgb(0 0 0 / 0.35);
-  --mark-lip: rgb(255 255 255 / 0.9);
+  --focus: #20251F;
+  --shadow-pop: 0 1px 0 rgb(32 37 31 / 0.04), 0 8px 24px -12px rgb(32 37 31 / 0.25);
 }
 
 /* Dark theme. The same values appear twice: keep both blocks in sync.
-   1) chosen with the toggle (or on any element with data-theme="dark"); */
-[data-theme="dark"] {
+   1) chosen with the toggle (or on any element with data-theme="dark"). .band (the dark
+      statement strips) always uses these values, on its own background (see below). */
+[data-theme="dark"],
+.band {
   color-scheme: dark;
-  --paper: #15171A;
-  --plate: #1F2226;
-  --text: #E6E7E9;
-  --steel: #9AA0A8;
-  --line: #2E3237;
-  --line-strong: #6B7179;
-  --ink: #8EA8F1;
-  --ink-hover: #A4BCFC;
-  --on-ink: #15171A;
+  --paper: #141A17;
+  --surface: #1B231F;
+  --text: #EFEDE4;
+  --muted: #A2AAA1;
+  --line: #2B3530;
+  --line-strong: #6D7771;
+  --accent: #E5835C;
+  --accent-hover: #EE9773;
+  --on-accent: #141A17;
+  --accent-text: #EC8E68;
+  --proof-bg: #22362A;
+  --proof: #A9D1B4;
   --danger: #F08A80;
   --danger-hover: #FB9E94;
-  --on-danger: #15171A;
+  --on-danger: #141A17;
   --tint: rgb(255 255 255 / 0.06);
   --danger-tint: rgb(240 138 128 / 0.1);
-
-  --bevel: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 0 rgb(0 0 0 / 0.45), 0 2px 3px -1px rgb(0 0 0 / 0.5);
-  --bevel-featured: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 0 rgb(0 0 0 / 0.45), 0 3px 4px -2px rgb(0 0 0 / 0.6);
-  --bevel-ink: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 1px 0 rgb(0 0 0 / 0.45), 0 2px 3px -1px rgb(0 0 0 / 0.5);
-  --press: inset 0 1px 2px rgb(0 0 0 / 0.35);
-  --press-ink: inset 0 1px 2px rgb(0 0 0 / 0.3);
-  --mark-shade: rgb(0 0 0 / 0.4);
-  --mark-lip: rgb(255 255 255 / 0.07);
+  --focus: #EFEDE4;
+  --shadow-pop: 0 1px 0 rgb(0 0 0 / 0.3), 0 10px 28px -12px rgb(0 0 0 / 0.7);
 }
 
 /* 2) from the operating system, unless the person chose light. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --paper: #15171A;
-    --plate: #1F2226;
-    --text: #E6E7E9;
-    --steel: #9AA0A8;
-    --line: #2E3237;
-    --line-strong: #6B7179;
-    --ink: #8EA8F1;
-    --ink-hover: #A4BCFC;
-    --on-ink: #15171A;
+    --paper: #141A17;
+    --surface: #1B231F;
+    --text: #EFEDE4;
+    --muted: #A2AAA1;
+    --line: #2B3530;
+    --line-strong: #6D7771;
+    --accent: #E5835C;
+    --accent-hover: #EE9773;
+    --on-accent: #141A17;
+    --accent-text: #EC8E68;
+    --proof-bg: #22362A;
+    --proof: #A9D1B4;
     --danger: #F08A80;
     --danger-hover: #FB9E94;
-    --on-danger: #15171A;
+    --on-danger: #141A17;
     --tint: rgb(255 255 255 / 0.06);
     --danger-tint: rgb(240 138 128 / 0.1);
-
-    --bevel: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 0 rgb(0 0 0 / 0.45), 0 2px 3px -1px rgb(0 0 0 / 0.5);
-    --bevel-featured: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 0 rgb(0 0 0 / 0.45), 0 3px 4px -2px rgb(0 0 0 / 0.6);
-    --bevel-ink: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 1px 0 rgb(0 0 0 / 0.45), 0 2px 3px -1px rgb(0 0 0 / 0.5);
-    --press: inset 0 1px 2px rgb(0 0 0 / 0.35);
-    --press-ink: inset 0 1px 2px rgb(0 0 0 / 0.3);
-    --mark-shade: rgb(0 0 0 / 0.4);
-    --mark-lip: rgb(255 255 255 / 0.07);
+    --focus: #EFEDE4;
+    --shadow-pop: 0 1px 0 rgb(0 0 0 / 0.3), 0 10px 28px -12px rgb(0 0 0 / 0.7);
   }
+}
+
+/* Background of the dark statement strips. Not in the blocks above on purpose: .band takes
+   the dark values from them and this one from the page theme. */
+:root, [data-theme="light"] { --band-bg: #212721; }
+[data-theme="dark"] { --band-bg: #0D1310; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --band-bg: #0D1310; }
+}
+
+/* Old names, kept until every page stylesheet is moved over (redesign phase 3). */
+:root,
+[data-theme],
+.band {
+  --plate: var(--surface);
+  --steel: var(--muted);
+  --ink: var(--accent-text);
+  --r-plate: 0;
+  --r-control: 0;
+  --r-chip: 0;
+  --r-mark: 0;
+  --bevel: none;
+  --bevel-featured: none;
+  --press: none;
 }
