@@ -66,3 +66,6 @@
 
 - 2026-11-11: Legal sync. `docs/DATA_INVENTORY.md` and `content/*/privacy.md` (7 languages) now match the code: rate-limit counters live in the DB cache (up to 24 h, not "memory, 1 h"), app logs have no IP, backups kept 14 days. Reverse-proxy and app log retention, and off-server backup retention, are marked TODO (visible in the privacy draft).
   Next: decide those retentions, then replace the TODOs; lawyer review.
+
+- 2026-11-11: Redesign phase 0. `docs/REDESIGN_PLAN.md`: what is taken from the Figma images, deviations, tokens, fonts (Geologica + Inter + Plex Mono), components, 3 logo options, motion plan, phases, open points.
+  Next: developer approves the plan (and the 5 open points), then phase 1 (foundation + styleguide).
