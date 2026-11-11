@@ -107,8 +107,10 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 - Lists: `.plate-row` (cover, name in Manrope, by-line, tagline, marks) · `.card` (landing) · `.chip` (tags).
 - Header: not sticky, hairline under, mobile menu is `<details>`. Footer: links, language form (POST), theme.
 - Toast: surface + border, `role=status`, bottom. Empty state: dashed frame, three unstruck marks, one action.
-- Error pages (`404.html`, `403.html` inside the site; `500.html`, `400.html`, `403_csrf.html` standalone):
-  code label, headline, one sentence, three unstruck marks, two links.
+- Error pages (`404.html`, `403.html` inside the site; `500.html`, `400.html`, `403_csrf.html` standalone, no DB or
+  context processors; views in `config/errors.py`): big mono status code, headline, one sentence, one mark that fails to
+  stamp, primary action (front page, or feed when signed in) + "Go back", "Reference: <request id>" on 500/403/CSRF.
+  Previews at `/_dev/errors/<code>/` (DEBUG only).
 - Tabs: plain links with `aria-current`; active = text color + 2px bar.
 
 ## Motion (`motion.css`, `motion.js`)
@@ -122,6 +124,7 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
   no reveal, no page transition, the tick head is hidden.
 - Landing: strike (once), live pulse + uptime tick + drift in the hero (3 loops, the maximum), closing cursor
   (far below the hero, never visible together with it), section reveal (once). Drift is desktop + hover only.
+- Error pages: one mark comes down, does not take and lifts away (once, 1.3 s); the dashed "Not yet" mark stays.
 - Project page: marks strike in order on load (300 / 650 / 1000 ms), one tick highlight over the 30 uptime
   cells (1 loop). Elsewhere: hover, press and focus answers, like/follow pop, menu and toast fades, page
   cross-fade.

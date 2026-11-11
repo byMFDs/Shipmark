@@ -23,3 +23,6 @@ staticfiles/
 .idea/
 .vscode/
 .DS_Store
+
+# Error logs (LOG_DIR)
+logs/

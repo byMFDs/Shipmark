@@ -1,5 +1,6 @@
 import hashlib
 import re
+import secrets
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
@@ -9,10 +10,32 @@ from django.urls import reverse
 from django.utils import translation
 from django.utils.http import urlencode
 
+from .errorlog import current_request
 from .ratelimit import is_limited
 
 
 BADGE_PREFIX = "/badge/"
+
+
+class RequestIdMiddleware:
+    """A short random id per request: `request.request_id`, the X-Request-ID response header, the
+    "Reference" on the 500/403/CSRF pages and the `request_id` of every error log line (config/errorlog.py).
+
+    Always made here, never taken from the client: a visitor cannot plant an id in our logs.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        request.request_id = secrets.token_hex(4)
+        token = current_request.set(request)
+        try:
+            response = self.get_response(request)
+        finally:
+            current_request.reset(token)
+        response.headers["X-Request-ID"] = request.request_id
+        return response
 
 
 class LocalhostRedirectMiddleware:

@@ -1906,3 +1906,51 @@ msgstr "Dieses Repository ist privat. Es können nur öffentliche Repositories g
 #: verification/repo.py:208 verification/repo.py:284
 msgid "This repository is already linked to another project."
 msgstr "Dieses Repository ist bereits mit einem anderen Projekt verknüpft."
+
+msgid "We could not read that request"
+msgstr "Diese Anfrage konnten wir nicht lesen"
+
+msgid "Something in it was malformed or incomplete. Go back and try again."
+msgstr "Etwas daran war fehlerhaft oder unvollständig. Geh zurück und versuch es noch einmal."
+
+msgid "This record is closed"
+msgstr "Dieser Eintrag ist nicht zugänglich"
+
+msgid "Your account is not allowed to open this page. If you have another account, sign in with that one."
+msgstr "Dein Konto darf diese Seite nicht öffnen. Wenn du ein anderes Konto hast, melde dich damit an."
+
+msgid "This form has expired"
+msgstr "Dieses Formular ist abgelaufen"
+
+msgid "It was opened too long ago, or in another tab before you signed in or out. Go back, reload the page and send it again."
+msgstr "Es wurde vor zu langer Zeit geöffnet oder in einem anderen Tab, bevor du dich an- oder abgemeldet hast. Geh zurück, lade die Seite neu und sende es noch einmal."
+
+msgid "No record found"
+msgstr "Kein Eintrag gefunden"
+
+msgid "We looked, and there is nothing at this address. The link may be mistyped, the page may have moved, or it is not public."
+msgstr "Wir haben nachgesehen: Unter dieser Adresse gibt es nichts. Vielleicht ist der Link falsch, die Seite wurde verschoben oder sie ist nicht öffentlich."
+
+msgid "Something broke on our side"
+msgstr "Bei uns ist etwas kaputtgegangen"
+
+msgid "It is not your fault, and the error has been logged. Try again in a minute."
+msgstr "Es liegt nicht an dir, und der Fehler wurde protokolliert. Versuch es in einer Minute noch einmal."
+
+msgid "Error"
+msgstr "Fehler"
+
+msgid "Go to your feed"
+msgstr "Zu deinem Feed"
+
+msgid "Go to the front page"
+msgstr "Zur Startseite"
+
+msgid "Go back"
+msgstr "Zurück"
+
+msgid "Reference:"
+msgstr "Referenz:"
+
+msgid "If it keeps happening, write to <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the reference."
+msgstr "Wenn das öfter passiert, schreib an <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> und gib die Referenz an."

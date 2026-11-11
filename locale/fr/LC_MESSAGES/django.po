@@ -1906,3 +1906,51 @@ msgstr "Ce dépôt est privé. Seuls les dépôts publics peuvent être contrôl
 #: verification/repo.py:208 verification/repo.py:284
 msgid "This repository is already linked to another project."
 msgstr "Ce dépôt est déjà lié à un autre projet."
+
+msgid "We could not read that request"
+msgstr "Nous n'avons pas pu lire cette requête"
+
+msgid "Something in it was malformed or incomplete. Go back and try again."
+msgstr "Quelque chose y était malformé ou incomplet. Revenez en arrière et réessayez."
+
+msgid "This record is closed"
+msgstr "Cette fiche est fermée"
+
+msgid "Your account is not allowed to open this page. If you have another account, sign in with that one."
+msgstr "Votre compte n'a pas accès à cette page. Si vous avez un autre compte, connectez-vous avec celui-ci."
+
+msgid "This form has expired"
+msgstr "Ce formulaire a expiré"
+
+msgid "It was opened too long ago, or in another tab before you signed in or out. Go back, reload the page and send it again."
+msgstr "Il a été ouvert il y a trop longtemps, ou dans un autre onglet avant votre connexion ou déconnexion. Revenez en arrière, rechargez la page et renvoyez-le."
+
+msgid "No record found"
+msgstr "Aucune fiche trouvée"
+
+msgid "We looked, and there is nothing at this address. The link may be mistyped, the page may have moved, or it is not public."
+msgstr "Nous avons vérifié : il n'y a rien à cette adresse. Le lien contient peut-être une erreur, la page a peut-être été déplacée, ou elle n'est pas publique."
+
+msgid "Something broke on our side"
+msgstr "Quelque chose a cassé de notre côté"
+
+msgid "It is not your fault, and the error has been logged. Try again in a minute."
+msgstr "Ce n'est pas votre faute, et l'erreur a été enregistrée. Réessayez dans une minute."
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid "Go to your feed"
+msgstr "Aller à votre fil"
+
+msgid "Go to the front page"
+msgstr "Aller à l'accueil"
+
+msgid "Go back"
+msgstr "Retour"
+
+msgid "Reference:"
+msgstr "Référence :"
+
+msgid "If it keeps happening, write to <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the reference."
+msgstr "Si cela se reproduit, écrivez à <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> en indiquant la référence."

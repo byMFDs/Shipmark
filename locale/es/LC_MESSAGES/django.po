@@ -1906,3 +1906,51 @@ msgstr "Este repositorio es privado. Solo se pueden comprobar repositorios públ
 #: verification/repo.py:208 verification/repo.py:284
 msgid "This repository is already linked to another project."
 msgstr "Este repositorio ya está vinculado a otro proyecto."
+
+msgid "We could not read that request"
+msgstr "No pudimos leer esa solicitud"
+
+msgid "Something in it was malformed or incomplete. Go back and try again."
+msgstr "Algo en ella estaba dañado o incompleto. Vuelve atrás e inténtalo de nuevo."
+
+msgid "This record is closed"
+msgstr "Este registro está cerrado"
+
+msgid "Your account is not allowed to open this page. If you have another account, sign in with that one."
+msgstr "Tu cuenta no tiene permiso para abrir esta página. Si tienes otra cuenta, inicia sesión con ella."
+
+msgid "This form has expired"
+msgstr "Este formulario ha caducado"
+
+msgid "It was opened too long ago, or in another tab before you signed in or out. Go back, reload the page and send it again."
+msgstr "Se abrió hace demasiado tiempo o en otra pestaña antes de iniciar o cerrar sesión. Vuelve atrás, recarga la página y envíalo de nuevo."
+
+msgid "No record found"
+msgstr "No se encontró ningún registro"
+
+msgid "We looked, and there is nothing at this address. The link may be mistyped, the page may have moved, or it is not public."
+msgstr "Lo comprobamos: no hay nada en esta dirección. Puede que el enlace tenga un error, que la página se haya movido o que no sea pública."
+
+msgid "Something broke on our side"
+msgstr "Algo se rompió por nuestra parte"
+
+msgid "It is not your fault, and the error has been logged. Try again in a minute."
+msgstr "No es culpa tuya y el error ya quedó registrado. Inténtalo de nuevo en un minuto."
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Go to your feed"
+msgstr "Ir a tus novedades"
+
+msgid "Go to the front page"
+msgstr "Ir a la página principal"
+
+msgid "Go back"
+msgstr "Volver"
+
+msgid "Reference:"
+msgstr "Referencia:"
+
+msgid "If it keeps happening, write to <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the reference."
+msgstr "Si vuelve a pasar, escribe a <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> e incluye la referencia."

@@ -3,7 +3,13 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import include, path
 
-from config import views
+from config import errors, views
+
+# Error pages (config/errors.py). Django uses these instead of its own when DEBUG is off.
+handler400 = "config.errors.bad_request"
+handler403 = "config.errors.permission_denied"
+handler404 = "config.errors.page_not_found"
+handler500 = "config.errors.server_error"
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
@@ -17,6 +23,8 @@ urlpatterns = [
     path("", include("social.urls")),
     path("", include("moderation.urls")),
     path("", include("pages.urls")),
+    # Previews of every error page, linked from /styleguide/. 404 unless DEBUG.
+    path("_dev/errors/<str:code>/", errors.preview, name="error_preview"),
 ]
 
 if settings.DEBUG:

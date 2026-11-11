@@ -1,4 +1,5 @@
-/* Error pages: 400, 403, 404, 500 and the CSRF failure. One headline, one sentence, two ways out. */
+/* Error pages: 400, 403, 404, 500 and the CSRF failure. A big mono status code, one headline, one sentence,
+   one mark that fails to stamp, two ways out, and a reference where the error was logged. */
 
 .error-page {
   display: grid;
@@ -7,17 +8,64 @@
   padding-bottom: var(--s-8);
 }
 
-/* The status code is a mono label above the headline; the marks are "not yet struck". */
-.error-page__code { display: block; }
-.error-page h1 { max-width: 16ch; font-size: var(--fs-5); }
-.error-page .lede { max-width: 46ch; }
-.error-page__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+.error-page [hidden] { display: none; }
 
-@media (min-width: 48em) {
-  .error-page h1 { font-size: var(--fs-6); }
+/* The status code: the record number of a record that is not there. */
+.error-page__code {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(4.5rem, 20vw, 9rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
 }
 
-/* Pages without the site header and menu (500, CSRF failure: no request or session to rely on). */
+.error-page__text { display: grid; gap: var(--s-3); }
+.error-page h1 { max-width: 18ch; font-size: var(--fs-4); }
+.error-page .lede { max-width: 46ch; }
+.error-page__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+.error-page__ref { margin: 0; color: var(--muted); }
+.error-page__help { margin: 0; max-width: 52ch; font-size: var(--fs--1); }
+
+/* Phones: both buttons full width, primary first. */
+@media (max-width: 29.99em) {
+  .error-page__actions { display: grid; width: 100%; }
+}
+
+@media (min-width: 48em) {
+  .error-page h1 { font-size: var(--fs-5); }
+}
+
+/* ---------- The mark that fails to stamp ----------
+   Final state (also with reduced motion, where base.css turns animations off): only the dashed "Not yet" mark.
+   The earned copy on top comes down, presses, does not take, and lifts away. Transform and opacity only, once. */
+
+.error-stamp { position: relative; display: inline-flex; }
+.error-stamp__ghost { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .error-stamp__ghost { animation: stamp-miss 1300ms var(--ease-out) 450ms both; }
+  .error-stamp > .hallmark { animation: stamp-shake 1300ms var(--ease-press) 450ms both; }
+}
+
+@keyframes stamp-miss {
+  0% { opacity: 0; transform: translateY(-16px) scale(1.18); }
+  30% { opacity: 0.95; transform: translateY(0) scale(0.97); }
+  42% { opacity: 0.95; transform: none; }
+  70% { opacity: 0.5; transform: translateY(-4px) rotate(-3deg); }
+  100% { opacity: 0; transform: translateY(-12px) rotate(-6deg); }
+}
+
+@keyframes stamp-shake {
+  0%, 30% { transform: none; }
+  36% { transform: translateX(-2px); }
+  42% { transform: translateX(2px); }
+  48%, 100% { transform: none; }
+}
+
+/* Pages without the site header and menu (500, 400, CSRF failure: no request or session to rely on). */
 .error-bar { padding-top: env(safe-area-inset-top); }
 .error-bar .container { display: flex; align-items: center; min-height: 4rem; }
 .error-bar a { display: inline-flex; align-items: center; min-height: var(--control-h); color: var(--text); }

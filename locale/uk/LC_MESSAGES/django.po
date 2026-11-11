@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 16:42+0000\n"
+"POT-Creation-Date: 2026-11-11 18:17+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Profile"
 msgstr "Профіль"
 
-#: accounts/admin.py:42 config/settings/base.py:259
+#: accounts/admin.py:42 config/settings/base.py:275
 msgid "Moderation"
 msgstr "Модерація"
 
@@ -151,64 +151,64 @@ msgstr "Ваш акаунт і все, що в ньому було, видале
 msgid "Proof, not promises."
 msgstr "Докази, а не обіцянки."
 
-#: config/settings/base.py:200
+#: config/settings/base.py:216
 msgid "Admin"
 msgstr "Адмінка"
 
-#: config/settings/base.py:236 config/settings/base.py:238
+#: config/settings/base.py:252 config/settings/base.py:254
 #: moderation/dashboard.py:44
 msgid "Users"
 msgstr "Користувачі"
 
-#: config/settings/base.py:242 config/settings/base.py:244
+#: config/settings/base.py:258 config/settings/base.py:260
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:245 templates/pages/landing.html:264
+#: config/settings/base.py:261 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
-#: config/settings/base.py:246 projects/forms.py:26
+#: config/settings/base.py:262 projects/forms.py:26
 #: templates/projects/detail.html:147
 msgid "Tags"
 msgstr "Теги"
 
-#: config/settings/base.py:247
+#: config/settings/base.py:263
 msgid "Tools"
 msgstr "Інструменти"
 
-#: config/settings/base.py:251
+#: config/settings/base.py:267
 msgid "Verification"
 msgstr "Підтвердження"
 
-#: config/settings/base.py:253
+#: config/settings/base.py:269
 msgid "Repositories"
 msgstr "Репозиторії"
 
-#: config/settings/base.py:254
+#: config/settings/base.py:270
 msgid "Domains"
 msgstr "Домени"
 
-#: config/settings/base.py:255
+#: config/settings/base.py:271
 msgid "Uptime checks"
 msgstr "Перевірки доступності"
 
-#: config/settings/base.py:261
+#: config/settings/base.py:277
 msgid "Reports"
 msgstr "Скарги"
 
-#: config/settings/base.py:263
+#: config/settings/base.py:279
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:264 projects/admin.py:44
+#: config/settings/base.py:280 projects/admin.py:44
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:268 config/settings/base.py:270
+#: config/settings/base.py:284 config/settings/base.py:286
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
@@ -374,9 +374,8 @@ msgstr "%(time)s тому"
 msgid "Feed"
 msgstr "Стрічка"
 
-#: pages/templatetags/ui.py:234 templates/errors/_body.html:10
-#: templates/pages/explore.html:4 templates/pages/explore.html:5
-#: templates/pages/explore.html:16
+#: pages/templatetags/ui.py:234 templates/pages/explore.html:4
+#: templates/pages/explore.html:5 templates/pages/explore.html:16
 msgid "Explore"
 msgstr "Огляд"
 
@@ -806,60 +805,44 @@ msgid "Like removed."
 msgstr "Вподобання знято."
 
 #: templates/400.html:3 templates/400.html:5
-msgid "Bad request"
-msgstr "Некоректний запит"
+msgid "We could not read that request"
+msgstr "Не вдалося прочитати цей запит"
 
 #: templates/400.html:6
-msgid "The request could not be understood. Go back and try again."
-msgstr "Запит не вдалося зрозуміти. Поверніться назад і спробуйте ще раз."
+msgid "Something in it was malformed or incomplete. Go back and try again."
+msgstr "Щось у ньому пошкоджене або неповне. Поверніться назад і спробуйте ще раз."
 
-#: templates/403.html:3 templates/403.html:8
-msgid "No access"
-msgstr "Немає доступу"
+#: templates/403.html:3 templates/403.html:7
+msgid "This record is closed"
+msgstr "Цей запис закритий"
 
-#: templates/403.html:9
-msgid ""
-"You are not allowed to open this page. If you signed in with another "
-"account, try that one."
-msgstr ""
-"Вам не дозволено відкривати цю сторінку. Якщо ви входили з іншого акаунта, "
-"спробуйте його."
+#: templates/403.html:8
+msgid "Your account is not allowed to open this page. If you have another account, sign in with that one."
+msgstr "Вашому акаунту не дозволено відкривати цю сторінку. Якщо у вас є інший акаунт, увійдіть із ним."
 
 #: templates/403_csrf.html:3 templates/403_csrf.html:5
-msgid "Form not accepted"
-msgstr "Форму не прийнято"
+msgid "This form has expired"
+msgstr "Ця форма застаріла"
 
 #: templates/403_csrf.html:6
-msgid ""
-"This form was opened too long ago, or in another tab. Go back, reload the "
-"page and send it again."
-msgstr ""
-"Цю форму відкрито надто давно або в іншій вкладці. Поверніться назад, "
-"оновіть сторінку і надішліть форму ще раз."
+msgid "It was opened too long ago, or in another tab before you signed in or out. Go back, reload the page and send it again."
+msgstr "Її відкрили надто давно або в іншій вкладці до входу чи виходу. Поверніться назад, оновіть сторінку й надішліть знову."
 
-#: templates/404.html:3 templates/404.html:8
-msgid "Page not found"
-msgstr "Сторінку не знайдено"
+#: templates/404.html:3 templates/404.html:7
+msgid "No record found"
+msgstr "Запис не знайдено"
 
-#: templates/404.html:9
-msgid ""
-"This page does not exist, or you are not allowed to see it. Check the "
-"address, or start again from the front page."
-msgstr ""
-"Цієї сторінки не існує, або вам не дозволено її бачити. Перевірте адресу або "
-"почніть знову з головної сторінки."
+#: templates/404.html:8
+msgid "We looked, and there is nothing at this address. The link may be mistyped, the page may have moved, or it is not public."
+msgstr "Ми перевірили: за цією адресою нічого немає. Можливо, в посиланні помилка, сторінку перенесли або вона не публічна."
 
 #: templates/500.html:3 templates/500.html:5
-msgid "Something went wrong"
-msgstr "Щось пішло не так"
+msgid "Something broke on our side"
+msgstr "У нас щось зламалося"
 
 #: templates/500.html:6
-msgid ""
-"Something broke on our side. Nothing you did caused it. Try again in a few "
-"minutes."
-msgstr ""
-"Щось зламалося з нашого боку, і це не через ваші дії. Спробуйте ще раз за "
-"кілька хвилин."
+msgid "It is not your fault, and the error has been logged. Try again in a minute."
+msgstr "Ви тут ні до чого, помилку вже записано. Спробуйте ще раз за хвилину."
 
 #: templates/accounts/_github_form.html:8 templates/socialaccount/login.html:15
 msgid "Continue with GitHub"
@@ -1175,11 +1158,32 @@ msgstr "Відкритих скарг немає."
 msgid "Skip to content"
 msgstr "Перейти до вмісту"
 
-#: templates/errors/_body.html:9
-msgid "Go to the start page"
-msgstr "На головну сторінку"
+#: templates/errors/_body.html:6
+msgid "Error"
+msgstr "Помилка"
 
-#: templates/errors/standalone.html:20
+#: templates/errors/_body.html:17
+msgid "Go to your feed"
+msgstr "До вашої стрічки"
+
+#: templates/errors/_body.html:17
+msgid "Go to the front page"
+msgstr "На головну"
+
+#: templates/errors/_body.html:18 templates/errors/_body.html:19
+msgid "Go back"
+msgstr "Назад"
+
+#: templates/errors/_body.html:21
+msgid "Reference:"
+msgstr "Код помилки:"
+
+#: templates/errors/_body.html:22
+#, python-format
+msgid "If it keeps happening, write to <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the reference."
+msgstr "Якщо це повторюється, напишіть на <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> і вкажіть код помилки."
+
+#: templates/errors/standalone.html:22
 msgid "Start page"
 msgstr "Головна сторінка"
 
@@ -2514,3 +2518,35 @@ msgstr "Цей репозиторій приватний. Перевіряти �
 #: verification/repo.py:208 verification/repo.py:284
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."
+
+#~ msgid "Bad request"
+#~ msgstr "Некоректний запит"
+
+#~ msgid "The request could not be understood. Go back and try again."
+#~ msgstr "Запит не вдалося зрозуміти. Поверніться назад і спробуйте ще раз."
+
+#~ msgid "No access"
+#~ msgstr "Немає доступу"
+
+#~ msgid "Form not accepted"
+#~ msgstr "Форму не прийнято"
+
+#~ msgid "Page not found"
+#~ msgstr "Сторінку не знайдено"
+
+#~ msgid ""
+#~ "This page does not exist, or you are not allowed to see it. Check the "
+#~ "address, or start again from the front page."
+#~ msgstr ""
+#~ "Цієї сторінки не існує, або вам не дозволено її бачити. Перевірте адресу "
+#~ "або почніть знову з головної сторінки."
+
+#~ msgid "Something went wrong"
+#~ msgstr "Щось пішло не так"
+
+#~ msgid ""
+#~ "Something broke on our side. Nothing you did caused it. Try again in a "
+#~ "few minutes."
+#~ msgstr ""
+#~ "Щось зламалося з нашого боку, і це не через ваші дії. Спробуйте ще раз за "
+#~ "кілька хвилин."

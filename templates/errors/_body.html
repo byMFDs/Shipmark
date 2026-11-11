@@ -1,13 +1,23 @@
-{% load i18n ui %}{# Shared body of the error pages. Needs: code, title, text. Optional: home_url, explore_url, retry. #}
+{% load i18n ui %}{% comment %}Shared body of the error pages. Needs: code, title, text, mark (hallmark id).
+  From config/errors.py: home_url, home_is_feed, back_url, request_id, contact_email.{% endcomment %}
 <div class="container page">
   <section class="error-page" aria-labelledby="error-title">
-    <p class="eyebrow numeric error-page__code">{{ code }}</p>
-    <h1 id="error-title">{{ title }}</h1>
-    <p class="lede">{{ text }}</p>
-    <div class="empty__marks" aria-hidden="true">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
-    <div class="error-page__actions">
-      <a class="btn btn--primary" href="{{ home_url|default:'/' }}">{% translate "Go to the start page" %}</a>
-      {% if explore_url %}<a class="btn btn--secondary" href="{{ explore_url }}">{% translate "Explore" %}</a>{% endif %}
+    <p class="error-page__code"><span class="visually-hidden">{% translate "Error" %} </span>{{ code }}</p>
+    <div class="error-page__text">
+      <h1 id="error-title">{{ title }}</h1>
+      <p class="lede">{{ text }}</p>
     </div>
+    {# A mark comes down to stamp the record, does not take, and lifts away: the dashed "Not yet" stays. #}
+    <div class="error-stamp" aria-hidden="true">
+      {% hallmark mark "m" False %}
+      <span class="error-stamp__ghost">{% hallmark mark "m" True %}</span>
+    </div>
+    <div class="error-page__actions">
+      <a class="btn btn--primary" href="{{ home_url|default:'/' }}">{% if home_is_feed %}{% translate "Go to your feed" %}{% else %}{% translate "Go to the front page" %}{% endif %}</a>
+      {% if back_url %}<a class="btn btn--secondary" href="{{ back_url }}" data-back>{% icon "arrow-left" %}<span>{% translate "Go back" %}</span></a>
+      {% else %}<button type="button" class="btn btn--secondary needs-js" data-back>{% icon "arrow-left" %}<span>{% translate "Go back" %}</span></button>{% endif %}
+    </div>
+    {% if request_id %}<p class="error-page__ref label">{% translate "Reference:" %} <span class="numeric">{{ request_id }}</span></p>{% endif %}
+    {% if contact_email and code == "500" %}<p class="error-page__help muted">{% blocktranslate trimmed %}If it keeps happening, write to <a href="mailto:{{ contact_email }}">{{ contact_email }}</a> and include the reference.{% endblocktranslate %}</p>{% endif %}
   </section>
 </div>

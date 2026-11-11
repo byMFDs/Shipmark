@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load i18n static %}
-{% block title %}{% translate "Page not found" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block title %}{% translate "No record found" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/error.css' %}">{% endblock %}
 {% block meta %}<meta name="robots" content="noindex">{% endblock %}
 {% block content %}
-  {% url 'pages:landing' as home_url %}{% url 'pages:explore' as explore_url %}
-  {% translate "Page not found" as title %}
-  {% translate "This page does not exist, or you are not allowed to see it. Check the address, or start again from the front page." as text %}
-  {% include "errors/_body.html" with code="404" %}
+  {% translate "No record found" as title %}
+  {% translate "We looked, and there is nothing at this address. The link may be mistyped, the page may have moved, or it is not public." as text %}
+  {% include "errors/_body.html" with code="404" mark="live" %}
 {% endblock %}
+{% block scripts %}<script type="module" src="{% static 'js/error.js' %}"></script>{% endblock %}

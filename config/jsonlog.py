@@ -27,17 +27,35 @@ class JsonFormatter(logging.Formatter):
         return json.dumps(data, ensure_ascii=False, default=str)
 
 
-def logging_config(level="INFO"):
-    """dictConfig: everything goes to stdout as JSON. Privacy: no IP addresses and no user agents are logged."""
-    return {
+def logging_config(level="INFO", log_dir=None, stdout=True):
+    """dictConfig: JSON lines on stdout, plus the error files in `log_dir` (config/errorlog.py) when given.
+
+    Privacy: no IP addresses and no user agents are logged. gunicorn.conf.py calls this without `log_dir`
+    (gunicorn's master process has no Django settings); Django adds the files in each worker.
+    """
+    config = {
         "version": 1,
         "disable_existing_loggers": False,
         "formatters": {"json": {"()": "config.jsonlog.JsonFormatter"}},
-        "handlers": {"stdout": {"class": "logging.StreamHandler", "stream": "ext://sys.stdout", "formatter": "json"}},
-        "root": {"handlers": ["stdout"], "level": level},
+        "filters": {},
+        "handlers": {},
+        "root": {"handlers": [], "level": level},
+        "loggers": {},
+    }
+    if stdout:
+        config["handlers"]["stdout"] = {"class": "logging.StreamHandler", "stream": "ext://sys.stdout", "formatter": "json"}
+        config["root"]["handlers"].append("stdout")
         # gunicorn.access writes one line per request; keep it from also reaching the root handler.
-        "loggers": {
+        config["loggers"] = {
             "gunicorn.error": {"handlers": ["stdout"], "level": level, "propagate": False},
             "gunicorn.access": {"handlers": ["stdout"], "level": "INFO", "propagate": False},
-        },
-    }
+        }
+    if log_dir:
+        from config.errorlog import file_handlers
+
+        formatters, filters, handlers = file_handlers(log_dir)
+        config["formatters"].update(formatters)
+        config["filters"].update(filters)
+        config["handlers"].update(handlers)
+        config["root"]["handlers"] += list(handlers)
+    return config

@@ -1,8 +1,8 @@
 {% extends "errors/standalone.html" %}
 {% load i18n %}
-{% block title %}{% translate "Bad request" %}{% endblock %}
+{% block title %}{% translate "We could not read that request" %}{% endblock %}
 {% block content %}
-  {% translate "Bad request" as title %}
-  {% translate "The request could not be understood. Go back and try again." as text %}
-  {% include "errors/_body.html" with code="400" %}
+  {% translate "We could not read that request" as title %}
+  {% translate "Something in it was malformed or incomplete. Go back and try again." as text %}
+  {% include "errors/_body.html" with mark="authored" %}
 {% endblock %}

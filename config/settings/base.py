@@ -1,4 +1,6 @@
 """Settings shared by all environments. Values come from .env vars (see .env.example)."""
+import sys
+import tempfile
 from pathlib import Path
 
 import environ
@@ -39,6 +41,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # First: every response gets an X-Request-ID, and every error log line carries the same id.
+    "config.middleware.RequestIdMiddleware",
     "django.middleware.security.SecurityMiddleware",
     # Before sessions and CSRF: a flood of admin login attempts is refused early.
     "config.middleware.AdminLoginThrottleMiddleware",
@@ -84,6 +88,18 @@ CONTENT_SECURITY_POLICY = "; ".join([
 PERMISSIONS_POLICY = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
 
 ROOT_URLCONF = "config.urls"
+# Error pages (config/errors.py; handler400/403/404/500 are set in config/urls.py). Never Django's debug pages
+# when DEBUG is off.
+CSRF_FAILURE_VIEW = "config.errors.csrf_failure"
+
+# Error log files (config/errorlog.py): errors.jsonl and notfound.jsonl, 5 MB x 5 each. Read with
+# `python manage.py show_errors`. Tests write to a temporary folder, never to the project.
+TESTING = sys.argv[1:2] == ["test"]
+LOG_DIR = Path(tempfile.mkdtemp(prefix="shipmark-test-logs-")) if TESTING else Path(env.str("LOG_DIR", default=str(BASE_DIR / "logs")))
+from config.jsonlog import logging_config  # noqa: E402
+
+# Development: only the files (Django's own console output stays as it is). prod.py adds JSON on stdout.
+LOGGING = logging_config("WARNING", log_dir=LOG_DIR, stdout=False)
 WSGI_APPLICATION = "config.wsgi.application"
 
 TEMPLATES = [

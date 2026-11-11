@@ -13,6 +13,10 @@
     <p class="lede">Every component in the light and the dark theme, side by side. This page exists only while
       <code>DEBUG</code> is on. The rules behind it are in <code>docs/DESIGN.md</code>.</p>
     <p class="sg-jump"><a href="#logo">Logo</a> · <a href="#motion">Motion</a> · <a href="#components">Components</a> · <a href="#chrome">Header and footer</a></p>
+    <p class="sg-jump">Error pages (as the real views render them):
+      <a href="{% url 'error_preview' '400' %}">400</a> · <a href="{% url 'error_preview' '403' %}">403</a> ·
+      <a href="{% url 'error_preview' '404' %}">404</a> · <a href="{% url 'error_preview' '500' %}">500</a> ·
+      <a href="{% url 'error_preview' 'csrf' %}">CSRF failure</a></p>
   </div>
 
   <section class="sg-section" id="logo" aria-labelledby="logo-title">

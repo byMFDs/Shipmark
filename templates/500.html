@@ -1,8 +1,8 @@
 {% extends "errors/standalone.html" %}
 {% load i18n %}
-{% block title %}{% translate "Something went wrong" %}{% endblock %}
+{% block title %}{% translate "Something broke on our side" %}{% endblock %}
 {% block content %}
-  {% translate "Something went wrong" as title %}
-  {% translate "Something broke on our side. Nothing you did caused it. Try again in a few minutes." as text %}
-  {% include "errors/_body.html" with code="500" %}
+  {% translate "Something broke on our side" as title %}
+  {% translate "It is not your fault, and the error has been logged. Try again in a minute." as text %}
+  {% include "errors/_body.html" with mark="steady" %}
 {% endblock %}

@@ -1,10 +1,11 @@
 {% load i18n static ui %}{% get_current_language as LANGUAGE_CODE %}<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-  {# Used when no request context exists (500, 400, CSRF failure): it needs no database, session or context processor. #}
+  {% comment %}Used when no request context exists (500, 400, CSRF failure): it needs no database, session or context
+    processor. Static files only; config/errors.py passes the few values it needs.{% endcomment %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}{% endblock %}{% if site_name %} · {{ site_name }}{% endif %}</title>
   <meta name="robots" content="noindex">
   <meta name="color-scheme" content="light dark">
   <script src="{% static 'js/theme-init.js' %}"></script>
@@ -13,6 +14,7 @@
   <link rel="stylesheet" href="{% static 'css/components.css' %}">
   <link rel="stylesheet" href="{% static 'css/pages/error.css' %}">
   <link rel="icon" href="{% static 'brand/favicon.svg' %}" type="image/svg+xml">
+  <script type="module" src="{% static 'js/error.js' %}"></script>
 </head>
 <body>
   <header class="error-bar">

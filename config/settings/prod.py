@@ -67,4 +67,5 @@ CACHES = {"default": {
 
 # Logs: one JSON object per line on stdout (config/jsonlog.py). The process manager (systemd, Docker, ...)
 # collects stdout. LOG_LEVEL=DEBUG for more detail. Django itself logs 4xx/5xx requests and unhandled exceptions here.
-LOGGING = logging_config(env.str("LOG_LEVEL", default="INFO").upper())  # noqa: F405
+# The error files (errors.jsonl, notfound.jsonl) go to LOG_DIR (default <project>/logs); see docs/DEPLOY_NOTES.md.
+LOGGING = logging_config(env.str("LOG_LEVEL", default="INFO").upper(), log_dir=LOG_DIR)  # noqa: F405

@@ -1,8 +1,8 @@
 {% extends "errors/standalone.html" %}
 {% load i18n %}
-{% block title %}{% translate "Form not accepted" %}{% endblock %}
+{% block title %}{% translate "This form has expired" %}{% endblock %}
 {% block content %}
-  {% translate "Form not accepted" as title %}
-  {% translate "This form was opened too long ago, or in another tab. Go back, reload the page and send it again." as text %}
-  {% include "errors/_body.html" with code="403" %}
+  {% translate "This form has expired" as title %}
+  {% translate "It was opened too long ago, or in another tab before you signed in or out. Go back, reload the page and send it again." as text %}
+  {% include "errors/_body.html" with mark="live" %}
 {% endblock %}

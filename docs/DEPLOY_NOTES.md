@@ -23,6 +23,7 @@ Set them in the real environment or in `/srv/shipmark/.env` (gitignored; real va
 | `SECURE_HSTS_SECONDS` | no | Default 3600. Raise to 31536000 after HTTPS has worked for a few days |
 | `SECURE_HSTS_INCLUDE_SUBDOMAINS`, `SECURE_HSTS_PRELOAD` | no | Default true |
 | `LOG_LEVEL` | no | Default `INFO` |
+| `LOG_DIR` | no | Folder for `errors.jsonl` and `notfound.jsonl`. Default `<project>/logs`. Must be writable by the gunicorn user |
 | `GUNICORN_BIND`, `WEB_CONCURRENCY` | no | Default `127.0.0.1:8000`, 3 workers |
 | `DEBUG` | no | Ignored in prod (always off) |
 
@@ -70,6 +71,35 @@ Everything is one JSON object per line on stdout: the app, Django errors (`djang
 (systemd: `journalctl -u shipmark -o cat | jq .`). Client IP addresses and user agents are **not** logged by the app,
 because the privacy page says we do not record IPs. The reverse proxy has its own access log; decide its retention
 (see the checklist).
+
+### Error log files and `show_errors`
+
+Besides stdout, every worker writes two JSON-lines files to `LOG_DIR` (`config/errorlog.py`):
+
+- `errors.jsonl`: unhandled exceptions, 5xx, 403 and CSRF failures.
+- `notfound.jsonl`: 404s, the same path at most once per minute per worker, so scanners cannot flood it.
+
+Each line: `timestamp, level, request_id, method, path, status, view, exception, message, traceback`
+(404 lines have no view, exception, message or traceback). The path has no query string and `/u/<name>/` is written
+as `/u/[user]/`; message and traceback are scrubbed of emails, IPs, tokens and secret-looking values. Never logged:
+IP, user agent, cookies, headers, query string, POST body. Both files rotate at 5 MB and keep 5 old copies
+(`errors.jsonl.1` … `.5`), so they never take more than 60 MB together; no `logrotate` rule is needed.
+
+Every response has an `X-Request-ID` header. The 500, 403 and "form expired" pages show the same id as
+"Reference: 3f9a1c2e", so when someone reports an error you can find its line.
+
+```bash
+export DJANGO_SETTINGS_MODULE=config.settings.prod
+python manage.py show_errors                 # last 20 errors, grouped by exception, newest first
+python manage.py show_errors --last 100 --full   # with tracebacks
+python manage.py show_errors --summary       # one line per exception: count, first/last time, top paths
+python manage.py show_errors --notfound      # most requested missing paths
+grep 3f9a1c2e "$LOG_DIR"/errors.jsonl* | jq . # one reference
+```
+
+Error pages: 400, 403, 404, 500 and the CSRF failure are custom (`config/errors.py`, `templates/`). The 500, 400 and
+CSRF pages use no database, session or context processor. With `DEBUG=True` locally you still see Django's yellow
+debug pages; preview the real ones at `/_dev/errors/<400|403|404|500|csrf>/` (linked from `/styleguide/`).
 
 ## Run against PostgreSQL on your own machine (Pop!_OS 24.04)
 
@@ -223,6 +253,7 @@ Server
 - [ ] Backups run, one copy is off the server, **a restore was tested**.
 - [ ] gunicorn restarts by itself after a crash and a reboot (kill it once and look).
 - [ ] Logs are JSON on stdout and show no IP addresses; you know where to read them.
+- [ ] `LOG_DIR` is writable by the app user; open a missing page and check that `show_errors --notfound` lists it.
 
 Accounts and secrets
 - [ ] GitHub OAuth App uses the production callback URL; a real sign-in works end to end.

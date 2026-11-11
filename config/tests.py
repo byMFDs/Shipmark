@@ -120,7 +120,7 @@ class ProductionSettingsTests(SimpleTestCase):
         env = {k: v for k, v in os.environ.items() if k not in ("ADMIN_URL", "DEBUG")}
         env.update({"DJANGO_SETTINGS_MODULE": "config.settings.prod", "SECRET_KEY": "tést-only-" + "abcdefghijklmnopqrstuvwxyz0123456789" * 2,
                     "DATABASE_URL": "sqlite:////tmp/unused.sqlite3", "ADMIN_URL": "staff-4f8k2/",
-                    "ALLOWED_HOSTS": "example.com", **extra})
+                    "ALLOWED_HOSTS": "example.com", "LOG_DIR": str(settings.LOG_DIR), **extra})
         return subprocess.run([sys.executable, "manage.py", *args], cwd=Path(settings.BASE_DIR), env=env,
                               capture_output=True, text=True)
 
@@ -234,7 +234,7 @@ class ErrorPageTests(TestCase):
         with override_settings(DEBUG=False):
             response = self.client.get("/no-such-page/")
         self.assertEqual(response.status_code, 404)
-        self.assertContains(response, "Page not found", status_code=404)
+        self.assertContains(response, "No record found", status_code=404)
         self.assertContains(response, 'class="site-header', status_code=404)
 
     def test_standalone_pages_need_no_context(self):
@@ -247,4 +247,4 @@ class ErrorPageTests(TestCase):
         request = RequestFactory().get("/")
         request.user = AnonymousUser()
         html = render_to_string("403.html", request=request)
-        self.assertIn("No access", html)
+        self.assertIn("This record is closed", html)

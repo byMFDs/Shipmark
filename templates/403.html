@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load i18n static %}
-{% block title %}{% translate "No access" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block title %}{% translate "This record is closed" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/error.css' %}">{% endblock %}
 {% block meta %}<meta name="robots" content="noindex">{% endblock %}
 {% block content %}
-  {% url 'pages:landing' as home_url %}{% url 'pages:explore' as explore_url %}
-  {% translate "No access" as title %}
-  {% translate "You are not allowed to open this page. If you signed in with another account, try that one." as text %}
-  {% include "errors/_body.html" with code="403" %}
+  {% translate "This record is closed" as title %}
+  {% translate "Your account is not allowed to open this page. If you have another account, sign in with that one." as text %}
+  {% include "errors/_body.html" with code="403" mark="authored" %}
 {% endblock %}
+{% block scripts %}<script type="module" src="{% static 'js/error.js' %}"></script>{% endblock %}

@@ -37,6 +37,8 @@ The results are shown on your public project page.
 
 **IP addresses and logs.** The application does not store your IP address, and its own logs do not contain it. For each page request the logs record only the method, the page address (without anything after a `?`), the response status, size and time taken, plus errors. They hold no browser details. Page addresses include usernames (`/u/<username>/`), so a log line can show which profile was opened, but not by whom.
 
+**Error log.** When something fails, the application writes a short record to an error file on our server: the time, a random reference number (the one shown on the error page), the request method, the page address without anything after a `?` and with usernames replaced by `[user]`, the response status, which part of the code failed, and the technical error message with email addresses, IP addresses and anything that looks like a password or key removed. Pages that were not found are written to a separate file, each address at most once a minute. These files never contain your IP address, browser details, cookies, what you typed into a form, your email address or your username. Each file is limited to 5 MB plus 5 older copies; the oldest is deleted when the limit is reached.
+
 > **TODO before launch:** the web server in front of the application keeps its own access log, which by default includes IP addresses. What it records and how long it keeps it (and how long the application logs are kept) has not been decided yet. Fill this in, or switch IP logging off, before this page goes public.
 
 **Abuse protection.** To limit abuse we count some actions (for example, likes per hour) in the site's database. Each counter is a number tied to your account or to a project, without any IP address, and applies for at most 24 hours. After that it is no longer used, but the row may stay in the database until it is cleaned up.
@@ -54,6 +56,7 @@ The results are shown on your public project page.
 - Audit log: kept. Entries about a deleted account do not contain the username or email.
 - Abuse-protection counters: at most 24 hours.
 - Backups: 14 days. A deleted account disappears from them within 14 days.
+- Error log files: until they are full (5 MB, plus 5 older copies of 5 MB each), then the oldest entries are deleted.
 - Web server and application logs: **TODO**, not decided yet.
 
 ## Who else receives data {#recipients}
