@@ -110,3 +110,7 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
   2) `SITE_URL` (dev localhost:8000, prod https://shipmark.me) for embed snippets, OG, canonical, export; favicon: files were already logo C, the tab showed a stale browser favicon cache (same URL since phase 1) and there was no favicon.ico -> content-versioned icon URLs, `favicon.ico` + `/favicon.ico`, `make_icons`; embed "how to use" hint.
   3) About page in all 7 languages from facts in CLAUDE.md/docs/code (proof rules, what is not verified, what builders get, who, next, contact); visible TODOs for the developer to confirm.
   4) Translations: cause = makemessages ran only for `uk` during the redesign (87 strings never reached pl/de/es/fr/pt-br) and the old test only looked for empty entries; no hardcoded UI strings found. All 537 strings in 6 catalogs, no fuzzy, compiled; privacy pages synced; new `pages/test_translations.py`. Next: native-speaker review of pl/de/es/fr/pt-br, confirm About TODOs, real CONTACT_EMAIL.
+
+- 2026-11-12: Trust hardening, stage 1 (audit only, no app code). `docs/TRUST_AUDIT.md`: what each hallmark checks today, attack scenarios a–l run as temporary mocked tests (deleted), ranked bypasses, fix evaluation, honest wording en/uk.
+  Main gaps: fork + 10 commits, no repo re-verification, own copy of someone's code, contributor gets "Repo owner", uptime follows redirects to other hosts.
+  Next: stage 2 (A–F) after approval.
