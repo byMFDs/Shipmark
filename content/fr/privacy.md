@@ -39,6 +39,8 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 **Adresses IP et journaux.** L’application ne conserve pas votre adresse IP et ses propres journaux ne la contiennent pas. Pour chaque requête de page, les journaux notent seulement la méthode, l’adresse de la page (sans ce qui suit un `?`), le statut de la réponse, la taille et le temps de traitement, ainsi que les erreurs. Ils ne contiennent aucune information sur votre navigateur. Les adresses de page contiennent des noms d’utilisateur (`/u/<username>/`) : une ligne de journal peut donc montrer quel profil a été ouvert, mais pas par qui.
 
+**Journal des erreurs.** Quand quelque chose échoue, l’application écrit une courte entrée dans un fichier d’erreurs sur notre serveur : l’heure, un numéro de référence aléatoire (celui affiché sur la page d’erreur), la méthode de la requête, l’adresse de la page sans ce qui suit un `?` et avec les noms d’utilisateur remplacés par `[user]`, le statut de la réponse, la partie du code qui a échoué et le message technique, dont sont retirés les adresses e-mail, les adresses IP et tout ce qui ressemble à un mot de passe ou une clé. Les pages introuvables sont écrites dans un fichier séparé, chaque adresse au plus une fois par minute. Ces fichiers ne contiennent jamais votre adresse IP, les informations de votre navigateur, vos cookies, ce que vous saisissez dans les formulaires, votre adresse e-mail ni votre nom d’utilisateur. Chaque fichier est limité à 5 Mo plus 5 copies plus anciennes ; une fois la limite atteinte, la plus ancienne est supprimée.
+
 > **TODO avant le lancement :** le serveur web placé devant l’application tient son propre journal d’accès, qui contient par défaut des adresses IP. Ce qu’il enregistre et combien de temps il le conserve (ainsi que la durée de conservation des journaux de l’application) n’est pas encore décidé. Il faut le compléter, ou désactiver l’enregistrement des IP, avant que cette page ne devienne publique.
 
 **Protection contre les abus.** Pour limiter les abus, nous comptons certaines actions (par exemple les mentions J’aime par heure) dans la base de données du site. Chaque compteur est un nombre lié à votre compte ou à un projet, sans adresse IP, valable 24 heures au plus. Ensuite il n’est plus utilisé, mais la ligne peut rester dans la base jusqu’à son nettoyage.
@@ -56,6 +58,7 @@ Les résultats sont affichés sur la page publique de votre projet.
 - Journal d’audit : conservé. Les entrées concernant un compte supprimé ne contiennent ni le nom d’utilisateur ni l’e-mail.
 - Compteurs de protection contre les abus : 24 heures au plus.
 - Sauvegardes : 14 jours. Un compte supprimé en disparaît dans ce délai de 14 jours.
+- Fichiers du journal des erreurs : jusqu’à ce qu’ils soient pleins (5 Mo plus 5 copies de 5 Mo), puis les entrées les plus anciennes sont supprimées.
 - Journaux du serveur web et de l’application : **TODO**, pas encore décidé.
 
 ## Qui d’autre reçoit des données {#recipients}

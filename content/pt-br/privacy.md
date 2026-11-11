@@ -39,6 +39,8 @@ Os resultados aparecem na página pública do seu projeto.
 
 **Endereços IP e registros.** O aplicativo não guarda seu endereço IP, e os registros dele não o contêm. De cada requisição de página, os registros anotam apenas o método, o endereço da página (sem o que vem depois de um `?`), o status da resposta, o tamanho e o tempo gasto, além dos erros. Não há dados do seu navegador. Os endereços de página incluem nomes de usuário (`/u/<username>/`), então uma linha de registro pode mostrar qual perfil foi aberto, mas não por quem.
 
+**Registro de erros.** Quando algo falha, o aplicativo grava uma entrada curta em um arquivo de erros no nosso servidor: a hora, um número de referência aleatório (o mesmo mostrado na página de erro), o método da requisição, o endereço da página sem o que vem depois de `?` e com nomes de usuário trocados por `[user]`, o status da resposta, a parte do código que falhou e a mensagem técnica, da qual são removidos endereços de e-mail, endereços IP e tudo o que pareça senha ou chave. Páginas não encontradas vão para um arquivo separado, cada endereço no máximo uma vez por minuto. Esses arquivos nunca contêm seu endereço IP, dados do navegador, cookies, o que você digita em formulários, seu e-mail nem seu nome de usuário. Cada arquivo é limitado a 5 MB mais 5 cópias anteriores; ao atingir o limite, a mais antiga é apagada.
+
 > **TODO antes do lançamento:** o servidor web na frente do aplicativo mantém seu próprio registro de acessos, que por padrão inclui endereços IP. O que ele registra e por quanto tempo guarda (e por quanto tempo os registros do aplicativo são guardados) ainda não foi decidido. É preciso preencher isso, ou desativar o registro de IP, antes de esta página se tornar pública.
 
 **Proteção contra abusos.** Para limitar abusos, contamos algumas ações (por exemplo, curtidas por hora) no banco de dados do site. Cada contador é um número ligado à sua conta ou a um projeto, sem endereço IP, e vale por no máximo 24 horas. Depois disso deixa de ser usado, mas a linha pode ficar no banco até ser limpa.
@@ -56,6 +58,7 @@ Os resultados aparecem na página pública do seu projeto.
 - Registro de auditoria: é mantido. As entradas sobre uma conta excluída não contêm o nome de usuário nem o e-mail.
 - Contadores de proteção contra abusos: no máximo 24 horas.
 - Backups: 14 dias. Uma conta excluída some deles em até 14 dias.
+- Arquivos do registro de erros: até encherem (5 MB mais 5 cópias anteriores de 5 MB), depois as entradas mais antigas são apagadas.
 - Registros do servidor web e do aplicativo: **TODO**, ainda não decidido.
 
 ## Quem mais recebe dados {#recipients}

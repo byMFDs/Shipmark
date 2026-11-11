@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 21:05+0000\n"
+"POT-Creation-Date: 2026-11-11 18:32+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -12,14 +12,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
 #: accounts/admin.py:41 moderation/admin.py:30
-#: templates/accounts/settings.html:14
+#: templates/accounts/settings.html:17
 msgid "Profile"
 msgstr "Profil"
 
-#: accounts/admin.py:42 config/settings/base.py:229
+#: accounts/admin.py:42 config/settings/base.py:278
 msgid "Moderation"
 msgstr "Moderacja"
 
@@ -42,7 +43,9 @@ msgstr "Zawieś wybranych użytkowników"
 #: accounts/admin.py:69
 #, python-format
 msgid "Skipped %(name)s: staff cannot suspend themselves or a superuser."
-msgstr "Pominięto %(name)s: administrator nie może zawiesić siebie ani superużytkownika."
+msgstr ""
+"Pominięto %(name)s: administrator nie może zawiesić siebie ani "
+"superużytkownika."
 
 #: accounts/admin.py:72
 #, python-format
@@ -63,7 +66,8 @@ msgid "You need to accept the Terms to create an account."
 msgstr "Aby założyć konto, musisz zaakceptować Regulamin."
 
 #: accounts/forms.py:49
-msgid "Your profile will be at /u/username/. Lowercase letters, digits, - and _."
+msgid ""
+"Your profile will be at /u/username/. Lowercase letters, digits, - and _."
 msgstr "Twój profil będzie pod adresem /u/nazwa/. Małe litery, cyfry, - i _."
 
 #: accounts/forms.py:72
@@ -84,7 +88,9 @@ msgstr "Wpisz swoją nazwę użytkownika, aby potwierdzić"
 
 #: accounts/forms.py:118
 msgid "This is not your username. Type it exactly as shown."
-msgstr "To nie jest Twoja nazwa użytkownika. Wpisz ją dokładnie tak, jak jest pokazana."
+msgstr ""
+"To nie jest Twoja nazwa użytkownika. Wpisz ją dokładnie tak, jak jest "
+"pokazana."
 
 #: accounts/models.py:16
 msgid "This username is already taken."
@@ -96,106 +102,112 @@ msgid "Use %(min)d to %(max)d characters."
 msgstr "Użyj od %(min)d do %(max)d znaków."
 
 #: accounts/usernames.py:31
-msgid "Use only lowercase letters, digits, hyphens and underscores, starting with a letter or digit."
-msgstr "Używaj tylko małych liter, cyfr, myślników i podkreślników, zaczynając od litery lub cyfry."
+msgid ""
+"Use only lowercase letters, digits, hyphens and underscores, starting with a "
+"letter or digit."
+msgstr ""
+"Używaj tylko małych liter, cyfr, myślników i podkreślników, zaczynając od "
+"litery lub cyfry."
 
 #: accounts/usernames.py:35
 msgid "This username is reserved. Please choose another."
 msgstr "Ta nazwa użytkownika jest zarezerwowana. Wybierz inną."
 
-#: accounts/views.py:50
+#: accounts/views.py:51
 msgid "You are signed out."
 msgstr "Wylogowano."
 
-#: accounts/views.py:62 moderation/views.py:30 projects/views.py:39
+#: accounts/views.py:63 moderation/views.py:30 projects/views.py:39
 #: social/views.py:65
 msgid "Your account is suspended."
 msgstr "Twoje konto jest zawieszone."
 
-#: accounts/views.py:65 projects/views.py:34 social/views.py:67
+#: accounts/views.py:66 projects/views.py:34 social/views.py:67
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Zbyt wiele zmian w krótkim czasie. Spróbuj ponownie za kilka minut."
 
-#: accounts/views.py:70
+#: accounts/views.py:71
 msgid "Settings saved."
 msgstr "Ustawienia zapisane."
 
-#: accounts/views.py:88
+#: accounts/views.py:89
 msgid "Thank you. You accepted the updated Terms."
 msgstr "Dziękujemy. Zaktualizowany Regulamin został zaakceptowany."
 
-#: accounts/views.py:99
+#: accounts/views.py:100
 msgid "Too many downloads in a short time. Try again later."
 msgstr "Zbyt wiele pobrań w krótkim czasie. Spróbuj ponownie później."
 
-#: accounts/views.py:122
+#: accounts/views.py:123
 msgid "Too many attempts. Try again later."
 msgstr "Zbyt wiele prób. Spróbuj ponownie później."
 
-#: accounts/views.py:126
+#: accounts/views.py:127
 msgid "Your account and everything in it were deleted."
 msgstr "Twoje konto i wszystko, co na nim było, zostało usunięte."
 
-#: config/branding.py:9
-msgid "Proof of what you actually shipped"
-msgstr "Dowód na to, co naprawdę udało się wypuścić"
+#: config/branding.py:12
+msgid "Proof, not promises."
+msgstr "Dowody, nie obietnice."
 
-#: config/settings/base.py:176
+#: config/settings/base.py:219
 msgid "Admin"
 msgstr "Administracja"
 
-#: config/settings/base.py:206 config/settings/base.py:208
+#: config/settings/base.py:255 config/settings/base.py:257
 #: moderation/dashboard.py:44
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: config/settings/base.py:212 config/settings/base.py:214
+#: config/settings/base.py:261 config/settings/base.py:263
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
+#: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Projekty"
 
-#: config/settings/base.py:215 templates/projects/_build_log.html:4
+#: config/settings/base.py:264 templates/pages/landing.html:264
+#: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Dziennik rozwoju"
 
-#: config/settings/base.py:216 projects/forms.py:26
-#: templates/projects/detail.html:122
+#: config/settings/base.py:265 projects/forms.py:26
+#: templates/projects/detail.html:147
 msgid "Tags"
 msgstr "Tagi"
 
-#: config/settings/base.py:217
+#: config/settings/base.py:266
 msgid "Tools"
 msgstr "Narzędzia"
 
-#: config/settings/base.py:221
+#: config/settings/base.py:270
 msgid "Verification"
 msgstr "Weryfikacja"
 
-#: config/settings/base.py:223
+#: config/settings/base.py:272
 msgid "Repositories"
 msgstr "Repozytoria"
 
-#: config/settings/base.py:224
+#: config/settings/base.py:273
 msgid "Domains"
 msgstr "Domeny"
 
-#: config/settings/base.py:225
+#: config/settings/base.py:274
 msgid "Uptime checks"
 msgstr "Sprawdzenia dostępności"
 
-#: config/settings/base.py:231
+#: config/settings/base.py:280
 msgid "Reports"
 msgstr "Zgłoszenia"
 
-#: config/settings/base.py:233
+#: config/settings/base.py:282
 msgid "Follows"
 msgstr "Obserwowania"
 
-#: config/settings/base.py:234 projects/admin.py:44
+#: config/settings/base.py:283 projects/admin.py:44
 msgid "Likes"
 msgstr "Polubienia"
 
-#: config/settings/base.py:238 config/settings/base.py:240
+#: config/settings/base.py:287 config/settings/base.py:289
 msgid "Audit log"
 msgstr "Dziennik audytu"
 
@@ -233,15 +245,15 @@ msgstr "Rejestracje z ostatnich 7 dni"
 msgid "Open reports"
 msgstr "Otwarte zgłoszenia"
 
-#: moderation/dashboard.py:51 pages/explore.py:28 pages/templatetags/ui.py:108
+#: moderation/dashboard.py:51 pages/explore.py:28 pages/templatetags/ui.py:115
 msgid "Repo owner"
 msgstr "Repo owner"
 
-#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:109
+#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:116
 msgid "Live"
 msgstr "Live"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:110
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:117
 msgid "Steady"
 msgstr "Steady"
 
@@ -347,44 +359,56 @@ msgstr "Najlepiej udowodnione"
 msgid "Any"
 msgstr "Dowolny"
 
-#: pages/templatetags/ui.py:75
+#: pages/templatetags/ui.py:80
 msgid "just now"
 msgstr "przed chwilą"
 
-#: pages/templatetags/ui.py:76
+#: pages/templatetags/ui.py:81
 #, python-format
 msgid "%(time)s ago"
 msgstr "%(time)s temu"
 
-#: pages/templatetags/ui.py:226 templates/social/feed.html:4
-#: templates/social/feed.html:5 templates/social/feed.html:11
+#: pages/templatetags/ui.py:263 templates/social/feed.html:4
+#: templates/social/feed.html:5 templates/social/feed.html:12
 msgid "Feed"
 msgstr "Aktualności"
 
-#: pages/templatetags/ui.py:226 templates/pages/explore.html:4
-#: templates/pages/explore.html:5 templates/pages/explore.html:15
+#: pages/templatetags/ui.py:263 templates/pages/explore.html:4
+#: templates/pages/explore.html:5 templates/pages/explore.html:16
 msgid "Explore"
 msgstr "Przeglądaj"
 
-#: pages/templatetags/ui.py:228
+#: pages/templatetags/ui.py:265
 msgid "About"
 msgstr "O serwisie"
 
-#: pages/templatetags/ui.py:229 templates/pages/landing.html:56
+#: pages/templatetags/ui.py:266 templates/pages/landing.html:279
 msgid "How proof works"
 msgstr "Jak działa dowód"
 
-#: pages/templatetags/ui.py:230
+#: pages/templatetags/ui.py:267
 msgid "Privacy"
 msgstr "Prywatność"
 
-#: pages/templatetags/ui.py:231
+#: pages/templatetags/ui.py:268
 msgid "Terms"
 msgstr "Regulamin"
 
-#: pages/templatetags/ui.py:232
+#: pages/templatetags/ui.py:269
 msgid "Cookies"
 msgstr "Pliki cookie"
+
+#: pages/test_languages.py:38 templates/pages/explore.html:69
+msgid "Show projects"
+msgstr "Pokaż projekty"
+
+#: pages/test_languages.py:65 templates/pages/explore.html:75
+#, python-format
+msgid "%(n)s project"
+msgid_plural "%(n)s projects"
+msgstr[0] "%(n)s projekt"
+msgstr[1] "%(n)s projekty"
+msgstr[2] "%(n)s projektów"
 
 #: projects/admin.py:33
 msgid "Content"
@@ -428,7 +452,7 @@ msgstr "Tekst"
 msgid "Up to 5, separated by commas. For example: devtools, webhooks."
 msgstr "Do 5, oddzielone przecinkami. Na przykład: devtools, webhooks."
 
-#: projects/forms.py:37
+#: projects/forms.py:37 templates/pages/landing.html:123
 msgid "GitHub repository"
 msgstr "Repozytorium GitHub"
 
@@ -437,8 +461,12 @@ msgid "One line, up to 120 characters."
 msgstr "Jedna linijka, do 120 znaków."
 
 #: projects/forms.py:40
-msgid "Markdown works. Links, lists, bold and code are allowed; HTML and images are not."
-msgstr "Markdown działa. Dozwolone są linki, listy, pogrubienie i kod; HTML i obrazy nie."
+msgid ""
+"Markdown works. Links, lists, bold and code are allowed; HTML and images are "
+"not."
+msgstr ""
+"Markdown działa. Dozwolone są linki, listy, pogrubienie i kod; HTML i obrazy "
+"nie."
 
 #: projects/forms.py:41
 msgid "The address where people can use it."
@@ -446,7 +474,8 @@ msgstr "Adres, pod którym można z tego korzystać."
 
 #: projects/forms.py:42
 msgid "Like owner/name, or paste the GitHub link. It is checked later."
-msgstr "W formie właściciel/nazwa albo wklej link do GitHuba. Sprawdzimy to później."
+msgstr ""
+"W formie właściciel/nazwa albo wklej link do GitHuba. Sprawdzimy to później."
 
 #: projects/forms.py:43
 msgid "Self-declared: we do not check this."
@@ -473,8 +502,11 @@ msgid "What changed?"
 msgstr "Co się zmieniło?"
 
 #: projects/forms.py:130
-msgid "Up to 500 characters. **Bold**, *italic*, [links](https://…) and `code` work."
-msgstr "Do 500 znaków. Działają **pogrubienie**, *kursywa*, [linki](https://…) i `kod`."
+msgid ""
+"Up to 500 characters. **Bold**, *italic*, [links](https://…) and `code` work."
+msgstr ""
+"Do 500 znaków. Działają **pogrubienie**, *kursywa*, [linki](https://…) i "
+"`kod`."
 
 #: projects/forms.py:132
 msgid "Write a few words about the update first."
@@ -485,12 +517,18 @@ msgid "This is the launch"
 msgstr "To jest premiera"
 
 #: projects/forms.py:136
-msgid "Marks this entry as Launched and sets the project's launch date to today. Only one per project."
-msgstr "Oznacza ten wpis jako premierę i ustawia datę premiery projektu na dziś. Tylko jeden na projekt."
+msgid ""
+"Marks this entry as Launched and sets the project's launch date to today. "
+"Only one per project."
+msgstr ""
+"Oznacza ten wpis jako premierę i ustawia datę premiery projektu na dziś. "
+"Tylko jeden na projekt."
 
 #: projects/forms.py:146 projects/forms.py:159
-msgid "This project already has a launch entry. Delete it first to mark another one."
-msgstr "Ten projekt ma już wpis o premierze. Najpierw go usuń, aby oznaczyć inny."
+msgid ""
+"This project already has a launch entry. Delete it first to mark another one."
+msgstr ""
+"Ten projekt ma już wpis o premierze. Najpierw go usuń, aby oznaczyć inny."
 
 #: projects/images.py:22
 msgid "The image is larger than 5 MB."
@@ -513,7 +551,7 @@ msgid "Draft"
 msgstr "Szkic"
 
 #: projects/models.py:42 templates/projects/detail.html:24
-#: templates/projects/form.html:14
+#: templates/projects/form.html:15
 msgid "Published"
 msgstr "Opublikowany"
 
@@ -530,17 +568,30 @@ msgid "Launched"
 msgstr "Premiera"
 
 #: projects/proof.py:28
-msgid "The linked public GitHub repository is owned by the author's GitHub account, or has at least 10 commits from it."
-msgstr "Powiązane publiczne repozytorium GitHub należy do konta autora na GitHubie albo ma co najmniej 10 commitów z tego konta."
+msgid ""
+"The linked public GitHub repository is owned by the author's GitHub account, "
+"or has at least 10 commits from it."
+msgstr ""
+"Powiązane publiczne repozytorium GitHub należy do konta autora na GitHubie "
+"albo ma co najmniej 10 commitów z tego konta."
 
 #: projects/proof.py:32
-msgid "The author proved control of the project's domain with a DNS record or a meta tag. It is checked again every 30 days and must be confirmed within 35."
-msgstr "Autor udowodnił kontrolę nad domeną projektu rekordem DNS lub metatagiem. Sprawdzamy to ponownie co 30 dni, a potwierdzenie musi być nie starsze niż 35 dni."
+msgid ""
+"The author proved control of the project's domain with a DNS record or a "
+"meta tag. It is checked again every 30 days and must be confirmed within 35."
+msgstr ""
+"Autor udowodnił kontrolę nad domeną projektu rekordem DNS lub metatagiem. "
+"Sprawdzamy to ponownie co 30 dni, a potwierdzenie musi być nie starsze niż "
+"35 dni."
 
 #: projects/proof.py:37
 #, no-python-format
-msgid "Live, and at least 95% of uptime checks succeeded over the last 30 days, with at least 40 checks."
-msgstr "Live oraz co najmniej 95% udanych sprawdzeń dostępności w ostatnich 30 dniach, przy co najmniej 40 sprawdzeniach."
+msgid ""
+"Live, and at least 95% of uptime checks succeeded over the last 30 days, "
+"with at least 40 checks."
+msgstr ""
+"Live oraz co najmniej 95% udanych sprawdzeń dostępności w ostatnich 30 "
+"dniach, przy co najmniej 40 sprawdzeniach."
 
 #: projects/proof.py:78
 msgid "No repository linked."
@@ -569,7 +620,8 @@ msgstr "Brak adresu strony."
 
 #: projects/proof.py:99
 msgid "The live URL is not a public domain name, so it cannot be verified."
-msgstr "Adres strony nie jest publiczną nazwą domeny, więc nie można go zweryfikować."
+msgstr ""
+"Adres strony nie jest publiczną nazwą domeny, więc nie można go zweryfikować."
 
 #: projects/proof.py:102
 #, python-format
@@ -588,7 +640,8 @@ msgstr "Utracono: %(domain)s nie przeszła ponownej weryfikacji."
 #: projects/proof.py:109
 #, python-format
 msgid "Lost: %(domain)s was not confirmed in the last 35 days."
-msgstr "Utracono: %(domain)s nie została potwierdzona w ciągu ostatnich 35 dni."
+msgstr ""
+"Utracono: %(domain)s nie została potwierdzona w ciągu ostatnich 35 dni."
 
 #: projects/proof.py:114
 msgid "Needs Live first."
@@ -609,8 +662,10 @@ msgstr "Dotąd %(total)s z %(min)s sprawdzeń dostępności."
 
 #: projects/proof.py:125
 #, python-format
-msgid "%(percent)s%% of checks succeeded in the last 30 days; %(min)s%% needed."
-msgstr "%(percent)s%% sprawdzeń udanych w ostatnich 30 dniach; wymagane %(min)s%%."
+msgid ""
+"%(percent)s%% of checks succeeded in the last 30 days; %(min)s%% needed."
+msgstr ""
+"%(percent)s%% sprawdzeń udanych w ostatnich 30 dniach; wymagane %(min)s%%."
 
 #: projects/views.py:73
 msgid "Draft saved. Add screenshots, then publish."
@@ -633,8 +688,11 @@ msgid "Sign in with GitHub to check a repository."
 msgstr "Zaloguj się przez GitHub, aby sprawdzić repozytorium."
 
 #: projects/views.py:131
-msgid "This repository was checked a moment ago. You can check again in 10 minutes."
-msgstr "To repozytorium zostało sprawdzone przed chwilą. Możesz sprawdzić ponownie za 10 minut."
+msgid ""
+"This repository was checked a moment ago. You can check again in 10 minutes."
+msgstr ""
+"To repozytorium zostało sprawdzone przed chwilą. Możesz sprawdzić ponownie "
+"za 10 minut."
 
 #: projects/views.py:140
 msgid "Repository checked. Repo owner earned."
@@ -642,11 +700,14 @@ msgstr "Repozytorium sprawdzone. Zdobyto Repo owner."
 
 #: projects/views.py:142
 #, python-format
-msgid "You have %(count)s commits in this repository. At least %(min)s are needed."
-msgstr "Masz %(count)s commitów w tym repozytorium. Potrzeba co najmniej %(min)s."
+msgid ""
+"You have %(count)s commits in this repository. At least %(min)s are needed."
+msgstr ""
+"Masz %(count)s commitów w tym repozytorium. Potrzeba co najmniej %(min)s."
 
 #: projects/views.py:145
-msgid "This repository belongs to another account and has no commits from yours."
+msgid ""
+"This repository belongs to another account and has no commits from yours."
 msgstr "To repozytorium należy do innego konta i nie ma commitów z Twojego."
 
 #: projects/views.py:179
@@ -691,8 +752,11 @@ msgstr "Zrzut ekranu usunięty."
 
 #: projects/views.py:326
 #, python-format
-msgid "A project can get at most %(n)s build log entries a day. Try again tomorrow."
-msgstr "Projekt może dostać najwyżej %(n)s wpisów dziennika rozwoju dziennie. Spróbuj jutro."
+msgid ""
+"A project can get at most %(n)s build log entries a day. Try again tomorrow."
+msgstr ""
+"Projekt może dostać najwyżej %(n)s wpisów dziennika rozwoju dziennie. "
+"Spróbuj jutro."
 
 #: projects/views.py:339
 msgid "Posted. Launch date set to today."
@@ -736,13 +800,67 @@ msgstr "Polubiono."
 msgid "Like removed."
 msgstr "Cofnięto polubienie."
 
+#: templates/400.html:3 templates/400.html:5
+msgid "We could not read that request"
+msgstr "Nie udało się odczytać tego żądania"
+
+#: templates/400.html:6
+msgid "Something in it was malformed or incomplete. Go back and try again."
+msgstr "Coś w nim jest uszkodzone lub niepełne. Wróć i spróbuj ponownie."
+
+#: templates/403.html:3 templates/403.html:7
+msgid "This record is closed"
+msgstr "Ten wpis jest zamknięty"
+
+#: templates/403.html:8
+msgid ""
+"Your account is not allowed to open this page. If you have another account, "
+"sign in with that one."
+msgstr ""
+"Twoje konto nie ma dostępu do tej strony. Jeśli masz inne konto, zaloguj się "
+"na nie."
+
+#: templates/403_csrf.html:3 templates/403_csrf.html:5
+msgid "This form has expired"
+msgstr "Ten formularz wygasł"
+
+#: templates/403_csrf.html:6
+msgid ""
+"It was opened too long ago, or in another tab before you signed in or out. "
+"Go back, reload the page and send it again."
+msgstr ""
+"Został otwarty zbyt dawno albo w innej karcie przed zalogowaniem lub "
+"wylogowaniem. Wróć, odśwież stronę i wyślij go ponownie."
+
+#: templates/404.html:3 templates/404.html:7
+msgid "No record found"
+msgstr "Nie znaleziono wpisu"
+
+#: templates/404.html:8
+msgid ""
+"We looked, and there is nothing at this address. The link may be mistyped, "
+"the page may have moved, or it is not public."
+msgstr ""
+"Sprawdziliśmy: pod tym adresem nic nie ma. Link może zawierać błąd, strona "
+"mogła zostać przeniesiona albo nie jest publiczna."
+
+#: templates/500.html:3 templates/500.html:5
+msgid "Something broke on our side"
+msgstr "Coś zepsuło się po naszej stronie"
+
+#: templates/500.html:6
+msgid ""
+"It is not your fault, and the error has been logged. Try again in a minute."
+msgstr "To nie Twoja wina, a błąd został zapisany. Spróbuj ponownie za minutę."
+
 #: templates/accounts/_github_form.html:8 templates/socialaccount/login.html:15
 msgid "Continue with GitHub"
 msgstr "Kontynuuj przez GitHub"
 
 #: templates/accounts/_github_form.html:11
 msgid "GitHub sign-in is not set up on this server yet."
-msgstr "Logowanie przez GitHub nie jest jeszcze skonfigurowane na tym serwerze."
+msgstr ""
+"Logowanie przez GitHub nie jest jeszcze skonfigurowane na tym serwerze."
 
 #: templates/accounts/accept_terms.html:4
 msgid "Updated Terms"
@@ -775,86 +893,112 @@ msgid "Accept and continue"
 msgstr "Zaakceptuj i kontynuuj"
 
 #: templates/accounts/accept_terms.html:23
-msgid "If you do not accept, you can sign out, or download your data and delete your account."
-msgstr "Jeśli nie zaakceptujesz, możesz się wylogować albo pobrać swoje dane i usunąć konto."
+msgid ""
+"If you do not accept, you can sign out, or download your data and delete "
+"your account."
+msgstr ""
+"Jeśli nie zaakceptujesz, możesz się wylogować albo pobrać swoje dane i "
+"usunąć konto."
 
 #: templates/accounts/accept_terms.html:26
-#: templates/accounts/delete_account.html:30
-#: templates/accounts/settings.html:47
+#: templates/accounts/delete_account.html:38
+#: templates/accounts/settings.html:50
 msgid "Download my data"
 msgstr "Pobierz moje dane"
 
 #: templates/accounts/accept_terms.html:27
 #: templates/accounts/delete_account.html:4
-#: templates/accounts/delete_account.html:10
-#: templates/accounts/settings.html:52 templates/accounts/settings.html:54
+#: templates/accounts/delete_account.html:11
+#: templates/accounts/settings.html:55 templates/accounts/settings.html:57
 msgid "Delete account"
 msgstr "Usuń konto"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
-#: templates/accounts/logout.html:14 templates/accounts/settings.html:39
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:32
+#: templates/accounts/logout.html:14 templates/accounts/settings.html:42
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:33
 msgid "Sign out"
 msgstr "Wyloguj się"
 
-#: templates/accounts/delete_account.html:11
+#: templates/accounts/delete_account.html:12
 msgid "This cannot be undone."
 msgstr "Tego nie można cofnąć."
 
-#: templates/accounts/delete_account.html:11
+#: templates/accounts/delete_account.html:12
 msgid "We cannot restore a deleted account, not even on request."
 msgstr "Usuniętego konta nie możemy przywrócić, nawet na prośbę."
 
-#: templates/accounts/delete_account.html:13
+#: templates/accounts/delete_account.html:17
 msgid "What is deleted"
 msgstr "Co zostanie usunięte"
 
-#: templates/accounts/delete_account.html:15
-msgid "Your profile: username, display name, bio, website, language, the email address and GitHub details we received at sign-in."
-msgstr "Twój profil: nazwa użytkownika, nazwa wyświetlana, bio, strona WWW, język, adres e-mail i dane z GitHuba otrzymane przy logowaniu."
+#: templates/accounts/delete_account.html:19
+msgid ""
+"Your profile: username, display name, bio, website, language, the email "
+"address and GitHub details we received at sign-in."
+msgstr ""
+"Twój profil: nazwa użytkownika, nazwa wyświetlana, bio, strona WWW, język, "
+"adres e-mail i dane z GitHuba otrzymane przy logowaniu."
 
-#: templates/accounts/delete_account.html:16
-msgid "All your projects, drafts included, with their screenshots, build log, hallmarks, domain and repository checks, uptime history and likes."
-msgstr "Wszystkie Twoje projekty, także szkice, wraz ze zrzutami ekranu, dziennikiem rozwoju, znakami, sprawdzeniami domeny i repozytorium, historią dostępności i polubieniami."
+#: templates/accounts/delete_account.html:20
+msgid ""
+"All your projects, drafts included, with their screenshots, build log, "
+"hallmarks, domain and repository checks, uptime history and likes."
+msgstr ""
+"Wszystkie Twoje projekty, także szkice, wraz ze zrzutami ekranu, dziennikiem "
+"rozwoju, znakami, sprawdzeniami domeny i repozytorium, historią dostępności "
+"i polubieniami."
 
-#: templates/accounts/delete_account.html:17
+#: templates/accounts/delete_account.html:21
 msgid "Your likes and follows."
 msgstr "Twoje polubienia i obserwowania."
 
-#: templates/accounts/delete_account.html:18
-msgid "Your badges stop showing hallmarks, and links to your profile and projects stop working."
-msgstr "Twoje plakietki przestaną pokazywać znaki, a linki do Twojego profilu i projektów przestaną działać."
+#: templates/accounts/delete_account.html:22
+msgid ""
+"Your badges stop showing hallmarks, and links to your profile and projects "
+"stop working."
+msgstr ""
+"Twoje plakietki przestaną pokazywać znaki, a linki do Twojego profilu i "
+"projektów przestaną działać."
 
-#: templates/accounts/delete_account.html:21
+#: templates/accounts/delete_account.html:27
 msgid "What is kept"
 msgstr "Co zostaje"
 
-#: templates/accounts/delete_account.html:23
+#: templates/accounts/delete_account.html:29
 msgid "Reports you made stay for moderation, without your name."
-msgstr "Wysłane przez Ciebie zgłoszenia zostają na potrzeby moderacji, bez Twojego imienia."
+msgstr ""
+"Wysłane przez Ciebie zgłoszenia zostają na potrzeby moderacji, bez Twojego "
+"imienia."
 
-#: templates/accounts/delete_account.html:24
-msgid "Our audit log records that an account was deleted, without your username or email."
-msgstr "Nasz dziennik audytu zapisuje, że konto zostało usunięte, bez Twojej nazwy użytkownika i adresu e-mail."
+#: templates/accounts/delete_account.html:30
+msgid ""
+"Our audit log records that an account was deleted, without your username or "
+"email."
+msgstr ""
+"Nasz dziennik audytu zapisuje, że konto zostało usunięte, bez Twojej nazwy "
+"użytkownika i adresu e-mail."
 
-#: templates/accounts/delete_account.html:25
+#: templates/accounts/delete_account.html:31
 msgid "Your username becomes free, and someone else can take it."
 msgstr "Twoja nazwa użytkownika zostaje zwolniona i ktoś inny może ją zająć."
 
-#: templates/accounts/delete_account.html:30
+#: templates/accounts/delete_account.html:37
 msgid "Want a copy first?"
 msgstr "Chcesz najpierw kopię?"
 
-#: templates/accounts/delete_account.html:36
+#: templates/accounts/delete_account.html:44
 #, python-format
-msgid "To confirm, type your username: <strong class=\"mono\">%(username)s</strong>"
-msgstr "Aby potwierdzić, wpisz swoją nazwę użytkownika: <strong class=\"mono\">%(username)s</strong>"
+msgid ""
+"To confirm, type your username: <strong class=\"mono\">%(username)s</strong>"
+msgstr ""
+"Aby potwierdzić, wpisz swoją nazwę użytkownika: <strong "
+"class=\"mono\">%(username)s</strong>"
 
-#: templates/accounts/delete_account.html:39
+#: templates/accounts/delete_account.html:47
 msgid "Delete my account"
 msgstr "Usuń moje konto"
 
-#: templates/accounts/delete_account.html:40
+#: templates/accounts/delete_account.html:48
 #: templates/moderation/report.html:19 templates/projects/delete.html:16
 msgid "Cancel"
 msgstr "Anuluj"
@@ -866,12 +1010,20 @@ msgstr "Zaloguj się"
 
 #: templates/accounts/login.html:11
 #, python-format
-msgid "%(name)s uses your GitHub account to sign in. There are no passwords to remember."
-msgstr "%(name)s używa Twojego konta GitHub do logowania. Nie musisz pamiętać żadnych haseł."
+msgid ""
+"%(name)s uses your GitHub account to sign in. There are no passwords to "
+"remember."
+msgstr ""
+"%(name)s używa Twojego konta GitHub do logowania. Nie musisz pamiętać "
+"żadnych haseł."
 
-#: templates/accounts/login.html:13 templates/pages/landing.html:24
-msgid "We ask GitHub only for your public profile and your email address. We never get access to your code."
-msgstr "Prosimy GitHub tylko o Twój publiczny profil i adres e-mail. Nigdy nie mamy dostępu do Twojego kodu."
+#: templates/accounts/login.html:13
+msgid ""
+"We ask GitHub only for your public profile and your email address. We never "
+"get access to your code."
+msgstr ""
+"Prosimy GitHub tylko o Twój publiczny profil i adres e-mail. Nigdy nie mamy "
+"dostępu do Twojego kodu."
 
 #: templates/accounts/logout.html:10
 msgid "Sign out?"
@@ -899,7 +1051,7 @@ msgstr "Data dołączenia: %(date)s"
 msgid "Edit profile"
 msgstr "Edytuj profil"
 
-#: templates/accounts/profile.html:31 templates/projects/detail.html:54
+#: templates/accounts/profile.html:31 templates/projects/detail.html:61
 msgid "Report"
 msgstr "Zgłoś"
 
@@ -916,8 +1068,12 @@ msgid "No projects yet"
 msgstr "Brak projektów"
 
 #: templates/accounts/profile.html:62
-msgid "Add something you shipped. It gets its first hallmark when you link the repository."
-msgstr "Dodaj coś, co udało się wypuścić. Pierwszy znak pojawi się po powiązaniu repozytorium."
+msgid ""
+"Add something you shipped. It gets its first hallmark when you link the "
+"repository."
+msgstr ""
+"Dodaj coś, co udało się wypuścić. Pierwszy znak pojawi się po powiązaniu "
+"repozytorium."
 
 #: templates/accounts/profile.html:64
 msgid "Add your first project"
@@ -937,58 +1093,60 @@ msgid "Only you see these."
 msgstr "Widzisz je tylko Ty."
 
 #: templates/accounts/profile.html:85 templates/projects/detail.html:29
-#: templates/projects/form.html:4 templates/projects/form.html:11
+#: templates/projects/form.html:4 templates/projects/form.html:12
 msgid "Edit project"
 msgstr "Edytuj projekt"
 
-#: templates/accounts/settings.html:4 templates/accounts/settings.html:10
-#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:31
+#: templates/accounts/settings.html:4 templates/accounts/settings.html:11
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:32
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: templates/accounts/settings.html:20
+#: templates/accounts/settings.html:23
 msgid "Save settings"
 msgstr "Zapisz ustawienia"
 
-#: templates/accounts/settings.html:24 templates/accounts/settings.html:26
-#: templates/includes/site_footer.html:34
-#: templates/includes/site_footer.html:35
+#: templates/accounts/settings.html:27 templates/accounts/settings.html:29
+#: templates/includes/site_footer.html:42
+#: templates/includes/site_footer.html:43
 msgid "Theme"
 msgstr "Motyw"
 
-#: templates/accounts/settings.html:25
+#: templates/accounts/settings.html:28
 msgid "Saved in this browser only."
 msgstr "Zapisane tylko w tej przeglądarce."
 
-#: templates/accounts/settings.html:27 templates/includes/site_footer.html:36
+#: templates/accounts/settings.html:30 templates/includes/site_footer.html:44
 msgid "System"
 msgstr "Systemowy"
 
-#: templates/accounts/settings.html:28 templates/includes/site_footer.html:37
+#: templates/accounts/settings.html:31 templates/includes/site_footer.html:45
 msgid "Light"
 msgstr "Jasny"
 
-#: templates/accounts/settings.html:29 templates/includes/site_footer.html:38
+#: templates/accounts/settings.html:32 templates/includes/site_footer.html:46
 msgid "Dark"
 msgstr "Ciemny"
 
-#: templates/accounts/settings.html:34
+#: templates/accounts/settings.html:37
 msgid "Account"
 msgstr "Konto"
 
-#: templates/accounts/settings.html:36
+#: templates/accounts/settings.html:39
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
-#: templates/accounts/settings.html:43
+#: templates/accounts/settings.html:46
 msgid "Your data"
 msgstr "Twoje dane"
 
-#: templates/accounts/settings.html:44
+#: templates/accounts/settings.html:47
 msgid "A JSON file with your profile, projects, build log, likes and follows."
-msgstr "Plik JSON z Twoim profilem, projektami, dziennikiem rozwoju, polubieniami i obserwowanymi."
+msgstr ""
+"Plik JSON z Twoim profilem, projektami, dziennikiem rozwoju, polubieniami i "
+"obserwowanymi."
 
-#: templates/accounts/settings.html:53
+#: templates/accounts/settings.html:56
 msgid "Removes your profile and all your projects. This cannot be undone."
 msgstr "Usuwa Twój profil i wszystkie projekty. Tego nie można cofnąć."
 
@@ -1008,30 +1166,67 @@ msgstr "Najnowsze otwarte zgłoszenia"
 msgid "No open reports."
 msgstr "Brak otwartych zgłoszeń."
 
-#: templates/base.html:38
+#: templates/base.html:46
 msgid "Skip to content"
 msgstr "Przejdź do treści"
+
+#: templates/errors/_body.html:6
+msgid "Error"
+msgstr "Błąd"
+
+#: templates/errors/_body.html:17
+msgid "Go to your feed"
+msgstr "Przejdź do aktualności"
+
+#: templates/errors/_body.html:17
+msgid "Go to the front page"
+msgstr "Na stronę główną"
+
+#: templates/errors/_body.html:18 templates/errors/_body.html:19
+msgid "Go back"
+msgstr "Wróć"
+
+#: templates/errors/_body.html:21
+msgid "Reference:"
+msgstr "Numer referencyjny:"
+
+#: templates/errors/_body.html:22
+#, python-format
+msgid ""
+"If it keeps happening, write to <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> and include the reference."
+msgstr ""
+"Jeśli to się powtarza, napisz na <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> i podaj numer referencyjny."
+
+#: templates/errors/standalone.html:24
+msgid "Start page"
+msgstr "Strona główna"
+
+#: templates/includes/form_errors.html:5
+msgid "Please fix these problems and try again."
+msgstr "Popraw te błędy i spróbuj ponownie."
 
 #: templates/includes/hallmark.html:1
 msgid "Not yet"
 msgstr "Jeszcze nie"
 
-#: templates/includes/site_footer.html:5
-msgid "Footer"
-msgstr "Stopka"
-
-#: templates/includes/site_footer.html:19
-msgid "Language"
-msgstr "Język"
-
-#: templates/includes/site_footer.html:29
-msgid "Change"
-msgstr "Zmień"
-
-#: templates/includes/site_header.html:6
+#: templates/includes/site_footer.html:7 templates/includes/site_header.html:6
 #, python-format
 msgid "%(name)s home"
 msgstr "Strona główna %(name)s"
+
+#: templates/includes/site_footer.html:13
+msgid "Footer"
+msgstr "Stopka"
+
+#: templates/includes/site_footer.html:27
+msgid "Language"
+msgstr "Język"
+
+#: templates/includes/site_footer.html:37
+msgid "Change"
+msgstr "Zmień"
 
 #: templates/includes/site_header.html:15
 msgid "Menu"
@@ -1045,22 +1240,22 @@ msgstr "Zamknij"
 msgid "Main"
 msgstr "Główna"
 
-#: templates/includes/site_nav.html:13 templates/projects/form.html:4
-#: templates/projects/form.html:11
+#: templates/includes/site_nav.html:14 templates/projects/form.html:4
+#: templates/projects/form.html:12
 msgid "New project"
 msgstr "Nowy projekt"
 
-#: templates/includes/site_nav.html:18 templates/includes/site_nav.html:30
+#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:31
 msgid "Your profile"
 msgstr "Twój profil"
 
-#: templates/includes/site_nav.html:25
+#: templates/includes/site_nav.html:26
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Menu konta: %(name)s"
 
-#: templates/includes/site_nav.html:37 templates/pages/_sign_in.html:6
-#: templates/pages/_sign_in.html:9 templates/socialaccount/login.html:10
+#: templates/includes/site_nav.html:38 templates/pages/_sign_in.html:9
+#: templates/pages/_sign_in.html:12 templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Zaloguj się przez GitHub"
 
@@ -1069,185 +1264,497 @@ msgid "Dismiss"
 msgstr "Zamknij"
 
 #: templates/moderation/report.html:13
-msgid "Reports go to the moderators. The person you report does not see who reported them."
-msgstr "Zgłoszenia trafiają do moderatorów. Osoba, którą zgłaszasz, nie zobaczy, kto ją zgłosił."
+msgid ""
+"Reports go to the moderators. The person you report does not see who "
+"reported them."
+msgstr ""
+"Zgłoszenia trafiają do moderatorów. Osoba, którą zgłaszasz, nie zobaczy, kto "
+"ją zgłosił."
 
 #: templates/moderation/report.html:18
 msgid "Send report"
 msgstr "Wyślij zgłoszenie"
 
 #: templates/pages/explore.html:6 templates/pages/explore.html:9
-msgid "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark."
-msgstr "Projekty zrobione z narzędziami AI, ze zweryfikowanymi znakami. Szukaj po nazwie albo filtruj po tagu, narzędziu i znaku."
+#: templates/pages/explore.html:17
+msgid ""
+"Projects people shipped with AI tools, with verified hallmarks. Search by "
+"name, or filter by tag, tool and hallmark."
+msgstr ""
+"Projekty zrobione z narzędziami AI, ze zweryfikowanymi znakami. Szukaj po "
+"nazwie albo filtruj po tagu, narzędziu i znaku."
 
-#: templates/pages/explore.html:18
+#: templates/pages/explore.html:21 templates/pages/explore.html:22
 msgid "Search and filter projects"
 msgstr "Szukaj i filtruj projekty"
 
-#: templates/pages/explore.html:20
+#: templates/pages/explore.html:25
 msgid "Search"
 msgstr "Szukaj"
 
-#: templates/pages/explore.html:22
+#: templates/pages/explore.html:27
 msgid "Project name or tagline"
 msgstr "Nazwa lub opis projektu"
 
-#: templates/pages/explore.html:26
+#: templates/pages/explore.html:31
 msgid "Tag"
 msgstr "Tag"
 
-#: templates/pages/explore.html:29
+#: templates/pages/explore.html:34
 msgid "Any tag"
 msgstr "Dowolny tag"
 
-#: templates/pages/explore.html:36 templates/pages/landing.html:38
+#: templates/pages/explore.html:41 templates/pages/landing.html:67
+#: templates/pages/landing.html:192 templates/pages/landing.html:214
+#: templates/pages/landing.html:236
 msgid "Built with"
 msgstr "Zbudowano z"
 
-#: templates/pages/explore.html:39
+#: templates/pages/explore.html:44
 msgid "Any tool"
 msgstr "Dowolne narzędzie"
 
-#: templates/pages/explore.html:46
+#: templates/pages/explore.html:51
 msgid "Hallmark"
 msgstr "Znak"
 
-#: templates/pages/explore.html:55
+#: templates/pages/explore.html:60
 msgid "Sort by"
 msgstr "Sortuj według"
 
-#: templates/pages/explore.html:64
-msgid "Show projects"
-msgstr "Pokaż projekty"
-
-#: templates/pages/explore.html:65 templates/pages/explore.html:84
+#: templates/pages/explore.html:70 templates/pages/explore.html:90
 msgid "Clear filters"
 msgstr "Wyczyść filtry"
 
-#: templates/pages/explore.html:69
-#, python-format
-msgid "%(n)s project"
-msgid_plural "%(n)s projects"
-msgstr[0] "%(n)s projekt"
-msgstr[1] "%(n)s projekty"
-msgstr[2] "%(n)s projektów"
-
-#: templates/pages/explore.html:69
+#: templates/pages/explore.html:75
 msgid "most hallmarks first, then newest"
 msgstr "najpierw najwięcej znaków, potem najnowsze"
 
-#: templates/pages/explore.html:76 templates/social/feed.html:42
+#: templates/pages/explore.html:82 templates/social/feed.html:45
 msgid "Pages"
 msgstr "Strony"
 
-#: templates/pages/explore.html:77
+#: templates/pages/explore.html:83
 msgid "Previous page"
 msgstr "Poprzednia strona"
 
-#: templates/pages/explore.html:78
+#: templates/pages/explore.html:84
 msgid "Next page"
 msgstr "Następna strona"
 
-#: templates/pages/explore.html:83
+#: templates/pages/explore.html:89
 msgid "No published projects match these filters."
 msgstr "Żaden opublikowany projekt nie pasuje do tych filtrów."
 
-#: templates/pages/explore.html:89
+#: templates/pages/explore.html:95
 msgid "Nothing has been published yet."
 msgstr "Nic jeszcze nie zostało opublikowane."
 
 #: templates/pages/landing.html:6 templates/pages/landing.html:9
-#: templates/pages/landing.html:19
 #, python-format
-msgid "%(name)s is a public record of projects built with AI tools and actually shipped. Each project earns marks from facts we check: who owns the repository, who controls the domain, and whether the site stays up."
-msgstr "%(name)s to publiczny rejestr projektów zbudowanych z narzędziami AI i naprawdę wypuszczonych w świat. Każdy projekt zdobywa znaki na podstawie sprawdzonych faktów: do kogo należy repozytorium, kto kontroluje domenę i czy strona działa bez przerw."
+msgid ""
+"%(name)s is a public record of projects built with AI tools and actually "
+"shipped. Each project earns marks from facts we check: who owns the "
+"repository, who controls the domain, and whether the site stays up."
+msgstr ""
+"%(name)s to publiczny rejestr projektów zbudowanych z narzędziami AI i "
+"naprawdę wypuszczonych w świat. Każdy projekt zdobywa znaki na podstawie "
+"sprawdzonych faktów: do kogo należy repozytorium, kto kontroluje domenę i "
+"czy strona działa bez przerw."
 
-#: templates/pages/landing.html:18
-msgid "Proof that you shipped it"
-msgstr "Dowód, że projekt naprawdę wyszedł w świat"
+#: templates/pages/landing.html:16
+msgid "Submit your project"
+msgstr "Dodaj swój projekt"
 
 #: templates/pages/landing.html:22
-msgid "Explore projects"
-msgstr "Przeglądaj projekty"
+msgid "The internet has enough claims."
+msgstr "W internecie jest dość deklaracji."
 
-#: templates/pages/landing.html:29
-msgid "Example project"
-msgstr "Przykładowy projekt"
+#: templates/pages/landing.html:23
+msgid "Less claim."
+msgstr "Mniej deklaracji."
 
-#: templates/pages/landing.html:33
-msgid "Inspect and replay webhooks without a tunnel"
-msgstr "Podglądaj i odtwarzaj webhooki bez tunelu"
+#: templates/pages/landing.html:23
+msgid "More shipped."
+msgstr "Więcej premier."
 
-#: templates/pages/landing.html:36
-msgid "Repository"
-msgstr "Repozytorium"
+#: templates/pages/landing.html:24
+msgid "Real projects. Independent checks. Proof you can point to."
+msgstr ""
+"Prawdziwe projekty. Niezależne sprawdzenia. Dowód, na który można wskazać."
 
-#: templates/pages/landing.html:37
-msgid "Domain"
-msgstr "Domena"
+#: templates/pages/landing.html:27
+msgid "Built with AI. Backed by evidence."
+msgstr "Zbudowane z AI. Poparte dowodami."
 
-#: templates/pages/landing.html:38
+#: templates/pages/landing.html:30
+msgid "GitHub shows the code. LinkedIn tells the story."
+msgstr "GitHub pokazuje kod. LinkedIn opowiada historię."
+
+#: templates/pages/landing.html:31
+#, python-format
+msgid "%(name)s checks what actually shipped."
+msgstr "%(name)s sprawdza, co naprawdę zostało wypuszczone."
+
+#: templates/pages/landing.html:39
+#, python-format
+msgid "%(name)s / Project record"
+msgstr "%(name)s / Karta projektu"
+
+#: templates/pages/landing.html:44
+msgid "your team, in sync"
+msgstr "zespół w jednym rytmie"
+
+#: templates/pages/landing.html:47
+msgid "Workspace"
+msgstr "Przestrzeń robocza"
+
+#: templates/pages/landing.html:48
+msgid "Overview"
+msgstr "Przegląd"
+
+#: templates/pages/landing.html:49
+msgid "Inbox"
+msgstr "Skrzynka"
+
+#: templates/pages/landing.html:51
+msgid "Activity"
+msgstr "Aktywność"
+
+#: templates/pages/landing.html:54
+msgid "A little less chaos."
+msgstr "Mniej chaosu."
+
+#: templates/pages/landing.html:56
+msgid "In progress"
+msgstr "W toku"
+
+#: templates/pages/landing.html:56
+msgid "New onboarding"
+msgstr "Nowy onboarding"
+
+#: templates/pages/landing.html:56
+msgid "API handoff"
+msgstr "Przekazanie API"
+
+#: templates/pages/landing.html:57
+msgid "Up next"
+msgstr "Następne"
+
+#: templates/pages/landing.html:57
+msgid "Design review"
+msgstr "Przegląd designu"
+
+#: templates/pages/landing.html:57
+msgid "Invite the team"
+msgstr "Zaproś zespół"
+
+#: templates/pages/landing.html:58
+msgid "Shipped"
+msgstr "Wypuszczone"
+
+#: templates/pages/landing.html:58
+msgid "Workspace v2"
+msgstr "Przestrzeń robocza v2"
+
+#: templates/pages/landing.html:58
+msgid "Billing fixes"
+msgstr "Poprawki płatności"
+
+#: templates/pages/landing.html:65 templates/pages/landing.html:190
+msgid "Calm project management for tiny teams."
+msgstr "Spokojne zarządzanie projektami dla małych zespołów."
+
+#: templates/pages/landing.html:67 templates/pages/landing.html:192
+#: templates/pages/landing.html:214 templates/pages/landing.html:236
 msgid "self-declared"
 msgstr "deklaracja autora"
 
-#: templates/pages/landing.html:41
-msgid "Repository owned by the author"
-msgstr "Repozytorium należy do autora"
+#: templates/pages/landing.html:70 templates/projects/detail.html:94
+msgid "Checked, not self-reported"
+msgstr "Sprawdzone, nie zadeklarowane"
 
-#: templates/pages/landing.html:42
-msgid "Domain control confirmed"
-msgstr "Kontrola nad domeną potwierdzona"
+#: templates/pages/landing.html:72
+msgid "Repo ownership"
+msgstr "Własność repozytorium"
 
-#: templates/pages/landing.html:43
+#: templates/pages/landing.html:72 templates/pages/landing.html:73
+msgid "confirmed"
+msgstr "potwierdzone"
+
+#: templates/pages/landing.html:73 templates/pages/landing.html:124
+msgid "Domain control"
+msgstr "Kontrola domeny"
+
+#: templates/pages/landing.html:74
+msgid "30-day uptime"
+msgstr "Dostępność z 30 dni"
+
+#: templates/pages/landing.html:75
+msgid "Domain"
+msgstr "Domena"
+
+#: templates/pages/landing.html:83
+msgid "Illustrative project · real verification rules"
+msgstr "Przykładowy projekt · prawdziwe zasady sprawdzania"
+
+#: templates/pages/landing.html:89
+msgid "How the marks behave"
+msgstr "Jak działają znaki"
+
+#: templates/pages/landing.html:91
+msgid "No self-awarded marks."
+msgstr "Żadnych znaków przyznanych samemu sobie."
+
+#: templates/pages/landing.html:92
+msgid "Checks keep running."
+msgstr "Sprawdzenia trwają cały czas."
+
+#: templates/pages/landing.html:93
+msgid "Proof can expire."
+msgstr "Dowód może wygasnąć."
+
+#: templates/pages/landing.html:101
+msgid "01 / The standard"
+msgstr "01 / Standard"
+
+#: templates/pages/landing.html:102
+msgid "Three marks. Zero shortcuts."
+msgstr "Trzy znaki. Zero skrótów."
+
+#: templates/pages/landing.html:103
+msgid "A mark is earned by a check, not a checkbox."
+msgstr "Znak zdobywa się sprawdzeniem, nie odhaczeniem pola."
+
+#: templates/pages/landing.html:117
+msgid "Linked to your GitHub account."
+msgstr "Powiązane z Twoim kontem GitHub."
+
+#: templates/pages/landing.html:118
+msgid "Not a demo. A destination."
+msgstr "Nie demo. Prawdziwy adres."
+
+#: templates/pages/landing.html:119
+msgid "Shipping is just day one."
+msgstr "Premiera to dopiero pierwszy dzień."
+
+#: templates/pages/landing.html:125
 #, python-format
-msgid "%(percent)s of %(checks)s checks in 30 days"
-msgstr "%(percent)s z %(checks)s sprawdzeń w 30 dni"
+msgid "30-day uptime ≥ 95%%"
+msgstr "Dostępność z 30 dni ≥ 95%%"
 
-#: templates/pages/landing.html:58
+#: templates/pages/landing.html:131
+msgid "Marks are never permanent. If checks start failing, the marks come off."
+msgstr ""
+"Znaki nie są wieczne. Jeśli sprawdzenia zaczną się nie udawać, znaki znikają."
+
+#: templates/pages/landing.html:133
+msgid ""
+"The AI tools a project was built with are declared by its author and labeled "
+"as self-declared."
+msgstr ""
+"Narzędzia AI, z którymi zbudowano projekt, deklaruje jego autor, a my "
+"oznaczamy je jako deklarację autora."
+
+#: templates/pages/landing.html:134
 msgid "Read the full rules"
 msgstr "Przeczytaj pełne zasady"
 
-#: templates/pages/landing.html:60
-msgid "A hallmark is struck only when the facts behind it are there, and it is removed when they stop being true. Nobody can buy one or add it by hand."
-msgstr "Znak jest nadawany tylko wtedy, gdy stoją za nim fakty, i jest zdejmowany, gdy przestają być prawdziwe. Nikt nie może go kupić ani dodać ręcznie."
+#: templates/pages/landing.html:143
+msgid "02 / Out in the world"
+msgstr "02 / Już w sieci"
 
-#: templates/pages/landing.html:69
-msgid "The AI tools a project was built with are declared by its author and labeled as self-declared."
-msgstr "Narzędzia AI, z którymi zbudowano projekt, deklaruje jego autor, a my oznaczamy je jako deklarację autora."
+#: templates/pages/landing.html:144
+msgid "Less pitch. More product."
+msgstr "Mniej pitchu. Więcej produktu."
 
-#: templates/pages/landing.html:76
-msgid "Recently launched"
-msgstr "Ostatnie premiery"
+#: templates/pages/landing.html:145
+msgid "A few things people actually put on the internet."
+msgstr "Kilka rzeczy, które ludzie naprawdę wypuścili do sieci."
 
-#: templates/pages/landing.html:77
-msgid "See all projects"
-msgstr "Zobacz wszystkie projekty"
+#: templates/pages/landing.html:146
+msgid "Explore projects"
+msgstr "Przeglądaj projekty"
 
-#: templates/pages/landing.html:86
-msgid "Nothing has been launched here yet. Published projects appear in this list as soon as their authors publish them."
-msgstr "Nic tu jeszcze nie miało premiery. Opublikowane projekty pojawią się na tej liście, gdy tylko ich autorzy je opublikują."
+#: templates/pages/landing.html:165 templates/pages/landing.html:193
+#: templates/pages/landing.html:215 templates/pages/landing.html:237
+#, python-format
+msgid "by %(name)s"
+msgstr "autor: %(name)s"
 
-#: templates/pages/landing.html:94
-msgid "Bring in something you shipped"
-msgstr "Pokaż coś, co udało się wypuścić"
+#: templates/pages/landing.html:171 templates/pages/landing.html:244
+msgid "Steady is earned over time, not on launch day."
+msgstr "Steady zdobywa się z czasem, nie w dniu premiery."
 
-#: templates/pages/landing.html:95
-msgid "Sign in, add the project, then link its repository and verify its domain. The hallmarks follow from the checks."
-msgstr "Zaloguj się, dodaj projekt, potem powiąż repozytorium i zweryfikuj domenę. Znaki wynikają ze sprawdzeń."
+#: templates/pages/landing.html:179
+msgid "workspace"
+msgstr "przestrzeń robocza"
 
-#: templates/projects/_build_log.html:21
+#: templates/pages/landing.html:180
+msgid "Make room for good work."
+msgstr "Zrób miejsce na dobrą pracę."
+
+#: templates/pages/landing.html:182
+msgid "Today"
+msgstr "Dziś"
+
+#: templates/pages/landing.html:182 templates/pages/landing.html:183
+#: templates/pages/landing.html:184
+msgid "Website refresh"
+msgstr "Odświeżenie strony"
+
+#: templates/pages/landing.html:182 templates/pages/landing.html:183
+#: templates/pages/landing.html:184
+msgid "Product updates"
+msgstr "Nowości w produkcie"
+
+#: templates/pages/landing.html:183
+msgid "This week"
+msgstr "W tym tygodniu"
+
+#: templates/pages/landing.html:184
+msgid "Done"
+msgstr "Gotowe"
+
+#: templates/pages/landing.html:201
+msgid "your reading room"
+msgstr "Twoja czytelnia"
+
+#: templates/pages/landing.html:202
+msgid "One more chapter."
+msgstr "Jeszcze jeden rozdział."
+
+#: templates/pages/landing.html:204
+msgid "Slow mornings"
+msgstr "Powolne poranki"
+
+#: templates/pages/landing.html:205
+msgid "Small rooms"
+msgstr "Małe pokoje"
+
+#: templates/pages/landing.html:206
+msgid "Field notes"
+msgstr "Notatki z terenu"
+
+#: templates/pages/landing.html:212
+msgid "Turn your reading habit into a little ritual."
+msgstr "Zamień czytanie w mały rytuał."
+
+#: templates/pages/landing.html:223
+msgid "form studio"
+msgstr "studio formularzy"
+
+#: templates/pages/landing.html:225
+msgid "Your next big thing"
+msgstr "Twoja następna wielka rzecz"
+
+#: templates/pages/landing.html:226
+msgid "Get on the list."
+msgstr "Zapisz się na listę."
+
+#: templates/pages/landing.html:228
+msgid "Count me in"
+msgstr "Wchodzę w to"
+
+#: templates/pages/landing.html:234
+msgid "A tiny form builder. No big subscription."
+msgstr "Mały kreator formularzy. Bez dużej subskrypcji."
+
+#: templates/pages/landing.html:243
+msgid "Illustrative projects"
+msgstr "Przykładowe projekty"
+
+#: templates/pages/landing.html:256
+msgid "03 / The work behind the mark"
+msgstr "03 / Praca za znakiem"
+
+#: templates/pages/landing.html:257
+msgid "Show your work."
+msgstr "Pokaż swoją pracę."
+
+#: templates/pages/landing.html:257
+msgid "Take your proof with you."
+msgstr "Zabierz dowody ze sobą."
+
+#: templates/pages/landing.html:258
+#, python-format
+msgid ""
+"Keep a short public build log. Then put a live %(name)s badge right in your "
+"GitHub README."
+msgstr ""
+"Prowadź krótki publiczny dziennik rozwoju. A w README na GitHubie umieść "
+"aktualną plakietkę %(name)s."
+
+#: templates/pages/landing.html:259
+msgid "Small updates. A visible track record."
+msgstr "Małe aktualizacje. Widoczna historia."
+
+#: templates/pages/landing.html:268
+msgid "Nov 08"
+msgstr "08 lis"
+
+#: templates/pages/landing.html:268
+msgid "Shipped team invites. Finally."
+msgstr "Wypuściliśmy zaproszenia do zespołu. Wreszcie."
+
+#: templates/pages/landing.html:269
+msgid "Nov 06"
+msgstr "06 lis"
+
+#: templates/pages/landing.html:269
+msgid "Fixed sync. Cut load time in half."
+msgstr "Naprawiliśmy synchronizację. Ładowanie dwa razy szybsze."
+
+#: templates/pages/landing.html:272
+msgid "In your README"
+msgstr "W Twoim README"
+
+#: templates/pages/landing.html:275
+#, python-format
+msgid "Example %(name)s badge: Repo owner, Live, Steady"
+msgstr "Przykładowa plakietka %(name)s: Repo owner, Live, Steady"
+
+#: templates/pages/landing.html:283
+msgid "Illustrative project"
+msgstr "Przykładowy projekt"
+
+#: templates/pages/landing.html:293
+msgid "Less talk. More receipts."
+msgstr "Mniej gadania. Więcej dowodów."
+
+#: templates/pages/landing.html:294
+msgid "You shipped it."
+msgstr "Projekt już działa."
+
+#: templates/pages/landing.html:294
+msgid "Now put your mark on it."
+msgstr "Teraz postaw na nim swój znak."
+
+#: templates/pages/landing.html:295
+msgid "Your tools don't define you. What you ship does."
+msgstr "Nie definiują Cię narzędzia. Definiuje Cię to, co wypuszczasz."
+
+#: templates/pages/landing.html:299
+msgid "GitHub account required"
+msgstr "Wymagane konto GitHub"
+
+#: templates/projects/_build_log.html:22
 msgid "Posting…"
 msgstr "Publikowanie…"
 
-#: templates/projects/_build_log.html:21
+#: templates/projects/_build_log.html:22
 msgid "Post update"
 msgstr "Opublikuj aktualizację"
 
-#: templates/projects/_build_log.html:29
-msgid "No entries yet. Post what you shipped, fixed or learned. Visitors see the log once it has an entry."
-msgstr "Brak wpisów. Napisz, co wydano, co naprawiono i czego się nauczono. Odwiedzający zobaczą dziennik, gdy pojawi się w nim wpis."
+#: templates/projects/_build_log.html:30
+msgid ""
+"No entries yet. Post what you shipped, fixed or learned. Visitors see the "
+"log once it has an entry."
+msgstr ""
+"Brak wpisów. Napisz, co wydano, co naprawiono i czego się nauczono. "
+"Odwiedzający zobaczą dziennik, gdy pojawi się w nim wpis."
 
-#: templates/projects/_build_log.html:31
+#: templates/projects/_build_log.html:32
 #, python-format
 msgid "Showing the latest %(n)s entry."
 msgid_plural "Showing the latest %(n)s entries."
@@ -1264,12 +1771,21 @@ msgid "Add a live URL above and save to verify its domain."
 msgstr "Dodaj powyżej adres strony i zapisz, aby zweryfikować jej domenę."
 
 #: templates/projects/_domain.html:7 verification/domain.py:40
-msgid "This address cannot be verified. Use a domain name, not an IP address or a local name."
-msgstr "Tego adresu nie można zweryfikować. Użyj nazwy domeny, nie adresu IP ani nazwy lokalnej."
+msgid ""
+"This address cannot be verified. Use a domain name, not an IP address or a "
+"local name."
+msgstr ""
+"Tego adresu nie można zweryfikować. Użyj nazwy domeny, nie adresu IP ani "
+"nazwy lokalnej."
 
 #: templates/projects/_domain.html:9
-msgid "Live is earned when you prove that you control the domain of your live URL. www is ignored: example.com and www.example.com are the same domain."
-msgstr "Live zdobywasz, gdy udowodnisz, że kontrolujesz domenę adresu swojej strony. Przedrostek www jest pomijany: example.com i www.example.com to ta sama domena."
+msgid ""
+"Live is earned when you prove that you control the domain of your live URL. "
+"www is ignored: example.com and www.example.com are the same domain."
+msgstr ""
+"Live zdobywasz, gdy udowodnisz, że kontrolujesz domenę adresu swojej strony. "
+"Przedrostek www jest pomijany: example.com i www.example.com to ta sama "
+"domena."
 
 #: templates/projects/_domain.html:15
 msgid "Method"
@@ -1284,8 +1800,12 @@ msgid "(works for any site)"
 msgstr "(działa dla każdej strony)"
 
 #: templates/projects/_domain.html:20
-msgid "Open the DNS settings where you bought the domain or where its DNS is hosted (Cloudflare, Namecheap, GoDaddy and so on)."
-msgstr "Otwórz ustawienia DNS tam, gdzie kupiono domenę lub gdzie hostowany jest jej DNS (Cloudflare, Namecheap, GoDaddy itp.)."
+msgid ""
+"Open the DNS settings where you bought the domain or where its DNS is hosted "
+"(Cloudflare, Namecheap, GoDaddy and so on)."
+msgstr ""
+"Otwórz ustawienia DNS tam, gdzie kupiono domenę lub gdzie hostowany jest jej "
+"DNS (Cloudflare, Namecheap, GoDaddy itp.)."
 
 #: templates/projects/_domain.html:21
 msgid "Add a new record of type TXT:"
@@ -1296,14 +1816,14 @@ msgid "Name (Host)"
 msgstr "Nazwa (Host)"
 
 #: templates/projects/_domain.html:24 templates/projects/_domain.html:26
-#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:10
-#: templates/projects/_embed_badge.html:15
+#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:15
+#: templates/projects/_embed_badge.html:20
 msgid "Copied"
 msgstr "Skopiowano"
 
 #: templates/projects/_domain.html:24 templates/projects/_domain.html:26
-#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:10
-#: templates/projects/_embed_badge.html:15
+#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:15
+#: templates/projects/_embed_badge.html:20
 msgid "Copy"
 msgstr "Kopiuj"
 
@@ -1320,24 +1840,47 @@ msgid "Common DNS mistakes"
 msgstr "Częste błędy w DNS"
 
 #: templates/projects/_domain.html:34
-msgid "Many providers add your domain to the name for you. Then type only the part before it (app for app.example.com), or @ for the domain itself. Otherwise you get a doubled name like app.example.com.example.com."
-msgstr "Wielu dostawców samo dopisuje Twoją domenę do nazwy. Wtedy wpisz tylko część przed nią (app dla app.example.com) albo @ dla samej domeny. Inaczej powstanie podwójna nazwa, np. app.example.com.example.com."
+msgid ""
+"Many providers add your domain to the name for you. Then type only the part "
+"before it (app for app.example.com), or @ for the domain itself. Otherwise "
+"you get a doubled name like app.example.com.example.com."
+msgstr ""
+"Wielu dostawców samo dopisuje Twoją domenę do nazwy. Wtedy wpisz tylko część "
+"przed nią (app dla app.example.com) albo @ dla samej domeny. Inaczej "
+"powstanie podwójna nazwa, np. app.example.com.example.com."
 
 #: templates/projects/_domain.html:35
-msgid "Add a new TXT record. Do not edit or replace existing ones (for example SPF records for email)."
-msgstr "Dodaj nowy rekord TXT. Nie edytuj i nie zastępuj istniejących (na przykład rekordów SPF dla poczty)."
+msgid ""
+"Add a new TXT record. Do not edit or replace existing ones (for example SPF "
+"records for email)."
+msgstr ""
+"Dodaj nowy rekord TXT. Nie edytuj i nie zastępuj istniejących (na przykład "
+"rekordów SPF dla poczty)."
 
 #: templates/projects/_domain.html:36
-msgid "Paste the value exactly. Quotes around it are fine; spaces or a missing part are not."
-msgstr "Wklej wartość dokładnie. Cudzysłowy dookoła są w porządku; spacje lub brakujący fragment nie."
+msgid ""
+"Paste the value exactly. Quotes around it are fine; spaces or a missing part "
+"are not."
+msgstr ""
+"Wklej wartość dokładnie. Cudzysłowy dookoła są w porządku; spacje lub "
+"brakujący fragment nie."
 
 #: templates/projects/_domain.html:37
-msgid "If this name is a CNAME (common for subdomains on Vercel, Netlify or GitHub Pages), DNS does not allow a TXT record on it. Use the meta tag instead."
-msgstr "Jeśli ta nazwa jest rekordem CNAME (częste dla subdomen na Vercel, Netlify czy GitHub Pages), DNS nie pozwala na rekord TXT na niej. Użyj wtedy metatagu."
+msgid ""
+"If this name is a CNAME (common for subdomains on Vercel, Netlify or GitHub "
+"Pages), DNS does not allow a TXT record on it. Use the meta tag instead."
+msgstr ""
+"Jeśli ta nazwa jest rekordem CNAME (częste dla subdomen na Vercel, Netlify "
+"czy GitHub Pages), DNS nie pozwala na rekord TXT na niej. Użyj wtedy "
+"metatagu."
 
 #: templates/projects/_domain.html:38
-msgid "Changes can take from a few minutes up to an hour to appear, depending on the provider."
-msgstr "Zmiany mogą pojawić się po kilku minutach, a nawet po godzinie, zależnie od dostawcy."
+msgid ""
+"Changes can take from a few minutes up to an hour to appear, depending on "
+"the provider."
+msgstr ""
+"Zmiany mogą pojawić się po kilku minutach, a nawet po godzinie, zależnie od "
+"dostawcy."
 
 #: templates/projects/_domain.html:39
 msgid "Keep the record after verifying. It is checked again every 30 days."
@@ -1361,8 +1904,16 @@ msgid "Publish the site, then press Verify now."
 msgstr "Opublikuj stronę, potem naciśnij Zweryfikuj teraz."
 
 #: templates/projects/_domain.html:53
-msgid "The homepage must be public (no login), answer with 200 OK within 5 seconds and be smaller than 512 KB. Redirects within the same domain are fine. The tag must be in the HTML from the server: a tag added later by JavaScript is not seen."
-msgstr "Strona główna musi być publiczna (bez logowania), odpowiadać 200 OK w ciągu 5 sekund i być mniejsza niż 512 KB. Przekierowania w obrębie tej samej domeny są w porządku. Tag musi być w HTML-u z serwera: tag dodany później przez JavaScript nie jest widoczny."
+msgid ""
+"The homepage must be public (no login), answer with 200 OK within 5 seconds "
+"and be smaller than 512 KB. Redirects within the same domain are fine. The "
+"tag must be in the HTML from the server: a tag added later by JavaScript is "
+"not seen."
+msgstr ""
+"Strona główna musi być publiczna (bez logowania), odpowiadać 200 OK w ciągu "
+"5 sekund i być mniejsza niż 512 KB. Przekierowania w obrębie tej samej "
+"domeny są w porządku. Tag musi być w HTML-u z serwera: tag dodany później "
+"przez JavaScript nie jest widoczny."
 
 #: templates/projects/_domain.html:57
 msgid "Checking…"
@@ -1388,12 +1939,19 @@ msgstr "Ostatnio potwierdzono %(date)s. Sprawdzamy ponownie co 30 dni."
 
 #: templates/projects/_domain_status.html:6
 #, python-format
-msgid "Last confirmed %(date)s. Live is paused until the domain is confirmed again."
-msgstr "Ostatnio potwierdzono %(date)s. Live jest wstrzymany, dopóki domena nie zostanie potwierdzona ponownie."
+msgid ""
+"Last confirmed %(date)s. Live is paused until the domain is confirmed again."
+msgstr ""
+"Ostatnio potwierdzono %(date)s. Live jest wstrzymany, dopóki domena nie "
+"zostanie potwierdzona ponownie."
 
 #: templates/projects/_domain_status.html:8
-msgid "Verification lost. The last automatic check did not find your token, so Live was removed."
-msgstr "Weryfikacja utracona. Ostatnie automatyczne sprawdzenie nie znalazło Twojego tokenu, więc Live został zdjęty."
+msgid ""
+"Verification lost. The last automatic check did not find your token, so Live "
+"was removed."
+msgstr ""
+"Weryfikacja utracona. Ostatnie automatyczne sprawdzenie nie znalazło Twojego "
+"tokenu, więc Live został zdjęty."
 
 #: templates/projects/_domain_status.html:8
 msgid "Fix it and verify again."
@@ -1405,20 +1963,42 @@ msgstr "Jeszcze nie zweryfikowano."
 
 #: templates/projects/_domain_status.html:12
 #, python-format
-msgid "Not verified yet. Prove that you control %(domain)s with one of the methods below."
-msgstr "Jeszcze nie zweryfikowano. Udowodnij, że kontrolujesz %(domain)s, jedną z metod poniżej."
+msgid ""
+"Not verified yet. Prove that you control %(domain)s with one of the methods "
+"below."
+msgstr ""
+"Jeszcze nie zweryfikowano. Udowodnij, że kontrolujesz %(domain)s, jedną z "
+"metod poniżej."
 
 #: templates/projects/_embed_badge.html:3
 msgid "Embed badge"
 msgstr "Osadź plakietkę"
 
-#: templates/projects/_embed_badge.html:4
-msgid "Paste it into a README or a website. It shows the hallmarks you have now and refreshes within an hour."
-msgstr "Wklej ją do README albo na stronę. Pokazuje znaki, które masz teraz, i odświeża się w ciągu godziny."
+#: templates/projects/_embed_badge.html:5
+msgid ""
+"Paste it into a README or a website. It shows the hallmarks you have now and "
+"refreshes within an hour."
+msgstr ""
+"Wklej ją do README albo na stronę. Pokazuje znaki, które masz teraz, i "
+"odświeża się w ciągu godziny."
 
 #: templates/projects/_embed_badge.html:8
+#: templates/projects/_embed_badge.html:13
 msgid "Markdown"
 msgstr "Markdown"
+
+#: templates/projects/_embed_badge.html:8
+msgid "for a GitHub README: open README.md, paste it at the top, commit."
+msgstr ""
+"do README na GitHubie: otwórz README.md, wklej na początku i zrób commit."
+
+#: templates/projects/_embed_badge.html:9
+msgid ""
+"for a website: paste it where the badge should appear, for example in the "
+"footer."
+msgstr ""
+"na stronę internetową: wklej tam, gdzie ma się pojawić plakietka, na "
+"przykład w stopce."
 
 #: templates/projects/_hallmark_info.html:5
 msgid "What this means"
@@ -1443,8 +2023,8 @@ msgid "Delete entry"
 msgstr "Usuń wpis"
 
 #: templates/projects/delete.html:4 templates/projects/delete.html:15
-#: templates/projects/detail.html:35 templates/projects/form.html:139
-#: templates/projects/form.html:141
+#: templates/projects/detail.html:35 templates/projects/form.html:143
+#: templates/projects/form.html:145
 msgid "Delete project"
 msgstr "Usuń projekt"
 
@@ -1454,8 +2034,12 @@ msgstr "Usunąć ten projekt?"
 
 #: templates/projects/delete.html:12
 #, python-format
-msgid "“%(name)s” and its screenshots will be removed for good. This cannot be undone."
-msgstr "„%(name)s” i jego zrzuty ekranu zostaną usunięte na zawsze. Tego nie można cofnąć."
+msgid ""
+"“%(name)s” and its screenshots will be removed for good. This cannot be "
+"undone."
+msgstr ""
+"„%(name)s” i jego zrzuty ekranu zostaną usunięte na zawsze. Tego nie można "
+"cofnąć."
 
 #: templates/projects/detail.html:12
 #, python-format
@@ -1474,33 +2058,37 @@ msgstr "Ukryty przez moderatorów. Tę stronę widzisz tylko Ty."
 msgid "Draft. Only you can see this page."
 msgstr "Szkic. Tę stronę widzisz tylko Ty."
 
-#: templates/projects/detail.html:31 templates/projects/form.html:126
+#: templates/projects/detail.html:31 templates/projects/form.html:130
 msgid "Publish project"
 msgstr "Opublikuj projekt"
 
-#: templates/projects/detail.html:33 templates/projects/form.html:131
+#: templates/projects/detail.html:33 templates/projects/form.html:135
 msgid "Unpublish project"
 msgstr "Cofnij publikację projektu"
 
-#: templates/projects/detail.html:60
+#: templates/projects/detail.html:54
 msgid "Open live site"
 msgstr "Otwórz działającą stronę"
 
-#: templates/projects/detail.html:67
+#: templates/projects/detail.html:70
 #, python-format
 msgid "Screenshot 1 of %(name)s"
 msgstr "Zrzut ekranu 1 projektu %(name)s"
 
-#: templates/projects/detail.html:72
+#: templates/projects/detail.html:74
 #, python-format
 msgid "Screenshot %(n)s of %(name)s"
 msgstr "Zrzut ekranu %(n)s projektu %(name)s"
 
-#: templates/projects/detail.html:84
+#: templates/projects/detail.html:83
+msgid "About this project"
+msgstr "O tym projekcie"
+
+#: templates/projects/detail.html:102
 msgid "Uptime"
 msgstr "Dostępność"
 
-#: templates/projects/detail.html:88
+#: templates/projects/detail.html:106
 #, python-format
 msgid "of %(n)s check in the last 30 days"
 msgid_plural "of %(n)s checks in the last 30 days"
@@ -1508,100 +2096,97 @@ msgstr[0] "z %(n)s sprawdzenia w ostatnich 30 dniach"
 msgstr[1] "z %(n)s sprawdzeń w ostatnich 30 dniach"
 msgstr[2] "z %(n)s sprawdzeń w ostatnich 30 dniach"
 
-#: templates/projects/detail.html:91
+#: templates/projects/detail.html:109
 msgid "No checks in the last 30 days yet. The site is checked every few hours."
-msgstr "Brak sprawdzeń w ostatnich 30 dniach. Strona jest sprawdzana co kilka godzin."
+msgstr ""
+"Brak sprawdzeń w ostatnich 30 dniach. Strona jest sprawdzana co kilka godzin."
 
-#: templates/projects/detail.html:94
+#: templates/projects/detail.html:112
 #, python-format
 msgid "Last checked %(time)s ago"
 msgstr "Ostatnie sprawdzenie %(time)s temu"
 
-#: templates/projects/detail.html:96
+#: templates/projects/detail.html:115
 msgid "Daily results, last 30 days"
 msgstr "Wyniki dzienne, ostatnie 30 dni"
 
-#: templates/projects/detail.html:99
+#: templates/projects/detail.html:118
 msgid "no checks"
 msgstr "brak sprawdzeń"
 
-#: templates/projects/detail.html:99
+#: templates/projects/detail.html:118
 #, python-format
 msgid "%(ok)s of %(total)s checks up"
 msgstr "%(ok)s z %(total)s sprawdzeń udanych"
 
-#: templates/projects/detail.html:102
+#: templates/projects/detail.html:123
 msgid "30 days ago"
 msgstr "30 dni temu"
 
-#: templates/projects/detail.html:102
+#: templates/projects/detail.html:123
 msgctxt "uptime"
 msgid "Today"
 msgstr "Dziś"
 
-#: templates/projects/detail.html:104
+#: templates/projects/detail.html:125
 msgctxt "uptime"
 msgid "Up"
 msgstr "Działa"
 
-#: templates/projects/detail.html:105
+#: templates/projects/detail.html:126
 msgid "Some checks failed"
 msgstr "Część sprawdzeń nie powiodła się"
 
-#: templates/projects/detail.html:106
+#: templates/projects/detail.html:127
 msgctxt "uptime"
 msgid "Down"
 msgstr "Nie działa"
 
-#: templates/projects/detail.html:107
+#: templates/projects/detail.html:128
 msgid "No checks"
 msgstr "Brak sprawdzeń"
 
-#: templates/projects/detail.html:114
-msgid "About this project"
-msgstr "O tym projekcie"
-
-#: templates/projects/detail.html:127 templates/projects/form.html:47
+#: templates/projects/detail.html:139 templates/projects/form.html:51
 msgid "Built with (self-declared)"
 msgstr "Zbudowano z (deklaracja autora)"
 
-#: templates/projects/form.html:14
+#: templates/projects/form.html:15
 msgid "Hidden by moderators"
 msgstr "Ukryty przez moderatorów"
 
-#: templates/projects/form.html:14
+#: templates/projects/form.html:15
 msgid "Draft. Only you can see it."
 msgstr "Szkic. Widzisz go tylko Ty."
 
-#: templates/projects/form.html:15
+#: templates/projects/form.html:16
 msgid "View page"
 msgstr "Zobacz stronę"
 
-#: templates/projects/form.html:18
+#: templates/projects/form.html:19
 msgid "It starts as a draft. Nobody sees it until you publish."
 msgstr "Zaczyna jako szkic. Nikt go nie widzi, dopóki go nie opublikujesz."
 
-#: templates/projects/form.html:37
+#: templates/projects/form.html:41
 msgid "Preview is not available right now."
 msgstr "Podgląd jest teraz niedostępny."
 
-#: templates/projects/form.html:37
+#: templates/projects/form.html:41
 msgid "Preview"
 msgstr "Podgląd"
 
-#: templates/projects/form.html:57
+#: templates/projects/form.html:61
 msgid "Save changes"
 msgstr "Zapisz zmiany"
 
-#: templates/projects/form.html:57
+#: templates/projects/form.html:61
 msgid "Save draft"
 msgstr "Zapisz szkic"
 
-#: templates/projects/form.html:62
+#: templates/projects/form.html:66
 msgid "Repository check"
 msgstr "Sprawdzenie repozytorium"
 
-#: templates/projects/form.html:65
+#: templates/projects/form.html:69
 #, python-format
 msgid "Repo owner: %(name)s, %(counter)s commit by you."
 msgid_plural "Repo owner: %(name)s, %(counter)s commits by you."
@@ -1609,82 +2194,92 @@ msgstr[0] "Repo owner: %(name)s, %(counter)s Twój commit."
 msgstr[1] "Repo owner: %(name)s, %(counter)s Twoje commity."
 msgstr[2] "Repo owner: %(name)s, %(counter)s Twoich commitów."
 
-#: templates/projects/form.html:66
+#: templates/projects/form.html:70
 #, python-format
 msgid "Checked %(date)s."
 msgstr "Sprawdzono %(date)s."
 
-#: templates/projects/form.html:68
-msgid "Not checked yet. Repo owner is earned if the public repository is yours, or you have at least 10 commits in it."
-msgstr "Jeszcze nie sprawdzono. Repo owner zdobywasz, jeśli publiczne repozytorium jest Twoje albo masz w nim co najmniej 10 commitów."
+#: templates/projects/form.html:72
+msgid ""
+"Not checked yet. Repo owner is earned if the public repository is yours, or "
+"you have at least 10 commits in it."
+msgstr ""
+"Jeszcze nie sprawdzono. Repo owner zdobywasz, jeśli publiczne repozytorium "
+"jest Twoje albo masz w nim co najmniej 10 commitów."
 
-#: templates/projects/form.html:71
+#: templates/projects/form.html:75
 msgid "Check repository"
 msgstr "Sprawdź repozytorium"
 
-#: templates/projects/form.html:73
+#: templates/projects/form.html:77
 msgid "Uses the repository saved above. Once every 10 minutes."
 msgstr "Używa repozytorium zapisanego powyżej. Raz na 10 minut."
 
-#: templates/projects/form.html:75
+#: templates/projects/form.html:79
 msgid "Add a GitHub repository above and save to check it."
 msgstr "Dodaj powyżej repozytorium GitHub i zapisz, aby je sprawdzić."
 
-#: templates/projects/form.html:82
+#: templates/projects/form.html:86
 msgid "Screenshots"
 msgstr "Zrzuty ekranu"
 
-#: templates/projects/form.html:83
+#: templates/projects/form.html:87
 #, python-format
-msgid "Up to %(max)s images, PNG, JPEG or WebP, 5 MB each. The first one is the cover."
-msgstr "Do %(max)s obrazów, PNG, JPEG lub WebP, po 5 MB. Pierwszy jest okładką."
+msgid ""
+"Up to %(max)s images, PNG, JPEG or WebP, 5 MB each. The first one is the "
+"cover."
+msgstr ""
+"Do %(max)s obrazów, PNG, JPEG lub WebP, po 5 MB. Pierwszy jest okładką."
 
-#: templates/projects/form.html:88
+#: templates/projects/form.html:92
 #, python-format
 msgid "Screenshot %(n)s"
 msgstr "Zrzut ekranu %(n)s"
 
-#: templates/projects/form.html:92
+#: templates/projects/form.html:96
 msgid "Move up"
 msgstr "W górę"
 
-#: templates/projects/form.html:96
+#: templates/projects/form.html:100
 msgid "Move down"
 msgstr "W dół"
 
-#: templates/projects/form.html:100
+#: templates/projects/form.html:104
 msgid "Remove"
 msgstr "Usuń"
 
-#: templates/projects/form.html:111
+#: templates/projects/form.html:115
 msgid "Add a screenshot"
 msgstr "Dodaj zrzut ekranu"
 
-#: templates/projects/form.html:114
+#: templates/projects/form.html:118
 msgid "Upload screenshot"
 msgstr "Wyślij zrzut ekranu"
 
-#: templates/projects/form.html:117
+#: templates/projects/form.html:121
 msgid "You have reached the limit of 4 screenshots. Remove one to add another."
 msgstr "Osiągnięto limit 4 zrzutów ekranu. Usuń jeden, aby dodać kolejny."
 
-#: templates/projects/form.html:122
+#: templates/projects/form.html:126
 msgid "Visibility"
 msgstr "Widoczność"
 
-#: templates/projects/form.html:124
+#: templates/projects/form.html:128
 msgid "This project is a draft. Publishing makes the page public."
 msgstr "Ten projekt jest szkicem. Publikacja udostępnia stronę publicznie."
 
-#: templates/projects/form.html:129
+#: templates/projects/form.html:133
 msgid "This project is public."
 msgstr "Ten projekt jest publiczny."
 
-#: templates/projects/form.html:134
-msgid "Moderators hid this project. Contact support if you think this is a mistake."
-msgstr "Moderatorzy ukryli ten projekt. Jeśli uważasz, że to pomyłka, napisz do wsparcia."
+#: templates/projects/form.html:138
+msgid ""
+"Moderators hid this project. Contact support if you think this is a mistake."
+msgstr ""
+"Moderatorzy ukryli ten projekt. Jeśli uważasz, że to pomyłka, napisz do "
+"wsparcia."
 
-#: templates/projects/form.html:140
+#: templates/projects/form.html:144
 msgid "This removes the project and its screenshots for good."
 msgstr "To usuwa projekt i jego zrzuty ekranu na zawsze."
 
@@ -1692,7 +2287,7 @@ msgstr "To usuwa projekt i jego zrzuty ekranu na zawsze."
 msgid "Could not save. Try again."
 msgstr "Nie udało się zapisać. Spróbuj ponownie."
 
-#: templates/social/_follow.html:13 templates/social/feed.html:16
+#: templates/social/_follow.html:13 templates/social/feed.html:19
 msgid "Following"
 msgstr "Obserwujesz"
 
@@ -1720,47 +2315,51 @@ msgstr "Polubiono"
 msgid "Like"
 msgstr "Lubię"
 
-#: templates/social/feed.html:7
+#: templates/social/feed.html:7 templates/social/feed.html:13
 msgid "Recently launched projects with verified proof."
 msgstr "Ostatnie premiery projektów ze zweryfikowanym dowodem."
 
-#: templates/social/feed.html:14
+#: templates/social/feed.html:17
 msgid "Feed sections"
 msgstr "Sekcje aktualności"
 
-#: templates/social/feed.html:17 templates/social/feed.html:21
+#: templates/social/feed.html:20 templates/social/feed.html:24
 msgid "Latest launches"
 msgstr "Najnowsze premiery"
 
-#: templates/social/feed.html:30
+#: templates/social/feed.html:33
 msgid "Nothing here yet"
 msgstr "Na razie nic"
 
-#: templates/social/feed.html:31
-msgid "Projects and updates from people you follow show up here. Follow someone from their profile."
-msgstr "Projekty i aktualizacje osób, które obserwujesz, pojawiają się tutaj. Zacznij obserwować kogoś z jego profilu."
+#: templates/social/feed.html:34
+msgid ""
+"Projects and updates from people you follow show up here. Follow someone "
+"from their profile."
+msgstr ""
+"Projekty i aktualizacje osób, które obserwujesz, pojawiają się tutaj. "
+"Zacznij obserwować kogoś z jego profilu."
 
-#: templates/social/feed.html:32
+#: templates/social/feed.html:35
 msgid "See latest launches"
 msgstr "Zobacz najnowsze premiery"
 
-#: templates/social/feed.html:36
+#: templates/social/feed.html:39
 msgid "No launches yet"
 msgstr "Brak premier"
 
-#: templates/social/feed.html:37
+#: templates/social/feed.html:40
 msgid "Published projects appear here, newest first."
 msgstr "Opublikowane projekty pojawiają się tutaj, od najnowszych."
 
-#: templates/social/feed.html:43
+#: templates/social/feed.html:46
 msgid "Newer"
 msgstr "Nowsze"
 
-#: templates/social/feed.html:44
+#: templates/social/feed.html:47
 msgid "Could not load more. Try again."
 msgstr "Nie udało się wczytać więcej. Spróbuj ponownie."
 
-#: templates/social/feed.html:44
+#: templates/social/feed.html:47
 msgid "Load more"
 msgstr "Wczytaj więcej"
 
@@ -1770,8 +2369,12 @@ msgid "Sign-in failed"
 msgstr "Logowanie nie powiodło się"
 
 #: templates/socialaccount/authentication_error.html:11
-msgid "GitHub did not complete the sign-in, or the request expired. Nothing was changed. Please try again."
-msgstr "GitHub nie dokończył logowania albo żądanie wygasło. Nic nie zostało zmienione. Spróbuj ponownie."
+msgid ""
+"GitHub did not complete the sign-in, or the request expired. Nothing was "
+"changed. Please try again."
+msgstr ""
+"GitHub nie dokończył logowania albo żądanie wygasło. Nic nie zostało "
+"zmienione. Spróbuj ponownie."
 
 #: templates/socialaccount/authentication_error.html:12
 msgid "Try again"
@@ -1787,8 +2390,11 @@ msgid "Sign-in cancelled"
 msgstr "Logowanie anulowane"
 
 #: templates/socialaccount/login_cancelled.html:11
-msgid "You cancelled the sign-in on GitHub. You can try again whenever you like."
-msgstr "Logowanie na GitHubie zostało anulowane. Możesz spróbować ponownie, kiedy chcesz."
+msgid ""
+"You cancelled the sign-in on GitHub. You can try again whenever you like."
+msgstr ""
+"Logowanie na GitHubie zostało anulowane. Możesz spróbować ponownie, kiedy "
+"chcesz."
 
 #: templates/socialaccount/login_cancelled.html:12
 msgid "Back to sign in"
@@ -1800,8 +2406,12 @@ msgstr "Załóż konto"
 
 #: templates/socialaccount/signup.html:11
 #, python-format
-msgid "You signed in with GitHub as <strong>%(login)s</strong>. Confirm your username and accept the Terms to finish."
-msgstr "Zalogowano przez GitHub jako <strong>%(login)s</strong>. Potwierdź nazwę użytkownika i zaakceptuj Regulamin, aby zakończyć."
+msgid ""
+"You signed in with GitHub as <strong>%(login)s</strong>. Confirm your "
+"username and accept the Terms to finish."
+msgstr ""
+"Zalogowano przez GitHub jako <strong>%(login)s</strong>. Potwierdź nazwę "
+"użytkownika i zaakceptuj Regulamin, aby zakończyć."
 
 #: templates/socialaccount/signup.html:19
 msgid "I accept the Terms"
@@ -1818,12 +2428,15 @@ msgstr "Uruchom weryfikację ponownie"
 #: verification/admin.py:42
 #, python-format
 msgid "Confirmed %(confirmed)s, retry later %(kept)s, removed %(removed)s."
-msgstr "Potwierdzone: %(confirmed)s, ponowna próba później: %(kept)s, usunięte: %(removed)s."
+msgstr ""
+"Potwierdzone: %(confirmed)s, ponowna próba później: %(kept)s, usunięte: "
+"%(removed)s."
 
 #: verification/admin.py:44
 #, python-format
 msgid "%(count)s row(s) skipped: not verified, or over the limit of %(limit)s."
-msgstr "Pominięto wierszy: %(count)s (niezweryfikowane albo ponad limit %(limit)s)."
+msgstr ""
+"Pominięto wierszy: %(count)s (niezweryfikowane albo ponad limit %(limit)s)."
 
 #: verification/domain.py:39
 msgid "Add a live URL and save the project first."
@@ -1838,12 +2451,20 @@ msgid "This domain does not exist in DNS. Check the spelling of the live URL."
 msgstr "Ta domena nie istnieje w DNS. Sprawdź pisownię adresu strony."
 
 #: verification/domain.py:43
-msgid "No TXT records were found on this name yet. DNS changes can take up to an hour."
-msgstr "Na tej nazwie nie znaleziono jeszcze rekordów TXT. Zmiany w DNS mogą trwać do godziny."
+msgid ""
+"No TXT records were found on this name yet. DNS changes can take up to an "
+"hour."
+msgstr ""
+"Na tej nazwie nie znaleziono jeszcze rekordów TXT. Zmiany w DNS mogą trwać "
+"do godziny."
 
 #: verification/domain.py:44
-msgid "TXT records were found, but none has your token. Check the value, character by character."
-msgstr "Znaleziono rekordy TXT, ale żaden nie zawiera Twojego tokenu. Sprawdź wartość znak po znaku."
+msgid ""
+"TXT records were found, but none has your token. Check the value, character "
+"by character."
+msgstr ""
+"Znaleziono rekordy TXT, ale żaden nie zawiera Twojego tokenu. Sprawdź "
+"wartość znak po znaku."
 
 #: verification/domain.py:45
 msgid "DNS did not answer in time. Try again in a few minutes."
@@ -1854,20 +2475,33 @@ msgid "This address points to a private network and cannot be checked."
 msgstr "Ten adres wskazuje na sieć prywatną i nie można go sprawdzić."
 
 #: verification/domain.py:47
-msgid "Your homepage could not be loaded (no answer within 5 seconds, or the connection failed)."
-msgstr "Nie udało się wczytać Twojej strony głównej (brak odpowiedzi w ciągu 5 sekund albo błąd połączenia)."
+msgid ""
+"Your homepage could not be loaded (no answer within 5 seconds, or the "
+"connection failed)."
+msgstr ""
+"Nie udało się wczytać Twojej strony głównej (brak odpowiedzi w ciągu 5 "
+"sekund albo błąd połączenia)."
 
 #: verification/domain.py:48
-msgid "Your homepage did not answer with 200 OK. It must be public, without a login."
-msgstr "Twoja strona główna nie odpowiedziała 200 OK. Musi być publiczna, bez logowania."
+msgid ""
+"Your homepage did not answer with 200 OK. It must be public, without a login."
+msgstr ""
+"Twoja strona główna nie odpowiedziała 200 OK. Musi być publiczna, bez "
+"logowania."
 
 #: verification/domain.py:49
-msgid "Your homepage answered with a server error. Try again when the site is up."
-msgstr "Twoja strona główna zwróciła błąd serwera. Spróbuj ponownie, gdy strona znów będzie działać."
+msgid ""
+"Your homepage answered with a server error. Try again when the site is up."
+msgstr ""
+"Twoja strona główna zwróciła błąd serwera. Spróbuj ponownie, gdy strona znów "
+"będzie działać."
 
 #: verification/domain.py:50
-msgid "Your homepage redirects to another domain. The tag must be on this domain."
-msgstr "Twoja strona główna przekierowuje na inną domenę. Tag musi być na tej domenie."
+msgid ""
+"Your homepage redirects to another domain. The tag must be on this domain."
+msgstr ""
+"Twoja strona główna przekierowuje na inną domenę. Tag musi być na tej "
+"domenie."
 
 #: verification/domain.py:51
 msgid "Your homepage is larger than 512 KB. Use the DNS method instead."
@@ -1879,7 +2513,8 @@ msgstr "Strona się wczytała, ale nie znaleziono w niej metatagu."
 
 #: verification/domain.py:53
 msgid "The meta tag was found, but its token does not match. Copy it again."
-msgstr "Znaleziono metatag, ale jego token się nie zgadza. Skopiuj go ponownie."
+msgstr ""
+"Znaleziono metatag, ale jego token się nie zgadza. Skopiuj go ponownie."
 
 #: verification/repo.py:114
 msgid "GitHub did not answer properly. Try again in a few minutes."
@@ -1888,7 +2523,8 @@ msgstr "GitHub nie odpowiedział prawidłowo. Spróbuj ponownie za kilka minut."
 #: verification/repo.py:127
 #, python-format
 msgid "GitHub's rate limit was reached. Try again in about %(minutes)s min."
-msgstr "Przekroczono limit żądań GitHuba. Spróbuj ponownie za około %(minutes)s min."
+msgstr ""
+"Przekroczono limit żądań GitHuba. Spróbuj ponownie za około %(minutes)s min."
 
 #: verification/repo.py:129
 msgid "GitHub's rate limit was reached. Try again later."
@@ -1896,11 +2532,17 @@ msgstr "Przekroczono limit żądań GitHuba. Spróbuj ponownie później."
 
 #: verification/repo.py:137
 msgid "This repository was renamed or moved. Enter its current name."
-msgstr "To repozytorium zmieniło nazwę lub zostało przeniesione. Podaj jego aktualną nazwę."
+msgstr ""
+"To repozytorium zmieniło nazwę lub zostało przeniesione. Podaj jego aktualną "
+"nazwę."
 
 #: verification/repo.py:141
-msgid "Repository not found. Check the spelling. Private repositories cannot be checked."
-msgstr "Nie znaleziono repozytorium. Sprawdź pisownię. Prywatnych repozytoriów nie można sprawdzić."
+msgid ""
+"Repository not found. Check the spelling. Private repositories cannot be "
+"checked."
+msgstr ""
+"Nie znaleziono repozytorium. Sprawdź pisownię. Prywatnych repozytoriów nie "
+"można sprawdzić."
 
 #: verification/repo.py:150
 msgid "This repository is too large to check automatically."
@@ -1908,62 +2550,9 @@ msgstr "To repozytorium jest zbyt duże, by sprawdzić je automatycznie."
 
 #: verification/repo.py:196
 msgid "This repository is private. Only public repositories can be checked."
-msgstr "To repozytorium jest prywatne. Można sprawdzać tylko publiczne repozytoria."
+msgstr ""
+"To repozytorium jest prywatne. Można sprawdzać tylko publiczne repozytoria."
 
 #: verification/repo.py:208 verification/repo.py:284
 msgid "This repository is already linked to another project."
 msgstr "To repozytorium jest już powiązane z innym projektem."
-
-msgid "We could not read that request"
-msgstr "Nie udało się odczytać tego żądania"
-
-msgid "Something in it was malformed or incomplete. Go back and try again."
-msgstr "Coś w nim jest uszkodzone lub niepełne. Wróć i spróbuj ponownie."
-
-msgid "This record is closed"
-msgstr "Ten wpis jest zamknięty"
-
-msgid "Your account is not allowed to open this page. If you have another account, sign in with that one."
-msgstr "Twoje konto nie ma dostępu do tej strony. Jeśli masz inne konto, zaloguj się na nie."
-
-msgid "This form has expired"
-msgstr "Ten formularz wygasł"
-
-msgid "It was opened too long ago, or in another tab before you signed in or out. Go back, reload the page and send it again."
-msgstr "Został otwarty zbyt dawno albo w innej karcie przed zalogowaniem lub wylogowaniem. Wróć, odśwież stronę i wyślij go ponownie."
-
-msgid "No record found"
-msgstr "Nie znaleziono wpisu"
-
-msgid "We looked, and there is nothing at this address. The link may be mistyped, the page may have moved, or it is not public."
-msgstr "Sprawdziliśmy: pod tym adresem nic nie ma. Link może zawierać błąd, strona mogła zostać przeniesiona albo nie jest publiczna."
-
-msgid "Something broke on our side"
-msgstr "Coś zepsuło się po naszej stronie"
-
-msgid "It is not your fault, and the error has been logged. Try again in a minute."
-msgstr "To nie Twoja wina, a błąd został zapisany. Spróbuj ponownie za minutę."
-
-msgid "Error"
-msgstr "Błąd"
-
-msgid "Go to your feed"
-msgstr "Przejdź do aktualności"
-
-msgid "Go to the front page"
-msgstr "Na stronę główną"
-
-msgid "Go back"
-msgstr "Wróć"
-
-msgid "Reference:"
-msgstr "Numer referencyjny:"
-
-msgid "If it keeps happening, write to <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the reference."
-msgstr "Jeśli to się powtarza, napisz na <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> i podaj numer referencyjny."
-
-msgid "for a GitHub README: open README.md, paste it at the top, commit."
-msgstr "do README na GitHubie: otwórz README.md, wklej na początku i zrób commit."
-
-msgid "for a website: paste it where the badge should appear, for example in the footer."
-msgstr "na stronę internetową: wklej tam, gdzie ma się pojawić plakietka, na przykład w stopce."

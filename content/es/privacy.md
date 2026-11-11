@@ -39,6 +39,8 @@ Los resultados se muestran en la página pública de tu proyecto.
 
 **Direcciones IP y registros.** La aplicación no guarda tu dirección IP y sus propios registros no la contienen. De cada petición de página los registros anotan solo el método, la dirección de la página (sin lo que va después de un `?`), el estado de la respuesta, el tamaño y el tiempo empleado, además de los errores. No contienen datos de tu navegador. Las direcciones de página incluyen nombres de usuario (`/u/<username>/`), así que una línea del registro puede mostrar qué perfil se abrió, pero no quién lo abrió.
 
+**Registro de errores.** Cuando algo falla, la aplicación escribe una entrada breve en un archivo de errores de nuestro servidor: la hora, un número de referencia aleatorio (el que aparece en la página de error), el método de la solicitud, la dirección de la página sin lo que va después de `?` y con los nombres de usuario sustituidos por `[user]`, el estado de la respuesta, la parte del código que falló y el mensaje técnico, del que se eliminan direcciones de correo, direcciones IP y todo lo que parezca una contraseña o una clave. Las páginas no encontradas van a un archivo aparte, cada dirección como mucho una vez por minuto. Estos archivos nunca contienen tu dirección IP, datos del navegador, cookies, lo que escribes en los formularios, tu correo ni tu nombre de usuario. Cada archivo está limitado a 5 MB más 5 copias anteriores; al llegar al límite se borra la más antigua.
+
 > **TODO antes del lanzamiento:** el servidor web que está delante de la aplicación lleva su propio registro de accesos, que por defecto incluye direcciones IP. Aún no se ha decidido qué anota ni cuánto tiempo lo conserva (ni cuánto se conservan los registros de la aplicación). Hay que completarlo, o desactivar el registro de IP, antes de que esta página sea pública.
 
 **Protección contra abusos.** Para limitar los abusos contamos algunas acciones (por ejemplo, me gusta por hora) en la base de datos del sitio. Cada contador es un número asociado a tu cuenta o a un proyecto, sin dirección IP, y se aplica durante 24 horas como máximo. Después deja de usarse, pero la fila puede permanecer en la base de datos hasta que se limpie.
@@ -56,6 +58,7 @@ Los resultados se muestran en la página pública de tu proyecto.
 - Registro de auditoría: se conserva. Las entradas sobre una cuenta eliminada no contienen el nombre de usuario ni el correo.
 - Contadores contra abusos: 24 horas como máximo.
 - Copias de seguridad: 14 días. Una cuenta eliminada desaparece de ellas en un plazo de 14 días.
+- Archivos del registro de errores: hasta que se llenan (5 MB más 5 copias anteriores de 5 MB), luego se borran las entradas más antiguas.
 - Registros del servidor web y de la aplicación: **TODO**, aún sin decidir.
 
 ## Quién más recibe datos {#recipients}

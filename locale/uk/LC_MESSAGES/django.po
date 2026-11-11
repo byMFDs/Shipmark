@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 18:17+0000\n"
+"POT-Creation-Date: 2026-11-11 18:32+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Profile"
 msgstr "Профіль"
 
-#: accounts/admin.py:42 config/settings/base.py:275
+#: accounts/admin.py:42 config/settings/base.py:278
 msgid "Moderation"
 msgstr "Модерація"
 
@@ -114,36 +114,36 @@ msgstr ""
 msgid "This username is reserved. Please choose another."
 msgstr "Це імʼя зарезервоване. Оберіть інше."
 
-#: accounts/views.py:50
+#: accounts/views.py:51
 msgid "You are signed out."
 msgstr "Ви вийшли з акаунта."
 
-#: accounts/views.py:62 moderation/views.py:30 projects/views.py:39
+#: accounts/views.py:63 moderation/views.py:30 projects/views.py:39
 #: social/views.py:65
 msgid "Your account is suspended."
 msgstr "Ваш акаунт призупинено."
 
-#: accounts/views.py:65 projects/views.py:34 social/views.py:67
+#: accounts/views.py:66 projects/views.py:34 social/views.py:67
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Забагато змін за короткий час. Спробуйте за кілька хвилин."
 
-#: accounts/views.py:70
+#: accounts/views.py:71
 msgid "Settings saved."
 msgstr "Налаштування збережено."
 
-#: accounts/views.py:88
+#: accounts/views.py:89
 msgid "Thank you. You accepted the updated Terms."
 msgstr "Дякуємо. Ви прийняли оновлені Умови."
 
-#: accounts/views.py:99
+#: accounts/views.py:100
 msgid "Too many downloads in a short time. Try again later."
 msgstr "Забагато завантажень за короткий час. Спробуйте пізніше."
 
-#: accounts/views.py:122
+#: accounts/views.py:123
 msgid "Too many attempts. Try again later."
 msgstr "Забагато спроб. Спробуйте пізніше."
 
-#: accounts/views.py:126
+#: accounts/views.py:127
 msgid "Your account and everything in it were deleted."
 msgstr "Ваш акаунт і все, що в ньому було, видалено."
 
@@ -151,64 +151,64 @@ msgstr "Ваш акаунт і все, що в ньому було, видале
 msgid "Proof, not promises."
 msgstr "Докази, а не обіцянки."
 
-#: config/settings/base.py:216
+#: config/settings/base.py:219
 msgid "Admin"
 msgstr "Адмінка"
 
-#: config/settings/base.py:252 config/settings/base.py:254
+#: config/settings/base.py:255 config/settings/base.py:257
 #: moderation/dashboard.py:44
 msgid "Users"
 msgstr "Користувачі"
 
-#: config/settings/base.py:258 config/settings/base.py:260
+#: config/settings/base.py:261 config/settings/base.py:263
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:261 templates/pages/landing.html:264
+#: config/settings/base.py:264 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
-#: config/settings/base.py:262 projects/forms.py:26
+#: config/settings/base.py:265 projects/forms.py:26
 #: templates/projects/detail.html:147
 msgid "Tags"
 msgstr "Теги"
 
-#: config/settings/base.py:263
+#: config/settings/base.py:266
 msgid "Tools"
 msgstr "Інструменти"
 
-#: config/settings/base.py:267
+#: config/settings/base.py:270
 msgid "Verification"
 msgstr "Підтвердження"
 
-#: config/settings/base.py:269
+#: config/settings/base.py:272
 msgid "Repositories"
 msgstr "Репозиторії"
 
-#: config/settings/base.py:270
+#: config/settings/base.py:273
 msgid "Domains"
 msgstr "Домени"
 
-#: config/settings/base.py:271
+#: config/settings/base.py:274
 msgid "Uptime checks"
 msgstr "Перевірки доступності"
 
-#: config/settings/base.py:277
+#: config/settings/base.py:280
 msgid "Reports"
 msgstr "Скарги"
 
-#: config/settings/base.py:279
+#: config/settings/base.py:282
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:280 projects/admin.py:44
+#: config/settings/base.py:283 projects/admin.py:44
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:284 config/settings/base.py:286
+#: config/settings/base.py:287 config/settings/base.py:289
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
@@ -246,15 +246,15 @@ msgstr "Реєстрації за 7 днів"
 msgid "Open reports"
 msgstr "Відкриті скарги"
 
-#: moderation/dashboard.py:51 pages/explore.py:28 pages/templatetags/ui.py:110
+#: moderation/dashboard.py:51 pages/explore.py:28 pages/templatetags/ui.py:115
 msgid "Repo owner"
 msgstr "Власник репозиторію"
 
-#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:111
+#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:116
 msgid "Live"
 msgstr "Працює"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:112
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:117
 msgid "Steady"
 msgstr "Стабільний"
 
@@ -360,42 +360,42 @@ msgstr "Найбільше доказів"
 msgid "Any"
 msgstr "Будь-яка"
 
-#: pages/templatetags/ui.py:75
+#: pages/templatetags/ui.py:80
 msgid "just now"
 msgstr "щойно"
 
-#: pages/templatetags/ui.py:76
+#: pages/templatetags/ui.py:81
 #, python-format
 msgid "%(time)s ago"
 msgstr "%(time)s тому"
 
-#: pages/templatetags/ui.py:234 templates/social/feed.html:4
+#: pages/templatetags/ui.py:263 templates/social/feed.html:4
 #: templates/social/feed.html:5 templates/social/feed.html:12
 msgid "Feed"
 msgstr "Стрічка"
 
-#: pages/templatetags/ui.py:234 templates/pages/explore.html:4
+#: pages/templatetags/ui.py:263 templates/pages/explore.html:4
 #: templates/pages/explore.html:5 templates/pages/explore.html:16
 msgid "Explore"
 msgstr "Огляд"
 
-#: pages/templatetags/ui.py:236
+#: pages/templatetags/ui.py:265
 msgid "About"
 msgstr "Про проєкт"
 
-#: pages/templatetags/ui.py:237 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:266 templates/pages/landing.html:279
 msgid "How proof works"
 msgstr "Як працюють підтвердження"
 
-#: pages/templatetags/ui.py:238
+#: pages/templatetags/ui.py:267
 msgid "Privacy"
 msgstr "Приватність"
 
-#: pages/templatetags/ui.py:239
+#: pages/templatetags/ui.py:268
 msgid "Terms"
 msgstr "Умови"
 
-#: pages/templatetags/ui.py:240
+#: pages/templatetags/ui.py:269
 msgid "Cookies"
 msgstr "Файли cookie"
 
@@ -810,38 +810,52 @@ msgstr "Не вдалося прочитати цей запит"
 
 #: templates/400.html:6
 msgid "Something in it was malformed or incomplete. Go back and try again."
-msgstr "Щось у ньому пошкоджене або неповне. Поверніться назад і спробуйте ще раз."
+msgstr ""
+"Щось у ньому пошкоджене або неповне. Поверніться назад і спробуйте ще раз."
 
 #: templates/403.html:3 templates/403.html:7
 msgid "This record is closed"
 msgstr "Цей запис закритий"
 
 #: templates/403.html:8
-msgid "Your account is not allowed to open this page. If you have another account, sign in with that one."
-msgstr "Вашому акаунту не дозволено відкривати цю сторінку. Якщо у вас є інший акаунт, увійдіть із ним."
+msgid ""
+"Your account is not allowed to open this page. If you have another account, "
+"sign in with that one."
+msgstr ""
+"Вашому акаунту не дозволено відкривати цю сторінку. Якщо у вас є інший "
+"акаунт, увійдіть із ним."
 
 #: templates/403_csrf.html:3 templates/403_csrf.html:5
 msgid "This form has expired"
 msgstr "Ця форма застаріла"
 
 #: templates/403_csrf.html:6
-msgid "It was opened too long ago, or in another tab before you signed in or out. Go back, reload the page and send it again."
-msgstr "Її відкрили надто давно або в іншій вкладці до входу чи виходу. Поверніться назад, оновіть сторінку й надішліть знову."
+msgid ""
+"It was opened too long ago, or in another tab before you signed in or out. "
+"Go back, reload the page and send it again."
+msgstr ""
+"Її відкрили надто давно або в іншій вкладці до входу чи виходу. Поверніться "
+"назад, оновіть сторінку й надішліть знову."
 
 #: templates/404.html:3 templates/404.html:7
 msgid "No record found"
 msgstr "Запис не знайдено"
 
 #: templates/404.html:8
-msgid "We looked, and there is nothing at this address. The link may be mistyped, the page may have moved, or it is not public."
-msgstr "Ми перевірили: за цією адресою нічого немає. Можливо, в посиланні помилка, сторінку перенесли або вона не публічна."
+msgid ""
+"We looked, and there is nothing at this address. The link may be mistyped, "
+"the page may have moved, or it is not public."
+msgstr ""
+"Ми перевірили: за цією адресою нічого немає. Можливо, в посиланні помилка, "
+"сторінку перенесли або вона не публічна."
 
 #: templates/500.html:3 templates/500.html:5
 msgid "Something broke on our side"
 msgstr "У нас щось зламалося"
 
 #: templates/500.html:6
-msgid "It is not your fault, and the error has been logged. Try again in a minute."
+msgid ""
+"It is not your fault, and the error has been logged. Try again in a minute."
 msgstr "Ви тут ні до чого, помилку вже записано. Спробуйте ще раз за хвилину."
 
 #: templates/accounts/_github_form.html:8 templates/socialaccount/login.html:15
@@ -1154,7 +1168,7 @@ msgstr "Останні відкриті скарги"
 msgid "No open reports."
 msgstr "Відкритих скарг немає."
 
-#: templates/base.html:44
+#: templates/base.html:46
 msgid "Skip to content"
 msgstr "Перейти до вмісту"
 
@@ -1180,10 +1194,14 @@ msgstr "Код помилки:"
 
 #: templates/errors/_body.html:22
 #, python-format
-msgid "If it keeps happening, write to <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the reference."
-msgstr "Якщо це повторюється, напишіть на <a href=\"mailto:%(contact_email)s\">%(contact_email)s</a> і вкажіть код помилки."
+msgid ""
+"If it keeps happening, write to <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> and include the reference."
+msgstr ""
+"Якщо це повторюється, напишіть на <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> і вкажіть код помилки."
 
-#: templates/errors/standalone.html:22
+#: templates/errors/standalone.html:24
 msgid "Start page"
 msgstr "Головна сторінка"
 
@@ -1799,14 +1817,14 @@ msgid "Name (Host)"
 msgstr "Ім'я (Host)"
 
 #: templates/projects/_domain.html:24 templates/projects/_domain.html:26
-#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:11
-#: templates/projects/_embed_badge.html:16
+#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:15
+#: templates/projects/_embed_badge.html:20
 msgid "Copied"
 msgstr "Скопійовано"
 
 #: templates/projects/_domain.html:24 templates/projects/_domain.html:26
-#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:11
-#: templates/projects/_embed_badge.html:16
+#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:15
+#: templates/projects/_embed_badge.html:20
 msgid "Copy"
 msgstr "Копіювати"
 
@@ -1964,9 +1982,22 @@ msgstr ""
 "Вставте його в README або на сайт. Він показує позначки, які у вас є зараз, "
 "і оновлюється протягом години."
 
-#: templates/projects/_embed_badge.html:9
+#: templates/projects/_embed_badge.html:8
+#: templates/projects/_embed_badge.html:13
 msgid "Markdown"
 msgstr "Markdown"
+
+#: templates/projects/_embed_badge.html:8
+msgid "for a GitHub README: open README.md, paste it at the top, commit."
+msgstr ""
+"для README на GitHub: відкрийте README.md, вставте на початку й зробіть "
+"коміт."
+
+#: templates/projects/_embed_badge.html:9
+msgid ""
+"for a website: paste it where the badge should appear, for example in the "
+"footer."
+msgstr "для сайту: вставте там, де має бути бейдж, наприклад у футері."
 
 #: templates/projects/_hallmark_info.html:5
 msgid "What this means"
@@ -2518,41 +2549,3 @@ msgstr "Цей репозиторій приватний. Перевіряти �
 #: verification/repo.py:208 verification/repo.py:284
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."
-
-#~ msgid "Bad request"
-#~ msgstr "Некоректний запит"
-
-#~ msgid "The request could not be understood. Go back and try again."
-#~ msgstr "Запит не вдалося зрозуміти. Поверніться назад і спробуйте ще раз."
-
-#~ msgid "No access"
-#~ msgstr "Немає доступу"
-
-#~ msgid "Form not accepted"
-#~ msgstr "Форму не прийнято"
-
-#~ msgid "Page not found"
-#~ msgstr "Сторінку не знайдено"
-
-#~ msgid ""
-#~ "This page does not exist, or you are not allowed to see it. Check the "
-#~ "address, or start again from the front page."
-#~ msgstr ""
-#~ "Цієї сторінки не існує, або вам не дозволено її бачити. Перевірте адресу "
-#~ "або почніть знову з головної сторінки."
-
-#~ msgid "Something went wrong"
-#~ msgstr "Щось пішло не так"
-
-#~ msgid ""
-#~ "Something broke on our side. Nothing you did caused it. Try again in a "
-#~ "few minutes."
-#~ msgstr ""
-#~ "Щось зламалося з нашого боку, і це не через ваші дії. Спробуйте ще раз за "
-#~ "кілька хвилин."
-
-msgid "for a GitHub README: open README.md, paste it at the top, commit."
-msgstr "для README на GitHub: відкрийте README.md, вставте на початку й зробіть коміт."
-
-msgid "for a website: paste it where the badge should appear, for example in the footer."
-msgstr "для сайту: вставте там, де має бути бейдж, наприклад у футері."

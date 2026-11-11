@@ -39,6 +39,8 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 **IP-Adressen und Logs.** Die Anwendung speichert deine IP-Adresse nicht, und ihre eigenen Logs enthalten sie nicht. Zu jeder Seitenanfrage halten die Logs nur die Methode, die Seitenadresse (ohne alles nach einem `?`), den Antwortstatus, die Größe und die Antwortzeit fest, dazu Fehler. Angaben zu deinem Browser sind nicht darin. Seitenadressen enthalten Benutzernamen (`/u/<username>/`); eine Logzeile kann also zeigen, welches Profil geöffnet wurde, aber nicht von wem.
 
+**Fehlerprotokoll.** Wenn etwas schiefgeht, schreibt die Anwendung einen kurzen Eintrag in eine Fehlerdatei auf unserem Server: Zeitpunkt, eine zufällige Referenznummer (die auf der Fehlerseite angezeigt wird), die Anfragemethode, die Seitenadresse ohne alles nach einem `?` und mit Benutzernamen ersetzt durch `[user]`, den Antwortstatus, den Teil des Codes, der fehlgeschlagen ist, und die technische Fehlermeldung, aus der E-Mail-Adressen, IP-Adressen und alles, was wie ein Passwort oder Schlüssel aussieht, entfernt sind. Nicht gefundene Seiten kommen in eine eigene Datei, jede Adresse höchstens einmal pro Minute. Diese Dateien enthalten nie deine IP-Adresse, Browserdaten, Cookies, Formulareingaben, deine E-Mail-Adresse oder deinen Benutzernamen. Jede Datei ist auf 5 MB plus 5 ältere Kopien begrenzt; ist die Grenze erreicht, wird die älteste gelöscht.
+
 > **TODO vor dem Start:** Der Webserver vor der Anwendung führt ein eigenes Zugriffslog, das standardmäßig IP-Adressen enthält. Was er aufzeichnet und wie lange er es aufbewahrt (und wie lange die Logs der Anwendung aufbewahrt werden), ist noch nicht entschieden. Das muss ergänzt oder die IP-Protokollierung abgeschaltet werden, bevor diese Seite öffentlich wird.
 
 **Schutz vor Missbrauch.** Um Missbrauch zu begrenzen, zählen wir einige Aktionen (zum Beispiel Likes pro Stunde) in der Datenbank der Seite. Jeder Zähler ist eine Zahl, die an dein Konto oder an ein Projekt gebunden ist, ohne IP-Adresse, und gilt höchstens 24 Stunden. Danach wird er nicht mehr verwendet, die Zeile kann aber in der Datenbank bleiben, bis sie bereinigt wird.
@@ -56,6 +58,7 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 - Audit-Log: bleibt erhalten. Einträge zu einem gelöschten Konto enthalten weder Benutzername noch E-Mail-Adresse.
 - Zähler zum Schutz vor Missbrauch: höchstens 24 Stunden.
 - Backups: 14 Tage. Ein gelöschtes Konto verschwindet innerhalb von 14 Tagen daraus.
+- Fehlerprotokoll-Dateien: bis sie voll sind (5 MB plus 5 ältere Kopien zu je 5 MB), dann werden die ältesten Einträge gelöscht.
 - Logs von Webserver und Anwendung: **TODO**, noch nicht entschieden.
 
 ## Wer sonst Daten erhält {#recipients}

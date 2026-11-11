@@ -39,6 +39,8 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 **Adresy IP i dzienniki.** Aplikacja nie zapisuje Twojego adresu IP, a jej własne dzienniki go nie zawierają. Przy każdym żądaniu strony dzienniki zapisują tylko metodę, adres strony (bez tego, co następuje po `?`), status odpowiedzi, rozmiar i czas obsługi oraz błędy. Nie ma w nich danych o Twojej przeglądarce. Adresy stron zawierają nazwy użytkowników (`/u/<username>/`), więc wiersz dziennika może pokazać, który profil otwarto, ale nie kto to zrobił.
 
+**Dziennik błędów.** Gdy coś się psuje, aplikacja zapisuje krótki wpis w pliku błędów na naszym serwerze: czas, losowy numer referencyjny (ten widoczny na stronie błędu), metodę żądania, adres strony bez części po `?` i z nazwami użytkowników zastąpionymi przez `[user]`, status odpowiedzi, część kodu, w której wystąpił błąd, oraz techniczny komunikat, z którego usunięto adresy e-mail, adresy IP i wszystko, co wygląda na hasło lub klucz. Nieznalezione strony trafiają do osobnego pliku, każdy adres najwyżej raz na minutę. Te pliki nigdy nie zawierają Twojego adresu IP, danych przeglądarki, plików cookie, tego, co wpisujesz w formularze, Twojego adresu e-mail ani nazwy użytkownika. Każdy plik ma limit 5 MB plus 5 starszych kopii; po osiągnięciu limitu najstarsza jest usuwana.
+
 > **TODO przed uruchomieniem:** serwer WWW przed aplikacją prowadzi własny dziennik dostępu, który domyślnie zawiera adresy IP. Co dokładnie zapisuje i jak długo to przechowuje (oraz jak długo przechowywane są dzienniki aplikacji), nie zostało jeszcze ustalone. Trzeba to uzupełnić albo wyłączyć zapisywanie IP, zanim ta strona stanie się publiczna.
 
 **Ochrona przed nadużyciami.** Aby ograniczać nadużycia, liczymy niektóre działania (na przykład polubienia na godzinę) w bazie danych serwisu. Każdy licznik to liczba przypisana do Twojego konta lub projektu, bez adresu IP, obowiązująca najwyżej 24 godziny. Potem nie jest już używany, ale wiersz może zostać w bazie, dopóki nie zostanie wyczyszczony.
@@ -56,6 +58,7 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 - Dziennik audytu: jest zachowywany. Wpisy o usuniętym koncie nie zawierają nazwy użytkownika ani adresu e-mail.
 - Liczniki ochrony przed nadużyciami: najwyżej 24 godziny.
 - Kopie zapasowe: 14 dni. Usunięte konto znika z nich w ciągu 14 dni.
+- Pliki dziennika błędów: do zapełnienia (5 MB plus 5 starszych kopii po 5 MB), potem najstarsze wpisy są usuwane.
 - Dzienniki serwera WWW i aplikacji: **TODO**, jeszcze nie ustalono.
 
 ## Kto jeszcze otrzymuje dane {#recipients}
