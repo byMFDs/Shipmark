@@ -114,3 +114,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 - 2026-11-12: Trust hardening, stage 1 (audit only, no app code). `docs/TRUST_AUDIT.md`: what each hallmark checks today, attack scenarios a–l run as temporary mocked tests (deleted), ranked bypasses, fix evaluation, honest wording en/uk.
   Main gaps: fork + 10 commits, no repo re-verification, own copy of someone's code, contributor gets "Repo owner", uptime follows redirects to other hosts.
   Next: stage 2 (A–F) after approval.
+
+- 2026-11-12: Trust hardening, stage 2 (branch trust-hardening, commits A–F + token file). Repo owner only for own non-fork repos (or the project's `.shipmark-verify` file); ids instead of names; login refreshed at every sign-in; review states + admin queue + blocks; weekly `reverify_repos`; uptime must answer from the verified domain; shared-host apexes refused; "What was checked" panel; texts in 7 languages; attack tests a–l.
+  Next: run the one-time steps in `docs/DEPLOY_NOTES.md` ("Trust hardening") on a DB copy, then production; add the `reverify_repos` cron line.

@@ -194,6 +194,29 @@ DJANGO_SETTINGS_MODULE=config.settings.prod .venv/bin/python manage.py reverify_
 DJANGO_SETTINGS_MODULE=config.settings.prod .venv/bin/python manage.py reverify_repos -v 2      # lists removed / review
 ```
 
+## Trust hardening: one-time steps after deploying it
+
+The trust-hardening migrations only add fields. Links that earned Repo owner by commit count alone
+(a rule that no longer exists) become "needs re-check": the mark is withheld with a neutral message and
+each one is logged in AuditLog. Nothing is deleted by the migration.
+
+1. Set `GITHUB_API_TOKEN` (see the table above).
+2. Try it on a copy first: restore last night's `pg_dump` into a scratch database and point
+   `DATABASE_URL` at it for the next two commands. Locally: `cp db.sqlite3 /tmp/copy.sqlite3` and
+   `DATABASE_URL=sqlite:////tmp/copy.sqlite3`.
+3. `python manage.py migrate`
+4. `python manage.py backfill_repo_facts --dry-run`, read the output, then without `--dry-run`.
+   It fills owner ids, repository dates, first commits and active weeks. It never removes a mark:
+   review facts -> "needs review", a repository that changed on GitHub -> "needs re-check". A rate limit
+   stops it; run it again, it continues where it stopped.
+5. `python manage.py reverify_repos --all -v 2`: decides every "needs re-check" link with the current
+   rules (removed marks are logged).
+6. Admin -> Verification -> Review queue: approve, revoke or block what is waiting.
+
+When the copy looks right, run steps 3-5 on production (with `DJANGO_SETTINGS_MODULE=config.settings.prod`).
+To re-check everything later (for example after changing a threshold in `config/settings/base.py`):
+`python manage.py reverify_repos --all`.
+
 ## Backups
 
 Two things hold data: the **database** and the **media folder** (screenshots). Back up both, daily, and keep a copy
