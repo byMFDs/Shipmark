@@ -19,14 +19,13 @@ from config.ratelimit import is_limited
 from verification import domain as domains
 from verification.models import DomainVerification
 from social.queries import like_state
-from verification.repo import AUTHORED, TOO_FEW, RepoCheckError, run_check
+from verification.repo import AUTHORED, FORK, RepoCheckError, run_check
 from verification.uptime import uptime_summary, with_uptime
 
 from .forms import BuildLogForm, ProjectForm
 from .badges import embed_snippets
 from .images import clean_screenshot
 from .models import LOG_ENTRIES_PER_DAY, MAX_SCREENSHOTS, BuildLogEntry, Project, Screenshot
-from .proof import MIN_AUTHORED_COMMITS
 from .rendering import MAX_LENGTH, render_user_markdown
 
 LOG_SHOWN = 50  # entries on the project page
@@ -129,14 +128,14 @@ def repo_check(request, project):
         except RepoCheckError as exc:
             messages.error(request, exc.message)
         else:
-            count = result.facts.commit_count
-            if result.outcome == AUTHORED:
+            if result.outcome == AUTHORED and result.link.is_verified:
                 messages.success(request, _("Repository checked. Repo owner earned."))
-            elif result.outcome == TOO_FEW:
-                messages.error(request, _("You have %(count)s commits in this repository. At least %(min)s are needed.")
-                               % {"count": count, "min": MIN_AUTHORED_COMMITS})
+            elif result.outcome == AUTHORED:
+                messages.success(request, _("Repository checked. Repo owner will appear after a short manual review."))
+            elif result.outcome == FORK:
+                messages.error(request, _("This repository is a fork. Forks cannot earn Repo owner; link the original repository."))
             else:
-                messages.error(request, _("This repository belongs to another account and has no commits from yours."))
+                messages.error(request, _("This repository is not owned by your personal GitHub account."))
     return back
 
 

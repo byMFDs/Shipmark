@@ -92,6 +92,8 @@
 
 /* A repository name can be 140 characters: let the button wrap instead of widening the page. */
 .project__links li { min-width: 0; max-width: 100%; }
+/* Under a repository button that has no Repo owner mark: the link is the author's claim, not a checked fact. */
+.project__link-note { display: block; margin-top: var(--s-1); }
 
 .project__links .with-icon {
   max-width: 100%;

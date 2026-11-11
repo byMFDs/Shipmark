@@ -17,30 +17,48 @@ from projects.proof import compute_hallmarks
 from projects.tests import make_project, make_user
 
 from .models import RepoLink
-from .repo import AUTHORED, NOT_YOURS, TOO_FEW, RepoCheckError, run_check
+from .repo import AUTHORED, FORK, NOT_YOURS, RepoCheckError, run_check
 
 User = get_user_model()
 REAL_CLIENT = httpx.Client
 ME = 1001  # the signed-in user's GitHub id in these tests
 
 
-def repo_json(owner_id=ME, owner_type="User", private=False, fork=False, name="me/tool", repo_id=77):
+def repo_json(owner_id=ME, owner_type="User", private=False, fork=False, name="me/tool", repo_id=77, created_at=None):
     login = name.split("/")[0]
-    return {"id": repo_id, "full_name": name, "private": private, "fork": fork,
+    return {"id": repo_id, "full_name": name, "private": private, "fork": fork, "created_at": created_at,
             "owner": {"id": owner_id, "login": login, "type": owner_type}}
 
 
-def mock_github(repo=None, repo_status=200, contributors=None, commits=None, last_page=None, extra=None):
-    """Patch httpx.Client so GitHub is answered from memory. Returns the list of requested paths."""
+def commit(date, sha=""):
+    return {"sha": sha, "commit": {"author": {"date": date}}}
+
+
+def stats_entry(user_id=ME, weeks=(), user_type="User"):
+    """GitHub /stats/contributors entry. weeks: (commits, additions, deletions) per week."""
+    return {"author": {"id": user_id, "type": user_type}, "total": sum(c for c, _a, _d in weeks),
+            "weeks": [{"w": 1700000000 + i * 604800, "c": c, "a": a, "d": d} for i, (c, a, d) in enumerate(weeks)]}
+
+
+def mock_github(repo=None, repo_status=200, contributors=None, commits=None, last_page=None, extra=None,
+                root=None, stats=None):
+    """Patch httpx.Client so GitHub is answered from memory. Returns the list of requested paths.
+
+    root: the commit list for the whole branch (no author filter); stats: /stats/contributors body, or 202.
+    """
     seen = []
     contributors = contributors if contributors is not None else []
-    commits = commits or [{"commit": {"author": {"date": "2024-05-01T10:00:00Z"}}}]
+    commits = commits or [commit("2024-05-01T10:00:00Z")]
 
     def handler(request):
         path, params = request.url.path, dict(request.url.params)
         seen.append(path + ("?" + str(request.url.query, "ascii") if request.url.query else ""))
         if extra and path in extra:
             return extra[path](request)
+        if path.endswith("/stats/contributors"):
+            return httpx.Response(202, json={}) if stats == 202 else httpx.Response(200, json=stats or [])
+        if path.endswith("/commits") and "author" not in params and root is not None:
+            return httpx.Response(200, json=root)
         if path.endswith("/contributors"):
             page = int(params.get("page", 1))
             return httpx.Response(200, json=contributors[page - 1] if page <= len(contributors) else [])
@@ -48,7 +66,7 @@ def mock_github(repo=None, repo_status=200, contributors=None, commits=None, las
             headers = {}
             if last_page and params.get("page") is None:
                 headers["Link"] = f'<https://api.github.com/x/commits?author=a&per_page=1&page={last_page}>; rel="last"'
-            body = commits if params.get("page") is None else [{"commit": {"author": {"date": "2023-01-02T00:00:00Z"}}}]
+            body = commits if params.get("page") is None else [commit("2023-01-02T00:00:00Z")]
             return httpx.Response(200, json=body, headers=headers)
         return httpx.Response(repo_status, json=repo if repo is not None else repo_json())
 
@@ -76,12 +94,14 @@ class RepoCheckTestCase(TestCase):
 
 
 class AuthorshipRuleTests(RepoCheckTestCase):
-    def test_owner_is_authored_without_commits(self):
-        result = self.check(contributors=[[]])
+    def test_owner_is_authored(self):
+        result = self.check(contributors=[[person()]])
         self.assertEqual(result.outcome, AUTHORED)
         link = RepoLink.objects.get(project=self.project)
         self.assertTrue(link.is_owner)
+        self.assertTrue(link.is_verified)
         self.assertTrue(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
+        self.assertTrue(AuditLog.objects.filter(action="hallmark.authored.earned").exists())
 
     def test_owner_gets_commit_count_and_dates(self):
         result = self.check(contributors=[[person(commits=25)]], last_page=25)
@@ -91,35 +111,33 @@ class AuthorshipRuleTests(RepoCheckTestCase):
         self.assertEqual(link.last_commit_at.year, 2024)
         self.assertEqual(link.first_commit_at.year, 2023)
 
-    def test_contributor_with_ten_commits_is_authored(self):
+    def test_commits_in_someone_elses_repo_are_not_enough(self):
         self.project.repo_full_name = "acme/lib"
         result = self.check(repo=repo_json(owner_id=5, owner_type="Organization", name="acme/lib"),
-                            contributors=[[person(user_id=5, commits=900, login="boss"), person(commits=10)]])
-        self.assertEqual(result.outcome, AUTHORED)
-        link = RepoLink.objects.get(project=self.project)
-        self.assertFalse(link.is_owner)
-        self.assertEqual(link.user_commit_count, 10)
-
-    def test_nine_commits_is_not_authored_and_not_stored(self):
-        result = self.check(repo=repo_json(owner_id=5, name="acme/lib"), contributors=[[person(commits=9)]])
-        self.assertEqual(result.outcome, TOO_FEW)
-        self.assertEqual(result.facts.commit_count, 9)
+                            contributors=[[person(user_id=5, commits=900, login="boss"), person(commits=500)]])
+        self.assertEqual(result.outcome, NOT_YOURS)
         self.assertFalse(RepoLink.objects.exists())
         self.assertFalse(compute_hallmarks(self.project)["authored"].earned)
+
+    def test_organisation_repo_is_not_owned_by_a_person(self):
+        result = self.check(repo=repo_json(owner_id=ME, owner_type="Organization"), contributors=[[person()]])
+        self.assertEqual(result.outcome, NOT_YOURS)
 
     def test_someone_elses_repo_with_no_commits(self):
         result = self.check(repo=repo_json(owner_id=5, name="acme/lib"), contributors=[[person(user_id=5)]])
         self.assertEqual(result.outcome, NOT_YOURS)
         self.assertFalse(RepoLink.objects.exists())
 
-    def test_fork_does_not_count_as_owned(self):
-        result = self.check(repo=repo_json(fork=True), contributors=[[person(user_id=5)]])
-        self.assertEqual(result.outcome, NOT_YOURS)
+    def test_fork_is_refused_even_with_own_commits(self):
+        result = self.check(repo=repo_json(fork=True), contributors=[[person(user_id=5), person(commits=50)]])
+        self.assertEqual(result.outcome, FORK)
+        self.assertFalse(RepoLink.objects.exists())
 
     def test_user_found_on_second_contributors_page(self):
-        first_page = [person(user_id=1000 + i, commits=50) for i in range(100)]
-        result = self.check(repo=repo_json(owner_id=5), contributors=[first_page, [person(commits=12)]])
+        first_page = [person(user_id=2000 + i, commits=50) for i in range(100)]
+        result = self.check(contributors=[first_page, [person(commits=12)]])
         self.assertEqual(result.outcome, AUTHORED)
+        self.assertEqual(result.facts.commit_count, 12)
 
     def test_failed_recheck_removes_the_old_link(self):
         self.check(contributors=[[person(commits=3)]])
@@ -178,7 +196,7 @@ class ErrorTests(RepoCheckTestCase):
         other = make_project(other_user, name="Other")
         RepoLink.objects.create(project=other, repo_full_name="Me/Tool", github_repo_id=77, is_owner=True,
                                 checked_at=timezone.now())
-        error = self.assertCode("taken", contributors=[[]])
+        error = self.assertCode("taken", contributors=[[person()]])
         self.assertIn("another project", error.message)
         self.assertFalse(RepoLink.objects.filter(project=self.project).exists())
 
@@ -186,11 +204,11 @@ class ErrorTests(RepoCheckTestCase):
         other = make_project(make_user("other"), name="Other")
         RepoLink.objects.create(project=other, repo_full_name="me/old-name", github_repo_id=77, is_owner=True,
                                 checked_at=timezone.now())
-        self.assertCode("taken", contributors=[[]])  # same GitHub id, new name
+        self.assertCode("taken", contributors=[[person()]])  # same GitHub id, new name
 
     def test_rechecking_own_repo_is_fine(self):
-        self.check(contributors=[[]])
-        self.assertEqual(self.check(contributors=[[]]).outcome, AUTHORED)
+        self.check(contributors=[[person()]])
+        self.assertEqual(self.check(contributors=[[person()]]).outcome, AUTHORED)
 
 
 class RepoCheckViewTests(RepoCheckTestCase):
@@ -205,17 +223,25 @@ class RepoCheckViewTests(RepoCheckTestCase):
             return self.client.post(self.url, follow=True)
 
     def test_success_message_and_hallmark(self):
-        response = self.post(contributors=[[]])
+        response = self.post(contributors=[[person()]])
         self.assertContains(response, "Repo owner earned")
         self.assertTrue(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
 
-    def test_too_few_commits_message(self):
-        response = self.post(repo=repo_json(owner_id=5), contributors=[[person(commits=9)]])
-        self.assertContains(response, "You have 9 commits")
+    def test_not_owner_message(self):
+        response = self.post(repo=repo_json(owner_id=5), contributors=[[person(commits=90)]])
+        self.assertContains(response, "not owned by your personal GitHub account")
+
+    def test_fork_message(self):
+        self.assertContains(self.post(repo=repo_json(fork=True)), "Forks cannot earn Repo owner")
+
+    def test_review_message_is_neutral(self):
+        response = self.post(contributors=[[]])  # no commits by the owner
+        self.assertContains(response, "after a short manual review")
+        self.assertFalse(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
 
     def test_limited_to_one_per_ten_minutes(self):
-        self.post(contributors=[[]])
-        patcher, seen = mock_github(contributors=[[]])
+        self.post(contributors=[[person()]])
+        patcher, seen = mock_github(contributors=[[person()]])
         with patcher:
             response = self.client.post(self.url, follow=True)
         self.assertEqual(seen, [])  # GitHub was not called
@@ -225,7 +251,7 @@ class RepoCheckViewTests(RepoCheckTestCase):
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="")
         self.assertContains(self.client.post(self.url, follow=True), "Add a GitHub repository")
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="me/tool")
-        self.assertContains(self.post(contributors=[[]]), "Repo owner earned")
+        self.assertContains(self.post(contributors=[[person()]]), "Repo owner earned")
 
     def test_user_without_github_account(self):
         SocialAccount.objects.all().delete()
@@ -248,7 +274,7 @@ class RepoCheckViewTests(RepoCheckTestCase):
 
 class StaleLinkTests(RepoCheckTestCase):
     def test_changing_the_repo_name_removes_the_hallmark(self):
-        self.check(contributors=[[]])
+        self.check(contributors=[[person()]])
         project = Project.objects.get(pk=self.project.pk)
         data = {"name": project.name, "tagline": project.tagline, "description": "", "live_url": "",
                 "repo_full_name": "me/other-tool", "tags_text": ""}
@@ -259,12 +285,12 @@ class StaleLinkTests(RepoCheckTestCase):
         self.assertFalse(compute_hallmarks(Project.objects.get(pk=project.pk))["authored"].earned)
 
     def test_link_for_a_different_name_does_not_count(self):
-        self.check(contributors=[[]])
+        self.check(contributors=[[person()]])
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="someone/else")
         self.assertFalse(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
 
     def test_name_match_ignores_case(self):
-        self.check(contributors=[[]])
+        self.check(contributors=[[person()]])
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="ME/Tool")
         self.assertTrue(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
 
@@ -301,7 +327,7 @@ class RepoIdentityTests(RepoCheckTestCase):
     def test_repo_transferred_away_removes_the_mark_and_logs(self):
         self.check(contributors=[[person(commits=3)]])
         result = self.check(repo=repo_json(owner_id=5), contributors=[[person(commits=3)]])
-        self.assertEqual(result.outcome, TOO_FEW)
+        self.assertEqual(result.outcome, NOT_YOURS)
         self.assertFalse(RepoLink.objects.exists())
         reasons = [e.metadata["reason"] for e in AuditLog.objects.filter(action="hallmark.authored.removed")]
         self.assertEqual(reasons, ["transferred"])
@@ -325,39 +351,161 @@ class RepoIdentityTests(RepoCheckTestCase):
 
 
 class BackfillRepoFactsTests(RepoCheckTestCase):
-    def run_command(self, **mock_args):
+    def run_command(self, *args, **mock_args):
         out = StringIO()
         patcher, seen = mock_github(**mock_args)
         with patcher:
-            call_command("backfill_repo_facts", stdout=out)
+            call_command("backfill_repo_facts", *args, stdout=out)
         return out.getvalue(), seen
 
-    def old_link(self, is_owner=True):
+    def old_link(self, is_owner=True, **extra):
         return RepoLink.objects.create(project=self.project, repo_full_name="me/tool", github_repo_id=77,
-                                       is_owner=is_owner, checked_at=timezone.now())
+                                       is_owner=is_owner, checked_at=timezone.now(), **extra)
 
-    def test_fills_owner_id_by_repo_id(self):
+    def earned(self):
+        return compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned
+
+    def test_fills_facts_and_keeps_the_mark(self):
         link = self.old_link()
-        output, seen = self.run_command(extra={"/repositories/77": lambda r: httpx.Response(200, json=repo_json())})
+        output, _seen = self.run_command(repo=repo_json(created_at="2024-04-01T00:00:00Z"), contributors=[[person()]],
+                                         root=[commit("2024-04-02T00:00:00Z", "a" * 40)],
+                                         stats=[stats_entry(weeks=[(2, 10, 1), (1, 3, 0)])])
         link.refresh_from_db()
         self.assertEqual(link.github_owner_id, ME)
+        self.assertEqual(link.root_commit_sha, "a" * 40)
+        self.assertEqual(link.active_weeks, 2)
+        self.assertEqual(link.repo_created_at.year, 2024)
         self.assertIn("Filled 1", output)
-        self.assertEqual(seen, ["/repositories/77"])
+        self.assertTrue(self.earned())
+        self.assertIn("Filled 0", self.run_command()[0])  # done links are skipped
 
-    def test_owner_changed_is_left_alone_and_nothing_removed(self):
+    def test_review_facts_set_needs_review_and_log(self):
+        self.old_link()
+        output, _seen = self.run_command(repo=repo_json(created_at="2025-01-01T00:00:00Z"), contributors=[[person()]],
+                                         root=[commit("2019-01-01T00:00:00Z", "b" * 40)])
+        link = RepoLink.objects.get()
+        self.assertEqual(link.review_state, RepoLink.Review.NEEDS_REVIEW)
+        self.assertEqual(link.review_reasons, ["imported_history"])
+        self.assertIn("needs review 1", output)
+        self.assertTrue(AuditLog.objects.filter(action="hallmark.authored.needs_review").exists())
+        self.assertFalse(self.earned())
+
+    def test_changed_repo_needs_recheck_and_is_not_deleted(self):
+        self.old_link()
+        output, _seen = self.run_command(repo=repo_json(owner_id=5), contributors=[[person()]])
+        link = RepoLink.objects.get()
+        self.assertEqual(link.review_state, RepoLink.Review.NEEDS_RECHECK)
+        self.assertIn("not_owner", output)
+        self.assertEqual(AuditLog.objects.get(action="hallmark.authored.needs_recheck").metadata["reason"], "not_owner")
+
+    def test_gone_repo_needs_recheck(self):
+        self.old_link()
+        self.run_command(repo_status=404, repo={"message": "Not Found"})
+        self.assertEqual(RepoLink.objects.get().review_state, RepoLink.Review.NEEDS_RECHECK)
+
+    def test_rename_is_followed(self):
+        self.old_link()
+        self.run_command(repo=repo_json(name="me/renamed"), contributors=[[person()]])
+        self.project.refresh_from_db()
+        self.assertEqual(self.project.repo_full_name, "me/renamed")
+        self.assertTrue(self.earned())
+
+    def test_rate_limit_and_errors_change_nothing(self):
         link = self.old_link()
-        output, _seen = self.run_command(extra={"/repositories/77": lambda r: httpx.Response(200, json=repo_json(owner_id=5))})
+        limited = {"/repos/me/tool": lambda r: httpx.Response(
+            403, json={"message": "API rate limit exceeded"}, headers={"x-ratelimit-remaining": "0"})}
+        self.assertIn("Rate limited", self.run_command(extra=limited)[0])
+        self.run_command(extra={"/repos/me/tool": lambda r: httpx.Response(502)})
         link.refresh_from_db()
         self.assertIsNone(link.github_owner_id)
-        self.assertIn("owner changed", output)
-        self.assertTrue(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
+        self.assertEqual(link.review_state, "")
+        self.assertTrue(self.earned())
 
-    def test_gone_and_rate_limit_change_nothing(self):
+    def test_dry_run_writes_nothing(self):
         link = self.old_link()
-        self.run_command(extra={"/repositories/77": lambda r: httpx.Response(404, json={})})
-        output, _seen = self.run_command(extra={"/repositories/77": lambda r: httpx.Response(
-            403, json={"message": "API rate limit exceeded"}, headers={"x-ratelimit-remaining": "0"})})
-        self.assertIn("Rate limited", output)
+        self.run_command("--dry-run", repo=repo_json(owner_id=5), contributors=[[person()]])
         link.refresh_from_db()
+        self.assertEqual(link.review_state, "")
         self.assertIsNone(link.github_owner_id)
-        self.assertTrue(RepoLink.objects.filter(pk=link.pk).exists())
+
+
+class ReviewRuleTests(RepoCheckTestCase):
+    """Facts that send a link to a manual review instead of earning Repo owner at once."""
+
+    def test_no_commits_by_the_owner(self):
+        result = self.check(contributors=[[person(user_id=5, commits=40)]])
+        self.assertEqual(result.facts.review_reasons, ["no_owner_commits"])
+        self.assertEqual(RepoLink.objects.get().review_state, RepoLink.Review.NEEDS_REVIEW)
+        mark = compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"]
+        self.assertFalse(mark.earned)
+        self.assertIn("routine manual review", mark.reason)
+
+    def test_imported_history(self):
+        self.check(repo=repo_json(created_at="2025-06-01T00:00:00Z"), contributors=[[person()]],
+                   root=[commit("2024-01-01T00:00:00Z")])
+        self.assertEqual(RepoLink.objects.get().review_reasons, ["imported_history"])
+
+    def test_history_a_few_weeks_older_than_the_repo_is_normal(self):
+        self.check(repo=repo_json(created_at="2025-06-01T00:00:00Z"), contributors=[[person()]],
+                   root=[commit("2025-04-15T00:00:00Z")])
+        link = RepoLink.objects.get()
+        self.assertEqual(link.review_reasons, [])
+        self.assertTrue(link.is_verified)
+
+    def test_duplicate_history(self):
+        other = make_project(make_user("other"), name="Other")
+        RepoLink.objects.create(project=other, repo_full_name="other/copy", github_repo_id=5, is_owner=True,
+                                root_commit_sha="c" * 40, checked_at=timezone.now())
+        self.check(contributors=[[person()]], root=[commit("2024-05-01T00:00:00Z", "c" * 40)])
+        self.assertEqual(RepoLink.objects.get(project=self.project).review_reasons, ["duplicate_history"])
+
+    def test_approval_survives_the_same_reasons_but_not_new_ones(self):
+        self.check(contributors=[[]])
+        RepoLink.objects.update(review_state=RepoLink.Review.APPROVED)
+        self.check(contributors=[[]])
+        self.assertEqual(RepoLink.objects.get().review_state, RepoLink.Review.APPROVED)
+        self.check(repo=repo_json(created_at="2025-06-01T00:00:00Z"), contributors=[[]],
+                   root=[commit("2020-01-01T00:00:00Z")])
+        self.assertEqual(RepoLink.objects.get().review_state, RepoLink.Review.NEEDS_REVIEW)
+
+    def test_reasons_gone_clears_the_review(self):
+        self.check(contributors=[[]])
+        self.check(contributors=[[person()]])
+        link = RepoLink.objects.get()
+        self.assertTrue(link.is_verified)
+        self.assertTrue(AuditLog.objects.filter(action="hallmark.authored.earned").exists())
+
+    def test_recheck_state_is_resolved_by_a_full_check(self):
+        RepoLink.objects.create(project=self.project, repo_full_name="me/tool", github_repo_id=77, is_owner=False,
+                                user_commit_count=12, review_state=RepoLink.Review.NEEDS_RECHECK, checked_at=timezone.now())
+        self.assertIn("checked again", compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].reason)
+        self.check(contributors=[[person()]])
+        self.assertTrue(RepoLink.objects.get().is_verified)
+
+
+class ActivityFactTests(RepoCheckTestCase):
+    def weeks(self, stats):
+        return self.check(contributors=[[person()]], stats=stats).facts.active_weeks
+
+    def test_counts_weeks_with_changed_lines_only(self):
+        self.assertEqual(self.weeks([stats_entry(weeks=[(3, 40, 2), (1, 0, 0), (0, 0, 0), (2, 1, 1)])]), 2)
+
+    def test_bots_and_other_people_do_not_count(self):
+        stats = [stats_entry(user_id=5, weeks=[(9, 9, 9)] * 5), stats_entry(user_id=ME, user_type="Bot", weeks=[(1, 1, 1)])]
+        self.assertEqual(self.weeks(stats), 0)
+
+    def test_still_computing_is_pending_and_keeps_the_last_number(self):
+        self.weeks([stats_entry(weeks=[(1, 5, 0)] * 3)])
+        self.assertIsNone(self.weeks(202))
+        self.assertEqual(RepoLink.objects.get().active_weeks, 3)  # pending never wipes a known fact
+        self.assertTrue(RepoLink.objects.get().is_verified)  # and never blocks the mark
+
+    def test_huge_repository_without_line_counts(self):
+        self.assertEqual(self.weeks([stats_entry(weeks=[(5, 0, 0), (2, 0, 0)])]), 2)
+
+    def test_empty_repository(self):
+        empty = {"/repos/me/tool/commits": lambda r: httpx.Response(409, json={"message": "Git Repository is empty."})}
+        result = self.check(extra=empty, contributors=[[]])
+        self.assertEqual(result.outcome, AUTHORED)
+        self.assertEqual(result.facts.root_commit_sha, "")
+        self.assertEqual(RepoLink.objects.get().review_reasons, ["no_owner_commits"])

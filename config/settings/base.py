@@ -150,6 +150,13 @@ GITHUB_OAUTH_CONFIGURED = bool(GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET)
 # limit from 60/hour per server IP to 5000/hour. We do not store users' own tokens.
 GITHUB_API_TOKEN = env.str("GITHUB_API_TOKEN", default="")
 
+# ---------- Proof rules (verification/) ----------
+# Repo owner: when the oldest commit is this many days older than the repository on GitHub, the
+# history was most likely made elsewhere and pushed (an import, or a copy). It is not refused, it
+# waits for a manual review. Working locally for a while before the first push is common, hence
+# the wide margin. Commit dates are written by the author, so this only catches careless copies.
+TRUST_IMPORTED_HISTORY_DAYS = 90
+
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
         # Only these two scopes. Never "repo" (CLAUDE.md section 6).

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 18:32+0000\n"
+"POT-Creation-Date: 2026-11-11 22:47+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Profile"
 msgstr "Профіль"
 
-#: accounts/admin.py:42 config/settings/base.py:278
+#: accounts/admin.py:42 config/settings/base.py:285
 msgid "Moderation"
 msgstr "Модерація"
 
@@ -118,12 +118,12 @@ msgstr "Це імʼя зарезервоване. Оберіть інше."
 msgid "You are signed out."
 msgstr "Ви вийшли з акаунта."
 
-#: accounts/views.py:63 moderation/views.py:30 projects/views.py:39
+#: accounts/views.py:63 moderation/views.py:30 projects/views.py:38
 #: social/views.py:65
 msgid "Your account is suspended."
 msgstr "Ваш акаунт призупинено."
 
-#: accounts/views.py:66 projects/views.py:34 social/views.py:67
+#: accounts/views.py:66 projects/views.py:33 social/views.py:67
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Забагато змін за короткий час. Спробуйте за кілька хвилин."
 
@@ -151,64 +151,64 @@ msgstr "Ваш акаунт і все, що в ньому було, видале
 msgid "Proof, not promises."
 msgstr "Докази, а не обіцянки."
 
-#: config/settings/base.py:219
+#: config/settings/base.py:226
 msgid "Admin"
 msgstr "Адмінка"
 
-#: config/settings/base.py:255 config/settings/base.py:257
+#: config/settings/base.py:262 config/settings/base.py:264
 #: moderation/dashboard.py:44
 msgid "Users"
 msgstr "Користувачі"
 
-#: config/settings/base.py:261 config/settings/base.py:263
+#: config/settings/base.py:268 config/settings/base.py:270
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:264 templates/pages/landing.html:264
+#: config/settings/base.py:271 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
-#: config/settings/base.py:265 projects/forms.py:26
+#: config/settings/base.py:272 projects/forms.py:26
 #: templates/projects/detail.html:147
 msgid "Tags"
 msgstr "Теги"
 
-#: config/settings/base.py:266
+#: config/settings/base.py:273
 msgid "Tools"
 msgstr "Інструменти"
 
-#: config/settings/base.py:270
+#: config/settings/base.py:277
 msgid "Verification"
 msgstr "Підтвердження"
 
-#: config/settings/base.py:272
+#: config/settings/base.py:279
 msgid "Repositories"
 msgstr "Репозиторії"
 
-#: config/settings/base.py:273
+#: config/settings/base.py:280
 msgid "Domains"
 msgstr "Домени"
 
-#: config/settings/base.py:274
+#: config/settings/base.py:281
 msgid "Uptime checks"
 msgstr "Перевірки доступності"
 
-#: config/settings/base.py:280
+#: config/settings/base.py:287
 msgid "Reports"
 msgstr "Скарги"
 
-#: config/settings/base.py:282
+#: config/settings/base.py:289
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:283 projects/admin.py:44
+#: config/settings/base.py:290 projects/admin.py:44
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:287 config/settings/base.py:289
+#: config/settings/base.py:294 config/settings/base.py:296
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
@@ -488,7 +488,7 @@ msgstr "Зазначає сам автор: ми цього не перевір�
 msgid "Enter a public web address, like https://example.com."
 msgstr "Вкажіть публічну веб-адресу, наприклад https://example.com."
 
-#: projects/forms.py:79 verification/repo.py:187
+#: projects/forms.py:79 verification/repo.py:265
 msgid "Use the form owner/name, for example octocat/hello-world."
 msgstr "Використайте вигляд власник/назва, наприклад octocat/hello-world."
 
@@ -571,15 +571,13 @@ msgstr "Оновлення"
 msgid "Launched"
 msgstr "Запуск"
 
-#: projects/proof.py:28
+#: projects/proof.py:27
 msgid ""
-"The linked public GitHub repository is owned by the author's GitHub account, "
-"or has at least 10 commits from it."
-msgstr ""
-"Прив'язаний публічний репозиторій на GitHub належить акаунту автора на "
-"GitHub або має щонайменше 10 комітів від нього."
+"The linked public GitHub repository is owned by the author's personal GitHub "
+"account and is not a fork."
+msgstr "Прив'язаний публічний репозиторій на GitHub належить особистому акаунту автора на GitHub і не є форком."
 
-#: projects/proof.py:32
+#: projects/proof.py:30
 msgid ""
 "The author proved control of the project's domain with a DNS record or a "
 "meta tag. It is checked again every 30 days and must be confirmed within 35."
@@ -588,7 +586,7 @@ msgstr ""
 "Повторна перевірка — кожні 30 днів, підтвердження має бути не давніше 35 "
 "днів."
 
-#: projects/proof.py:37
+#: projects/proof.py:35
 #, no-python-format
 msgid ""
 "Live, and at least 95% of uptime checks succeeded over the last 30 days, "
@@ -597,60 +595,59 @@ msgstr ""
 "Є позначка «Працює», і щонайменше 95% перевірок доступності за останні 30 "
 "днів успішні, за щонайменше 40 перевірок."
 
-#: projects/proof.py:78
+#: projects/proof.py:76
 msgid "No repository linked."
 msgstr "Репозиторій не прив'язано."
 
-#: projects/proof.py:82 projects/proof.py:92
+#: projects/proof.py:80 projects/proof.py:88
 msgid "The repository check has not passed yet."
 msgstr "Перевірку репозиторію ще не пройдено."
 
+#: projects/proof.py:82
+msgid "The repository is waiting for a routine manual review."
+msgstr "Репозиторій чекає на звичайну ручну перевірку."
+
 #: projects/proof.py:84
+msgid "The repository is being checked again under the current rules."
+msgstr "Репозиторій перевіряється знову за чинними правилами."
+
+#: projects/proof.py:86
 #, python-format
 msgid "%(repo)s is owned by the author's GitHub account."
 msgstr "%(repo)s належить акаунту автора на GitHub."
 
-#: projects/proof.py:89
-#, python-format
-msgid "%(count)s commit by the author in %(repo)s."
-msgid_plural "%(count)s commits by the author in %(repo)s."
-msgstr[0] "%(count)s коміт автора в %(repo)s."
-msgstr[1] "%(count)s коміти автора в %(repo)s."
-msgstr[2] "%(count)s комітів автора в %(repo)s."
-msgstr[3] "%(count)s коміту автора в %(repo)s."
-
-#: projects/proof.py:97
+#: projects/proof.py:93
 msgid "No live URL."
 msgstr "Немає адреси сайту."
 
-#: projects/proof.py:99
+#: projects/proof.py:95
 msgid "The live URL is not a public domain name, so it cannot be verified."
 msgstr "Адреса сайту не є публічним доменом, тому її не можна підтвердити."
 
-#: projects/proof.py:102
+#: projects/proof.py:98
 #, python-format
 msgid "Control of %(domain)s confirmed %(date)s."
 msgstr "Контроль над %(domain)s підтверджено %(date)s."
 
-#: projects/proof.py:106
+#: projects/proof.py:102
 msgid "The domain has not been verified yet."
 msgstr "Домен ще не підтверджено."
 
-#: projects/proof.py:108
+#: projects/proof.py:104
 #, python-format
 msgid "Lost: %(domain)s failed re-verification."
 msgstr "Втрачено: %(domain)s не пройшов повторну перевірку."
 
-#: projects/proof.py:109
+#: projects/proof.py:105
 #, python-format
 msgid "Lost: %(domain)s was not confirmed in the last 35 days."
 msgstr "Втрачено: %(domain)s не підтверджено за останні 35 днів."
 
-#: projects/proof.py:114
+#: projects/proof.py:110
 msgid "Needs Live first."
 msgstr "Спершу потрібна позначка «Працює»."
 
-#: projects/proof.py:118
+#: projects/proof.py:114
 #, python-format
 msgid "%(percent)s%% of %(total)s check succeeded in the last 30 days."
 msgid_plural "%(percent)s%% of %(total)s checks succeeded in the last 30 days."
@@ -659,102 +656,102 @@ msgstr[1] "%(percent)s%% з %(total)s перевірок успішні за о�
 msgstr[2] "%(percent)s%% з %(total)s перевірок успішні за останні 30 днів."
 msgstr[3] "%(percent)s%% з %(total)s перевірки успішні за останні 30 днів."
 
-#: projects/proof.py:122
+#: projects/proof.py:118
 #, python-format
 msgid "%(total)s of %(min)s uptime checks so far."
 msgstr "Поки що %(total)s з %(min)s перевірок доступності."
 
-#: projects/proof.py:125
+#: projects/proof.py:121
 #, python-format
 msgid ""
 "%(percent)s%% of checks succeeded in the last 30 days; %(min)s%% needed."
 msgstr ""
 "%(percent)s%% успішних перевірок за останні 30 днів; потрібно %(min)s%%."
 
-#: projects/views.py:73
+#: projects/views.py:72
 msgid "Draft saved. Add screenshots, then publish."
 msgstr "Чернетку збережено. Додайте скріншоти, потім опублікуйте."
 
-#: projects/views.py:87
+#: projects/views.py:86
 msgid "Changes saved."
 msgstr "Зміни збережено."
 
-#: projects/views.py:109
+#: projects/views.py:108
 msgid "The description is too long."
 msgstr "Опис задовгий."
 
-#: projects/views.py:127
+#: projects/views.py:120
 msgid "Add a GitHub repository and save the project first."
 msgstr "Спершу вкажіть репозиторій GitHub і збережіть проєкт."
 
-#: projects/views.py:129
+#: projects/views.py:122
 msgid "Sign in with GitHub to check a repository."
 msgstr "Увійдіть через GitHub, щоб перевірити репозиторій."
 
-#: projects/views.py:131
+#: projects/views.py:124
 msgid ""
 "This repository was checked a moment ago. You can check again in 10 minutes."
 msgstr "Репозиторій щойно перевіряли. Повторити можна за 10 хвилин."
 
-#: projects/views.py:140
+#: projects/views.py:132
 msgid "Repository checked. Repo owner earned."
 msgstr "Репозиторій перевірено. Позначку «Власник репозиторію» отримано."
 
-#: projects/views.py:142
-#, python-format
-msgid ""
-"You have %(count)s commits in this repository. At least %(min)s are needed."
-msgstr ""
-"У цьому репозиторії у вас комітів: %(count)s. Потрібно щонайменше %(min)s."
+#: projects/views.py:134
+msgid "Repository checked. Repo owner will appear after a short manual review."
+msgstr "Репозиторій перевірено. «Власник репозиторію» з'явиться після короткої ручної перевірки."
 
-#: projects/views.py:145
+#: projects/views.py:136
 msgid ""
-"This repository belongs to another account and has no commits from yours."
-msgstr ""
-"Цей репозиторій належить іншому акаунту, і від вашого акаунта в ньому немає "
-"комітів."
+"This repository is a fork. Forks cannot earn Repo owner; link the original "
+"repository."
+msgstr "Цей репозиторій є форком. Форки не можуть отримати «Власник репозиторію»; вкажіть оригінальний репозиторій."
 
-#: projects/views.py:179
+#: projects/views.py:138
+msgid "This repository is not owned by your personal GitHub account."
+msgstr "Цей репозиторій не належить вашому особистому акаунту на GitHub."
+
+#: projects/views.py:172
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr "Забагато перевірок. Зачекайте кілька хвилин і перевірте знову."
 
-#: projects/views.py:188
+#: projects/views.py:181
 msgid "Verified. Confirmed again."
 msgstr "Підтверджено. Перевірку оновлено."
 
-#: projects/views.py:188
+#: projects/views.py:181
 msgid "Verified. Live earned."
 msgstr "Підтверджено. Отримано позначку Live."
 
-#: projects/views.py:208
+#: projects/views.py:201
 msgid "Published."
 msgstr "Опубліковано."
 
-#: projects/views.py:218
+#: projects/views.py:211
 msgid "Moved back to drafts."
 msgstr "Повернуто до чернеток."
 
-#: projects/views.py:228
+#: projects/views.py:221
 msgid "Project deleted."
 msgstr "Проєкт видалено."
 
-#: projects/views.py:241
+#: projects/views.py:234
 msgid "Choose an image first."
 msgstr "Спершу виберіть зображення."
 
-#: projects/views.py:257
+#: projects/views.py:250
 msgid "A project can have at most 4 screenshots. Remove one first."
 msgstr "У проєкта може бути не більше 4 скріншотів. Спершу видаліть один."
 
-#: projects/views.py:260
+#: projects/views.py:253
 msgid "Screenshot added."
 msgstr "Скріншот додано."
 
-#: projects/views.py:278
+#: projects/views.py:271
 msgid "Screenshot removed."
 msgstr "Скріншот видалено."
 
-#: projects/views.py:326
+#: projects/views.py:319
 #, python-format
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
@@ -762,15 +759,15 @@ msgstr ""
 "Проєкт може мати щонайбільше %(n)s записів у журналі за добу. Спробуйте "
 "завтра."
 
-#: projects/views.py:339
+#: projects/views.py:332
 msgid "Posted. Launch date set to today."
 msgstr "Опубліковано. Дату запуску змінено на сьогодні."
 
-#: projects/views.py:339
+#: projects/views.py:332
 msgid "Posted."
 msgstr "Опубліковано."
 
-#: projects/views.py:365 projects/views.py:366
+#: projects/views.py:358 projects/views.py:359
 msgid "Entry deleted."
 msgstr "Запис видалено."
 
@@ -2022,8 +2019,8 @@ msgid "Delete entry"
 msgstr "Видалити запис"
 
 #: templates/projects/delete.html:4 templates/projects/delete.html:15
-#: templates/projects/detail.html:35 templates/projects/form.html:143
-#: templates/projects/form.html:145
+#: templates/projects/detail.html:35 templates/projects/form.html:147
+#: templates/projects/form.html:149
 msgid "Delete project"
 msgstr "Видалити проєкт"
 
@@ -2056,17 +2053,21 @@ msgstr "Приховано модераторами. Цю сторінку ба�
 msgid "Draft. Only you can see this page."
 msgstr "Чернетка. Цю сторінку бачите лише ви."
 
-#: templates/projects/detail.html:31 templates/projects/form.html:130
+#: templates/projects/detail.html:31 templates/projects/form.html:134
 msgid "Publish project"
 msgstr "Опублікувати проєкт"
 
-#: templates/projects/detail.html:33 templates/projects/form.html:135
+#: templates/projects/detail.html:33 templates/projects/form.html:139
 msgid "Unpublish project"
 msgstr "Зняти з публікації"
 
 #: templates/projects/detail.html:54
 msgid "Open live site"
 msgstr "Відкрити сайт"
+
+#: templates/projects/detail.html:55
+msgid "Unverified link"
+msgstr "Неперевірене посилання"
 
 #: templates/projects/detail.html:70
 #, python-format
@@ -2201,30 +2202,41 @@ msgid "Checked %(date)s."
 msgstr "Перевірено: %(date)s."
 
 #: templates/projects/form.html:72
+#, python-format
 msgid ""
-"Not checked yet. Repo owner is earned if the public repository is yours, or "
-"you have at least 10 commits in it."
-msgstr ""
-"Ще не перевірено. «Власник репозиторію» отримують, якщо публічний "
-"репозиторій ваш або ви маєте в ньому щонайменше 10 комітів."
+"%(name)s passed the check. Repo owner will appear after a short manual "
+"review; nothing is needed from you."
+msgstr "%(name)s пройшов перевірку. «Власник репозиторію» з'явиться після короткої ручної перевірки; від вас нічого не потрібно."
 
-#: templates/projects/form.html:75
+#: templates/projects/form.html:74
+msgid ""
+"The rules for Repo owner changed. Check the repository again; it takes a few "
+"seconds."
+msgstr "Правила для «Власник репозиторію» змінилися. Перевірте репозиторій ще раз, це займе кілька секунд."
+
+#: templates/projects/form.html:76
+msgid ""
+"Not checked yet. Repo owner is earned when the public repository is owned by "
+"your personal GitHub account and is not a fork."
+msgstr "Ще не перевірено. «Власник репозиторію» отримують, коли публічний репозиторій належить вашому особистому акаунту на GitHub і не є форком."
+
+#: templates/projects/form.html:79
 msgid "Check repository"
 msgstr "Перевірити репозиторій"
 
-#: templates/projects/form.html:77
+#: templates/projects/form.html:81
 msgid "Uses the repository saved above. Once every 10 minutes."
 msgstr "Береться збережений вище репозиторій. Не частіше ніж раз на 10 хвилин."
 
-#: templates/projects/form.html:79
+#: templates/projects/form.html:83
 msgid "Add a GitHub repository above and save to check it."
 msgstr "Вкажіть репозиторій GitHub вище й збережіть, щоб його перевірити."
 
-#: templates/projects/form.html:86
+#: templates/projects/form.html:90
 msgid "Screenshots"
 msgstr "Скріншоти"
 
-#: templates/projects/form.html:87
+#: templates/projects/form.html:91
 #, python-format
 msgid ""
 "Up to %(max)s images, PNG, JPEG or WebP, 5 MB each. The first one is the "
@@ -2233,54 +2245,54 @@ msgstr ""
 "До %(max)s зображень, PNG, JPEG або WebP, до 5 МБ кожне. Перше стає "
 "обкладинкою."
 
-#: templates/projects/form.html:92
+#: templates/projects/form.html:96
 #, python-format
 msgid "Screenshot %(n)s"
 msgstr "Скріншот %(n)s"
 
-#: templates/projects/form.html:96
+#: templates/projects/form.html:100
 msgid "Move up"
 msgstr "Вгору"
 
-#: templates/projects/form.html:100
+#: templates/projects/form.html:104
 msgid "Move down"
 msgstr "Вниз"
 
-#: templates/projects/form.html:104
+#: templates/projects/form.html:108
 msgid "Remove"
 msgstr "Видалити"
 
-#: templates/projects/form.html:115
+#: templates/projects/form.html:119
 msgid "Add a screenshot"
 msgstr "Додати скріншот"
 
-#: templates/projects/form.html:118
+#: templates/projects/form.html:122
 msgid "Upload screenshot"
 msgstr "Завантажити скріншот"
 
-#: templates/projects/form.html:121
+#: templates/projects/form.html:125
 msgid "You have reached the limit of 4 screenshots. Remove one to add another."
 msgstr "Ви досягли ліміту в 4 скріншоти. Видаліть один, щоб додати інший."
 
-#: templates/projects/form.html:126
+#: templates/projects/form.html:130
 msgid "Visibility"
 msgstr "Видимість"
 
-#: templates/projects/form.html:128
+#: templates/projects/form.html:132
 msgid "This project is a draft. Publishing makes the page public."
 msgstr "Цей проєкт — чернетка. Після публікації сторінка стане публічною."
 
-#: templates/projects/form.html:133
+#: templates/projects/form.html:137
 msgid "This project is public."
 msgstr "Цей проєкт публічний."
 
-#: templates/projects/form.html:138
+#: templates/projects/form.html:142
 msgid ""
 "Moderators hid this project. Contact support if you think this is a mistake."
 msgstr ""
 "Модератори приховали цей проєкт. Якщо це помилка, напишіть у підтримку."
 
-#: templates/projects/form.html:144
+#: templates/projects/form.html:148
 msgid "This removes the project and its screenshots for good."
 msgstr "Проєкт і його скріншоти буде видалено назавжди."
 
@@ -2512,25 +2524,29 @@ msgstr "Сторінка завантажилася, але метатегу в 
 msgid "The meta tag was found, but its token does not match. Copy it again."
 msgstr "Метатег знайдено, але токен не збігається. Скопіюйте його ще раз."
 
-#: verification/repo.py:114
+#: verification/repo.py:131
 msgid "GitHub did not answer properly. Try again in a few minutes."
 msgstr "GitHub не відповів як слід. Спробуйте за кілька хвилин."
 
-#: verification/repo.py:127
+#: verification/repo.py:144
 #, python-format
 msgid "GitHub's rate limit was reached. Try again in about %(minutes)s min."
 msgstr ""
 "Досягнуто ліміт запитів GitHub. Спробуйте приблизно через %(minutes)s хв."
 
-#: verification/repo.py:129
+#: verification/repo.py:146
 msgid "GitHub's rate limit was reached. Try again later."
 msgstr "Досягнуто ліміт запитів GitHub. Спробуйте пізніше."
 
-#: verification/repo.py:137
+#: verification/repo.py:154
+msgid "This repository has no commits yet."
+msgstr "У цьому репозиторії ще немає комітів."
+
+#: verification/repo.py:157
 msgid "This repository was renamed or moved. Enter its current name."
 msgstr "Репозиторій перейменовано або переміщено. Вкажіть його поточну назву."
 
-#: verification/repo.py:141
+#: verification/repo.py:162
 msgid ""
 "Repository not found. Check the spelling. Private repositories cannot be "
 "checked."
@@ -2538,14 +2554,14 @@ msgstr ""
 "Репозиторій не знайдено. Перевірте написання. Приватні репозиторії "
 "перевірити не можна."
 
-#: verification/repo.py:150
+#: verification/repo.py:171
 msgid "This repository is too large to check automatically."
 msgstr "Цей репозиторій завеликий для автоматичної перевірки."
 
-#: verification/repo.py:196
+#: verification/repo.py:270
 msgid "This repository is private. Only public repositories can be checked."
 msgstr "Цей репозиторій приватний. Перевіряти можна лише публічні."
 
-#: verification/repo.py:208 verification/repo.py:284
+#: verification/repo.py:288 verification/repo.py:454
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."

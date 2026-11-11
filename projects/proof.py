@@ -17,16 +17,14 @@ from django.utils.translation import ngettext
 
 from verification import domain as domains
 from verification import uptime
-from verification.models import DomainVerification
+from verification.models import DomainVerification, RepoLink
 
 HALLMARK_KINDS = ("authored", "live", "steady")
-MIN_AUTHORED_COMMITS = 10
 
 # What each hallmark means, in one or two sentences. Shown next to the large marks.
 RULES = {
     "authored": gettext_lazy(
-        "The linked public GitHub repository is owned by the author's GitHub account, "
-        "or has at least 10 commits from it."
+        "The linked public GitHub repository is owned by the author's personal GitHub account and is not a fork."
     ),
     "live": gettext_lazy(
         "The author proved control of the project's domain with a DNS record or a meta tag. "
@@ -80,15 +78,13 @@ def _authored(project):
     # A link for another repo name is stale: the project now points at a repository nobody checked.
     if link is None or link.repo_full_name.lower() != project.repo_full_name.lower():
         return Hallmark("authored", False, _("The repository check has not passed yet."))
-    if link.is_owner:
+    if link.review_state == RepoLink.Review.NEEDS_REVIEW:
+        return Hallmark("authored", False, _("The repository is waiting for a routine manual review."))
+    if link.review_state == RepoLink.Review.NEEDS_RECHECK:
+        return Hallmark("authored", False, _("The repository is being checked again under the current rules."))
+    if link.is_verified:
         return Hallmark("authored", True, _("%(repo)s is owned by the author's GitHub account.")
                         % {"repo": link.repo_full_name}, link.earned_at)
-    count = link.user_commit_count
-    if count >= MIN_AUTHORED_COMMITS:
-        reason = ngettext(
-            "%(count)s commit by the author in %(repo)s.", "%(count)s commits by the author in %(repo)s.", count,
-        ) % {"count": count, "repo": link.repo_full_name}
-        return Hallmark("authored", True, reason, link.earned_at)
     return Hallmark("authored", False, _("The repository check has not passed yet."))
 
 

@@ -1,14 +1,22 @@
+from django.conf import settings
 from django.db import models
 from django.db.models.functions import Lower
 from django.utils import timezone
 
 
 class RepoLink(models.Model):
-    """A GitHub repository that passed the authorship check for a project.
+    """A GitHub repository that passed the Repo owner check for a project.
 
-    Rows exist only for repositories that earn Authored. A failed check is never stored, so nobody
-    can block someone else's repository by claiming it (CLAUDE.md section 2, anti-gaming).
+    Rows exist only for repositories that passed: owned by the user and not a fork. A failed check is
+    never stored, so nobody can block someone else's repository by claiming it (CLAUDE.md section 2).
+    A passed link earns the mark unless it waits for a review (`review_state`).
     """
+
+    class Review(models.TextChoices):
+        CLEAR = "", "Clear"
+        NEEDS_REVIEW = "needs_review", "Needs review"  # a fact in review_reasons; staff decides
+        NEEDS_RECHECK = "needs_recheck", "Needs re-check"  # passed under older rules; checked again
+        APPROVED = "approved", "Approved"  # staff looked at the reasons and approved
 
     project = models.OneToOneField("projects.Project", on_delete=models.CASCADE, related_name="repo_link")
     repo_full_name = models.CharField(max_length=140)  # as GitHub spells it: "owner/repo"
@@ -19,6 +27,16 @@ class RepoLink(models.Model):
     user_commit_count = models.PositiveIntegerField(default=0)
     first_commit_at = models.DateTimeField(null=True, blank=True)
     last_commit_at = models.DateTimeField(null=True, blank=True)
+    repo_created_at = models.DateTimeField(null=True, blank=True)  # on GitHub
+    root_commit_sha = models.CharField(max_length=40, blank=True, db_index=True)  # oldest commit, default branch
+    root_commit_at = models.DateTimeField(null=True, blank=True)  # its author date, as written in the commit
+    active_weeks = models.PositiveIntegerField(null=True, blank=True)  # None: GitHub statistics not ready yet
+    stats_checked_at = models.DateTimeField(null=True, blank=True)
+    review_state = models.CharField(max_length=16, choices=Review.choices, default="", blank=True, db_index=True)
+    review_reasons = models.JSONField(default=list, blank=True)  # codes from verification/repo.py
+    reviewed_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
+                                    related_name="+")
+    reviewed_at = models.DateTimeField(null=True, blank=True)
     checked_at = models.DateTimeField()  # latest successful check
     # First successful check. A failed check deletes the row, so this is when the current Authored began.
     earned_at = models.DateTimeField(default=timezone.now)
@@ -31,6 +49,11 @@ class RepoLink(models.Model):
 
     def __str__(self):
         return self.repo_full_name
+
+    @property
+    def is_verified(self):
+        """Earns Repo owner: the repository passed and is not waiting for a review or re-check."""
+        return self.is_owner and self.review_state in (self.Review.CLEAR, self.Review.APPROVED)
 
 
 class DomainVerification(models.Model):

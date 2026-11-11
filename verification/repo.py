@@ -1,4 +1,9 @@
-"""Repository authorship check: the Authored hallmark (CLAUDE.md section 2).
+"""Repository check: the Repo owner hallmark (id `authored`, CLAUDE.md section 2).
+
+Repo owner is earned only by a public, non-fork repository owned by the user's personal GitHub
+account. It says who owns the repository, never who wrote the code. The other facts read here
+(commit count and dates, history start, active weeks) are shown as facts; three of them send the
+link to a manual review instead of earning the mark (`review_reasons`).
 
 Talks only to the fixed host api.github.com. The user controls just the "owner/name" part,
 which is validated strictly and URL-encoded, so it cannot change the host or path.
@@ -12,8 +17,8 @@ Only repositories that earn Authored are stored (see RepoLink). Every removal is
 import logging
 import re
 import time
-from dataclasses import dataclass
-from datetime import datetime
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
 from urllib.parse import parse_qs, quote, urlsplit
 
 import httpx
@@ -25,8 +30,6 @@ from django.utils.translation import gettext as _
 
 from config import branding
 from moderation import audit
-from projects.proof import MIN_AUTHORED_COMMITS
-
 from .models import RepoLink
 
 logger = logging.getLogger(__name__)
@@ -40,7 +43,11 @@ REPO_RE = re.compile(r"^[A-Za-z0-9_.-]{1,39}/[A-Za-z0-9_.-]{1,100}$")
 MOVED_RE = re.compile(r"^https://api\.github\.com/repositories/(\d{1,15})(?:[/?]|$)")
 
 # Outcomes after a successful look at GitHub.
-AUTHORED, TOO_FEW, NOT_YOURS = "authored", "too_few", "not_yours"
+AUTHORED, NOT_YOURS, FORK = "authored", "not_yours", "fork"
+# Why a link waits for a manual review (RepoLink.review_reasons). Facts, not accusations.
+IMPORTED_HISTORY = "imported_history"  # first commit much older than the repository on GitHub
+DUPLICATE_HISTORY = "duplicate_history"  # same first commit as a repository linked to another project
+NO_OWNER_COMMITS = "no_owner_commits"  # GitHub shows no commits by the owner
 
 
 class RepoCheckError(Exception):
@@ -58,20 +65,23 @@ class RepoFacts:
     full_name: str
     repo_id: int
     owner_id: int
-    is_owner: bool
-    commit_count: int
-    first_commit_at: datetime | None = None
+    is_owner: bool  # personal account of the user, not a fork
+    commit_count: int  # commits by the user on the default branch (GitHub's contributors list)
+    is_fork: bool = False
+    repo_created_at: datetime | None = None
+    first_commit_at: datetime | None = None  # the user's first and last commit
     last_commit_at: datetime | None = None
+    root_commit_sha: str = ""  # the oldest commit of the default branch
+    root_commit_at: datetime | None = None
+    active_weeks: int | None = None  # None: GitHub is still computing its statistics
+    review_reasons: list = field(default_factory=list)
 
 
 @dataclass
 class CheckResult:
     outcome: str
     facts: RepoFacts
-
-
-def is_authored(is_owner, commit_count):
-    return is_owner or commit_count >= MIN_AUTHORED_COMMITS
+    link: object = None  # the stored RepoLink when the outcome is AUTHORED
 
 
 # ---------- GitHub API ----------
@@ -138,8 +148,10 @@ def _rate_limited(response):
 
 def _raise_for_status(response):
     status = response.status_code
-    if status in (200, 204):  # 204: an empty repository has no contributors
+    if status in (200, 202, 204):  # 202: statistics still being computed; 204: empty repository
         return
+    if status == 409:  # GET /commits on a repository without commits
+        raise RepoCheckError("empty", _("This repository has no commits yet."))
     if status in (301, 302, 307, 308):
         match = MOVED_RE.match(response.headers.get("location", ""))
         raise RepoCheckError("moved", _("This repository was renamed or moved. Enter its current name."),
@@ -174,6 +186,14 @@ def _commit_time(commits):
         return _parse_time(commits[0]["commit"]["author"]["date"])
     except (IndexError, KeyError, TypeError):
         return None
+
+
+def _commit_sha(commits):
+    try:
+        sha = str(commits[0]["sha"])
+    except (IndexError, KeyError, TypeError):
+        return ""
+    return sha if re.fullmatch(r"[0-9a-f]{40}", sha) else ""
 
 
 def _last_page(response):
@@ -254,27 +274,67 @@ def fetch_facts(full_name, github_user_id, project=None):
             full_name=str(repo["full_name"]),
             repo_id=repo["id"],
             owner_id=repo["owner"]["id"],
-            # A fork is not authorship: forking someone's project must not earn the mark.
+            is_fork=bool(repo.get("fork")),
+            # A fork is someone else's project: it never earns the mark (on any path).
             is_owner=repo["owner"].get("id") == github_user_id
             and repo["owner"].get("type") == "User"
             and not repo.get("fork"),
             commit_count=0,
+            repo_created_at=_parse_time(repo.get("created_at")),
         )
+        if facts.is_fork or not facts.is_owner:
+            return facts  # refused anyway: no need to spend more API calls
         if _taken(facts, project):  # fail early, before spending more API calls
             raise RepoCheckError("taken", _("This repository is already linked to another project."))
 
         login = _find_contributor(api, base, github_user_id, facts)
+        commits_path = f"{base}/commits"
         if facts.commit_count and login:
-            commits_path = f"{base}/commits"
-            latest, response = api.json(commits_path, {"author": login, "per_page": 1})
-            facts.last_commit_at = _commit_time(latest)
-            pages = _last_page(response)
-            if pages > 1:
-                oldest, _response = api.json(commits_path, {"author": login, "per_page": 1, "page": pages})
-                facts.first_commit_at = _commit_time(oldest)
-            else:
-                facts.first_commit_at = facts.last_commit_at
+            facts.last_commit_at, facts.first_commit_at, _sha = _newest_and_oldest(api, commits_path, {"author": login})
+        _newest, facts.root_commit_at, facts.root_commit_sha = _newest_and_oldest(api, commits_path, {})
+        facts.active_weeks = _active_weeks(api, base, github_user_id)
         return facts
+
+
+def _newest_and_oldest(api, path, params):
+    """(newest date, oldest date, oldest sha) of a commit list, in at most two requests. Empty repo: Nones."""
+    try:
+        newest, response = api.json(path, {**params, "per_page": 1})
+    except RepoCheckError as exc:
+        if exc.code == "empty":
+            return None, None, ""
+        raise
+    pages = _last_page(response)
+    oldest = api.json(path, {**params, "per_page": 1, "page": pages})[0] if pages > 1 else newest
+    return _commit_time(newest), _commit_time(oldest), _commit_sha(oldest)
+
+
+def _active_weeks(api, base, github_user_id):
+    """Weeks with at least one commit by the user that changed lines, from GitHub's statistics.
+
+    Only the user's own entry is read, so bots never count. Weeks with commits but no changed lines
+    (empty commits) do not count. None when GitHub is still computing (202) or did not answer:
+    it is only a fact, so the weekly re-check simply fills it in later.
+    """
+    try:
+        data, response = api.json(f"{base}/stats/contributors")
+    except RepoCheckError as exc:
+        if exc.code == "rate_limited":
+            raise
+        return None
+    if response.status_code == 202:
+        return None
+    if not isinstance(data, list):
+        return 0  # 204: no commits
+    for entry in data:
+        author = entry.get("author") if isinstance(entry, dict) else None
+        if not isinstance(author, dict) or author.get("id") != github_user_id or author.get("type") == "Bot":
+            continue
+        weeks = [w for w in entry.get("weeks") or [] if isinstance(w, dict) and (w.get("c") or 0) > 0]
+        if weeks and not any((w.get("a") or 0) + (w.get("d") or 0) for w in weeks):
+            return len(weeks)  # GitHub does not count lines for repositories with 10,000+ commits
+        return sum(1 for w in weeks if (w.get("a") or 0) + (w.get("d") or 0) > 0)
+    return 0
 
 
 def _find_contributor(api, base, github_user_id, facts):
@@ -307,6 +367,28 @@ def _taken(facts, project):
     return qs.exists()
 
 
+def review_reasons(facts, project):
+    """Facts that send a link to a manual review instead of earning Repo owner at once."""
+    reasons = []
+    if facts.commit_count == 0:
+        reasons.append(NO_OWNER_COMMITS)
+    margin = timedelta(days=settings.TRUST_IMPORTED_HISTORY_DAYS)
+    if facts.root_commit_at and facts.repo_created_at and facts.root_commit_at < facts.repo_created_at - margin:
+        reasons.append(IMPORTED_HISTORY)
+    if facts.root_commit_sha and (RepoLink.objects.filter(root_commit_sha=facts.root_commit_sha)
+                                  .exclude(project=project).exists()):
+        reasons.append(DUPLICATE_HISTORY)
+    return reasons
+
+
+def next_review_state(link, reasons):
+    """Review state after a check. Staff approval survives re-checks unless a new reason appears."""
+    Review = RepoLink.Review
+    if link is not None and link.review_state == Review.APPROVED and set(reasons) <= set(link.review_reasons):
+        return Review.APPROVED
+    return Review.NEEDS_REVIEW if reasons else Review.CLEAR
+
+
 def remove_link(project, reason, actor=None, **metadata):
     """Delete the project's RepoLink (Repo owner is gone) and log it. Returns True if there was one."""
     link = RepoLink.objects.filter(project=project).first()
@@ -319,7 +401,19 @@ def remove_link(project, reason, actor=None, **metadata):
     return True
 
 
-def _follow_rename(project, link, facts, actor):
+def mark_recheck(link, reason, actor=None, **metadata):
+    """Withhold the mark until the next full check, without deleting the link. Logged."""
+    if link.review_state == RepoLink.Review.NEEDS_RECHECK:
+        return False
+    with transaction.atomic():
+        link.review_state = RepoLink.Review.NEEDS_RECHECK
+        link.save(update_fields=["review_state"])
+        audit.log("hallmark.authored.needs_recheck", link.project, actor=actor, repo=link.repo_full_name,
+                  reason=reason, **metadata)
+    return True
+
+
+def follow_rename(project, link, facts, actor):
     """Same ids, new name on GitHub: keep the project pointing at its repository's current name."""
     if project.repo_full_name.lower() == facts.full_name.lower():
         return
@@ -347,24 +441,53 @@ def run_check(project, github_user_id, actor=None):
     if change in ("recreated", "transferred"):
         remove_link(project, change, actor=actor, new_repo_id=facts.repo_id, new_owner_id=facts.owner_id)
 
-    if not is_authored(facts.is_owner, facts.commit_count):
-        remove_link(project, "not_authored", actor=actor)
-        outcome = TOO_FEW if facts.commit_count else NOT_YOURS
-        return CheckResult(outcome, facts)
+    if facts.is_fork or not facts.is_owner:
+        remove_link(project, "fork" if facts.is_fork else "not_owner", actor=actor)
+        return CheckResult(FORK if facts.is_fork else NOT_YOURS, facts)
 
-    _follow_rename(project, old, facts, actor)
+    follow_rename(project, old, facts, actor)
+    if change in ("recreated", "transferred"):
+        old = None
     try:
-        with transaction.atomic():
-            RepoLink.objects.update_or_create(project=project, defaults={
-                "repo_full_name": facts.full_name,
-                "github_repo_id": facts.repo_id,
-                "github_owner_id": facts.owner_id,
-                "is_owner": facts.is_owner,
-                "user_commit_count": facts.commit_count,
-                "first_commit_at": facts.first_commit_at,
-                "last_commit_at": facts.last_commit_at,
-                "checked_at": timezone.now(),
-            })
+        link = store_link(project, facts, old, actor)
     except IntegrityError as exc:  # another project linked it between our check and the save
         raise RepoCheckError("taken", _("This repository is already linked to another project.")) from exc
-    return CheckResult(AUTHORED, facts)
+    return CheckResult(AUTHORED, facts, link)
+
+
+def store_link(project, facts, old, actor=None):
+    """Save the facts of a repository that passed, with its review state, and log state changes."""
+    facts.review_reasons = review_reasons(facts, project)
+    state = next_review_state(old, facts.review_reasons)
+    now = timezone.now()
+    values = {
+        "repo_full_name": facts.full_name,
+        "github_repo_id": facts.repo_id,
+        "github_owner_id": facts.owner_id,
+        "is_owner": facts.is_owner,
+        "user_commit_count": facts.commit_count,
+        "first_commit_at": facts.first_commit_at,
+        "last_commit_at": facts.last_commit_at,
+        "repo_created_at": facts.repo_created_at,
+        "root_commit_sha": facts.root_commit_sha,
+        "root_commit_at": facts.root_commit_at,
+        "review_state": state,
+        "review_reasons": facts.review_reasons if state != RepoLink.Review.APPROVED else old.review_reasons,
+        "checked_at": now,
+    }
+    if facts.active_weeks is not None:  # keep the last known number while GitHub recomputes
+        values["active_weeks"] = facts.active_weeks
+        values["stats_checked_at"] = now
+    was_verified = old is not None and old.is_verified
+    with transaction.atomic():
+        link, created = RepoLink.objects.update_or_create(project=project, defaults=values)
+        if link.is_verified and not was_verified and not created:  # the current run of the mark starts now
+            link.earned_at = now
+            link.save(update_fields=["earned_at"])
+        was = "" if created or old is None else old.review_state
+        if state == RepoLink.Review.NEEDS_REVIEW and was != state:
+            audit.log("hallmark.authored.needs_review", project, actor=actor, repo=link.repo_full_name,
+                      reasons=facts.review_reasons)
+        elif link.is_verified and (created or was in (RepoLink.Review.NEEDS_REVIEW, RepoLink.Review.NEEDS_RECHECK)):
+            audit.log("hallmark.authored.earned", project, actor=actor, repo=link.repo_full_name)
+    return link

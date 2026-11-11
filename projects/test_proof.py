@@ -13,7 +13,7 @@ from verification.domain import DomainCheckError, verification_for
 from verification.models import DomainVerification, RepoLink, UptimeCheck
 
 from .models import Project
-from .proof import MIN_AUTHORED_COMMITS, HallmarkSet, compute_hallmarks
+from .proof import HallmarkSet, compute_hallmarks
 from .tests import make_project, make_user
 
 V = DomainVerification
@@ -92,12 +92,20 @@ class AuthoredTests(ProofTestCase):
         self.assertEqual(mark.earned_at, link.earned_at)
         self.assertIn("ann/tally", mark.reason)
 
-    def test_ten_commits_is_enough_nine_is_not(self):
-        link = self.link(is_owner=False, user_commit_count=MIN_AUTHORED_COMMITS)
+    def test_commit_count_alone_never_earns(self):
+        self.link(is_owner=False, user_commit_count=500)
+        self.assertFalse(self.marks()["authored"].earned)
+
+    def test_review_states(self):
+        link = self.link(is_owner=True, review_state=RepoLink.Review.NEEDS_REVIEW, review_reasons=["imported_history"])
         mark = self.marks()["authored"]
-        self.assertTrue(mark.earned)
-        self.assertIn("10 commits", mark.reason)
-        link.user_commit_count = MIN_AUTHORED_COMMITS - 1
+        self.assertFalse(mark.earned)
+        self.assertEqual(mark.reason, "The repository is waiting for a routine manual review.")
+        self.assertNotIn("import", mark.reason)  # the public reason never names the suspicion
+        link.review_state = RepoLink.Review.APPROVED
+        link.save()
+        self.assertTrue(self.marks()["authored"].earned)
+        link.review_state = RepoLink.Review.NEEDS_RECHECK
         link.save()
         self.assertFalse(self.marks()["authored"].earned)
 
@@ -244,7 +252,7 @@ class PageTests(ProofTestCase):
         self.assertContains(response, 'class="hallmark-info"', count=3)
         self.assertContains(response, "ann/tally is owned by the author&#x27;s GitHub account.")
         self.assertContains(response, "Needs Live first.")
-        self.assertContains(response, "at least 10 commits from it")  # the rule
+        self.assertContains(response, "personal GitHub account and is not a fork")  # the rule
         self.assertContains(response, 'href="/how-proof-works/#live"')
 
     def test_how_proof_works_in_english_and_ukrainian(self):
@@ -256,3 +264,14 @@ class PageTests(ProofTestCase):
         uk = self.client.get("/how-proof-works/", headers={"Accept-Language": "uk"})
         self.assertContains(uk, "Як працюють підтвердження")
         self.assertContains(uk, 'id="steady"')
+
+
+class UnverifiedRepoLinkTests(ProofTestCase):
+    def test_repo_without_the_mark_is_labelled(self):
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertContains(response, "https://github.com/ann/tally")
+        self.assertContains(response, "Unverified link")
+
+    def test_repo_with_the_mark_is_not_labelled(self):
+        self.link(is_owner=True)
+        self.assertNotContains(self.client.get(self.project.get_absolute_url()), "Unverified link")

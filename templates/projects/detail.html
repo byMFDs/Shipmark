@@ -52,7 +52,7 @@
           {% if project.safe_live_url or project.repo_url %}
             <ul class="project__links">
               {% if project.safe_live_url %}<li><a class="btn btn--primary" href="{{ project.safe_live_url }}" rel="nofollow ugc noopener">{% translate "Open live site" %}{% icon "arrow-up-right" "arrow" %}</a></li>{% endif %}
-              {% if project.repo_url %}<li><a class="btn btn--secondary with-icon" href="{{ project.repo_url }}" rel="nofollow ugc noopener">{% icon "github" %}<span>{{ project.repo_full_name }}</span></a></li>{% endif %}
+              {% if project.repo_url %}<li><a class="btn btn--secondary with-icon" href="{{ project.repo_url }}" rel="nofollow ugc noopener">{% icon "github" %}<span>{{ project.repo_full_name }}</span></a>{% if not hallmarks.authored.earned %}<span class="project__link-note label muted">{% translate "Unverified link" %}</span>{% endif %}</li>{% endif %}
             </ul>
           {% endif %}
           {% if project.status == "published" %}
