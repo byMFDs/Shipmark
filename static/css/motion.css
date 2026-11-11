@@ -20,10 +20,17 @@
 
 /* ---------- Pause: offscreen and hidden tabs ---------- */
 
-html.is-paused [data-loop],
-html.is-paused [data-loop] *,
-[data-loop]:not(.is-inview),
-[data-loop]:not(.is-inview) * {
+/* Only when JS runs: without it nothing sets .is-inview, and a paused strike would stay frozen at its first frame. */
+html.js.is-paused [data-loop],
+html.js.is-paused [data-loop] *,
+html.js.is-paused [data-loop] *::before,
+html.js.is-paused [data-loop] *::after,
+html.js.is-paused .cursor[data-loop]::after,
+.js [data-loop]:not(.is-inview),
+.js [data-loop]:not(.is-inview) *,
+.js [data-loop]:not(.is-inview) *::before,
+.js [data-loop]:not(.is-inview) *::after,
+.js .cursor[data-loop]:not(.is-inview)::after {
   animation-play-state: paused !important;
 }
 

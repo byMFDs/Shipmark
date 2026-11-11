@@ -20,8 +20,7 @@
 }
 
 @media (hover: hover) {
-  :is(a, button):hover > .arrow,
-  :is(a, button):hover .arrow--nudge { transform: translate(2px, -2px); }
+  :is(a, button):hover > .arrow { transform: translate(2px, -2px); }
 }
 
 /* ---------- Buttons ---------- */
@@ -423,20 +422,6 @@
 
 .plate__owner a { color: inherit; }
 
-.plate__media {
-  margin-top: var(--s-5);
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--paper);
-  border: 1px solid var(--line);
-}
-
-.plate__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 /* The strip where hallmarks sit. */
 .plate__strip {
   display: flex;
@@ -773,8 +758,6 @@
   .section-head > :not(.section-head__aside) { grid-column: 1; }
   .section-head__aside { grid-column: 2; grid-row: 2 / span 2; align-self: end; }
 }
-
-.section-head__titles { display: grid; gap: var(--s-4); }
 
 /* Hairline that can draw itself in (motion.css). */
 .rule {

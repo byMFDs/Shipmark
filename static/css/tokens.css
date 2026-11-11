@@ -145,19 +145,3 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) { --band-bg: #0D1310; }
 }
-
-/* Old names, kept until every page stylesheet is moved over (redesign phase 3). */
-:root,
-[data-theme],
-.band {
-  --plate: var(--surface);
-  --steel: var(--muted);
-  --ink: var(--accent-text);
-  --r-plate: 0;
-  --r-control: 0;
-  --r-chip: 0;
-  --r-mark: 0;
-  --bevel: none;
-  --bevel-featured: none;
-  --press: none;
-}

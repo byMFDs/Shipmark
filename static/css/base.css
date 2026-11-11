@@ -282,33 +282,6 @@ hr {
   .page { padding-top: var(--s-7); }
 }
 
-/* 1 column on phones, 6 from 48em, 12 from 64em. On tablets every span is halved. */
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--s-5);
-}
-
-@media (min-width: 48em) {
-  .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .grid > * { grid-column: span 6; }
-  .col-3 { grid-column: span 3; }
-  .col-4 { grid-column: span 2; }
-  .col-6 { grid-column: span 3; }
-  .col-8 { grid-column: span 4; }
-}
-
-@media (min-width: 64em) {
-  .grid { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-6); }
-  .grid > * { grid-column: span 12; }
-  .col-3 { grid-column: span 3; }
-  .col-4 { grid-column: span 4; }
-  .col-5 { grid-column: span 5; }
-  .col-6 { grid-column: span 6; }
-  .col-7 { grid-column: span 7; }
-  .col-8 { grid-column: span 8; }
-}
-
 /* ---------- Utilities ---------- */
 
 /* Largest headline (landing hero, closing band). */
