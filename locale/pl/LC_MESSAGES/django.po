@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 23:01+0000\n"
+"POT-Creation-Date: 2026-11-11 23:08+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Profile"
 msgstr "Profil"
 
-#: accounts/admin.py:42 config/settings/base.py:296
+#: accounts/admin.py:42 config/settings/base.py:305
 msgid "Moderation"
 msgstr "Moderacja"
 
@@ -150,64 +150,72 @@ msgstr "Twoje konto i wszystko, co na nim było, zostało usunięte."
 msgid "Proof, not promises."
 msgstr "Dowody, nie obietnice."
 
-#: config/settings/base.py:237
+#: config/settings/base.py:243
 msgid "Admin"
 msgstr "Administracja"
 
-#: config/settings/base.py:273 config/settings/base.py:275
+#: config/settings/base.py:279 config/settings/base.py:281
 #: moderation/dashboard.py:44
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: config/settings/base.py:279 config/settings/base.py:281
+#: config/settings/base.py:285 config/settings/base.py:287
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Projekty"
 
-#: config/settings/base.py:282 templates/pages/landing.html:264
+#: config/settings/base.py:288 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Dziennik rozwoju"
 
-#: config/settings/base.py:283 projects/forms.py:26
+#: config/settings/base.py:289 projects/forms.py:26
 #: templates/projects/detail.html:147
 msgid "Tags"
 msgstr "Tagi"
 
-#: config/settings/base.py:284
+#: config/settings/base.py:290
 msgid "Tools"
 msgstr "Narzędzia"
 
-#: config/settings/base.py:288
+#: config/settings/base.py:294
 msgid "Verification"
 msgstr "Weryfikacja"
 
-#: config/settings/base.py:290
+#: config/settings/base.py:296
+msgid "Review queue"
+msgstr "Kolejka weryfikacji"
+
+#: config/settings/base.py:298
 msgid "Repositories"
 msgstr "Repozytoria"
 
-#: config/settings/base.py:291
+#: config/settings/base.py:299
 msgid "Domains"
 msgstr "Domeny"
 
-#: config/settings/base.py:292
+#: config/settings/base.py:300
 msgid "Uptime checks"
 msgstr "Sprawdzenia dostępności"
 
-#: config/settings/base.py:298
+#: config/settings/base.py:301
+msgid "Blocked repos and domains"
+msgstr "Zablokowane repozytoria i domeny"
+
+#: config/settings/base.py:307
 msgid "Reports"
 msgstr "Zgłoszenia"
 
-#: config/settings/base.py:300
+#: config/settings/base.py:309
 msgid "Follows"
 msgstr "Obserwowania"
 
-#: config/settings/base.py:301 projects/admin.py:44
+#: config/settings/base.py:310 projects/admin.py:44
 msgid "Likes"
 msgstr "Polubienia"
 
-#: config/settings/base.py:305 config/settings/base.py:307
+#: config/settings/base.py:314 config/settings/base.py:316
 msgid "Audit log"
 msgstr "Dziennik audytu"
 
@@ -2448,18 +2456,64 @@ msgstr "Akceptuję Regulamin"
 msgid "Create account"
 msgstr "Załóż konto"
 
-#: verification/admin.py:31
+#: verification/admin.py:33
+msgid "Approve (the review reasons are fine)"
+msgstr "Zatwierdź (powody weryfikacji są w porządku)"
+
+#: verification/admin.py:36
+#, python-format
+msgid "Approved %(count)s."
+msgstr "Zatwierdzono: %(count)s."
+
+#: verification/admin.py:38
+msgid "Revoke Repo owner"
+msgstr "Odbierz Repo owner"
+
+#: verification/admin.py:41 verification/admin.py:104
+#, python-format
+msgid "Revoked %(count)s."
+msgstr "Odebrano: %(count)s."
+
+#: verification/admin.py:43
+msgid "Block the repository and revoke Repo owner"
+msgstr "Zablokuj repozytorium i odbierz Repo owner"
+
+#: verification/admin.py:48 verification/admin.py:111
+#, python-format
+msgid "Blocked %(count)s."
+msgstr "Zablokowano: %(count)s."
+
+#: verification/admin.py:50
+msgid "Re-check on GitHub now"
+msgstr "Sprawdź teraz ponownie na GitHubie"
+
+#: verification/admin.py:60
+#, python-format
+msgid ""
+"Confirmed %(confirmed)s, needs review %(review)s, removed %(removed)s, retry "
+"later %(kept)s."
+msgstr "Potwierdzono %(confirmed)s, do weryfikacji %(review)s, usunięto %(removed)s, ponów później %(kept)s."
+
+#: verification/admin.py:101
+msgid "Revoke Live"
+msgstr "Odbierz Live"
+
+#: verification/admin.py:106
+msgid "Block the domain and revoke Live"
+msgstr "Zablokuj domenę i odbierz Live"
+
+#: verification/admin.py:113
 msgid "Re-run verification now"
 msgstr "Uruchom weryfikację ponownie"
 
-#: verification/admin.py:42
+#: verification/admin.py:124
 #, python-format
 msgid "Confirmed %(confirmed)s, retry later %(kept)s, removed %(removed)s."
 msgstr ""
 "Potwierdzone: %(confirmed)s, ponowna próba później: %(kept)s, usunięte: "
 "%(removed)s."
 
-#: verification/admin.py:44
+#: verification/admin.py:126
 #, python-format
 msgid "%(count)s row(s) skipped: not verified, or over the limit of %(limit)s."
 msgstr ""
@@ -2474,17 +2528,25 @@ msgid ""
 "This is the main address of a hosting service shared by many sites, so it "
 "cannot be verified. Use your own address on it (like yourname.github.io) or "
 "your own domain."
-msgstr "To główny adres hostingu współdzielonego przez wiele stron, więc nie da się go zweryfikować. Użyj własnego adresu w tym serwisie (np. yourname.github.io) albo własnej domeny."
+msgstr ""
+"To główny adres hostingu współdzielonego przez wiele stron, więc nie da się "
+"go zweryfikować. Użyj własnego adresu w tym serwisie (np. yourname.github."
+"io) albo własnej domeny."
 
 #: verification/domain.py:44
 msgid "This domain is already verified for another project."
 msgstr "Ta domena jest już zweryfikowana dla innego projektu."
 
 #: verification/domain.py:45
+msgid ""
+"This domain cannot be verified. If you think this is a mistake, write to us."
+msgstr "Tej domeny nie można zweryfikować. Jeśli uważasz, że to błąd, napisz do nas."
+
+#: verification/domain.py:46
 msgid "This domain does not exist in DNS. Check the spelling of the live URL."
 msgstr "Ta domena nie istnieje w DNS. Sprawdź pisownię adresu strony."
 
-#: verification/domain.py:46
+#: verification/domain.py:47
 msgid ""
 "No TXT records were found on this name yet. DNS changes can take up to an "
 "hour."
@@ -2492,7 +2554,7 @@ msgstr ""
 "Na tej nazwie nie znaleziono jeszcze rekordów TXT. Zmiany w DNS mogą trwać "
 "do godziny."
 
-#: verification/domain.py:47
+#: verification/domain.py:48
 msgid ""
 "TXT records were found, but none has your token. Check the value, character "
 "by character."
@@ -2500,15 +2562,15 @@ msgstr ""
 "Znaleziono rekordy TXT, ale żaden nie zawiera Twojego tokenu. Sprawdź "
 "wartość znak po znaku."
 
-#: verification/domain.py:48
+#: verification/domain.py:49
 msgid "DNS did not answer in time. Try again in a few minutes."
 msgstr "DNS nie odpowiedział na czas. Spróbuj ponownie za kilka minut."
 
-#: verification/domain.py:49
+#: verification/domain.py:50
 msgid "This address points to a private network and cannot be checked."
 msgstr "Ten adres wskazuje na sieć prywatną i nie można go sprawdzić."
 
-#: verification/domain.py:50
+#: verification/domain.py:51
 msgid ""
 "Your homepage could not be loaded (no answer within 5 seconds, or the "
 "connection failed)."
@@ -2516,36 +2578,36 @@ msgstr ""
 "Nie udało się wczytać Twojej strony głównej (brak odpowiedzi w ciągu 5 "
 "sekund albo błąd połączenia)."
 
-#: verification/domain.py:51
+#: verification/domain.py:52
 msgid ""
 "Your homepage did not answer with 200 OK. It must be public, without a login."
 msgstr ""
 "Twoja strona główna nie odpowiedziała 200 OK. Musi być publiczna, bez "
 "logowania."
 
-#: verification/domain.py:52
+#: verification/domain.py:53
 msgid ""
 "Your homepage answered with a server error. Try again when the site is up."
 msgstr ""
 "Twoja strona główna zwróciła błąd serwera. Spróbuj ponownie, gdy strona znów "
 "będzie działać."
 
-#: verification/domain.py:53
+#: verification/domain.py:54
 msgid ""
 "Your homepage redirects to another domain. The tag must be on this domain."
 msgstr ""
 "Twoja strona główna przekierowuje na inną domenę. Tag musi być na tej "
 "domenie."
 
-#: verification/domain.py:54
+#: verification/domain.py:55
 msgid "Your homepage is larger than 512 KB. Use the DNS method instead."
 msgstr "Twoja strona główna jest większa niż 512 KB. Użyj metody DNS."
 
-#: verification/domain.py:55
+#: verification/domain.py:56
 msgid "The page loaded, but the meta tag was not found in it."
 msgstr "Strona się wczytała, ale nie znaleziono w niej metatagu."
 
-#: verification/domain.py:56
+#: verification/domain.py:57
 msgid "The meta tag was found, but its token does not match. Copy it again."
 msgstr ""
 "Znaleziono metatag, ale jego token się nie zgadza. Skopiuj go ponownie."
@@ -2587,10 +2649,16 @@ msgid "This repository is too large to check automatically."
 msgstr "To repozytorium jest zbyt duże, by sprawdzić je automatycznie."
 
 #: verification/repo.py:277
+msgid ""
+"This repository cannot be linked. If you think this is a mistake, write to "
+"us."
+msgstr "Tego repozytorium nie można połączyć. Jeśli uważasz, że to błąd, napisz do nas."
+
+#: verification/repo.py:280
 msgid "This repository is private. Only public repositories can be checked."
 msgstr ""
 "To repozytorium jest prywatne. Można sprawdzać tylko publiczne repozytoria."
 
-#: verification/repo.py:296 verification/repo.py:462
+#: verification/repo.py:299 verification/repo.py:465
 msgid "This repository is already linked to another project."
 msgstr "To repozytorium jest już powiązane z innym projektem."

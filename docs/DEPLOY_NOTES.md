@@ -19,7 +19,7 @@ Set them in the real environment or in `/srv/shipmark/.env` (gitignored; real va
 | `SITE_URL` | no | Public address used in embed snippets, Open Graph, canonical links and the data export. Default `https://shipmark.me` (from `SITE_DOMAIN`); must be https. Dev default `http://localhost:8000` |
 | `ADMIN_URL` | yes | Private admin address, e.g. `staff-4f8k2/`. `admin/` is refused at startup |
 | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | yes | OAuth App. Callback URL: `https://YOUR.DOMAIN/accounts/github/login/callback/` |
-| `GITHUB_API_TOKEN` | recommended | Token with **no scopes**; lifts the repo check limit from 60 to 5000 requests/hour |
+| `GITHUB_API_TOKEN` | **yes** (for `reverify_repos`) | Fine-grained or classic token with **no scopes** (public data only). Lifts GitHub's limit from 60 to 5000 requests/hour. One repo check costs up to ~10 requests, so without it the weekly re-check of repositories stops at the limit after a handful of repos (nothing breaks: it continues next run) |
 | `MEDIA_ROOT` | no | Folder for uploads. Default `<project>/media` |
 | `SECURE_HSTS_SECONDS` | no | Default 3600. Raise to 31536000 after HTTPS has worked for a few days |
 | `SECURE_HSTS_INCLUDE_SUBDOMAINS`, `SECURE_HSTS_PRELOAD` | no | Default true |
@@ -172,6 +172,11 @@ DJANGO_SETTINGS_MODULE=config.settings.prod
 
 # Domain re-verification (Live hallmark): once a day. Re-checks domains not confirmed in 30 days.
 30 4 * * *    cd /srv/shipmark && flock -n /tmp/shipmark-reverify.lock .venv/bin/python manage.py reverify_domains >> /var/log/shipmark/reverify.log 2>&1
+
+# Repository re-verification (Repo owner): once a day. Each link is re-checked when its last check is
+# 7 days old (TRUST_REVERIFY_REPOS_DAYS), plus links waiting for a re-check or for GitHub statistics.
+# Needs GITHUB_API_TOKEN. A rate limit ends the run early; the rest is done the next day.
+45 4 * * *    cd /srv/shipmark && flock -n /tmp/shipmark-repos.lock .venv/bin/python manage.py reverify_repos >> /var/log/shipmark/repos.log 2>&1
 ```
 
 Create the log directory once: `mkdir -p /var/log/shipmark` (owned by the user that runs cron).
@@ -186,6 +191,7 @@ Check by hand:
 ```bash
 DJANGO_SETTINGS_MODULE=config.settings.prod .venv/bin/python manage.py check_uptime -v 2   # lists sites that are down
 DJANGO_SETTINGS_MODULE=config.settings.prod .venv/bin/python manage.py reverify_domains -v 2
+DJANGO_SETTINGS_MODULE=config.settings.prod .venv/bin/python manage.py reverify_repos -v 2      # lists removed / review
 ```
 
 ## Backups

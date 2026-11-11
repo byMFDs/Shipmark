@@ -30,7 +30,7 @@ from django.utils.translation import gettext as _
 
 from config import branding
 from moderation import audit
-from .models import RepoLink
+from .models import Block, RepoLink
 
 logger = logging.getLogger(__name__)
 
@@ -273,6 +273,9 @@ def fetch_facts(full_name, github_user_id, project=None):
 
     with _Api() as api:
         repo = _repo_json(api, full_name)
+        if Block.repo_blocked(repo["id"]):
+            raise RepoCheckError("blocked", _("This repository cannot be linked. If you think this is a mistake, "
+                                              "write to us."))
         if repo.get("private"):
             raise RepoCheckError("private", _("This repository is private. Only public repositories can be checked."))
         base = _base(repo["full_name"])  # the current name, after a rename
@@ -440,7 +443,7 @@ def run_check(project, github_user_id, actor=None):
     try:
         facts = fetch_facts(project.repo_full_name, github_user_id, project)
     except RepoCheckError as exc:
-        if exc.code in ("not_found", "private", "moved", "taken", "invalid"):
+        if exc.code in ("not_found", "private", "moved", "taken", "invalid", "blocked"):
             remove_link(project, exc.code, actor=actor)
         raise
 
@@ -500,3 +503,65 @@ def store_link(project, facts, old, actor=None):
         elif link.is_verified and (created or was in (RepoLink.Review.NEEDS_REVIEW, RepoLink.Review.NEEDS_RECHECK)):
             audit.log("hallmark.authored.earned", project, actor=actor, repo=link.repo_full_name)
     return link
+
+
+# ---------- Re-verification (reverify_repos) ----------
+
+REVERIFY_REMOVE = ("not_found", "private", "blocked")  # definite answers from GitHub or staff
+
+
+def reverify_link(link, actor=None):
+    """Check a stored link again: by repo id first, then the facts. Returns the outcome:
+
+    "confirmed" (still passes), "review" (passes, waits for a review), "removed" (definite: gone,
+    private, another repository or owner, blocked) or "kept" (GitHub did not answer properly:
+    nothing changes, the next run tries again). A rate limit is raised, so the command can stop.
+    Every change is logged in AuditLog (by remove_link, mark_recheck, follow_rename, store_link).
+    """
+    from accounts.github import github_id  # here: accounts imports projects, which imports this module
+
+    project = link.project
+    try:
+        with _Api() as api:
+            repo = repo_by_id(api, link.github_repo_id)
+    except RepoCheckError as exc:
+        if exc.code == "rate_limited":
+            raise
+        if exc.code == "not_found":  # deleted, or private (both look the same to a public request)
+            remove_link(project, "gone", actor=actor, source="reverify")
+            return "removed"
+        return "kept"
+    user_id = github_id(project.owner)
+    if user_id is None:  # the GitHub sign-in is gone: nothing to compare the owner with
+        mark_recheck(link, "no_github_account", actor=actor, source="reverify")
+        return "review"
+    try:
+        facts = fetch_facts(repo["full_name"], user_id, project)
+    except RepoCheckError as exc:
+        if exc.code == "rate_limited":
+            raise
+        if exc.code in REVERIFY_REMOVE:
+            remove_link(project, exc.code, actor=actor, source="reverify")
+            return "removed"
+        return "kept"
+    change = identity_change(link, facts.repo_id, facts.owner_id, facts.full_name)
+    if change in ("recreated", "transferred") or facts.is_fork or not facts.is_owner:
+        reason = change if change in ("recreated", "transferred") else "fork" if facts.is_fork else "not_owner"
+        remove_link(project, reason, actor=actor, source="reverify")
+        return "removed"
+    follow_rename(project, link, facts, actor)
+    link = store_link(project, facts, link, actor)
+    return "review" if link.review_state == RepoLink.Review.NEEDS_REVIEW else "confirmed"
+
+
+def due_links(now=None):
+    """Links to re-check: not checked for TRUST_REVERIFY_REPOS_DAYS, waiting for a re-check, or with
+    GitHub statistics still pending for more than TRUST_STATS_RETRY_HOURS. Suspended users are skipped."""
+    now = now or timezone.now()
+    week = now - timedelta(days=settings.TRUST_REVERIFY_REPOS_DAYS)
+    stats = now - timedelta(hours=settings.TRUST_STATS_RETRY_HOURS)
+    return (RepoLink.objects
+            .filter(Q(checked_at__lt=week) | Q(review_state=RepoLink.Review.NEEDS_RECHECK)
+                    | Q(active_weeks__isnull=True, checked_at__lt=stats))
+            .exclude(project__owner__is_suspended=True)
+            .select_related("project", "project__owner").order_by("checked_at"))

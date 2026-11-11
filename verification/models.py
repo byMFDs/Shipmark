@@ -119,3 +119,45 @@ class UptimeCheck(models.Model):
 
     def __str__(self):
         return f"{self.project_id} {self.checked_at:%Y-%m-%d %H:%M} {'ok' if self.ok else 'down'}"
+
+
+class Block(models.Model):
+    """A repository or domain staff decided must not earn a mark again (review queue in the admin).
+
+    Repositories are blocked by GitHub repo id (a rename does not escape it), domains by domain_key.
+    """
+
+    class Kind(models.TextChoices):
+        REPO = "repo", "Repository"
+        DOMAIN = "domain", "Domain"
+
+    kind = models.CharField(max_length=6, choices=Kind.choices)
+    value = models.CharField(max_length=253)  # repo id as text, or domain_key
+    label = models.CharField(max_length=253, blank=True)  # readable: "owner/name" or the domain
+    reason = models.CharField(max_length=200, blank=True)  # internal note, never shown to the user
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
+                                   related_name="+")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["kind", "value"], name="unique_block")]
+
+    def __str__(self):
+        return f"{self.kind}: {self.label or self.value}"
+
+    @classmethod
+    def repo_blocked(cls, repo_id):
+        return cls.objects.filter(kind=cls.Kind.REPO, value=str(repo_id)).exists()
+
+    @classmethod
+    def domain_blocked(cls, key):
+        return cls.objects.filter(kind=cls.Kind.DOMAIN, value=key).exists()
+
+
+class RepoReview(RepoLink):
+    """The admin review queue: repo links waiting for a review or a re-check (same rows as RepoLink)."""
+
+    class Meta:
+        proxy = True
+        verbose_name = "repository review"
+        verbose_name_plural = "review queue"

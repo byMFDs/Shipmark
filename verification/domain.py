@@ -25,7 +25,7 @@ from django.utils.translation import gettext_lazy as _
 from config import branding
 from moderation import audit
 
-from .models import DomainVerification
+from .models import Block, DomainVerification
 from .net import BlockedURL, FetchError, safe_fetch
 
 logger = logging.getLogger(__name__)
@@ -42,6 +42,7 @@ MESSAGES = {
     "shared_host": _("This is the main address of a hosting service shared by many sites, so it cannot be "
                      "verified. Use your own address on it (like yourname.github.io) or your own domain."),
     "taken": _("This domain is already verified for another project."),
+    "blocked_domain": _("This domain cannot be verified. If you think this is a mistake, write to us."),
     "dns_nxdomain": _("This domain does not exist in DNS. Check the spelling of the live URL."),
     "dns_no_txt": _("No TXT records were found on this name yet. DNS changes can take up to an hour."),
     "dns_wrong_txt": _("TXT records were found, but none has your token. Check the value, character by character."),
@@ -254,6 +255,9 @@ def verify(row, method, actor=None):
     if is_shared_host(row.domain):
         _save_error(row, "shared_host", now)
         raise DomainCheckError("shared_host")
+    if Block.domain_blocked(row.domain_key):
+        _save_error(row, "blocked_domain", now)
+        raise DomainCheckError("blocked_domain")
     if taken_by_other(row):
         _save_error(row, "taken", now)
         raise DomainCheckError("taken")
@@ -296,6 +300,8 @@ def reverify(row, now=None):
     try:
         if domain_key(host_from_url(row.project.live_url) or "") != row.domain_key:
             raise DomainCheckError("no_url")  # the live URL moved away; Live no longer applies
+        if Block.domain_blocked(row.domain_key):
+            raise DomainCheckError("blocked_domain")
         run_method(row, row.method)
     except DomainCheckError as exc:
         expired = row.last_confirmed_at is None or row.last_confirmed_at < now - LIVE_MAX_AGE

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 23:01+0000\n"
+"POT-Creation-Date: 2026-11-11 23:08+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Profile"
 msgstr "Профіль"
 
-#: accounts/admin.py:42 config/settings/base.py:296
+#: accounts/admin.py:42 config/settings/base.py:305
 msgid "Moderation"
 msgstr "Модерація"
 
@@ -151,64 +151,72 @@ msgstr "Ваш акаунт і все, що в ньому було, видале
 msgid "Proof, not promises."
 msgstr "Докази, а не обіцянки."
 
-#: config/settings/base.py:237
+#: config/settings/base.py:243
 msgid "Admin"
 msgstr "Адмінка"
 
-#: config/settings/base.py:273 config/settings/base.py:275
+#: config/settings/base.py:279 config/settings/base.py:281
 #: moderation/dashboard.py:44
 msgid "Users"
 msgstr "Користувачі"
 
-#: config/settings/base.py:279 config/settings/base.py:281
+#: config/settings/base.py:285 config/settings/base.py:287
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:282 templates/pages/landing.html:264
+#: config/settings/base.py:288 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
-#: config/settings/base.py:283 projects/forms.py:26
+#: config/settings/base.py:289 projects/forms.py:26
 #: templates/projects/detail.html:147
 msgid "Tags"
 msgstr "Теги"
 
-#: config/settings/base.py:284
+#: config/settings/base.py:290
 msgid "Tools"
 msgstr "Інструменти"
 
-#: config/settings/base.py:288
+#: config/settings/base.py:294
 msgid "Verification"
 msgstr "Підтвердження"
 
-#: config/settings/base.py:290
+#: config/settings/base.py:296
+msgid "Review queue"
+msgstr "Черга перевірки"
+
+#: config/settings/base.py:298
 msgid "Repositories"
 msgstr "Репозиторії"
 
-#: config/settings/base.py:291
+#: config/settings/base.py:299
 msgid "Domains"
 msgstr "Домени"
 
-#: config/settings/base.py:292
+#: config/settings/base.py:300
 msgid "Uptime checks"
 msgstr "Перевірки доступності"
 
-#: config/settings/base.py:298
+#: config/settings/base.py:301
+msgid "Blocked repos and domains"
+msgstr "Заблоковані репозиторії й домени"
+
+#: config/settings/base.py:307
 msgid "Reports"
 msgstr "Скарги"
 
-#: config/settings/base.py:300
+#: config/settings/base.py:309
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:301 projects/admin.py:44
+#: config/settings/base.py:310 projects/admin.py:44
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:305 config/settings/base.py:307
+#: config/settings/base.py:314 config/settings/base.py:316
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
@@ -2445,17 +2453,63 @@ msgstr "Я приймаю Умови"
 msgid "Create account"
 msgstr "Створити акаунт"
 
-#: verification/admin.py:31
+#: verification/admin.py:33
+msgid "Approve (the review reasons are fine)"
+msgstr "Схвалити (причини перевірки в порядку)"
+
+#: verification/admin.py:36
+#, python-format
+msgid "Approved %(count)s."
+msgstr "Схвалено: %(count)s."
+
+#: verification/admin.py:38
+msgid "Revoke Repo owner"
+msgstr "Відкликати «Власник репозиторію»"
+
+#: verification/admin.py:41 verification/admin.py:104
+#, python-format
+msgid "Revoked %(count)s."
+msgstr "Відкликано: %(count)s."
+
+#: verification/admin.py:43
+msgid "Block the repository and revoke Repo owner"
+msgstr "Заблокувати репозиторій і відкликати «Власник репозиторію»"
+
+#: verification/admin.py:48 verification/admin.py:111
+#, python-format
+msgid "Blocked %(count)s."
+msgstr "Заблоковано: %(count)s."
+
+#: verification/admin.py:50
+msgid "Re-check on GitHub now"
+msgstr "Перевірити на GitHub зараз"
+
+#: verification/admin.py:60
+#, python-format
+msgid ""
+"Confirmed %(confirmed)s, needs review %(review)s, removed %(removed)s, retry "
+"later %(kept)s."
+msgstr "Підтверджено %(confirmed)s, на перевірку %(review)s, знято %(removed)s, повторити пізніше %(kept)s."
+
+#: verification/admin.py:101
+msgid "Revoke Live"
+msgstr "Відкликати Live"
+
+#: verification/admin.py:106
+msgid "Block the domain and revoke Live"
+msgstr "Заблокувати домен і відкликати Live"
+
+#: verification/admin.py:113
 msgid "Re-run verification now"
 msgstr "Перевірити ще раз зараз"
 
-#: verification/admin.py:42
+#: verification/admin.py:124
 #, python-format
 msgid "Confirmed %(confirmed)s, retry later %(kept)s, removed %(removed)s."
 msgstr ""
 "Підтверджено: %(confirmed)s, повторимо пізніше: %(kept)s, знято: %(removed)s."
 
-#: verification/admin.py:44
+#: verification/admin.py:126
 #, python-format
 msgid "%(count)s row(s) skipped: not verified, or over the limit of %(limit)s."
 msgstr ""
@@ -2470,17 +2524,25 @@ msgid ""
 "This is the main address of a hosting service shared by many sites, so it "
 "cannot be verified. Use your own address on it (like yourname.github.io) or "
 "your own domain."
-msgstr "Це головна адреса хостингу, яким користується багато сайтів, тому її не можна підтвердити. Вкажіть свою адресу на ньому (наприклад, yourname.github.io) або власний домен."
+msgstr ""
+"Це головна адреса хостингу, яким користується багато сайтів, тому її не "
+"можна підтвердити. Вкажіть свою адресу на ньому (наприклад, yourname.github."
+"io) або власний домен."
 
 #: verification/domain.py:44
 msgid "This domain is already verified for another project."
 msgstr "Цей домен уже підтверджено для іншого проєкту."
 
 #: verification/domain.py:45
+msgid ""
+"This domain cannot be verified. If you think this is a mistake, write to us."
+msgstr "Цей домен не можна підтвердити. Якщо вважаєте, що це помилка, напишіть нам."
+
+#: verification/domain.py:46
 msgid "This domain does not exist in DNS. Check the spelling of the live URL."
 msgstr "Такого домену немає в DNS. Перевірте написання адреси сайту."
 
-#: verification/domain.py:46
+#: verification/domain.py:47
 msgid ""
 "No TXT records were found on this name yet. DNS changes can take up to an "
 "hour."
@@ -2488,7 +2550,7 @@ msgstr ""
 "На цьому імені поки немає TXT-записів. Зміни в DNS можуть з'являтися до "
 "години."
 
-#: verification/domain.py:47
+#: verification/domain.py:48
 msgid ""
 "TXT records were found, but none has your token. Check the value, character "
 "by character."
@@ -2496,15 +2558,15 @@ msgstr ""
 "TXT-записи знайдено, але в жодному немає вашого токена. Звірте значення "
 "посимвольно."
 
-#: verification/domain.py:48
+#: verification/domain.py:49
 msgid "DNS did not answer in time. Try again in a few minutes."
 msgstr "DNS не відповів вчасно. Спробуйте за кілька хвилин."
 
-#: verification/domain.py:49
+#: verification/domain.py:50
 msgid "This address points to a private network and cannot be checked."
 msgstr "Ця адреса веде в приватну мережу, її не можна перевірити."
 
-#: verification/domain.py:50
+#: verification/domain.py:51
 msgid ""
 "Your homepage could not be loaded (no answer within 5 seconds, or the "
 "connection failed)."
@@ -2512,34 +2574,34 @@ msgstr ""
 "Не вдалося завантажити головну сторінку (немає відповіді за 5 секунд або "
 "з'єднання не вдалося)."
 
-#: verification/domain.py:51
+#: verification/domain.py:52
 msgid ""
 "Your homepage did not answer with 200 OK. It must be public, without a login."
 msgstr ""
 "Головна сторінка не відповіла 200 OK. Вона має бути публічною, без входу."
 
-#: verification/domain.py:52
+#: verification/domain.py:53
 msgid ""
 "Your homepage answered with a server error. Try again when the site is up."
 msgstr ""
 "Головна сторінка відповіла помилкою сервера. Спробуйте, коли сайт запрацює."
 
-#: verification/domain.py:53
+#: verification/domain.py:54
 msgid ""
 "Your homepage redirects to another domain. The tag must be on this domain."
 msgstr ""
 "Головна сторінка переспрямовує на інший домен. Тег має бути саме на цьому "
 "домені."
 
-#: verification/domain.py:54
+#: verification/domain.py:55
 msgid "Your homepage is larger than 512 KB. Use the DNS method instead."
 msgstr "Головна сторінка більша за 512 КБ. Скористайтеся способом через DNS."
 
-#: verification/domain.py:55
+#: verification/domain.py:56
 msgid "The page loaded, but the meta tag was not found in it."
 msgstr "Сторінка завантажилася, але метатегу в ній немає."
 
-#: verification/domain.py:56
+#: verification/domain.py:57
 msgid "The meta tag was found, but its token does not match. Copy it again."
 msgstr "Метатег знайдено, але токен не збігається. Скопіюйте його ще раз."
 
@@ -2578,9 +2640,15 @@ msgid "This repository is too large to check automatically."
 msgstr "Цей репозиторій завеликий для автоматичної перевірки."
 
 #: verification/repo.py:277
+msgid ""
+"This repository cannot be linked. If you think this is a mistake, write to "
+"us."
+msgstr "Цей репозиторій не можна прив'язати. Якщо вважаєте, що це помилка, напишіть нам."
+
+#: verification/repo.py:280
 msgid "This repository is private. Only public repositories can be checked."
 msgstr "Цей репозиторій приватний. Перевіряти можна лише публічні."
 
-#: verification/repo.py:296 verification/repo.py:462
+#: verification/repo.py:299 verification/repo.py:465
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."

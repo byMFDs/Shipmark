@@ -157,6 +157,12 @@ GITHUB_API_TOKEN = env.str("GITHUB_API_TOKEN", default="")
 # the wide margin. Commit dates are written by the author, so this only catches careless copies.
 TRUST_IMPORTED_HISTORY_DAYS = 90
 
+# Repo owner is checked again (repo id, owner id, visibility, facts) when the last check is this old.
+# reverify_repos runs daily from cron, so the work is spread over the week.
+TRUST_REVERIFY_REPOS_DAYS = 7
+# GitHub computes contributor statistics in the background (202). Ask again after this many hours.
+TRUST_STATS_RETRY_HOURS = 20
+
 # Live: bare addresses of hosting services where each user gets a subdomain. Nobody "controls"
 # github.io itself, so it is refused with a clear message (yourname.github.io is fine).
 # Compared without "www.". A Public Suffix List would be complete, but it is a new dependency.
@@ -287,9 +293,12 @@ UNFOLD = {
             {
                 "title": _("Verification"),
                 "items": [
+                    {"title": _("Review queue"), "icon": "fact_check", "link": reverse_lazy("admin:verification_reporeview_changelist"),
+                     "badge": "verification.review.review_queue_badge"},
                     {"title": _("Repositories"), "icon": "code", "link": reverse_lazy("admin:verification_repolink_changelist")},
                     {"title": _("Domains"), "icon": "dns", "link": reverse_lazy("admin:verification_domainverification_changelist")},
                     {"title": _("Uptime checks"), "icon": "monitor_heart", "link": reverse_lazy("admin:verification_uptimecheck_changelist")},
+                    {"title": _("Blocked repos and domains"), "icon": "block", "link": reverse_lazy("admin:verification_block_changelist")},
                 ],
             },
             {
