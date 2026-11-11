@@ -13,6 +13,8 @@ class RepoLink(models.Model):
     project = models.OneToOneField("projects.Project", on_delete=models.CASCADE, related_name="repo_link")
     repo_full_name = models.CharField(max_length=140)  # as GitHub spells it: "owner/repo"
     github_repo_id = models.BigIntegerField(unique=True)  # does not change when the repo is renamed
+    # The account that owns the repository on GitHub. Changes only on a transfer. Empty: not backfilled yet.
+    github_owner_id = models.BigIntegerField(null=True, blank=True)
     is_owner = models.BooleanField(default=False)  # a personal, non-fork repo owned by the user
     user_commit_count = models.PositiveIntegerField(default=0)
     first_commit_at = models.DateTimeField(null=True, blank=True)

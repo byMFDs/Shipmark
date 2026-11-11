@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from accounts.forms import StyledFormMixin
 from verification.domain import forget_other_domains
-from verification.models import RepoLink
+from verification.repo import remove_link
 
 from .models import MAX_LOG_LENGTH, BuildLogEntry, Project, Tag, Tool, unique_slug
 
@@ -112,7 +112,7 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
         self.save_m2m()
         if not creating and "repo_full_name" in self.changed_data:
             # The old check was for another repository. Remove it so it stops blocking that repo.
-            RepoLink.objects.filter(project=project).delete()
+            remove_link(project, "repo_changed", actor=project.owner)
         if not creating and "live_url" in self.changed_data:
             # Same idea for domains: a verification for the old domain must not keep blocking it.
             forget_other_domains(project, actor=project.owner)

@@ -1,13 +1,16 @@
+from io import StringIO
 from unittest.mock import patch
 
 import httpx
 from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
+from django.core.management import call_command
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
+from moderation.models import AuditLog
 from projects.forms import ProjectForm
 from projects.models import Project
 from projects.proof import compute_hallmarks
@@ -264,3 +267,97 @@ class StaleLinkTests(RepoCheckTestCase):
         self.check(contributors=[[]])
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="ME/Tool")
         self.assertTrue(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
+
+
+class RepoIdentityTests(RepoCheckTestCase):
+    """Repositories are compared by GitHub ids (repo id, owner id), never by names."""
+
+    def test_owner_id_is_stored(self):
+        self.check(contributors=[[person(commits=3)]])
+        self.assertEqual(RepoLink.objects.get().github_owner_id, ME)
+
+    def test_renamed_repo_is_followed_by_id_and_project_name_updated(self):
+        self.check(contributors=[[person(commits=3)]])
+        moved = {"/repos/me/tool": lambda request: httpx.Response(
+            301, headers={"location": "https://api.github.com/repositories/77"})}
+        patcher, seen = mock_github(repo=repo_json(name="me/tool-v2"), contributors=[[person(commits=3)]], extra=moved)
+        with patcher:
+            result = run_check(self.project, ME)
+        self.assertEqual(result.outcome, AUTHORED)
+        self.assertIn("/repositories/77", seen)
+        self.project.refresh_from_db()
+        self.assertEqual(self.project.repo_full_name, "me/tool-v2")
+        self.assertEqual(RepoLink.objects.get().repo_full_name, "me/tool-v2")
+        self.assertTrue(AuditLog.objects.filter(action="repo.renamed").exists())
+        self.assertTrue(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
+
+    def test_deleted_and_recreated_repo_is_a_new_repository(self):
+        self.check(contributors=[[person(commits=3)]])
+        self.check(repo=repo_json(repo_id=999), contributors=[[person(commits=3)]])
+        entry = AuditLog.objects.get(action="hallmark.authored.removed")
+        self.assertEqual(entry.metadata["reason"], "recreated")
+        self.assertEqual(RepoLink.objects.get().github_repo_id, 999)
+
+    def test_repo_transferred_away_removes_the_mark_and_logs(self):
+        self.check(contributors=[[person(commits=3)]])
+        result = self.check(repo=repo_json(owner_id=5), contributors=[[person(commits=3)]])
+        self.assertEqual(result.outcome, TOO_FEW)
+        self.assertFalse(RepoLink.objects.exists())
+        reasons = [e.metadata["reason"] for e in AuditLog.objects.filter(action="hallmark.authored.removed")]
+        self.assertEqual(reasons, ["transferred"])
+
+    def test_every_removal_is_logged(self):
+        self.check(contributors=[[person(commits=3)]])
+        with self.assertRaises(RepoCheckError):
+            self.check(repo=repo_json(private=True))
+        entry = AuditLog.objects.get(action="hallmark.authored.removed")
+        self.assertEqual(entry.metadata["reason"], "private")
+        self.assertEqual(entry.metadata["repo_id"], 77)
+
+    def test_changing_the_repo_in_the_form_logs_the_removal(self):
+        self.check(contributors=[[person(commits=3)]])
+        form = ProjectForm({"name": "Tallyhook", "tagline": "A tagline", "repo_full_name": "me/other"},
+                           instance=self.project)
+        self.assertTrue(form.is_valid(), form.errors)
+        form.save()
+        self.assertFalse(RepoLink.objects.exists())
+        self.assertEqual(AuditLog.objects.get(action="hallmark.authored.removed").metadata["reason"], "repo_changed")
+
+
+class BackfillRepoFactsTests(RepoCheckTestCase):
+    def run_command(self, **mock_args):
+        out = StringIO()
+        patcher, seen = mock_github(**mock_args)
+        with patcher:
+            call_command("backfill_repo_facts", stdout=out)
+        return out.getvalue(), seen
+
+    def old_link(self, is_owner=True):
+        return RepoLink.objects.create(project=self.project, repo_full_name="me/tool", github_repo_id=77,
+                                       is_owner=is_owner, checked_at=timezone.now())
+
+    def test_fills_owner_id_by_repo_id(self):
+        link = self.old_link()
+        output, seen = self.run_command(extra={"/repositories/77": lambda r: httpx.Response(200, json=repo_json())})
+        link.refresh_from_db()
+        self.assertEqual(link.github_owner_id, ME)
+        self.assertIn("Filled 1", output)
+        self.assertEqual(seen, ["/repositories/77"])
+
+    def test_owner_changed_is_left_alone_and_nothing_removed(self):
+        link = self.old_link()
+        output, _seen = self.run_command(extra={"/repositories/77": lambda r: httpx.Response(200, json=repo_json(owner_id=5))})
+        link.refresh_from_db()
+        self.assertIsNone(link.github_owner_id)
+        self.assertIn("owner changed", output)
+        self.assertTrue(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
+
+    def test_gone_and_rate_limit_change_nothing(self):
+        link = self.old_link()
+        self.run_command(extra={"/repositories/77": lambda r: httpx.Response(404, json={})})
+        output, _seen = self.run_command(extra={"/repositories/77": lambda r: httpx.Response(
+            403, json={"message": "API rate limit exceeded"}, headers={"x-ratelimit-remaining": "0"})})
+        self.assertIn("Rate limited", output)
+        link.refresh_from_db()
+        self.assertIsNone(link.github_owner_id)
+        self.assertTrue(RepoLink.objects.filter(pk=link.pk).exists())

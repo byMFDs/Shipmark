@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods, require_POST
 
-from allauth.socialaccount.models import SocialAccount
+from accounts.github import github_id as github_user_id
 
 from config.ratelimit import is_limited
 from verification import domain as domains
@@ -112,17 +112,11 @@ def preview(request):
 
 # ---------- Repository check ----------
 
-def _github_user_id(user):
-    """GitHub's numeric account id from the sign-in (it does not change when the login is renamed)."""
-    uid = SocialAccount.objects.filter(user=user, provider="github").values_list("uid", flat=True).first()
-    return int(uid) if uid and str(uid).isdigit() else None
-
-
 @owner_project
 @require_POST
 def repo_check(request, project):
     back = redirect("projects:edit", username=project.owner.username, slug=project.slug)
-    github_id = _github_user_id(request.user)
+    github_id = github_user_id(request.user)
     if not project.repo_full_name:
         messages.error(request, _("Add a GitHub repository and save the project first."))
     elif github_id is None:
@@ -131,7 +125,7 @@ def repo_check(request, project):
         messages.error(request, _("This repository was checked a moment ago. You can check again in 10 minutes."))
     else:
         try:
-            result = run_check(project, github_id)
+            result = run_check(project, github_id, actor=request.user)
         except RepoCheckError as exc:
             messages.error(request, exc.message)
         else:

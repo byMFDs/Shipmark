@@ -3,7 +3,9 @@ import re
 
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from django.db import transaction
 
+from . import github
 from .usernames import generate_username
 
 
@@ -29,6 +31,17 @@ class AccountAdapter(DefaultAccountAdapter):
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
     def is_open_for_signup(self, request, sociallogin):
         return True  # GitHub sign-up is open
+
+    def pre_social_login(self, request, sociallogin):
+        """Every GitHub sign-in. allauth has already refreshed `extra_data` from GET /user by now."""
+        if sociallogin.is_existing:
+            github.refresh_login(sociallogin.user, sociallogin.account.extra_data)
+
+    def save_user(self, request, sociallogin, form=None):
+        """First sign-in: an old local account may still hold this login (its owner renamed on GitHub)."""
+        with transaction.atomic():
+            github.release_login(sociallogin.user.github_login, keep=sociallogin.user)
+            return super().save_user(request, sociallogin, form)
 
     def populate_user(self, request, sociallogin, data):
         """Runs on first login, before the confirmation step. Everything here can be edited later."""

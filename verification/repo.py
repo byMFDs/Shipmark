@@ -4,8 +4,10 @@ Talks only to the fixed host api.github.com. The user controls just the "owner/n
 which is validated strictly and URL-encoded, so it cannot change the host or path.
 (The `safe_fetch` guard is for user-supplied URLs; there is none here.)
 
-Ownership is compared by GitHub's numeric account id, not the login, because logins can be renamed.
-Only repositories that earn Authored are stored (see RepoLink).
+Identity is always compared by GitHub's numeric ids, never by names: the user by account id, the
+repository by repo id, its owner by owner id. Names can be renamed, and a freed name can be taken by
+someone else (a deleted repo recreated under the same name is a different repository).
+Only repositories that earn Authored are stored (see RepoLink). Every removal is logged (AuditLog).
 """
 import logging
 import re
@@ -22,6 +24,7 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from config import branding
+from moderation import audit
 from projects.proof import MIN_AUTHORED_COMMITS
 
 from .models import RepoLink
@@ -33,6 +36,8 @@ TIMEOUT = 6  # seconds per request
 DEADLINE = 25  # seconds for the whole check, so a slow GitHub cannot hold a worker for long
 CONTRIBUTORS_PAGES = 5  # 5 x 100 contributors, sorted by commits. Beyond that we say "too large".
 REPO_RE = re.compile(r"^[A-Za-z0-9_.-]{1,39}/[A-Za-z0-9_.-]{1,100}$")
+# Where GitHub points a renamed or transferred repository: GET /repos/old/name -> 301 to this.
+MOVED_RE = re.compile(r"^https://api\.github\.com/repositories/(\d{1,15})(?:[/?]|$)")
 
 # Outcomes after a successful look at GitHub.
 AUTHORED, TOO_FEW, NOT_YOURS = "authored", "too_few", "not_yours"
@@ -41,16 +46,18 @@ AUTHORED, TOO_FEW, NOT_YOURS = "authored", "too_few", "not_yours"
 class RepoCheckError(Exception):
     """The check could not finish. `message` is user-facing (already translated)."""
 
-    def __init__(self, code, message):
+    def __init__(self, code, message, moved_to=None):
         super().__init__(message)
         self.code = code
         self.message = message
+        self.moved_to = moved_to  # repo id from a 301, when GitHub says where the repository went
 
 
 @dataclass
 class RepoFacts:
     full_name: str
     repo_id: int
+    owner_id: int
     is_owner: bool
     commit_count: int
     first_commit_at: datetime | None = None
@@ -134,7 +141,9 @@ def _raise_for_status(response):
     if status in (200, 204):  # 204: an empty repository has no contributors
         return
     if status in (301, 302, 307, 308):
-        raise RepoCheckError("moved", _("This repository was renamed or moved. Enter its current name."))
+        match = MOVED_RE.match(response.headers.get("location", ""))
+        raise RepoCheckError("moved", _("This repository was renamed or moved. Enter its current name."),
+                             moved_to=int(match.group(1)) if match else None)
     if status in (404, 410, 451):
         raise RepoCheckError(
             "not_found",
@@ -178,26 +187,73 @@ def _last_page(response):
         return 1
 
 
+def _valid_name(full_name):
+    return bool(REPO_RE.match(full_name or "")) and not any(part in (".", "..") for part in full_name.split("/"))
+
+
+def _base(full_name):
+    owner_name, repo_name = full_name.split("/")
+    return f"/repos/{quote(owner_name, safe='')}/{quote(repo_name, safe='')}"
+
+
+def _repo_json(api, full_name):
+    """GET /repos/{full_name}, following one rename/transfer redirect by repo id. Checked shape."""
+    try:
+        repo, _response = api.json(_base(full_name))
+    except RepoCheckError as exc:
+        if exc.code != "moved" or exc.moved_to is None:
+            raise
+        repo, _response = api.json(f"/repositories/{exc.moved_to}")
+    return _checked(repo)
+
+
+def _checked(repo):
+    if (not isinstance(repo, dict) or not isinstance(repo.get("owner"), dict) or not isinstance(repo.get("id"), int)
+            or not isinstance(repo["owner"].get("id"), int) or not _valid_name(str(repo.get("full_name") or ""))):
+        raise _unavailable()
+    return repo
+
+
+def repo_by_id(api, repo_id):
+    """GET /repositories/{id}: the repository with this id, whatever its name is now. 404 = deleted or private."""
+    return _checked(api.json(f"/repositories/{int(repo_id)}")[0])
+
+
+def identity_change(link, repo_id, owner_id, full_name):
+    """How the repository GitHub shows now differs from the stored link, by ids first.
+
+    "recreated": another repository id (the old one was deleted, or the name now points elsewhere);
+    "transferred": same repository, another owner account; "renamed": same ids, another name; None: same.
+    """
+    if link is None:
+        return None
+    if link.github_repo_id != repo_id:
+        return "recreated"
+    if link.github_owner_id is not None and link.github_owner_id != owner_id:
+        return "transferred"
+    if link.repo_full_name.lower() != full_name.lower():
+        return "renamed"
+    return None
+
+
 def fetch_facts(full_name, github_user_id, project=None):
     """Ask GitHub about the repository. Raises RepoCheckError; never returns partial garbage.
 
     `project` is the project asking: its own existing link does not count as "taken".
     """
-    if not REPO_RE.match(full_name) or any(part in (".", "..") for part in full_name.split("/")):
+    if not _valid_name(full_name):
         raise RepoCheckError("invalid", _("Use the form owner/name, for example octocat/hello-world."))
-    owner_name, repo_name = full_name.split("/")
-    base = f"/repos/{quote(owner_name, safe='')}/{quote(repo_name, safe='')}"
 
     with _Api() as api:
-        repo, _response = api.json(base)
-        if not isinstance(repo, dict) or not isinstance(repo.get("owner"), dict) or not isinstance(repo.get("id"), int):
-            raise _unavailable()
+        repo = _repo_json(api, full_name)
         if repo.get("private"):
             raise RepoCheckError("private", _("This repository is private. Only public repositories can be checked."))
+        base = _base(repo["full_name"])  # the current name, after a rename
 
         facts = RepoFacts(
-            full_name=str(repo.get("full_name") or full_name),
+            full_name=str(repo["full_name"]),
             repo_id=repo["id"],
+            owner_id=repo["owner"]["id"],
             # A fork is not authorship: forking someone's project must not earn the mark.
             is_owner=repo["owner"].get("id") == github_user_id
             and repo["owner"].get("type") == "User"
@@ -251,7 +307,29 @@ def _taken(facts, project):
     return qs.exists()
 
 
-def run_check(project, github_user_id):
+def remove_link(project, reason, actor=None, **metadata):
+    """Delete the project's RepoLink (Repo owner is gone) and log it. Returns True if there was one."""
+    link = RepoLink.objects.filter(project=project).first()
+    if link is None:
+        return False
+    with transaction.atomic():
+        audit.log("hallmark.authored.removed", project, actor=actor, repo=link.repo_full_name,
+                  repo_id=link.github_repo_id, reason=reason, **metadata)
+        link.delete()
+    return True
+
+
+def _follow_rename(project, link, facts, actor):
+    """Same ids, new name on GitHub: keep the project pointing at its repository's current name."""
+    if project.repo_full_name.lower() == facts.full_name.lower():
+        return
+    audit.log("repo.renamed", project, actor=actor, old=project.repo_full_name, new=facts.full_name,
+              repo_id=facts.repo_id)
+    project.repo_full_name = facts.full_name
+    project.save(update_fields=["repo_full_name"])
+
+
+def run_check(project, github_user_id, actor=None):
     """Check `project.repo_full_name` for its owner and store the result. Returns CheckResult.
 
     A definite "no" (gone, private, not authored) removes the project's old RepoLink, so the
@@ -261,19 +339,26 @@ def run_check(project, github_user_id):
         facts = fetch_facts(project.repo_full_name, github_user_id, project)
     except RepoCheckError as exc:
         if exc.code in ("not_found", "private", "moved", "taken", "invalid"):
-            RepoLink.objects.filter(project=project).delete()
+            remove_link(project, exc.code, actor=actor)
         raise
 
+    old = RepoLink.objects.filter(project=project).first()
+    change = identity_change(old, facts.repo_id, facts.owner_id, facts.full_name)
+    if change in ("recreated", "transferred"):
+        remove_link(project, change, actor=actor, new_repo_id=facts.repo_id, new_owner_id=facts.owner_id)
+
     if not is_authored(facts.is_owner, facts.commit_count):
-        RepoLink.objects.filter(project=project).delete()
+        remove_link(project, "not_authored", actor=actor)
         outcome = TOO_FEW if facts.commit_count else NOT_YOURS
         return CheckResult(outcome, facts)
 
+    _follow_rename(project, old, facts, actor)
     try:
         with transaction.atomic():
             RepoLink.objects.update_or_create(project=project, defaults={
                 "repo_full_name": facts.full_name,
                 "github_repo_id": facts.repo_id,
+                "github_owner_id": facts.owner_id,
                 "is_owner": facts.is_owner,
                 "user_commit_count": facts.commit_count,
                 "first_commit_at": facts.first_commit_at,
