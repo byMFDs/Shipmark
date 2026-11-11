@@ -12,7 +12,7 @@ GitHub montre du code. LinkedIn montre des affirmations. {{ site_name }} essaie 
 
 Un projet peut obtenir trois poinçons. Chacun est un fait que notre serveur vérifie, et chacun disparaît dès que le fait n'est plus vrai.
 
-- **Repo owner.** Le projet lie un dépôt GitHub public. Nous demandons à l’API publique de GitHub s’il appartient au compte GitHub personnel de l’auteur et n’est pas un fork, et nous le recontrôlons chaque semaine.
+- **Repo owner.** Le projet lie un dépôt GitHub public. Nous demandons à l’API publique de GitHub s’il appartient au compte GitHub personnel de l’auteur et n’est pas un fork ; pour les dépôts d’organisations et d’équipes, l’auteur ajoute à la place un fichier contenant le jeton de ce projet. Nous le recontrôlons chaque semaine.
 - **Live.** L'auteur prouve qu'il contrôle le domaine du projet avec un jeton que nous générons : un enregistrement TXT dans le DNS ou une balise meta sur la page d'accueil. Nous le revérifions régulièrement, et le poinçon ne tient que tant que le domaine a été confirmé au cours des 35 derniers jours.
 - **Steady.** Dès qu'un projet a Live, nous ouvrons son adresse environ toutes les 3 heures. Steady exige au moins 40 vérifications sur les 30 derniers jours, dont au moins 95 % doivent obtenir une réponse sans erreur en moins de 5 secondes.
 

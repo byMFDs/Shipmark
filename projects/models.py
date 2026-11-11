@@ -49,6 +49,9 @@ class Project(models.Model):
     description = models.TextField(blank=True, max_length=5000)  # markdown
     live_url = models.URLField(max_length=200, blank=True)
     repo_full_name = models.CharField(max_length=140, blank=True)  # "owner/repo"
+    # Content of the verification file for organisation and team repositories (verification/repo.py).
+    # Random, made on first use, unique: never shared with or reused by another project.
+    repo_token = models.CharField(max_length=64, null=True, blank=True, unique=True, editable=False)
     tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
     built_with = models.ManyToManyField(Tool, blank=True, related_name="projects")  # self-declared
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.DRAFT, db_index=True)

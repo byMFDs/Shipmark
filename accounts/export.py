@@ -76,6 +76,7 @@ def _project(project, absolute):
             "github_repo_id": repo.github_repo_id,
             "github_owner_id": repo.github_owner_id,
             "is_owner": repo.is_owner,
+            "token_file_found": repo.token_file_found,
             "repo_created_at": _dt(repo.repo_created_at),
             "homepage": repo.homepage,
             "root_commit_sha": repo.root_commit_sha,

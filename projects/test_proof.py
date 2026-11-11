@@ -252,7 +252,7 @@ class PageTests(ProofTestCase):
         self.assertContains(response, 'class="hallmark-info"', count=3)
         self.assertContains(response, "ann/tally is owned by the author&#x27;s GitHub account.")
         self.assertContains(response, "Needs Live first.")
-        self.assertContains(response, "personal GitHub account and is not a fork")  # the rule
+        self.assertContains(response, "needs write access to the repository")  # the rule
         self.assertContains(response, 'href="/how-proof-works/#live"')
 
     def test_how_proof_works_in_english_and_ukrainian(self):

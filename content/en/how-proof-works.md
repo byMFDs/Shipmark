@@ -4,9 +4,11 @@ A project here can earn three hallmarks. Each one is a fact we check ourselves, 
 
 ## Repo owner {#authored}
 
-**What it means:** the GitHub repository linked to the project belongs to the personal GitHub account of the person who posted it. It does not prove who wrote the code.
+**What it means:** the GitHub repository linked to the project belongs to the personal GitHub account of the person who posted it, or (for organisation and team repositories) holds this project's verification file, which needs write access. It does not prove who wrote the code.
 
 **How it is checked:** the author links a public GitHub repository and presses "Check repository". We ask GitHub's public API about it. The mark is earned when the repository belongs to the author's personal GitHub account and is not a fork.
+
+**Organisation and team repositories:** the edit page gives each project its own random token. Add a file named `.shipmark-verify` with only that token in it to the root of the default branch, then check again. Only people who can push to the repository can add it, so it proves write access, not who wrote the code. Forks never count, on either path. The file is checked again every week; if it is gone, the mark is removed.
 
 Accounts and repositories are compared by GitHub's numeric ids, not by names: renaming an account or a repository changes nothing, and a deleted repository that someone recreates under the same name is a different repository. We only read public data: signing in never gives us access to private repositories.
 

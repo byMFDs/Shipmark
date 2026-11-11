@@ -57,7 +57,7 @@ class Command(BaseCommand):
         else:
             change = identity_change(link, facts.repo_id, facts.owner_id, facts.full_name)
             reason = (change if change in ("recreated", "transferred")
-                      else "fork" if facts.is_fork else None if facts.is_owner else "not_owner")
+                      else "fork" if facts.is_fork else None if facts.is_owner or facts.token_file else "not_owner")
             if reason is None:
                 if not dry:
                     follow_rename(link.project, link, facts, None)

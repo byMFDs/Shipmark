@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 23:17+0000\n"
+"POT-Creation-Date: 2026-11-11 23:28+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -497,7 +497,7 @@ msgstr "Selbst angegeben: Das prüfen wir nicht."
 msgid "Enter a public web address, like https://example.com."
 msgstr "Gib eine öffentliche Webadresse ein, zum Beispiel https://example.com."
 
-#: projects/forms.py:79 verification/repo.py:272
+#: projects/forms.py:79 verification/repo.py:280
 msgid "Use the form owner/name, for example octocat/hello-world."
 msgstr "Verwende das Format Besitzer/Name, zum Beispiel octocat/hello-world."
 
@@ -574,23 +574,22 @@ msgstr "Veröffentlicht"
 msgid "Hidden"
 msgstr "Verborgen"
 
-#: projects/models.py:139
+#: projects/models.py:142
 msgid "Update"
 msgstr "Update"
 
-#: projects/models.py:140 templates/projects/_log_entry.html:4
+#: projects/models.py:143 templates/projects/_log_entry.html:4
 msgid "Launched"
 msgstr "Gelauncht"
 
 #: projects/proof.py:27
 msgid ""
 "The linked public GitHub repository is owned by the author's personal GitHub "
-"account and is not a fork."
-msgstr ""
-"Das verknüpfte öffentliche GitHub-Repository gehört dem persönlichen GitHub-"
-"Konto der Person und ist kein Fork."
+"account, or holds this project's verification file, which needs write access "
+"to the repository. Forks never count."
+msgstr "Das verknüpfte öffentliche GitHub-Repository gehört dem persönlichen GitHub-Konto der Person oder enthält die Bestätigungsdatei dieses Projekts, wofür Schreibzugriff auf das Repository nötig ist. Forks zählen nie."
 
-#: projects/proof.py:30
+#: projects/proof.py:31
 msgid ""
 "The author proved control of the project's domain with a DNS record or a "
 "meta tag. It is checked again every 30 days and must be confirmed within 35."
@@ -599,7 +598,7 @@ msgstr ""
 "Eintrag oder einem Meta-Tag nachgewiesen. Das wird alle 30 Tage erneut "
 "geprüft und muss innerhalb von 35 Tagen bestätigt sein."
 
-#: projects/proof.py:35
+#: projects/proof.py:36
 #, no-python-format
 msgid ""
 "Live, and at least 95% of uptime checks succeeded over the last 30 days, "
@@ -608,61 +607,66 @@ msgstr ""
 "Live, und mindestens 95 % der Uptime-Prüfungen waren in den letzten 30 Tagen "
 "erfolgreich, bei mindestens 40 Prüfungen."
 
-#: projects/proof.py:76
+#: projects/proof.py:77
 msgid "No repository linked."
 msgstr "Kein Repository verknüpft."
 
-#: projects/proof.py:80 projects/proof.py:88
+#: projects/proof.py:81 projects/proof.py:92
 msgid "The repository check has not passed yet."
 msgstr "Die Repository-Prüfung wurde noch nicht bestanden."
 
-#: projects/proof.py:82
+#: projects/proof.py:83
 msgid "The repository is waiting for a routine manual review."
 msgstr "Das Repository wartet auf eine routinemäßige manuelle Prüfung."
 
-#: projects/proof.py:84
+#: projects/proof.py:85
 msgid "The repository is being checked again under the current rules."
 msgstr "Das Repository wird nach den aktuellen Regeln erneut geprüft."
 
-#: projects/proof.py:86
+#: projects/proof.py:87
 #, python-format
 msgid "%(repo)s is owned by the author's GitHub account."
 msgstr "%(repo)s gehört dem GitHub-Konto des Autors."
 
-#: projects/proof.py:93
+#: projects/proof.py:90
+#, python-format
+msgid "%(repo)s holds this project's verification file."
+msgstr "%(repo)s enthält die Bestätigungsdatei dieses Projekts."
+
+#: projects/proof.py:97
 msgid "No live URL."
 msgstr "Keine Live-URL."
 
-#: projects/proof.py:95
+#: projects/proof.py:99
 msgid "The live URL is not a public domain name, so it cannot be verified."
 msgstr ""
 "Die Live-URL ist kein öffentlicher Domainname und kann daher nicht "
 "verifiziert werden."
 
-#: projects/proof.py:98
+#: projects/proof.py:102
 #, python-format
 msgid "Control of %(domain)s confirmed %(date)s."
 msgstr "Kontrolle über %(domain)s am %(date)s bestätigt."
 
-#: projects/proof.py:102
+#: projects/proof.py:106
 msgid "The domain has not been verified yet."
 msgstr "Die Domain wurde noch nicht verifiziert."
 
-#: projects/proof.py:104
+#: projects/proof.py:108
 #, python-format
 msgid "Lost: %(domain)s failed re-verification."
 msgstr "Verloren: %(domain)s hat die erneute Verifizierung nicht bestanden."
 
-#: projects/proof.py:105
+#: projects/proof.py:109
 #, python-format
 msgid "Lost: %(domain)s was not confirmed in the last 35 days."
 msgstr "Verloren: %(domain)s wurde in den letzten 35 Tagen nicht bestätigt."
 
-#: projects/proof.py:110
+#: projects/proof.py:114
 msgid "Needs Live first."
 msgstr "Braucht zuerst Live."
 
-#: projects/proof.py:114
+#: projects/proof.py:118
 #, python-format
 msgid "%(percent)s%% of %(total)s check succeeded in the last 30 days."
 msgid_plural "%(percent)s%% of %(total)s checks succeeded in the last 30 days."
@@ -671,12 +675,12 @@ msgstr[0] ""
 msgstr[1] ""
 "%(percent)s %% von %(total)s Prüfungen in den letzten 30 Tagen erfolgreich."
 
-#: projects/proof.py:118
+#: projects/proof.py:122
 #, python-format
 msgid "%(total)s of %(min)s uptime checks so far."
 msgstr "Bisher %(total)s von %(min)s Uptime-Prüfungen."
 
-#: projects/proof.py:121
+#: projects/proof.py:125
 #, python-format
 msgid ""
 "%(percent)s%% of checks succeeded in the last 30 days; %(min)s%% needed."
@@ -684,93 +688,118 @@ msgstr ""
 "%(percent)s %% der Prüfungen in den letzten 30 Tagen erfolgreich; nötig sind "
 "%(min)s %%."
 
-#: projects/proof.py:158
+#: projects/proof.py:165
 msgid "Repository"
 msgstr "Repository"
 
-#: projects/proof.py:158
+#: projects/proof.py:165
 msgid "History"
 msgstr "Verlauf"
 
-#: projects/proof.py:163
+#: projects/proof.py:170
 #, python-format
 msgid ""
 "%(repo)s passed the ownership check on %(date)s and is waiting for a routine "
 "manual review."
-msgstr "%(repo)s hat die Eigentümerprüfung am %(date)s bestanden und wartet auf eine routinemäßige manuelle Prüfung."
+msgstr ""
+"%(repo)s hat die Eigentümerprüfung am %(date)s bestanden und wartet auf eine "
+"routinemäßige manuelle Prüfung."
 
-#: projects/proof.py:166
+#: projects/proof.py:173
 #, python-format
 msgid ""
 "%(repo)s is owned by the author's GitHub account, matched by account id. "
 "Checked %(date)s."
-msgstr "%(repo)s gehört dem GitHub-Konto der Person, abgeglichen über die Konto-ID. Geprüft am %(date)s."
+msgstr ""
+"%(repo)s gehört dem GitHub-Konto der Person, abgeglichen über die Konto-ID. "
+"Geprüft am %(date)s."
 
-#: projects/proof.py:167
+#: projects/proof.py:176
+#, python-format
+msgid ""
+"%(repo)s holds this project's verification file, which needs write access. "
+"Checked %(date)s."
+msgstr "%(repo)s enthält die Bestätigungsdatei dieses Projekts, wofür Schreibzugriff nötig ist. Geprüft am %(date)s."
+
+#: projects/proof.py:177
 msgid "Not a fork."
 msgstr "Kein Fork."
 
-#: projects/proof.py:169
+#: projects/proof.py:179
 #, python-format
 msgid "Repository created on GitHub %(date)s."
 msgstr "Repository auf GitHub angelegt am %(date)s."
 
-#: projects/proof.py:172
+#: projects/proof.py:182
 #, python-format
 msgid "First commit in its history: %(date)s."
 msgstr "Erster Commit im Verlauf: %(date)s."
 
-#: projects/proof.py:175
+#: projects/proof.py:185
 #, python-format
 msgid "Commits by the author: %(count)s, from %(first)s to %(last)s."
 msgstr "Commits der Person: %(count)s, vom %(first)s bis %(last)s."
 
-#: projects/proof.py:179
+#: projects/proof.py:189
 #, python-format
 msgid "Weeks with code changes by the author: %(weeks)s."
 msgstr "Wochen mit Codeänderungen der Person: %(weeks)s."
 
-#: projects/proof.py:183
+#: projects/proof.py:193
 msgid "No other project here has the same history."
 msgstr "Kein anderes Projekt hier hat denselben Verlauf."
 
-#: projects/proof.py:185
+#: projects/proof.py:195
 #, python-format
 msgid "%(repo)s is not verified. It is the author's own link."
 msgstr "%(repo)s ist nicht geprüft. Es ist ein Link der Person selbst."
 
-#: projects/proof.py:191
+#: projects/proof.py:201
 #, python-format
 msgid ""
 "Control of %(domain)s proven with a meta tag on %(first)s, last confirmed "
 "%(last)s."
-msgstr "Kontrolle über %(domain)s per Meta-Tag belegt am %(first)s, zuletzt bestätigt am %(last)s."
+msgstr ""
+"Kontrolle über %(domain)s per Meta-Tag belegt am %(first)s, zuletzt "
+"bestätigt am %(last)s."
 
-#: projects/proof.py:193
+#: projects/proof.py:203
 #, python-format
 msgid ""
 "Control of %(domain)s proven with a DNS record on %(first)s, last confirmed "
 "%(last)s."
-msgstr "Kontrolle über %(domain)s per DNS-Eintrag belegt am %(first)s, zuletzt bestätigt am %(last)s."
+msgstr ""
+"Kontrolle über %(domain)s per DNS-Eintrag belegt am %(first)s, zuletzt "
+"bestätigt am %(last)s."
 
-#: projects/proof.py:194 projects/proof.py:196 templates/pages/landing.html:75
+#: projects/proof.py:204 projects/proof.py:207 projects/proof.py:210
+#: templates/pages/landing.html:75
 msgid "Domain"
 msgstr "Domain"
 
-#: projects/proof.py:196
+#: projects/proof.py:207
 #, python-format
 msgid "The repository's website field on GitHub points to %(domain)s."
 msgstr "Das Website-Feld des Repositorys auf GitHub verweist auf %(domain)s."
 
-#: projects/proof.py:200 templates/projects/detail.html:102
+#: projects/proof.py:211
+#, python-format
+msgid ""
+"The repository holds this project's verification file, and %(domain)s is "
+"verified for the same project."
+msgstr "Das Repository enthält die Bestätigungsdatei dieses Projekts, und %(domain)s ist für dasselbe Projekt bestätigt."
+
+#: projects/proof.py:215 templates/projects/detail.html:102
 msgid "Uptime"
 msgstr "Uptime"
 
-#: projects/proof.py:201
+#: projects/proof.py:216
 #, python-format
 msgid ""
 "%(ok)s of %(total)s checks in the last 30 days got an answer from %(domain)s."
-msgstr "%(ok)s von %(total)s Prüfungen der letzten 30 Tage bekamen eine Antwort von %(domain)s."
+msgstr ""
+"%(ok)s von %(total)s Prüfungen der letzten 30 Tage bekamen eine Antwort von "
+"%(domain)s."
 
 #: projects/views.py:73
 msgid "Draft saved. Add screenshots, then publish."
@@ -780,35 +809,35 @@ msgstr "Entwurf gespeichert. Füge Screenshots hinzu und veröffentliche dann."
 msgid "Changes saved."
 msgstr "Änderungen gespeichert."
 
-#: projects/views.py:109
+#: projects/views.py:111
 msgid "The description is too long."
 msgstr "Die Beschreibung ist zu lang."
 
-#: projects/views.py:121
+#: projects/views.py:123
 msgid "Add a GitHub repository and save the project first."
 msgstr "Füge zuerst ein GitHub-Repository hinzu und speichere das Projekt."
 
-#: projects/views.py:123
+#: projects/views.py:125
 msgid "Sign in with GitHub to check a repository."
 msgstr "Melde dich mit GitHub an, um ein Repository zu prüfen."
 
-#: projects/views.py:125
+#: projects/views.py:127
 msgid ""
 "This repository was checked a moment ago. You can check again in 10 minutes."
 msgstr ""
 "Dieses Repository wurde gerade erst geprüft. In 10 Minuten kannst du es "
 "erneut prüfen."
 
-#: projects/views.py:133
+#: projects/views.py:135
 msgid "Repository checked. Repo owner earned."
 msgstr "Repository geprüft. Repo owner erhalten."
 
-#: projects/views.py:135
+#: projects/views.py:137
 msgid "Repository checked. Repo owner will appear after a short manual review."
 msgstr ""
 "Repository geprüft. Repo owner erscheint nach einer kurzen manuellen Prüfung."
 
-#: projects/views.py:137
+#: projects/views.py:139
 msgid ""
 "This repository is a fork. Forks cannot earn Repo owner; link the original "
 "repository."
@@ -816,52 +845,54 @@ msgstr ""
 "Dieses Repository ist ein Fork. Forks können Repo owner nicht erhalten; "
 "verknüpfe das ursprüngliche Repository."
 
-#: projects/views.py:139
-msgid "This repository is not owned by your personal GitHub account."
-msgstr "Dieses Repository gehört nicht deinem persönlichen GitHub-Konto."
+#: projects/views.py:141
+msgid ""
+"This repository is not owned by your personal GitHub account, and its "
+"verification file was not found."
+msgstr "Dieses Repository gehört nicht deinem persönlichen GitHub-Konto, und die Bestätigungsdatei wurde darin nicht gefunden."
 
-#: projects/views.py:176
+#: projects/views.py:179
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr ""
 "Zu viele Prüfungen. Warte ein paar Minuten und verifiziere dann erneut."
 
-#: projects/views.py:185
+#: projects/views.py:188
 msgid "Verified. Confirmed again."
 msgstr "Verifiziert. Erneut bestätigt."
 
-#: projects/views.py:185
+#: projects/views.py:188
 msgid "Verified. Live earned."
 msgstr "Verifiziert. Live erhalten."
 
-#: projects/views.py:205
+#: projects/views.py:208
 msgid "Published."
 msgstr "Veröffentlicht."
 
-#: projects/views.py:215
+#: projects/views.py:218
 msgid "Moved back to drafts."
 msgstr "Zurück in die Entwürfe verschoben."
 
-#: projects/views.py:225
+#: projects/views.py:228
 msgid "Project deleted."
 msgstr "Projekt gelöscht."
 
-#: projects/views.py:238
+#: projects/views.py:241
 msgid "Choose an image first."
 msgstr "Wähle zuerst ein Bild aus."
 
-#: projects/views.py:254
+#: projects/views.py:257
 msgid "A project can have at most 4 screenshots. Remove one first."
 msgstr "Ein Projekt kann höchstens 4 Screenshots haben. Entferne zuerst einen."
 
-#: projects/views.py:257
+#: projects/views.py:260
 msgid "Screenshot added."
 msgstr "Screenshot hinzugefügt."
 
-#: projects/views.py:275
+#: projects/views.py:278
 msgid "Screenshot removed."
 msgstr "Screenshot entfernt."
 
-#: projects/views.py:323
+#: projects/views.py:326
 #, python-format
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
@@ -869,15 +900,15 @@ msgstr ""
 "Ein Projekt kann pro Tag höchstens %(n)s Build-Log-Einträge bekommen. "
 "Versuche es morgen erneut."
 
-#: projects/views.py:336
+#: projects/views.py:339
 msgid "Posted. Launch date set to today."
 msgstr "Veröffentlicht. Launch-Datum auf heute gesetzt."
 
-#: projects/views.py:336
+#: projects/views.py:339
 msgid "Posted."
 msgstr "Veröffentlicht."
 
-#: projects/views.py:362 projects/views.py:363
+#: projects/views.py:365 projects/views.py:366
 msgid "Entry deleted."
 msgstr "Eintrag gelöscht."
 
@@ -1935,13 +1966,13 @@ msgstr "Name (Host)"
 
 #: templates/projects/_domain.html:26 templates/projects/_domain.html:28
 #: templates/projects/_domain.html:51 templates/projects/_embed_badge.html:15
-#: templates/projects/_embed_badge.html:20
+#: templates/projects/_embed_badge.html:20 templates/projects/form.html:82
 msgid "Copied"
 msgstr "Kopiert"
 
 #: templates/projects/_domain.html:26 templates/projects/_domain.html:28
 #: templates/projects/_domain.html:51 templates/projects/_embed_badge.html:15
-#: templates/projects/_embed_badge.html:20
+#: templates/projects/_embed_badge.html:20 templates/projects/form.html:82
 msgid "Copy"
 msgstr "Kopieren"
 
@@ -2144,8 +2175,8 @@ msgid "Delete entry"
 msgstr "Eintrag löschen"
 
 #: templates/projects/delete.html:4 templates/projects/delete.html:15
-#: templates/projects/detail.html:35 templates/projects/form.html:147
-#: templates/projects/form.html:149
+#: templates/projects/detail.html:35 templates/projects/form.html:154
+#: templates/projects/form.html:156
 msgid "Delete project"
 msgstr "Projekt löschen"
 
@@ -2179,11 +2210,11 @@ msgstr "Von der Moderation verborgen. Nur du kannst diese Seite sehen."
 msgid "Draft. Only you can see this page."
 msgstr "Entwurf. Nur du kannst diese Seite sehen."
 
-#: templates/projects/detail.html:31 templates/projects/form.html:134
+#: templates/projects/detail.html:31 templates/projects/form.html:141
 msgid "Publish project"
 msgstr "Projekt veröffentlichen"
 
-#: templates/projects/detail.html:33 templates/projects/form.html:139
+#: templates/projects/detail.html:33 templates/projects/form.html:146
 msgid "Unpublish project"
 msgstr "Veröffentlichung zurücknehmen"
 
@@ -2275,7 +2306,9 @@ msgstr "Was geprüft wurde"
 msgid ""
 "We check ownership, control of the domain and uptime. We cannot check who "
 "wrote the code."
-msgstr "Wir prüfen Eigentum, Kontrolle über die Domain und Erreichbarkeit. Wer den Code geschrieben hat, können wir nicht prüfen."
+msgstr ""
+"Wir prüfen Eigentum, Kontrolle über die Domain und Erreichbarkeit. Wer den "
+"Code geschrieben hat, können wir nicht prüfen."
 
 #: templates/projects/detail.html:153 templates/projects/form.html:51
 msgid "Built with (self-declared)"
@@ -2355,22 +2388,40 @@ msgstr ""
 "deinem persönlichen GitHub-Konto gehört und kein Fork ist."
 
 #: templates/projects/form.html:79
+msgid "Organisation or team repository?"
+msgstr "Repository einer Organisation oder eines Teams?"
+
+#: templates/projects/form.html:80
+#, python-format
+msgid ""
+"Add a file named %(file)s to the root of the default branch, with only this "
+"text in it:"
+msgstr "Lege im Hauptverzeichnis des Standard-Branches eine Datei namens %(file)s an, die nur diesen Text enthält:"
+
+#: templates/projects/form.html:83
+msgid ""
+"Then press Check repository. Only people who can push to the repository can "
+"add the file, so it proves write access. Keep it: it is checked again every "
+"week."
+msgstr "Klicke dann auf „Repository prüfen“. Nur wer in das Repository pushen darf, kann die Datei anlegen, sie belegt also Schreibzugriff. Lass sie liegen: Sie wird jede Woche erneut geprüft."
+
+#: templates/projects/form.html:86
 msgid "Check repository"
 msgstr "Repository prüfen"
 
-#: templates/projects/form.html:81
+#: templates/projects/form.html:88
 msgid "Uses the repository saved above. Once every 10 minutes."
 msgstr "Verwendet das oben gespeicherte Repository. Einmal alle 10 Minuten."
 
-#: templates/projects/form.html:83
+#: templates/projects/form.html:90
 msgid "Add a GitHub repository above and save to check it."
 msgstr "Füge oben ein GitHub-Repository hinzu und speichere, um es zu prüfen."
 
-#: templates/projects/form.html:90
+#: templates/projects/form.html:97
 msgid "Screenshots"
 msgstr "Screenshots"
 
-#: templates/projects/form.html:91
+#: templates/projects/form.html:98
 #, python-format
 msgid ""
 "Up to %(max)s images, PNG, JPEG or WebP, 5 MB each. The first one is the "
@@ -2379,59 +2430,59 @@ msgstr ""
 "Bis zu %(max)s Bilder, PNG, JPEG oder WebP, je 5 MB. Das erste ist das "
 "Titelbild."
 
-#: templates/projects/form.html:96
+#: templates/projects/form.html:103
 #, python-format
 msgid "Screenshot %(n)s"
 msgstr "Screenshot %(n)s"
 
-#: templates/projects/form.html:100
+#: templates/projects/form.html:107
 msgid "Move up"
 msgstr "Nach oben"
 
-#: templates/projects/form.html:104
+#: templates/projects/form.html:111
 msgid "Move down"
 msgstr "Nach unten"
 
-#: templates/projects/form.html:108
+#: templates/projects/form.html:115
 msgid "Remove"
 msgstr "Entfernen"
 
-#: templates/projects/form.html:119
+#: templates/projects/form.html:126
 msgid "Add a screenshot"
 msgstr "Screenshot hinzufügen"
 
-#: templates/projects/form.html:122
+#: templates/projects/form.html:129
 msgid "Upload screenshot"
 msgstr "Screenshot hochladen"
 
-#: templates/projects/form.html:125
+#: templates/projects/form.html:132
 msgid "You have reached the limit of 4 screenshots. Remove one to add another."
 msgstr ""
 "Du hast das Limit von 4 Screenshots erreicht. Entferne einen, um einen "
 "weiteren hinzuzufügen."
 
-#: templates/projects/form.html:130
+#: templates/projects/form.html:137
 msgid "Visibility"
 msgstr "Sichtbarkeit"
 
-#: templates/projects/form.html:132
+#: templates/projects/form.html:139
 msgid "This project is a draft. Publishing makes the page public."
 msgstr ""
 "Dieses Projekt ist ein Entwurf. Mit der Veröffentlichung wird die Seite "
 "öffentlich."
 
-#: templates/projects/form.html:137
+#: templates/projects/form.html:144
 msgid "This project is public."
 msgstr "Dieses Projekt ist öffentlich."
 
-#: templates/projects/form.html:142
+#: templates/projects/form.html:149
 msgid ""
 "Moderators hid this project. Contact support if you think this is a mistake."
 msgstr ""
 "Die Moderation hat dieses Projekt verborgen. Wende dich an den Support, wenn "
 "du das für einen Fehler hältst."
 
-#: templates/projects/form.html:148
+#: templates/projects/form.html:155
 msgid "This removes the project and its screenshots for good."
 msgstr "Das entfernt das Projekt und seine Screenshots endgültig."
 
@@ -2739,34 +2790,34 @@ msgstr ""
 "Das Meta-Tag wurde gefunden, aber sein Token stimmt nicht überein. Kopiere "
 "es erneut."
 
-#: verification/repo.py:132
+#: verification/repo.py:140
 msgid "GitHub did not answer properly. Try again in a few minutes."
 msgstr ""
 "GitHub hat nicht richtig geantwortet. Versuche es in ein paar Minuten erneut."
 
-#: verification/repo.py:145
+#: verification/repo.py:153
 #, python-format
 msgid "GitHub's rate limit was reached. Try again in about %(minutes)s min."
 msgstr ""
 "Das Anfrage-Limit von GitHub wurde erreicht. Versuche es in etwa %(minutes)s "
 "Min. erneut."
 
-#: verification/repo.py:147
+#: verification/repo.py:155
 msgid "GitHub's rate limit was reached. Try again later."
 msgstr ""
 "Das Anfrage-Limit von GitHub wurde erreicht. Versuche es später erneut."
 
-#: verification/repo.py:155
+#: verification/repo.py:163
 msgid "This repository has no commits yet."
 msgstr "Dieses Repository hat noch keine Commits."
 
-#: verification/repo.py:158
+#: verification/repo.py:166
 msgid "This repository was renamed or moved. Enter its current name."
 msgstr ""
 "Dieses Repository wurde umbenannt oder verschoben. Gib seinen aktuellen "
 "Namen ein."
 
-#: verification/repo.py:163
+#: verification/repo.py:171
 msgid ""
 "Repository not found. Check the spelling. Private repositories cannot be "
 "checked."
@@ -2774,11 +2825,11 @@ msgstr ""
 "Repository nicht gefunden. Prüfe die Schreibweise. Private Repositories "
 "können nicht geprüft werden."
 
-#: verification/repo.py:172
+#: verification/repo.py:180
 msgid "This repository is too large to check automatically."
 msgstr "Dieses Repository ist zu groß, um es automatisch zu prüfen."
 
-#: verification/repo.py:277
+#: verification/repo.py:285
 msgid ""
 "This repository cannot be linked. If you think this is a mistake, write to "
 "us."
@@ -2786,12 +2837,12 @@ msgstr ""
 "Dieses Repository kann nicht verknüpft werden. Wenn du das für einen Fehler "
 "hältst, schreib uns."
 
-#: verification/repo.py:280
+#: verification/repo.py:288
 msgid "This repository is private. Only public repositories can be checked."
 msgstr ""
 "Dieses Repository ist privat. Es können nur öffentliche Repositories geprüft "
 "werden."
 
-#: verification/repo.py:299 verification/repo.py:465
+#: verification/repo.py:310 verification/repo.py:516
 msgid "This repository is already linked to another project."
 msgstr "Dieses Repository ist bereits mit einem anderen Projekt verknüpft."

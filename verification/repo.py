@@ -1,7 +1,9 @@
 """Repository check: the Repo owner hallmark (id `authored`, CLAUDE.md section 2).
 
-Repo owner is earned only by a public, non-fork repository owned by the user's personal GitHub
-account. It says who owns the repository, never who wrote the code. The other facts read here
+Repo owner is earned by a public, non-fork repository that is either owned by the user's personal
+GitHub account, or (for organisation and team repositories) has the project's verification file
+`.shipmark-verify` on its default branch, which only someone with write access can add.
+It says who controls the repository, never who wrote the code. The other facts read here
 (commit count and dates, history start, active weeks) are shown as facts; three of them send the
 link to a manual review instead of earning the mark (`review_reasons`).
 
@@ -14,8 +16,11 @@ repository by repo id, its owner by owner id. Names can be renamed, and a freed 
 someone else (a deleted repo recreated under the same name is a different repository).
 Only repositories that earn Authored are stored (see RepoLink). Every removal is logged (AuditLog).
 """
+import base64
+import hmac
 import logging
 import re
+import secrets
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -39,6 +44,8 @@ TIMEOUT = 6  # seconds per request
 DEADLINE = 25  # seconds for the whole check, so a slow GitHub cannot hold a worker for long
 CONTRIBUTORS_PAGES = 5  # 5 x 100 contributors, sorted by commits. Beyond that we say "too large".
 REPO_RE = re.compile(r"^[A-Za-z0-9_.-]{1,39}/[A-Za-z0-9_.-]{1,100}$")
+TOKEN_FILE = f".{branding.VERIFY_TOKEN_NAME}"  # ".shipmark-verify" in the repository root
+TOKEN_FILE_MAX = 1024  # bytes; the file holds one 32-character token
 # Where GitHub points a renamed or transferred repository: GET /repos/old/name -> 301 to this.
 MOVED_RE = re.compile(r"^https://api\.github\.com/repositories/(\d{1,15})(?:[/?]|$)")
 
@@ -67,6 +74,7 @@ class RepoFacts:
     owner_id: int
     is_owner: bool  # personal account of the user, not a fork
     commit_count: int  # commits by the user on the default branch (GitHub's contributors list)
+    token_file: bool = False  # the project's verification file is on the default branch
     is_fork: bool = False
     repo_created_at: datetime | None = None
     homepage: str = ""
@@ -293,8 +301,11 @@ def fetch_facts(full_name, github_user_id, project=None):
             repo_created_at=_parse_time(repo.get("created_at")),
             homepage=_homepage(repo.get("homepage")),
         )
-        if facts.is_fork or not facts.is_owner:
+        if facts.is_fork:
             return facts  # refused anyway: no need to spend more API calls
+        facts.token_file = _has_token_file(api, base, getattr(project, "repo_token", None))
+        if not (facts.is_owner or facts.token_file):
+            return facts
         if _taken(facts, project):  # fail early, before spending more API calls
             raise RepoCheckError("taken", _("This repository is already linked to another project."))
 
@@ -305,6 +316,46 @@ def fetch_facts(full_name, github_user_id, project=None):
         _newest, facts.root_commit_at, facts.root_commit_sha = _newest_and_oldest(api, commits_path, {})
         facts.active_weeks = _active_weeks(api, base, github_user_id)
         return facts
+
+
+def repo_token_for(project):
+    """The project's verification-file token, made on first use. Random and unique, never reused."""
+    if project.repo_token:
+        return project.repo_token
+    from projects.models import Project  # here: projects imports this module
+
+    for _attempt in range(3):
+        token = secrets.token_hex(16)
+        try:
+            with transaction.atomic():
+                updated = Project.objects.filter(pk=project.pk, repo_token__isnull=True).update(repo_token=token)
+        except IntegrityError:  # astronomically unlikely collision: try another
+            continue
+        if not updated:  # a parallel request made it first
+            token = Project.objects.values_list("repo_token", flat=True).get(pk=project.pk)
+        project.repo_token = token
+        return token
+    raise RuntimeError("could not make a unique repo token")
+
+
+def _has_token_file(api, base, token):
+    """True when the default branch has TOKEN_FILE with exactly this project's token (spaces around ignored)."""
+    if not token:
+        return False
+    try:
+        data, _response = api.json(f"{base}/contents/{TOKEN_FILE}")
+    except RepoCheckError as exc:
+        if exc.code == "not_found":  # no such file (or an empty repository)
+            return False
+        raise
+    if (not isinstance(data, dict) or data.get("type") != "file" or data.get("encoding") != "base64"
+            or not isinstance(data.get("size"), int) or data["size"] > TOKEN_FILE_MAX):
+        return False
+    try:
+        content = base64.b64decode(str(data.get("content") or ""), validate=False).decode("utf-8").strip()
+    except (ValueError, UnicodeDecodeError):
+        return False
+    return hmac.compare_digest(content.encode(), token.encode())
 
 
 def _newest_and_oldest(api, path, params):
@@ -452,7 +503,7 @@ def run_check(project, github_user_id, actor=None):
     if change in ("recreated", "transferred"):
         remove_link(project, change, actor=actor, new_repo_id=facts.repo_id, new_owner_id=facts.owner_id)
 
-    if facts.is_fork or not facts.is_owner:
+    if facts.is_fork or not (facts.is_owner or facts.token_file):
         remove_link(project, "fork" if facts.is_fork else "not_owner", actor=actor)
         return CheckResult(FORK if facts.is_fork else NOT_YOURS, facts)
 
@@ -476,6 +527,7 @@ def store_link(project, facts, old, actor=None):
         "github_repo_id": facts.repo_id,
         "github_owner_id": facts.owner_id,
         "is_owner": facts.is_owner,
+        "token_file_found": facts.token_file,
         "user_commit_count": facts.commit_count,
         "first_commit_at": facts.first_commit_at,
         "last_commit_at": facts.last_commit_at,
@@ -545,8 +597,9 @@ def reverify_link(link, actor=None):
             return "removed"
         return "kept"
     change = identity_change(link, facts.repo_id, facts.owner_id, facts.full_name)
-    if change in ("recreated", "transferred") or facts.is_fork or not facts.is_owner:
-        reason = change if change in ("recreated", "transferred") else "fork" if facts.is_fork else "not_owner"
+    if change in ("recreated", "transferred") or facts.is_fork or not (facts.is_owner or facts.token_file):
+        reason = (change if change in ("recreated", "transferred") else "fork" if facts.is_fork
+                  else "token_file_missing" if link.token_file_found else "not_owner")
         remove_link(project, reason, actor=actor, source="reverify")
         return "removed"
     follow_rename(project, link, facts, actor)

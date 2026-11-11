@@ -4,9 +4,11 @@ Projekt może tu zdobyć trzy znaki (hallmarks). Każdy z nich to fakt, który s
 
 ## Repo owner {#authored}
 
-**Co to znaczy:** repozytorium GitHub połączone z projektem należy do osobistego konta GitHub osoby, która opublikowała projekt. Nie dowodzi to, kto napisał kod.
+**Co to znaczy:** repozytorium GitHub połączone z projektem należy do osobistego konta GitHub osoby, która opublikowała projekt, albo (w repozytoriach organizacji i zespołów) zawiera plik weryfikacyjny tego projektu, do którego dodania potrzebny jest dostęp do zapisu. Nie dowodzi to, kto napisał kod.
 
 **Jak jest sprawdzane:** autor podaje publiczne repozytorium GitHub i klika „Sprawdź repozytorium”. Pytamy publiczne API GitHuba. Oznaczenie zdobywa się, gdy repozytorium należy do osobistego konta GitHub autora i nie jest forkiem.
+
+**Repozytoria organizacji i zespołów:** na stronie edycji każdy projekt dostaje własny losowy token. Dodaj w katalogu głównym domyślnej gałęzi plik `.shipmark-verify` zawierający tylko ten token i sprawdź ponownie. Dodać go mogą tylko osoby z prawem do pushowania, więc potwierdza on dostęp do zapisu, a nie to, kto napisał kod. Forki nie liczą się w żadnym wariancie. Plik jest sprawdzany co tydzień; jeśli go nie ma, oznaczenie jest usuwane.
 
 Konta i repozytoria porównujemy po numerycznych identyfikatorach GitHuba, nie po nazwach: zmiana nazwy konta lub repozytorium niczego nie zmienia, a usunięte repozytorium utworzone przez kogoś od nowa pod tą samą nazwą to inne repozytorium. Czytamy tylko dane publiczne: logowanie nigdy nie daje nam dostępu do prywatnych repozytoriów.
 

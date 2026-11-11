@@ -23,7 +23,7 @@ Dúvidas ou solicitações: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Verificações de comprovação.** Para conceder selos, verificamos os fatos nós mesmos (nosso interesse legítimo em mostrar comprovações confiáveis):
 
-- *Repo owner:* consultamos a API pública do GitHub sobre o repositório que você vincula e guardamos o id dele, o id da conta dona, se ele é seu, a data de criação e o campo Website, o primeiro commit do histórico (id e data), o seu número de commits, as datas do seu primeiro e último commit, o número de semanas com commits seus e o estado de uma revisão manual, quando for necessária. Verificamos de novo toda semana. A lista de outras pessoas que contribuem é lida durante a verificação e não é guardada.
+- *Repo owner:* consultamos a API pública do GitHub sobre o repositório que você vincula e guardamos o id dele, o id da conta dona, se ele é seu, a data de criação e o campo Website, o primeiro commit do histórico (id e data), o seu número de commits, as datas do seu primeiro e último commit, o número de semanas com commits seus e o estado de uma revisão manual, quando for necessária. Verificamos de novo toda semana. A lista de outras pessoas que contribuem é lida durante a verificação e não é guardada. Se você usa o arquivo de verificação em um repositório de organização, também guardamos se ele foi encontrado.
 - *Live:* consultamos os registros DNS do domínio do seu projeto ou acessamos a página dele para encontrar seu token de verificação.
 - *Steady:* acessamos o endereço do seu projeto a cada poucas horas e guardamos se ele respondeu e com que rapidez. Essas verificações ficam guardadas por **90 dias**.
 

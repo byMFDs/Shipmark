@@ -7,7 +7,8 @@ from django.utils import timezone
 class RepoLink(models.Model):
     """A GitHub repository that passed the Repo owner check for a project.
 
-    Rows exist only for repositories that passed: owned by the user and not a fork. A failed check is
+    Rows exist only for repositories that passed: not a fork, and owned by the user or holding the
+    project's verification file. A failed check is
     never stored, so nobody can block someone else's repository by claiming it (CLAUDE.md section 2).
     A passed link earns the mark unless it waits for a review (`review_state`).
     """
@@ -24,6 +25,7 @@ class RepoLink(models.Model):
     # The account that owns the repository on GitHub. Changes only on a transfer. Empty: not backfilled yet.
     github_owner_id = models.BigIntegerField(null=True, blank=True)
     is_owner = models.BooleanField(default=False)  # a personal, non-fork repo owned by the user
+    token_file_found = models.BooleanField(default=False)  # the project's .shipmark-verify file is in it
     user_commit_count = models.PositiveIntegerField(default=0)
     first_commit_at = models.DateTimeField(null=True, blank=True)
     last_commit_at = models.DateTimeField(null=True, blank=True)
@@ -54,7 +56,7 @@ class RepoLink(models.Model):
     @property
     def is_verified(self):
         """Earns Repo owner: the repository passed and is not waiting for a review or re-check."""
-        return self.is_owner and self.review_state in (self.Review.CLEAR, self.Review.APPROVED)
+        return (self.is_owner or self.token_file_found) and self.review_state in (self.Review.CLEAR, self.Review.APPROVED)
 
 
 class DomainVerification(models.Model):

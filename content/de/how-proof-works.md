@@ -4,9 +4,11 @@ Ein Projekt kann hier drei Prüfzeichen (Hallmarks) verdienen. Jedes davon ist e
 
 ## Repo owner {#authored}
 
-**Was es bedeutet:** Das mit dem Projekt verknüpfte GitHub-Repository gehört dem persönlichen GitHub-Konto der Person, die das Projekt veröffentlicht hat. Es beweist nicht, wer den Code geschrieben hat.
+**Was es bedeutet:** Das mit dem Projekt verknüpfte GitHub-Repository gehört dem persönlichen GitHub-Konto der Person, die das Projekt veröffentlicht hat, oder enthält (bei Repositorys von Organisationen und Teams) die Bestätigungsdatei dieses Projekts, wofür Schreibzugriff nötig ist. Es beweist nicht, wer den Code geschrieben hat.
 
 **Wie es geprüft wird:** Die Person verknüpft ein öffentliches GitHub-Repository und klickt auf „Repository prüfen“. Wir fragen die öffentliche API von GitHub. Das Prüfzeichen gibt es, wenn das Repository dem persönlichen GitHub-Konto der Person gehört und kein Fork ist.
+
+**Repositorys von Organisationen und Teams:** Auf der Bearbeitungsseite bekommt jedes Projekt ein eigenes zufälliges Token. Lege im Hauptverzeichnis des Standard-Branches eine Datei `.shipmark-verify` an, die nur dieses Token enthält, und prüfe erneut. Nur wer in das Repository pushen darf, kann sie anlegen; sie belegt also Schreibzugriff, nicht, wer den Code geschrieben hat. Forks zählen auf keinem Weg. Die Datei wird jede Woche erneut geprüft; fehlt sie, wird das Prüfzeichen entfernt.
 
 Konten und Repositorys werden über die numerischen IDs von GitHub verglichen, nicht über Namen: Ein umbenanntes Konto oder Repository ändert nichts, und ein gelöschtes Repository, das jemand unter demselben Namen neu anlegt, ist ein anderes Repository. Wir lesen nur öffentliche Daten: Die Anmeldung gibt uns nie Zugriff auf private Repositorys.
 

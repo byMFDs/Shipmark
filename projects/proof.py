@@ -24,7 +24,8 @@ HALLMARK_KINDS = ("authored", "live", "steady")
 # What each hallmark means, in one or two sentences. Shown next to the large marks.
 RULES = {
     "authored": gettext_lazy(
-        "The linked public GitHub repository is owned by the author's personal GitHub account and is not a fork."
+        "The linked public GitHub repository is owned by the author's personal GitHub account, or holds this "
+        "project's verification file, which needs write access to the repository. Forks never count."
     ),
     "live": gettext_lazy(
         "The author proved control of the project's domain with a DNS record or a meta tag. "
@@ -82,8 +83,11 @@ def _authored(project):
         return Hallmark("authored", False, _("The repository is waiting for a routine manual review."))
     if link.review_state == RepoLink.Review.NEEDS_RECHECK:
         return Hallmark("authored", False, _("The repository is being checked again under the current rules."))
-    if link.is_verified:
+    if link.is_verified and link.is_owner:
         return Hallmark("authored", True, _("%(repo)s is owned by the author's GitHub account.")
+                        % {"repo": link.repo_full_name}, link.earned_at)
+    if link.is_verified:
+        return Hallmark("authored", True, _("%(repo)s holds this project's verification file.")
                         % {"repo": link.repo_full_name}, link.earned_at)
     return Hallmark("authored", False, _("The repository check has not passed yet."))
 
@@ -127,7 +131,8 @@ def repo_domain_link(project, now=None):
     """How the linked repository points at the verified domain, as a fact (it is not a hallmark rule).
 
     "homepage": the repository's Website field on GitHub is on the verified domain (only the
-    repository's admins can set it). None: no link shown, or nothing to compare.
+    repository's admins can set it); "token_file": the repository holds this project's verification
+    file, and the project's domain is verified. None: no link shown, or nothing to compare.
     """
     link = getattr(project, "repo_link", None) if project.pk else None
     row = domains.current_row(project)
@@ -135,6 +140,8 @@ def repo_domain_link(project, now=None):
         return None
     if link.homepage and domains.domain_key(domains.host_from_url(link.homepage)) == row.domain_key:
         return "homepage"
+    if link.token_file_found:
+        return "token_file"
     return None
 
 
@@ -161,9 +168,12 @@ def checked_facts(project, now=None):
         if link.review_state == RepoLink.Review.NEEDS_REVIEW:
             facts.append(CheckedFact(repo_label, _(
                 "%(repo)s passed the ownership check on %(date)s and is waiting for a routine manual review.") % values))
-        else:
+        elif link.is_owner:
             facts.append(CheckedFact(repo_label, _(
                 "%(repo)s is owned by the author's GitHub account, matched by account id. Checked %(date)s.") % values))
+        else:
+            facts.append(CheckedFact(repo_label, _(
+                "%(repo)s holds this project's verification file, which needs write access. Checked %(date)s.") % values))
         facts.append(CheckedFact(repo_label, _("Not a fork.")))
         if link.repo_created_at:
             facts.append(CheckedFact(history_label, _("Repository created on GitHub %(date)s.")
@@ -192,9 +202,14 @@ def checked_facts(project, now=None):
                 if row.method == DomainVerification.Method.META else
                 _("Control of %(domain)s proven with a DNS record on %(first)s, last confirmed %(last)s."))
         facts.append(CheckedFact(_("Domain"), text % values))
-        if repo_domain_link(project, now) == "homepage":
+        binding = repo_domain_link(project, now)
+        if binding == "homepage":
             facts.append(CheckedFact(_("Domain"), _("The repository's website field on GitHub points to %(domain)s.")
                                      % {"domain": row.domain}))
+        elif binding == "token_file":
+            facts.append(CheckedFact(_("Domain"), _(
+                "The repository holds this project's verification file, and %(domain)s is verified for the same project.")
+                % {"domain": row.domain}))
         ok, total = uptime.window_counts(project, now)
         if total:
             facts.append(CheckedFact(_("Uptime"), _(

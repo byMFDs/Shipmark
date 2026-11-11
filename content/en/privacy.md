@@ -21,7 +21,7 @@ Questions or requests: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Proof checks.** To award hallmarks we check facts ourselves (our legitimate interest in showing proof that can be trusted):
 
-- *Repo owner:* we ask GitHub's public API about the repository you link and store its id, its owner's account id, whether you own it, its creation date and its Website field, the first commit of its history (id and date), your commit count, your first and last commit dates, the number of weeks with your commits, and the state of a manual review when one is needed. We check it again every week. GitHub's list of other contributors is read during the check and not stored.
+- *Repo owner:* we ask GitHub's public API about the repository you link and store its id, its owner's account id, whether you own it, its creation date and its Website field, the first commit of its history (id and date), your commit count, your first and last commit dates, the number of weeks with your commits, and the state of a manual review when one is needed. We check it again every week. GitHub's list of other contributors is read during the check and not stored. If you use the verification file for an organisation repository, we also store whether it was found.
 - *Live:* we look up the DNS records of your project's domain or fetch its page to find your verification token.
 - *Steady:* we request your project's address up to every few hours and store whether it answered and how fast. These checks are kept for **90 days**.
 

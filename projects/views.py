@@ -19,7 +19,7 @@ from config.ratelimit import is_limited
 from verification import domain as domains
 from verification.models import DomainVerification
 from social.queries import like_state
-from verification.repo import AUTHORED, FORK, RepoCheckError, run_check
+from verification.repo import AUTHORED, FORK, TOKEN_FILE, RepoCheckError, repo_token_for, run_check
 from verification.uptime import uptime_summary, with_uptime
 
 from .forms import BuildLogForm, ProjectForm
@@ -92,6 +92,8 @@ def edit(request, project):
         "screenshots": list(project.screenshots.all()),
         "max_screenshots": MAX_SCREENSHOTS,
         "repo_link": getattr(project, "repo_link", None),
+        "repo_token": repo_token_for(project) if project.repo_full_name else "",
+        "repo_token_file": TOKEN_FILE,
         **_domain_context(project, domains.verification_for(project, create=True)),
     })
 
@@ -136,7 +138,8 @@ def repo_check(request, project):
             elif result.outcome == FORK:
                 messages.error(request, _("This repository is a fork. Forks cannot earn Repo owner; link the original repository."))
             else:
-                messages.error(request, _("This repository is not owned by your personal GitHub account."))
+                messages.error(request, _("This repository is not owned by your personal GitHub account, "
+                                          "and its verification file was not found."))
     return back
 
 

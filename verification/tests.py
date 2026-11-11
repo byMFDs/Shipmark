@@ -1,3 +1,4 @@
+import base64
 from io import StringIO
 from unittest.mock import patch
 
@@ -17,7 +18,7 @@ from projects.proof import compute_hallmarks
 from projects.tests import make_project, make_user
 
 from .models import RepoLink
-from .repo import AUTHORED, FORK, NOT_YOURS, RepoCheckError, run_check
+from .repo import AUTHORED, FORK, NOT_YOURS, RepoCheckError, repo_token_for, run_check
 
 User = get_user_model()
 REAL_CLIENT = httpx.Client
@@ -509,3 +510,111 @@ class ActivityFactTests(RepoCheckTestCase):
         self.assertEqual(result.outcome, AUTHORED)
         self.assertEqual(result.facts.root_commit_sha, "")
         self.assertEqual(RepoLink.objects.get().review_reasons, ["no_owner_commits"])
+
+
+class TokenFileTests(RepoCheckTestCase):
+    """Organisation and team repositories: the project's .shipmark-verify file proves write access."""
+
+    def setUp(self):
+        super().setUp()
+        self.project.repo_full_name = "acme/app"
+        self.project.save()
+        self.token = repo_token_for(self.project)
+        self.org_repo = repo_json(owner_id=5, owner_type="Organization", name="acme/app")
+
+    def file(self, text=None, status=200, size=None):
+        body = text if text is not None else self.token
+        payload = {"type": "file", "encoding": "base64", "size": size if size is not None else len(body),
+                   "content": base64.b64encode(body.encode()).decode()}
+        return {"/repos/acme/app/contents/.shipmark-verify": lambda r: httpx.Response(status, json=payload)}
+
+    def test_org_repo_with_the_token_file_earns(self):
+        result = self.check(repo=self.org_repo, contributors=[[person()]], extra=self.file(f"  {self.token}\n"))
+        self.assertEqual(result.outcome, AUTHORED)
+        link = RepoLink.objects.get()
+        self.assertTrue(link.token_file_found)
+        self.assertFalse(link.is_owner)
+        mark = compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"]
+        self.assertTrue(mark.earned)
+        self.assertIn("verification file", mark.reason)
+
+    def test_wrong_or_missing_file_is_not_yours_and_stores_nothing(self):
+        for extra in (self.file("0" * 32), self.file(status=404), self.file(size=5000), {}):
+            with self.subTest(extra=bool(extra)):
+                self.assertEqual(self.check(repo=self.org_repo, contributors=[[person()]], extra=extra).outcome, NOT_YOURS)
+                self.assertFalse(RepoLink.objects.exists())
+
+    def test_another_projects_token_does_not_work(self):
+        other = make_project(make_user("other"), name="Other", repo_full_name="acme/app")
+        other_token = repo_token_for(other)
+        self.assertNotEqual(other_token, self.token)
+        result = self.check(repo=self.org_repo, contributors=[[person()]], extra=self.file(other_token))
+        self.assertEqual(result.outcome, NOT_YOURS)
+
+    def test_fork_with_the_token_file_is_still_refused(self):
+        fork = repo_json(owner_id=ME, fork=True, name="acme/app")
+        self.assertEqual(self.check(repo=fork, contributors=[[person()]], extra=self.file()).outcome, FORK)
+
+    def test_contributor_without_the_file_cannot_squat(self):
+        self.check(repo=self.org_repo, contributors=[[person(commits=400)]])
+        self.assertFalse(RepoLink.objects.exists())  # nothing stored, so the real team can still link it
+
+    def test_tokens_are_random_unique_and_kept(self):
+        self.assertRegex(self.token, r"^[0-9a-f]{32}$")
+        self.assertEqual(repo_token_for(Project.objects.get(pk=self.project.pk)), self.token)
+        tokens = {repo_token_for(make_project(self.user, name=f"P{i}")) for i in range(20)}
+        self.assertEqual(len(tokens), 20)
+        self.assertNotIn(self.token, tokens)
+
+    def test_owner_without_a_token_spends_no_extra_request(self):
+        project = make_project(self.user, name="Mine", repo_full_name="me/tool")
+        patcher, seen = mock_github(contributors=[[person()]])
+        with patcher:
+            run_check(project, ME)
+        self.assertFalse(any("contents" in path for path in seen))
+
+    def test_edit_page_shows_the_file_and_token(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("projects:edit", args=["me", self.project.slug]))
+        self.assertContains(response, ".shipmark-verify")
+        self.assertContains(response, self.token)
+
+
+class TokenFileRecheckTests(RepoCheckTestCase):
+    def setUp(self):
+        super().setUp()
+        self.project.repo_full_name = "acme/app"
+        self.project.save()
+        self.token = repo_token_for(self.project)
+        self.org = repo_json(owner_id=5, owner_type="Organization", name="acme/app")
+        payload = {"type": "file", "encoding": "base64", "size": 32, "content": base64.b64encode(self.token.encode()).decode()}
+        self.with_file = {"/repos/acme/app/contents/.shipmark-verify": lambda r: httpx.Response(200, json=payload)}
+        self.check(repo=self.org, contributors=[[person()]], extra=self.with_file)
+        self.assertTrue(RepoLink.objects.get().is_verified)
+
+    def reverify(self, extra):
+        from .repo import reverify_link
+
+        patcher, _seen = mock_github(repo=self.org, contributors=[[person()]], extra=extra)
+        with patcher:
+            return reverify_link(RepoLink.objects.select_related("project__owner").get())
+
+    def test_file_still_there_is_confirmed(self):
+        self.assertEqual(self.reverify(self.with_file), "confirmed")
+
+    def test_file_removed_removes_the_mark_with_auditlog(self):
+        gone = {"/repos/acme/app/contents/.shipmark-verify": lambda r: httpx.Response(404, json={})}
+        self.assertEqual(self.reverify(gone), "removed")
+        self.assertEqual(AuditLog.objects.filter(action="hallmark.authored.removed").get().metadata["reason"],
+                         "token_file_missing")
+
+    def test_github_error_on_the_file_keeps_the_mark(self):
+        broken = {"/repos/acme/app/contents/.shipmark-verify": lambda r: httpx.Response(502)}
+        self.assertEqual(self.reverify(broken), "kept")
+        self.assertTrue(RepoLink.objects.get().is_verified)
+
+    def test_panel_says_verification_file(self):
+        from projects.proof import checked_facts
+
+        project = Project.objects.select_related("repo_link").get(pk=self.project.pk)
+        self.assertIn("verification file", checked_facts(project)[0].text)

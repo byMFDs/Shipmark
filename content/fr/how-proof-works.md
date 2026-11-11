@@ -4,9 +4,11 @@ Un projet peut obtenir ici trois poinçons (hallmarks). Chacun est un fait que n
 
 ## Repo owner {#authored}
 
-**Ce que cela signifie :** le dépôt GitHub lié au projet appartient au compte GitHub personnel de la personne qui l’a publié. Cela ne prouve pas qui a écrit le code.
+**Ce que cela signifie :** le dépôt GitHub lié au projet appartient au compte GitHub personnel de la personne qui l’a publié ou (pour les dépôts d’organisations et d’équipes) contient le fichier de vérification de ce projet, ce qui exige un accès en écriture. Cela ne prouve pas qui a écrit le code.
 
 **Comment c’est contrôlé :** l’auteur lie un dépôt GitHub public et clique sur « Contrôler le dépôt ». Nous interrogeons l’API publique de GitHub. La marque est obtenue quand le dépôt appartient au compte GitHub personnel de l’auteur et n’est pas un fork.
+
+**Dépôts d’organisations et d’équipes :** la page de modification donne à chaque projet son propre jeton aléatoire. Ajoutez à la racine de la branche par défaut un fichier nommé `.shipmark-verify` qui contient uniquement ce jeton, puis contrôlez à nouveau. Seules les personnes qui peuvent pousser dans le dépôt peuvent l’ajouter : il prouve un accès en écriture, pas qui a écrit le code. Les forks ne comptent jamais, quelle que soit la voie. Le fichier est recontrôlé chaque semaine ; s’il a disparu, la marque est retirée.
 
 Les comptes et les dépôts sont comparés par les identifiants numériques de GitHub, pas par leur nom : renommer un compte ou un dépôt ne change rien, et un dépôt supprimé que quelqu’un recrée sous le même nom est un autre dépôt. Nous ne lisons que des données publiques : la connexion ne nous donne jamais accès aux dépôts privés.
 

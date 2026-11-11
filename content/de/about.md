@@ -12,7 +12,7 @@ GitHub zeigt Code. LinkedIn zeigt Behauptungen. {{ site_name }} versucht, Ergebn
 
 Ein Projekt kann drei Prüfzeichen verdienen. Jedes ist eine Tatsache, die unser Server prüft, und jedes verschwindet, sobald die Tatsache nicht mehr stimmt.
 
-- **Repo owner.** Das Projekt verknüpft ein öffentliches GitHub-Repository. Wir fragen die öffentliche API von GitHub, ob es dem persönlichen GitHub-Konto der Person gehört und kein Fork ist, und prüfen das jede Woche erneut.
+- **Repo owner.** Das Projekt verknüpft ein öffentliches GitHub-Repository. Wir fragen die öffentliche API von GitHub, ob es dem persönlichen GitHub-Konto der Person gehört und kein Fork ist; bei Repositorys von Organisationen und Teams legt die Person stattdessen eine Datei mit dem Token dieses Projekts an. Wir prüfen das jede Woche erneut.
 - **Live.** Die Person weist nach, dass sie die Domain des Projekts kontrolliert, mit einem Token, das wir erzeugen: als DNS-TXT-Eintrag oder als Meta-Tag auf der Startseite. Wir prüfen das regelmäßig erneut, und das Zeichen gilt nur, solange die Domain in den letzten 35 Tagen bestätigt wurde.
 - **Steady.** Sobald ein Projekt Live hat, rufen wir seine Adresse etwa alle 3 Stunden auf. Steady braucht mindestens 40 Prüfungen in den letzten 30 Tagen, und mindestens 95 % davon müssen innerhalb von 5 Sekunden eine Antwort ohne Fehler bekommen.
 

@@ -4,9 +4,11 @@ Un proyecto puede conseguir aquí tres sellos (hallmarks). Cada uno es un hecho 
 
 ## Repo owner {#authored}
 
-**Qué significa:** el repositorio de GitHub enlazado al proyecto pertenece a la cuenta personal de GitHub de quien lo publicó. No demuestra quién escribió el código.
+**Qué significa:** el repositorio de GitHub enlazado al proyecto pertenece a la cuenta personal de GitHub de quien lo publicó o (en repositorios de organizaciones y equipos) contiene el archivo de verificación de este proyecto, que requiere permiso de escritura. No demuestra quién escribió el código.
 
 **Cómo se comprueba:** el autor enlaza un repositorio público de GitHub y pulsa «Comprobar repositorio». Consultamos la API pública de GitHub. La marca se consigue cuando el repositorio pertenece a la cuenta personal de GitHub del autor y no es un fork.
+
+**Repositorios de organizaciones y equipos:** la página de edición da a cada proyecto su propio token aleatorio. Añade en la raíz de la rama principal un archivo llamado `.shipmark-verify` que contenga solo ese token y vuelve a comprobar. Solo quien puede hacer push al repositorio puede añadirlo, así que demuestra permiso de escritura, no quién escribió el código. Los forks nunca cuentan, por ninguna de las dos vías. El archivo se vuelve a comprobar cada semana; si ya no está, la marca se retira.
 
 Las cuentas y los repositorios se comparan por los identificadores numéricos de GitHub, no por sus nombres: cambiar el nombre de una cuenta o de un repositorio no cambia nada, y un repositorio borrado que alguien vuelve a crear con el mismo nombre es otro repositorio. Solo leemos datos públicos: iniciar sesión nunca nos da acceso a repositorios privados.
 

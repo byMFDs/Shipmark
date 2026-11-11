@@ -75,6 +75,13 @@
             {% else %}
               <p class="muted">{% translate "Not checked yet. Repo owner is earned when the public repository is owned by your personal GitHub account and is not a fork." %}</p>
             {% endif %}
+            <details class="method__help">
+              <summary>{% translate "Organisation or team repository?" %}</summary>
+              <p>{% blocktranslate with file=repo_token_file %}Add a file named {{ file }} to the root of the default branch, with only this text in it:{% endblocktranslate %}</p>
+              <div class="dns-record dns-record--single"><code class="code-value" id="repo-token">{{ repo_token }}</code>
+                <button type="button" class="btn btn--secondary btn--copy needs-js" data-copy="repo-token" data-copied="{% translate "Copied" %}">{% icon "copy" %}<span>{% translate "Copy" %}</span></button></div>
+              <p class="field__hint">{% translate "Then press Check repository. Only people who can push to the repository can add the file, so it proves write access. Keep it: it is checked again every week." %}</p>
+            </details>
             <form method="post" action="{% url 'projects:repo_check' project.owner.username project.slug %}">
               {% csrf_token %}<button class="btn btn--secondary" type="submit">{% translate "Check repository" %}</button>
             </form>

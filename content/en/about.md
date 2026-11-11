@@ -12,7 +12,7 @@ GitHub shows code. LinkedIn shows claims. {{ site_name }} tries to show outcomes
 
 A project can earn three hallmarks. Each one is a fact our server checks, and each one disappears when the fact stops being true.
 
-- **Repo owner.** The project links a public GitHub repository. We ask GitHub's public API whether it belongs to the author's personal GitHub account and is not a fork, and we check it again every week.
+- **Repo owner.** The project links a public GitHub repository. We ask GitHub's public API whether it belongs to the author's personal GitHub account and is not a fork; for organisation and team repositories, the author adds a file with this project's token instead. We check it again every week.
 - **Live.** The author proves control of the project's domain with a token we generate: a DNS TXT record or a meta tag on the homepage. We re-check it regularly, and the mark holds only while the domain was confirmed in the last 35 days.
 - **Steady.** Once a project is Live, we open its address about every 3 hours. Steady needs at least 40 checks in the last 30 days, and at least 95% of them must get an answer without an error within 5 seconds.
 

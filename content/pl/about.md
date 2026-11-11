@@ -12,7 +12,7 @@ GitHub pokazuje kod. LinkedIn pokazuje deklaracje. {{ site_name }} próbuje poka
 
 Projekt może zdobyć trzy znaki. Każdy z nich to fakt sprawdzany przez nasz serwer i każdy znika, gdy fakt przestaje być prawdziwy.
 
-- **Repo owner.** Projekt wskazuje publiczne repozytorium GitHub. Pytamy publiczne API GitHuba, czy należy ono do osobistego konta GitHub autora i nie jest forkiem, i sprawdzamy to ponownie co tydzień.
+- **Repo owner.** Projekt wskazuje publiczne repozytorium GitHub. Pytamy publiczne API GitHuba, czy należy ono do osobistego konta GitHub autora i nie jest forkiem; w repozytoriach organizacji i zespołów autor zamiast tego dodaje plik z tokenem tego projektu. Sprawdzamy to ponownie co tydzień.
 - **Live.** Autor udowadnia, że kontroluje domenę projektu, za pomocą wygenerowanego przez nas tokenu: rekordu TXT w DNS albo metatagu na stronie głównej. Regularnie sprawdzamy to ponownie, a znak obowiązuje tylko, dopóki domena była potwierdzona w ciągu ostatnich 35 dni.
 - **Steady.** Gdy projekt ma Live, otwieramy jego adres mniej więcej co 3 godziny. Steady wymaga co najmniej 40 sprawdzeń w ostatnich 30 dniach, z których co najmniej 95% musi dostać odpowiedź bez błędu w ciągu 5 sekund.
 

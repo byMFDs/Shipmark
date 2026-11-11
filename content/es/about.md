@@ -12,7 +12,7 @@ GitHub muestra código. LinkedIn muestra afirmaciones. {{ site_name }} intenta m
 
 Un proyecto puede ganar tres sellos. Cada uno es un hecho que comprueba nuestro servidor, y cada uno desaparece cuando el hecho deja de ser cierto.
 
-- **Repo owner.** El proyecto enlaza un repositorio público de GitHub. Preguntamos a la API pública de GitHub si pertenece a la cuenta personal de GitHub del autor y no es un fork, y lo volvemos a comprobar cada semana.
+- **Repo owner.** El proyecto enlaza un repositorio público de GitHub. Preguntamos a la API pública de GitHub si pertenece a la cuenta personal de GitHub del autor y no es un fork; en repositorios de organizaciones y equipos, el autor añade en su lugar un archivo con el token de este proyecto. Lo volvemos a comprobar cada semana.
 - **Live.** El autor demuestra que controla el dominio del proyecto con un token que generamos: un registro TXT en el DNS o una metaetiqueta en la página principal. Lo volvemos a comprobar con regularidad, y el sello solo se mantiene mientras el dominio se haya confirmado en los últimos 35 días.
 - **Steady.** Cuando un proyecto tiene Live, abrimos su dirección más o menos cada 3 horas. Steady necesita al menos 40 comprobaciones en los últimos 30 días, y al menos el 95 % de ellas debe recibir respuesta sin error en 5 segundos.
 
