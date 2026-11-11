@@ -149,6 +149,7 @@ def _domain_context(project, row):
         "domain_live": live,
         "domain_needs_confirm": bool(row and row.status == DomainVerification.Status.VERIFIED and not live),
         "domain_error": domains.error_message(row.last_error) if row else "",
+        "domain_shared": domains.error_message("shared_host") if row and domains.is_shared_host(row.domain) else "",
         "domain_record": domains.record_value(row.token) if row else "",
         "domain_meta": domains.meta_tag(row.token) if row else "",
         "domain_home": domains.homepage_url(project, row.domain) if row else "",
@@ -167,6 +168,8 @@ def domain_verify(request, project):
         message = domains.error_message("no_url")
     elif row is None:
         message = domains.error_message("bad_host")
+    elif domains.is_shared_host(row.domain):  # before the rate limit: no request is made for it
+        message = domains.error_message("shared_host")
     elif (is_limited("domain_verify", project.pk, limit=5, window=600)
           or is_limited("domain_verify_user", request.user.pk, limit=30, window=3600)):
         message, status = _("Too many checks. Wait a few minutes, then verify again."), 429

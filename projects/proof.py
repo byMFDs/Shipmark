@@ -123,6 +123,21 @@ def _steady(project, live, now):
     })
 
 
+def repo_domain_link(project, now=None):
+    """How the linked repository points at the verified domain, as a fact (it is not a hallmark rule).
+
+    "homepage": the repository's Website field on GitHub is on the verified domain (only the
+    repository's admins can set it). None: no link shown, or nothing to compare.
+    """
+    link = getattr(project, "repo_link", None) if project.pk else None
+    row = domains.current_row(project)
+    if link is None or not domains.row_is_live(row, now):
+        return None
+    if link.homepage and domains.domain_key(domains.host_from_url(link.homepage)) == row.domain_key:
+        return "homepage"
+    return None
+
+
 def compute_hallmarks(project, now=None):
     """Return a HallmarkSet (Authored, Live, Steady) for a project. Steady always requires Live."""
     live = _live(project, now)

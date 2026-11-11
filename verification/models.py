@@ -28,6 +28,7 @@ class RepoLink(models.Model):
     first_commit_at = models.DateTimeField(null=True, blank=True)
     last_commit_at = models.DateTimeField(null=True, blank=True)
     repo_created_at = models.DateTimeField(null=True, blank=True)  # on GitHub
+    homepage = models.CharField(max_length=200, blank=True)  # the repository's "Website" field on GitHub
     root_commit_sha = models.CharField(max_length=40, blank=True, db_index=True)  # oldest commit, default branch
     root_commit_at = models.DateTimeField(null=True, blank=True)  # its author date, as written in the commit
     active_weeks = models.PositiveIntegerField(null=True, blank=True)  # None: GitHub statistics not ready yet

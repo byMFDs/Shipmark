@@ -157,7 +157,7 @@ class CommandTests(UptimeTestCase):
         second = self.live_project("https://second.dev/", name="Second")
         real = uptime.probe
 
-        def probe_or_crash(url):
+        def probe_or_crash(url, **kwargs):
             if url == "https://example.com/":
                 raise RuntimeError("bug")
             return real(url)
@@ -282,3 +282,34 @@ class ProjectPageTests(UptimeTestCase):
         project = make_project(self.owner, name="Plain", live_url="https://plain.dev/")
         response = self.client.get(self.url(project))
         self.assertNotContains(response, 'class="uptime"')
+
+
+class FinalHostTests(UptimeTestCase):
+    """A check counts only when the answer comes from the verified domain, after all redirects."""
+
+    def fetch_to(self, final_url, status=200):
+        def fetch(url, method="GET", **kwargs):
+            return FetchResult(url=final_url, status_code=status, headers=httpx.Headers(), content=b"",
+                               redirects=[final_url] if final_url != url else [])
+        return patch.object(uptime, "safe_fetch", fetch)
+
+    def test_redirect_to_another_domain_is_down(self):
+        with self.fetch_to("https://someone-else.com/landing"):
+            check = uptime.check_project(self.project)
+        self.assertFalse(check.ok)
+        self.assertEqual(check.error, uptime.OTHER_HOST)
+        self.assertEqual(check.status_code, 200)
+
+    def test_redirects_within_the_domain_are_fine(self):
+        for final in ("https://www.example.com/app", "https://example.com/en/"):
+            UptimeCheck.objects.all().delete()
+            with self.subTest(final=final), self.fetch_to(final):
+                self.assertTrue(uptime.check_project(self.project).ok)
+
+    def test_subdomain_is_another_host(self):
+        with self.fetch_to("https://app.example.com/"):
+            self.assertFalse(uptime.check_project(self.project).ok)
+
+    def test_probe_without_expected_domain_keeps_old_behaviour(self):
+        with self.fetch_to("https://elsewhere.com/"):
+            self.assertTrue(probe("https://example.com/").ok)

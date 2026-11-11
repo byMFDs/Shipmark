@@ -69,6 +69,7 @@ class RepoFacts:
     commit_count: int  # commits by the user on the default branch (GitHub's contributors list)
     is_fork: bool = False
     repo_created_at: datetime | None = None
+    homepage: str = ""
     first_commit_at: datetime | None = None  # the user's first and last commit
     last_commit_at: datetime | None = None
     root_commit_sha: str = ""  # the oldest commit of the default branch
@@ -234,6 +235,12 @@ def _checked(repo):
     return repo
 
 
+def _homepage(value):
+    """The repository's Website field, kept only when it is a plain http(s) address."""
+    value = str(value or "").strip()
+    return value if len(value) <= 200 and value.lower().startswith(("http://", "https://")) else ""
+
+
 def repo_by_id(api, repo_id):
     """GET /repositories/{id}: the repository with this id, whatever its name is now. 404 = deleted or private."""
     return _checked(api.json(f"/repositories/{int(repo_id)}")[0])
@@ -281,6 +288,7 @@ def fetch_facts(full_name, github_user_id, project=None):
             and not repo.get("fork"),
             commit_count=0,
             repo_created_at=_parse_time(repo.get("created_at")),
+            homepage=_homepage(repo.get("homepage")),
         )
         if facts.is_fork or not facts.is_owner:
             return facts  # refused anyway: no need to spend more API calls
@@ -469,6 +477,7 @@ def store_link(project, facts, old, actor=None):
         "first_commit_at": facts.first_commit_at,
         "last_commit_at": facts.last_commit_at,
         "repo_created_at": facts.repo_created_at,
+        "homepage": facts.homepage,
         "root_commit_sha": facts.root_commit_sha,
         "root_commit_at": facts.root_commit_at,
         "review_state": state,

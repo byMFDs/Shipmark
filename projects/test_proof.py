@@ -275,3 +275,25 @@ class UnverifiedRepoLinkTests(ProofTestCase):
     def test_repo_with_the_mark_is_not_labelled(self):
         self.link(is_owner=True)
         self.assertNotContains(self.client.get(self.project.get_absolute_url()), "Unverified link")
+
+
+class RepoDomainLinkTests(ProofTestCase):
+    def test_homepage_on_the_verified_domain(self):
+        from .proof import repo_domain_link
+
+        self.verify()
+        link = self.link(is_owner=True, homepage="https://www.example.com/docs")
+        self.assertEqual(repo_domain_link(self.fresh()), "homepage")
+        link.homepage = "https://elsewhere.com/"
+        link.save()
+        self.assertIsNone(repo_domain_link(self.fresh()))
+
+    def test_soft_rule_never_changes_the_marks(self):
+        from .proof import repo_domain_link
+
+        self.verify()
+        self.link(is_owner=True, homepage="")
+        self.assertIsNone(repo_domain_link(self.fresh()))
+        marks = self.marks()
+        self.assertTrue(marks["authored"].earned)
+        self.assertTrue(marks["live"].earned)

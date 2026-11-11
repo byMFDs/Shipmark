@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 22:47+0000\n"
+"POT-Creation-Date: 2026-11-11 23:01+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Profile"
 msgstr "Профіль"
 
-#: accounts/admin.py:42 config/settings/base.py:285
+#: accounts/admin.py:42 config/settings/base.py:296
 msgid "Moderation"
 msgstr "Модерація"
 
@@ -151,64 +151,64 @@ msgstr "Ваш акаунт і все, що в ньому було, видале
 msgid "Proof, not promises."
 msgstr "Докази, а не обіцянки."
 
-#: config/settings/base.py:226
+#: config/settings/base.py:237
 msgid "Admin"
 msgstr "Адмінка"
 
-#: config/settings/base.py:262 config/settings/base.py:264
+#: config/settings/base.py:273 config/settings/base.py:275
 #: moderation/dashboard.py:44
 msgid "Users"
 msgstr "Користувачі"
 
-#: config/settings/base.py:268 config/settings/base.py:270
+#: config/settings/base.py:279 config/settings/base.py:281
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:271 templates/pages/landing.html:264
+#: config/settings/base.py:282 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
-#: config/settings/base.py:272 projects/forms.py:26
+#: config/settings/base.py:283 projects/forms.py:26
 #: templates/projects/detail.html:147
 msgid "Tags"
 msgstr "Теги"
 
-#: config/settings/base.py:273
+#: config/settings/base.py:284
 msgid "Tools"
 msgstr "Інструменти"
 
-#: config/settings/base.py:277
+#: config/settings/base.py:288
 msgid "Verification"
 msgstr "Підтвердження"
 
-#: config/settings/base.py:279
+#: config/settings/base.py:290
 msgid "Repositories"
 msgstr "Репозиторії"
 
-#: config/settings/base.py:280
+#: config/settings/base.py:291
 msgid "Domains"
 msgstr "Домени"
 
-#: config/settings/base.py:281
+#: config/settings/base.py:292
 msgid "Uptime checks"
 msgstr "Перевірки доступності"
 
-#: config/settings/base.py:287
+#: config/settings/base.py:298
 msgid "Reports"
 msgstr "Скарги"
 
-#: config/settings/base.py:289
+#: config/settings/base.py:300
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:290 projects/admin.py:44
+#: config/settings/base.py:301 projects/admin.py:44
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:294 config/settings/base.py:296
+#: config/settings/base.py:305 config/settings/base.py:307
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
@@ -488,7 +488,7 @@ msgstr "Зазначає сам автор: ми цього не перевір�
 msgid "Enter a public web address, like https://example.com."
 msgstr "Вкажіть публічну веб-адресу, наприклад https://example.com."
 
-#: projects/forms.py:79 verification/repo.py:265
+#: projects/forms.py:79 verification/repo.py:272
 msgid "Use the form owner/name, for example octocat/hello-world."
 msgstr "Використайте вигляд власник/назва, наприклад octocat/hello-world."
 
@@ -575,7 +575,9 @@ msgstr "Запуск"
 msgid ""
 "The linked public GitHub repository is owned by the author's personal GitHub "
 "account and is not a fork."
-msgstr "Прив'язаний публічний репозиторій на GitHub належить особистому акаунту автора на GitHub і не є форком."
+msgstr ""
+"Прив'язаний публічний репозиторій на GitHub належить особистому акаунту "
+"автора на GitHub і не є форком."
 
 #: projects/proof.py:30
 msgid ""
@@ -699,59 +701,63 @@ msgstr "Репозиторій перевірено. Позначку «Влас
 
 #: projects/views.py:134
 msgid "Repository checked. Repo owner will appear after a short manual review."
-msgstr "Репозиторій перевірено. «Власник репозиторію» з'явиться після короткої ручної перевірки."
+msgstr ""
+"Репозиторій перевірено. «Власник репозиторію» з'явиться після короткої "
+"ручної перевірки."
 
 #: projects/views.py:136
 msgid ""
 "This repository is a fork. Forks cannot earn Repo owner; link the original "
 "repository."
-msgstr "Цей репозиторій є форком. Форки не можуть отримати «Власник репозиторію»; вкажіть оригінальний репозиторій."
+msgstr ""
+"Цей репозиторій є форком. Форки не можуть отримати «Власник репозиторію»; "
+"вкажіть оригінальний репозиторій."
 
 #: projects/views.py:138
 msgid "This repository is not owned by your personal GitHub account."
 msgstr "Цей репозиторій не належить вашому особистому акаунту на GitHub."
 
-#: projects/views.py:172
+#: projects/views.py:175
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr "Забагато перевірок. Зачекайте кілька хвилин і перевірте знову."
 
-#: projects/views.py:181
+#: projects/views.py:184
 msgid "Verified. Confirmed again."
 msgstr "Підтверджено. Перевірку оновлено."
 
-#: projects/views.py:181
+#: projects/views.py:184
 msgid "Verified. Live earned."
 msgstr "Підтверджено. Отримано позначку Live."
 
-#: projects/views.py:201
+#: projects/views.py:204
 msgid "Published."
 msgstr "Опубліковано."
 
-#: projects/views.py:211
+#: projects/views.py:214
 msgid "Moved back to drafts."
 msgstr "Повернуто до чернеток."
 
-#: projects/views.py:221
+#: projects/views.py:224
 msgid "Project deleted."
 msgstr "Проєкт видалено."
 
-#: projects/views.py:234
+#: projects/views.py:237
 msgid "Choose an image first."
 msgstr "Спершу виберіть зображення."
 
-#: projects/views.py:250
+#: projects/views.py:253
 msgid "A project can have at most 4 screenshots. Remove one first."
 msgstr "У проєкта може бути не більше 4 скріншотів. Спершу видаліть один."
 
-#: projects/views.py:253
+#: projects/views.py:256
 msgid "Screenshot added."
 msgstr "Скріншот додано."
 
-#: projects/views.py:271
+#: projects/views.py:274
 msgid "Screenshot removed."
 msgstr "Скріншот видалено."
 
-#: projects/views.py:319
+#: projects/views.py:322
 #, python-format
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
@@ -759,15 +765,15 @@ msgstr ""
 "Проєкт може мати щонайбільше %(n)s записів у журналі за добу. Спробуйте "
 "завтра."
 
-#: projects/views.py:332
+#: projects/views.py:335
 msgid "Posted. Launch date set to today."
 msgstr "Опубліковано. Дату запуску змінено на сьогодні."
 
-#: projects/views.py:332
+#: projects/views.py:335
 msgid "Posted."
 msgstr "Опубліковано."
 
-#: projects/views.py:358 projects/views.py:359
+#: projects/views.py:361 projects/views.py:362
 msgid "Entry deleted."
 msgstr "Запис видалено."
 
@@ -1769,7 +1775,7 @@ msgstr "Підтвердження домену"
 msgid "Add a live URL above and save to verify its domain."
 msgstr "Вкажіть адресу сайту вище й збережіть, щоб підтвердити домен."
 
-#: templates/projects/_domain.html:7 verification/domain.py:40
+#: templates/projects/_domain.html:7 verification/domain.py:41
 msgid ""
 "This address cannot be verified. Use a domain name, not an IP address or a "
 "local name."
@@ -1777,7 +1783,7 @@ msgstr ""
 "Цю адресу не можна підтвердити. Вкажіть доменне ім'я, а не IP-адресу чи "
 "локальну назву."
 
-#: templates/projects/_domain.html:9
+#: templates/projects/_domain.html:11
 msgid ""
 "Live is earned when you prove that you control the domain of your live URL. "
 "www is ignored: example.com and www.example.com are the same domain."
@@ -1785,19 +1791,19 @@ msgstr ""
 "Позначку Live отримує той, хто довів, що керує доменом адреси сайту. www не "
 "враховується: example.com і www.example.com — це той самий домен."
 
-#: templates/projects/_domain.html:15
+#: templates/projects/_domain.html:17
 msgid "Method"
 msgstr "Спосіб"
 
-#: templates/projects/_domain.html:17
+#: templates/projects/_domain.html:19
 msgid "DNS TXT record"
 msgstr "TXT-запис у DNS"
 
-#: templates/projects/_domain.html:17
+#: templates/projects/_domain.html:19
 msgid "(works for any site)"
 msgstr "(підходить для будь-якого сайту)"
 
-#: templates/projects/_domain.html:20
+#: templates/projects/_domain.html:22
 msgid ""
 "Open the DNS settings where you bought the domain or where its DNS is hosted "
 "(Cloudflare, Namecheap, GoDaddy and so on)."
@@ -1805,39 +1811,39 @@ msgstr ""
 "Відкрийте налаштування DNS там, де ви купили домен або де розміщено його DNS "
 "(Cloudflare, Namecheap, GoDaddy тощо)."
 
-#: templates/projects/_domain.html:21
+#: templates/projects/_domain.html:23
 msgid "Add a new record of type TXT:"
 msgstr "Додайте новий запис типу TXT:"
 
-#: templates/projects/_domain.html:23
+#: templates/projects/_domain.html:25
 msgid "Name (Host)"
 msgstr "Ім'я (Host)"
 
-#: templates/projects/_domain.html:24 templates/projects/_domain.html:26
-#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:15
+#: templates/projects/_domain.html:26 templates/projects/_domain.html:28
+#: templates/projects/_domain.html:51 templates/projects/_embed_badge.html:15
 #: templates/projects/_embed_badge.html:20
 msgid "Copied"
 msgstr "Скопійовано"
 
-#: templates/projects/_domain.html:24 templates/projects/_domain.html:26
-#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:15
+#: templates/projects/_domain.html:26 templates/projects/_domain.html:28
+#: templates/projects/_domain.html:51 templates/projects/_embed_badge.html:15
 #: templates/projects/_embed_badge.html:20
 msgid "Copy"
 msgstr "Копіювати"
 
-#: templates/projects/_domain.html:25
+#: templates/projects/_domain.html:27
 msgid "Value"
 msgstr "Значення"
 
-#: templates/projects/_domain.html:29
+#: templates/projects/_domain.html:31
 msgid "Save, wait a few minutes, then press Verify now."
 msgstr "Збережіть, зачекайте кілька хвилин і натисніть «Перевірити зараз»."
 
-#: templates/projects/_domain.html:32
+#: templates/projects/_domain.html:34
 msgid "Common DNS mistakes"
 msgstr "Типові помилки з DNS"
 
-#: templates/projects/_domain.html:34
+#: templates/projects/_domain.html:36
 msgid ""
 "Many providers add your domain to the name for you. Then type only the part "
 "before it (app for app.example.com), or @ for the domain itself. Otherwise "
@@ -1847,7 +1853,7 @@ msgstr ""
 "перед ним (app для app.example.com) або @ для самого домену. Інакше вийде "
 "подвоєне ім'я на зразок app.example.com.example.com."
 
-#: templates/projects/_domain.html:35
+#: templates/projects/_domain.html:37
 msgid ""
 "Add a new TXT record. Do not edit or replace existing ones (for example SPF "
 "records for email)."
@@ -1855,7 +1861,7 @@ msgstr ""
 "Додайте новий TXT-запис. Не змінюйте й не замінюйте наявні (наприклад, SPF-"
 "записи для пошти)."
 
-#: templates/projects/_domain.html:36
+#: templates/projects/_domain.html:38
 msgid ""
 "Paste the value exactly. Quotes around it are fine; spaces or a missing part "
 "are not."
@@ -1863,7 +1869,7 @@ msgstr ""
 "Вставте значення точно. Лапки навколо нього не заважають, а пробіли чи "
 "пропущена частина — заважають."
 
-#: templates/projects/_domain.html:37
+#: templates/projects/_domain.html:39
 msgid ""
 "If this name is a CNAME (common for subdomains on Vercel, Netlify or GitHub "
 "Pages), DNS does not allow a TXT record on it. Use the meta tag instead."
@@ -1871,7 +1877,7 @@ msgstr ""
 "Якщо це ім'я — CNAME (часто буває з піддоменами на Vercel, Netlify чи GitHub "
 "Pages), DNS не дозволяє додати на нього TXT-запис. Скористайтеся метатегом."
 
-#: templates/projects/_domain.html:38
+#: templates/projects/_domain.html:40
 msgid ""
 "Changes can take from a few minutes up to an hour to appear, depending on "
 "the provider."
@@ -1879,29 +1885,29 @@ msgstr ""
 "Зміни з'являються за кілька хвилин, а інколи до години — залежно від "
 "провайдера."
 
-#: templates/projects/_domain.html:39
+#: templates/projects/_domain.html:41
 msgid "Keep the record after verifying. It is checked again every 30 days."
 msgstr ""
 "Не видаляйте запис після підтвердження. Його перевіряють знову кожні 30 днів."
 
-#: templates/projects/_domain.html:44
+#: templates/projects/_domain.html:46
 msgid "Meta tag on the homepage"
 msgstr "Метатег на головній сторінці"
 
-#: templates/projects/_domain.html:44
+#: templates/projects/_domain.html:46
 msgid "(if you can edit the site's HTML)"
 msgstr "(якщо ви можете змінювати HTML сайту)"
 
-#: templates/projects/_domain.html:47
+#: templates/projects/_domain.html:49
 #, python-format
 msgid "Add this tag inside &lt;head&gt; of %(url)s:"
 msgstr "Додайте цей тег усередину &lt;head&gt; сторінки %(url)s:"
 
-#: templates/projects/_domain.html:51
+#: templates/projects/_domain.html:53
 msgid "Publish the site, then press Verify now."
 msgstr "Опублікуйте сайт і натисніть «Перевірити зараз»."
 
-#: templates/projects/_domain.html:53
+#: templates/projects/_domain.html:55
 msgid ""
 "The homepage must be public (no login), answer with 200 OK within 5 seconds "
 "and be smaller than 512 KB. Redirects within the same domain are fine. The "
@@ -1913,15 +1919,15 @@ msgstr ""
 "дозволені. Тег має бути в HTML, який віддає сервер: тег, доданий пізніше "
 "через JavaScript, не видно."
 
-#: templates/projects/_domain.html:57
+#: templates/projects/_domain.html:59
 msgid "Checking…"
 msgstr "Перевіряємо…"
 
-#: templates/projects/_domain.html:57
+#: templates/projects/_domain.html:59
 msgid "Verify now"
 msgstr "Перевірити зараз"
 
-#: templates/projects/_domain.html:58
+#: templates/projects/_domain.html:60
 msgid "Up to 5 checks per 10 minutes."
 msgstr "До 5 перевірок за 10 хвилин."
 
@@ -2206,19 +2212,25 @@ msgstr "Перевірено: %(date)s."
 msgid ""
 "%(name)s passed the check. Repo owner will appear after a short manual "
 "review; nothing is needed from you."
-msgstr "%(name)s пройшов перевірку. «Власник репозиторію» з'явиться після короткої ручної перевірки; від вас нічого не потрібно."
+msgstr ""
+"%(name)s пройшов перевірку. «Власник репозиторію» з'явиться після короткої "
+"ручної перевірки; від вас нічого не потрібно."
 
 #: templates/projects/form.html:74
 msgid ""
 "The rules for Repo owner changed. Check the repository again; it takes a few "
 "seconds."
-msgstr "Правила для «Власник репозиторію» змінилися. Перевірте репозиторій ще раз, це займе кілька секунд."
+msgstr ""
+"Правила для «Власник репозиторію» змінилися. Перевірте репозиторій ще раз, "
+"це займе кілька секунд."
 
 #: templates/projects/form.html:76
 msgid ""
 "Not checked yet. Repo owner is earned when the public repository is owned by "
 "your personal GitHub account and is not a fork."
-msgstr "Ще не перевірено. «Власник репозиторію» отримують, коли публічний репозиторій належить вашому особистому акаунту на GitHub і не є форком."
+msgstr ""
+"Ще не перевірено. «Власник репозиторію» отримують, коли публічний "
+"репозиторій належить вашому особистому акаунту на GitHub і не є форком."
 
 #: templates/projects/form.html:79
 msgid "Check repository"
@@ -2449,19 +2461,26 @@ msgid "%(count)s row(s) skipped: not verified, or over the limit of %(limit)s."
 msgstr ""
 "Пропущено рядків: %(count)s (не підтверджені або понад ліміт %(limit)s)."
 
-#: verification/domain.py:39
+#: verification/domain.py:40
 msgid "Add a live URL and save the project first."
 msgstr "Спершу вкажіть адресу сайту й збережіть проєкт."
 
-#: verification/domain.py:41
+#: verification/domain.py:42
+msgid ""
+"This is the main address of a hosting service shared by many sites, so it "
+"cannot be verified. Use your own address on it (like yourname.github.io) or "
+"your own domain."
+msgstr "Це головна адреса хостингу, яким користується багато сайтів, тому її не можна підтвердити. Вкажіть свою адресу на ньому (наприклад, yourname.github.io) або власний домен."
+
+#: verification/domain.py:44
 msgid "This domain is already verified for another project."
 msgstr "Цей домен уже підтверджено для іншого проєкту."
 
-#: verification/domain.py:42
+#: verification/domain.py:45
 msgid "This domain does not exist in DNS. Check the spelling of the live URL."
 msgstr "Такого домену немає в DNS. Перевірте написання адреси сайту."
 
-#: verification/domain.py:43
+#: verification/domain.py:46
 msgid ""
 "No TXT records were found on this name yet. DNS changes can take up to an "
 "hour."
@@ -2469,7 +2488,7 @@ msgstr ""
 "На цьому імені поки немає TXT-записів. Зміни в DNS можуть з'являтися до "
 "години."
 
-#: verification/domain.py:44
+#: verification/domain.py:47
 msgid ""
 "TXT records were found, but none has your token. Check the value, character "
 "by character."
@@ -2477,15 +2496,15 @@ msgstr ""
 "TXT-записи знайдено, але в жодному немає вашого токена. Звірте значення "
 "посимвольно."
 
-#: verification/domain.py:45
+#: verification/domain.py:48
 msgid "DNS did not answer in time. Try again in a few minutes."
 msgstr "DNS не відповів вчасно. Спробуйте за кілька хвилин."
 
-#: verification/domain.py:46
+#: verification/domain.py:49
 msgid "This address points to a private network and cannot be checked."
 msgstr "Ця адреса веде в приватну мережу, її не можна перевірити."
 
-#: verification/domain.py:47
+#: verification/domain.py:50
 msgid ""
 "Your homepage could not be loaded (no answer within 5 seconds, or the "
 "connection failed)."
@@ -2493,60 +2512,60 @@ msgstr ""
 "Не вдалося завантажити головну сторінку (немає відповіді за 5 секунд або "
 "з'єднання не вдалося)."
 
-#: verification/domain.py:48
+#: verification/domain.py:51
 msgid ""
 "Your homepage did not answer with 200 OK. It must be public, without a login."
 msgstr ""
 "Головна сторінка не відповіла 200 OK. Вона має бути публічною, без входу."
 
-#: verification/domain.py:49
+#: verification/domain.py:52
 msgid ""
 "Your homepage answered with a server error. Try again when the site is up."
 msgstr ""
 "Головна сторінка відповіла помилкою сервера. Спробуйте, коли сайт запрацює."
 
-#: verification/domain.py:50
+#: verification/domain.py:53
 msgid ""
 "Your homepage redirects to another domain. The tag must be on this domain."
 msgstr ""
 "Головна сторінка переспрямовує на інший домен. Тег має бути саме на цьому "
 "домені."
 
-#: verification/domain.py:51
+#: verification/domain.py:54
 msgid "Your homepage is larger than 512 KB. Use the DNS method instead."
 msgstr "Головна сторінка більша за 512 КБ. Скористайтеся способом через DNS."
 
-#: verification/domain.py:52
+#: verification/domain.py:55
 msgid "The page loaded, but the meta tag was not found in it."
 msgstr "Сторінка завантажилася, але метатегу в ній немає."
 
-#: verification/domain.py:53
+#: verification/domain.py:56
 msgid "The meta tag was found, but its token does not match. Copy it again."
 msgstr "Метатег знайдено, але токен не збігається. Скопіюйте його ще раз."
 
-#: verification/repo.py:131
+#: verification/repo.py:132
 msgid "GitHub did not answer properly. Try again in a few minutes."
 msgstr "GitHub не відповів як слід. Спробуйте за кілька хвилин."
 
-#: verification/repo.py:144
+#: verification/repo.py:145
 #, python-format
 msgid "GitHub's rate limit was reached. Try again in about %(minutes)s min."
 msgstr ""
 "Досягнуто ліміт запитів GitHub. Спробуйте приблизно через %(minutes)s хв."
 
-#: verification/repo.py:146
+#: verification/repo.py:147
 msgid "GitHub's rate limit was reached. Try again later."
 msgstr "Досягнуто ліміт запитів GitHub. Спробуйте пізніше."
 
-#: verification/repo.py:154
+#: verification/repo.py:155
 msgid "This repository has no commits yet."
 msgstr "У цьому репозиторії ще немає комітів."
 
-#: verification/repo.py:157
+#: verification/repo.py:158
 msgid "This repository was renamed or moved. Enter its current name."
 msgstr "Репозиторій перейменовано або переміщено. Вкажіть його поточну назву."
 
-#: verification/repo.py:162
+#: verification/repo.py:163
 msgid ""
 "Repository not found. Check the spelling. Private repositories cannot be "
 "checked."
@@ -2554,14 +2573,14 @@ msgstr ""
 "Репозиторій не знайдено. Перевірте написання. Приватні репозиторії "
 "перевірити не можна."
 
-#: verification/repo.py:171
+#: verification/repo.py:172
 msgid "This repository is too large to check automatically."
 msgstr "Цей репозиторій завеликий для автоматичної перевірки."
 
-#: verification/repo.py:270
+#: verification/repo.py:277
 msgid "This repository is private. Only public repositories can be checked."
 msgstr "Цей репозиторій приватний. Перевіряти можна лише публічні."
 
-#: verification/repo.py:288 verification/repo.py:454
+#: verification/repo.py:296 verification/repo.py:462
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."

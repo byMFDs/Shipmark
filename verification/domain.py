@@ -17,6 +17,7 @@ from urllib.parse import urlsplit
 
 import dns.exception
 import dns.resolver
+from django.conf import settings
 from django.db import IntegrityError, transaction
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -38,6 +39,8 @@ LIVE_MAX_AGE = timedelta(days=35)  # Live counts only if confirmed within this t
 MESSAGES = {
     "no_url": _("Add a live URL and save the project first."),
     "bad_host": _("This address cannot be verified. Use a domain name, not an IP address or a local name."),
+    "shared_host": _("This is the main address of a hosting service shared by many sites, so it cannot be "
+                     "verified. Use your own address on it (like yourname.github.io) or your own domain."),
     "taken": _("This domain is already verified for another project."),
     "dns_nxdomain": _("This domain does not exist in DNS. Check the spelling of the live URL."),
     "dns_no_txt": _("No TXT records were found on this name yet. DNS changes can take up to an hour."),
@@ -96,6 +99,11 @@ def host_from_url(url):
     if host == "localhost" or host.endswith((".localhost", ".local", ".internal", ".home.arpa", ".test")):
         return None
     return host
+
+
+def is_shared_host(host):
+    """The bare address of a hosting service where every user gets a subdomain (settings list)."""
+    return domain_key(host) in settings.TRUST_SHARED_HOST_APEXES
 
 
 def domain_key(host):
@@ -243,6 +251,9 @@ def verify(row, method, actor=None):
     if method not in DomainVerification.Method.values:
         method = DomainVerification.Method.DNS
     now = timezone.now()
+    if is_shared_host(row.domain):
+        _save_error(row, "shared_host", now)
+        raise DomainCheckError("shared_host")
     if taken_by_other(row):
         _save_error(row, "taken", now)
         raise DomainCheckError("taken")

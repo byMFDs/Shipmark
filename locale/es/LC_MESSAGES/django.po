@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 22:47+0000\n"
+"POT-Creation-Date: 2026-11-11 23:01+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Profile"
 msgstr "Perfil"
 
-#: accounts/admin.py:42 config/settings/base.py:285
+#: accounts/admin.py:42 config/settings/base.py:296
 msgid "Moderation"
 msgstr "Moderación"
 
@@ -148,64 +148,64 @@ msgstr "Tu cuenta y todo lo que contenía se han eliminado."
 msgid "Proof, not promises."
 msgstr "Pruebas, no promesas."
 
-#: config/settings/base.py:226
+#: config/settings/base.py:237
 msgid "Admin"
 msgstr "Administración"
 
-#: config/settings/base.py:262 config/settings/base.py:264
+#: config/settings/base.py:273 config/settings/base.py:275
 #: moderation/dashboard.py:44
 msgid "Users"
 msgstr "Usuarios"
 
-#: config/settings/base.py:268 config/settings/base.py:270
+#: config/settings/base.py:279 config/settings/base.py:281
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Proyectos"
 
-#: config/settings/base.py:271 templates/pages/landing.html:264
+#: config/settings/base.py:282 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Registro de desarrollo"
 
-#: config/settings/base.py:272 projects/forms.py:26
+#: config/settings/base.py:283 projects/forms.py:26
 #: templates/projects/detail.html:147
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: config/settings/base.py:273
+#: config/settings/base.py:284
 msgid "Tools"
 msgstr "Herramientas"
 
-#: config/settings/base.py:277
+#: config/settings/base.py:288
 msgid "Verification"
 msgstr "Verificación"
 
-#: config/settings/base.py:279
+#: config/settings/base.py:290
 msgid "Repositories"
 msgstr "Repositorios"
 
-#: config/settings/base.py:280
+#: config/settings/base.py:291
 msgid "Domains"
 msgstr "Dominios"
 
-#: config/settings/base.py:281
+#: config/settings/base.py:292
 msgid "Uptime checks"
 msgstr "Comprobaciones de disponibilidad"
 
-#: config/settings/base.py:287
+#: config/settings/base.py:298
 msgid "Reports"
 msgstr "Denuncias"
 
-#: config/settings/base.py:289
+#: config/settings/base.py:300
 msgid "Follows"
 msgstr "Seguimientos"
 
-#: config/settings/base.py:290 projects/admin.py:44
+#: config/settings/base.py:301 projects/admin.py:44
 msgid "Likes"
 msgstr "Me gusta"
 
-#: config/settings/base.py:294 config/settings/base.py:296
+#: config/settings/base.py:305 config/settings/base.py:307
 msgid "Audit log"
 msgstr "Registro de auditoría"
 
@@ -483,7 +483,7 @@ msgstr "Declarado por el autor: no lo comprobamos."
 msgid "Enter a public web address, like https://example.com."
 msgstr "Introduce una dirección web pública, como https://example.com."
 
-#: projects/forms.py:79 verification/repo.py:265
+#: projects/forms.py:79 verification/repo.py:272
 msgid "Use the form owner/name, for example octocat/hello-world."
 msgstr "Usa el formato propietario/nombre, por ejemplo octocat/hello-world."
 
@@ -571,7 +571,9 @@ msgstr "Lanzado"
 msgid ""
 "The linked public GitHub repository is owned by the author's personal GitHub "
 "account and is not a fork."
-msgstr "El repositorio público de GitHub enlazado pertenece a la cuenta personal de GitHub de quien lo publica y no es un fork."
+msgstr ""
+"El repositorio público de GitHub enlazado pertenece a la cuenta personal de "
+"GitHub de quien lo publica y no es un fork."
 
 #: projects/proof.py:30
 msgid ""
@@ -700,61 +702,65 @@ msgstr "Repositorio comprobado. Repo owner conseguido."
 
 #: projects/views.py:134
 msgid "Repository checked. Repo owner will appear after a short manual review."
-msgstr "Repositorio comprobado. Repo owner aparecerá después de una breve revisión manual."
+msgstr ""
+"Repositorio comprobado. Repo owner aparecerá después de una breve revisión "
+"manual."
 
 #: projects/views.py:136
 msgid ""
 "This repository is a fork. Forks cannot earn Repo owner; link the original "
 "repository."
-msgstr "Este repositorio es un fork. Los forks no pueden conseguir Repo owner; enlaza el repositorio original."
+msgstr ""
+"Este repositorio es un fork. Los forks no pueden conseguir Repo owner; "
+"enlaza el repositorio original."
 
 #: projects/views.py:138
 msgid "This repository is not owned by your personal GitHub account."
 msgstr "Este repositorio no pertenece a tu cuenta personal de GitHub."
 
-#: projects/views.py:172
+#: projects/views.py:175
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr "Demasiadas comprobaciones. Espera unos minutos y vuelve a verificar."
 
-#: projects/views.py:181
+#: projects/views.py:184
 msgid "Verified. Confirmed again."
 msgstr "Verificado. Confirmado de nuevo."
 
-#: projects/views.py:181
+#: projects/views.py:184
 msgid "Verified. Live earned."
 msgstr "Verificado. Live conseguido."
 
-#: projects/views.py:201
+#: projects/views.py:204
 msgid "Published."
 msgstr "Publicado."
 
-#: projects/views.py:211
+#: projects/views.py:214
 msgid "Moved back to drafts."
 msgstr "Devuelto a borradores."
 
-#: projects/views.py:221
+#: projects/views.py:224
 msgid "Project deleted."
 msgstr "Proyecto eliminado."
 
-#: projects/views.py:234
+#: projects/views.py:237
 msgid "Choose an image first."
 msgstr "Elige primero una imagen."
 
-#: projects/views.py:250
+#: projects/views.py:253
 msgid "A project can have at most 4 screenshots. Remove one first."
 msgstr ""
 "Un proyecto puede tener como máximo 4 capturas de pantalla. Elimina una "
 "primero."
 
-#: projects/views.py:253
+#: projects/views.py:256
 msgid "Screenshot added."
 msgstr "Captura de pantalla añadida."
 
-#: projects/views.py:271
+#: projects/views.py:274
 msgid "Screenshot removed."
 msgstr "Captura de pantalla eliminada."
 
-#: projects/views.py:319
+#: projects/views.py:322
 #, python-format
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
@@ -762,15 +768,15 @@ msgstr ""
 "Un proyecto puede recibir como máximo %(n)s entradas del registro de "
 "desarrollo al día. Inténtalo de nuevo mañana."
 
-#: projects/views.py:332
+#: projects/views.py:335
 msgid "Posted. Launch date set to today."
 msgstr "Publicado. Fecha de lanzamiento fijada en hoy."
 
-#: projects/views.py:332
+#: projects/views.py:335
 msgid "Posted."
 msgstr "Publicado."
 
-#: projects/views.py:358 projects/views.py:359
+#: projects/views.py:361 projects/views.py:362
 msgid "Entry deleted."
 msgstr "Entrada eliminada."
 
@@ -1775,7 +1781,7 @@ msgstr "Verificación del dominio"
 msgid "Add a live URL above and save to verify its domain."
 msgstr "Añade arriba una URL pública y guarda para verificar su dominio."
 
-#: templates/projects/_domain.html:7 verification/domain.py:40
+#: templates/projects/_domain.html:7 verification/domain.py:41
 msgid ""
 "This address cannot be verified. Use a domain name, not an IP address or a "
 "local name."
@@ -1783,7 +1789,7 @@ msgstr ""
 "Esta dirección no se puede verificar. Usa un nombre de dominio, no una "
 "dirección IP ni un nombre local."
 
-#: templates/projects/_domain.html:9
+#: templates/projects/_domain.html:11
 msgid ""
 "Live is earned when you prove that you control the domain of your live URL. "
 "www is ignored: example.com and www.example.com are the same domain."
@@ -1791,19 +1797,19 @@ msgstr ""
 "Live se consigue al demostrar que controlas el dominio de tu URL pública. El "
 "www se ignora: example.com y www.example.com son el mismo dominio."
 
-#: templates/projects/_domain.html:15
+#: templates/projects/_domain.html:17
 msgid "Method"
 msgstr "Método"
 
-#: templates/projects/_domain.html:17
+#: templates/projects/_domain.html:19
 msgid "DNS TXT record"
 msgstr "Registro DNS TXT"
 
-#: templates/projects/_domain.html:17
+#: templates/projects/_domain.html:19
 msgid "(works for any site)"
 msgstr "(sirve para cualquier sitio)"
 
-#: templates/projects/_domain.html:20
+#: templates/projects/_domain.html:22
 msgid ""
 "Open the DNS settings where you bought the domain or where its DNS is hosted "
 "(Cloudflare, Namecheap, GoDaddy and so on)."
@@ -1811,39 +1817,39 @@ msgstr ""
 "Abre los ajustes de DNS donde compraste el dominio o donde está alojado su "
 "DNS (Cloudflare, Namecheap, GoDaddy, etc.)."
 
-#: templates/projects/_domain.html:21
+#: templates/projects/_domain.html:23
 msgid "Add a new record of type TXT:"
 msgstr "Añade un registro nuevo de tipo TXT:"
 
-#: templates/projects/_domain.html:23
+#: templates/projects/_domain.html:25
 msgid "Name (Host)"
 msgstr "Nombre (Host)"
 
-#: templates/projects/_domain.html:24 templates/projects/_domain.html:26
-#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:15
+#: templates/projects/_domain.html:26 templates/projects/_domain.html:28
+#: templates/projects/_domain.html:51 templates/projects/_embed_badge.html:15
 #: templates/projects/_embed_badge.html:20
 msgid "Copied"
 msgstr "Copiado"
 
-#: templates/projects/_domain.html:24 templates/projects/_domain.html:26
-#: templates/projects/_domain.html:49 templates/projects/_embed_badge.html:15
+#: templates/projects/_domain.html:26 templates/projects/_domain.html:28
+#: templates/projects/_domain.html:51 templates/projects/_embed_badge.html:15
 #: templates/projects/_embed_badge.html:20
 msgid "Copy"
 msgstr "Copiar"
 
-#: templates/projects/_domain.html:25
+#: templates/projects/_domain.html:27
 msgid "Value"
 msgstr "Valor"
 
-#: templates/projects/_domain.html:29
+#: templates/projects/_domain.html:31
 msgid "Save, wait a few minutes, then press Verify now."
 msgstr "Guarda, espera unos minutos y pulsa Verificar ahora."
 
-#: templates/projects/_domain.html:32
+#: templates/projects/_domain.html:34
 msgid "Common DNS mistakes"
 msgstr "Errores frecuentes de DNS"
 
-#: templates/projects/_domain.html:34
+#: templates/projects/_domain.html:36
 msgid ""
 "Many providers add your domain to the name for you. Then type only the part "
 "before it (app for app.example.com), or @ for the domain itself. Otherwise "
@@ -1853,7 +1859,7 @@ msgstr ""
 "solo la parte anterior (app para app.example.com), o @ para el dominio "
 "mismo. Si no, obtendrás un nombre duplicado como app.example.com.example.com."
 
-#: templates/projects/_domain.html:35
+#: templates/projects/_domain.html:37
 msgid ""
 "Add a new TXT record. Do not edit or replace existing ones (for example SPF "
 "records for email)."
@@ -1861,7 +1867,7 @@ msgstr ""
 "Añade un registro TXT nuevo. No edites ni sustituyas los existentes (por "
 "ejemplo, los registros SPF del correo)."
 
-#: templates/projects/_domain.html:36
+#: templates/projects/_domain.html:38
 msgid ""
 "Paste the value exactly. Quotes around it are fine; spaces or a missing part "
 "are not."
@@ -1869,7 +1875,7 @@ msgstr ""
 "Pega el valor exactamente. Las comillas alrededor no importan; los espacios "
 "o una parte que falte, sí."
 
-#: templates/projects/_domain.html:37
+#: templates/projects/_domain.html:39
 msgid ""
 "If this name is a CNAME (common for subdomains on Vercel, Netlify or GitHub "
 "Pages), DNS does not allow a TXT record on it. Use the meta tag instead."
@@ -1877,7 +1883,7 @@ msgstr ""
 "Si este nombre es un CNAME (habitual en subdominios de Vercel, Netlify o "
 "GitHub Pages), el DNS no permite un registro TXT en él. Usa la metaetiqueta."
 
-#: templates/projects/_domain.html:38
+#: templates/projects/_domain.html:40
 msgid ""
 "Changes can take from a few minutes up to an hour to appear, depending on "
 "the provider."
@@ -1885,29 +1891,29 @@ msgstr ""
 "Los cambios pueden tardar desde unos minutos hasta una hora en aparecer, "
 "según el proveedor."
 
-#: templates/projects/_domain.html:39
+#: templates/projects/_domain.html:41
 msgid "Keep the record after verifying. It is checked again every 30 days."
 msgstr ""
 "Mantén el registro después de verificar. Se vuelve a comprobar cada 30 días."
 
-#: templates/projects/_domain.html:44
+#: templates/projects/_domain.html:46
 msgid "Meta tag on the homepage"
 msgstr "Metaetiqueta en la página de inicio"
 
-#: templates/projects/_domain.html:44
+#: templates/projects/_domain.html:46
 msgid "(if you can edit the site's HTML)"
 msgstr "(si puedes editar el HTML del sitio)"
 
-#: templates/projects/_domain.html:47
+#: templates/projects/_domain.html:49
 #, python-format
 msgid "Add this tag inside &lt;head&gt; of %(url)s:"
 msgstr "Añade esta etiqueta dentro de &lt;head&gt; de %(url)s:"
 
-#: templates/projects/_domain.html:51
+#: templates/projects/_domain.html:53
 msgid "Publish the site, then press Verify now."
 msgstr "Publica el sitio y pulsa Verificar ahora."
 
-#: templates/projects/_domain.html:53
+#: templates/projects/_domain.html:55
 msgid ""
 "The homepage must be public (no login), answer with 200 OK within 5 seconds "
 "and be smaller than 512 KB. Redirects within the same domain are fine. The "
@@ -1919,15 +1925,15 @@ msgstr ""
 "dominio están bien. La etiqueta debe estar en el HTML que envía el servidor: "
 "una etiqueta añadida después con JavaScript no se ve."
 
-#: templates/projects/_domain.html:57
+#: templates/projects/_domain.html:59
 msgid "Checking…"
 msgstr "Comprobando…"
 
-#: templates/projects/_domain.html:57
+#: templates/projects/_domain.html:59
 msgid "Verify now"
 msgstr "Verificar ahora"
 
-#: templates/projects/_domain.html:58
+#: templates/projects/_domain.html:60
 msgid "Up to 5 checks per 10 minutes."
 msgstr "Hasta 5 comprobaciones cada 10 minutos."
 
@@ -2211,19 +2217,25 @@ msgstr "Comprobado el %(date)s."
 msgid ""
 "%(name)s passed the check. Repo owner will appear after a short manual "
 "review; nothing is needed from you."
-msgstr "%(name)s superó la comprobación. Repo owner aparecerá después de una breve revisión manual; no tienes que hacer nada."
+msgstr ""
+"%(name)s superó la comprobación. Repo owner aparecerá después de una breve "
+"revisión manual; no tienes que hacer nada."
 
 #: templates/projects/form.html:74
 msgid ""
 "The rules for Repo owner changed. Check the repository again; it takes a few "
 "seconds."
-msgstr "Las reglas de Repo owner han cambiado. Vuelve a comprobar el repositorio; tarda unos segundos."
+msgstr ""
+"Las reglas de Repo owner han cambiado. Vuelve a comprobar el repositorio; "
+"tarda unos segundos."
 
 #: templates/projects/form.html:76
 msgid ""
 "Not checked yet. Repo owner is earned when the public repository is owned by "
 "your personal GitHub account and is not a fork."
-msgstr "Aún no comprobado. Repo owner se consigue cuando el repositorio público pertenece a tu cuenta personal de GitHub y no es un fork."
+msgstr ""
+"Aún no comprobado. Repo owner se consigue cuando el repositorio público "
+"pertenece a tu cuenta personal de GitHub y no es un fork."
 
 #: templates/projects/form.html:79
 msgid "Check repository"
@@ -2459,20 +2471,27 @@ msgstr ""
 "Filas omitidas: %(count)s (sin verificar, o por encima del límite de "
 "%(limit)s)."
 
-#: verification/domain.py:39
+#: verification/domain.py:40
 msgid "Add a live URL and save the project first."
 msgstr "Primero añade una URL pública y guarda el proyecto."
 
-#: verification/domain.py:41
+#: verification/domain.py:42
+msgid ""
+"This is the main address of a hosting service shared by many sites, so it "
+"cannot be verified. Use your own address on it (like yourname.github.io) or "
+"your own domain."
+msgstr "Esta es la dirección principal de un servicio de alojamiento que comparten muchos sitios, así que no se puede verificar. Usa tu propia dirección en él (como yourname.github.io) o tu propio dominio."
+
+#: verification/domain.py:44
 msgid "This domain is already verified for another project."
 msgstr "Este dominio ya está verificado para otro proyecto."
 
-#: verification/domain.py:42
+#: verification/domain.py:45
 msgid "This domain does not exist in DNS. Check the spelling of the live URL."
 msgstr ""
 "Este dominio no existe en el DNS. Revisa cómo está escrita la URL pública."
 
-#: verification/domain.py:43
+#: verification/domain.py:46
 msgid ""
 "No TXT records were found on this name yet. DNS changes can take up to an "
 "hour."
@@ -2480,7 +2499,7 @@ msgstr ""
 "Aún no se encontraron registros TXT en este nombre. Los cambios de DNS "
 "pueden tardar hasta una hora."
 
-#: verification/domain.py:44
+#: verification/domain.py:47
 msgid ""
 "TXT records were found, but none has your token. Check the value, character "
 "by character."
@@ -2488,15 +2507,15 @@ msgstr ""
 "Se encontraron registros TXT, pero ninguno tiene tu token. Revisa el valor "
 "carácter por carácter."
 
-#: verification/domain.py:45
+#: verification/domain.py:48
 msgid "DNS did not answer in time. Try again in a few minutes."
 msgstr "El DNS no respondió a tiempo. Inténtalo de nuevo en unos minutos."
 
-#: verification/domain.py:46
+#: verification/domain.py:49
 msgid "This address points to a private network and cannot be checked."
 msgstr "Esta dirección apunta a una red privada y no se puede comprobar."
 
-#: verification/domain.py:47
+#: verification/domain.py:50
 msgid ""
 "Your homepage could not be loaded (no answer within 5 seconds, or the "
 "connection failed)."
@@ -2504,65 +2523,65 @@ msgstr ""
 "No se pudo cargar tu página de inicio (sin respuesta en 5 segundos, o falló "
 "la conexión)."
 
-#: verification/domain.py:48
+#: verification/domain.py:51
 msgid ""
 "Your homepage did not answer with 200 OK. It must be public, without a login."
 msgstr ""
 "Tu página de inicio no respondió con 200 OK. Debe ser pública, sin login."
 
-#: verification/domain.py:49
+#: verification/domain.py:52
 msgid ""
 "Your homepage answered with a server error. Try again when the site is up."
 msgstr ""
 "Tu página de inicio respondió con un error del servidor. Inténtalo de nuevo "
 "cuando el sitio esté en marcha."
 
-#: verification/domain.py:50
+#: verification/domain.py:53
 msgid ""
 "Your homepage redirects to another domain. The tag must be on this domain."
 msgstr ""
 "Tu página de inicio redirige a otro dominio. La etiqueta debe estar en este "
 "dominio."
 
-#: verification/domain.py:51
+#: verification/domain.py:54
 msgid "Your homepage is larger than 512 KB. Use the DNS method instead."
 msgstr "Tu página de inicio pesa más de 512 KB. Usa el método DNS."
 
-#: verification/domain.py:52
+#: verification/domain.py:55
 msgid "The page loaded, but the meta tag was not found in it."
 msgstr "La página se cargó, pero no se encontró la metaetiqueta en ella."
 
-#: verification/domain.py:53
+#: verification/domain.py:56
 msgid "The meta tag was found, but its token does not match. Copy it again."
 msgstr ""
 "Se encontró la metaetiqueta, pero su token no coincide. Cópialo de nuevo."
 
-#: verification/repo.py:131
+#: verification/repo.py:132
 msgid "GitHub did not answer properly. Try again in a few minutes."
 msgstr "GitHub no respondió correctamente. Inténtalo de nuevo en unos minutos."
 
-#: verification/repo.py:144
+#: verification/repo.py:145
 #, python-format
 msgid "GitHub's rate limit was reached. Try again in about %(minutes)s min."
 msgstr ""
 "Se alcanzó el límite de solicitudes de GitHub. Inténtalo de nuevo en unos "
 "%(minutes)s min."
 
-#: verification/repo.py:146
+#: verification/repo.py:147
 msgid "GitHub's rate limit was reached. Try again later."
 msgstr ""
 "Se alcanzó el límite de solicitudes de GitHub. Inténtalo de nuevo más tarde."
 
-#: verification/repo.py:154
+#: verification/repo.py:155
 msgid "This repository has no commits yet."
 msgstr "Este repositorio aún no tiene commits."
 
-#: verification/repo.py:157
+#: verification/repo.py:158
 msgid "This repository was renamed or moved. Enter its current name."
 msgstr ""
 "Este repositorio cambió de nombre o se movió. Introduce su nombre actual."
 
-#: verification/repo.py:162
+#: verification/repo.py:163
 msgid ""
 "Repository not found. Check the spelling. Private repositories cannot be "
 "checked."
@@ -2570,15 +2589,15 @@ msgstr ""
 "Repositorio no encontrado. Revisa cómo está escrito. Los repositorios "
 "privados no se pueden comprobar."
 
-#: verification/repo.py:171
+#: verification/repo.py:172
 msgid "This repository is too large to check automatically."
 msgstr "Este repositorio es demasiado grande para comprobarlo automáticamente."
 
-#: verification/repo.py:270
+#: verification/repo.py:277
 msgid "This repository is private. Only public repositories can be checked."
 msgstr ""
 "Este repositorio es privado. Solo se pueden comprobar repositorios públicos."
 
-#: verification/repo.py:288 verification/repo.py:454
+#: verification/repo.py:296 verification/repo.py:462
 msgid "This repository is already linked to another project."
 msgstr "Este repositorio ya está vinculado a otro proyecto."

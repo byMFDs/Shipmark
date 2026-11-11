@@ -157,6 +157,17 @@ GITHUB_API_TOKEN = env.str("GITHUB_API_TOKEN", default="")
 # the wide margin. Commit dates are written by the author, so this only catches careless copies.
 TRUST_IMPORTED_HISTORY_DAYS = 90
 
+# Live: bare addresses of hosting services where each user gets a subdomain. Nobody "controls"
+# github.io itself, so it is refused with a clear message (yourname.github.io is fine).
+# Compared without "www.". A Public Suffix List would be complete, but it is a new dependency.
+TRUST_SHARED_HOST_APEXES = frozenset({
+    "github.io", "githubusercontent.com", "gitlab.io", "vercel.app", "now.sh", "netlify.app", "netlify.com",
+    "pages.dev", "workers.dev", "herokuapp.com", "onrender.com", "fly.dev", "railway.app", "glitch.me",
+    "replit.app", "repl.co", "web.app", "firebaseapp.com", "azurewebsites.net", "appspot.com",
+    "surge.sh", "deno.dev", "bitbucket.io", "codeberg.page", "neocities.org", "blogspot.com",
+    "wordpress.com", "framer.website", "webflow.io", "carrd.co", "lovable.app", "bolt.new",
+})
+
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
         # Only these two scopes. Never "repo" (CLAUDE.md section 6).

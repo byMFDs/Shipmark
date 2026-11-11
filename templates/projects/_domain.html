@@ -5,6 +5,8 @@
     <p class="muted">{% translate "Add a live URL above and save to verify its domain." %}</p>
   {% elif not domain_row %}
     <p class="muted">{% translate "This address cannot be verified. Use a domain name, not an IP address or a local name." %}</p>
+  {% elif domain_shared %}
+    <p class="muted">{{ domain_shared }}</p>
   {% else %}
     <p class="field__hint">{% translate "Live is earned when you prove that you control the domain of your live URL. www is ignored: example.com and www.example.com are the same domain." %}</p>
     <div data-domain-status aria-live="polite">{% include "projects/_domain_status.html" %}</div>

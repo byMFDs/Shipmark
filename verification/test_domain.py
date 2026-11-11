@@ -375,3 +375,59 @@ class ViewTests(DomainTestCase):
         self.client.logout()
         response = self.client.get(self.project.get_absolute_url())
         self.assertContains(response, "hallmark--l is-earned", count=1)
+
+
+class SharedHostTests(DomainTestCase):
+    def test_bare_shared_hosts_are_refused_with_a_clear_code(self):
+        for host in ("github.io", "www.vercel.app", "netlify.app", "pages.dev", "herokuapp.com"):
+            project = make_project(self.owner, name=host, live_url=f"https://{host}/")
+            row = verification_for(project, create=True)
+            with self.subTest(host=host), fake_dns({host: [f"shipmark-verify={row.token}"]}), \
+                    self.assertRaises(DomainCheckError) as ctx:
+                verify(row, "dns")
+            self.assertEqual(ctx.exception.code, "shared_host")
+            self.assertIn("yourname.github.io", ctx.exception.message)
+
+    def test_own_subdomain_on_a_shared_host_is_fine(self):
+        self.assertFalse(domain.is_shared_host("ann.github.io"))
+        project = make_project(self.owner, name="Pages", live_url="https://ann.github.io/")
+        row = verification_for(project, create=True)
+        with fake_dns({"ann.github.io": [f"shipmark-verify={row.token}"]}):
+            self.assertTrue(verify(row, "dns"))
+
+    def test_edit_page_and_view_explain_it_without_a_request(self):
+        project = make_project(self.owner, name="Apex", live_url="https://github.io/")
+        self.client.force_login(self.owner)
+        edit = reverse("projects:edit", args=["ann", project.slug])
+        self.assertContains(self.client.get(edit), "hosting service shared by many sites")
+        with patch.object(domain, "run_method") as run:
+            response = self.client.post(reverse("projects:domain_verify", args=["ann", project.slug]), follow=True)
+        run.assert_not_called()
+        self.assertContains(response, "hosting service shared by many sites")
+
+
+class TokenUniquenessTests(DomainTestCase):
+    def test_tokens_are_random_per_project_and_domain_and_never_reused(self):
+        tokens = {self.row.token}
+        for i in range(15):
+            project = make_project(self.owner, name=f"P{i}", live_url=f"https://p{i}.example.org/")
+            tokens.add(verification_for(project, create=True).token)
+        self.assertEqual(len(tokens), 16)
+        old = self.row.token
+        self.project.live_url = "https://other.example.net/"
+        self.project.save()
+        domain.forget_other_domains(self.project)
+        new = verification_for(self.project, create=True).token
+        self.assertNotEqual(new, old)
+        self.project.live_url = "https://www.example.com/app"  # back to the first domain: a fresh token
+        self.project.save()
+        domain.forget_other_domains(self.project)
+        self.assertNotIn(verification_for(self.project, create=True).token, (old, new))
+        self.assertRegex(new, r"^[0-9a-f]{32}$")
+
+    def test_reverify_checks_this_rows_own_token(self):
+        row = self.verified(days_ago=31)
+        other = make_project(make_user("bob"), name="Bob", live_url="https://bob.example.org/")
+        other_row = verification_for(other, create=True)
+        with fake_dns({"www.example.com": [f"shipmark-verify={other_row.token}"], "example.com": []}):
+            self.assertEqual(domain.reverify(row), "removed")

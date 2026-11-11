@@ -16,7 +16,7 @@ from django.db.models import Count, Exists, OuterRef, Subquery
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 
-from .domain import LIVE_MAX_AGE
+from .domain import LIVE_MAX_AGE, domain_key, host_from_url
 from .models import DomainVerification, UptimeCheck
 from .net import BlockedURL, FetchError, safe_fetch
 
@@ -39,25 +39,34 @@ class Probe:
     error: str = ""
 
 
+OTHER_HOST = "other_host"  # Probe.error: the site answered, but only after redirecting to another domain
+
+
 def _request(url, method):
     start = time.monotonic()
     try:
-        status = safe_fetch(url, method=method, read_body=False).status_code
+        result = safe_fetch(url, method=method, read_body=False)
     except FetchError as exc:
-        return None, None, exc
-    return status, round((time.monotonic() - start) * 1000), None
+        return None, None, None, exc
+    return result.status_code, result.url, round((time.monotonic() - start) * 1000), None
 
 
-def probe(url):
-    """HEAD first; GET when HEAD gets status >= 400 or fails (many servers refuse HEAD but serve GET)."""
-    status, ms, error = _request(url, "HEAD")
+def probe(url, expected_key=None):
+    """HEAD first; GET when HEAD gets status >= 400 or fails (many servers refuse HEAD but serve GET).
+
+    expected_key: the verified domain (domain_key). A site that ends up on another domain after its
+    redirects is down for Steady: the answer is not from the domain that was proven.
+    """
+    status, final_url, ms, error = _request(url, "HEAD")
     retry = (status is not None and status >= 400) or (
         error is not None and not isinstance(error, BlockedURL) and error.code not in NO_GET_RETRY
     )
     if retry:
-        status, ms, error = _request(url, "GET")
+        status, final_url, ms, error = _request(url, "GET")
     if status is None:
         return Probe(ok=False, status_code=None, response_ms=None, error=error.code)
+    if expected_key and domain_key(host_from_url(final_url)) != expected_key:
+        return Probe(ok=False, status_code=status, response_ms=ms, error=OTHER_HOST)
     return Probe(ok=status < 400, status_code=status, response_ms=ms)
 
 
@@ -74,7 +83,7 @@ def check_project(project, now=None):
     now = now or timezone.now()
     if recently_checked(project, now):
         return None
-    result = probe(project.live_url)
+    result = probe(project.live_url, expected_key=domain_key(host_from_url(project.live_url)))
     return UptimeCheck.objects.create(
         project=project, checked_at=now, ok=result.ok, status_code=result.status_code,
         response_ms=result.response_ms, error=result.error,
