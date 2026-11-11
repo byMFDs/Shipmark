@@ -1,18 +1,26 @@
-/* Feed and the follow/like buttons. Mobile first. */
+/* Feed and the list rows shared with Explore. Mobile first. */
 
-.feed__title { font-size: var(--fs-3); margin-bottom: var(--s-4); }
-.feed__subtitle { font-size: var(--fs-1); margin-bottom: var(--s-4); }
 .feed { padding-bottom: var(--s-8); }
-.feed__list { margin-top: var(--s-4); }
+
+.feed__subtitle { margin-bottom: var(--s-4); }
+.feed__list { margin-top: var(--s-5); }
 
 /* A row here has a cover and a body (the base .plate-row has a third column for marks). */
-.feed-item { grid-template-columns: auto minmax(0, 1fr); align-items: start; }
+.feed-item {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--s-3) var(--s-4);
+  padding-block: var(--s-5);
+}
+
 .feed-item:focus-visible { outline-offset: 2px; }
 .feed-item__body { min-width: 0; display: grid; gap: var(--s-1); }
 .feed-item__by { margin: 0; font-size: var(--fs--1); overflow-wrap: anywhere; }
 .feed-item__text { overflow-wrap: anywhere; }
 .feed-item__text > :first-child { margin-top: 0; }
 .feed-item__text > :last-child { margin-bottom: 0; }
+.feed-item__text > * + * { margin-top: 0.5em; }
+.feed-item__text code { padding: 0.1em 0.3em; background: var(--tint); }
 
 .feed-item__foot {
   display: flex;
@@ -20,7 +28,15 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--s-3);
-  margin-top: var(--s-2);
+  margin-top: var(--s-3);
+}
+
+/* An update from the build log: a round avatar and the entry, no cover. */
+.feed-item--entry .feed-item__by { font-size: var(--fs-0); }
+
+@media (min-width: 48em) {
+  .feed-item { gap: var(--s-3) var(--s-5); }
+  .project-thumb { width: 7rem; height: 4.5rem; }
 }
 
 .pager {

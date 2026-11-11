@@ -1,15 +1,12 @@
-/* Explore: filters above a list of rows (row styles come from feed.css). Mobile first. */
+/* Explore: a filter record above a list of rows (row styles come from feed.css). Mobile first. */
 
 .explore { padding-bottom: var(--s-8); }
-.explore__title { font-size: var(--fs-3); }
 
-/* Phones: one column. 48em: search full width, four selects in two columns. 64em: one row of selects. */
-.explore-filters {
+/* Phones: one column. 30em: two columns. 64em: search full width, then one row of four selects. */
+.explore-filters__grid {
   display: grid;
   gap: var(--s-4);
-  margin-top: var(--s-5);
-  padding-bottom: var(--s-5);
-  border-bottom: 1px solid var(--line);
+  padding: 0 var(--s-5) var(--s-5);
 }
 
 .explore-filters .field { min-width: 0; }
@@ -23,19 +20,15 @@
 }
 
 @media (min-width: 30em) {
-  .explore-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .explore-filters__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .explore-filters__search,
   .explore-filters__actions { grid-column: 1 / -1; }
 }
 
 @media (min-width: 64em) {
-  .explore-filters { grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: end; }
+  .explore-filters__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: end; }
 }
 
-.explore__count {
-  margin-top: var(--s-4);
-  font-size: var(--fs--1);
-}
-
+.explore__count { margin-top: var(--s-6); }
 .explore__list { margin-top: var(--s-3); }
 .explore .empty { margin-top: var(--s-5); }

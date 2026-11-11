@@ -6,53 +6,57 @@
 
 {% block content %}
   <div class="container page">
-    <div class="settings">
-      <h1>{% translate "Settings" %}</h1>
+    <div class="sheet">
+      <header class="sheet__intro">
+        <h1>{% translate "Settings" %}</h1>
+      </header>
 
-      <form method="post" class="settings__section stack" novalidate>
-        {% csrf_token %}
-        <h2>{% translate "Profile" %}</h2>
-        {% include "includes/form_errors.html" %}
-        {% include "includes/form_field.html" with field=form.display_name %}
-        {% include "includes/form_field.html" with field=form.bio %}
-        {% include "includes/form_field.html" with field=form.website %}
-        {% include "includes/form_field.html" with field=form.preferred_language %}
-        <div><button class="btn btn--primary" type="submit">{% translate "Save settings" %}</button></div>
-      </form>
-
-      <section class="settings__section stack needs-js">
-        <h2>{% translate "Theme" %}</h2>
-        <p class="field__hint">{% translate "Saved in this browser only." %}</p>
-        <div class="theme-switch" role="group" aria-label="{% translate 'Theme' %}">
-          <button type="button" class="theme-switch__option" data-theme-choice="system" aria-pressed="true">{% icon "monitor" %}{% translate "System" %}</button>
-          <button type="button" class="theme-switch__option" data-theme-choice="light" aria-pressed="false">{% icon "sun" %}{% translate "Light" %}</button>
-          <button type="button" class="theme-switch__option" data-theme-choice="dark" aria-pressed="false">{% icon "moon" %}{% translate "Dark" %}</button>
-        </div>
-      </section>
-
-      <section class="settings__section stack">
-        <h2>{% translate "Account" %}</h2>
-        <dl class="settings__facts">
-          <div><dt>{% translate "Username" %}</dt><dd>{{ user.username }}</dd></div>
-          {% if user.github_login %}<div><dt>GitHub</dt><dd><a href="https://github.com/{{ user.github_login }}" rel="noopener">{{ user.github_login }}</a></dd></div>{% endif %}
-        </dl>
-        <div><a class="btn btn--secondary" href="{% url 'account_logout' %}">{% translate "Sign out" %}</a></div>
-      </section>
-
-      <section class="settings__section stack">
-        <h2>{% translate "Your data" %}</h2>
-        <p>{% translate "A JSON file with your profile, projects, build log, likes and follows." %}</p>
-        <form method="post" action="{% url 'accounts:export' %}">
+      <div class="sheet__body">
+        <form method="post" class="panel stack" novalidate>
           {% csrf_token %}
-          <button class="btn btn--secondary" type="submit">{% translate "Download my data" %}</button>
+          <h2>{% translate "Profile" %}</h2>
+          {% include "includes/form_errors.html" %}
+          {% include "includes/form_field.html" with field=form.display_name %}
+          {% include "includes/form_field.html" with field=form.bio %}
+          {% include "includes/form_field.html" with field=form.website %}
+          {% include "includes/form_field.html" with field=form.preferred_language %}
+          <div><button class="btn btn--primary" type="submit">{% translate "Save settings" %}</button></div>
         </form>
-      </section>
 
-      <section class="settings__section stack">
-        <h2>{% translate "Delete account" %}</h2>
-        <p>{% translate "Removes your profile and all your projects. This cannot be undone." %}</p>
-        <div><a class="btn btn--danger" href="{% url 'accounts:delete' %}">{% translate "Delete account" %}</a></div>
-      </section>
+        <section class="panel stack needs-js">
+          <h2>{% translate "Theme" %}</h2>
+          <p class="field__hint">{% translate "Saved in this browser only." %}</p>
+          <div class="theme-switch" role="group" aria-label="{% translate 'Theme' %}">
+            <button type="button" class="theme-switch__option" data-theme-choice="system" aria-pressed="true">{% icon "monitor" %}{% translate "System" %}</button>
+            <button type="button" class="theme-switch__option" data-theme-choice="light" aria-pressed="false">{% icon "sun" %}{% translate "Light" %}</button>
+            <button type="button" class="theme-switch__option" data-theme-choice="dark" aria-pressed="false">{% icon "moon" %}{% translate "Dark" %}</button>
+          </div>
+        </section>
+
+        <section class="panel stack">
+          <h2>{% translate "Account" %}</h2>
+          <dl class="settings__facts">
+            <div><dt>{% translate "Username" %}</dt><dd class="mono">{{ user.username }}</dd></div>
+            {% if user.github_login %}<div><dt>GitHub</dt><dd><a href="https://github.com/{{ user.github_login }}" rel="noopener">{{ user.github_login }}</a></dd></div>{% endif %}
+          </dl>
+          <div><a class="btn btn--secondary" href="{% url 'account_logout' %}">{% translate "Sign out" %}</a></div>
+        </section>
+
+        <section class="panel stack">
+          <h2>{% translate "Your data" %}</h2>
+          <p>{% translate "A JSON file with your profile, projects, build log, likes and follows." %}</p>
+          <form method="post" action="{% url 'accounts:export' %}">
+            {% csrf_token %}
+            <button class="btn btn--secondary" type="submit">{% translate "Download my data" %}</button>
+          </form>
+        </section>
+
+        <section class="panel panel--danger stack">
+          <h2>{% translate "Delete account" %}</h2>
+          <p>{% translate "Removes your profile and all your projects. This cannot be undone." %}</p>
+          <div><a class="btn btn--danger" href="{% url 'accounts:delete' %}">{% translate "Delete account" %}</a></div>
+        </section>
+      </div>
     </div>
   </div>
 {% endblock %}

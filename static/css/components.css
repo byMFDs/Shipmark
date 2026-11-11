@@ -595,8 +595,12 @@
 }
 
 .plate-row__name {
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: var(--fs-1);
+  font-weight: 500;
   line-height: var(--lh-snug);
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
 }
 
 .plate-row__name a {
@@ -629,7 +633,7 @@
   flex: none;
   display: grid;
   place-content: center;
-  width: 3.5rem;
+  width: 5rem;
   height: 3.5rem;
   object-fit: cover;
   background: var(--paper);
@@ -1362,6 +1366,52 @@ html:not(.js) .toasts:not(:empty) {
 .empty__text {
   max-width: 44ch;
   color: var(--muted);
+}
+
+/* ---------- Page head: headline and one lede above a list or a form ---------- */
+
+.page-head {
+  display: grid;
+  gap: var(--s-4);
+  margin-bottom: var(--s-6);
+}
+
+.page-head h1 { max-width: 18ch; }
+
+@media (min-width: 48em) {
+  .page-head h1 { font-size: var(--fs-5); }
+}
+
+/* ---------- Sheet: a form page. Phones: one column. From 64em: title left (4), panels right (8) ---------- */
+
+.sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-6);
+  padding-bottom: var(--s-8);
+}
+
+.sheet__intro { display: grid; gap: var(--s-3); align-content: start; }
+.sheet__body { display: grid; gap: var(--s-5); min-width: 0; }
+
+@media (min-width: 64em) {
+  .sheet { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s-6); }
+  .sheet__intro { grid-column: 1 / span 4; position: sticky; top: var(--s-5); }
+  .sheet__body { grid-column: 5 / span 8; max-width: 46rem; }
+}
+
+/* Panel: one framed section of a sheet. Danger rule on top = destructive section. */
+.panel {
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.panel > h2 { font-size: var(--fs-2); }
+.panel--danger { border-top: 3px solid var(--danger); }
+
+@media (min-width: 48em) {
+  .panel { padding: var(--s-6); }
 }
 
 /* ---------- Tabs: plain links, one page per tab ---------- */

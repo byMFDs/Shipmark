@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container page">
+  <div class="container page profile">
     <header class="profile-head">
       {% avatar person.display_name|default:person.username 96 %}
       <div class="profile-head__text">
@@ -46,7 +46,7 @@
           {% for project in projects %}
             <li class="plate-row">
               {% include "projects/_thumb.html" with project=project %}
-              <div>
+              <div class="profile-row__main">
                 <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></p>
                 <p class="plate-row__tagline">{{ project.tagline }}</p>
               </div>
@@ -78,7 +78,7 @@
           {% for project in drafts %}
             <li class="plate-row">
               {% include "projects/_thumb.html" with project=project %}
-              <div>
+              <div class="profile-row__main">
                 <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a> <span class="muted">· {{ project.get_status_display }}</span></p>
                 <p class="plate-row__tagline">{{ project.tagline }}</p>
               </div>

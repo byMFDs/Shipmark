@@ -12,10 +12,15 @@
 
 {% block content %}
   <div class="container page explore">
-    <h1 class="explore__title">{% translate "Explore" %}</h1>
+    <header class="page-head">
+      <h1>{% translate "Explore" %}</h1>
+      <p class="lede">{% translate "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark." %}</p>
+    </header>
 
     {# A plain GET form: every filter ends up in the URL, so a view can be shared and works without JS. #}
-    <form class="explore-filters" method="get" action="{% url 'pages:explore' %}" role="search" aria-label="{% translate 'Search and filter projects' %}">
+    <form class="record explore-filters" method="get" action="{% url 'pages:explore' %}" role="search" aria-label="{% translate 'Search and filter projects' %}">
+      <div class="record__head"><span class="label">{% translate "Search and filter projects" %}</span></div>
+      <div class="explore-filters__grid">
       <div class="field explore-filters__search">
         <label class="field__label" for="explore-q">{% translate "Search" %}</label>
         <input class="input" type="search" id="explore-q" name="q" value="{{ params.q }}" maxlength="100"
@@ -64,9 +69,10 @@
         <button class="btn btn--primary" type="submit">{% translate "Show projects" %}</button>
         {% if filtered %}<a class="btn btn--quiet" href="{% url 'pages:explore' %}">{% translate "Clear filters" %}</a>{% endif %}
       </div>
+      </div>
     </form>
 
-    <p class="explore__count muted">{% blocktranslate count n=total trimmed %}{{ n }} project{% plural %}{{ n }} projects{% endblocktranslate %}{% if params.sort == "proven" %} · {% translate "most hallmarks first, then newest" %}{% endif %}</p>
+    <p class="label explore__count">{% blocktranslate count n=total trimmed %}{{ n }} project{% plural %}{{ n }} projects{% endblocktranslate %}{% if params.sort == "proven" %} · {% translate "most hallmarks first, then newest" %}{% endif %}</p>
 
     {% if projects %}
       <ul class="plate-list explore__list">

@@ -7,22 +7,22 @@
 
 {% block content %}
   <div class="container page">
-    <div class="editor">
-      <header class="editor__intro">
+    <div class="sheet">
+      <header class="sheet__intro">
       <h1>{% if project %}{% translate "Edit project" %}{% else %}{% translate "New project" %}{% endif %}</h1>
       {% if project %}
-        <p class="muted editor__status">
+        <p class="muted">
           {% if project.status == "published" %}{% translate "Published" %}{% elif project.status == "hidden" %}{% translate "Hidden by moderators" %}{% else %}{% translate "Draft. Only you can see it." %}{% endif %}
           · <a href="{{ project.get_absolute_url }}">{% translate "View page" %}</a>
         </p>
       {% else %}
-        <p class="muted editor__status">{% translate "It starts as a draft. Nobody sees it until you publish." %}</p>
+        <p class="muted">{% translate "It starts as a draft. Nobody sees it until you publish." %}</p>
       {% endif %}
       </header>
 
-      <div class="editor__body">
+      <div class="sheet__body">
 
-      <form method="post" class="editor__section stack" novalidate data-project-form data-preview-url="{% url 'projects:preview' %}">
+      <form method="post" class="panel stack" novalidate data-project-form data-preview-url="{% url 'projects:preview' %}">
         {% csrf_token %}
         {% include "includes/form_errors.html" %}
         {% include "includes/form_field.html" with field=form.name %}
@@ -62,7 +62,7 @@
       </form>
 
       {% if project %}
-        <section class="editor__section stack" aria-labelledby="repo-title">
+        <section class="panel stack" aria-labelledby="repo-title">
           <h2 id="repo-title">{% translate "Repository check" %}</h2>
           {% if project.repo_full_name %}
             {% if repo_link %}
@@ -82,7 +82,7 @@
 
         {% include "projects/_domain.html" %}
 
-        <section class="editor__section stack" aria-labelledby="shots-title">
+        <section class="panel stack" aria-labelledby="shots-title">
           <h2 id="shots-title">{% translate "Screenshots" %}</h2>
           <p class="field__hint">{% blocktranslate with max=max_screenshots %}Up to {{ max }} images, PNG, JPEG or WebP, 5 MB each. The first one is the cover.{% endblocktranslate %}</p>
           {% if screenshots %}
@@ -122,7 +122,7 @@
           {% endif %}
         </section>
 
-        <section class="editor__section stack" aria-labelledby="status-title">
+        <section class="panel stack" aria-labelledby="status-title">
           <h2 id="status-title">{% translate "Visibility" %}</h2>
           {% if project.status == "draft" %}
             <p class="muted">{% translate "This project is a draft. Publishing makes the page public." %}</p>
@@ -139,7 +139,7 @@
           {% endif %}
         </section>
 
-        <section class="editor__section stack" aria-labelledby="delete-title">
+        <section class="panel stack" aria-labelledby="delete-title">
           <h2 id="delete-title">{% translate "Delete project" %}</h2>
           <p class="muted">{% translate "This removes the project and its screenshots for good." %}</p>
           <div><a class="btn btn--danger" href="{% url 'projects:delete' project.owner.username project.slug %}">{% translate "Delete project" %}</a></div>

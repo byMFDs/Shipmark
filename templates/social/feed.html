@@ -8,7 +8,10 @@
 
 {% block content %}
   <div class="container page feed">
-    <h1 class="feed__title">{% translate "Feed" %}</h1>
+    <header class="page-head">
+      <h1>{% translate "Feed" %}</h1>
+      <p class="lede">{% translate "Recently launched projects with verified proof." %}</p>
+    </header>
 
     {% if user.is_authenticated %}
       <nav class="tabs" aria-label="{% translate 'Feed sections' %}">
@@ -18,7 +21,7 @@
         </ul>
       </nav>
     {% else %}
-      <h2 class="feed__subtitle">{% translate "Latest launches" %}</h2>
+      <h2 class="feed__subtitle label">{% translate "Latest launches" %}</h2>
     {% endif %}
 
     {% if items %}

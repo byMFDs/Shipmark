@@ -1,4 +1,6 @@
-/* Sign in, sign out, signup confirmation, errors, settings. */
+/* Settings, delete account, and the auth cards (sign in, sign out, signup, errors). */
+
+/* ---------- Auth cards ---------- */
 
 .auth {
   max-width: 28rem;
@@ -11,25 +13,15 @@
 .auth > p { max-width: none; }
 .auth__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 
-
-.settings { max-width: 36rem; }
-.settings > h1 { margin-bottom: var(--s-6); }
-
-.settings__section {
-  padding-block: var(--s-6);
-  border-top: 1px solid var(--line);
-}
-
-.settings__section h2 { font-size: var(--fs-1); }
+/* ---------- Settings and delete account (a .sheet of .panel sections) ---------- */
 
 .settings__facts {
   display: grid;
   gap: var(--s-2);
-  margin: 0;
 }
 
 .settings__facts div { display: flex; gap: var(--s-4); }
-.settings__facts dt { min-width: 6rem; color: var(--steel); }
+.settings__facts dt { min-width: 6rem; color: var(--muted); }
 .settings__facts dd { margin: 0; overflow-wrap: anywhere; }
 
 .settings__list {
@@ -39,4 +31,4 @@
   max-width: var(--measure);
 }
 
-.settings > h2 { font-size: var(--fs-1); margin-top: var(--s-6); }
+.panel__action { margin-top: var(--s-3); }
