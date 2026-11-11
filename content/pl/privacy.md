@@ -23,7 +23,7 @@ Pytania i wnioski: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Sprawdzenia dowodów.** Aby przyznawać znaki, sprawdzamy fakty sami (nasz uzasadniony interes w pokazywaniu dowodów, którym można ufać):
 
-- *Authored:* pytamy publiczne API GitHuba o powiązane repozytorium i zapisujemy, czy jesteś jego właścicielem, liczbę Twoich commitów oraz daty pierwszego i ostatniego commita. Listę pozostałych współtwórców z GitHuba czytamy podczas sprawdzenia i nie zapisujemy jej.
+- *Repo owner:* pytamy publiczne API GitHuba o powiązane repozytorium i zapisujemy, czy jesteś jego właścicielem, liczbę Twoich commitów oraz daty pierwszego i ostatniego commita. Listę pozostałych współtwórców z GitHuba czytamy podczas sprawdzenia i nie zapisujemy jej.
 - *Live:* sprawdzamy rekordy DNS domeny Twojego projektu albo pobieramy jego stronę, aby znaleźć Twój token weryfikacyjny.
 - *Steady:* wysyłamy żądanie pod adres Twojego projektu co kilka godzin i zapisujemy, czy odpowiedział i jak szybko. Te sprawdzenia przechowujemy przez **90 dni**.
 

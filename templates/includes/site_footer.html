@@ -1,5 +1,5 @@
 {% load i18n ui %}
-<footer class="site-footer">
+<footer class="site-footer{% if flush %} site-footer--flush{% endif %}">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
       <a href="{{ home_url }}">

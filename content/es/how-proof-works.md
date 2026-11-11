@@ -2,9 +2,9 @@
 
 Un proyecto puede conseguir aquí tres sellos (hallmarks). Cada uno es un hecho que comprobamos nosotros mismos, no algo que el autor escribe. Los sellos se calculan de nuevo cada vez que se muestra una página, a partir de las últimas comprobaciones, así que un sello que ya no se cumple desaparece.
 
-## Authored {#authored}
+## Repo owner {#authored}
 
-**Qué significa:** la persona que publicó el proyecto escribió el código, o una parte real de él.
+**Qué significa:** la cuenta de GitHub de la persona que publicó el proyecto es propietaria del repositorio vinculado, o tiene al menos 10 commits en él. No prueba quién escribió el código.
 
 **Cómo se comprueba:** el autor vincula un repositorio público de GitHub y pulsa «Comprobar repositorio». Consultamos la API pública de GitHub. El sello se consigue cuando se cumple una de estas dos condiciones:
 
@@ -13,7 +13,7 @@ Un proyecto puede conseguir aquí tres sellos (hallmarks). Cada uno es un hecho 
 
 Las cuentas se comparan por el id numérico de GitHub, así que cambiar el nombre de la cuenta no importa. Solo leemos datos públicos: iniciar sesión nunca nos da acceso a repositorios privados.
 
-**Cómo se puede perder:** una comprobación posterior encuentra el repositorio borrado, privado, movido o que ya no es de esa cuenta, o el autor vincula otro repositorio al proyecto. Un repositorio solo puede estar vinculado a un proyecto.
+**Cómo se puede perder:** una comprobación posterior encuentra el repositorio borrado, privado, movido o que ya no es de esa cuenta y no tiene suficientes commits suyos, o el autor vincula otro repositorio al proyecto. Un repositorio solo puede estar vinculado a un proyecto.
 
 ## Live {#live}
 
@@ -57,4 +57,4 @@ Estas partes de un proyecto las escribe el autor y **no** las comprobamos:
 - etiquetas y fecha de lanzamiento;
 - «Creado con», las herramientas de IA que el autor dice haber usado. Siempre aparece como «declarado por el autor».
 
-Los sellos solo dicen lo que dicen. Authored trata del código, Live del dominio, Steady de la disponibilidad. Ninguno es una reseña del producto.
+Los sellos solo dicen lo que dicen. Repo owner trata del repositorio, Live del dominio, Steady de la disponibilidad. Ninguno es una reseña del producto.

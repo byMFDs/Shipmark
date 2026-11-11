@@ -48,7 +48,7 @@ def dashboard_callback(request, context):
              "link": reverse("admin:moderation_report_changelist") + "?status__exact=open"},
         ],
         "hallmark_stats": [
-            {"label": _("Authored"), "value": marks["authored"]},
+            {"label": _("Repo owner"), "value": marks["authored"]},
             {"label": _("Live"), "value": marks["live"]},
             {"label": _("Steady"), "value": marks["steady"]},
         ],

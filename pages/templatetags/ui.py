@@ -104,8 +104,10 @@ def avatar(name, size=32, src=""):
 
 # ---------- Hallmark ----------
 
+# Display names. The internal id "authored" stays; the mark proves repository ownership
+# (or 10+ commits), never who wrote the code, so it is shown as "Repo owner".
 HALLMARK_LABELS = {
-    "authored": _("Authored"),
+    "authored": _("Repo owner"),
     "live": _("Live"),
     "steady": _("Steady"),
 }
@@ -199,6 +201,12 @@ def hallmark(kind, size="m", earned=True, fact=""):
     }
 
 
+@register.simple_tag
+def hallmark_label(kind):
+    """{% hallmark_label "live" %}: the display name of a hallmark, without the chip."""
+    return HALLMARK_LABELS[kind]
+
+
 # ---------- Site header and footer ----------
 
 def _url(name, *args):
@@ -280,7 +288,8 @@ def site_header(context, demo="", compact=False):
 
 
 @register.inclusion_tag("includes/site_footer.html", takes_context=True)
-def site_footer(context, demo=False):
+def site_footer(context, demo=False, flush=False):
+    """Footer. `flush`: starts right under a dark band, without margin or hairline (landing)."""
     request = context.get("request")
     links = []
     for name, args, label in FOOTER_LINKS:
@@ -300,4 +309,5 @@ def site_footer(context, demo=False):
         "csrf_token": context.get("csrf_token"),
         "year": timezone.now().year,
         "demo": demo,
+        "flush": flush,
     }

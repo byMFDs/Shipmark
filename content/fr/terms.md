@@ -8,7 +8,7 @@ Ces conditions constituent l’accord entre vous et {{ legal_owner_name }}, qui 
 
 ## Ce qu’est {{ site_name }} {#service}
 
-Un lieu public pour présenter des logiciels que vous avez livrés, avec des poinçons que nous contrôlons nous-mêmes : Authored (dépôt GitHub), Live (contrôle du domaine) et Steady (disponibilité). Le fonctionnement de chaque contrôle est expliqué dans [Comment fonctionne la preuve](/how-proof-works/). Le service est gratuit.
+Un lieu public pour présenter des logiciels que vous avez livrés, avec des poinçons que nous contrôlons nous-mêmes : Repo owner (dépôt GitHub), Live (contrôle du domaine) et Steady (disponibilité). Le fonctionnement de chaque contrôle est expliqué dans [Comment fonctionne la preuve](/how-proof-works/). Le service est gratuit.
 
 ## Votre compte {#account}
 

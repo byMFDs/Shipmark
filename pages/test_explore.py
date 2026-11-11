@@ -49,10 +49,20 @@ class LandingTests(Facts, TestCase):
     def test_signed_out_sees_hero_proof_and_sign_in(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Proof that you shipped it")
-        self.assertContains(response, 'class="plate plate--featured strike specimen"')
+        self.assertContains(response, "Less claim.")
+        self.assertContains(response, 'class="record specimen drift"')
+        self.assertContains(response, "Illustrative project · real verification rules")  # the example says it is made up
         self.assertContains(response, "Sign in with GitHub")
+        self.assertContains(response, "Submit your project")
         self.assertContains(response, "How proof works")
+
+    def test_no_code_authorship_claims(self):
+        """We check repository ownership, not who wrote the code (en and uk)."""
+        for lang, words in (("en", ("Authored", "wrote the code")), ("uk", ("Авторство", "написа"))):
+            response = self.client.get("/", headers={"accept-language": lang})
+            self.assertContains(response, f'lang="{lang}"')
+            for word in words:
+                self.assertNotContains(response, word)
 
     def test_signed_in_goes_to_feed(self):
         self.client.force_login(self.ann)
@@ -65,10 +75,10 @@ class LandingTests(Facts, TestCase):
         make_project(make_user("bad", is_suspended=True), name="Suspended one")
         response = self.client.get("/")
         self.assertEqual([p.name for p in response.context["recent"]], ["Shown"])
-        self.assertNotContains(response, "Nothing has been launched here yet")
+        self.assertNotContains(response, "Illustrative projects")  # never mixed with real ones
 
     def test_empty_strip_falls_back(self):
-        self.assertContains(self.client.get("/"), "Nothing has been launched here yet")
+        self.assertContains(self.client.get("/"), "Illustrative projects")
 
     def test_query_count_does_not_grow_with_projects(self):
         make_project(self.ann, name="One")

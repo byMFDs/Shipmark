@@ -6,7 +6,7 @@ These terms are the agreement between you and {{ legal_owner_name }}, who runs {
 
 ## What {{ site_name }} is {#service}
 
-A public place to show software you shipped, with hallmarks that we check ourselves: Authored (GitHub repository), Live (domain control) and Steady (uptime). How each check works is explained on [How proof works](/how-proof-works/). The service is free.
+A public place to show software you shipped, with hallmarks that we check ourselves: Repo owner (GitHub repository), Live (domain control) and Steady (uptime). How each check works is explained on [How proof works](/how-proof-works/). The service is free.
 
 ## Your account {#account}
 

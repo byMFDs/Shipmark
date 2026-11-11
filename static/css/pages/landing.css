@@ -1,167 +1,544 @@
-/* Landing. Mobile first: one column; from 64em the hero text and the example plate sit side by side. */
+/* Landing. Mobile first: one column; from 64em the hero, and section 03, sit in two columns.
+   Motion (strike, pulse, tick strip, drift, cursor, reveal) comes from motion.css. */
 
 .inline-form { display: contents; }
 
+/* Landing headlines never hyphenate (they are short and chosen to fit); a word that still
+   cannot fit wraps without a hyphen instead of widening the page. */
+.hero__title,
+.closing__title,
+.landing-section h2 {
+  hyphens: manual;
+  overflow-wrap: break-word;
+}
+
+/* Two sentences, two lines: each sentence is a span. */
+.hero__title > span,
+.closing__title > span,
+.work__text h2 > span { display: block; }
+
 /* ---------- Hero ---------- */
 
-.hero { padding-block: var(--s-6) var(--s-8); }
+.hero { padding-block: var(--s-6) var(--section); }
 
 .hero__grid {
   display: grid;
   gap: var(--s-7);
 }
 
-.hero__text { min-width: 0; }
-
-.hero__lede {
-  max-width: 44ch;
-  margin-top: var(--s-5);
-  font-size: var(--fs-1);
-  line-height: 1.45;
+/* The headline is sized by its column (container query units), so the longest word always fits. */
+.hero__text {
+  min-width: 0;
+  container-type: inline-size;
 }
 
+.hero__title {
+  margin-top: var(--s-5);
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  font-size: clamp(2.5rem, 14cqi, 5.5rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: var(--track-display);
+}
+
+.hero__lede { margin-top: var(--s-5); }
+
 .hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-3);
+  display: grid;
+  justify-items: start;
+  gap: var(--s-4);
   margin-top: var(--s-6);
 }
 
-.hero__note {
-  max-width: 44ch;
-  margin-top: var(--s-4);
-  color: var(--steel);
-  font-size: var(--fs--1);
-}
+.hero__actions .btn--lg { min-width: min(15rem, 100%); justify-content: space-between; }
 
-.hero__specimen { min-width: 0; }
-
-.specimen__caption {
-  margin-bottom: var(--s-3);
-  color: var(--steel);
-  font-size: var(--fs--1);
-}
-
-.specimen .plate__title { font-size: var(--fs-3); }
-
-.specimen__facts {
+.hero__compare {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--s-2) var(--s-5);
-  margin-top: var(--s-5);
-  font-size: var(--fs--1);
+  gap: var(--s-3) var(--s-6);
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-1);
+  line-height: 1.4;
 }
 
-.specimen__facts dt { color: var(--steel); }
-.specimen__facts dd { overflow-wrap: anywhere; }
+.hero__compare p { max-width: 22ch; }
 
-/* Three large marks in a column on phones, in a row once there is room. */
-.specimen .plate__strip {
+@media (min-width: 30em) {
+  .hero__compare { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* The example record. */
+.hero__figure { min-width: 0; }
+
+.hero__caption { margin-top: var(--s-3); }
+
+.specimen .record__body { display: grid; }
+
+.specimen__shot { margin-bottom: var(--s-5); }
+
+.specimen__name { font-size: var(--fs-3); }
+
+.specimen .plate__tagline { margin-top: var(--s-2); }
+
+.specimen .plate__strip { margin-top: var(--s-5); }
+
+.specimen__declared { margin-top: var(--s-4); }
+
+.specimen__checked { color: var(--proof); }
+
+/* "Repo ownership ✓   Domain control ✓ / 30-day uptime 99.9%   ● relay.example" */
+.checks {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  color: var(--muted);
+}
+
+@media (min-width: 30em) {
+  .checks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.checks__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-1) var(--s-3);
+  min-width: 0;
+}
+
+.checks dd {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.checks__ok { width: 1rem; height: 1rem; color: var(--proof); }
+.checks .pulse-dot { color: var(--proof); }
+
+.specimen__ticks { margin-top: var(--s-4); height: 0.875rem; }
+
+@media (min-width: 64em) {
+  .hero { padding-top: var(--s-8); }
+  .hero__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--s-6);
+    align-items: start;
+  }
+  .hero__text { grid-column: 1 / span 6; }
+  .hero__figure { grid-column: 7 / span 6; }
+}
+
+/* ---------- Product illustrations (made-up screens, decorative) ---------- */
+/* Fixed pastel colors, the same in both themes, like a screenshot would be. Every text pair
+   inside is at least 4.9:1 (measured 2026-11-11). Text inside is at least 12px. */
+
+.mock {
+  --mock-bg: #DCD9EA;
+  --mock-ink: #34324A;
+  --mock-soft: #5A5873;
+  --mock-card: #EFEDF7;
+  --mock-item: #FFFEFA;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  min-width: 0;
+  padding: var(--s-4);
+  overflow: hidden;
+  background: var(--mock-bg);
+  color: var(--mock-ink);
+  font-size: var(--fs--2);
+  line-height: 1.35;
+  user-select: none;
+}
+
+/* Rows never shrink: when a screen is taller than its frame, the bottom is cut off like a screenshot. */
+.mock > * { flex-shrink: 0; }
+
+.mock p, .mock li { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.mock__bar {
+  font-family: var(--font-mono);
+  color: var(--mock-soft);
+}
+
+.mock__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-1);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.mock__kicker {
+  font-family: var(--font-mono);
+  color: var(--mock-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mock__app {
   display: grid;
   gap: var(--s-4);
 }
 
+.mock__side {
+  display: none;
+  margin: 0;
+  padding: 0 var(--s-4) 0 0;
+  list-style: none;
+  border-right: 1px solid rgb(52 50 74 / 0.25);
+}
+
+.mock__side li + li { margin-top: var(--s-1); }
+.mock__side .mock__kicker { margin-bottom: var(--s-2); }
+
+.mock__main { display: grid; gap: var(--s-3); min-width: 0; }
+
+.mock__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-2);
+}
+
+.mock__col {
+  display: grid;
+  align-content: start;
+  gap: var(--s-2);
+  min-width: 0;
+  padding: var(--s-2);
+  background: var(--mock-card);
+}
+
+.mock .mock__item {
+  white-space: normal;
+  padding: var(--s-1) var(--s-2);
+  background: var(--mock-item);
+}
+
+/* Phones: two board columns instead of three, so the cards stay readable. */
+@media (max-width: 29.99em) {
+  .mock__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mock__cols > :nth-child(3) { display: none; }
+}
+
 @media (min-width: 30em) {
-  .specimen .plate__strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .specimen .hallmark--l { flex-direction: column; gap: var(--s-2); }
+  .mock { padding: var(--s-5); }
+  .mock__app { grid-template-columns: auto minmax(0, 1fr); }
+  .mock__side { display: block; }
+  .mock__title { font-size: var(--fs-2); }
+}
+
+/* The cards are narrower than the hero record: keep their screens simple. */
+.card__media .mock { height: 100%; }
+.card__media .mock__title { font-size: var(--fs-1); }
+
+.mock--plotline {
+  --mock-bg: #E3E4CB;
+  --mock-ink: #3A3D27;
+  --mock-soft: #575A3F;
+}
+
+.mock__books {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+
+.mock .mock__book {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-3);
+  aspect-ratio: 5 / 6;
+  padding: var(--s-2);
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  text-transform: uppercase;
+  white-space: normal;
+}
+
+.mock__book span { font-family: var(--font-mono); font-weight: 400; }
+
+/* Book colors with their text: white on the dark two (5.3:1 and 7.1:1), ink on the yellow (7.4:1). */
+.mock__book--1 { background: #A9512F; color: #FFFEFA; }
+.mock__book--2 { background: #35604A; color: #FFFEFA; }
+.mock__book--3 { background: #D3B24F; color: #2B2610; }
+
+.mock--forma {
+  --mock-bg: #EBD5C8;
+  --mock-ink: #4E2F22;
+  --mock-soft: #6B4A3C;
+}
+
+.mock__form {
+  display: grid;
+  gap: var(--s-2);
+  align-self: center;
+  width: min(100%, 17rem);
+  padding: var(--s-4);
+  background: var(--mock-item);
+}
+
+.mock__form .mock__title { color: #6B3E2C; }
+
+.mock__field {
+  padding: var(--s-2);
+  border: 1px solid #C9BDB4;
+  background: #F4F1EC;
+  color: #6B625C;
+}
+
+.mock__button {
+  padding: var(--s-2);
+  background: #6B3E2C;
+  color: #FFFEFA;
+  text-align: center;
+}
+
+/* Cover letter for a real project without screenshots. */
+.card__placeholder {
+  display: grid;
+  place-content: center;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: var(--fs-5);
+  font-weight: 500;
+}
+
+/* ---------- Statements band ---------- */
+
+.statements { padding-block: var(--s-6); }
+
+.statements__list {
+  display: grid;
+  gap: var(--s-3) var(--s-6);
+  margin-block: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
 }
 
 @media (min-width: 48em) {
-  .specimen { padding: var(--s-7); }
-  .specimen .plate__title { font-size: var(--fs-4); }
-}
-
-@media (min-width: 64em) {
-  .hero { padding-block: var(--s-8) var(--s-9); }
-  .hero__grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--s-5);
-    align-items: center;
-  }
-  .hero__text { grid-column: 1 / span 5; }
-  .hero__specimen { grid-column: 7 / span 6; }
+  .statements__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* ---------- Sections ---------- */
 
-.landing-section {
-  padding-block: var(--s-7);
-  border-top: 1px solid var(--line);
-}
+.landing-section { padding-top: var(--section); }
+
+.landing-section .section-head h2 { max-width: none; }
 
 @media (min-width: 64em) {
-  .landing-section { padding-block: var(--s-8); }
+  .landing-section h2 { font-size: var(--fs-5); }
 }
 
-.landing-section__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s-2) var(--s-5);
-}
-
-/* Link beside a heading: a 44px tap target, not a 25px line of text. */
-.landing-section__head a {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--control-h);
-}
-
-.landing-section__intro {
-  max-width: var(--measure);
-  margin-top: var(--s-4);
-}
-
-.landing-section__note {
-  max-width: var(--measure);
-  margin-top: var(--s-6);
-  color: var(--steel);
-  font-size: var(--fs--1);
-}
-
-/* How proof works: three steps, numbered by the list, side by side from 48em. */
-.proof-steps {
+/* 01 The standard: three marks, side by side from 48em. */
+.standard {
   display: grid;
-  gap: var(--s-6);
-  margin-top: var(--s-6);
+  gap: var(--s-7);
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
 @media (min-width: 48em) {
-  .proof-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-5); }
+  .standard { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-6); }
 }
 
-.proof-step {
-  display: grid;
-  align-content: start;
+.standard__item {
+  display: flex;
+  flex-direction: column;
   gap: var(--s-3);
 }
 
-.proof-step__title { font-size: var(--fs-1); }
-.proof-step__title .hallmark__label { font-weight: 600; }
-.proof-step p { max-width: 40ch; color: var(--steel); }
-
-/* Recently launched: hairline rows, in 2 then 3 columns. */
-.recent-list {
-  display: grid;
-  margin: var(--s-5) 0 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--line);
+.standard__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--s-4);
 }
 
-@media (min-width: 48em) {
-  .recent-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-6); }
+.standard__check { width: 1.5rem; height: 1.5rem; color: var(--proof); }
+
+.standard__name { font-size: var(--fs-3); }
+
+.standard__claim { font-weight: 500; font-size: 1.0625rem; }
+
+.standard__rule { max-width: 40ch; color: var(--muted); }
+
+.standard__meta {
+  margin-top: auto;
+  padding-top: var(--s-4);
+  color: var(--proof);
+}
+
+.standard__note { margin-top: var(--s-7); }
+
+.standard__foot {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-1);
+  max-width: var(--measure);
+  margin-top: var(--s-4);
+  font-size: var(--fs--1);
+}
+
+/* 02 Out in the world. */
+.landing-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-5);
+}
+
+/* 03 The work behind the mark. */
+.work__rule { margin-bottom: var(--section); }
+
+.work {
+  display: grid;
+  gap: var(--s-7);
+}
+
+.work__text {
+  display: grid;
+  align-content: start;
+  gap: var(--s-4);
+  min-width: 0;
+}
+
+.work__text h2 { margin-top: var(--s-2); }
+
+.work__note {
+  margin-top: var(--s-2);
+  color: var(--proof);
+  font-size: var(--fs--1);
+}
+
+.work__figure { min-width: 0; }
+
+.log__top { margin-top: 0; }
+
+.log {
+  display: grid;
+  gap: var(--s-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.log__entry {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--s-4);
+}
+
+@media (min-width: 30em) {
+  .log__entry { grid-template-columns: 6.5rem minmax(0, 1fr); font-size: var(--fs-1); }
+}
+
+.readme {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3) var(--s-5);
+  margin-top: var(--s-4);
+}
+
+/* A picture of the README badge. */
+.badge-preview {
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  border: 1px solid var(--line-strong);
+  font-size: var(--fs--2);
+}
+
+.badge-preview__site {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--s-2) var(--s-3);
+  background: var(--band-bg);
+  color: #EFEDE4;
+}
+
+.badge-preview__logo { height: 1rem; width: auto; }
+.badge-preview__logo .logo-mark,
+.badge-preview__logo .logo-word { fill: currentColor; }
+
+.badge-preview__marks {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  padding: var(--s-2) var(--s-3);
+  background: var(--proof-bg);
+  color: var(--proof);
+  font-family: var(--font-mono);
+}
+
+.badge-preview__marks .icon { width: 0.875rem; height: 0.875rem; }
+
+@media (min-width: 64em) {
+  .work {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--s-6);
+  }
+  .work__text { grid-column: 1 / span 6; }
+  .work__figure { grid-column: 7 / span 6; }
+}
+
+/* ---------- Closing band ---------- */
+
+.closing {
+  margin-top: var(--section);
+  padding-block: var(--s-8);
 }
 
 @media (min-width: 64em) {
-  .recent-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .closing { padding-block: var(--s-9); }
 }
 
-.landing-empty { margin-top: var(--s-5); }
+.closing__grid {
+  display: grid;
+  gap: var(--s-6);
+}
 
-/* Closing call to action. */
-.landing-cta { padding-bottom: var(--s-9); }
-.landing-cta__text { max-width: 52ch; margin-top: var(--s-4); }
+.closing__text {
+  display: grid;
+  gap: var(--s-5);
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.closing__title {
+  font-size: var(--fs-4);
+  font-size: clamp(2.25rem, 11cqi, 4.25rem);
+  line-height: 1.05;
+}
+
+.closing__action {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-3);
+}
+
+@media (min-width: 64em) {
+  .closing__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
+  }
+  .closing__text { grid-column: 1 / span 8; }
+  .closing__action { grid-column: 9 / span 4; justify-items: stretch; }
+  .closing__action .btn--lg { justify-content: space-between; }
+}

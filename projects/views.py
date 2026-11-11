@@ -137,7 +137,7 @@ def repo_check(request, project):
         else:
             count = result.facts.commit_count
             if result.outcome == AUTHORED:
-                messages.success(request, _("Repository checked. Authored earned."))
+                messages.success(request, _("Repository checked. Repo owner earned."))
             elif result.outcome == TOO_FEW:
                 messages.error(request, _("You have %(count)s commits in this repository. At least %(min)s are needed.")
                                % {"count": count, "min": MIN_AUTHORED_COMMITS})

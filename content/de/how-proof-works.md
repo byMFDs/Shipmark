@@ -2,9 +2,9 @@
 
 Ein Projekt kann hier drei Prüfzeichen (Hallmarks) verdienen. Jedes davon ist eine Tatsache, die wir selbst prüfen, und nichts, was die Autorin oder der Autor einträgt. Prüfzeichen werden bei jedem Aufruf einer Seite aus den neuesten Prüfungen neu berechnet. Ein Zeichen, das nicht mehr zutrifft, verschwindet also.
 
-## Authored {#authored}
+## Repo owner {#authored}
 
-**Was es bedeutet:** Die Person, die das Projekt eingestellt hat, hat den Code oder einen echten Teil davon geschrieben.
+**Was es bedeutet:** Das GitHub-Konto der Person, die das Projekt eingestellt hat, besitzt das verknüpfte Repository oder hat mindestens 10 Commits darin. Wer den Code geschrieben hat, beweist das nicht.
 
 **Wie es geprüft wird:** Die Autorin oder der Autor verknüpft ein öffentliches GitHub-Repository und klickt auf „Repository prüfen“. Wir fragen dazu die öffentliche API von GitHub ab. Das Zeichen wird vergeben, wenn eine der beiden Bedingungen erfüllt ist:
 
@@ -13,7 +13,7 @@ Ein Projekt kann hier drei Prüfzeichen (Hallmarks) verdienen. Jedes davon ist e
 
 Konten vergleichen wir über die numerische Konto-ID von GitHub. Eine Umbenennung des GitHub-Kontos spielt also keine Rolle. Wir lesen nur öffentliche Daten: Die Anmeldung gibt uns nie Zugriff auf private Repositories.
 
-**Wie es verloren gehen kann:** Eine spätere Prüfung stellt fest, dass das Repository gelöscht, privat oder verschoben wurde oder nicht mehr vom Konto stammt, oder der Autor verknüpft ein anderes Repository mit dem Projekt. Ein Repository kann nur mit einem Projekt verknüpft sein.
+**Wie es verloren gehen kann:** Eine spätere Prüfung stellt fest, dass das Repository gelöscht, privat oder verschoben wurde oder dem Konto nicht mehr gehört und nicht genug Commits von ihm hat, oder der Autor verknüpft ein anderes Repository mit dem Projekt. Ein Repository kann nur mit einem Projekt verknüpft sein.
 
 ## Live {#live}
 
@@ -57,4 +57,4 @@ Diese Teile eines Projekts schreibt der Autor, und wir prüfen sie **nicht**:
 - Tags und Launch-Datum;
 - „Gebaut mit“, die KI-Tools, die der Autor nach eigener Aussage genutzt hat. Das ist immer als „selbst angegeben“ gekennzeichnet.
 
-Prüfzeichen sagen nur das, was sie sagen. Authored betrifft den Code, Live die Domain, Steady die Uptime. Keines davon ist eine Bewertung des Produkts.
+Prüfzeichen sagen nur das, was sie sagen. Repo owner betrifft das Repository, Live die Domain, Steady die Uptime. Keines davon ist eine Bewertung des Produkts.

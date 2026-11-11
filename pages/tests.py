@@ -75,7 +75,7 @@ class HallmarkTagTests(SimpleTestCase):
     def test_earned_and_not_earned_say_so_in_text(self):
         earned = self.render('{% hallmark "authored" "m" True %}')
         self.assertIn("is-earned", earned)
-        self.assertIn("Authored", earned)
+        self.assertIn("Repo owner", earned)
         self.assertNotIn("Not yet", earned)
 
         unearned = self.render('{% hallmark "live" "m" False %}')

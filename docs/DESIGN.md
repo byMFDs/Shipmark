@@ -70,7 +70,7 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 ## Hallmark
 - SVG cartouche: rectangle with cut corners (cut = 1/5 of height), 5:4, joints softened 2px.
 - Only a glyph inside, as on real hallmarks; the word sits beside it, so marks keep one width in
-  every language. Authored: commit node (ring on a line) · Live: dot inside a ring ·
+  every language. Repo owner (id `authored`): commit node (ring on a line) · Live: dot inside a ring ·
   Steady: three equal bars. Glyph stroke 1.5px like the icon set, 2px at L.
 - Earned: solid ink, glyph cut out in plate color; deboss = dark line on the inner top edge, light
   line under the outer bottom edge, drawn in the SVG (box-shadow would show square corners).

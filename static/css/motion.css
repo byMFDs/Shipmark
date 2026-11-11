@@ -148,6 +148,11 @@ html.is-paused [data-loop] *,
   animation: tick 6s steps(30, jump-none) infinite;
 }
 
+/* Reduced motion: the strip is static, so the head would read as one odd cell. */
+@media (prefers-reduced-motion: reduce) {
+  .tick-strip__head { display: none; }
+}
+
 /* Moves the head across the strip in --cells steps (each cell plus its 2px gap). */
 @keyframes tick {
   from { transform: translateX(0); }

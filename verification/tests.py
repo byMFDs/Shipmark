@@ -203,7 +203,7 @@ class RepoCheckViewTests(RepoCheckTestCase):
 
     def test_success_message_and_hallmark(self):
         response = self.post(contributors=[[]])
-        self.assertContains(response, "Authored earned")
+        self.assertContains(response, "Repo owner earned")
         self.assertTrue(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
 
     def test_too_few_commits_message(self):
@@ -222,7 +222,7 @@ class RepoCheckViewTests(RepoCheckTestCase):
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="")
         self.assertContains(self.client.post(self.url, follow=True), "Add a GitHub repository")
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="me/tool")
-        self.assertContains(self.post(contributors=[[]]), "Authored earned")
+        self.assertContains(self.post(contributors=[[]]), "Repo owner earned")
 
     def test_user_without_github_account(self):
         SocialAccount.objects.all().delete()

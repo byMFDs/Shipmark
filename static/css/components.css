@@ -590,7 +590,7 @@
   font-weight: 500;
 }
 
-/* ---------- Hallmark: a flat stamped chip, "✓ Authored" ---------- */
+/* ---------- Hallmark: a flat stamped chip, "✓ Repo owner" ---------- */
 /* Earned: pale green fill, green mono label, a check. Not earned: dashed outline, muted, "Not yet".
    Names stay English in every language (see docs/EDITING.md), so chips keep one width. */
 

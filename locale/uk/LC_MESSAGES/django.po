@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 14:56+0000\n"
+"POT-Creation-Date: 2026-11-11 16:04+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -162,10 +162,12 @@ msgstr "Користувачі"
 
 #: config/settings/base.py:236 config/settings/base.py:238
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
+#: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:239 templates/projects/_build_log.html:4
+#: config/settings/base.py:239 templates/pages/landing.html:264
+#: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
@@ -244,15 +246,15 @@ msgstr "Реєстрації за 7 днів"
 msgid "Open reports"
 msgstr "Відкриті скарги"
 
-#: moderation/dashboard.py:51 pages/explore.py:28 pages/templatetags/ui.py:108
-msgid "Authored"
-msgstr "Авторство"
+#: moderation/dashboard.py:51 pages/explore.py:28 pages/templatetags/ui.py:110
+msgid "Repo owner"
+msgstr "Власник репозиторію"
 
-#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:109
+#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:111
 msgid "Live"
 msgstr "Працює"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:110
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:112
 msgid "Steady"
 msgstr "Стабільний"
 
@@ -367,33 +369,33 @@ msgstr "щойно"
 msgid "%(time)s ago"
 msgstr "%(time)s тому"
 
-#: pages/templatetags/ui.py:226 templates/social/feed.html:4
+#: pages/templatetags/ui.py:234 templates/social/feed.html:4
 #: templates/social/feed.html:5 templates/social/feed.html:11
 msgid "Feed"
 msgstr "Стрічка"
 
-#: pages/templatetags/ui.py:226 templates/pages/explore.html:4
+#: pages/templatetags/ui.py:234 templates/pages/explore.html:4
 #: templates/pages/explore.html:5 templates/pages/explore.html:15
 msgid "Explore"
 msgstr "Огляд"
 
-#: pages/templatetags/ui.py:228
+#: pages/templatetags/ui.py:236
 msgid "About"
 msgstr "Про проєкт"
 
-#: pages/templatetags/ui.py:229 templates/pages/landing.html:56
+#: pages/templatetags/ui.py:237 templates/pages/landing.html:279
 msgid "How proof works"
 msgstr "Як працюють підтвердження"
 
-#: pages/templatetags/ui.py:230
+#: pages/templatetags/ui.py:238
 msgid "Privacy"
 msgstr "Приватність"
 
-#: pages/templatetags/ui.py:231
+#: pages/templatetags/ui.py:239
 msgid "Terms"
 msgstr "Умови"
 
-#: pages/templatetags/ui.py:232
+#: pages/templatetags/ui.py:240
 msgid "Cookies"
 msgstr "Файли cookie"
 
@@ -452,7 +454,7 @@ msgstr "Текст"
 msgid "Up to 5, separated by commas. For example: devtools, webhooks."
 msgstr "До 5, через кому. Наприклад: devtools, webhooks."
 
-#: projects/forms.py:37
+#: projects/forms.py:37 templates/pages/landing.html:123
 msgid "GitHub repository"
 msgstr "Репозиторій на GitHub"
 
@@ -593,9 +595,7 @@ msgid ""
 "with at least 40 checks."
 msgstr ""
 "Є позначка «Працює», і щонайменше 95% перевірок доступності за останні 30 "
-"днів успішні, за щонайменше 40 перевірок.Є позначка «Працює», і щонайменше "
-"95% перевірок доступності за останні 30 днів успішні, за щонайменше 40 "
-"перевірок."
+"днів успішні, за щонайменше 40 перевірок."
 
 #: projects/proof.py:78
 msgid "No repository linked."
@@ -697,8 +697,8 @@ msgid ""
 msgstr "Репозиторій щойно перевіряли. Повторити можна за 10 хвилин."
 
 #: projects/views.py:140
-msgid "Repository checked. Authored earned."
-msgstr "Репозиторій перевірено. Відзнаку «Authored» отримано."
+msgid "Repository checked. Repo owner earned."
+msgstr "Репозиторій перевірено. Позначку «Власник репозиторію» отримано."
 
 #: projects/views.py:142
 #, python-format
@@ -966,7 +966,7 @@ msgstr ""
 "%(name)s використовує ваш акаунт GitHub для входу. Паролі запамʼятовувати не "
 "потрібно."
 
-#: templates/accounts/login.html:13 templates/pages/landing.html:24
+#: templates/accounts/login.html:13
 msgid ""
 "We ask GitHub only for your public profile and your email address. We never "
 "get access to your code."
@@ -1169,8 +1169,8 @@ msgstr "Ваш профіль"
 msgid "Account menu for %(name)s"
 msgstr "Меню акаунта: %(name)s"
 
-#: templates/includes/site_nav.html:38 templates/pages/_sign_in.html:6
-#: templates/pages/_sign_in.html:9 templates/socialaccount/login.html:10
+#: templates/includes/site_nav.html:38 templates/pages/_sign_in.html:9
+#: templates/pages/_sign_in.html:12 templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Увійти через GitHub"
 
@@ -1218,7 +1218,9 @@ msgstr "Тег"
 msgid "Any tag"
 msgstr "Будь-який тег"
 
-#: templates/pages/explore.html:36 templates/pages/landing.html:38
+#: templates/pages/explore.html:36 templates/pages/landing.html:67
+#: templates/pages/landing.html:192 templates/pages/landing.html:214
+#: templates/pages/landing.html:236
 msgid "Built with"
 msgstr "Створено з"
 
@@ -1263,71 +1265,203 @@ msgid "Nothing has been published yet."
 msgstr "Ще нічого не опубліковано."
 
 #: templates/pages/landing.html:6 templates/pages/landing.html:9
-#: templates/pages/landing.html:19
 #, python-format
 msgid ""
 "%(name)s is a public record of projects built with AI tools and actually "
-"shipped. Each project earns hallmarks from facts that are checked: who wrote "
-"the code, who controls the domain, and whether the site stays up."
+"shipped. Each project earns marks from facts we check: who owns the "
+"repository, who controls the domain, and whether the site stays up."
 msgstr ""
 "%(name)s — публічний реєстр проєктів, створених за допомогою ШІ і справді "
-"випущених. Кожен проєкт отримує позначки на основі перевірених фактів: хто "
-"написав код, хто контролює домен і чи сайт працює без збоїв."
+"запущених. Кожен проєкт отримує позначки за фактами, які ми перевіряємо: "
+"кому належить репозиторій, хто контролює домен і чи сайт стабільно працює."
 
-#: templates/pages/landing.html:18
-msgid "Proof that you shipped it"
-msgstr "Доказ, що ви це випустили"
+#: templates/pages/landing.html:16
+msgid "Submit your project"
+msgstr "Додати свій проєкт"
 
 #: templates/pages/landing.html:22
-msgid "Explore projects"
-msgstr "Переглянути проєкти"
+msgid "The internet has enough claims."
+msgstr "В інтернеті вистачає заяв."
 
-#: templates/pages/landing.html:29
-msgid "Example project"
-msgstr "Приклад проєкту"
+#: templates/pages/landing.html:23
+msgid "Less claim."
+msgstr "Менше заяв."
 
-#: templates/pages/landing.html:33
-msgid "Inspect and replay webhooks without a tunnel"
-msgstr "Перегляд і повтор вебхуків без тунелю"
+#: templates/pages/landing.html:23
+msgid "More shipped."
+msgstr "Більше запусків."
 
-#: templates/pages/landing.html:36
-msgid "Repository"
-msgstr "Репозиторій"
+#: templates/pages/landing.html:24
+msgid "Real projects. Independent checks. Proof you can point to."
+msgstr "Справжні проєкти. Незалежні перевірки. Докази, на які можна послатися."
 
-#: templates/pages/landing.html:37
-msgid "Domain"
-msgstr "Домен"
+#: templates/pages/landing.html:27
+msgid "Built with AI. Backed by evidence."
+msgstr "Зроблено з ШІ. Підкріплено доказами."
 
-#: templates/pages/landing.html:38
+#: templates/pages/landing.html:30
+msgid "GitHub shows the code. LinkedIn tells the story."
+msgstr "GitHub показує код. LinkedIn розповідає історію."
+
+#: templates/pages/landing.html:31
+#, python-format
+msgid "%(name)s checks what actually shipped."
+msgstr "%(name)s перевіряє, що справді запущено."
+
+#: templates/pages/landing.html:39
+#, python-format
+msgid "%(name)s / Project record"
+msgstr "%(name)s / Картка проєкту"
+
+#: templates/pages/landing.html:44
+msgid "your team, in sync"
+msgstr "команда в одному ритмі"
+
+#: templates/pages/landing.html:47
+msgid "Workspace"
+msgstr "Простір"
+
+#: templates/pages/landing.html:48
+msgid "Overview"
+msgstr "Огляд"
+
+#: templates/pages/landing.html:49
+msgid "Inbox"
+msgstr "Вхідні"
+
+#: templates/pages/landing.html:51
+msgid "Activity"
+msgstr "Активність"
+
+#: templates/pages/landing.html:54
+msgid "A little less chaos."
+msgstr "Трохи менше хаосу."
+
+#: templates/pages/landing.html:56
+msgid "In progress"
+msgstr "У роботі"
+
+#: templates/pages/landing.html:56
+msgid "New onboarding"
+msgstr "Новий онбординг"
+
+#: templates/pages/landing.html:56
+msgid "API handoff"
+msgstr "Передача API"
+
+#: templates/pages/landing.html:57
+msgid "Up next"
+msgstr "Далі"
+
+#: templates/pages/landing.html:57
+msgid "Design review"
+msgstr "Рев’ю дизайну"
+
+#: templates/pages/landing.html:57
+msgid "Invite the team"
+msgstr "Запросити команду"
+
+#: templates/pages/landing.html:58
+msgid "Shipped"
+msgstr "Запущено"
+
+#: templates/pages/landing.html:58
+msgid "Workspace v2"
+msgstr "Простір v2"
+
+#: templates/pages/landing.html:58
+msgid "Billing fixes"
+msgstr "Виправлення оплат"
+
+#: templates/pages/landing.html:65 templates/pages/landing.html:190
+msgid "Calm project management for tiny teams."
+msgstr "Спокійне керування проєктами для маленьких команд."
+
+#: templates/pages/landing.html:67 templates/pages/landing.html:192
+#: templates/pages/landing.html:214 templates/pages/landing.html:236
 msgid "self-declared"
 msgstr "зазначено автором"
 
-#: templates/pages/landing.html:41
-msgid "Repository owned by the author"
-msgstr "Репозиторій належить автору"
+#: templates/pages/landing.html:70
+msgid "Checked, not self-reported"
+msgstr "Перевірено, а не заявлено"
 
-#: templates/pages/landing.html:42
-msgid "Domain control confirmed"
-msgstr "Контроль домену підтверджено"
+#: templates/pages/landing.html:72
+msgid "Repo ownership"
+msgstr "Власність репозиторію"
 
-#: templates/pages/landing.html:43
+#: templates/pages/landing.html:72 templates/pages/landing.html:73
+msgid "confirmed"
+msgstr "підтверджено"
+
+#: templates/pages/landing.html:73 templates/pages/landing.html:124
+msgid "Domain control"
+msgstr "Контроль домену"
+
+#: templates/pages/landing.html:74
+msgid "30-day uptime"
+msgstr "Доступність за 30 днів"
+
+#: templates/pages/landing.html:75
+msgid "Domain"
+msgstr "Домен"
+
+#: templates/pages/landing.html:83
+msgid "Illustrative project · real verification rules"
+msgstr "Вигаданий проєкт · справжні правила перевірки"
+
+#: templates/pages/landing.html:89
+msgid "How the marks behave"
+msgstr "Як поводяться позначки"
+
+#: templates/pages/landing.html:91
+msgid "No self-awarded marks."
+msgstr "Позначку не можна поставити собі самому."
+
+#: templates/pages/landing.html:92
+msgid "Checks keep running."
+msgstr "Перевірки не зупиняються."
+
+#: templates/pages/landing.html:93
+msgid "Proof can expire."
+msgstr "Докази мають термін дії."
+
+#: templates/pages/landing.html:101
+msgid "01 / The standard"
+msgstr "01 / Стандарт"
+
+#: templates/pages/landing.html:102
+msgid "Three marks. Zero shortcuts."
+msgstr "Три позначки. Без поблажок."
+
+#: templates/pages/landing.html:103
+msgid "A mark is earned by a check, not a checkbox."
+msgstr "Позначку дає перевірка, а не галочка."
+
+#: templates/pages/landing.html:117
+msgid "Linked to your GitHub account."
+msgstr "Прив’язано до вашого акаунта GitHub."
+
+#: templates/pages/landing.html:118
+msgid "Not a demo. A destination."
+msgstr "Не демо, а справжня адреса."
+
+#: templates/pages/landing.html:119
+msgid "Shipping is just day one."
+msgstr "Запуск — лише перший день."
+
+#: templates/pages/landing.html:125
 #, python-format
-msgid "%(percent)s of %(checks)s checks in 30 days"
-msgstr "%(percent)s з %(checks)s перевірок за 30 днів"
+msgid "30-day uptime ≥ 95%%"
+msgstr "Доступність за 30 днів ≥ 95%%"
 
-#: templates/pages/landing.html:58
-msgid "Read the full rules"
-msgstr "Усі правила"
-
-#: templates/pages/landing.html:60
-msgid ""
-"A hallmark is struck only when the facts behind it are there, and it is "
-"removed when they stop being true. Nobody can buy one or add it by hand."
+#: templates/pages/landing.html:131
+msgid "Marks are never permanent. If checks start failing, the marks come off."
 msgstr ""
-"Позначку ставлять лише тоді, коли за нею є факти, і знімають, коли вони "
-"перестають бути правдою. Її не можна купити чи додати вручну."
+"Позначки не вічні. Якщо перевірки починають провалюватися, позначки "
+"знімаються."
 
-#: templates/pages/landing.html:69
+#: templates/pages/landing.html:133
 msgid ""
 "The AI tools a project was built with are declared by its author and labeled "
 "as self-declared."
@@ -1335,33 +1469,187 @@ msgstr ""
 "ШІ-інструменти, з якими створено проєкт, вказує сам автор, і вони позначені "
 "як «зазначено автором»."
 
-#: templates/pages/landing.html:76
-msgid "Recently launched"
-msgstr "Нещодавно запущені"
+#: templates/pages/landing.html:134
+msgid "Read the full rules"
+msgstr "Усі правила"
 
-#: templates/pages/landing.html:77
-msgid "See all projects"
-msgstr "Усі проєкти"
+#: templates/pages/landing.html:143
+msgid "02 / Out in the world"
+msgstr "02 / Уже в мережі"
 
-#: templates/pages/landing.html:86
+#: templates/pages/landing.html:144
+msgid "Less pitch. More product."
+msgstr "Менше пітчів. Більше продукту."
+
+#: templates/pages/landing.html:145
+msgid "A few things people actually put on the internet."
+msgstr "Кілька речей, які люди справді випустили в мережу."
+
+#: templates/pages/landing.html:146
+msgid "Explore projects"
+msgstr "Переглянути проєкти"
+
+#: templates/pages/landing.html:165 templates/pages/landing.html:193
+#: templates/pages/landing.html:215 templates/pages/landing.html:237
+#, python-format
+msgid "by %(name)s"
+msgstr "від %(name)s"
+
+#: templates/pages/landing.html:171 templates/pages/landing.html:244
+msgid "Steady is earned over time, not on launch day."
+msgstr "«Стабільний» заробляють з часом, а не в день запуску."
+
+#: templates/pages/landing.html:179
+msgid "workspace"
+msgstr "простір"
+
+#: templates/pages/landing.html:180
+msgid "Make room for good work."
+msgstr "Звільніть місце для гарної роботи."
+
+#: templates/pages/landing.html:182
+msgid "Today"
+msgstr "Сьогодні"
+
+#: templates/pages/landing.html:182 templates/pages/landing.html:183
+#: templates/pages/landing.html:184
+msgid "Website refresh"
+msgstr "Оновлення сайту"
+
+#: templates/pages/landing.html:182 templates/pages/landing.html:183
+#: templates/pages/landing.html:184
+msgid "Product updates"
+msgstr "Новини продукту"
+
+#: templates/pages/landing.html:183
+msgid "This week"
+msgstr "Цього тижня"
+
+#: templates/pages/landing.html:184
+msgid "Done"
+msgstr "Готово"
+
+#: templates/pages/landing.html:201
+msgid "your reading room"
+msgstr "ваша читальня"
+
+#: templates/pages/landing.html:202
+msgid "One more chapter."
+msgstr "Ще один розділ."
+
+#: templates/pages/landing.html:204
+msgid "Slow mornings"
+msgstr "Повільні ранки"
+
+#: templates/pages/landing.html:205
+msgid "Small rooms"
+msgstr "Малі кімнати"
+
+#: templates/pages/landing.html:206
+msgid "Field notes"
+msgstr "Польові нотатки"
+
+#: templates/pages/landing.html:212
+msgid "Turn your reading habit into a little ritual."
+msgstr "Перетворіть читання на маленький ритуал."
+
+#: templates/pages/landing.html:223
+msgid "form studio"
+msgstr "студія форм"
+
+#: templates/pages/landing.html:225
+msgid "Your next big thing"
+msgstr "Ваша наступна велика справа"
+
+#: templates/pages/landing.html:226
+msgid "Get on the list."
+msgstr "Запишіться в список."
+
+#: templates/pages/landing.html:228
+msgid "Count me in"
+msgstr "Я з вами"
+
+#: templates/pages/landing.html:234
+msgid "A tiny form builder. No big subscription."
+msgstr "Маленький конструктор форм. Без великої підписки."
+
+#: templates/pages/landing.html:243
+msgid "Illustrative projects"
+msgstr "Вигадані проєкти"
+
+#: templates/pages/landing.html:256
+msgid "03 / The work behind the mark"
+msgstr "03 / Робота за позначкою"
+
+#: templates/pages/landing.html:257
+msgid "Show your work."
+msgstr "Покажіть роботу."
+
+#: templates/pages/landing.html:257
+msgid "Take your proof with you."
+msgstr "Беріть докази з собою."
+
+#: templates/pages/landing.html:258
+#, python-format
 msgid ""
-"Nothing has been launched here yet. Published projects appear in this list "
-"as soon as their authors publish them."
+"Keep a short public build log. Then put a live %(name)s badge right in your "
+"GitHub README."
 msgstr ""
-"Тут ще нічого не запущено. Проєкти з'являться в цьому списку, щойно автори "
-"їх опублікують."
+"Ведіть короткий публічний журнал розробки. А в README на GitHub додайте "
+"живий бейдж %(name)s."
 
-#: templates/pages/landing.html:94
-msgid "Bring in something you shipped"
-msgstr "Принесіть те, що ви випустили"
+#: templates/pages/landing.html:259
+msgid "Small updates. A visible track record."
+msgstr "Невеликі оновлення. Видима історія."
 
-#: templates/pages/landing.html:95
-msgid ""
-"Sign in, add the project, then link its repository and verify its domain. "
-"The hallmarks follow from the checks."
-msgstr ""
-"Увійдіть, додайте проєкт, прив'яжіть репозиторій і підтвердьте домен. "
-"Позначки з'являться за результатами перевірок."
+#: templates/pages/landing.html:268
+msgid "Nov 08"
+msgstr "08 лист."
+
+#: templates/pages/landing.html:268
+msgid "Shipped team invites. Finally."
+msgstr "Запустили запрошення в команду. Нарешті."
+
+#: templates/pages/landing.html:269
+msgid "Nov 06"
+msgstr "06 лист."
+
+#: templates/pages/landing.html:269
+msgid "Fixed sync. Cut load time in half."
+msgstr "Полагодили синхронізацію. Завантаження вдвічі швидше."
+
+#: templates/pages/landing.html:272
+msgid "In your README"
+msgstr "У вашому README"
+
+#: templates/pages/landing.html:275
+#, python-format
+msgid "Example %(name)s badge: Repo owner, Live, Steady"
+msgstr "Приклад бейджа %(name)s: Repo owner, Live, Steady"
+
+#: templates/pages/landing.html:283
+msgid "Illustrative project"
+msgstr "Вигаданий проєкт"
+
+#: templates/pages/landing.html:293
+msgid "Less talk. More receipts."
+msgstr "Менше слів. Більше доказів."
+
+#: templates/pages/landing.html:294
+msgid "You shipped it."
+msgstr "Ви це запустили."
+
+#: templates/pages/landing.html:294
+msgid "Now put your mark on it."
+msgstr "Тепер поставте на це свою позначку."
+
+#: templates/pages/landing.html:295
+msgid "Your tools don't define you. What you ship does."
+msgstr "Вас визначають не інструменти, а те, що ви запускаєте."
+
+#: templates/pages/landing.html:299
+msgid "GitHub account required"
+msgstr "Потрібен акаунт GitHub"
 
 #: templates/projects/_build_log.html:21
 msgid "Posting…"
@@ -1799,12 +2087,12 @@ msgstr "Перевірка репозиторію"
 
 #: templates/projects/form.html:65
 #, python-format
-msgid "Authored: %(name)s, %(counter)s commit by you."
-msgid_plural "Authored: %(name)s, %(counter)s commits by you."
-msgstr[0] "Authored: %(name)s, комітів ваших: %(counter)s."
-msgstr[1] "Authored: %(name)s, комітів ваших: %(counter)s."
-msgstr[2] "Authored: %(name)s, комітів ваших: %(counter)s."
-msgstr[3] "Authored: %(name)s, комітів ваших: %(counter)s."
+msgid "Repo owner: %(name)s, %(counter)s commit by you."
+msgid_plural "Repo owner: %(name)s, %(counter)s commits by you."
+msgstr[0] "Власник репозиторію: %(name)s, комітів ваших: %(counter)s."
+msgstr[1] "Власник репозиторію: %(name)s, комітів ваших: %(counter)s."
+msgstr[2] "Власник репозиторію: %(name)s, комітів ваших: %(counter)s."
+msgstr[3] "Власник репозиторію: %(name)s, комітів ваших: %(counter)s."
 
 #: templates/projects/form.html:66
 #, python-format
@@ -1813,11 +2101,11 @@ msgstr "Перевірено: %(date)s."
 
 #: templates/projects/form.html:68
 msgid ""
-"Not checked yet. Authored is earned if the public repository is yours, or "
+"Not checked yet. Repo owner is earned if the public repository is yours, or "
 "you have at least 10 commits in it."
 msgstr ""
-"Ще не перевірено. «Authored» отримують, якщо публічний репозиторій ваш або "
-"ви зробили в ньому щонайменше 10 комітів."
+"Ще не перевірено. «Власник репозиторію» отримують, якщо публічний "
+"репозиторій ваш або ви маєте в ньому щонайменше 10 комітів."
 
 #: templates/projects/form.html:71
 msgid "Check repository"
@@ -2161,8 +2449,54 @@ msgstr "Цей репозиторій приватний. Перевіряти �
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."
 
-#~ msgid "Proof of what you actually shipped"
-#~ msgstr "Докази того, що ви справді випустили"
+#~ msgid "Authored"
+#~ msgstr "Авторство"
+
+#~ msgid "Example project"
+#~ msgstr "Приклад проєкту"
+
+#~ msgid "Inspect and replay webhooks without a tunnel"
+#~ msgstr "Перегляд і повтор вебхуків без тунелю"
+
+#~ msgid "Repository"
+#~ msgstr "Репозиторій"
+
+#~ msgid "Repository owned by the author"
+#~ msgstr "Репозиторій належить автору"
+
+#, python-format
+#~ msgid "%(percent)s of %(checks)s checks in 30 days"
+#~ msgstr "%(percent)s з %(checks)s перевірок за 30 днів"
+
+#~ msgid ""
+#~ "A hallmark is struck only when the facts behind it are there, and it is "
+#~ "removed when they stop being true. Nobody can buy one or add it by hand."
+#~ msgstr ""
+#~ "Позначку ставлять лише тоді, коли за нею є факти, і знімають, коли вони "
+#~ "перестають бути правдою. Її не можна купити чи додати вручну."
+
+#~ msgid "Recently launched"
+#~ msgstr "Нещодавно запущені"
+
+#~ msgid "See all projects"
+#~ msgstr "Усі проєкти"
+
+#~ msgid ""
+#~ "Nothing has been launched here yet. Published projects appear in this "
+#~ "list as soon as their authors publish them."
+#~ msgstr ""
+#~ "Тут ще нічого не запущено. Проєкти з'являться в цьому списку, щойно "
+#~ "автори їх опублікують."
+
+#~ msgid "Bring in something you shipped"
+#~ msgstr "Принесіть те, що ви випустили"
+
+#~ msgid ""
+#~ "Sign in, add the project, then link its repository and verify its domain. "
+#~ "The hallmarks follow from the checks."
+#~ msgstr ""
+#~ "Увійдіть, додайте проєкт, прив'яжіть репозиторій і підтвердьте домен. "
+#~ "Позначки з'являться за результатами перевірок."
 
 #, python-format
 #~ msgid "%(name)s is under construction"

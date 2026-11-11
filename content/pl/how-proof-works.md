@@ -2,9 +2,9 @@
 
 Projekt może tu zdobyć trzy znaki (hallmarks). Każdy z nich to fakt, który sprawdzamy sami, a nie coś, co wpisuje autor. Znaki są obliczane na nowo przy każdym wyświetleniu strony, na podstawie najnowszych sprawdzeń, więc znak, który przestał być aktualny, znika.
 
-## Authored {#authored}
+## Repo owner {#authored}
 
-**Co to znaczy:** osoba, która opublikowała projekt, napisała kod albo jego istotną część.
+**Co to znaczy:** konto GitHub osoby, która opublikowała projekt, jest właścicielem powiązanego repozytorium albo ma w nim co najmniej 10 commitów. Nie dowodzi to, kto napisał kod.
 
 **Jak jest sprawdzane:** autor podaje publiczne repozytorium na GitHubie i klika „Sprawdź repozytorium”. Pytamy o nie publiczne API GitHuba. Znak jest przyznawany, gdy spełniony jest jeden z warunków:
 
@@ -13,7 +13,7 @@ Projekt może tu zdobyć trzy znaki (hallmarks). Każdy z nich to fakt, który s
 
 Konta porównujemy po numerycznym identyfikatorze konta w GitHubie, więc zmiana nazwy konta nie ma znaczenia. Czytamy tylko dane publiczne: logowanie nigdy nie daje nam dostępu do prywatnych repozytoriów.
 
-**Jak można go utracić:** późniejsze sprawdzenie stwierdzi, że repozytorium zostało usunięte, jest prywatne, zostało przeniesione albo nie jest już dziełem tego konta, albo autor powiąże z projektem inne repozytorium. Jedno repozytorium może być powiązane tylko z jednym projektem.
+**Jak można go utracić:** późniejsze sprawdzenie stwierdzi, że repozytorium zostało usunięte, jest prywatne, zostało przeniesione albo konto nie jest już jego właścicielem i nie ma w nim dość commitów, albo autor powiąże z projektem inne repozytorium. Jedno repozytorium może być powiązane tylko z jednym projektem.
 
 ## Live {#live}
 
@@ -57,4 +57,4 @@ Te elementy projektu pisze autor, a my ich **nie** sprawdzamy:
 - tagi i data premiery;
 - „Zbudowano z”, czyli narzędzia AI, których według autora użył. Zawsze jest oznaczone jako deklaracja autora.
 
-Znaki mówią tylko to, co mówią. Authored dotyczy kodu, Live domeny, Steady dostępności. Żaden z nich nie jest oceną produktu.
+Znaki mówią tylko to, co mówią. Repo owner dotyczy repozytorium, Live domeny, Steady dostępności. Żaden z nich nie jest oceną produktu.

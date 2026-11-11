@@ -170,7 +170,7 @@ class PublicPageTests(ProjectTestCase):
         self.assertContains(response, "Built with (self-declared)")
         self.assertContains(response, "Claude Code")
         self.assertNotContains(response, "Edit project")  # no owner controls for visitors
-        for kind in ("Authored", "Live", "Steady"):
+        for kind in ("Repo owner", "Live", "Steady"):
             self.assertContains(response, kind)
         self.assertEqual(response.content.decode().count("Not yet"), 3)
 

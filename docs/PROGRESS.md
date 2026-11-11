@@ -75,3 +75,7 @@
 
 - 2026-11-11: Redesign phase 1 fixes. Logo switched to C "struck slash" (one 8-unit punch, 2:1 slash, 4×4 px stop at 16px) in logo/mark/favicon SVGs and both PNGs; A and B only on /styleguide/. Dark primary button `#E5835C` → `#F5803F` with dark text (6.76:1); every token pair measured in both themes, table in `docs/DESIGN.md`. localhost vs 127.0.0.1: server output identical (HTML, CSS, fresh-profile screenshots pixel-equal); cause is per-origin browser state (static had no Cache-Control → heuristic cache; theme in localStorage). Dev-only `LocalhostRedirectMiddleware` + static `no-cache` via WhiteNoise in dev; 7 tests; README note.
   Next: developer approves, then phase 2 (landing).
+
+- 2026-11-11: Redesign phase 2 (landing). `/` rebuilt from the Figma images: hero + illustrative "project record" (labelled, relay.example, 99.9%), statement band, 01 marks (rule text from `proof.RULES`), 02 real recent projects or 3 labelled illustrative cards (never mixed), 03 build log + badge picture, closing band; footer flush. Motion: strike once; pulse, tick strip, drift in the hero; cursor in the closing band; reveal on 01-03. "Submit your project" = GitHub sign-in with next=/new/.
+  Copy honesty: mark shown as "Repo owner / Власник репозиторію" everywhere (UI, badges, admin, Explore filter, content pages in 7 languages; id `authored` unchanged); "wrote the code" removed. Fixed duplicated uk Steady rule. Checked 360/390/768/1440, light/dark, en/uk.
+  Next: phase 3 (feed, explore, profile, project pages).

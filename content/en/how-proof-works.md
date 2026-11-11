@@ -2,9 +2,9 @@
 
 A project here can earn three hallmarks. Each one is a fact we check ourselves, not something the author types in. Hallmarks are worked out again every time a page is shown, from the latest checks, so a mark that no longer holds disappears.
 
-## Authored {#authored}
+## Repo owner {#authored}
 
-**What it means:** the person who posted the project wrote the code, or a real part of it.
+**What it means:** the GitHub account of the person who posted the project owns the linked repository, or has at least 10 commits in it. It does not prove who wrote the code.
 
 **How it is checked:** the author links a public GitHub repository and presses "Check repository". We ask GitHub's public API about it. The mark is earned when either:
 
@@ -13,7 +13,7 @@ A project here can earn three hallmarks. Each one is a fact we check ourselves, 
 
 Accounts are compared by GitHub's numeric account id, so renaming a GitHub account does not matter. We only read public data: signing in never gives us access to private repositories.
 
-**How it can be lost:** a later check finds the repository deleted, private, moved or no longer authored by the account, or the author links a different repository to the project. One repository can be linked to only one project.
+**How it can be lost:** a later check finds the repository deleted, private, moved or no longer owned by the account and without enough commits from it, or the author links a different repository to the project. One repository can be linked to only one project.
 
 ## Live {#live}
 
@@ -57,4 +57,4 @@ These parts of a project are written by the author and **not** checked by us:
 - tags and the launch date;
 - "Built with", the AI tools the author says they used. It is always labeled "self-declared".
 
-Hallmarks only say what they say. Authored is about the code, Live about the domain, Steady about uptime. None of them is a review of the product.
+Hallmarks only say what they say. Repo owner is about the repository, Live about the domain, Steady about uptime. None of them is a review of the product.

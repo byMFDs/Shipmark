@@ -2,9 +2,9 @@
 
 Um projeto pode conquistar aqui três selos (hallmarks). Cada um é um fato que nós mesmos verificamos, não algo que o autor escreve. Os selos são recalculados toda vez que uma página é exibida, a partir das verificações mais recentes, então um selo que deixou de valer desaparece.
 
-## Authored {#authored}
+## Repo owner {#authored}
 
-**O que significa:** a pessoa que publicou o projeto escreveu o código, ou uma parte real dele.
+**O que significa:** a conta do GitHub de quem publicou o projeto é dona do repositório vinculado, ou tem pelo menos 10 commits nele. Isso não prova quem escreveu o código.
 
 **Como é verificado:** o autor vincula um repositório público do GitHub e clica em “Verificar repositório”. Consultamos a API pública do GitHub. O selo é conquistado quando uma destas condições é atendida:
 
@@ -13,7 +13,7 @@ Um projeto pode conquistar aqui três selos (hallmarks). Cada um é um fato que 
 
 As contas são comparadas pelo id numérico do GitHub, então renomear a conta do GitHub não faz diferença. Lemos apenas dados públicos: entrar na conta nunca nos dá acesso a repositórios privados.
 
-**Como pode ser perdido:** uma verificação posterior encontra o repositório excluído, privado, movido ou que não é mais da conta, ou o autor vincula outro repositório ao projeto. Um repositório só pode estar vinculado a um projeto.
+**Como pode ser perdido:** uma verificação posterior encontra o repositório excluído, privado, movido ou que não é mais da conta e não tem commits suficientes dela, ou o autor vincula outro repositório ao projeto. Um repositório só pode estar vinculado a um projeto.
 
 ## Live {#live}
 
@@ -57,4 +57,4 @@ Estas partes de um projeto são escritas pelo autor e **não** são verificadas 
 - tags e data de lançamento;
 - “Feito com”, as ferramentas de IA que o autor diz ter usado. Sempre aparece como “declarado pelo autor”.
 
-Os selos dizem só o que dizem. Authored trata do código, Live do domínio, Steady da disponibilidade. Nenhum deles é uma avaliação do produto.
+Os selos dizem só o que dizem. Repo owner trata do repositório, Live do domínio, Steady da disponibilidade. Nenhum deles é uma avaliação do produto.

@@ -23,7 +23,7 @@ Fragen oder Anliegen: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Nachweis-Prüfungen.** Um Prüfzeichen zu vergeben, prüfen wir Fakten selbst (unser berechtigtes Interesse an Nachweisen, denen man vertrauen kann):
 
-- *Authored:* Wir fragen die öffentliche API von GitHub zum verknüpften Repository ab und speichern, ob es dir gehört, deine Commit-Anzahl sowie das Datum deines ersten und letzten Commits. Die Liste der anderen Mitwirkenden von GitHub wird bei der Prüfung gelesen und nicht gespeichert.
+- *Repo owner:* Wir fragen die öffentliche API von GitHub zum verknüpften Repository ab und speichern, ob es dir gehört, deine Commit-Anzahl sowie das Datum deines ersten und letzten Commits. Die Liste der anderen Mitwirkenden von GitHub wird bei der Prüfung gelesen und nicht gespeichert.
 - *Live:* Wir fragen die DNS-Einträge der Domain deines Projekts ab oder rufen seine Seite ab, um dein Verifizierungs-Token zu finden.
 - *Steady:* Wir rufen die Adresse deines Projekts alle paar Stunden ab und speichern, ob sie geantwortet hat und wie schnell. Diese Prüfungen werden **90 Tage** aufbewahrt.
 

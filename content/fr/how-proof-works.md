@@ -2,9 +2,9 @@
 
 Un projet peut obtenir ici trois poinçons (hallmarks). Chacun est un fait que nous contrôlons nous-mêmes, pas quelque chose que l’auteur saisit. Les poinçons sont recalculés à chaque affichage d’une page, à partir des derniers contrôles : un poinçon qui n’est plus justifié disparaît.
 
-## Authored {#authored}
+## Repo owner {#authored}
 
-**Ce que cela signifie :** la personne qui a publié le projet a écrit le code, ou une part réelle de celui-ci.
+**Ce que cela signifie :** le compte GitHub de la personne qui a publié le projet possède le dépôt lié, ou y a au moins 10 commits. Cela ne prouve pas qui a écrit le code.
 
 **Comment c’est contrôlé :** l’auteur lie un dépôt GitHub public et clique sur « Contrôler le dépôt ». Nous interrogeons l’API publique de GitHub. Le poinçon est obtenu lorsque l’une de ces conditions est remplie :
 
@@ -13,7 +13,7 @@ Un projet peut obtenir ici trois poinçons (hallmarks). Chacun est un fait que n
 
 Les comptes sont comparés par l’identifiant numérique GitHub, donc renommer un compte GitHub n’a aucune incidence. Nous ne lisons que des données publiques : la connexion ne nous donne jamais accès aux dépôts privés.
 
-**Comment il peut être perdu :** un contrôle ultérieur constate que le dépôt est supprimé, privé, déplacé ou n’est plus l’œuvre du compte, ou l’auteur lie un autre dépôt au projet. Un dépôt ne peut être lié qu’à un seul projet.
+**Comment il peut être perdu :** un contrôle ultérieur constate que le dépôt est supprimé, privé, déplacé ou n’appartient plus au compte, qui n’y a pas assez de commits, ou l’auteur lie un autre dépôt au projet. Un dépôt ne peut être lié qu’à un seul projet.
 
 ## Live {#live}
 
@@ -57,4 +57,4 @@ Ces éléments d’un projet sont rédigés par l’auteur et ne sont **pas** co
 - étiquettes et date de lancement ;
 - « Créé avec », les outils d’IA que l’auteur dit avoir utilisés. C’est toujours indiqué comme « déclaré par l’auteur ».
 
-Les poinçons disent seulement ce qu’ils disent. Authored concerne le code, Live le domaine, Steady la disponibilité. Aucun n’est une évaluation du produit.
+Les poinçons disent seulement ce qu’ils disent. Repo owner concerne le dépôt, Live le domaine, Steady la disponibilité. Aucun n’est une évaluation du produit.

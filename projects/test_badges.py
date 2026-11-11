@@ -37,7 +37,7 @@ class BadgeResponseTests(TestCase):
         root = parse(response)
         self.assertEqual(root.tag, SVG_NS + "svg")
         self.assertIn("Tallyhook", root.get("aria-label"))
-        self.assertIn("Authored", root.get("aria-label"))
+        self.assertIn("Repo owner", root.get("aria-label"))
 
     def test_no_cookies_even_for_a_signed_in_visitor(self):
         self.client.force_login(self.ana)

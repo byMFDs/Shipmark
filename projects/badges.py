@@ -36,7 +36,7 @@ LINE = "#868C93"
 INK = "#2A3FCF"
 
 HALLMARK_ORDER = ("authored", "live", "steady")
-HALLMARK_LABELS = {"authored": "Authored", "live": "Live", "steady": "Steady"}  # English only, see docs
+HALLMARK_LABELS = {"authored": "Repo owner", "live": "Live", "steady": "Steady"}  # English only, see docs
 
 # Control characters break XML; bidi controls and zero-width characters could fake the text.
 _UNSAFE = re.compile("[\x00-\x1f\x7f-\x9f​-‏‪-‮⁦-⁩﻿￾￿]")

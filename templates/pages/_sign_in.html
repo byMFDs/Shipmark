@@ -1,10 +1,12 @@
-{% load i18n ui %}{# One-click GitHub sign-in (a CSRF-protected POST). Falls back to the sign-in page when OAuth is not set up. #}
+{% load i18n ui %}{% comment %}One-click GitHub sign-in (a CSRF-protected POST). Falls back to the sign-in page when OAuth is not set up.
+Optional: label (button text, then the GitHub icon becomes an arrow), next (local URL to open after sign-in), size="lg".{% endcomment %}
 {% if github_configured %}
   <form class="inline-form" method="post" action="{% url 'github_login' %}">
     {% csrf_token %}
     <input type="hidden" name="process" value="login">
-    <button class="btn btn--primary" type="submit">{% icon "github" %}{% translate "Sign in with GitHub" %}</button>
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    <button class="btn btn--primary{% if size == 'lg' %} btn--lg{% endif %}" type="submit">{% if label %}{{ label }}{% icon "arrow-up-right" "arrow" %}{% else %}{% icon "github" %}{% translate "Sign in with GitHub" %}{% endif %}</button>
   </form>
 {% else %}
-  <a class="btn btn--primary" href="{% url 'account_login' %}">{% icon "github" %}{% translate "Sign in with GitHub" %}</a>
+  <a class="btn btn--primary{% if size == 'lg' %} btn--lg{% endif %}" href="{% url 'account_login' %}{% if next %}?next={{ next|urlencode }}{% endif %}">{% if label %}{{ label }}{% icon "arrow-up-right" "arrow" %}{% else %}{% icon "github" %}{% translate "Sign in with GitHub" %}{% endif %}</a>
 {% endif %}

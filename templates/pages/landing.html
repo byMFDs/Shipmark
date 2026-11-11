@@ -3,97 +3,303 @@
 
 {% block title %}{{ brand.SITE_NAME }}: {{ brand.TAGLINE }}{% endblock %}
 {% block og_title %}{{ brand.SITE_NAME }}: {{ brand.TAGLINE }}{% endblock %}
-{% block og_description %}{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns hallmarks from facts that are checked: who wrote the code, who controls the domain, and whether the site stays up.{% endblocktranslate %}{% endblock %}
-{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}"><link rel="stylesheet" href="{% static 'css/pages/landing.css' %}">{% endblock %}
+{% block og_description %}{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns marks from facts we check: who owns the repository, who controls the domain, and whether the site stays up.{% endblocktranslate %}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/landing.css' %}">{% endblock %}
 {% block meta %}
-  <meta name="description" content="{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns hallmarks from facts that are checked: who wrote the code, who controls the domain, and whether the site stays up.{% endblocktranslate %}">
+  <meta name="description" content="{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns marks from facts we check: who owns the repository, who controls the domain, and whether the site stays up.{% endblocktranslate %}">
 {% endblock %}
 
 {% block content %}
   {% url 'pages:explore' as explore_url %}
+  {% maybe_url "pages:how_proof_works" as proof_url %}
+  {% maybe_url "projects:new" as new_url %}
+  {% translate "Submit your project" as submit_label %}
 
+  {# ---------- Hero ---------- #}
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__grid">
       <div class="hero__text">
-        <h1 class="display" id="hero-title">{% translate "Proof that you shipped it" %}</h1>
-        <p class="hero__lede">{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns hallmarks from facts that are checked: who wrote the code, who controls the domain, and whether the site stays up.{% endblocktranslate %}</p>
+        <p class="eyebrow">{% translate "The internet has enough claims." %}</p>
+        <h1 class="hero__title" id="hero-title"><span>{% translate "Less claim." %}</span> <span>{% translate "More shipped." %}</span></h1>
+        <p class="lede hero__lede">{% translate "Real projects. Independent checks. Proof you can point to." %}</p>
         <div class="hero__actions">
-          {% include "pages/_sign_in.html" %}
-          <a class="btn btn--quiet" href="{{ explore_url }}">{% translate "Explore projects" %}</a>
+          {% include "pages/_sign_in.html" with label=submit_label next=new_url size="lg" %}
+          <p class="label">{% translate "Built with AI. Backed by evidence." %}</p>
         </div>
-        <p class="hero__note">{% translate "We ask GitHub only for your public profile and your email address. We never get access to your code." %}</p>
+        <div class="hero__compare">
+          <p class="muted">{% translate "GitHub shows the code. LinkedIn tells the story." %}</p>
+          <p>{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} checks what actually shipped.{% endblocktranslate %}</p>
+        </div>
       </div>
 
-      {# The one bold moment (CLAUDE.md section 9): the marks are struck in sequence on load. Pure CSS; reduced motion shows the final state. #}
-      <figure class="hero__specimen">
-        <figcaption class="specimen__caption">{% translate "Example project" %}</figcaption>
-        <article class="plate plate--featured strike specimen">
-          <div class="plate__head">
-            <p class="plate__title">Tallyhook</p>
-            <p class="plate__tagline">{% translate "Inspect and replay webhooks without a tunnel" %}</p>
+      {# Illustrative only: a made-up project shown with the real rules. The caption says so. Strike, pulse, tick and drift: motion.css. #}
+      <figure class="hero__figure" aria-labelledby="specimen-caption" data-loop>
+        <article class="record specimen drift">
+          <div class="record__head">
+            <span class="label">{% blocktranslate with name=brand.SITE_NAME %}{{ name }} / Project record{% endblocktranslate %}</span>
+            <span class="label numeric">№ 0042</span>
           </div>
-          <dl class="specimen__facts">
-            <dt>{% translate "Repository" %}</dt><dd class="mono">tallyhook/tallyhook</dd>
-            <dt>{% translate "Domain" %}</dt><dd class="mono">tallyhook.dev</dd>
-            <dt>{% translate "Built with" %}</dt><dd>Claude Code, Cursor <span class="muted">({% translate "self-declared" %})</span></dd>
-          </dl>
-          <div class="plate__strip">
-            {% translate "Repository owned by the author" as fact_authored %}
-            {% translate "Domain control confirmed" as fact_live %}
-            {% blocktranslate with percent="99.6%" checks=240 asvar fact_steady %}{{ percent }} of {{ checks }} checks in 30 days{% endblocktranslate %}
-            {% hallmark "authored" "l" True fact_authored %}
-            {% hallmark "live" "l" True fact_live %}
-            {% hallmark "steady" "l" True fact_steady %}
+          <div class="record__body">
+            <div class="mock mock--relay specimen__shot" aria-hidden="true">
+              <p class="mock__bar">relay / {% translate "your team, in sync" %}</p>
+              <div class="mock__app">
+                <ul class="mock__side">
+                  <li class="mock__kicker">{% translate "Workspace" %}</li>
+                  <li>{% translate "Overview" %}</li>
+                  <li>{% translate "Inbox" %}</li>
+                  <li>{% translate "Projects" %}</li>
+                  <li>{% translate "Activity" %}</li>
+                </ul>
+                <div class="mock__main">
+                  <p class="mock__title">{% translate "A little less chaos." %}</p>
+                  <div class="mock__cols">
+                    <div class="mock__col"><p class="mock__kicker">{% translate "In progress" %}</p><p class="mock__item">{% translate "New onboarding" %}</p><p class="mock__item">{% translate "API handoff" %}</p></div>
+                    <div class="mock__col"><p class="mock__kicker">{% translate "Up next" %}</p><p class="mock__item">{% translate "Design review" %}</p><p class="mock__item">{% translate "Invite the team" %}</p></div>
+                    <div class="mock__col"><p class="mock__kicker">{% translate "Shipped" %}</p><p class="mock__item">{% translate "Workspace v2" %}</p><p class="mock__item">{% translate "Billing fixes" %}</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="plate__title specimen__name">Relay</p>
+            <p class="plate__tagline">{% translate "Calm project management for tiny teams." %}</p>
+            <div class="plate__strip strike">{% hallmark "authored" %}{% hallmark "live" %}{% hallmark "steady" %}</div>
+            <p class="declared specimen__declared">{% translate "Built with" %} Cursor · {% translate "self-declared" %}</p>
+
+            <hr class="record__rule">
+            <p class="label specimen__checked">{% translate "Checked, not self-reported" %}</p>
+            <dl class="checks">
+              <div class="checks__row"><dt>{% translate "Repo ownership" %}</dt><dd>{% icon "check" "checks__ok" %}<span class="visually-hidden">{% translate "confirmed" %}</span></dd></div>
+              <div class="checks__row"><dt>{% translate "Domain control" %}</dt><dd>{% icon "check" "checks__ok" %}<span class="visually-hidden">{% translate "confirmed" %}</span></dd></div>
+              <div class="checks__row"><dt>{% translate "30-day uptime" %}</dt><dd class="numeric">99.9%</dd></div>
+              <div class="checks__row"><dt class="visually-hidden">{% translate "Domain" %}</dt><dd><span class="pulse-dot" aria-hidden="true"></span>relay.example</dd></div>
+            </dl>
+            <div class="tick-strip specimen__ticks" aria-hidden="true">
+              {% for i in "012345678901234567890123456789" %}<span class="tick-strip__cell{% if forloop.counter == 19 %} is-miss{% endif %}"></span>{% endfor %}
+              <span class="tick-strip__head"></span>
+            </div>
           </div>
         </article>
+        <figcaption class="label hero__caption" id="specimen-caption">{% translate "Illustrative project · real verification rules" %}</figcaption>
       </figure>
     </div>
   </section>
 
-  <section class="landing-section" aria-labelledby="proof-title">
+  {# ---------- Statements ---------- #}
+  <section class="band statements" aria-label="{% translate 'How the marks behave' %}">
+    <ul class="container statements__list">
+      <li>{% translate "No self-awarded marks." %}</li>
+      <li>{% translate "Checks keep running." %}</li>
+      <li>{% translate "Proof can expire." %}</li>
+    </ul>
+  </section>
+
+  {# ---------- 01 The standard ---------- #}
+  <section class="landing-section" aria-labelledby="standard-title">
     <div class="container">
-      <div class="landing-section__head">
-        <h2 id="proof-title">{% translate "How proof works" %}</h2>
-        {% maybe_url "pages:how_proof_works" as proof_url %}
-        {% if proof_url %}<a href="{{ proof_url }}">{% translate "Read the full rules" %}</a>{% endif %}
-      </div>
-      <p class="landing-section__intro">{% translate "A hallmark is struck only when the facts behind it are there, and it is removed when they stop being true. Nobody can buy one or add it by hand." %}</p>
-      <ol class="proof-steps">
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">{% translate "01 / The standard" %}</p>
+        <h2 id="standard-title">{% translate "Three marks. Zero shortcuts." %}</h2>
+        <p class="lede">{% translate "A mark is earned by a check, not a checkbox." %}</p>
+      </header>
+
+      {# Rule text comes from projects/proof.py RULES, so this page cannot drift from the code. #}
+      <ol class="standard" data-reveal>
         {% for step in proof %}
-          <li class="proof-step">
-            <h3 class="proof-step__title">{% hallmark step.kind "l" True %}</h3>
-            <p>{{ step.rule }}</p>
+          <li class="standard__item">
+            <hr class="rule">
+            <div class="standard__top">
+              <span class="eyebrow numeric">0{{ forloop.counter }}</span>
+              {% icon "check" "standard__check" %}
+            </div>
+            <h3 class="standard__name">{% hallmark_label step.kind %}</h3>
+            <p class="standard__claim">
+              {% if step.kind == "authored" %}{% translate "Linked to your GitHub account." %}
+              {% elif step.kind == "live" %}{% translate "Not a demo. A destination." %}
+              {% else %}{% translate "Shipping is just day one." %}{% endif %}
+            </p>
+            <p class="standard__rule">{{ step.rule }}</p>
+            <p class="label standard__meta">
+              {% if step.kind == "authored" %}{% translate "GitHub repository" %}
+              {% elif step.kind == "live" %}{% translate "Domain control" %}
+              {% else %}{% translate "30-day uptime ≥ 95%" %}{% endif %}
+            </p>
           </li>
         {% endfor %}
       </ol>
-      <p class="landing-section__note">{% translate "The AI tools a project was built with are declared by its author and labeled as self-declared." %}</p>
+
+      <div class="proof-note standard__note">{% icon "return" %}<span>{% translate "Marks are never permanent. If checks start failing, the marks come off." %}</span></div>
+      <div class="standard__foot">
+        <p class="muted">{% translate "The AI tools a project was built with are declared by its author and labeled as self-declared." %}</p>
+        {% if proof_url %}<a class="link-arrow" href="{{ proof_url }}"><span>{% translate "Read the full rules" %}</span>{% icon "arrow-up-right" "arrow" %}</a>{% endif %}
+      </div>
     </div>
   </section>
 
+  {# ---------- 02 Out in the world ---------- #}
   <section class="landing-section" aria-labelledby="recent-title">
     <div class="container">
-      <div class="landing-section__head">
-        <h2 id="recent-title">{% translate "Recently launched" %}</h2>
-        {% if recent %}<a href="{{ explore_url }}">{% translate "See all projects" %}</a>{% endif %}
-      </div>
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">{% translate "02 / Out in the world" %}</p>
+        <h2 id="recent-title">{% translate "Less pitch. More product." %}</h2>
+        <p class="lede">{% translate "A few things people actually put on the internet." %}</p>
+        <a class="link-arrow section-head__aside" href="{{ explore_url }}"><span>{% translate "Explore projects" %}</span>{% icon "arrow-up-right" "arrow" %}</a>
+      </header>
+
       {% if recent %}
-        <ul class="recent-list">
-          {% for project in recent %}{% include "pages/_project_row.html" with with_like=False %}{% endfor %}
+        {# Real projects only. Never mixed with the illustrative ones below. #}
+        <ul class="card-grid" data-reveal>
+          {% for project in recent %}
+            <li>
+              <article class="card">
+                <div class="card__media">
+                  {% with cover=project.cover %}
+                    {% if cover %}<img src="{{ cover.image.url }}" alt="" width="640" height="400" loading="lazy">
+                    {% else %}<span class="card__placeholder" aria-hidden="true">{{ project.name|slice:":1"|upper }}</span>{% endif %}
+                  {% endwith %}
+                </div>
+                <div class="card__body">
+                  <h3 class="card__title"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
+                  <p class="card__tagline">{{ project.tagline }}</p>
+                  <div class="card__marks">{% for h in project.hallmarks %}{% if h.earned %}{% hallmark h.kind "s" %}{% endif %}{% endfor %}</div>
+                  <p class="card__foot"><span>{% blocktranslate with name=project.owner.display_name|default:project.owner.username %}by {{ name }}{% endblocktranslate %}</span>{% icon "arrow-up-right" "arrow" %}</p>
+                </div>
+              </article>
+            </li>
+          {% endfor %}
         </ul>
+        <p class="label landing-foot">{% translate "Steady is earned over time, not on launch day." %}</p>
       {% else %}
-        <div class="empty landing-empty">
-          <div class="empty__marks">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
-          <p class="empty__text">{% translate "Nothing has been launched here yet. Published projects appear in this list as soon as their authors publish them." %}</p>
+        {# Nothing published yet: three made-up projects, labelled as such, not links. #}
+        <ul class="card-grid" data-reveal aria-describedby="illustrative-note">
+          <li>
+            <article class="card">
+              <div class="card__media">
+                <div class="mock mock--relay" aria-hidden="true">
+                  <p class="mock__bar">relay / {% translate "workspace" %}</p>
+                  <p class="mock__title">{% translate "Make room for good work." %}</p>
+                  <div class="mock__cols">
+                    <div class="mock__col"><p class="mock__kicker">{% translate "Today" %}</p><p class="mock__item">{% translate "Website refresh" %}</p><p class="mock__item">{% translate "Product updates" %}</p></div>
+                    <div class="mock__col"><p class="mock__kicker">{% translate "This week" %}</p><p class="mock__item">{% translate "Website refresh" %}</p><p class="mock__item">{% translate "Product updates" %}</p></div>
+                    <div class="mock__col"><p class="mock__kicker">{% translate "Done" %}</p><p class="mock__item">{% translate "Website refresh" %}</p><p class="mock__item">{% translate "Product updates" %}</p></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card__body">
+                <h3 class="card__title">Relay</h3>
+                <p class="card__tagline">{% translate "Calm project management for tiny teams." %}</p>
+                <div class="card__marks">{% hallmark "authored" "s" %}{% hallmark "live" "s" %}{% hallmark "steady" "s" %}</div>
+                <p class="declared">{% translate "Built with" %} Cursor · {% translate "self-declared" %}</p>
+                <p class="card__foot">{% blocktranslate with name="Maya Chen" %}by {{ name }}{% endblocktranslate %}</p>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="card">
+              <div class="card__media">
+                <div class="mock mock--plotline" aria-hidden="true">
+                  <p class="mock__bar">plotline / {% translate "your reading room" %}</p>
+                  <p class="mock__title">{% translate "One more chapter." %}</p>
+                  <div class="mock__books">
+                    <p class="mock__book mock__book--1">{% translate "Slow mornings" %}<span>01</span></p>
+                    <p class="mock__book mock__book--2">{% translate "Small rooms" %}<span>02</span></p>
+                    <p class="mock__book mock__book--3">{% translate "Field notes" %}<span>03</span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="card__body">
+                <h3 class="card__title">Plotline</h3>
+                <p class="card__tagline">{% translate "Turn your reading habit into a little ritual." %}</p>
+                <div class="card__marks">{% hallmark "authored" "s" %}{% hallmark "live" "s" %}{% hallmark "steady" "s" %}</div>
+                <p class="declared">{% translate "Built with" %} Claude Code · {% translate "self-declared" %}</p>
+                <p class="card__foot">{% blocktranslate with name="Leo Park" %}by {{ name }}{% endblocktranslate %}</p>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="card">
+              <div class="card__media">
+                <div class="mock mock--forma" aria-hidden="true">
+                  <p class="mock__bar">forma / {% translate "form studio" %}</p>
+                  <div class="mock__form">
+                    <p class="mock__kicker">{% translate "Your next big thing" %}</p>
+                    <p class="mock__title">{% translate "Get on the list." %}</p>
+                    <p class="mock__field">you@example.com</p>
+                    <p class="mock__button">{% translate "Count me in" %}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card__body">
+                <h3 class="card__title">Forma</h3>
+                <p class="card__tagline">{% translate "A tiny form builder. No big subscription." %}</p>
+                <div class="card__marks">{% hallmark "authored" "s" %}{% hallmark "live" "s" %}</div>
+                <p class="declared">{% translate "Built with" %} Lovable · {% translate "self-declared" %}</p>
+                <p class="card__foot">{% blocktranslate with name="Nina Patel" %}by {{ name }}{% endblocktranslate %}</p>
+              </div>
+            </article>
+          </li>
+        </ul>
+        <div class="landing-foot">
+          <p class="label" id="illustrative-note">{% translate "Illustrative projects" %}</p>
+          <p class="label">{% translate "Steady is earned over time, not on launch day." %}</p>
         </div>
       {% endif %}
     </div>
   </section>
 
-  <section class="landing-section landing-cta" aria-labelledby="cta-title">
+  {# ---------- 03 The work behind the mark ---------- #}
+  <section class="landing-section" aria-labelledby="work-title">
     <div class="container">
-      <h2 id="cta-title">{% translate "Bring in something you shipped" %}</h2>
-      <p class="landing-cta__text">{% translate "Sign in, add the project, then link its repository and verify its domain. The hallmarks follow from the checks." %}</p>
-      <div class="hero__actions">{% include "pages/_sign_in.html" %}</div>
+      <hr class="rule work__rule">
+      <div class="work" data-reveal>
+        <div class="work__text">
+          <p class="eyebrow">{% translate "03 / The work behind the mark" %}</p>
+          <h2 id="work-title"><span>{% translate "Show your work." %}</span> <span>{% translate "Take your proof with you." %}</span></h2>
+          <p class="lede">{% blocktranslate with name=brand.SITE_NAME trimmed %}Keep a short public build log. Then put a live {{ name }} badge right in your GitHub README.{% endblocktranslate %}</p>
+          <p class="mono work__note">{% translate "Small updates. A visible track record." %}</p>
+        </div>
+
+        <figure class="work__figure" aria-labelledby="work-caption">
+          <article class="record">
+            <div class="record__head"><span class="label">Relay / {% translate "Build log" %}</span></div>
+            <div class="record__body">
+              <hr class="record__rule log__top">
+              <ol class="log">
+                <li class="log__entry"><time class="label numeric" datetime="2026-11-08">{% translate "Nov 08" %}</time><p>{% translate "Shipped team invites. Finally." %}</p></li>
+                <li class="log__entry"><time class="label numeric" datetime="2026-11-06">{% translate "Nov 06" %}</time><p>{% translate "Fixed sync. Cut load time in half." %}</p></li>
+              </ol>
+              <hr class="record__rule">
+              <p class="label">{% translate "In your README" %}</p>
+              <div class="readme">
+                {# A picture of the badge: badges are always English (docs/EDITING.md). The real one is on the owner's project page. #}
+                <p class="badge-preview" role="img" aria-label="{% blocktranslate with name=brand.SITE_NAME %}Example {{ name }} badge: Repo owner, Live, Steady{% endblocktranslate %}">
+                  <span class="badge-preview__site">{% inline_svg brand.LOGO "badge-preview__logo" %}</span>
+                  <span class="badge-preview__marks">{% icon "check" %}Repo owner · Live · Steady</span>
+                </p>
+                {% if proof_url %}<a class="link-arrow" href="{{ proof_url }}"><span>{% translate "How proof works" %}</span>{% icon "arrow-up-right" "arrow" %}</a>{% endif %}
+              </div>
+            </div>
+          </article>
+          <figcaption class="label hero__caption" id="work-caption">{% translate "Illustrative project" %}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  {# ---------- Closing ---------- #}
+  <section class="band closing" aria-labelledby="closing-title">
+    <div class="container closing__grid">
+      <div class="closing__text">
+        <p class="label cursor" data-loop>{% translate "Less talk. More receipts." %}</p>
+        <h2 class="closing__title" id="closing-title"><span>{% translate "You shipped it." %}</span> <span>{% translate "Now put your mark on it." %}</span></h2>
+        <p class="lede">{% translate "Your tools don't define you. What you ship does." %}</p>
+      </div>
+      <div class="closing__action">
+        {% include "pages/_sign_in.html" with label=submit_label next=new_url size="lg" %}
+        <p class="label">{% translate "GitHub account required" %}</p>
+      </div>
     </div>
   </section>
 {% endblock %}
+
+{% block footer %}{% site_footer flush=True %}{% endblock %}

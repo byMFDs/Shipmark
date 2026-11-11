@@ -56,7 +56,7 @@ Never store the level as truth; derive it from facts. Cache if needed.
 
 | Hallmark | Earned when |
 |---|---|
-| **Authored** | Linked public GitHub repo is owned by the user's GitHub account, OR user has ≥10 commits in it |
+| **Repo owner** (id `authored`; never claim code authorship) | Linked public GitHub repo is owned by the user's GitHub account, OR user has ≥10 commits in it |
 | **Live** | User proved control of the project domain (DNS TXT or meta tag), re-confirmed in the last 35 days |
 | **Steady** | Has Live AND ≥95% successful uptime checks over the last 30 days, with ≥40 checks |
 | *(Used)* | Post-MVP. Do not build. Show nothing for it. |

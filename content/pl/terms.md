@@ -8,7 +8,7 @@ Ten regulamin jest umową między Tobą a {{ legal_owner_name }}, który prowadz
 
 ## Czym jest {{ site_name }} {#service}
 
-Publiczne miejsce na pokazanie oprogramowania, które trafiło do użytkowników, ze znakami sprawdzanymi przez nas samych: Authored (repozytorium GitHub), Live (kontrola nad domeną) i Steady (dostępność). Jak działa każde sprawdzenie, wyjaśnia strona [Jak działa dowód](/how-proof-works/). Usługa jest bezpłatna.
+Publiczne miejsce na pokazanie oprogramowania, które trafiło do użytkowników, ze znakami sprawdzanymi przez nas samych: Repo owner (repozytorium GitHub), Live (kontrola nad domeną) i Steady (dostępność). Jak działa każde sprawdzenie, wyjaśnia strona [Jak działa dowód](/how-proof-works/). Usługa jest bezpłatna.
 
 ## Twoje konto {#account}
 

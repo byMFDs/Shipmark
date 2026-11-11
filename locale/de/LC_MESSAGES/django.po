@@ -234,8 +234,8 @@ msgid "Open reports"
 msgstr "Offene Meldungen"
 
 #: moderation/dashboard.py:51 pages/explore.py:28 pages/templatetags/ui.py:108
-msgid "Authored"
-msgstr "Authored"
+msgid "Repo owner"
+msgstr "Repo owner"
 
 #: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:109
 msgid "Live"
@@ -635,8 +635,8 @@ msgid "This repository was checked a moment ago. You can check again in 10 minut
 msgstr "Dieses Repository wurde gerade erst geprüft. In 10 Minuten kannst du es erneut prüfen."
 
 #: projects/views.py:140
-msgid "Repository checked. Authored earned."
-msgstr "Repository geprüft. Authored erhalten."
+msgid "Repository checked. Repo owner earned."
+msgstr "Repository geprüft. Repo owner erhalten."
 
 #: projects/views.py:142
 #, python-format
@@ -1156,8 +1156,8 @@ msgstr "Es wurde noch nichts veröffentlicht."
 #: templates/pages/landing.html:6 templates/pages/landing.html:9
 #: templates/pages/landing.html:19
 #, python-format
-msgid "%(name)s is a public record of projects built with AI tools and actually shipped. Each project earns hallmarks from facts that are checked: who wrote the code, who controls the domain, and whether the site stays up."
-msgstr "%(name)s ist ein öffentliches Verzeichnis von Projekten, die mit KI-Tools gebaut und wirklich veröffentlicht wurden. Jedes Projekt erhält Prüfzeichen auf Basis geprüfter Fakten: Wer den Code geschrieben hat, wer die Domain kontrolliert und ob die Seite erreichbar bleibt."
+msgid "%(name)s is a public record of projects built with AI tools and actually shipped. Each project earns marks from facts we check: who owns the repository, who controls the domain, and whether the site stays up."
+msgstr "%(name)s ist ein öffentliches Verzeichnis von Projekten, die mit KI-Tools gebaut und wirklich veröffentlicht wurden. Jedes Projekt erhält Prüfzeichen auf Basis geprüfter Fakten: Wem das Repository gehört, wer die Domain kontrolliert und ob die Seite erreichbar bleibt."
 
 #: templates/pages/landing.html:18
 msgid "Proof that you shipped it"
@@ -1598,10 +1598,10 @@ msgstr "Repository-Prüfung"
 
 #: templates/projects/form.html:65
 #, python-format
-msgid "Authored: %(name)s, %(counter)s commit by you."
-msgid_plural "Authored: %(name)s, %(counter)s commits by you."
-msgstr[0] "Authored: %(name)s, %(counter)s Commit von dir."
-msgstr[1] "Authored: %(name)s, %(counter)s Commits von dir."
+msgid "Repo owner: %(name)s, %(counter)s commit by you."
+msgid_plural "Repo owner: %(name)s, %(counter)s commits by you."
+msgstr[0] "Repo owner: %(name)s, %(counter)s Commit von dir."
+msgstr[1] "Repo owner: %(name)s, %(counter)s Commits von dir."
 
 #: templates/projects/form.html:66
 #, python-format
@@ -1609,8 +1609,8 @@ msgid "Checked %(date)s."
 msgstr "Geprüft am %(date)s."
 
 #: templates/projects/form.html:68
-msgid "Not checked yet. Authored is earned if the public repository is yours, or you have at least 10 commits in it."
-msgstr "Noch nicht geprüft. Authored bekommst du, wenn das öffentliche Repository dir gehört oder du mindestens 10 Commits darin hast."
+msgid "Not checked yet. Repo owner is earned if the public repository is yours, or you have at least 10 commits in it."
+msgstr "Noch nicht geprüft. Repo owner bekommst du, wenn das öffentliche Repository dir gehört oder du mindestens 10 Commits darin hast."
 
 #: templates/projects/form.html:71
 msgid "Check repository"

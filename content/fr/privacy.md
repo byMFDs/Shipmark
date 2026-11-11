@@ -23,7 +23,7 @@ Questions ou demandes : [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Contrôles de preuve.** Pour attribuer des poinçons, nous contrôlons nous-mêmes les faits (notre intérêt légitime à montrer des preuves fiables) :
 
-- *Authored :* nous interrogeons l’API publique de GitHub sur le dépôt que vous liez et conservons s’il vous appartient, votre nombre de commits, ainsi que les dates de votre premier et de votre dernier commit. La liste des autres contributeurs fournie par GitHub est lue pendant le contrôle et n’est pas conservée.
+- *Repo owner :* nous interrogeons l’API publique de GitHub sur le dépôt que vous liez et conservons s’il vous appartient, votre nombre de commits, ainsi que les dates de votre premier et de votre dernier commit. La liste des autres contributeurs fournie par GitHub est lue pendant le contrôle et n’est pas conservée.
 - *Live :* nous consultons les enregistrements DNS du domaine de votre projet ou récupérons sa page pour y trouver votre jeton de vérification.
 - *Steady :* nous interrogeons l’adresse de votre projet toutes les quelques heures et conservons si elle a répondu et à quelle vitesse. Ces contrôles sont conservés **90 jours**.
 
