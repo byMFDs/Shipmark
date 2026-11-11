@@ -4,16 +4,17 @@ A project here can earn three hallmarks. Each one is a fact we check ourselves, 
 
 ## Repo owner {#authored}
 
-**What it means:** the GitHub account of the person who posted the project owns the linked repository, or has at least 10 commits in it. It does not prove who wrote the code.
+**What it means:** the GitHub repository linked to the project belongs to the personal GitHub account of the person who posted it. It does not prove who wrote the code.
 
-**How it is checked:** the author links a public GitHub repository and presses "Check repository". We ask GitHub's public API about it. The mark is earned when either:
+**How it is checked:** the author links a public GitHub repository and presses "Check repository". We ask GitHub's public API about it. The mark is earned when the repository belongs to the author's personal GitHub account and is not a fork.
 
-- the repository belongs to the author's personal GitHub account and is not a fork, or
-- GitHub counts at least 10 commits from the author's account in the repository's contributor list.
+Accounts and repositories are compared by GitHub's numeric ids, not by names: renaming an account or a repository changes nothing, and a deleted repository that someone recreates under the same name is a different repository. We only read public data: signing in never gives us access to private repositories.
 
-Accounts are compared by GitHub's numeric account id, so renaming a GitHub account does not matter. We only read public data: signing in never gives us access to private repositories.
+**What else we record:** when the repository was created, its first commit, how many commits the author has and when the first and latest were made, and in how many weeks the author's commits changed code (from GitHub's statistics; bots do not count). The project page lists these facts under "What was checked". The mark waits for a short manual review in three cases: the first commit is much older than the repository, the same first commit belongs to a repository linked to another project here, or GitHub shows no commits by the author. Commit dates are written by whoever makes the commit, so they describe the history; they do not prove it.
 
-**How it can be lost:** a later check finds the repository deleted, private, moved or no longer owned by the account and without enough commits from it, or the author links a different repository to the project. One repository can be linked to only one project.
+**How it is re-checked:** every week we look the repository up again by its id.
+
+**How it can be lost:** the repository is deleted, made private or transferred to another account, or the author links a different repository. One repository can be linked to only one project.
 
 ## Live {#live}
 
@@ -36,6 +37,8 @@ Accounts are compared by GitHub's numeric account id, so renaming a GitHub accou
 
 Every time Live is earned or removed, the change is recorded in our internal log.
 
+The bare address of a hosting service shared by many sites (such as `github.io` or `vercel.app`) cannot be verified. Your own address on it (`yourname.github.io`) can.
+
 ## Steady {#steady}
 
 **What it means:** the project stays up, not just on launch day.
@@ -49,6 +52,8 @@ The project page shows the uptime percentage and a 30-day strip. Results are kep
 
 **How it can be lost:** uptime falls below 95%, or the project loses Live. Steady always requires Live.
 
+A check also fails when the site answers only after redirecting to another domain: the answer has to come from the domain that was verified.
+
 ## What is self-declared {#self-declared}
 
 These parts of a project are written by the author and **not** checked by us:
@@ -58,3 +63,7 @@ These parts of a project are written by the author and **not** checked by us:
 - "Built with", the AI tools the author says they used. It is always labeled "self-declared".
 
 Hallmarks only say what they say. Repo owner is about the repository, Live about the domain, Steady about uptime. None of them is a review of the product.
+
+## What we cannot check {#limits}
+
+{{ site_name }} checks facts it can prove: who owns the linked GitHub repository, who controls the domain, and whether the site answers. It does not and cannot check who wrote the code. Commit history and dates are written by the repository owner and can be changed. If you think a project is copied, report it.

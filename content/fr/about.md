@@ -12,7 +12,7 @@ GitHub montre du code. LinkedIn montre des affirmations. {{ site_name }} essaie 
 
 Un projet peut obtenir trois poinçons. Chacun est un fait que notre serveur vérifie, et chacun disparaît dès que le fait n'est plus vrai.
 
-- **Repo owner.** Le projet renvoie vers un dépôt GitHub public. Nous demandons à l'API publique de GitHub si le dépôt appartient au compte GitHub de l'auteur et n'est pas un fork, ou si l'auteur y a au moins 10 commits.
+- **Repo owner.** Le projet lie un dépôt GitHub public. Nous demandons à l’API publique de GitHub s’il appartient au compte GitHub personnel de l’auteur et n’est pas un fork, et nous le recontrôlons chaque semaine.
 - **Live.** L'auteur prouve qu'il contrôle le domaine du projet avec un jeton que nous générons : un enregistrement TXT dans le DNS ou une balise meta sur la page d'accueil. Nous le revérifions régulièrement, et le poinçon ne tient que tant que le domaine a été confirmé au cours des 35 derniers jours.
 - **Steady.** Dès qu'un projet a Live, nous ouvrons son adresse environ toutes les 3 heures. Steady exige au moins 40 vérifications sur les 30 derniers jours, dont au moins 95 % doivent obtenir une réponse sans erreur en moins de 5 secondes.
 
@@ -20,7 +20,7 @@ Les règles complètes, y compris comment chaque poinçon peut être perdu, sont
 
 ## Ce que nous ne vérifions pas {#not-verified}
 
-- **Qui a écrit le code.** Repo owner signifie qu'un compte possède un dépôt ou y a des commits. Cela ne dit rien de qui a tapé le code, ni de la part écrite par un outil d'IA. C'est pourquoi le poinçon s'appelle « Repo owner ».
+- **Qui a écrit le code.** {{ site_name }} contrôle les faits qu’il peut prouver : à qui appartient le dépôt GitHub lié, qui contrôle le domaine et si le site répond. Il ne contrôle pas, et ne peut pas contrôler, qui a écrit le code ni quelle part en a écrit un outil d’IA. L’historique des commits et ses dates sont écrits par le propriétaire du dépôt et peuvent être modifiés. Si vous pensez qu’un projet est copié, signalez-le.
 - **Si le projet est bon.** Les poinçons ne sont pas des avis. Un projet Steady peut être une idée faible, et un excellent projet peut n'avoir encore aucun poinçon.
 - **Ce que l'auteur écrit.** Le nom, la description, les captures, les tags, la date de lancement et les outils d'IA sous « Créé avec » sont indiqués par l'auteur. « Créé avec » est toujours marqué comme déclaré par l'auteur.
 

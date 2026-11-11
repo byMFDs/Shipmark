@@ -26,6 +26,7 @@ from .forms import BuildLogForm, ProjectForm
 from .badges import embed_snippets
 from .images import clean_screenshot
 from .models import LOG_ENTRIES_PER_DAY, MAX_SCREENSHOTS, BuildLogEntry, Project, Screenshot
+from .proof import checked_facts
 from .rendering import MAX_LENGTH, render_user_markdown
 
 LOG_SHOWN = 50  # entries on the project page
@@ -394,6 +395,7 @@ def _render_detail(request, project, log_form=None, status=200):
         "is_owner": is_owner,
         "screenshots": screenshots,
         "hallmarks": hallmarks,
+        "checked": checked_facts(project),
         # Shown while the project is Live, and afterwards as long as there is a check history.
         "uptime": uptime if hallmarks["live"].earned or uptime.last_checked_at else None,
         "tools": list(project.built_with.all()),

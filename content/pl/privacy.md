@@ -13,7 +13,7 @@ Pytania i wnioski: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Co przechowujemy i po co {#data}
 
-**Gdy logujesz się przez GitHub.** Od GitHuba otrzymujemy identyfikator Twojego konta, login, imię i nazwisko, bio, link do awatara i pozostałe publiczne pola profilu GitHub, a także adresy e-mail przypisane do Twojego konta GitHub. Prosimy GitHub tylko o `read:user` i `user:email`: przez Twoje konto nigdy nie mamy dostępu do Twoich repozytoriów, ani prywatnych, ani publicznych. Po zalogowaniu nie przechowujemy Twojego tokenu dostępu do GitHuba. Potrzebujemy tych danych, by założyć konto i rozpoznać Cię następnym razem (wykonanie umowy z Tobą).
+**Gdy logujesz się przez GitHub.** Od GitHuba otrzymujemy identyfikator Twojego konta, login, imię i nazwisko, bio, link do awatara i pozostałe publiczne pola profilu GitHub, a także adresy e-mail przypisane do Twojego konta GitHub. Prosimy GitHub tylko o `read:user` i `user:email`: przez Twoje konto nigdy nie mamy dostępu do Twoich repozytoriów, ani prywatnych, ani publicznych. Po zalogowaniu nie przechowujemy Twojego tokenu dostępu do GitHuba. Potrzebujemy tych danych, by założyć konto i rozpoznać Cię następnym razem (wykonanie umowy z Tobą). Twój login GitHub jest odświeżany przy każdym logowaniu, więc profil zawsze prowadzi do Twojego obecnego konta GitHub.
 
 **Twój profil.** Nazwa użytkownika, nazwa wyświetlana, bio, strona WWW i język. Nazwa i bio zaczynają od wartości z GitHuba; możesz je zmienić w Ustawieniach. Twoja nazwa użytkownika, nazwa wyświetlana, bio, strona WWW, login GitHub i miesiąc dołączenia są **publiczne**.
 
@@ -23,7 +23,7 @@ Pytania i wnioski: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Sprawdzenia dowodów.** Aby przyznawać znaki, sprawdzamy fakty sami (nasz uzasadniony interes w pokazywaniu dowodów, którym można ufać):
 
-- *Repo owner:* pytamy publiczne API GitHuba o powiązane repozytorium i zapisujemy, czy jesteś jego właścicielem, liczbę Twoich commitów oraz daty pierwszego i ostatniego commita. Listę pozostałych współtwórców z GitHuba czytamy podczas sprawdzenia i nie zapisujemy jej.
+- *Repo owner:* pytamy publiczne API GitHuba o repozytorium, które podajesz, i zapisujemy jego identyfikator, identyfikator konta właściciela, czy należy do Ciebie, datę utworzenia i pole Website, pierwszy commit jego historii (identyfikator i datę), liczbę Twoich commitów, daty pierwszego i ostatniego, liczbę tygodni z Twoimi commitami oraz stan ręcznej weryfikacji, gdy jest potrzebna. Sprawdzamy to ponownie co tydzień. Listę innych współtwórców czytamy podczas sprawdzania i nie zapisujemy jej.
 - *Live:* sprawdzamy rekordy DNS domeny Twojego projektu albo pobieramy jego stronę, aby znaleźć Twój token weryfikacyjny.
 - *Steady:* wysyłamy żądanie pod adres Twojego projektu co kilka godzin i zapisujemy, czy odpowiedział i jak szybko. Te sprawdzenia przechowujemy przez **90 dni**.
 

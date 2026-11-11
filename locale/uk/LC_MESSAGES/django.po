@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 23:08+0000\n"
+"POT-Creation-Date: 2026-11-11 23:17+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -118,12 +118,12 @@ msgstr "Це імʼя зарезервоване. Оберіть інше."
 msgid "You are signed out."
 msgstr "Ви вийшли з акаунта."
 
-#: accounts/views.py:63 moderation/views.py:30 projects/views.py:38
+#: accounts/views.py:63 moderation/views.py:30 projects/views.py:39
 #: social/views.py:65
 msgid "Your account is suspended."
 msgstr "Ваш акаунт призупинено."
 
-#: accounts/views.py:66 projects/views.py:33 social/views.py:67
+#: accounts/views.py:66 projects/views.py:34 social/views.py:67
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Забагато змін за короткий час. Спробуйте за кілька хвилин."
 
@@ -172,7 +172,7 @@ msgid "Build log"
 msgstr "Журнал розробки"
 
 #: config/settings/base.py:289 projects/forms.py:26
-#: templates/projects/detail.html:147
+#: templates/projects/detail.html:161
 msgid "Tags"
 msgstr "Теги"
 
@@ -678,42 +678,130 @@ msgid ""
 msgstr ""
 "%(percent)s%% успішних перевірок за останні 30 днів; потрібно %(min)s%%."
 
-#: projects/views.py:72
+#: projects/proof.py:158
+msgid "Repository"
+msgstr "Репозиторій"
+
+#: projects/proof.py:158
+msgid "History"
+msgstr "Історія"
+
+#: projects/proof.py:163
+#, python-format
+msgid ""
+"%(repo)s passed the ownership check on %(date)s and is waiting for a routine "
+"manual review."
+msgstr "%(repo)s пройшов перевірку власника %(date)s і чекає на звичайну ручну перевірку."
+
+#: projects/proof.py:166
+#, python-format
+msgid ""
+"%(repo)s is owned by the author's GitHub account, matched by account id. "
+"Checked %(date)s."
+msgstr "%(repo)s належить акаунту автора на GitHub, звірено за id акаунта. Перевірено %(date)s."
+
+#: projects/proof.py:167
+msgid "Not a fork."
+msgstr "Не форк."
+
+#: projects/proof.py:169
+#, python-format
+msgid "Repository created on GitHub %(date)s."
+msgstr "Репозиторій створено на GitHub %(date)s."
+
+#: projects/proof.py:172
+#, python-format
+msgid "First commit in its history: %(date)s."
+msgstr "Перший коміт в історії: %(date)s."
+
+#: projects/proof.py:175
+#, python-format
+msgid "Commits by the author: %(count)s, from %(first)s to %(last)s."
+msgstr "Комітів автора: %(count)s, з %(first)s до %(last)s."
+
+#: projects/proof.py:179
+#, python-format
+msgid "Weeks with code changes by the author: %(weeks)s."
+msgstr "Тижнів зі змінами коду від автора: %(weeks)s."
+
+#: projects/proof.py:183
+msgid "No other project here has the same history."
+msgstr "Жоден інший проєкт тут не має такої самої історії."
+
+#: projects/proof.py:185
+#, python-format
+msgid "%(repo)s is not verified. It is the author's own link."
+msgstr "%(repo)s не перевірено. Це посилання від самого автора."
+
+#: projects/proof.py:191
+#, python-format
+msgid ""
+"Control of %(domain)s proven with a meta tag on %(first)s, last confirmed "
+"%(last)s."
+msgstr "Контроль над %(domain)s доведено метатегом %(first)s, востаннє підтверджено %(last)s."
+
+#: projects/proof.py:193
+#, python-format
+msgid ""
+"Control of %(domain)s proven with a DNS record on %(first)s, last confirmed "
+"%(last)s."
+msgstr "Контроль над %(domain)s доведено DNS-записом %(first)s, востаннє підтверджено %(last)s."
+
+#: projects/proof.py:194 projects/proof.py:196 templates/pages/landing.html:75
+msgid "Domain"
+msgstr "Домен"
+
+#: projects/proof.py:196
+#, python-format
+msgid "The repository's website field on GitHub points to %(domain)s."
+msgstr "Поле Website репозиторію на GitHub веде на %(domain)s."
+
+#: projects/proof.py:200 templates/projects/detail.html:102
+msgid "Uptime"
+msgstr "Доступність"
+
+#: projects/proof.py:201
+#, python-format
+msgid ""
+"%(ok)s of %(total)s checks in the last 30 days got an answer from %(domain)s."
+msgstr "%(ok)s з %(total)s перевірок за останні 30 днів отримали відповідь від %(domain)s."
+
+#: projects/views.py:73
 msgid "Draft saved. Add screenshots, then publish."
 msgstr "Чернетку збережено. Додайте скріншоти, потім опублікуйте."
 
-#: projects/views.py:86
+#: projects/views.py:87
 msgid "Changes saved."
 msgstr "Зміни збережено."
 
-#: projects/views.py:108
+#: projects/views.py:109
 msgid "The description is too long."
 msgstr "Опис задовгий."
 
-#: projects/views.py:120
+#: projects/views.py:121
 msgid "Add a GitHub repository and save the project first."
 msgstr "Спершу вкажіть репозиторій GitHub і збережіть проєкт."
 
-#: projects/views.py:122
+#: projects/views.py:123
 msgid "Sign in with GitHub to check a repository."
 msgstr "Увійдіть через GitHub, щоб перевірити репозиторій."
 
-#: projects/views.py:124
+#: projects/views.py:125
 msgid ""
 "This repository was checked a moment ago. You can check again in 10 minutes."
 msgstr "Репозиторій щойно перевіряли. Повторити можна за 10 хвилин."
 
-#: projects/views.py:132
+#: projects/views.py:133
 msgid "Repository checked. Repo owner earned."
 msgstr "Репозиторій перевірено. Позначку «Власник репозиторію» отримано."
 
-#: projects/views.py:134
+#: projects/views.py:135
 msgid "Repository checked. Repo owner will appear after a short manual review."
 msgstr ""
 "Репозиторій перевірено. «Власник репозиторію» з'явиться після короткої "
 "ручної перевірки."
 
-#: projects/views.py:136
+#: projects/views.py:137
 msgid ""
 "This repository is a fork. Forks cannot earn Repo owner; link the original "
 "repository."
@@ -721,51 +809,51 @@ msgstr ""
 "Цей репозиторій є форком. Форки не можуть отримати «Власник репозиторію»; "
 "вкажіть оригінальний репозиторій."
 
-#: projects/views.py:138
+#: projects/views.py:139
 msgid "This repository is not owned by your personal GitHub account."
 msgstr "Цей репозиторій не належить вашому особистому акаунту на GitHub."
 
-#: projects/views.py:175
+#: projects/views.py:176
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr "Забагато перевірок. Зачекайте кілька хвилин і перевірте знову."
 
-#: projects/views.py:184
+#: projects/views.py:185
 msgid "Verified. Confirmed again."
 msgstr "Підтверджено. Перевірку оновлено."
 
-#: projects/views.py:184
+#: projects/views.py:185
 msgid "Verified. Live earned."
 msgstr "Підтверджено. Отримано позначку Live."
 
-#: projects/views.py:204
+#: projects/views.py:205
 msgid "Published."
 msgstr "Опубліковано."
 
-#: projects/views.py:214
+#: projects/views.py:215
 msgid "Moved back to drafts."
 msgstr "Повернуто до чернеток."
 
-#: projects/views.py:224
+#: projects/views.py:225
 msgid "Project deleted."
 msgstr "Проєкт видалено."
 
-#: projects/views.py:237
+#: projects/views.py:238
 msgid "Choose an image first."
 msgstr "Спершу виберіть зображення."
 
-#: projects/views.py:253
+#: projects/views.py:254
 msgid "A project can have at most 4 screenshots. Remove one first."
 msgstr "У проєкта може бути не більше 4 скріншотів. Спершу видаліть один."
 
-#: projects/views.py:256
+#: projects/views.py:257
 msgid "Screenshot added."
 msgstr "Скріншот додано."
 
-#: projects/views.py:274
+#: projects/views.py:275
 msgid "Screenshot removed."
 msgstr "Скріншот видалено."
 
-#: projects/views.py:322
+#: projects/views.py:323
 #, python-format
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
@@ -773,15 +861,15 @@ msgstr ""
 "Проєкт може мати щонайбільше %(n)s записів у журналі за добу. Спробуйте "
 "завтра."
 
-#: projects/views.py:335
+#: projects/views.py:336
 msgid "Posted. Launch date set to today."
 msgstr "Опубліковано. Дату запуску змінено на сьогодні."
 
-#: projects/views.py:335
+#: projects/views.py:336
 msgid "Posted."
 msgstr "Опубліковано."
 
-#: projects/views.py:361 projects/views.py:362
+#: projects/views.py:362 projects/views.py:363
 msgid "Entry deleted."
 msgstr "Запис видалено."
 
@@ -1501,10 +1589,6 @@ msgstr "Контроль домену"
 msgid "30-day uptime"
 msgstr "Доступність за 30 днів"
 
-#: templates/pages/landing.html:75
-msgid "Domain"
-msgstr "Домен"
-
 #: templates/pages/landing.html:83
 msgid "Illustrative project · real verification rules"
 msgstr "Вигаданий проєкт · справжні правила перевірки"
@@ -2010,7 +2094,7 @@ msgid ""
 "footer."
 msgstr "для сайту: вставте там, де має бути бейдж, наприклад у футері."
 
-#: templates/projects/_hallmark_info.html:5
+#: templates/projects/_hallmark_info.html:5 templates/projects/detail.html:144
 msgid "What this means"
 msgstr "Що це означає"
 
@@ -2097,10 +2181,6 @@ msgstr "Скріншот %(n)s з %(name)s"
 msgid "About this project"
 msgstr "Про цей проєкт"
 
-#: templates/projects/detail.html:102
-msgid "Uptime"
-msgstr "Доступність"
-
 #: templates/projects/detail.html:106
 #, python-format
 msgid "of %(n)s check in the last 30 days"
@@ -2161,7 +2241,17 @@ msgstr "Не працює"
 msgid "No checks"
 msgstr "Перевірок не було"
 
-#: templates/projects/detail.html:139 templates/projects/form.html:51
+#: templates/projects/detail.html:138
+msgid "What was checked"
+msgstr "Що перевірено"
+
+#: templates/projects/detail.html:144
+msgid ""
+"We check ownership, control of the domain and uptime. We cannot check who "
+"wrote the code."
+msgstr "Ми перевіряємо власника, контроль над доменом і доступність. Хто писав код, ми перевірити не можемо."
+
+#: templates/projects/detail.html:153 templates/projects/form.html:51
 msgid "Built with (self-declared)"
 msgstr "Створено з (зазначено автором)"
 
@@ -2489,15 +2579,17 @@ msgstr "Перевірити на GitHub зараз"
 msgid ""
 "Confirmed %(confirmed)s, needs review %(review)s, removed %(removed)s, retry "
 "later %(kept)s."
-msgstr "Підтверджено %(confirmed)s, на перевірку %(review)s, знято %(removed)s, повторити пізніше %(kept)s."
+msgstr ""
+"Підтверджено %(confirmed)s, на перевірку %(review)s, знято %(removed)s, "
+"повторити пізніше %(kept)s."
 
 #: verification/admin.py:101
 msgid "Revoke Live"
-msgstr "Відкликати Live"
+msgstr "Відкликати «Працює»"
 
 #: verification/admin.py:106
 msgid "Block the domain and revoke Live"
-msgstr "Заблокувати домен і відкликати Live"
+msgstr "Заблокувати домен і відкликати «Працює»"
 
 #: verification/admin.py:113
 msgid "Re-run verification now"
@@ -2536,7 +2628,8 @@ msgstr "Цей домен уже підтверджено для іншого п
 #: verification/domain.py:45
 msgid ""
 "This domain cannot be verified. If you think this is a mistake, write to us."
-msgstr "Цей домен не можна підтвердити. Якщо вважаєте, що це помилка, напишіть нам."
+msgstr ""
+"Цей домен не можна підтвердити. Якщо вважаєте, що це помилка, напишіть нам."
 
 #: verification/domain.py:46
 msgid "This domain does not exist in DNS. Check the spelling of the live URL."
@@ -2643,7 +2736,9 @@ msgstr "Цей репозиторій завеликий для автомати
 msgid ""
 "This repository cannot be linked. If you think this is a mistake, write to "
 "us."
-msgstr "Цей репозиторій не можна прив'язати. Якщо вважаєте, що це помилка, напишіть нам."
+msgstr ""
+"Цей репозиторій не можна прив'язати. Якщо вважаєте, що це помилка, напишіть "
+"нам."
 
 #: verification/repo.py:280
 msgid "This repository is private. Only public repositories can be checked."

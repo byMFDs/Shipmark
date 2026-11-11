@@ -12,7 +12,7 @@ GitHub shows code. LinkedIn shows claims. {{ site_name }} tries to show outcomes
 
 A project can earn three hallmarks. Each one is a fact our server checks, and each one disappears when the fact stops being true.
 
-- **Repo owner.** The project links a public GitHub repository. We ask GitHub's public API whether the repository belongs to the author's GitHub account and is not a fork, or whether the author has at least 10 commits in it.
+- **Repo owner.** The project links a public GitHub repository. We ask GitHub's public API whether it belongs to the author's personal GitHub account and is not a fork, and we check it again every week.
 - **Live.** The author proves control of the project's domain with a token we generate: a DNS TXT record or a meta tag on the homepage. We re-check it regularly, and the mark holds only while the domain was confirmed in the last 35 days.
 - **Steady.** Once a project is Live, we open its address about every 3 hours. Steady needs at least 40 checks in the last 30 days, and at least 95% of them must get an answer without an error within 5 seconds.
 
@@ -20,7 +20,7 @@ The full rules, including how each mark can be lost, are on [How proof works](/h
 
 ## What we do not verify {#not-verified}
 
-- **Who wrote the code.** Repo owner means an account owns a repository or has commits in it. It says nothing about who typed the code, or how much of it an AI tool wrote. That is why the mark is called "Repo owner".
+- **Who wrote the code.** {{ site_name }} checks facts it can prove: who owns the linked GitHub repository, who controls the domain, and whether the site answers. It does not and cannot check who wrote the code, or how much of it an AI tool wrote. Commit history and dates are written by the repository owner and can be changed. If you think a project is copied, report it.
 - **Whether the project is good.** Hallmarks are not reviews. A Steady project can still be a weak idea, and a great project can have no marks yet.
 - **What the author writes.** Name, description, screenshots, tags, launch date and the AI tools under "Built with" come from the author. "Built with" is always labeled self-declared.
 

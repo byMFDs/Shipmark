@@ -13,7 +13,7 @@ Preguntas o solicitudes: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Qué guardamos y por qué {#data}
 
-**Cuando inicias sesión con GitHub.** Recibimos de GitHub el id de tu cuenta, tu login, tu nombre, tu biografía, el enlace a tu avatar y los demás campos públicos de tu perfil de GitHub, además de las direcciones de correo de tu cuenta de GitHub. Solo pedimos a GitHub `read:user` y `user:email`: nunca obtenemos acceso a tus repositorios, ni privados ni públicos, a través de tu cuenta. No conservamos tu token de acceso de GitHub después de iniciar sesión. Necesitamos estos datos para crear tu cuenta y reconocerte la próxima vez (ejecución de nuestro acuerdo contigo).
+**Cuando inicias sesión con GitHub.** Recibimos de GitHub el id de tu cuenta, tu login, tu nombre, tu biografía, el enlace a tu avatar y los demás campos públicos de tu perfil de GitHub, además de las direcciones de correo de tu cuenta de GitHub. Solo pedimos a GitHub `read:user` y `user:email`: nunca obtenemos acceso a tus repositorios, ni privados ni públicos, a través de tu cuenta. No conservamos tu token de acceso de GitHub después de iniciar sesión. Necesitamos estos datos para crear tu cuenta y reconocerte la próxima vez (ejecución de nuestro acuerdo contigo). Tu usuario de GitHub se actualiza cada vez que inicias sesión, así tu perfil siempre enlaza a tu cuenta actual de GitHub.
 
 **Tu perfil.** Nombre de usuario, nombre visible, biografía, sitio web e idioma. El nombre y la biografía empiezan con tus valores de GitHub; puedes cambiarlos en Ajustes. Tu nombre de usuario, nombre visible, biografía, sitio web, login de GitHub y el mes en que te uniste son **públicos**.
 
@@ -23,7 +23,7 @@ Preguntas o solicitudes: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Comprobaciones de la prueba.** Para conceder sellos comprobamos los hechos nosotros mismos (nuestro interés legítimo en mostrar pruebas en las que se pueda confiar):
 
-- *Repo owner:* consultamos la API pública de GitHub sobre el repositorio que vinculas y guardamos si eres su propietario, tu número de commits y las fechas de tu primer y último commit. La lista de otros colaboradores de GitHub se lee durante la comprobación y no se guarda.
+- *Repo owner:* consultamos la API pública de GitHub sobre el repositorio que enlazas y guardamos su identificador, el identificador de la cuenta propietaria, si es tuyo, su fecha de creación y su campo Website, el primer commit de su historial (identificador y fecha), tu número de commits, las fechas de tu primer y último commit, el número de semanas con commits tuyos y el estado de una revisión manual cuando hace falta. Lo volvemos a comprobar cada semana. La lista de otras personas que contribuyen se lee durante la comprobación y no se guarda.
 - *Live:* consultamos los registros DNS del dominio de tu proyecto o descargamos su página para encontrar tu token de verificación.
 - *Steady:* solicitamos la dirección de tu proyecto cada pocas horas y guardamos si respondió y con qué rapidez. Estas comprobaciones se conservan **90 días**.
 

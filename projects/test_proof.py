@@ -297,3 +297,44 @@ class RepoDomainLinkTests(ProofTestCase):
         marks = self.marks()
         self.assertTrue(marks["authored"].earned)
         self.assertTrue(marks["live"].earned)
+
+
+class WhatWasCheckedTests(ProofTestCase):
+    def texts(self):
+        from .proof import checked_facts
+
+        return [fact.text for fact in checked_facts(self.fresh())]
+
+    def test_verified_repo_and_domain_facts_with_dates(self):
+        self.verify()
+        self.link(is_owner=True, user_commit_count=12, first_commit_at=self.now - timedelta(days=90),
+                  last_commit_at=self.now, repo_created_at=self.now - timedelta(days=100),
+                  root_commit_at=self.now - timedelta(days=99), root_commit_sha="d" * 40, active_weeks=7,
+                  homepage="https://example.com/")
+        joined = " | ".join(self.texts())
+        for part in ("matched by account id", "Not a fork.", "Repository created on GitHub", "First commit in its history",
+                     "Commits by the author: 12", "Weeks with code changes by the author: 7",
+                     "No other project here has the same history", "proven with a DNS record",
+                     "website field on GitHub points to example.com"):
+            self.assertIn(part, joined)
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertContains(response, "What was checked")
+        self.assertContains(response, "We cannot check who wrote the code.")
+
+    def test_unverified_link_and_review_never_name_the_reason(self):
+        self.assertEqual(self.texts(), ["ann/tally is not verified. It is the author's own link."])
+        self.link(is_owner=True, review_state=RepoLink.Review.NEEDS_REVIEW, review_reasons=["imported_history"])
+        joined = " ".join(self.texts())
+        self.assertIn("routine manual review", joined)
+        self.assertNotIn("import", joined)
+
+    def test_shared_history_is_not_claimed_unique(self):
+        other = make_project(make_user("bob"), name="Copy", repo_full_name="bob/copy")
+        RepoLink.objects.create(project=other, repo_full_name="bob/copy", github_repo_id=999, is_owner=True,
+                                root_commit_sha="e" * 40, checked_at=self.now)
+        self.link(is_owner=True, root_commit_sha="e" * 40)
+        self.assertNotIn("No other project here has the same history.", self.texts())
+
+    def test_nothing_to_show_hides_the_panel(self):
+        Project.objects.filter(pk=self.project.pk).update(repo_full_name="", live_url="")
+        self.assertNotContains(self.client.get(self.project.get_absolute_url()), "What was checked")

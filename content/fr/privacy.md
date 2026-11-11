@@ -13,7 +13,7 @@ Questions ou demandes : [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Ce que nous conservons et pourquoi {#data}
 
-**Lorsque vous vous connectez avec GitHub.** Nous recevons de GitHub l’identifiant de votre compte, votre login, votre nom, votre bio, le lien de votre avatar et les autres champs publics de votre profil GitHub, ainsi que les adresses e-mail de votre compte GitHub. Nous demandons à GitHub uniquement `read:user` et `user:email` : nous n’obtenons jamais d’accès à vos dépôts, privés ou publics, via votre compte. Nous ne conservons pas votre jeton d’accès GitHub après la connexion. Nous avons besoin de ces données pour créer votre compte et vous reconnaître la fois suivante (exécution de notre accord avec vous).
+**Lorsque vous vous connectez avec GitHub.** Nous recevons de GitHub l’identifiant de votre compte, votre login, votre nom, votre bio, le lien de votre avatar et les autres champs publics de votre profil GitHub, ainsi que les adresses e-mail de votre compte GitHub. Nous demandons à GitHub uniquement `read:user` et `user:email` : nous n’obtenons jamais d’accès à vos dépôts, privés ou publics, via votre compte. Nous ne conservons pas votre jeton d’accès GitHub après la connexion. Nous avons besoin de ces données pour créer votre compte et vous reconnaître la fois suivante (exécution de notre accord avec vous). Votre identifiant GitHub est mis à jour à chaque connexion, pour que votre profil mène toujours à votre compte GitHub actuel.
 
 **Votre profil.** Nom d’utilisateur, nom affiché, bio, site web et langue. Le nom et la bio reprennent d’abord vos valeurs GitHub ; vous pouvez les modifier dans les Réglages. Votre nom d’utilisateur, votre nom affiché, votre bio, votre site web, votre login GitHub et le mois de votre inscription sont **publics**.
 
@@ -23,7 +23,7 @@ Questions ou demandes : [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Contrôles de preuve.** Pour attribuer des poinçons, nous contrôlons nous-mêmes les faits (notre intérêt légitime à montrer des preuves fiables) :
 
-- *Repo owner :* nous interrogeons l’API publique de GitHub sur le dépôt que vous liez et conservons s’il vous appartient, votre nombre de commits, ainsi que les dates de votre premier et de votre dernier commit. La liste des autres contributeurs fournie par GitHub est lue pendant le contrôle et n’est pas conservée.
+- *Repo owner :* nous interrogeons l’API publique de GitHub sur le dépôt que vous liez et enregistrons son identifiant, l’identifiant du compte propriétaire, s’il vous appartient, sa date de création et son champ Website, le premier commit de son historique (identifiant et date), votre nombre de commits, les dates de votre premier et de votre dernier commit, le nombre de semaines avec vos commits et l’état d’une vérification manuelle si elle est nécessaire. Nous le recontrôlons chaque semaine. La liste des autres contributeurs est lue pendant le contrôle et n’est pas enregistrée.
 - *Live :* nous consultons les enregistrements DNS du domaine de votre projet ou récupérons sa page pour y trouver votre jeton de vérification.
 - *Steady :* nous interrogeons l’adresse de votre projet toutes les quelques heures et conservons si elle a répondu et à quelle vitesse. Ces contrôles sont conservés **90 jours**.
 

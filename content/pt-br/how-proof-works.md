@@ -4,16 +4,17 @@ Um projeto pode conquistar aqui três selos (hallmarks). Cada um é um fato que 
 
 ## Repo owner {#authored}
 
-**O que significa:** a conta do GitHub de quem publicou o projeto é dona do repositório vinculado, ou tem pelo menos 10 commits nele. Isso não prova quem escreveu o código.
+**O que significa:** o repositório do GitHub vinculado ao projeto pertence à conta pessoal do GitHub de quem o publicou. Isso não prova quem escreveu o código.
 
-**Como é verificado:** o autor vincula um repositório público do GitHub e clica em “Verificar repositório”. Consultamos a API pública do GitHub. O selo é conquistado quando uma destas condições é atendida:
+**Como é verificado:** o autor vincula um repositório público do GitHub e clica em “Verificar repositório”. Consultamos a API pública do GitHub. A marca é conquistada quando o repositório pertence à conta pessoal do GitHub do autor e não é um fork.
 
-- o repositório pertence à conta pessoal do autor no GitHub e não é um fork, ou
-- o GitHub contabiliza pelo menos 10 commits da conta do autor na lista de colaboradores do repositório.
+Contas e repositórios são comparados pelos ids numéricos do GitHub, não pelos nomes: renomear uma conta ou um repositório não muda nada, e um repositório apagado que alguém recria com o mesmo nome é outro repositório. Só lemos dados públicos: entrar nunca nos dá acesso a repositórios privados.
 
-As contas são comparadas pelo id numérico do GitHub, então renomear a conta do GitHub não faz diferença. Lemos apenas dados públicos: entrar na conta nunca nos dá acesso a repositórios privados.
+**O que mais registramos:** quando o repositório foi criado, o primeiro commit dele, quantos commits o autor tem e quando foram o primeiro e o último, e em quantas semanas os commits do autor mudaram código (pelas estatísticas do GitHub; bots não contam). A página do projeto mostra esses fatos em “O que foi verificado”. A marca espera uma breve revisão manual em três casos: o primeiro commit é muito mais antigo que o repositório, o mesmo primeiro commit pertence a um repositório vinculado a outro projeto daqui, ou o GitHub não mostra nenhum commit do autor. As datas dos commits são escritas por quem faz o commit, então descrevem o histórico, mas não o provam.
 
-**Como pode ser perdido:** uma verificação posterior encontra o repositório excluído, privado, movido ou que não é mais da conta e não tem commits suficientes dela, ou o autor vincula outro repositório ao projeto. Um repositório só pode estar vinculado a um projeto.
+**Como é verificado de novo:** toda semana buscamos o repositório de novo pelo id.
+
+**Como pode ser perdido:** o repositório é apagado, fica privado ou é transferido para outra conta, ou o autor vincula outro repositório. Um repositório só pode estar vinculado a um projeto.
 
 ## Live {#live}
 
@@ -36,6 +37,8 @@ As contas são comparadas pelo id numérico do GitHub, então renomear a conta d
 
 Toda vez que Live é conquistado ou removido, a mudança fica registrada no nosso registro interno.
 
+O endereço principal de um serviço de hospedagem compartilhado por muitos sites (como `github.io` ou `vercel.app`) não pode ser verificado. O seu próprio endereço nele (`yourname.github.io`) pode.
+
 ## Steady {#steady}
 
 **O que significa:** o projeto continua no ar, não só no dia do lançamento.
@@ -49,6 +52,8 @@ A página do projeto mostra a porcentagem de disponibilidade e uma faixa de 30 d
 
 **Como pode ser perdido:** a disponibilidade cai abaixo de 95%, ou o projeto perde Live. Steady sempre exige Live.
 
+Uma verificação também falha quando o site só responde depois de redirecionar para outro domínio: a resposta precisa vir do domínio verificado.
+
 ## O que é declarado pelo autor {#self-declared}
 
 Estas partes de um projeto são escritas pelo autor e **não** são verificadas por nós:
@@ -58,3 +63,7 @@ Estas partes de um projeto são escritas pelo autor e **não** são verificadas 
 - “Feito com”, as ferramentas de IA que o autor diz ter usado. Sempre aparece como “declarado pelo autor”.
 
 Os selos dizem só o que dizem. Repo owner trata do repositório, Live do domínio, Steady da disponibilidade. Nenhum deles é uma avaliação do produto.
+
+## O que não podemos verificar {#limits}
+
+O {{ site_name }} verifica fatos que consegue provar: a quem pertence o repositório do GitHub vinculado, quem controla o domínio e se o site responde. Ele não verifica, nem pode verificar, quem escreveu o código. O histórico de commits e as datas são escritos pelo dono do repositório e podem ser alterados. Se você acha que um projeto foi copiado, denuncie.

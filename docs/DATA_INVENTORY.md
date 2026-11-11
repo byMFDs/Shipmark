@@ -5,7 +5,7 @@ Every piece of personal data the code stores or processes. The privacy, terms an
 **When a model gets a new personal field, or data goes somewhere new, update this file, the legal
 pages and `accounts/export.py`.**
 
-Last checked against the code: 2026-11-11 (error log files added).
+Last checked against the code: 2026-11-12 (trust hardening: GitHub login refresh, repository facts, review queue, blocks).
 
 "Public" means anyone on the internet, signed in or not. "Staff" means people with admin access
 (`is_staff`) at `ADMIN_URL`. Every record below is in the export unless the "Export" column says no.
@@ -19,7 +19,7 @@ Last checked against the code: 2026-11-11 (error log files added).
 | `bio` (≤280) | GitHub `bio` at first sign-in, then the user | Profile | Until deletion | Public | yes |
 | `website` | The user | Profile link | Until deletion | Public (only http/https shown as a link) | yes |
 | `email` | GitHub (primary email) | Account record; staff can contact the person about their account or a report. **No email is sent by the site** | Until deletion | Staff only. Never shown publicly | yes |
-| `github_login` | GitHub at first sign-in | Profile link to GitHub; one account per GitHub login | Until deletion | Public | yes |
+| `github_login` | GitHub, refreshed at **every** sign-in (`accounts/github.py`). If another local account still holds the same login (its owner renamed on GitHub), that stale copy is cleared and logged | Profile link to GitHub; one account per GitHub login | Until deletion | Public | yes |
 | `avatar_url` | GitHub at first sign-in | Stored for later use. **Not shown** (initials are shown; remote images would leak visitors' IPs to GitHub) | Until deletion | Staff | yes |
 | `preferred_language` | The user (settings or language switcher) | UI language | Until deletion | Staff | yes |
 | `terms_version_accepted`, `terms_accepted_at` | Signup step and "accept updated Terms" page | Proof of which Terms the user accepted, and when | Until deletion | Staff | yes |
@@ -54,9 +54,10 @@ OAuth scopes: `read:user`, `user:email` only. No access to private repositories.
 
 | Data | Source | Purpose | Retention | Who can see it | Export |
 |---|---|---|---|---|---|
-| `RepoLink` (repo name, GitHub repo id, is owner, the user's commit count, first/last commit dates, check dates) | GitHub public API (`api.github.com`) | Repo owner hallmark (id `authored`) | Until the check fails, the repo is unlinked, or deletion | Hallmark and its facts: public on published projects | yes |
+| `RepoLink`: repo name, GitHub repo id, owner account id, is owner, repo created date, the repo's Website field, first commit of the history (sha, date), the user's commit count, first/last commit dates, active weeks, review state and reasons, reviewed by/at, check dates | GitHub public API (`api.github.com`), re-read weekly by `reverify_repos` | Repo owner hallmark (id `authored`) and the "What was checked" panel | Until the check fails, the repo is unlinked, or deletion | Facts with dates: public on published projects. Review reasons and reviewer: owner (export) and staff only; the page shows only "waiting for a routine manual review" | yes (without reviewer) |
 | Contributor lists of repositories | GitHub public API | Find the user's commit count | **Not stored**: other contributors' logins and counts are read in memory and dropped | n/a | n/a |
 | `DomainVerification` (domain, method, token, status, dates, last error code) | The user's live URL; our DNS lookups and HTTP requests | Live hallmark | With the project (one row per project + domain) | Status/dates: public via the hallmark. Token: owner and staff | yes (no token) |
+| `Block` (kind repo/domain, repo id or domain, readable name, internal note, staff member, date) | Staff, from the review queue | Stops a repository or domain from earning a mark again | Until staff delete it (logged) | Staff only | no (a moderation record about a repository or domain, not about the person) |
 | `UptimeCheck` (time, ok, status code, response time, error code) | Our requests to the project URL | Steady hallmark | **90 days** (pruned by `check_uptime`) | Public summary on the project page | no (technical data about the site, not the person; shown on the project page) |
 
 Requests to users' sites go through `verification/net.py::safe_fetch` with a fixed User-Agent
@@ -74,7 +75,7 @@ Requests to users' sites go through `verification/net.py::safe_fetch` with a fix
 | Data | Source | Purpose | Retention | Who can see it | Export |
 |---|---|---|---|---|---|
 | `Report` (reporter, target, target name, reason, details, status, handled by, dates) | A signed-in user | Moderation | Kept after it is resolved (no automatic deletion). When the reporter deletes their account, `reporter` becomes empty. When the target is deleted, the target link becomes empty; the readable name (`target_repr`, e.g. "alice/my-app") stays | Staff only. The reported person is not told who reported them | yes (reports you made) |
-| `AuditLog` (actor, action, target type/id, target name, metadata, date) | System and staff | Record of hallmark changes, moderation actions, account deletions | Kept (no automatic deletion). Actor becomes empty when that account is deleted. The account-deletion entry has no username or email ("deleted user #<id>") | Staff only, read-only | no (internal record) |
+| `AuditLog` (actor, action, target type/id, target name, metadata, date) | System and staff | Record of hallmark changes (earned, removed, needs review, needs re-check, repo renamed), GitHub login changes (`account.github_login.renamed` / `.released`, with old and new login), moderation actions (approve, revoke, block), account deletions | Kept (no automatic deletion). Actor becomes empty when that account is deleted. The account-deletion entry has no username or email ("deleted user #<id>") | Staff only, read-only | no (internal record) |
 
 ## 7. Cookies and browser storage
 

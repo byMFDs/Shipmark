@@ -12,7 +12,7 @@ GitHub pokazuje kod. LinkedIn pokazuje deklaracje. {{ site_name }} próbuje poka
 
 Projekt może zdobyć trzy znaki. Każdy z nich to fakt sprawdzany przez nasz serwer i każdy znika, gdy fakt przestaje być prawdziwy.
 
-- **Repo owner.** Projekt wskazuje publiczne repozytorium na GitHubie. Pytamy publiczne API GitHuba, czy repozytorium należy do konta GitHub autora i nie jest forkiem, albo czy autor ma w nim co najmniej 10 commitów.
+- **Repo owner.** Projekt wskazuje publiczne repozytorium GitHub. Pytamy publiczne API GitHuba, czy należy ono do osobistego konta GitHub autora i nie jest forkiem, i sprawdzamy to ponownie co tydzień.
 - **Live.** Autor udowadnia, że kontroluje domenę projektu, za pomocą wygenerowanego przez nas tokenu: rekordu TXT w DNS albo metatagu na stronie głównej. Regularnie sprawdzamy to ponownie, a znak obowiązuje tylko, dopóki domena była potwierdzona w ciągu ostatnich 35 dni.
 - **Steady.** Gdy projekt ma Live, otwieramy jego adres mniej więcej co 3 godziny. Steady wymaga co najmniej 40 sprawdzeń w ostatnich 30 dniach, z których co najmniej 95% musi dostać odpowiedź bez błędu w ciągu 5 sekund.
 
@@ -20,7 +20,7 @@ Pełne zasady, w tym to, jak można stracić każdy znak, są na stronie [Jak dz
 
 ## Czego nie sprawdzamy {#not-verified}
 
-- **Kto napisał kod.** Repo owner oznacza, że konto jest właścicielem repozytorium albo ma w nim commity. Nie mówi nic o tym, kto pisał kod ani ile napisało go narzędzie AI. Dlatego znak nazywa się „Repo owner”.
+- **Kto napisał kod.** {{ site_name }} sprawdza fakty, które da się udowodnić: do kogo należy połączone repozytorium GitHub, kto kontroluje domenę i czy strona odpowiada. Nie sprawdza i nie może sprawdzić, kto napisał kod ani ile napisało go narzędzie AI. Historię commitów i ich daty zapisuje właściciel repozytorium i można je zmienić. Jeśli uważasz, że projekt jest skopiowany, zgłoś go.
 - **Czy projekt jest dobry.** Znaki to nie recenzje. Projekt ze znakiem Steady może być słabym pomysłem, a świetny projekt może jeszcze nie mieć żadnego znaku.
 - **Co pisze autor.** Nazwę, opis, zrzuty ekranu, tagi, datę premiery i narzędzia AI w sekcji „Zbudowano z” podaje autor. „Zbudowano z” jest zawsze oznaczone jako deklaracja autora.
 

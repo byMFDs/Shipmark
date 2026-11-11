@@ -12,7 +12,7 @@ GitHub zeigt Code. LinkedIn zeigt Behauptungen. {{ site_name }} versucht, Ergebn
 
 Ein Projekt kann drei Prüfzeichen verdienen. Jedes ist eine Tatsache, die unser Server prüft, und jedes verschwindet, sobald die Tatsache nicht mehr stimmt.
 
-- **Repo owner.** Das Projekt verlinkt ein öffentliches GitHub-Repository. Wir fragen die öffentliche GitHub-API, ob das Repository dem GitHub-Konto der Person gehört und kein Fork ist, oder ob sie mindestens 10 Commits darin hat.
+- **Repo owner.** Das Projekt verknüpft ein öffentliches GitHub-Repository. Wir fragen die öffentliche API von GitHub, ob es dem persönlichen GitHub-Konto der Person gehört und kein Fork ist, und prüfen das jede Woche erneut.
 - **Live.** Die Person weist nach, dass sie die Domain des Projekts kontrolliert, mit einem Token, das wir erzeugen: als DNS-TXT-Eintrag oder als Meta-Tag auf der Startseite. Wir prüfen das regelmäßig erneut, und das Zeichen gilt nur, solange die Domain in den letzten 35 Tagen bestätigt wurde.
 - **Steady.** Sobald ein Projekt Live hat, rufen wir seine Adresse etwa alle 3 Stunden auf. Steady braucht mindestens 40 Prüfungen in den letzten 30 Tagen, und mindestens 95 % davon müssen innerhalb von 5 Sekunden eine Antwort ohne Fehler bekommen.
 
@@ -20,7 +20,7 @@ Die vollständigen Regeln, auch wie man jedes Zeichen verlieren kann, stehen unt
 
 ## Was wir nicht prüfen {#not-verified}
 
-- **Wer den Code geschrieben hat.** Repo owner heißt: Ein Konto besitzt ein Repository oder hat Commits darin. Es sagt nichts darüber, wer den Code getippt hat oder wie viel davon ein KI-Werkzeug geschrieben hat. Deshalb heißt das Zeichen „Repo owner“.
+- **Wer den Code geschrieben hat.** {{ site_name }} prüft Fakten, die sich belegen lassen: wem das verknüpfte GitHub-Repository gehört, wer die Domain kontrolliert und ob die Website antwortet. Wer den Code geschrieben hat oder wie viel davon ein KI-Werkzeug geschrieben hat, prüfen wir nicht und können wir nicht prüfen. Commit-Verlauf und Daten schreibt die Person, der das Repository gehört, und sie lassen sich ändern. Wenn du glaubst, dass ein Projekt kopiert ist, melde es.
 - **Ob das Projekt gut ist.** Prüfzeichen sind keine Bewertungen. Ein Projekt mit Steady kann trotzdem eine schwache Idee sein, und ein großartiges Projekt hat vielleicht noch kein Zeichen.
 - **Was die Person schreibt.** Name, Beschreibung, Screenshots, Tags, Launch-Datum und die KI-Werkzeuge unter „Gebaut mit“ kommen von der Person selbst. „Gebaut mit“ ist immer als selbst angegeben markiert.
 

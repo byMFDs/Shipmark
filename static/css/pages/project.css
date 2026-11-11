@@ -20,6 +20,7 @@
 .proofs { order: 2; }
 .project__about { order: 3; }
 .build-log { order: 4; }
+.checked { order: 5; }
 .facts { order: 5; }
 .embed { order: 6; }
 
@@ -537,3 +538,8 @@
 .method__help { margin-top: var(--s-4); }
 .method__help summary { cursor: pointer; min-height: var(--control-h); display: flex; align-items: center; font-weight: 600; }
 .method__help ul { margin: var(--s-2) 0 0; padding-left: 1.2em; display: grid; gap: var(--s-2); }
+
+/* "What was checked": facts behind the marks, label above each line. */
+.checked__list { display: grid; gap: var(--s-3); margin: 0; }
+.checked__list dd { margin: 0; overflow-wrap: anywhere; }
+.checked__note { margin-top: var(--s-4); font-size: var(--fs--1); }

@@ -12,7 +12,7 @@ O GitHub mostra código. O LinkedIn mostra afirmações. O {{ site_name }} tenta
 
 Um projeto pode ganhar três selos. Cada um é um fato que o nosso servidor verifica, e cada um desaparece quando o fato deixa de ser verdade.
 
-- **Repo owner.** O projeto aponta para um repositório público do GitHub. Perguntamos à API pública do GitHub se o repositório pertence à conta do GitHub do autor e não é um fork, ou se o autor tem pelo menos 10 commits nele.
+- **Repo owner.** O projeto vincula um repositório público do GitHub. Perguntamos à API pública do GitHub se ele pertence à conta pessoal do GitHub do autor e não é um fork, e verificamos de novo toda semana.
 - **Live.** O autor prova que controla o domínio do projeto com um token que geramos: um registro TXT no DNS ou uma meta tag na página inicial. Verificamos de novo regularmente, e o selo só vale enquanto o domínio tiver sido confirmado nos últimos 35 dias.
 - **Steady.** Quando um projeto tem Live, abrimos o endereço dele mais ou menos a cada 3 horas. Steady exige pelo menos 40 verificações nos últimos 30 dias, e pelo menos 95% delas precisam receber resposta sem erro em até 5 segundos.
 
@@ -20,7 +20,7 @@ As regras completas, incluindo como cada selo pode ser perdido, estão em [Como 
 
 ## O que não verificamos {#not-verified}
 
-- **Quem escreveu o código.** Repo owner significa que uma conta é dona de um repositório ou tem commits nele. Não diz nada sobre quem digitou o código nem quanto dele foi escrito por uma ferramenta de IA. Por isso o selo se chama "Repo owner".
+- **Quem escreveu o código.** O {{ site_name }} verifica fatos que consegue provar: a quem pertence o repositório do GitHub vinculado, quem controla o domínio e se o site responde. Ele não verifica, nem pode verificar, quem escreveu o código ou quanto dele foi escrito por uma ferramenta de IA. O histórico de commits e as datas são escritos pelo dono do repositório e podem ser alterados. Se você acha que um projeto foi copiado, denuncie.
 - **Se o projeto é bom.** Selos não são avaliações. Um projeto Steady ainda pode ser uma ideia fraca, e um ótimo projeto pode ainda não ter nenhum selo.
 - **O que o autor escreve.** Nome, descrição, capturas de tela, tags, data de lançamento e as ferramentas de IA em "Feito com" são informados pelo autor. "Feito com" sempre aparece como declarado pelo autor.
 

@@ -4,16 +4,17 @@ Un projet peut obtenir ici trois poinçons (hallmarks). Chacun est un fait que n
 
 ## Repo owner {#authored}
 
-**Ce que cela signifie :** le compte GitHub de la personne qui a publié le projet possède le dépôt lié, ou y a au moins 10 commits. Cela ne prouve pas qui a écrit le code.
+**Ce que cela signifie :** le dépôt GitHub lié au projet appartient au compte GitHub personnel de la personne qui l’a publié. Cela ne prouve pas qui a écrit le code.
 
-**Comment c’est contrôlé :** l’auteur lie un dépôt GitHub public et clique sur « Contrôler le dépôt ». Nous interrogeons l’API publique de GitHub. Le poinçon est obtenu lorsque l’une de ces conditions est remplie :
+**Comment c’est contrôlé :** l’auteur lie un dépôt GitHub public et clique sur « Contrôler le dépôt ». Nous interrogeons l’API publique de GitHub. La marque est obtenue quand le dépôt appartient au compte GitHub personnel de l’auteur et n’est pas un fork.
 
-- le dépôt appartient au compte GitHub personnel de l’auteur et n’est pas un fork, ou
-- GitHub compte au moins 10 commits du compte de l’auteur dans la liste des contributeurs du dépôt.
+Les comptes et les dépôts sont comparés par les identifiants numériques de GitHub, pas par leur nom : renommer un compte ou un dépôt ne change rien, et un dépôt supprimé que quelqu’un recrée sous le même nom est un autre dépôt. Nous ne lisons que des données publiques : la connexion ne nous donne jamais accès aux dépôts privés.
 
-Les comptes sont comparés par l’identifiant numérique GitHub, donc renommer un compte GitHub n’a aucune incidence. Nous ne lisons que des données publiques : la connexion ne nous donne jamais accès aux dépôts privés.
+**Ce que nous enregistrons aussi :** la date de création du dépôt, son premier commit, le nombre de commits de l’auteur et les dates du premier et du dernier, et le nombre de semaines où ses commits ont modifié du code (d’après les statistiques de GitHub ; les bots ne comptent pas). La page du projet présente ces faits sous « Ce qui a été contrôlé ». La marque attend une courte vérification manuelle dans trois cas : le premier commit est bien plus ancien que le dépôt, le même premier commit appartient au dépôt d’un autre projet ici, ou GitHub n’affiche aucun commit de l’auteur. Les dates des commits sont écrites par la personne qui fait le commit : elles décrivent l’historique, elles ne le prouvent pas.
 
-**Comment il peut être perdu :** un contrôle ultérieur constate que le dépôt est supprimé, privé, déplacé ou n’appartient plus au compte, qui n’y a pas assez de commits, ou l’auteur lie un autre dépôt au projet. Un dépôt ne peut être lié qu’à un seul projet.
+**Comment c’est recontrôlé :** chaque semaine, nous retrouvons le dépôt par son identifiant.
+
+**Comment il peut être perdu :** le dépôt est supprimé, rendu privé ou transféré à un autre compte, ou l’auteur lie un autre dépôt. Un dépôt ne peut être lié qu’à un seul projet.
 
 ## Live {#live}
 
@@ -36,6 +37,8 @@ Les comptes sont comparés par l’identifiant numérique GitHub, donc renommer 
 
 Chaque fois que Live est obtenu ou retiré, le changement est consigné dans notre journal interne.
 
+L’adresse principale d’un hébergeur partagé par de nombreux sites (comme `github.io` ou `vercel.app`) ne peut pas être vérifiée. Votre propre adresse chez lui (`yourname.github.io`) le peut.
+
 ## Steady {#steady}
 
 **Ce que cela signifie :** le projet reste en ligne, pas seulement le jour du lancement.
@@ -49,6 +52,8 @@ La page du projet affiche le pourcentage de disponibilité et une bande de 30 jo
 
 **Comment il peut être perdu :** la disponibilité tombe sous 95 %, ou le projet perd Live. Steady exige toujours Live.
 
+Un contrôle échoue aussi quand le site ne répond qu’après une redirection vers un autre domaine : la réponse doit venir du domaine vérifié.
+
 ## Ce qui est déclaré par l’auteur {#self-declared}
 
 Ces éléments d’un projet sont rédigés par l’auteur et ne sont **pas** contrôlés par nous :
@@ -58,3 +63,7 @@ Ces éléments d’un projet sont rédigés par l’auteur et ne sont **pas** co
 - « Créé avec », les outils d’IA que l’auteur dit avoir utilisés. C’est toujours indiqué comme « déclaré par l’auteur ».
 
 Les poinçons disent seulement ce qu’ils disent. Repo owner concerne le dépôt, Live le domaine, Steady la disponibilité. Aucun n’est une évaluation du produit.
+
+## Ce que nous ne pouvons pas contrôler {#limits}
+
+{{ site_name }} contrôle les faits qu’il peut prouver : à qui appartient le dépôt GitHub lié, qui contrôle le domaine et si le site répond. Il ne contrôle pas, et ne peut pas contrôler, qui a écrit le code. L’historique des commits et ses dates sont écrits par le propriétaire du dépôt et peuvent être modifiés. Si vous pensez qu’un projet est copié, signalez-le.

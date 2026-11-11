@@ -132,6 +132,20 @@
           </div>
         </section>
 
+        {% if checked %}
+          {# Facts behind the marks, with dates. Ownership, control and uptime only: never who wrote the code. #}
+          <section class="record checked" aria-labelledby="checked-title">
+            <div class="record__head"><h2 class="label" id="checked-title">{% translate "What was checked" %}</h2></div>
+            <div class="record__body">
+              <dl class="checked__list">
+                {% for fact in checked %}<div><dt class="label muted">{{ fact.label }}</dt><dd>{{ fact.text }}</dd></div>{% endfor %}
+              </dl>
+              {% maybe_url "pages:how_proof_works" as proof_url %}
+              <p class="checked__note muted">{% translate "We check ownership, control of the domain and uptime. We cannot check who wrote the code." %}{% if proof_url %} <a href="{{ proof_url }}#limits">{% translate "What this means" %}</a>{% endif %}</p>
+            </div>
+          </section>
+        {% endif %}
+
         {% if project_tags or tools %}
           <div class="record facts">
             {% if tools %}

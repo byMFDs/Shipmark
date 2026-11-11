@@ -138,6 +138,71 @@ def repo_domain_link(project, now=None):
     return None
 
 
+@dataclass(frozen=True)
+class CheckedFact:
+    label: str  # short mono label: Repository, History, Domain, Uptime
+    text: str  # one sentence, already translated, dates included
+
+
+def _date(value):
+    return formats.date_format(value, "DATE_FORMAT")
+
+
+def checked_facts(project, now=None):
+    """The "What was checked" panel: facts we checked ourselves, with dates. Never a verdict on who wrote
+    the code, and never the reason of a review (the owner only sees that a review is pending)."""
+    facts = []
+    link = getattr(project, "repo_link", None) if project.pk else None
+    if link is not None and link.repo_full_name.lower() != project.repo_full_name.lower():
+        link = None  # left over from another repository
+    repo_label, history_label = _("Repository"), _("History")
+    if link is not None and link.review_state != RepoLink.Review.NEEDS_RECHECK:
+        values = {"repo": link.repo_full_name, "date": _date(link.checked_at)}
+        if link.review_state == RepoLink.Review.NEEDS_REVIEW:
+            facts.append(CheckedFact(repo_label, _(
+                "%(repo)s passed the ownership check on %(date)s and is waiting for a routine manual review.") % values))
+        else:
+            facts.append(CheckedFact(repo_label, _(
+                "%(repo)s is owned by the author's GitHub account, matched by account id. Checked %(date)s.") % values))
+        facts.append(CheckedFact(repo_label, _("Not a fork.")))
+        if link.repo_created_at:
+            facts.append(CheckedFact(history_label, _("Repository created on GitHub %(date)s.")
+                                     % {"date": _date(link.repo_created_at)}))
+        if link.root_commit_at:
+            facts.append(CheckedFact(history_label, _("First commit in its history: %(date)s.")
+                                     % {"date": _date(link.root_commit_at)}))
+        if link.user_commit_count and link.first_commit_at and link.last_commit_at:
+            facts.append(CheckedFact(history_label, _("Commits by the author: %(count)s, from %(first)s to %(last)s.") % {
+                "count": link.user_commit_count, "first": _date(link.first_commit_at), "last": _date(link.last_commit_at),
+            }))
+        if link.active_weeks is not None:
+            facts.append(CheckedFact(history_label, _("Weeks with code changes by the author: %(weeks)s.")
+                                     % {"weeks": link.active_weeks}))
+        if link.root_commit_sha and not (RepoLink.objects.filter(root_commit_sha=link.root_commit_sha)
+                                         .exclude(pk=link.pk).exists()):
+            facts.append(CheckedFact(history_label, _("No other project here has the same history.")))
+    elif project.repo_full_name:
+        facts.append(CheckedFact(repo_label, _("%(repo)s is not verified. It is the author's own link.")
+                                 % {"repo": project.repo_full_name}))
+
+    row = domains.current_row(project)
+    if domains.row_is_live(row, now):
+        values = {"domain": row.domain, "first": _date(row.verified_at), "last": _date(row.last_confirmed_at)}
+        text = (_("Control of %(domain)s proven with a meta tag on %(first)s, last confirmed %(last)s.")
+                if row.method == DomainVerification.Method.META else
+                _("Control of %(domain)s proven with a DNS record on %(first)s, last confirmed %(last)s."))
+        facts.append(CheckedFact(_("Domain"), text % values))
+        if repo_domain_link(project, now) == "homepage":
+            facts.append(CheckedFact(_("Domain"), _("The repository's website field on GitHub points to %(domain)s.")
+                                     % {"domain": row.domain}))
+        ok, total = uptime.window_counts(project, now)
+        if total:
+            facts.append(CheckedFact(_("Uptime"), _(
+                "%(ok)s of %(total)s checks in the last 30 days got an answer from %(domain)s.")
+                % {"ok": ok, "total": total, "domain": row.domain}))
+    return facts
+
+
 def compute_hallmarks(project, now=None):
     """Return a HallmarkSet (Authored, Live, Steady) for a project. Steady always requires Live."""
     live = _live(project, now)

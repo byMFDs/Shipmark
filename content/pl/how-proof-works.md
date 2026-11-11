@@ -4,16 +4,17 @@ Projekt może tu zdobyć trzy znaki (hallmarks). Każdy z nich to fakt, który s
 
 ## Repo owner {#authored}
 
-**Co to znaczy:** konto GitHub osoby, która opublikowała projekt, jest właścicielem powiązanego repozytorium albo ma w nim co najmniej 10 commitów. Nie dowodzi to, kto napisał kod.
+**Co to znaczy:** repozytorium GitHub połączone z projektem należy do osobistego konta GitHub osoby, która opublikowała projekt. Nie dowodzi to, kto napisał kod.
 
-**Jak jest sprawdzane:** autor podaje publiczne repozytorium na GitHubie i klika „Sprawdź repozytorium”. Pytamy o nie publiczne API GitHuba. Znak jest przyznawany, gdy spełniony jest jeden z warunków:
+**Jak jest sprawdzane:** autor podaje publiczne repozytorium GitHub i klika „Sprawdź repozytorium”. Pytamy publiczne API GitHuba. Oznaczenie zdobywa się, gdy repozytorium należy do osobistego konta GitHub autora i nie jest forkiem.
 
-- repozytorium należy do osobistego konta autora na GitHubie i nie jest forkiem, albo
-- GitHub zlicza co najmniej 10 commitów z konta autora na liście współtwórców repozytorium.
+Konta i repozytoria porównujemy po numerycznych identyfikatorach GitHuba, nie po nazwach: zmiana nazwy konta lub repozytorium niczego nie zmienia, a usunięte repozytorium utworzone przez kogoś od nowa pod tą samą nazwą to inne repozytorium. Czytamy tylko dane publiczne: logowanie nigdy nie daje nam dostępu do prywatnych repozytoriów.
 
-Konta porównujemy po numerycznym identyfikatorze konta w GitHubie, więc zmiana nazwy konta nie ma znaczenia. Czytamy tylko dane publiczne: logowanie nigdy nie daje nam dostępu do prywatnych repozytoriów.
+**Co jeszcze zapisujemy:** kiedy utworzono repozytorium, jego pierwszy commit, ile commitów ma autor i kiedy powstał pierwszy i ostatni, oraz w ilu tygodniach commity autora zmieniały kod (ze statystyk GitHuba; boty się nie liczą). Strona projektu pokazuje te fakty w sekcji „Co sprawdzono”. W trzech przypadkach oznaczenie czeka na krótką ręczną weryfikację: pierwszy commit jest dużo starszy niż repozytorium, ten sam pierwszy commit ma repozytorium innego projektu tutaj albo GitHub nie pokazuje żadnych commitów autora. Daty commitów zapisuje ten, kto tworzy commit, więc opisują historię, ale jej nie dowodzą.
 
-**Jak można go utracić:** późniejsze sprawdzenie stwierdzi, że repozytorium zostało usunięte, jest prywatne, zostało przeniesione albo konto nie jest już jego właścicielem i nie ma w nim dość commitów, albo autor powiąże z projektem inne repozytorium. Jedno repozytorium może być powiązane tylko z jednym projektem.
+**Jak jest sprawdzane ponownie:** co tydzień ponownie odnajdujemy repozytorium po jego identyfikatorze.
+
+**Jak można go utracić:** repozytorium zostaje usunięte, ustawione jako prywatne lub przeniesione na inne konto albo autor podaje inne repozytorium. Jedno repozytorium można połączyć tylko z jednym projektem.
 
 ## Live {#live}
 
@@ -36,6 +37,8 @@ Konta porównujemy po numerycznym identyfikatorze konta w GitHubie, więc zmiana
 
 Każde zdobycie lub usunięcie Live jest zapisywane w naszym wewnętrznym dzienniku.
 
+Głównego adresu hostingu współdzielonego przez wiele stron (np. `github.io` lub `vercel.app`) nie można zweryfikować. Twój własny adres w tym serwisie (`yourname.github.io`) można.
+
 ## Steady {#steady}
 
 **Co to znaczy:** projekt działa nieprzerwanie, a nie tylko w dniu premiery.
@@ -49,6 +52,8 @@ Strona projektu pokazuje odsetek dostępności i pasek z 30 dni. Wyniki przechow
 
 **Jak można go utracić:** dostępność spada poniżej 95% albo projekt traci Live. Steady zawsze wymaga Live.
 
+Sprawdzenie nie liczy się też wtedy, gdy strona odpowiada dopiero po przekierowaniu na inną domenę: odpowiedź musi przyjść ze zweryfikowanej domeny.
+
 ## Co jest deklaracją autora {#self-declared}
 
 Te elementy projektu pisze autor, a my ich **nie** sprawdzamy:
@@ -58,3 +63,7 @@ Te elementy projektu pisze autor, a my ich **nie** sprawdzamy:
 - „Zbudowano z”, czyli narzędzia AI, których według autora użył. Zawsze jest oznaczone jako deklaracja autora.
 
 Znaki mówią tylko to, co mówią. Repo owner dotyczy repozytorium, Live domeny, Steady dostępności. Żaden z nich nie jest oceną produktu.
+
+## Czego nie możemy sprawdzić {#limits}
+
+{{ site_name }} sprawdza fakty, które da się udowodnić: do kogo należy połączone repozytorium GitHub, kto kontroluje domenę i czy strona odpowiada. Nie sprawdza i nie może sprawdzić, kto napisał kod. Historię commitów i ich daty zapisuje właściciel repozytorium i można je zmienić. Jeśli uważasz, że projekt jest skopiowany, zgłoś go.

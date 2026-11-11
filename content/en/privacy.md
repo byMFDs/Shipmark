@@ -11,7 +11,7 @@ Questions or requests: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## What we store and why {#data}
 
-**When you sign in with GitHub.** We receive from GitHub your account id, login, name, bio, avatar link and the other public fields of your GitHub profile, plus the email addresses on your GitHub account. We ask GitHub only for `read:user` and `user:email`: we never get access to your repositories, private or public, through your account. We do not keep your GitHub access token after sign-in. We need this to create your account and to recognise you next time (performance of our agreement with you).
+**When you sign in with GitHub.** We receive from GitHub your account id, login, name, bio, avatar link and the other public fields of your GitHub profile, plus the email addresses on your GitHub account. We ask GitHub only for `read:user` and `user:email`: we never get access to your repositories, private or public, through your account. We do not keep your GitHub access token after sign-in. We need this to create your account and to recognise you next time (performance of our agreement with you). Your GitHub login is refreshed at every sign-in, so your profile always links to your current GitHub account.
 
 **Your profile.** Username, display name, bio, website and language. The name and bio start as your GitHub values; you can change them in Settings. Your username, display name, bio, website, GitHub login and the month you joined are **public**.
 
@@ -21,7 +21,7 @@ Questions or requests: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Proof checks.** To award hallmarks we check facts ourselves (our legitimate interest in showing proof that can be trusted):
 
-- *Repo owner:* we ask GitHub's public API about the repository you link and store whether you own it, your commit count, and your first and last commit dates. GitHub's list of other contributors is read during the check and not stored.
+- *Repo owner:* we ask GitHub's public API about the repository you link and store its id, its owner's account id, whether you own it, its creation date and its Website field, the first commit of its history (id and date), your commit count, your first and last commit dates, the number of weeks with your commits, and the state of a manual review when one is needed. We check it again every week. GitHub's list of other contributors is read during the check and not stored.
 - *Live:* we look up the DNS records of your project's domain or fetch its page to find your verification token.
 - *Steady:* we request your project's address up to every few hours and store whether it answered and how fast. These checks are kept for **90 days**.
 
