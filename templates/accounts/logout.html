@@ -6,7 +6,7 @@
 
 {% block content %}
   <div class="container page">
-    <section class="auth plate plate--featured">
+    <section class="auth">
       <h1>{% translate "Sign out?" %}</h1>
       <p>{% blocktranslate with name=request.user.username %}You are signed in as {{ name }}.{% endblocktranslate %}</p>
       <form method="post" class="auth__actions">

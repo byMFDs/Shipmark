@@ -199,26 +199,32 @@ UNFOLD = {
     "SITE_HEADER": branding.SITE_NAME,
     "SITE_SUBHEADER": _("Admin"),
     "SITE_URL": "/",
-    "SITE_ICON": lambda request: static(branding.LOGO_MARK),
-    "SITE_LOGO": lambda request: static(branding.LOGO),
+    "SITE_ICON": {
+        "light": lambda request: static(branding.LOGO_MARK),
+        "dark": lambda request: static(branding.LOGO_MARK_DARK),
+    },
+    "SITE_LOGO": {
+        "light": lambda request: static(branding.LOGO),
+        "dark": lambda request: static(branding.LOGO_DARK),
+    },
     "SITE_FAVICONS": [{"rel": "icon", "sizes": "any", "type": "image/svg+xml", "href": lambda request: static(branding.FAVICON)}],
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
-    "BORDER_RADIUS": "8px",  # controls (tokens: plates 10, controls 8)
-    # Hallmark ink (#2A3FCF) is the only accent: primary-600 is the light-mode ink, primary-400 the dark-mode ink.
-    # Base grays lean to Graphite (#1E2126 = base-900) and Steel (#666C74 = base-500).
+    "BORDER_RADIUS": "0px",  # square corners, as on the site (tokens.css --radius)
+    # Same palette as static/css/tokens.css. primary = the terracotta action color (600 in light mode,
+    # 400 in dark mode); base = the warm paper / green-black text scale, 900 = text, 950 = dark page.
     "COLORS": {
         "base": {
-            "50": "oklch(98.5% .003 258)", "100": "oklch(96% .004 258)", "200": "oklch(92% .005 258)",
-            "300": "oklch(87% .007 258)", "400": "oklch(70% .012 258)", "500": "oklch(52.9% .015 256)",
-            "600": "oklch(44% .014 258)", "700": "oklch(37% .012 259)", "800": "oklch(30% .011 260)",
-            "900": "oklch(24.7% .01 261)", "950": "oklch(20.4% .007 258)",
+            "50": "oklch(97.3% .005 95.1)", "100": "oklch(94.5% .009 100)", "200": "oklch(88.1% .011 100.8)",
+            "300": "oklch(80% .015 115.1)", "400": "oklch(62.7% .015 124.7)", "500": "oklch(49.1% .015 141.8)",
+            "600": "oklch(42.6% .014 145.3)", "700": "oklch(36.6% .015 145.3)", "800": "oklch(31.1% .017 148.7)",
+            "900": "oklch(25.7% .013 140.5)", "950": "oklch(21% .011 163.7)",
         },
         "primary": {
-            "50": "oklch(97% .012 268.6)", "100": "oklch(94% .03 268.6)", "200": "oklch(88% .06 268.6)",
-            "300": "oklch(82% .09 268.6)", "400": "oklch(74.1% .11 268.6)", "500": "oklch(60% .17 268.6)",
-            "600": "oklch(45.8% .22 268.6)", "700": "oklch(40% .2 268.6)", "800": "oklch(34% .16 268.6)",
-            "900": "oklch(29% .12 268.6)", "950": "oklch(22% .09 268.6)",
+            "50": "oklch(96.6% .016 52.6)", "100": "oklch(92.4% .034 50.2)", "200": "oklch(85.2% .068 48.9)",
+            "300": "oklch(77% .104 45.2)", "400": "oklch(72.1% .163 47.2)", "500": "oklch(63.7% .164 41.7)",
+            "600": "oklch(56% .155 37.5)", "700": "oklch(49.4% .14 37.8)", "800": "oklch(41.8% .116 37.6)",
+            "900": "oklch(34.4% .091 36.7)", "950": "oklch(26.6% .065 37.7)",
         },
     },
     "DASHBOARD_CALLBACK": "moderation.dashboard.dashboard_callback",

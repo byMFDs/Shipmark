@@ -1,0 +1,38 @@
+/* Long text pages from content/<lang>/*.md: about, how proof works, privacy, terms, cookies.
+   The page is one .prose column; headlines are separated by hairlines so a long page reads as sections. */
+
+.doc { padding-bottom: var(--s-7); }
+
+.doc h1 { font-size: var(--fs-4); margin-bottom: var(--s-5); }
+
+@media (min-width: 48em) {
+  .doc h1 { font-size: var(--fs-5); }
+}
+
+/* The first paragraph after the title is the lede. */
+.doc h1 + p {
+  color: var(--muted);
+  font-size: 1.125rem;
+  line-height: 1.45;
+}
+
+@media (min-width: 48em) {
+  .doc h1 + p { font-size: var(--fs-1); }
+}
+
+.doc h2 {
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-3);
+}
+
+.doc h3 { margin-top: var(--s-6); font-size: var(--fs-1); }
+
+.doc ul,
+.doc ol { padding-left: 1.4em; }
+.doc li + li { margin-top: 0.35em; }
+
+/* Reading text is not hyphenated where words are short enough; German and Polish keep it (see base.css). */
+.doc:lang(en),
+.doc:lang(uk) { hyphens: manual; }

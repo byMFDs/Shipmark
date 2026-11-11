@@ -1,0 +1,13 @@
+{% load i18n ui %}{# Shared body of the error pages. Needs: code, title, text. Optional: home_url, explore_url, retry. #}
+<div class="container page">
+  <section class="error-page" aria-labelledby="error-title">
+    <p class="eyebrow numeric error-page__code">{{ code }}</p>
+    <h1 id="error-title">{{ title }}</h1>
+    <p class="lede">{{ text }}</p>
+    <div class="empty__marks" aria-hidden="true">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
+    <div class="error-page__actions">
+      <a class="btn btn--primary" href="{{ home_url|default:'/' }}">{% translate "Go to the start page" %}</a>
+      {% if explore_url %}<a class="btn btn--secondary" href="{{ explore_url }}">{% translate "Explore" %}</a>{% endif %}
+    </div>
+  </section>
+</div>

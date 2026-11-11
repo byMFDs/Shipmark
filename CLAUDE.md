@@ -188,43 +188,38 @@ Always use `select_related`/`prefetch_related` on lists. No N+1 queries.
 
 ## 9. Design direction
 
-Concept: **an assay office for software.** Work is brought in, tested, and struck with
-hallmarks. Projects are objects; proof is stamped into them. Restrained, precise,
-tactile. Not playful, not colorful, not a game.
+Concept: **a public record of shipped work.** Each project is a framed record; proof is a flat mark on it.
+Warm paper, 1px hairline frames, square corners, one action color. Restrained and precise, not playful.
+Full rules and measured contrast: `docs/DESIGN.md`; values: `static/css/tokens.css` (light / dark).
 
-Palette (light / dark):
-- Paper `#F1F2EF` / Night `#15171A` (page background)
-- Plate `#FAFAF8` / `#1F2226` (raised object surfaces)
-- Graphite `#1E2126` / `#E6E7E9` (text)
-- Steel `#666C74` / `#9AA0A8` (secondary text; was #6E747C, failed AA on Paper)
-- Hairline `#D5D8DB` / `#2E3237` (dividers)
-- Line-strong `#868C93` / `#6B7179` (borders of inputs and controls, 3:1)
-- Hallmark ink `#2A3FCF` / `#8EA8F1` (the only accent: proof marks, links, focus, primary action)
-- Danger `#A8322D` / `#F08A80` (errors and destructive actions only; a status color, not an accent)
-Full tokens and rules: `docs/DESIGN.md`, `static/css/tokens.css`.
+Palette (light / dark): Paper `#F4F3EE` / `#141A17` (page) · Surface `#FFFEFA` / `#1B231F` (records, inputs) ·
+Text `#20251F` / `#EFEDE4` · Muted `#5C635B` / `#A2AAA1` · Line `#D9D8D0` / `#2B3530` (dividers) ·
+Line-strong `#868A80` / `#6D7771` (control borders, 3:1) · **Accent (terracotta) `#BD4B27` / `#F5803F`:
+the primary action only** · Proof green `#2B5A3F` on `#E3EBDA` / `#A9D1B4` on `#22362A`: earned marks and
+proof only · Danger `#A8322D` / `#F08A80`: errors and destructive actions only. Dark `.band` strips on the
+landing always use the dark tokens.
 
-Type (self-hosted, OFL, Latin + Cyrillic): **IBM Plex Sans** for body and UI,
-**IBM Plex Sans Condensed** for display headings (tight tracking, large sizes),
-**IBM Plex Mono** only where content is literally code (DNS records, tokens, embed snippets).
-Scale ratio 1.25. Body 17px desktop / 16px mobile, line-height 1.55, max line ~68ch.
+Type (self-hosted, OFL, Latin + Latin-ext + Cyrillic): **Manrope** (headlines, 500), **Inter** (body, UI),
+**IBM Plex Mono** (mono labels, code, record numbers). Scale 1.25. Body 17px desktop / 16px mobile,
+line-height 1.55, max line ~68ch. Mono uppercase labels (12px, tracked) name records, meta lines and
+eyebrows; that is part of the style now. Do not put mono caps on long sentences.
 
-Objects: projects are **plates** with a subtle bevel (inner highlight + short crisp shadow),
-not identical cards: the featured plate is larger, list items are quieter.
-Hallmarks are small stamped SVG cartouches (rectangle with cut corners): debossed
-(inset shadow) when earned, hairline outline when not.
-**One bold moment:** on the landing hero, one large example plate gets its hallmarks
-struck in sequence on load (~1.2s total, a short press). With `prefers-reduced-motion`,
-show the final state. No other ambient animation. Motion elsewhere only answers actions.
-
-Radii by hierarchy: plates 10px, controls 8px, hallmarks 2px.
-Icons: own inline SVG set, 1.5px stroke. No icon fonts, no emoji as icons.
+Objects: **records** (`.record`: frame + mono header row) hold a project's proof, build log, embed badge and
+filters; **panels** (`.panel`) are form sections; list rows (`.plate-row`) and landing cards are quieter.
+Hallmarks are flat chips (check + mono label, "Repo owner" / "Live" / "Steady"), pale green when earned,
+dashed outline + "Not yet" when not. Depth = surface color + hairlines; no bevels, shadows or gradients.
+Radius 0 (avatars stay round). Icons: own inline SVG set, 1.5px stroke. No icon fonts, no emoji as icons.
 Layout: left-aligned text, max width 1200px, 12-column grid on desktop, one column on mobile.
 
-Avoid: ALL-CAPS eyebrow labels; coloring or italicizing one word in a headline;
-gradient washes; identical card grids with the same soft shadow; `→` glued to button text;
-neon or acid accents; Bootstrap look; filler marketing copy.
-Copy: plain, sentence case, specific. Buttons say what happens ("Publish project",
-"Verify domain"), and the result uses the same word ("Published").
+Motion (`motion.css`, `motion.js`): transform and opacity only; loops run only while on screen and pause in
+a hidden tab; at most 3 loops visible at once; `prefers-reduced-motion` shows the final state. Landing: the
+hero strike, pulse, tick, drift, closing cursor, section reveal. Project page: marks strike in order on load,
+one tick over the uptime strip. Elsewhere only hover/press/focus answers and a page cross-fade.
+
+Avoid: coloring or italicizing one word in a headline; gradient washes; identical card grids with the same
+soft shadow; `→` glued to button text (use the inline arrow icon); neon accents; Bootstrap look; filler copy.
+Copy: plain, specific. Buttons say what happens ("Publish project", "Verify domain"), and the result uses
+the same word ("Published"). **Never claim who wrote the code**: the first mark is "Repo owner".
 
 ---
 

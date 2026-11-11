@@ -1,0 +1,27 @@
+{% load i18n static ui %}{% get_current_language as LANGUAGE_CODE %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  {# Used when no request context exists (500, 400, CSRF failure): it needs no database, session or context processor. #}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light dark">
+  <script src="{% static 'js/theme-init.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'css/pages/error.css' %}">
+  <link rel="icon" href="{% static 'brand/favicon.svg' %}" type="image/svg+xml">
+</head>
+<body>
+  <header class="error-bar">
+    <div class="container">
+      <a href="/">{% inline_svg "brand/logo.svg" "site-logo" %}<span class="visually-hidden">{% translate "Start page" %}</span></a>
+    </div>
+  </header>
+  <main class="site-main">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -3,10 +3,17 @@
 /* ---------- Auth cards ---------- */
 
 .auth {
-  max-width: 28rem;
+  max-width: 30rem;
   display: grid;
   gap: var(--s-4);
   margin-inline: 0;
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+@media (min-width: 48em) {
+  .auth { padding: var(--s-6); }
 }
 
 .auth h1 { font-size: var(--fs-3); }

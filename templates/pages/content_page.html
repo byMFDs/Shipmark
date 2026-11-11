@@ -1,11 +1,13 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% if page.title %}{{ page.title }} · {% endif %}{{ brand.SITE_NAME }}{% endblock %}
 
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/content.css' %}">{% endblock %}
+
 {% block content %}
   <div class="container page">
-    <article class="prose"{% if page.language != LANGUAGE_CODE %} lang="{{ page.language }}"{% endif %}>
+    <article class="prose doc"{% if page.language != LANGUAGE_CODE %} lang="{{ page.language }}"{% endif %}>
       {{ page.html|safe }}
     </article>
   </div>

@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.test import RequestFactory, SimpleTestCase, TestCase
+from django.contrib.auth.models import AnonymousUser
+from django.template.loader import render_to_string
+from django.test import RequestFactory, SimpleTestCase, TestCase, override_settings
 
 from config.context_processors import brand
 
@@ -223,3 +225,26 @@ class LocalhostRedirectTests(TestCase):
             "hasattr(s, 'WHITENOISE_ADD_HEADERS_FUNCTION'))",
         )
         self.assertIn("False False False", result.stdout, result.stderr)
+
+
+class ErrorPageTests(TestCase):
+    """The styled error pages render: 404 and 403 inside the site, 500, 400 and CSRF failure without any request context."""
+
+    def test_404_is_the_styled_page(self):
+        with override_settings(DEBUG=False):
+            response = self.client.get("/no-such-page/")
+        self.assertEqual(response.status_code, 404)
+        self.assertContains(response, "Page not found", status_code=404)
+        self.assertContains(response, 'class="site-header', status_code=404)
+
+    def test_standalone_pages_need_no_context(self):
+        for name in ("500", "400", "403_csrf"):
+            html = render_to_string(f"{name}.html")
+            self.assertIn("error-page", html, name)
+            self.assertNotIn("<main id=", html, name)  # no site header, session or database needed
+
+    def test_403_renders_in_the_site(self):
+        request = RequestFactory().get("/")
+        request.user = AnonymousUser()
+        html = render_to_string("403.html", request=request)
+        self.assertIn("No access", html)

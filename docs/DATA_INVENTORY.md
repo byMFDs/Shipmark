@@ -54,7 +54,7 @@ OAuth scopes: `read:user`, `user:email` only. No access to private repositories.
 
 | Data | Source | Purpose | Retention | Who can see it | Export |
 |---|---|---|---|---|---|
-| `RepoLink` (repo name, GitHub repo id, is owner, the user's commit count, first/last commit dates, check dates) | GitHub public API (`api.github.com`) | Authored hallmark | Until the check fails, the repo is unlinked, or deletion | Hallmark and its facts: public on published projects | yes |
+| `RepoLink` (repo name, GitHub repo id, is owner, the user's commit count, first/last commit dates, check dates) | GitHub public API (`api.github.com`) | Repo owner hallmark (id `authored`) | Until the check fails, the repo is unlinked, or deletion | Hallmark and its facts: public on published projects | yes |
 | Contributor lists of repositories | GitHub public API | Find the user's commit count | **Not stored**: other contributors' logins and counts are read in memory and dropped | n/a | n/a |
 | `DomainVerification` (domain, method, token, status, dates, last error code) | The user's live URL; our DNS lookups and HTTP requests | Live hallmark | With the project (one row per project + domain) | Status/dates: public via the hallmark. Token: owner and staff | yes (no token) |
 | `UptimeCheck` (time, ok, status code, response time, error code) | Our requests to the project URL | Steady hallmark | **90 days** (pruned by `check_uptime`) | Public summary on the project page | no (technical data about the site, not the person; shown on the project page) |
@@ -103,7 +103,7 @@ Only strictly necessary ones. No analytics, no ads, no third-party scripts or fo
 
 | Who | What they get | Why |
 |---|---|---|
-| GitHub, Inc. | The sign-in redirect (you sign in on github.com). Our server calls `api.github.com` for your profile, emails, and public repository data | Sign-in, Authored hallmark |
+| GitHub, Inc. | The sign-in redirect (you sign in on github.com). Our server calls `api.github.com` for your profile, emails, and public repository data | Sign-in, Repo owner hallmark (id `authored`) |
 | DNS resolvers and the project's own server | DNS queries for the project domain; HTTP requests to the project URL | Live and Steady hallmarks |
 | Hosting provider | Everything above, as it runs the server and database | Hosting (processor). Name it in the privacy page before launch |
 

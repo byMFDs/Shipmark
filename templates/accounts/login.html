@@ -6,7 +6,7 @@
 
 {% block content %}
   <div class="container page">
-    <section class="auth plate plate--featured">
+    <section class="auth">
       <h1>{% translate "Sign in" %}</h1>
       <p>{% blocktranslate with name=brand.SITE_NAME %}{{ name }} uses your GitHub account to sign in. There are no passwords to remember.{% endblocktranslate %}</p>
       {% include "accounts/_github_form.html" %}

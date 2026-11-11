@@ -143,7 +143,7 @@ class NewLanguagePagesTests(TestCase):
                 html = self.client.get("/how-proof-works/", headers={"Accept-Language": code}).content.decode()
                 for anchor in ("authored", "live", "steady", "self-declared"):
                     self.assertIn(f'id="{anchor}"', html)
-                self.assertIn('<article class="prose"', html)
+                self.assertIn('<article class="prose doc"', html)
 
     def test_legal_page_is_served_in_each_language(self):
         for code in CONVENIENCE_CODES:

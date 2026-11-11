@@ -1,0 +1,8 @@
+{% extends "errors/standalone.html" %}
+{% load i18n %}
+{% block title %}{% translate "Form not accepted" %}{% endblock %}
+{% block content %}
+  {% translate "Form not accepted" as title %}
+  {% translate "This form was opened too long ago, or in another tab. Go back, reload the page and send it again." as text %}
+  {% include "errors/_body.html" with code="403" %}
+{% endblock %}

@@ -18,6 +18,9 @@ SOCIAL_LINKS = {}
 
 LOGO = "brand/logo.svg"
 LOGO_MARK = "brand/logo-mark.svg"
+# Light-colored copies for dark backgrounds (the admin in dark mode). Same shapes: change both together.
+LOGO_DARK = "brand/logo-dark.svg"
+LOGO_MARK_DARK = "brand/logo-mark-dark.svg"
 FAVICON = "brand/favicon.svg"
 APPLE_TOUCH_ICON = "brand/apple-touch-icon.png"
 OG_DEFAULT_IMAGE = "brand/og-default.png"

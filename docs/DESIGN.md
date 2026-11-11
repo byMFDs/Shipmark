@@ -1,14 +1,19 @@
 # Design system (values live in `static/css/tokens.css`)
 
-An assay office for software: projects are plates, proof is struck into them. Rules:
-- Raised = you can press it (buttons, plates). Recessed = it receives (inputs, earned marks).
-- Ink only on proof marks, links, focus and the one primary action per view. Never a wash,
-  glow, gradient or tinted section. People are round (avatars); objects are cut (plates, marks).
-- Text left-aligned. Motion only answers an action, except the hero strike. No hover lifts.
+A public record of shipped work: each project is a framed record, and proof is a flat mark on it.
+Warm paper, hairline frames, square corners, one action color. Rules:
+- Depth comes from surface color (paper < surface) and hairlines. No bevels, shadows, gradients,
+  glow or tinted sections. Square corners everywhere; only people (avatars) are round.
+- Terracotta (`--accent`) is the one action color: the primary button, nothing else.
+  Green (`--proof`) means proof only: earned marks, the uptime strip, "public" status.
+  Danger red is for errors and destructive actions only.
+- Mono uppercase labels (12px, tracked) name things: record headers, meta lines, eyebrows.
+  Headlines are Manrope, body is Inter. Text is left-aligned.
+- Motion answers an action, or marks a fact appearing (see Motion). No hover lifts.
 
 ## Color (light / dark)
-Values: `static/css/tokens.css` (the redesign tokens; old names like `--ink`, `--steel` are aliases
-until phase 3). Dark theme is used by the toggle, by the OS setting, and always inside `.band`.
+Dark theme is used by the toggle, by the OS setting, and always inside `.band`. Both blocks in
+`tokens.css` must stay in sync. Old token names (`--steel`, `--ink`, `--plate`) are only aliases now.
 
 ### Measured contrast (WCAG 2.x; AA = 4.5:1 text, 3:1 large text and UI). Checked 2026-11-11.
 Recheck after any token change; every pair below must stay at or above its minimum.
@@ -48,69 +53,72 @@ line-strong 3.29 / 4.05 · focus 13.00 / 16.02. The primary button inside a band
 orange fails (≈2.6:1), so in dark the label is always dark. In light it stays white on `#BD4B27`.
 
 ## Type
-- Plex Sans 400, 400 italic, 600 (body, UI, h3-h4) · Plex Sans Condensed 600 (h1-h2 only) ·
-  Plex Mono 400 (code). Latin + Cyrillic woff2 by `unicode-range`. Condensed has no Cyrillic, so
-  that file is variable Plex Sans at wdth 75 / wght 600 (same widths as Condensed), see OFL.txt.
-- Fallbacks: local Arial / Liberation Sans scaled to Plex metrics (`size-adjust` + overrides).
-- Root 100% (16px), 106.25% (17px) from 64em. Sizes in rem, so browser font settings still work.
-- Scale 1.25: fs--1 .8rem (meta; the minimum) · fs-0 1 · fs-1 1.25 · fs-2 1.563 · fs-3 1.953 ·
-  fs-4 2.441 · fs-5 3.052 · fs-6 3.815. Hero h1: clamp(fs-4 … fs-6).
-- Body 1.55 line-height, max 68ch · h1-h2 1.05, tracking -0.02em · h3-h4 1.25 · numbers tabular.
+- Manrope (variable 200-800; headlines, weight 500, tracking -0.03em) · Inter (variable; body and UI) ·
+  IBM Plex Mono 400 (labels, code, numbers in records). Self-hosted woff2 (Latin, Latin-ext, Cyrillic by
+  `unicode-range`), licences in `static/fonts/OFL.txt`. Fallbacks: local Arial / Liberation Sans scaled to
+  each font's metrics (`size-adjust`), so swapping causes no layout shift.
+- Root 100% (16px), 106.25% (17px) from 64em. Sizes in rem. Scale 1.25: fs--2 .75rem (mono labels, the
+  smallest text) · fs--1 .8125 · fs-0 1 · fs-1 1.25 · fs-2 1.563 · fs-3 1.953 · fs-4 2.441 · fs-5 3.052 ·
+  fs-6 3.815 · `--fs-hero` clamp(2.75rem, 5.6vw + 1.4rem, 5.5rem) (landing only).
+- Body line-height 1.55, max line 68ch. h1-h2 line-height 1.05; `.lede` 1.25rem muted, max 52ch.
+- Headlines hyphenate (`hyphens: auto`) so German and Polish never widen a 360px phone; reading text
+  (`.doc`) does not in en and uk.
 
 ## Space, radii, depth
-- Space (4px base): s-1 .25rem · s-2 .5 · s-3 .75 · s-4 1 · s-5 1.5 · s-6 2 · s-7 3 · s-8 4 · s-9 6.
-- Radii by size: plate 10px · control 8px · chip, checkbox 4px · mark 2px · avatar 50%.
-- Bevel (plates, secondary buttons): inner top highlight + 1px contact line + one short shadow.
-  Light `inset 0 1px 0 #fff/.85, 0 1px 0 text/.06, 0 2px 3px -1px text/.12`; dark `inset 0 1px 0
-  #fff/.05, 0 1px 0 #000/.45, 0 2px 3px -1px #000/.5`. Blur never above 4px.
-  Featured plate: last layer `0 3px 4px -2px`. Compact rows: no shadow, hairline separators.
-- Press (inputs; buttons on `:active`): `inset 0 1px 2px text/.10`, button moves 1px down.
-- Focus: 2px ink `outline`, offset 2px, on every focusable (survives forced-colors mode).
-
-## Hallmark
-- SVG cartouche: rectangle with cut corners (cut = 1/5 of height), 5:4, joints softened 2px.
-- Only a glyph inside, as on real hallmarks; the word sits beside it, so marks keep one width in
-  every language. Repo owner (id `authored`): commit node (ring on a line) · Live: dot inside a ring ·
-  Steady: three equal bars. Glyph stroke 1.5px like the icon set, 2px at L.
-- Earned: solid ink, glyph cut out in plate color; deboss = dark line on the inner top edge, light
-  line under the outer bottom edge, drawn in the SVG (box-shadow would show square corners).
-- Not earned: outline and glyph in `--line-strong` (3:1), no fill, label "Not yet".
-- S 20×16: lists, earned marks only, label visually hidden · M 30×24 + label ·
-  L 50×40 + label + one fact ("Owner of org/repo · checked 2 days ago").
-
-## Hero: the specimen plate
-- Headline (Condensed, fs-6), one plain sentence, "Sign in with GitHub". Under it, not beside it:
-  one large example plate over 8 columns, captioned "Example project".
-- Three L marks on the plate's bottom strip. Desktop: hairline leader lines to short notes on the
-  right saying what was checked. Mobile: the notes are a list under the plate.
-- Strikes at 250 / 600 / 950 ms, 150ms each: ink fills at once, mark 1.06 → 1, deboss deep →
-  normal, plate dips 1px. Done by ~1.15s. CSS only, once. Reduced motion: final state.
+- Space (4px base): s-1 .25rem ... s-9 6rem. Radius 0 (`--radius`). Focus: 2px `--focus` outline, offset 2px.
+- Frames: 1px `--line` hairline; control edges use `--line-strong` (3:1). Press: buttons scale .98.
 
 ## Layout
-- Content max 1200px; side padding max(1rem, safe-area inset) → 1.5rem at 48em → 2rem at 64em.
-- Grid 1 → 6 (48em) → 12 columns (64em), gap 1.5rem. Project page, feed, explore: 8 + aside 4.
-- Targets ≥44px on `pointer: coarse`; chips and small controls may be 32px on `pointer: fine`.
+- Content max 1200px; side padding max(1rem, safe-area inset) -> 1.5rem at 48em -> 2rem at 64em.
+- Grid 1 -> 6 (48em) -> 12 columns (64em), gap 1.5rem / 2rem.
+- Project page: head across the top, then main (8: cover, about, build log) and proof column (4: marks,
+  uptime, built with, tags, embed). On phones the order is head, cover, marks, about, log, facts, embed.
+- Form pages (`.sheet`): title left (4), framed `.panel` sections right (8) from 64em; one column below.
+- Targets >= 44px on `pointer: coarse`; chips and small controls may be 32px on `pointer: fine`.
 
-## Components
-- Buttons (44px, radius 8, Sans 600): primary = ink fill · secondary = plate, line-strong, bevel ·
-  quiet = text only, shade on hover · danger = danger text + border, filled only on final confirm.
-- Fields: plate, line-strong border, press shadow, ≥16px text. Error: danger border, message under,
-  `aria-invalid` + `aria-describedby`. Checkbox: 20px box inside a 44px label row.
-- Plate: featured (large, bevel, screenshot) · compact (row, S marks right). Chip: radius 4, hairline.
-- Header: solid paper, hairline under, not sticky; mobile menu is `<details>` (works without JS).
-- Footer: links, language form (POST + button), theme System / Light / Dark, © owner.
-- Toast: plate + bevel, `role=status`, bottom above safe-area; JS hides it after 6s.
-- Empty state: an empty plate outline with three unstruck marks, one sentence, one action.
-- Tabs: plain links with `aria-current`; active = text color + 2px ink bar.
+## Hallmark
+- Flat chip: check glyph + mono label ("Repo owner", "Live", "Steady"); names stay English in every language.
+  Earned: `--proof-bg` fill, `--proof` text. Not earned: dashed `--line-strong` outline, muted, "Not yet".
+- Sizes: S (lists, label may hide state) · M · L (project page: chip + one fact line, opens a panel).
+- The first mark proves repository ownership (or 10+ commits), never who wrote the code. Internal id stays
+  `authored`; only display text says "Repo owner".
+
+## Components (`components.css`)
+- Buttons (44px, Inter 500): primary = accent fill (label dark in dark theme) · secondary = surface +
+  `--line-strong` · quiet = text only · danger = danger outline, filled only on the final confirmation.
+- Fields: surface, `--line-strong` border, >= 16px text, error = danger border + message with icon,
+  `aria-invalid` + `aria-describedby`. Checkbox and radio: 20px control inside a 44px row. `.code-value` +
+  `.btn--copy`: a literal value to paste.
+- `.record` (frame + mono header row) is the base of the proof column, build log, embed panel, filters and
+  the landing specimen. `.panel` is a framed form section (`--danger` = destructive). `.page-head`: h1 + lede.
+- Lists: `.plate-row` (cover, name in Manrope, by-line, tagline, marks) · `.card` (landing) · `.chip` (tags).
+- Header: not sticky, hairline under, mobile menu is `<details>`. Footer: links, language form (POST), theme.
+- Toast: surface + border, `role=status`, bottom. Empty state: dashed frame, three unstruck marks, one action.
+- Error pages (`404.html`, `403.html` inside the site; `500.html`, `400.html`, `403_csrf.html` standalone):
+  code label, headline, one sentence, three unstruck marks, two links.
+- Tabs: plain links with `aria-current`; active = text color + 2px bar.
+
+## Motion (`motion.css`, `motion.js`)
+- Transform and opacity only. Loops run only while their block is on screen (`.is-inview`) and stop in a
+  hidden tab (`html.is-paused`). At most 3 loops visible at once. Reduced motion: final state, no loops,
+  no reveal, no page transition. Without JS nothing is hidden.
+- Landing: strike (once), live pulse, uptime tick, drift, closing cursor, section reveal.
+- Project page: marks strike in order on load (300 / 650 / 1000 ms), one tick highlight over the 30 uptime
+  cells (loop 1). Elsewhere: hover, press and focus answers, like/follow pop, page cross-fade
+  (`@view-transition`, 180ms).
+
+## Badge (`projects/badges.py`)
+Drawn in Python with fixed colors from the light tokens (plate, graphite, steel, line) and green for stamps and
+the count. Square corners. Pairs measured 2026-11-11: plate/graphite 15.46, steel/plate 6.14, plate/proof 7.89,
+white/proof 7.96, line/plate 3.49 (border).
 
 ## Logo
-- Mark C, "struck slash": a square with a slash and a full stop cut out of it. Both cuts use one
-  8-unit punch on the 32-unit grid. The slash leans 2:1 (about 63°), lower and heavier than a typed
-  "/" (~70°), so it reads as a struck mark, not a path separator or a terminal prompt. The stop is an
-  8×8 square on even units: exactly 4×4 px at 16px, so it stays visible in a browser tab.
-- Path: `M0 0H32V32H0ZM4 26H12L22 6H14ZM20 18H28V26H20Z` (even-odd). Used in `logo.svg`,
-  `logo-mark.svg`, `favicon.svg`; the PNGs (`apple-touch-icon.png`, `og-default.png`) draw the same shape.
-- Options A (notch check) and B (corner stamp) are kept in `static/brand/options/` and shown only on
-  `/styleguide/`.
-- Wordmark: lowercase "shipmark" in Manrope 700, outlined to paths. Header and footer inline the SVG
-  so it follows the theme; favicon.svg switches color with its own `prefers-color-scheme` query.
+- Mark C, "struck slash": a square with a slash and a full stop cut out. Path
+  `M0 0H32V32H0ZM4 26H12L22 6H14ZM20 18H28V26H20Z` (even-odd). Files: `logo.svg`, `logo-mark.svg`, `favicon.svg`,
+  PNGs for the touch icon and OG image; `logo-dark.svg` and `logo-mark-dark.svg` are light copies for the dark
+  admin. Options A and B live in `static/brand/options/` (styleguide only).
+- Wordmark: lowercase "shipmark" in Manrope 700 as outlines. Header and footer inline the SVG so it follows the theme.
+
+## Admin
+django-unfold, colors from the same palette (`UNFOLD["COLORS"]`: primary = terracotta, base = warm green-black),
+radius 0, light/dark logo from `branding.py`. Nothing else is overridden.

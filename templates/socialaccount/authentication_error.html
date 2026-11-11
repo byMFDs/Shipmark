@@ -6,7 +6,7 @@
 
 {% block content %}
   <div class="container page">
-    <section class="auth plate plate--featured">
+    <section class="auth">
       <h1>{% translate "Sign-in failed" %}</h1>
       <p>{% translate "GitHub did not complete the sign-in, or the request expired. Nothing was changed. Please try again." %}</p>
       <a class="btn btn--primary" href="{% url 'account_login' %}">{% translate "Try again" %}</a>

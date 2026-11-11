@@ -1,0 +1,23 @@
+/* Error pages: 400, 403, 404, 500 and the CSRF failure. One headline, one sentence, two ways out. */
+
+.error-page {
+  display: grid;
+  gap: var(--s-5);
+  justify-items: start;
+  padding-bottom: var(--s-8);
+}
+
+/* The status code is a mono label above the headline; the marks are "not yet struck". */
+.error-page__code { display: block; }
+.error-page h1 { max-width: 16ch; font-size: var(--fs-5); }
+.error-page .lede { max-width: 46ch; }
+.error-page__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+
+@media (min-width: 48em) {
+  .error-page h1 { font-size: var(--fs-6); }
+}
+
+/* Pages without the site header and menu (500, CSRF failure: no request or session to rely on). */
+.error-bar { padding-top: env(safe-area-inset-top); }
+.error-bar .container { display: flex; align-items: center; min-height: 4rem; }
+.error-bar a { display: inline-flex; align-items: center; min-height: var(--control-h); color: var(--text); }
