@@ -9,7 +9,7 @@ from django.db import IntegrityError, transaction
 from django.db.models import F
 from django.utils import timezone
 
-from . import limits
+from . import limits, notifications, stickers
 from .images import delete_images, store_images
 from .models import Reply, Thread, Vote
 
@@ -100,6 +100,11 @@ def place_reply(parent):
 
 
 def create_reply(author, thread, parent=None, body="", sticker_key="", images=()):
+    """`parent` is the reply being answered (None: the thread). Its author is notified, also when the depth
+    limit attaches the new reply one level higher."""
+    if sticker_key and not stickers.is_sticker(sticker_key):
+        raise ValueError("unknown sticker")  # forms check this first; never store a key outside the manifest
+    recipient, kind = notifications.recipient_for(thread, parent)
     parent, root, depth = place_reply(parent)
     now = timezone.now()
     with transaction.atomic():
@@ -109,6 +114,7 @@ def create_reply(author, thread, parent=None, body="", sticker_key="", images=()
         )
         store_images(images, author, reply=reply)
         Thread.objects.filter(pk=thread.pk).update(reply_count=F("reply_count") + 1, last_activity_at=now)
+        notifications.notify(reply, recipient, kind)
     return reply
 
 

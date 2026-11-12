@@ -12,7 +12,7 @@
     <h1>Styleguide</h1>
     <p class="lede">Every component in the light and the dark theme, side by side. This page exists only while
       <code>DEBUG</code> is on. The rules behind it are in <code>docs/DESIGN.md</code>.</p>
-    <p class="sg-jump"><a href="#logo">Logo</a> · <a href="#motion">Motion</a> · <a href="#components">Components</a> · <a href="#chrome">Header and footer</a></p>
+    <p class="sg-jump"><a href="#logo">Logo</a> · <a href="#motion">Motion</a> · <a href="#components">Components</a> · <a href="#stickers">Stickers</a> · <a href="#chrome">Header and footer</a></p>
     <p class="sg-jump">Error pages (as the real views render them):
       <a href="{% url 'error_preview' '400' %}">400</a> · <a href="{% url 'error_preview' '403' %}">403</a> ·
       <a href="{% url 'error_preview' '404' %}">404</a> · <a href="{% url 'error_preview' '500' %}">500</a> ·
@@ -122,6 +122,21 @@
         <div class="sg-panel" data-theme="{{ theme }}">
           <p class="sg-panel__theme">{{ theme|capfirst }} theme</p>
           {% include "pages/styleguide/_components.html" %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="sg-section" id="stickers" aria-labelledby="stickers-title">
+    <h2 id="stickers-title">Stickers ({{ stickers|length }}, community replies)</h2>
+    <p class="sg-note">Own artwork, static files in static/stickers/, keys and translated labels in community/stickers.py. The label is the alt text.</p>
+    <div class="sg-pair">
+      {% for theme in themes %}
+        <div class="sg-panel" data-theme="{{ theme }}">
+          <p class="sg-panel__theme">{{ theme|capfirst }} theme</p>
+          <ul class="sg-stickers">
+            {% for sticker in stickers %}<li><img src="{% static sticker.file %}" width="64" height="64" alt="{{ sticker.label }}" loading="lazy"><span>{{ sticker.key }}</span></li>{% endfor %}
+          </ul>
         </div>
       {% endfor %}
     </div>

@@ -174,13 +174,13 @@ class ExportTests(TestCase):
     def test_query_count_does_not_grow_with_projects(self):
         self.client.force_login(self.alice)
         # 13 + the ban check (active sanctions) + sanctions and notices + skills, links and pins in the export
-        # + community: images, threads, replies, upvotes
-        with self.assertNumQueries(23):
+        # + community: images, threads, replies, upvotes, notifications
+        with self.assertNumQueries(24):
             self.client.post(self.url)
         for i in range(5):
             p = make_project(self.alice, f"more-{i}")
             BuildLogEntry.objects.create(project=p, text="x")
-        with self.assertNumQueries(23):
+        with self.assertNumQueries(24):
             self.client.post(self.url)
 
     def test_rate_limited(self):

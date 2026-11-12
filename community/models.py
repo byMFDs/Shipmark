@@ -3,7 +3,7 @@
 Nothing is ever hard-deleted by a normal action. An author's delete wipes the text for real and sets `deleted_at`;
 a moderator's removal sets `status = removed` and keeps the text for appeals (the image files go at once).
 `score` and `reply_count` are denormalized: changed with F() in the same transaction as the vote or reply,
-and repaired by `manage.py community_recount`.
+and repaired by `manage.py community_daily`.
 """
 import uuid
 
@@ -21,9 +21,10 @@ from moderation.visibility import banned
 from . import limits, stickers
 
 
-def visible_author(queryset):
-    """Rows whose author is not suspended or banned. A deleted account (author is NULL) stays visible."""
-    return queryset.filter(Q(author__isnull=True) | Q(author__is_suspended=False)).filter(~banned("author"))
+def visible_author(queryset, field="author"):
+    """Rows whose author (at the `field` path) is not suspended or banned. A deleted account (NULL) stays visible."""
+    return queryset.filter(
+        Q(**{f"{field}__isnull": True}) | Q(**{f"{field}__is_suspended": False})).filter(~banned(field))
 
 
 class Board(models.Model):
@@ -259,3 +260,42 @@ class Vote(models.Model):
 
     def __str__(self):
         return f"{self.user_id} -> {'thread' if self.thread_id else 'reply'} {self.thread_id or self.reply_id}"
+
+
+class ReplyNotificationQuerySet(models.QuerySet):
+    def visible(self):
+        """Only about replies that can still be read: published, not deleted, in a public thread, by an author
+        who is not hidden. A notification about a reply that was removed later simply stops showing."""
+        return visible_author(self.filter(
+            reply__status=Reply.Status.PUBLISHED, reply__deleted_at__isnull=True,
+            reply__thread__status__in=Thread.PUBLIC_STATES, reply__thread__board__is_active=True,
+        ), "reply__author")
+
+
+class ReplyNotification(models.Model):
+    """In-app only (no email): "someone replied to your thread / your reply". One per recipient and reply."""
+
+    class Kind(models.TextChoices):
+        THREAD = "thread", _("Reply to your thread")
+        REPLY = "reply", _("Reply to your reply")
+
+    recipient = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="community_notifications",
+    )
+    reply = models.ForeignKey(Reply, on_delete=models.CASCADE, related_name="notifications")
+    kind = models.CharField(max_length=10, choices=Kind.choices)
+    created_at = models.DateTimeField(default=timezone.now, db_index=True)
+    read_at = models.DateTimeField(null=True, blank=True)
+
+    objects = ReplyNotificationQuerySet.as_manager()
+
+    class Meta:
+        ordering = ["-created_at", "-id"]
+        indexes = [models.Index(fields=["recipient", "-created_at"], name="notification_inbox")]
+        constraints = [
+            models.UniqueConstraint(fields=["recipient", "reply"], name="one_notification_per_reply"),
+        ]
+
+    def __str__(self):
+        return f"{self.recipient_id}: {self.kind} {self.reply_id}"
+

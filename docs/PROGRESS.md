@@ -150,3 +150,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-13: Community stage 1 (backend). App `community/` behind `COMMUNITY_ENABLED` (dev on, prod off): boards, threads, replies (depth 3), images, upvotes; reports on threads/replies in /mod/; remove/lock/pin with reasons, notices, AuditLog; age, link, image, rate and duplicate limits; Hot/New/Top in SQL; deletion and export cover it; minimal templates; 7 languages. Details: `docs/COMMUNITY_STATUS.md`.
   Next: "GO 2a" (reply notifications, sticker files), then 2b (UI).
+
+- 2026-11-13: Community stage 2a. In-app reply notifications (`ReplyNotification`, `/community/notifications/`, header dot from `User.community_notified_at` at zero queries, 90-day pruning in `community_daily`, export), 32 original sticker SVGs with safety and manifest tests, sticker sheet on /styleguide/, 7 languages.
+  Next: "GO 2b" (UI: picker, composer, image grids and lightbox, pages).

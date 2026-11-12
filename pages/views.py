@@ -62,8 +62,11 @@ def styleguide(request):
     """Every component in both themes. Development only: 404 when DEBUG is off."""
     if not settings.DEBUG:
         raise Http404
+    from community.stickers import STICKERS
+
     tokens = [{"name": n, "light": light, "dark": dark, "use": use} for n, light, dark, use in STYLEGUIDE_TOKENS]
-    return render(request, "pages/styleguide.html", {"themes": ["light", "dark"], "tokens": tokens})
+    stickers = [{"key": key, "label": label, "file": f"stickers/{key}.svg"} for key, label in STICKERS.items()]
+    return render(request, "pages/styleguide.html", {"themes": ["light", "dark"], "tokens": tokens, "stickers": stickers})
 
 
 def content_page(request, slug):

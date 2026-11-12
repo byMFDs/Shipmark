@@ -32,6 +32,10 @@ DUPLICATE_SHORT = 20
 
 EDIT_SILENT_WINDOW = timedelta(minutes=15)  # later edits show "edited"; the title can only change inside it
 
+# Reply notifications: kept this long, then deleted by `manage.py community_daily`.
+NOTIFICATION_RETENTION = timedelta(days=90)
+NOTIFICATIONS_PER_PAGE = 30
+
 THREADS_PER_PAGE = 20
 REPLIES_PER_PAGE = 30  # top-level replies; their branches come with them
 MAX_SEARCH = 80

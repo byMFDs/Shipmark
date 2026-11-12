@@ -219,3 +219,14 @@
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
+
+.sg-stickers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sg-stickers li { display: grid; justify-items: center; gap: var(--s-1); }
+.sg-stickers span { font-family: var(--font-mono); font-size: var(--fs--1); color: var(--muted); }

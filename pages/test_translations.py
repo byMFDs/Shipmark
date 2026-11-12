@@ -198,7 +198,8 @@ class RenderedPagesTests(TestCase):
                  f"{p.get_absolute_url()}delete/", "/settings/", "/settings/delete/"]
         t = self.thread
         public += ["/community/", "/community/b/help/", t.get_absolute_url()]
-        owner += [t.get_absolute_url(), "/community/new/", f"/community/t/{t.pk}/edit/", f"/community/t/{t.pk}/delete/"]
+        owner += [t.get_absolute_url(), "/community/new/", f"/community/t/{t.pk}/edit/", f"/community/t/{t.pk}/delete/",
+                  "/community/notifications/"]
         other = [f"/report/project/ann/{p.slug}/", t.get_absolute_url(), f"/report/thread/{t.pk}/"]
         return [(None, url) for url in public] + [(self.ann, url) for url in owner] + [(self.bob, url) for url in other]
 

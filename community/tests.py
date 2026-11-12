@@ -1,11 +1,15 @@
 """Community backend: the flag, reading, posting rules, abuse cases, moderation, deletion and export."""
+import re
 import tempfile
+import xml.etree.ElementTree as ET
 from datetime import timedelta
 from io import StringIO
 from unittest import mock
 
 from django.core.cache import cache
 from django.core.files.storage import default_storage
+from django.conf import settings
+from django.contrib.staticfiles import finders
 from django.core.management import call_command
 from django.db import IntegrityError, connection, transaction
 from django.test import Client, TestCase, override_settings
@@ -23,7 +27,7 @@ from moderation.models import AuditLog, Notice, Report, Sanction
 from projects.tests import image_file, make_user
 
 from . import limits, ranking, services
-from .models import Board, CommunityImage, Reply, Thread, Vote
+from .models import Board, CommunityImage, Reply, ReplyNotification, Thread, Vote
 from .stickers import STICKERS
 
 TEMP_MEDIA = tempfile.mkdtemp(prefix="shipmark-test-community-")
@@ -468,7 +472,7 @@ class ReplyTests(CommunityTestCase):
                 self.assertEqual(self.reply(self.bob, body="With a sticker", sticker=bad).status_code, 400)
         self.assertEqual(Reply.objects.count(), 1)
         self.assertEqual(len(STICKERS), 32)
-        self.assertContains(self.client.get(self.thread.get_absolute_url()), ":Rocket:")
+        self.assertContains(self.client.get(self.thread.get_absolute_url()), 'stickers/rocket.svg" width="96" height="96" alt="Rocket"')
 
     def test_reply_validation(self):
         self.assertEqual(self.reply(self.bob).status_code, 400)  # nothing at all
@@ -864,7 +868,7 @@ class HiddenAuthorTests(CommunityTestCase):
         Thread.objects.filter(pk=self.thread.pk).update(score=99, reply_count=99)
         Reply.objects.filter(pk=reply.pk).update(score=42)
         out = StringIO()
-        call_command("community_recount", stdout=out)
+        call_command("community_daily", stdout=out)
         self.thread.refresh_from_db()
         reply.refresh_from_db()
         self.assertEqual((self.thread.score, self.thread.reply_count, reply.score), (2, 1, 0))
@@ -934,3 +938,238 @@ class AccountTests(CommunityTestCase):
                          [("My reply.", "rocket", "removed", REASON)])
         self.assertEqual([v["url"] for v in data["upvotes"]], [other.get_absolute_url()])
         self.assertNotIn("Bob's private business.", str(data))
+
+
+# ---------- Stage 2a: reply notifications ----------
+
+class NotificationTests(CommunityTestCase):
+    def inbox(self, user):
+        return self.login(user).get(reverse("community:notifications"))
+
+    def fresh(self, user):
+        return User.objects.get(pk=user.pk)
+
+    def test_reply_to_a_thread_and_to_a_reply(self):
+        self.reply(self.bob, body="Wait an hour for DNS.")
+        bobs = Reply.objects.get(author=self.bob)
+        note = ReplyNotification.objects.get()
+        self.assertEqual((note.recipient, note.reply, note.kind, note.read_at), (self.ann, bobs, "thread", None))
+        self.assertIsNotNone(self.fresh(self.ann).community_notified_at)
+
+        self.reply(self.ann, parent=bobs.pk, body="Thanks, it worked.")
+        note = ReplyNotification.objects.get(recipient=self.bob)
+        self.assertEqual(note.kind, "reply")
+        self.assertEqual(ReplyNotification.objects.filter(recipient=self.ann).count(), 1)  # not about her own reply
+
+    def test_the_answered_person_hears_even_past_the_depth_limit(self):
+        one = services.create_reply(self.bob, self.thread, body="One.")
+        two = services.create_reply(self.mira, self.thread, parent=one, body="Two.")
+        three = services.create_reply(self.bob, self.thread, parent=two, body="Three.")
+        four = services.create_reply(self.ann, self.thread, parent=three, body="Four.")
+        self.assertEqual(four.parent, two)  # attached one level up
+        self.assertTrue(ReplyNotification.objects.filter(recipient=self.bob, reply=four, kind="reply").exists())
+        self.assertFalse(ReplyNotification.objects.filter(recipient=self.mira, reply=four).exists())
+
+    def test_no_notification_for_yourself_or_a_deleted_account(self):
+        services.create_reply(self.ann, self.thread, body="Answering my own thread.")
+        orphan = make_thread(None, title="A thread of a deleted account")
+        services.create_reply(self.bob, orphan, body="Hello?")
+        self.assertEqual(ReplyNotification.objects.count(), 0)
+        self.assertIsNone(self.fresh(self.ann).community_notified_at)
+
+    def test_inbox_shows_only_your_own(self):
+        services.create_reply(self.bob, self.thread, body="For Ann only.")
+        other = make_thread(self.mira, title="Mira asks something")
+        services.create_reply(self.bob, other, body="For Mira only.")
+        response = self.inbox(self.ann)
+        self.assertContains(response, "For Ann only.")
+        self.assertNotContains(response, "For Mira only.")
+        self.assertNotContains(self.inbox(self.boss), "For Ann only.")  # not even a superuser sees someone else's
+
+    def test_opening_the_inbox_marks_read_and_clears_the_mark(self):
+        services.create_reply(self.bob, self.thread, body="An answer.")
+        page = self.login(self.ann).get("/explore/")
+        self.assertContains(page, "user-menu__dot")
+        self.assertContains(page, reverse("community:notifications"))
+        first = self.inbox(self.ann)
+        self.assertContains(first, "New ·")
+        self.assertIsNone(self.fresh(self.ann).community_notified_at)
+        self.assertIsNotNone(ReplyNotification.objects.get().read_at)
+        self.assertNotContains(self.client.get("/explore/"), "user-menu__dot")
+        self.assertNotContains(self.inbox(self.ann), "New ·")
+
+    def test_the_mark_costs_no_query(self):
+        self.client.force_login(self.ann)
+        with CaptureQueriesContext(connection) as before:
+            self.client.get("/explore/")
+        services.create_reply(self.bob, self.thread, body="An answer.")
+        with CaptureQueriesContext(connection) as after:
+            self.assertContains(self.client.get("/explore/"), "user-menu__dot")
+        self.assertEqual(len(after), len(before))
+
+    def test_hidden_replies_drop_out_of_the_inbox(self):
+        removed = services.create_reply(self.bob, self.thread, body="Removed by moderators.")
+        deleted = services.create_reply(self.mira, self.thread, body="Deleted by the author.")
+        cat = old_user("cat")
+        services.create_reply(cat, self.thread, body="Written by a banned person.")
+        services.create_reply(self.boss, self.thread, body="Still visible.")
+        decisions.remove_reply(removed, self.mira, REASON)
+        services.delete_reply(deleted)
+        self.ban(cat)
+        response = self.inbox(self.ann)
+        self.assertContains(response, "Still visible.")
+        for text in ("Removed by moderators.", "Deleted by the author.", "Written by a banned person."):
+            self.assertNotContains(response, text)
+
+    def test_a_reply_by_a_deleted_account_stays_anonymous(self):
+        services.create_reply(self.bob, self.thread, body="Bob says hi.")
+        delete_account(self.bob)
+        response = self.inbox(self.ann)
+        self.assertContains(response, "A deleted account replied to your thread")
+        self.assertNotContains(response, "@bob")
+
+    def test_recipient_deletion_takes_the_notifications(self):
+        services.create_reply(self.bob, self.thread, body="An answer.")
+        delete_account(self.ann)
+        self.assertEqual(ReplyNotification.objects.count(), 0)
+
+    def test_muted_people_still_read_their_inbox(self):
+        services.create_reply(self.bob, self.thread, body="An answer.")
+        self.ban(self.ann, Sanction.Kind.MUTE)
+        self.assertContains(self.inbox(self.ann), "An answer.")
+
+    def test_anonymous_and_flag_off(self):
+        response = self.client.get(reverse("community:notifications"))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("/login/", response["Location"])
+        self.client.force_login(self.ann)
+        with override_settings(COMMUNITY_ENABLED=False):
+            User.objects.filter(pk=self.ann.pk).update(community_notified_at=timezone.now())
+            self.assertEqual(self.client.get(reverse("community:notifications")).status_code, 404)
+            page = self.client.get("/explore/")
+            self.assertNotContains(page, "user-menu__dot")
+            self.assertNotContains(page, "/community/")
+        self.assertEqual(self.client.post(reverse("community:notifications")).status_code, 405)  # GET only
+
+    def test_inbox_pages_and_constant_queries(self):
+        def count():
+            with CaptureQueriesContext(connection) as queries:
+                self.assertEqual(self.client.get(reverse("community:notifications")).status_code, 200)
+            return len(queries)
+
+        self.client.force_login(self.ann)
+        self.client.get(reverse("community:notifications"))  # warm up (first request of the session)
+        services.create_reply(self.bob, self.thread, body="First.")
+        self.ann.refresh_from_db()
+        few = count()  # one unread
+        for n in range(limits.NOTIFICATIONS_PER_PAGE + 3):
+            services.create_reply(old_user(f"user{n}"), self.thread, body=f"Answer number {n}.")
+        self.assertEqual(count(), few)  # many unread, same number of queries
+        response = self.client.get(reverse("community:notifications"))
+        self.assertEqual(len(response.context["items"]), limits.NOTIFICATIONS_PER_PAGE)
+        self.assertTrue(response.context["has_next"])
+        self.assertEqual(len(self.client.get(reverse("community:notifications"), {"page": 2}).context["items"]), 4)
+
+    def test_daily_command_prunes_old_notifications(self):
+        services.create_reply(self.bob, self.thread, body="Old.")
+        services.create_reply(self.mira, self.thread, body="New.")
+        ReplyNotification.objects.filter(reply__body="Old.").update(created_at=timezone.now() - timedelta(days=91))
+        out = StringIO()
+        call_command("community_daily", stdout=out)
+        self.assertEqual(list(ReplyNotification.objects.values_list("reply__body", flat=True)), ["New."])
+        self.assertIn("Deleted 1 old notifications", out.getvalue())
+
+    def test_export_lists_notifications_without_the_other_persons_text(self):
+        services.create_reply(self.bob, self.thread, body="Bob's private words.")
+        data = build_export(self.ann)["community"]["notifications"]
+        self.assertEqual([n["kind"] for n in data], ["thread"])
+        self.assertNotIn("private words", str(data))
+        self.assertNotIn("bob", str(data))
+
+
+# ---------- Stage 2a: stickers ----------
+
+STICKER_DIR = "stickers"
+SAFE_TAGS = {"svg", "g", "circle", "ellipse", "rect", "path"}
+SAFE_ATTRS = {"xmlns", "viewBox", "width", "height", "cx", "cy", "r", "rx", "ry", "x", "y", "d", "fill", "stroke",
+              "stroke-width", "stroke-linecap", "stroke-linejoin", "opacity", "transform"}
+
+
+def sticker_files():
+    folder = finders.find(STICKER_DIR)
+    from pathlib import Path
+
+    return {path.stem: path for path in Path(folder).glob("*.svg")}
+
+
+class StickerFileTests(TestCase):
+    def test_manifest_and_files_match(self):
+        files = sticker_files()
+        self.assertEqual(sorted(files), sorted(STICKERS))
+        self.assertGreaterEqual(len(STICKERS), 30)
+        self.assertLessEqual(len(STICKERS), 40)
+        for key in STICKERS:
+            self.assertRegex(key, r"^[a-z]+(-[a-z]+)*$")
+
+    def test_files_are_plain_safe_svg(self):
+        """Our own files only, but checked like untrusted ones: no script, no links, no external anything."""
+        for key, path in sticker_files().items():
+            with self.subTest(sticker=key):
+                raw = path.read_text(encoding="utf-8")
+                self.assertLess(len(raw), 8000)
+                self.assertNotRegex(raw.lower(), r"<script|<foreignobject|<image|<use|href|url\(|@import|<style|<!entity|<!doctype")
+                root = ET.fromstring(raw)
+                self.assertEqual(root.get("viewBox"), "0 0 96 96")
+                for element in root.iter():
+                    tag = element.tag.split("}")[-1]
+                    self.assertIn(tag, SAFE_TAGS)
+                    for name in element.attrib:
+                        self.assertIn(name, SAFE_ATTRS)
+                        self.assertFalse(name.lower().startswith("on"))
+
+    def test_every_label_is_translated(self):
+        from django.utils import translation
+
+        for code, _name in settings.LANGUAGES:
+            if code == "en":
+                continue
+            with translation.override(code):
+                for key, label in STICKERS.items():
+                    with self.subTest(code=code, sticker=key):
+                        self.assertTrue(str(label))
+            with translation.override("uk"):
+                self.assertEqual(str(STICKERS["rocket"]), "Ракета")
+
+
+class StickerPostingTests(CommunityTestCase):
+    def test_one_sticker_per_reply_even_when_two_are_sent(self):
+        self.login(self.bob).post(reverse("community:reply", args=[self.thread.pk]), {"sticker": ["rocket", "fire"]})
+        self.assertEqual(list(Reply.objects.values_list("sticker_key", flat=True)), ["fire"])
+
+    def test_service_refuses_an_unknown_key(self):
+        with self.assertRaises(ValueError):
+            services.create_reply(self.bob, self.thread, sticker_key="../../evil")
+        self.assertEqual(Reply.objects.count(), 0)
+
+    def test_a_retired_sticker_is_not_rendered(self):
+        reply = services.create_reply(self.bob, self.thread, body="With an old sticker.", sticker_key="rocket")
+        Reply.objects.filter(pk=reply.pk).update(sticker_key="retired")
+        html = self.client.get(self.thread.get_absolute_url()).content.decode()
+        self.assertIn("With an old sticker.", html)
+        self.assertNotIn("stickers/retired.svg", html)
+
+    def test_alt_text_follows_the_language(self):
+        services.create_reply(self.bob, self.thread, sticker_key="thumbs-up")
+        html = self.client.get(self.thread.get_absolute_url(), headers={"Accept-Language": "uk"}).content.decode()
+        self.assertIn('alt="Палець угору"', html)
+
+    def test_sticker_notification_text(self):
+        services.create_reply(self.bob, self.thread, sticker_key="clap")
+        self.assertContains(self.login(self.ann).get(reverse("community:notifications")), "Sticker: Clap")
+
+    @override_settings(DEBUG=True)
+    def test_styleguide_shows_the_sheet(self):
+        response = self.client.get("/styleguide/")
+        for key in STICKERS:
+            self.assertContains(response, f"stickers/{key}.svg")
+

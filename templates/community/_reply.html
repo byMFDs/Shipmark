@@ -1,4 +1,4 @@
-{% load i18n ui %}{# One reply and the answers under it. Needs: node (community.tree.Node), thread, voted_replies, may_reply. #}
+{% load i18n static ui %}{# One reply and the answers under it. Needs: node (community.tree.Node), thread, voted_replies, may_reply. #}
 {% with reply=node.reply %}
 <li id="r{{ reply.pk }}">
   {% if node.stub == "deleted" %}
@@ -8,7 +8,7 @@
   {% else %}
     <p class="muted">{% include "community/_author.html" with author=reply.author %} · <a href="#r{{ reply.pk }}"><time datetime="{{ reply.created_at|date:'c' }}" title="{{ reply.created_at|date:'DATETIME_FORMAT' }}">{{ reply.created_at|ago }}</time></a>{% if reply.edited_at %} · {% translate "edited" %}{% endif %}</p>
     {% if reply.body %}<div class="prose">{{ reply.body_html|safe }}</div>{% endif %}
-    {% if reply.sticker_key %}<p class="mono">:{{ reply.sticker_label }}:</p>{% endif %}
+    {% if reply.sticker_key and reply.sticker_label %}<p><img src="{% static 'stickers/'|add:reply.sticker_key|add:'.svg' %}" width="96" height="96" alt="{{ reply.sticker_label }}" loading="lazy"></p>{% endif %}
     {% include "community/_images.html" with images=reply.images.all %}
     <div class="owner-bar">
       {% if reply.pk in voted_replies %}{% url 'community:vote_reply' reply.pk as vote_url %}{% include "community/_vote.html" with action=vote_url voted=True score=reply.score own=False %}

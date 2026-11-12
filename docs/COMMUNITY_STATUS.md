@@ -8,7 +8,7 @@ Brief: community master brief (kept by the developer in `docs/promts/`, not in g
 |---|---|---|
 | 0 | Plan | done 2026-11-12, answers received |
 | 1 | Backend: data, permissions and abuse limits, flag, moderation integration, admin, abuse-case tests, minimal UI | done 2026-11-13 |
-| 2a | Backend for the UI: reply notifications (in-app), sticker files + manifest test, permissions and abuse tests for them | not started |
+| 2a | Backend for the UI: reply notifications (in-app), sticker files + manifest test, permissions and abuse tests for them | done 2026-11-13 |
 | 2b | UI: C (picker), D (composer, grids, lightbox, `blob:` preview), E (pages, 3 columns, Load more) | not started |
 | 3 | Polish: design and motion, legal (Terms, Privacy, rules, `TERMS_VERSION` bump), docs, full tests, `check --deploy` | not started |
 
@@ -48,15 +48,32 @@ raise `TERMS_VERSION` when Community ships; `COMMUNITY_ENABLED` stays off in pro
   resolved; protected accounts: pin only; restore (superuser, text only). Queue filter Thread/Reply, report detail
   shows the post. "Moderate" menu tag accepts `thread=` / `reply=`.
 - Hot / New / Top in SQL (`community/ranking.py`), search by title, pinned row, reply tree Best / New with pages,
-  constant query counts (tested). `community_recount` repairs counters and drops votes of hidden accounts.
+  constant query counts (tested). `community_daily` (was `community_recount`) repairs counters, drops votes of hidden accounts, prunes old notifications.
 - Account deletion and export cover the community (even with the flag off). Admin: boards editable, posts read-only
   with restore; votes not registered.
 - Minimal UI only (plain templates, no community CSS yet): lists, thread, forms, delete confirmation.
 - 64 tests in `community/tests.py`; translation test now also renders the community pages in 6 languages.
 
+## Stage 2a (done)
+- Reply notifications (in-app, no email): `ReplyNotification` (recipient, reply, kind thread/reply, created, read; one per
+  recipient and reply). The answered person is told, also when the depth limit attaches the reply one level up; nobody
+  about their own reply; nothing for deleted or inactive accounts. `/community/notifications/` lists only your own
+  (no per-item URL, so nothing to guess), 30 per page, constant queries; opening it marks all read.
+  Removed, deleted, banned-author replies drop out by themselves (query filter, nothing to clean up).
+- Header mark: `User.community_notified_at` (accounts migration 0007), so the dot on the avatar and the "Replies to you
+  · new" menu item cost no query on any page (the site has many exact query-count tests). Hidden when the flag is off.
+- `community_daily` (renamed from `community_recount`): counters + deletes notifications older than 90 days.
+- Export: `community.notifications` (kind, address, dates; not the other person's text or name).
+- Stickers: 32 original SVGs in `static/stickers/` (96×96, paper plate with ink ring, apricot "glove" tone, brand
+  terracotta/green), shown as `<img>` with the translated label as alt; a retired key renders nothing. Sheet on
+  `/styleguide/#stickers`. Tests: manifest = files, safe-SVG allowlist (no script/links/style/external), labels in
+  every language, one sticker per reply even if two are posted, unknown key refused by the service too.
+- Not done here (2b): picker UI, composer, image grids and lightbox, `blob:` preview, community CSS.
+- To do in stage 3: DATA_INVENTORY / Privacy for notifications and `community_notified_at`.
+
 ## Open questions
 - Reports about threads/replies stay listed in /mod/ while the flag is off (their detail page is a 404). OK?
-- `community_recount` needs a cron line (daily) when Community ships; added to DEPLOY_NOTES in stage 3.
+- `community_daily` needs a cron line (daily) when Community ships; added to DEPLOY_NOTES in stage 3.
 
 ## Not touched in this round
 - Footer and the badge component (another task owns them); `feed.css`; Explore; proof rules.

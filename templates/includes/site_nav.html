@@ -17,6 +17,7 @@
       <ul class="user-links">
         <li class="user-links__who">{% user_avatar me.user 32 name=me.name %}<span>{{ me.name }}{% user_marks me.user %}</span></li>
         {% if profile_url %}<li><a href="{{ profile_url }}">{% translate "Your profile" %}</a></li>{% endif %}
+        {% if notifications_url %}<li><a href="{{ notifications_url }}">{% translate "Replies to you" %}{% if has_new_replies %} <span class="mono">{% translate "new" %}</span>{% endif %}</a></li>{% endif %}
         {% if mod_url %}<li><a href="{{ mod_url }}">{% translate "Moderation" %} <span class="mono">{{ mod_count }}</span><span class="visually-hidden"> {% translate "open reports" %}</span></a></li>{% endif %}
         {% if settings_url %}<li><a href="{{ settings_url }}">{% translate "Settings" %}</a></li>{% endif %}
         {% if logout_url %}<li><a href="{{ logout_url }}">{% translate "Sign out" %}</a></li>{% endif %}
@@ -24,12 +25,13 @@
     {% else %}
       {# Desktop: avatar button opens a small menu. A <details>, so it works without JS; menu.js adds Escape and outside click. #}
       <details class="user-menu" data-menu>
-        <summary class="user-menu__button" aria-label="{% blocktranslate with name=me.name %}Account menu for {{ name }}{% endblocktranslate %}">
-          {% user_avatar me.user 32 name=me.name %}{% icon "chevron-down" %}
+        <summary class="user-menu__button" aria-label="{% if has_new_replies %}{% blocktranslate with name=me.name %}Account menu for {{ name }}, new replies{% endblocktranslate %}{% else %}{% blocktranslate with name=me.name %}Account menu for {{ name }}{% endblocktranslate %}{% endif %}">
+          {% user_avatar me.user 32 name=me.name %}{% if has_new_replies %}<span class="user-menu__dot" aria-hidden="true"></span>{% endif %}{% icon "chevron-down" %}
         </summary>
         <ul class="user-menu__panel">
           <li class="user-menu__who">{{ me.name }}{% user_marks me.user %}</li>
           {% if profile_url %}<li><a class="user-menu__item" href="{{ profile_url }}">{% translate "Your profile" %}</a></li>{% endif %}
+          {% if notifications_url %}<li><a class="user-menu__item" href="{{ notifications_url }}">{% translate "Replies to you" %}{% if has_new_replies %} <span class="mono">{% translate "new" %}</span>{% endif %}</a></li>{% endif %}
           {% if mod_url %}<li><a class="user-menu__item" href="{{ mod_url }}">{% translate "Moderation" %} <span class="mono">{{ mod_count }}</span><span class="visually-hidden"> {% translate "open reports" %}</span></a></li>{% endif %}
           {% if settings_url %}<li><a class="user-menu__item" href="{{ settings_url }}">{% translate "Settings" %}</a></li>{% endif %}
           {% if logout_url %}<li><a class="user-menu__item" href="{{ logout_url }}">{% translate "Sign out" %}</a></li>{% endif %}

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:05+0000\n"
+"POT-Creation-Date: 2026-11-12 22:31+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
@@ -23,7 +23,7 @@ msgstr "Connexion en tant que %(name)s."
 msgid "You are signed out."
 msgstr "Vous êtes déconnecté."
 
-#: accounts/admin.py:39 accounts/models.py:98
+#: accounts/admin.py:39 accounts/models.py:101
 msgid "badge"
 msgstr "badge"
 
@@ -42,7 +42,7 @@ msgid "Pictures"
 msgstr "Images"
 
 #: accounts/admin.py:109 config/settings/base.py:329
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:33
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
 #: templates/moderation/mod/report.html:3
@@ -296,56 +296,56 @@ msgstr "Depuis GitHub"
 msgid "This username is already taken."
 msgstr "Ce nom d’utilisateur est déjà pris."
 
-#: accounts/models.py:84
+#: accounts/models.py:87
 msgid "Official"
 msgstr "Officiel"
 
-#: accounts/models.py:85 moderation/models.py:78
+#: accounts/models.py:88 moderation/models.py:78
 #: templates/includes/user_marks.html:1
 msgid "Moderator"
 msgstr "Modérateur"
 
-#: accounts/models.py:99
+#: accounts/models.py:102
 msgid "badges"
 msgstr "badges"
 
-#: accounts/models.py:110
+#: accounts/models.py:113
 msgid "Website"
 msgstr "Site web"
 
-#: accounts/models.py:111
+#: accounts/models.py:114
 msgid "GitHub"
 msgstr "GitHub"
 
-#: accounts/models.py:112
+#: accounts/models.py:115
 msgid "X"
 msgstr "X"
 
-#: accounts/models.py:113
+#: accounts/models.py:116
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: accounts/models.py:114
+#: accounts/models.py:117
 msgid "Telegram"
 msgstr "Telegram"
 
-#: accounts/models.py:115
+#: accounts/models.py:118
 msgid "Other"
 msgstr "Autre"
 
-#: accounts/models.py:124
+#: accounts/models.py:127
 msgid "profile link"
 msgstr "lien du profil"
 
-#: accounts/models.py:125
+#: accounts/models.py:128
 msgid "profile links"
 msgstr "liens du profil"
 
-#: accounts/models.py:141
+#: accounts/models.py:144
 msgid "pinned project"
 msgstr "projet épinglé"
 
-#: accounts/models.py:142
+#: accounts/models.py:145
 msgid "pinned projects"
 msgstr "projets épinglés"
 
@@ -411,7 +411,8 @@ msgstr "Restaurer les réponses sélectionnées (superutilisateurs uniquement)"
 #: community/apps.py:8 config/settings/base.py:342 pages/templatetags/ui.py:348
 #: templates/community/home.html:4 templates/community/home.html:5
 #: templates/community/home.html:11 templates/community/home.html:12
-#: templates/community/thread.html:4 templates/community/thread_form.html:10
+#: templates/community/notifications.html:10 templates/community/thread.html:4
+#: templates/community/thread_form.html:10
 msgid "Community"
 msgstr "Communauté"
 
@@ -489,6 +490,7 @@ msgstr ""
 "ne l'est pas."
 
 #: community/forms.py:76 config/settings/base.py:347
+#: templates/community/notifications.html:21
 msgid "Images"
 msgstr "Images"
 
@@ -531,25 +533,33 @@ msgstr "Cet autocollant n'existe pas."
 msgid "Write something, or add an image or a sticker."
 msgstr "Écrivez quelque chose, ou ajoutez une image ou un autocollant."
 
-#: community/models.py:34
+#: community/models.py:35
 msgid "Inactive boards and their threads are hidden."
 msgstr "Les rubriques inactives et leurs fils sont masqués."
 
-#: community/models.py:64 community/models.py:135 news/admin.py:29
+#: community/models.py:65 community/models.py:136 news/admin.py:29
 #: projects/models.py:42 templates/projects/detail.html:24
 #: templates/projects/form.html:15
 msgid "Published"
 msgstr "Publié"
 
-#: community/models.py:65 templates/community/_row.html:4
+#: community/models.py:66 templates/community/_row.html:4
 #: templates/community/thread.html:12
 msgid "Locked"
 msgstr "Verrouillé"
 
-#: community/models.py:66 community/models.py:136 projects/models.py:44
+#: community/models.py:67 community/models.py:137 projects/models.py:44
 #: templates/community/thread.html:12
 msgid "Removed"
 msgstr "Retiré"
+
+#: community/models.py:279
+msgid "Reply to your thread"
+msgstr "Réponse dans votre fil"
+
+#: community/models.py:280
+msgid "Reply to your reply"
+msgstr "Réponse à votre réponse"
 
 #: community/permissions.py:35
 msgid ""
@@ -728,15 +738,15 @@ msgstr "Cette réponse ne peut pas être modifiée."
 msgid "Reply deleted."
 msgstr "Réponse supprimée."
 
-#: community/views.py:341
+#: community/views.py:359
 msgid "Bad request."
 msgstr "Requête invalide."
 
-#: community/views.py:343
+#: community/views.py:361
 msgid "You cannot vote for your own post."
 msgstr "Vous ne pouvez pas voter pour votre propre message."
 
-#: community/views.py:356 social/views.py:67
+#: community/views.py:374 social/views.py:67
 msgid "Sign in to do this."
 msgstr "Connectez-vous pour faire cela."
 
@@ -2271,7 +2281,7 @@ msgstr "Supprimer le compte"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
 #: templates/accounts/logout.html:14 templates/accounts/settings.html:107
-#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:35
+#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
 msgid "Sign out"
 msgstr "Se déconnecter"
 
@@ -2506,7 +2516,7 @@ msgid "Built with (self-declared)"
 msgstr "Créé avec (déclaré par l’auteur)"
 
 #: templates/accounts/settings.html:4 templates/accounts/settings.html:12
-#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:34
+#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 msgid "Settings"
 msgstr "Réglages"
 
@@ -2720,7 +2730,7 @@ msgid "New thread"
 msgstr "Nouveau fil"
 
 #: templates/community/home.html:16 templates/community/thread.html:69
-#: templates/includes/site_nav.html:40 templates/pages/_sign_in.html:10
+#: templates/includes/site_nav.html:42 templates/pages/_sign_in.html:10
 #: templates/pages/_sign_in.html:13 templates/social/feed.html:25
 #: templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
@@ -2771,19 +2781,20 @@ msgid_plural "%(counter)s threads"
 msgstr[0] "%(counter)s fil"
 msgstr[1] "%(counter)s fils"
 
-#: templates/community/home.html:70 templates/community/thread.html:49
-#: templates/moderation/mod/queue.html:59 templates/news/list.html:20
-#: templates/pages/explore.html:82 templates/social/feed.html:74
+#: templates/community/home.html:70 templates/community/notifications.html:27
+#: templates/community/thread.html:49 templates/moderation/mod/queue.html:59
+#: templates/news/list.html:20 templates/pages/explore.html:82
+#: templates/social/feed.html:74
 msgid "Pages"
 msgstr "Pages"
 
-#: templates/community/home.html:71 templates/community/thread.html:50
-#: templates/pages/explore.html:83
+#: templates/community/home.html:71 templates/community/notifications.html:28
+#: templates/community/thread.html:50 templates/pages/explore.html:83
 msgid "Previous page"
 msgstr "Page précédente"
 
-#: templates/community/home.html:72 templates/community/thread.html:51
-#: templates/pages/explore.html:84
+#: templates/community/home.html:72 templates/community/notifications.html:29
+#: templates/community/thread.html:51 templates/pages/explore.html:84
 msgid "Next page"
 msgstr "Page suivante"
 
@@ -2802,6 +2813,59 @@ msgstr "Pas encore de fil ici"
 #: templates/community/home.html:78
 msgid "Start the first one."
 msgstr "Lancez le premier."
+
+#: templates/community/notifications.html:4
+#: templates/community/notifications.html:11
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
+msgid "Replies to you"
+msgstr "Réponses pour vous"
+
+#: templates/community/notifications.html:12
+msgid ""
+"When someone answers your thread or your reply, it shows up here. We never "
+"send these by email."
+msgstr ""
+"Quand quelqu'un répond dans votre fil ou à votre réponse, cela apparaît ici. "
+"Nous ne l'envoyons jamais par e-mail."
+
+#: templates/community/notifications.html:19
+msgid "New"
+msgstr "Nouveau"
+
+#: templates/community/notifications.html:20
+#, python-format
+msgid "@%(name)s replied to your thread “%(title)s”"
+msgstr "@%(name)s a répondu dans votre fil « %(title)s »"
+
+#: templates/community/notifications.html:20
+#, python-format
+msgid "@%(name)s replied to you in “%(title)s”"
+msgstr "@%(name)s vous a répondu dans « %(title)s »"
+
+#: templates/community/notifications.html:20
+#, python-format
+msgid "A deleted account replied to your thread “%(title)s”"
+msgstr "Un compte supprimé a répondu dans votre fil « %(title)s »"
+
+#: templates/community/notifications.html:20
+#, python-format
+msgid "A deleted account replied to you in “%(title)s”"
+msgstr "Un compte supprimé vous a répondu dans « %(title)s »"
+
+#: templates/community/notifications.html:21
+#, python-format
+msgid "Sticker: %(name)s"
+msgstr "Autocollant : %(name)s"
+
+#: templates/community/notifications.html:33
+msgid "No replies yet"
+msgstr "Pas encore de réponse"
+
+#: templates/community/notifications.html:33
+msgid "Start a thread or answer someone, and replies to you will appear here."
+msgstr ""
+"Ouvrez un fil ou répondez à quelqu'un, et les réponses pour vous apparaîtront"
+" ici."
 
 #: templates/community/reply_form.html:4 templates/community/reply_form.html:11
 msgid "Edit reply"
@@ -3032,16 +3096,25 @@ msgstr "Principal"
 msgid "New project"
 msgstr "Nouveau projet"
 
-#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:32
+#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:33
 #: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Votre profil"
 
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:33
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
+msgid "new"
+msgstr "nouveau"
+
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 msgid "open reports"
 msgstr "signalements ouverts"
 
-#: templates/includes/site_nav.html:27
+#: templates/includes/site_nav.html:28
+#, python-format
+msgid "Account menu for %(name)s, new replies"
+msgstr "Menu du compte de %(name)s, nouvelles réponses"
+
+#: templates/includes/site_nav.html:28
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Menu du compte de %(name)s"

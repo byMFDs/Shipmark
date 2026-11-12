@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:05+0000\n"
+"POT-Creation-Date: 2026-11-12 22:31+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -23,7 +23,7 @@ msgstr "Angemeldet als %(name)s."
 msgid "You are signed out."
 msgstr "Du bist abgemeldet."
 
-#: accounts/admin.py:39 accounts/models.py:98
+#: accounts/admin.py:39 accounts/models.py:101
 msgid "badge"
 msgstr "Abzeichen"
 
@@ -42,7 +42,7 @@ msgid "Pictures"
 msgstr "Bilder"
 
 #: accounts/admin.py:109 config/settings/base.py:329
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:33
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
 #: templates/moderation/mod/report.html:3
@@ -300,56 +300,56 @@ msgstr "Von GitHub"
 msgid "This username is already taken."
 msgstr "Dieser Benutzername ist bereits vergeben."
 
-#: accounts/models.py:84
+#: accounts/models.py:87
 msgid "Official"
 msgstr "Offiziell"
 
-#: accounts/models.py:85 moderation/models.py:78
+#: accounts/models.py:88 moderation/models.py:78
 #: templates/includes/user_marks.html:1
 msgid "Moderator"
 msgstr "Moderator"
 
-#: accounts/models.py:99
+#: accounts/models.py:102
 msgid "badges"
 msgstr "Abzeichen"
 
-#: accounts/models.py:110
+#: accounts/models.py:113
 msgid "Website"
 msgstr "Website"
 
-#: accounts/models.py:111
+#: accounts/models.py:114
 msgid "GitHub"
 msgstr "GitHub"
 
-#: accounts/models.py:112
+#: accounts/models.py:115
 msgid "X"
 msgstr "X"
 
-#: accounts/models.py:113
+#: accounts/models.py:116
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: accounts/models.py:114
+#: accounts/models.py:117
 msgid "Telegram"
 msgstr "Telegram"
 
-#: accounts/models.py:115
+#: accounts/models.py:118
 msgid "Other"
 msgstr "Sonstige"
 
-#: accounts/models.py:124
+#: accounts/models.py:127
 msgid "profile link"
 msgstr "Profil-Link"
 
-#: accounts/models.py:125
+#: accounts/models.py:128
 msgid "profile links"
 msgstr "Profil-Links"
 
-#: accounts/models.py:141
+#: accounts/models.py:144
 msgid "pinned project"
 msgstr "angeheftetes Projekt"
 
-#: accounts/models.py:142
+#: accounts/models.py:145
 msgid "pinned projects"
 msgstr "angeheftete Projekte"
 
@@ -415,7 +415,8 @@ msgstr "Ausgewählte Antworten wiederherstellen (nur Superuser)"
 #: community/apps.py:8 config/settings/base.py:342 pages/templatetags/ui.py:348
 #: templates/community/home.html:4 templates/community/home.html:5
 #: templates/community/home.html:11 templates/community/home.html:12
-#: templates/community/thread.html:4 templates/community/thread_form.html:10
+#: templates/community/notifications.html:10 templates/community/thread.html:4
+#: templates/community/thread_form.html:10
 msgid "Community"
 msgstr "Community"
 
@@ -491,6 +492,7 @@ msgstr ""
 "nicht."
 
 #: community/forms.py:76 config/settings/base.py:347
+#: templates/community/notifications.html:21
 msgid "Images"
 msgstr "Bilder"
 
@@ -533,25 +535,33 @@ msgstr "Diesen Sticker gibt es nicht."
 msgid "Write something, or add an image or a sticker."
 msgstr "Schreib etwas oder füge ein Bild oder einen Sticker hinzu."
 
-#: community/models.py:34
+#: community/models.py:35
 msgid "Inactive boards and their threads are hidden."
 msgstr "Inaktive Bereiche und ihre Threads sind ausgeblendet."
 
-#: community/models.py:64 community/models.py:135 news/admin.py:29
+#: community/models.py:65 community/models.py:136 news/admin.py:29
 #: projects/models.py:42 templates/projects/detail.html:24
 #: templates/projects/form.html:15
 msgid "Published"
 msgstr "Veröffentlicht"
 
-#: community/models.py:65 templates/community/_row.html:4
+#: community/models.py:66 templates/community/_row.html:4
 #: templates/community/thread.html:12
 msgid "Locked"
 msgstr "Gesperrt"
 
-#: community/models.py:66 community/models.py:136 projects/models.py:44
+#: community/models.py:67 community/models.py:137 projects/models.py:44
 #: templates/community/thread.html:12
 msgid "Removed"
 msgstr "Entfernt"
+
+#: community/models.py:279
+msgid "Reply to your thread"
+msgstr "Antwort in deinem Thread"
+
+#: community/models.py:280
+msgid "Reply to your reply"
+msgstr "Antwort auf deine Antwort"
 
 #: community/permissions.py:35
 msgid ""
@@ -731,15 +741,15 @@ msgstr "Diese Antwort kann nicht geändert werden."
 msgid "Reply deleted."
 msgstr "Antwort gelöscht."
 
-#: community/views.py:341
+#: community/views.py:359
 msgid "Bad request."
 msgstr "Ungültige Anfrage."
 
-#: community/views.py:343
+#: community/views.py:361
 msgid "You cannot vote for your own post."
 msgstr "Du kannst nicht für deinen eigenen Beitrag stimmen."
 
-#: community/views.py:356 social/views.py:67
+#: community/views.py:374 social/views.py:67
 msgid "Sign in to do this."
 msgstr "Melde dich an, um das zu tun."
 
@@ -2269,7 +2279,7 @@ msgstr "Konto löschen"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
 #: templates/accounts/logout.html:14 templates/accounts/settings.html:107
-#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:35
+#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
 msgid "Sign out"
 msgstr "Abmelden"
 
@@ -2502,7 +2512,7 @@ msgid "Built with (self-declared)"
 msgstr "Gebaut mit (selbst angegeben)"
 
 #: templates/accounts/settings.html:4 templates/accounts/settings.html:12
-#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:34
+#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -2715,7 +2725,7 @@ msgid "New thread"
 msgstr "Neuer Thread"
 
 #: templates/community/home.html:16 templates/community/thread.html:69
-#: templates/includes/site_nav.html:40 templates/pages/_sign_in.html:10
+#: templates/includes/site_nav.html:42 templates/pages/_sign_in.html:10
 #: templates/pages/_sign_in.html:13 templates/social/feed.html:25
 #: templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
@@ -2766,19 +2776,20 @@ msgid_plural "%(counter)s threads"
 msgstr[0] "%(counter)s Thread"
 msgstr[1] "%(counter)s Threads"
 
-#: templates/community/home.html:70 templates/community/thread.html:49
-#: templates/moderation/mod/queue.html:59 templates/news/list.html:20
-#: templates/pages/explore.html:82 templates/social/feed.html:74
+#: templates/community/home.html:70 templates/community/notifications.html:27
+#: templates/community/thread.html:49 templates/moderation/mod/queue.html:59
+#: templates/news/list.html:20 templates/pages/explore.html:82
+#: templates/social/feed.html:74
 msgid "Pages"
 msgstr "Seiten"
 
-#: templates/community/home.html:71 templates/community/thread.html:50
-#: templates/pages/explore.html:83
+#: templates/community/home.html:71 templates/community/notifications.html:28
+#: templates/community/thread.html:50 templates/pages/explore.html:83
 msgid "Previous page"
 msgstr "Vorherige Seite"
 
-#: templates/community/home.html:72 templates/community/thread.html:51
-#: templates/pages/explore.html:84
+#: templates/community/home.html:72 templates/community/notifications.html:29
+#: templates/community/thread.html:51 templates/pages/explore.html:84
 msgid "Next page"
 msgstr "Nächste Seite"
 
@@ -2797,6 +2808,59 @@ msgstr "Hier gibt es noch keine Threads"
 #: templates/community/home.html:78
 msgid "Start the first one."
 msgstr "Starte den ersten."
+
+#: templates/community/notifications.html:4
+#: templates/community/notifications.html:11
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
+msgid "Replies to you"
+msgstr "Antworten an dich"
+
+#: templates/community/notifications.html:12
+msgid ""
+"When someone answers your thread or your reply, it shows up here. We never "
+"send these by email."
+msgstr ""
+"Wenn jemand in deinem Thread oder auf deine Antwort antwortet, erscheint es "
+"hier. Wir schicken das nie per E-Mail."
+
+#: templates/community/notifications.html:19
+msgid "New"
+msgstr "Neu"
+
+#: templates/community/notifications.html:20
+#, python-format
+msgid "@%(name)s replied to your thread “%(title)s”"
+msgstr "@%(name)s hat in deinem Thread „%(title)s“ geantwortet"
+
+#: templates/community/notifications.html:20
+#, python-format
+msgid "@%(name)s replied to you in “%(title)s”"
+msgstr "@%(name)s hat dir in „%(title)s“ geantwortet"
+
+#: templates/community/notifications.html:20
+#, python-format
+msgid "A deleted account replied to your thread “%(title)s”"
+msgstr "Ein gelöschtes Konto hat in deinem Thread „%(title)s“ geantwortet"
+
+#: templates/community/notifications.html:20
+#, python-format
+msgid "A deleted account replied to you in “%(title)s”"
+msgstr "Ein gelöschtes Konto hat dir in „%(title)s“ geantwortet"
+
+#: templates/community/notifications.html:21
+#, python-format
+msgid "Sticker: %(name)s"
+msgstr "Sticker: %(name)s"
+
+#: templates/community/notifications.html:33
+msgid "No replies yet"
+msgstr "Noch keine Antworten"
+
+#: templates/community/notifications.html:33
+msgid "Start a thread or answer someone, and replies to you will appear here."
+msgstr ""
+"Starte einen Thread oder antworte jemandem, dann erscheinen Antworten an dich"
+" hier."
 
 #: templates/community/reply_form.html:4 templates/community/reply_form.html:11
 msgid "Edit reply"
@@ -3025,16 +3089,25 @@ msgstr "Hauptnavigation"
 msgid "New project"
 msgstr "Neues Projekt"
 
-#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:32
+#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:33
 #: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Dein Profil"
 
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:33
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
+msgid "new"
+msgstr "neu"
+
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 msgid "open reports"
 msgstr "offene Meldungen"
 
-#: templates/includes/site_nav.html:27
+#: templates/includes/site_nav.html:28
+#, python-format
+msgid "Account menu for %(name)s, new replies"
+msgstr "Kontomenü von %(name)s, neue Antworten"
+
+#: templates/includes/site_nav.html:28
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Kontomenü von %(name)s"

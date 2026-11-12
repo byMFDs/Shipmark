@@ -1,14 +1,16 @@
-"""Recompute the denormalized counters: `score` of threads and replies, `reply_count` of threads.
+"""Daily community upkeep (cron), safe to run at any time:
 
-They move with every vote and reply, so this is a repair tool and the place where the votes of suspended and
-banned people stop counting. Safe to run at any time; daily from cron is enough.
+1. Recompute the denormalized counters: `score` of threads and replies, `reply_count` of threads. They move with
+   every vote and reply, so this repairs drift and is where the votes of suspended and banned people stop counting.
+2. Delete reply notifications older than 90 days (community/limits.py NOTIFICATION_RETENTION).
 
-    python manage.py community_recount
+    python manage.py community_daily
 """
 from django.core.management.base import BaseCommand
 from django.db.models import Count, IntegerField, OuterRef, Subquery
 from django.db.models.functions import Coalesce
 
+from community import notifications
 from community.models import Reply, Thread, Vote
 from moderation.visibility import banned
 
@@ -37,8 +39,9 @@ def recount():
 
 
 class Command(BaseCommand):
-    help = "Recompute community scores and reply counts (votes of suspended and banned accounts are left out)."
+    help = "Recompute community scores and reply counts, and delete reply notifications older than 90 days."
 
     def handle(self, *args, **options):
         threads, replies = recount()
-        self.stdout.write(f"Recounted {threads} threads and {replies} replies.")
+        pruned = notifications.prune()
+        self.stdout.write(f"Recounted {threads} threads and {replies} replies. Deleted {pruned} old notifications.")

@@ -9,7 +9,7 @@ from allauth.socialaccount.models import SocialAccount
 from django.db.models import Prefetch
 from django.utils import timezone
 
-from community.models import CommunityImage, Reply, Thread, Vote
+from community.models import CommunityImage, Reply, ReplyNotification, Thread, Vote
 from config import branding
 from moderation.models import Notice, Report, Sanction
 from projects.models import BuildLogEntry, Project
@@ -145,6 +145,12 @@ def _community(user, absolute):
         "upvotes": [
             {"url": absolute((v.thread or v.reply).get_absolute_url()), "created_at": _dt(v.created_at)}
             for v in votes
+        ],
+        # Replies to you: only the address and dates, not the other person's text or name.
+        "notifications": [
+            {"kind": n.kind, "url": absolute(n.reply.get_absolute_url()), "created_at": _dt(n.created_at),
+             "read_at": _dt(n.read_at)}
+            for n in ReplyNotification.objects.filter(recipient=user).select_related("reply__thread").order_by("created_at", "id")
         ],
     }
 

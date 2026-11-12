@@ -58,6 +58,9 @@ class User(AbstractUser):
     terms_version_accepted = models.CharField(max_length=20, blank=True)
     terms_accepted_at = models.DateTimeField(null=True, blank=True)
     is_suspended = models.BooleanField(default=False)
+    # Set when someone replies to this person in the community; cleared when they open their notifications.
+    # Read from request.user, so the "new replies" mark in the header costs no query on any page.
+    community_notified_at = models.DateTimeField(null=True, blank=True, editable=False)
 
     class Meta:
         constraints = [

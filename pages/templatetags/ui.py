@@ -388,7 +388,11 @@ def site_header(context, demo="", compact=False):
 
     viewer = context.get("viewer")
     moderator = bool(not demo and viewer is not None and viewer.can_moderate)
+    # Reply notifications (community). The mark comes from the user row, so it costs no query.
+    community = bool(not demo and signed_in and settings.COMMUNITY_ENABLED)
     return {
+        "notifications_url": reverse("community:notifications") if community else "",
+        "has_new_replies": bool(community and user.community_notified_at),
         "mod_url": reverse("moderation:queue") if moderator else "",
         "mod_count": viewer.open_reports if moderator else 0,
         "brand": context.get("brand"),

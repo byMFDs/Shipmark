@@ -49,7 +49,7 @@
             {% elif kind == "reply" and post %}
               <p class="muted">{{ post.thread.title }} · {{ post.get_status_display }}{% if post.is_deleted %} · {% translate "deleted by the author" %}{% endif %}</p>
               <div class="prose">{{ post.body_html|safe }}</div>
-              {% if post.sticker_key %}<p class="mono">:{{ post.sticker_label }}:</p>{% endif %}
+              {% if post.sticker_key and post.sticker_label %}<p><img src="{% static 'stickers/'|add:post.sticker_key|add:'.svg' %}" width="96" height="96" alt="{{ post.sticker_label }}"></p>{% endif %}
               <p><a href="{{ post.get_absolute_url }}">{% translate "Open the thread" %}</a></p>
             {% else %}
               <p class="muted">{% translate "The reported item was deleted." %}</p>

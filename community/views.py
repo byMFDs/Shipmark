@@ -18,7 +18,7 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 from config.ratelimit import is_limited
 from moderation.pages import write_blocked_message
 
-from . import limits, ranking, services, tree
+from . import limits, notifications, ranking, services, tree
 from .flags import community_view
 from .forms import ReplyEditForm, ReplyForm, ThreadEditForm, ThreadForm
 from .models import Board, Reply, Thread, Vote
@@ -317,6 +317,24 @@ def reply_delete(request, pk):
         return redirect(reply.thread)
     return render(request, "community/confirm_delete.html", {"thread": reply.thread, "reply": reply,
                                                            "back": reply.get_absolute_url()})
+
+
+# ---------- Notifications ----------
+
+@community_view
+@login_required
+@require_GET
+def notifications_view(request):
+    """The signed-in person's own notifications only (there is no per-item URL to guess). Opening the page
+    marks everything read and clears the header mark; the ones that were new are highlighted this once."""
+    page = _page(request)
+    start = (page - 1) * limits.NOTIFICATIONS_PER_PAGE
+    rows = list(notifications.inbox(request.user)[start:start + limits.NOTIFICATIONS_PER_PAGE + 1])
+    notifications.mark_all_read(request.user)
+    return render(request, "community/notifications.html", {
+        "items": rows[:limits.NOTIFICATIONS_PER_PAGE], "has_next": len(rows) > limits.NOTIFICATIONS_PER_PAGE,
+        "page": page,
+    })
 
 
 # ---------- Votes ----------

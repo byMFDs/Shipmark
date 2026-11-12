@@ -1257,6 +1257,18 @@ a.chip::after {
 }
 
 .user-menu__button::-webkit-details-marker { display: none; }
+/* "New replies" (community notifications): a small ink dot on the avatar; the summary's aria-label says it too. */
+.user-menu__button { position: relative; }
+.user-menu__dot {
+  position: absolute;
+  top: 0.45rem;
+  left: calc(var(--s-2) + 1.55rem);
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 0 0 2px var(--paper);
+}
 .user-menu__button .icon { width: 1rem; height: 1rem; transition: transform var(--t-base) var(--ease-out); }
 .user-menu[open] .user-menu__button .icon { transform: rotate(180deg); }
 

@@ -8,6 +8,7 @@ urlpatterns = [
     path("community/", views.home, name="home"),
     path("community/b/<slug:slug>/", views.home, name="board"),
     path("community/new/", views.thread_new, name="new"),
+    path("community/notifications/", views.notifications_view, name="notifications"),
     path("community/t/<int:pk>/", views.thread_detail, name="thread_short"),
     path("community/t/<int:pk>-<slug:slug>/", views.thread_detail, name="thread"),
     path("community/t/<int:pk>/edit/", views.thread_edit, name="thread_edit"),
