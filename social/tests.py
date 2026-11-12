@@ -381,11 +381,12 @@ class FeedQueryCountTests(SocialTestCase):
         Follow.objects.create(follower=self.me, following=self.ana)
         self.populate(5)
         self.client.force_login(self.me)
-        # Session + user, then: projects, screenshots, domain checks (+ build log entries on "following").
-        with self.assertNumQueries(5):
+        # Session + user, then: projects, screenshots, domain checks, owners' badges (+ build log entries and
+        # their owners' badges on "following"), and the signed-in user's badges for the header.
+        with self.assertNumQueries(7):
             self.client.get(reverse("social:feed"), {"tab": "latest"})
-        with self.assertNumQueries(6):
+        with self.assertNumQueries(9):
             self.client.get(reverse("social:feed"), {"tab": "following"})
         self.client.logout()
-        with self.assertNumQueries(3):  # no session, no user
+        with self.assertNumQueries(4):  # no session, no user, no header badges
             self.client.get(reverse("social:feed"))

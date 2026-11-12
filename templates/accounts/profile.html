@@ -17,7 +17,7 @@
     <header class="profile-head">
       {% avatar person.display_name|default:person.username 96 %}
       <div class="profile-head__text">
-        <h1 class="profile-head__name">{{ person.display_name|default:person.username }}</h1>
+        <h1 class="profile-head__name">{{ person.display_name|default:person.username }}{% user_marks person %}</h1>
         <p class="profile-head__handle muted">@{{ person.username }}</p>
         {% if person.bio %}<p class="profile-head__bio">{{ person.bio }}</p>{% endif %}
         <ul class="profile-head__links">

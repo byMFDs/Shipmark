@@ -20,6 +20,7 @@ from django.utils.timesince import timesince
 from django.utils.translation import get_language, gettext
 from django.utils.translation import gettext_lazy as _
 
+from config import branding
 from config.site import absolute_url as site_absolute_url
 
 register = template.Library()
@@ -66,6 +67,19 @@ def inline_svg(path, css_class="", label=""):
 def icon(name, css_class="", label=""):
     """An icon from static/icons/<name>.svg. Decorative unless a label is given."""
     return inline_svg(f"icons/{name}.svg", f"icon {css_class}".strip(), label)
+
+
+@register.inclusion_tag("includes/user_marks.html")
+def user_marks(person):
+    """Badges after a name: {% user_marks project.owner %}. On lists prefetch "owner__badges" (no N+1)."""
+    from accounts.roles import MODERATOR, OFFICIAL, badge_kinds  # here: accounts imports this app's settings
+
+    kinds = badge_kinds(person) if person is not None and not isinstance(person, dict) else frozenset()
+    return {
+        "official": OFFICIAL in kinds,
+        "moderator": MODERATOR in kinds,
+        "official_label": gettext("Official %(site)s account") % {"site": branding.SITE_NAME},
+    }
 
 
 # ---------- Relative dates ----------
@@ -292,7 +306,7 @@ def site_header(context, demo="", compact=False):
         profile_url = new_url = login_url = settings_url = logout_url = "#"
     else:
         signed_in = bool(user and user.is_authenticated)
-        me = {"name": user.display_name or user.username, "username": user.username} if signed_in else None
+        me = {"name": user.display_name or user.username, "username": user.username, "user": user} if signed_in else None
         profile_url = _url("accounts:profile", user.username) if signed_in else ""
         new_url = _url("projects:new")
         login_url = _url("account_login")

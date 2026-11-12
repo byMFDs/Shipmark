@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from accounts.system import SYSTEM_USERNAME
 from projects.models import Project
 from verification.uptime import with_uptime
 
@@ -35,15 +36,15 @@ def hallmark_counts():
 
 
 def dashboard_callback(request, context):
-    User = get_user_model()
+    people = get_user_model().objects.exclude(username=SYSTEM_USERNAME)  # the system account is not a person
     week_ago = timezone.now() - timedelta(days=7)
     marks = hallmark_counts()
     open_reports = Report.objects.filter(status=Report.Status.OPEN)
     context.update({
         "stats": [
-            {"label": _("Users"), "value": User.objects.count()},
+            {"label": _("Users"), "value": people.count()},
             {"label": _("Published projects"), "value": public_projects().count()},
-            {"label": _("Signups, last 7 days"), "value": User.objects.filter(date_joined__gte=week_ago).count()},
+            {"label": _("Signups, last 7 days"), "value": people.filter(date_joined__gte=week_ago).count()},
             {"label": _("Open reports"), "value": open_reports.count(),
              "link": reverse("admin:moderation_report_changelist") + "?status__exact=open"},
         ],

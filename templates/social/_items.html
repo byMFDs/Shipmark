@@ -7,7 +7,7 @@
         <div class="feed-item__body">
           <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></p>
           <p class="feed-item__by muted">
-            <a href="{% url 'accounts:profile' project.owner.username %}">@{{ project.owner.username }}</a>
+            <a href="{% url 'accounts:profile' project.owner.username %}">@{{ project.owner.username }}</a>{% user_marks project.owner %}
             · <time datetime="{{ item.at|date:'c' }}" title="{{ item.at|date:'DATETIME_FORMAT' }}">{{ item.at|ago }}</time>
           </p>
           <p class="plate-row__tagline">{{ project.tagline }}</p>
@@ -24,7 +24,7 @@
         {% avatar entry.project.owner.display_name|default:entry.project.owner.username 56 %}
         <div class="feed-item__body">
           <p class="feed-item__by">
-            <a href="{% url 'accounts:profile' entry.project.owner.username %}">@{{ entry.project.owner.username }}</a>
+            <a href="{% url 'accounts:profile' entry.project.owner.username %}">@{{ entry.project.owner.username }}</a>{% user_marks entry.project.owner %}
             {% translate "posted an update on" %}
             <a href="{{ entry.project.get_absolute_url }}#log-{{ entry.pk }}">{{ entry.project.name }}</a>
             <span class="muted">· <time datetime="{{ item.at|date:'c' }}" title="{{ item.at|date:'DATETIME_FORMAT' }}">{{ item.at|ago }}</time></span>

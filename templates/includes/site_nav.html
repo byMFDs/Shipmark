@@ -15,7 +15,7 @@
     {% if in_panel %}
       {# Phone menu: the account links are listed openly. #}
       <ul class="user-links">
-        <li class="user-links__who">{% avatar me.name 32 %}<span>{{ me.name }}</span></li>
+        <li class="user-links__who">{% avatar me.name 32 %}<span>{{ me.name }}{% user_marks me.user %}</span></li>
         {% if profile_url %}<li><a href="{{ profile_url }}">{% translate "Your profile" %}</a></li>{% endif %}
         {% if settings_url %}<li><a href="{{ settings_url }}">{% translate "Settings" %}</a></li>{% endif %}
         {% if logout_url %}<li><a href="{{ logout_url }}">{% translate "Sign out" %}</a></li>{% endif %}
@@ -27,7 +27,7 @@
           {% avatar me.name 32 %}{% icon "chevron-down" %}
         </summary>
         <ul class="user-menu__panel">
-          <li class="user-menu__who">{{ me.name }}</li>
+          <li class="user-menu__who">{{ me.name }}{% user_marks me.user %}</li>
           {% if profile_url %}<li><a class="user-menu__item" href="{{ profile_url }}">{% translate "Your profile" %}</a></li>{% endif %}
           {% if settings_url %}<li><a class="user-menu__item" href="{{ settings_url }}">{% translate "Settings" %}</a></li>{% endif %}
           {% if logout_url %}<li><a class="user-menu__item" href="{{ logout_url }}">{% translate "Sign out" %}</a></li>{% endif %}

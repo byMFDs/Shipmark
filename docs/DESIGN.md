@@ -112,6 +112,9 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
   stamp, primary action (front page, or feed when signed in) + "Go back", "Reference: <request id>" on 500/403/CSRF.
   Previews at `/_dev/errors/<code>/` (DEBUG only).
 - Tabs: plain links with `aria-current`; active = text color + 2px bar.
+- Marks after a name (`{% user_marks person %}`, `.user-mark`): official = filled ink diamond with a cut check,
+  `title` + hidden text "Official Shipmark account" (no colour: it is neither proof nor an action); moderator = quiet
+  mono "MODERATOR" label with a `--line-strong` outline. Lists prefetch `owner__badges`.
 
 ## Motion (`motion.css`, `motion.js`)
 - Animations use transform and opacity only. Exception, on purpose: hover/focus colour and border-colour fades

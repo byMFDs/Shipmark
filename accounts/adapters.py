@@ -6,7 +6,7 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django.db import transaction
 
 from . import github
-from .usernames import generate_username
+from .usernames import generate_username, looks_official
 
 
 def _one_line(text, limit):
@@ -51,6 +51,8 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         user.github_login = login
         user.username = generate_username(login)  # suggestion; the user confirms it on the next page
         user.display_name = _one_line(data.get("name"), 80) or login
+        if looks_official(user.display_name):  # a GitHub name like "Shipmark Team" is not carried over
+            user.display_name = ""
         user.bio = _one_line(extra.get("bio"), 280)
         user.avatar_url = extra.get("avatar_url") or ""
         # Not used: allauth's first/last name. We keep one display name.

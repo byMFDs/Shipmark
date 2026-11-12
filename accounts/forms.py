@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from .models import User
-from .usernames import is_taken, validate_username
+from .usernames import is_taken, validate_display_name, validate_username
 
 
 class StyledFormMixin:
@@ -84,7 +84,9 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
         return url
 
     def clean_display_name(self):
-        return " ".join(self.cleaned_data["display_name"].split())
+        value = " ".join(self.cleaned_data["display_name"].split())
+        validate_display_name(value, self.instance)
+        return value
 
 
 class AcceptTermsForm(StyledFormMixin, forms.Form):

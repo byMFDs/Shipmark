@@ -37,3 +37,32 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class UserBadge(models.Model):
+    """A mark next to a person's name. Granted and revoked only by superusers (admin or `grant_badge`).
+
+    Official: "Official Shipmark account", gives no permissions. Moderator: the only source of the
+    moderation permission (`accounts.roles.can_moderate`), never `is_staff`. Every change is in AuditLog.
+    """
+
+    class Kind(models.TextChoices):
+        OFFICIAL = "official", _("Official")
+        MODERATOR = "moderator", _("Moderator")
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="badges")
+    kind = models.CharField(max_length=20, choices=Kind.choices)
+    granted_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+",
+    )  # None: a migration or the command
+    granted_at = models.DateTimeField(auto_now_add=True)
+    note = models.CharField(max_length=200, blank=True)
+
+    class Meta:
+        ordering = ["kind"]
+        constraints = [models.UniqueConstraint(fields=["user", "kind"], name="one_badge_of_a_kind_per_user")]
+        verbose_name = _("badge")
+        verbose_name_plural = _("badges")
+
+    def __str__(self):
+        return f"{self.user} · {self.get_kind_display()}"

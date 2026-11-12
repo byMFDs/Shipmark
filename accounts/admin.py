@@ -2,13 +2,71 @@ from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.db.models import Count, Q
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin, TabularInline
 from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 
 from moderation import actions, audit
 from moderation.adminbase import AuditedModelAdmin
 
-from .models import User
+from . import badges
+from .models import User, UserBadge
+from .roles import can_manage_badges
+
+
+class BadgePermissions:
+    """Badges: superusers grant, change and revoke; other staff only look (CLAUDE: one source, accounts.roles)."""
+
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_active and request.user.is_staff
+
+    def has_add_permission(self, request, obj=None):
+        return can_manage_badges(request.user)
+
+    def has_change_permission(self, request, obj=None):
+        return can_manage_badges(request.user)
+
+    def has_delete_permission(self, request, obj=None):
+        return can_manage_badges(request.user)
+
+
+class UserBadgeInline(BadgePermissions, TabularInline):
+    model = UserBadge
+    fk_name = "user"
+    extra = 0
+    fields = ("kind", "note", "granted_by", "granted_at")
+    readonly_fields = ("granted_by", "granted_at")
+    verbose_name = _("badge")
+    verbose_name_plural = _("Badges (only superusers can change these)")
+
+
+@admin.register(UserBadge)
+class UserBadgeAdmin(BadgePermissions, ModelAdmin):
+    list_display = ("user", "kind", "granted_by", "granted_at", "note")
+    list_filter = ("kind",)
+    search_fields = ("user__username", "user__display_name", "note")
+    list_select_related = ("user", "granted_by")
+    autocomplete_fields = ("user",)
+    fields = ("user", "kind", "note", "granted_by", "granted_at")
+    readonly_fields = ("granted_by", "granted_at")
+
+    def get_readonly_fields(self, request, obj=None):
+        # An existing badge keeps its person and kind; revoke it and grant a new one instead.
+        return self.readonly_fields + (("user", "kind") if obj else ())
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.granted_by = request.user
+        super().save_model(request, obj, form, change)
+        badges.log_saved(obj, request.user, created=not change)
+
+    def delete_model(self, request, obj):
+        super().delete_model(request, obj)
+        badges.log_deleted(obj, request.user)
+
+    def delete_queryset(self, request, queryset):
+        for badge in queryset.select_related("user"):
+            self.delete_model(request, badge)
 
 
 class UserAddForm(UserCreationForm):
@@ -34,6 +92,7 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
     ordering = ("-date_joined",)
     date_hierarchy = "date_joined"
     actions = ["suspend", "unsuspend"]
+    inlines = [UserBadgeInline]
     readonly_fields = ("last_login", "date_joined", "terms_version_accepted", "terms_accepted_at")
 
     fieldsets = (
@@ -45,6 +104,14 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
     )
     add_fieldsets = ((None, {"classes": ("wide",), "fields": ("username", "password1", "password2")}),)
 
+    def get_readonly_fields(self, request, obj=None):
+        # Only superusers change roles. Otherwise staff with "change user" could make themselves superuser
+        # and so reach everything that is superuser-only (badges, permanent sanctions).
+        fields = super().get_readonly_fields(request, obj)
+        if not request.user.is_superuser:
+            fields = tuple(fields) + ("is_staff", "is_superuser", "groups", "user_permissions")
+        return fields
+
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
             _projects=Count("projects", filter=Q(projects__status="published"), distinct=True),
@@ -53,6 +120,24 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
     @admin.display(description=_("Published projects"), ordering="_projects")
     def project_count(self, obj):
         return obj._projects
+
+    def save_formset(self, request, form, formset, change):
+        """Badge rows from the inline: set who granted them and write AuditLog, like the badge admin does."""
+        if formset.model is not UserBadge:
+            return super().save_formset(request, form, formset, change)
+        if not can_manage_badges(request.user):  # read-only inline; never save posted rows
+            return None
+        instances = formset.save(commit=False)
+        for badge in formset.deleted_objects:
+            badge.delete()
+            badges.log_deleted(badge, request.user)
+        for badge in instances:
+            created = badge.pk is None
+            if created:
+                badge.granted_by = request.user
+            badge.save()
+            badges.log_saved(badge, request.user, created=created)
+        return None
 
     def save_model(self, request, obj, form, change):
         # Editing the checkbox in the form is a moderation step too: log it like the actions do.

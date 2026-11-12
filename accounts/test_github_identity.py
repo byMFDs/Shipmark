@@ -16,6 +16,7 @@ from django.urls import reverse
 
 from moderation.models import AuditLog
 
+from .system import SYSTEM_USERNAME
 from .tests import FAKE_GITHUB_APP, make_user
 
 User = get_user_model()
@@ -119,7 +120,7 @@ class GitHubLoginFlowTests(TestCase):
         carol.refresh_from_db()
         self.assertEqual(bob.github_login, "carol")
         self.assertEqual(carol.github_login, "")
-        self.assertEqual(User.objects.count(), 2)
+        self.assertEqual(User.objects.exclude(username=SYSTEM_USERNAME).count(), 2)  # the system account is not a person
 
     def test_same_login_twice_changes_nothing(self):
         ann = self.existing("ann", 10, "ann")

@@ -3,16 +3,25 @@
 Usernames appear in URLs (/u/<username>/), so they are lowercase and URL-safe.
 """
 import re
+import unicodedata
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-# CLAUDE.md section 4. Also blocks names that look like official accounts.
+from config import branding
+
+# CLAUDE.md section 4. Also blocks names that look like official accounts ("shipmark" is the system account).
 RESERVED_USERNAMES = frozenset({
     "admin", "api", "static", "media", "badge", "legal", "settings", "new", "feed",
     "explore", "login", "logout", "signup", "u", "p", "help", "about", "support",
     "root", "system",
+    "shipmark", "official", "moderator", "mod", "team", "staff", "news",
 })
+
+# Display names only official accounts may use: the site name alone or with one of these words.
+# Compared after case folding, Unicode normalization (NFKC) and dropping everything but letters and digits,
+# so "SHIPMARK", "Shipmark  Team", "shipmark-official", "Official Shipmark" and "Ｓｈｉｐｍａｒｋ" are all caught.
+OFFICIAL_NAME_WORDS = ("", "team", "official", "staff", "support", "news", "moderator", "moderation", "hq")
 
 MIN_LENGTH = 3
 MAX_LENGTH = 39  # same as GitHub
@@ -61,3 +70,24 @@ def generate_username(github_login):
         suffix = f"-{n}"
         candidate = base[: MAX_LENGTH - len(suffix)] + suffix
     return candidate
+
+
+def _name_key(value):
+    folded = unicodedata.normalize("NFKC", value or "").casefold()
+    return "".join(ch for ch in folded if ch.isalnum())
+
+
+def looks_official(display_name):
+    """True when the display name would pass for the site's own account."""
+    site = _name_key(branding.SITE_NAME)
+    key = _name_key(display_name)
+    return bool(key) and any(key in (site + word, word + site) for word in OFFICIAL_NAME_WORDS)
+
+
+def validate_display_name(value, user=None):
+    """Only accounts with the official badge may be called "Shipmark", "Shipmark Team" and so on."""
+    from .roles import is_official
+
+    if looks_official(value) and not (user is not None and is_official(user)):
+        raise ValidationError(_("This name is reserved for official %(site)s accounts."), code="reserved_name",
+                              params={"site": branding.SITE_NAME})

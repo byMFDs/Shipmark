@@ -162,7 +162,7 @@
                   <h3 class="card__title"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
                   <p class="card__tagline">{{ project.tagline }}</p>
                   <div class="card__marks">{% for h in project.hallmarks %}{% if h.earned %}{% hallmark h.kind "s" %}{% endif %}{% endfor %}</div>
-                  <p class="card__foot"><span>{% blocktranslate with name=project.owner.display_name|default:project.owner.username %}by {{ name }}{% endblocktranslate %}</span>{% icon "arrow-up-right" "arrow" %}</p>
+                  <p class="card__foot"><span>{% blocktranslate with name=project.owner.display_name|default:project.owner.username %}by {{ name }}{% endblocktranslate %}{% user_marks project.owner %}</span>{% icon "arrow-up-right" "arrow" %}</p>
                 </div>
               </article>
             </li>

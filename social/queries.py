@@ -53,7 +53,7 @@ def _event_at():
 def project_rows(queryset, user):
     """Same loading as the profile list, so project.hallmarks needs no extra queries."""
     return with_social(with_uptime(
-        queryset.prefetch_related("screenshots", "domain_verifications").select_related("owner", "repo_link")
+        queryset.prefetch_related("screenshots", "domain_verifications", "owner__badges").select_related("owner", "repo_link")
     ), user).annotate(event_at=_event_at())
 
 
@@ -80,7 +80,8 @@ def following_feed(user, page):
             project__owner__is_suspended=False,
             project__owner__in=followed,
         ).exclude(kind=BuildLogEntry.Kind.LAUNCH)
-        .select_related("project__owner").order_by("-created_at", "-pk")[:wanted]
+        .select_related("project__owner").prefetch_related("project__owner__badges")
+        .order_by("-created_at", "-pk")[:wanted]
     )
     merged = [FeedItem("project", p, p.event_at) for p in projects] + [FeedItem("entry", e, e.created_at) for e in entries]
     merged.sort(key=lambda item: (item.at, item.kind, item.obj.pk), reverse=True)
