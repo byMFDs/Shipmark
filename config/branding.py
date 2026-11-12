@@ -10,8 +10,8 @@ SITE_NAME = "Shipmark"
 # Shown where a URL is natural: footer, badges, profile URL, embed snippets. No scheme, no slash.
 SITE_DOMAIN = "shipmark.me"
 TAGLINE = _("Proof, not promises.")
-CONTACT_EMAIL = "hello@example.com"
-LEGAL_OWNER_NAME = "Your Name"
+CONTACT_EMAIL = "shipmark@gmail.com"
+LEGAL_OWNER_NAME = "Shipmark. A Danylo Rudenko production."
 
 # Label -> URL. Shown in the footer once the design exists. Empty for now.
 SOCIAL_LINKS = {}
