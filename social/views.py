@@ -11,7 +11,10 @@ from django.utils.http import url_has_allowed_host_and_scheme, urlencode
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET, require_POST
 
+from accounts.roles import can_write
 from config.ratelimit import is_limited
+from moderation.pages import write_blocked_message
+from moderation.visibility import visible_users
 from projects.models import Project
 
 from . import queries
@@ -61,8 +64,8 @@ def social_action(name, limit, window):
                     return JsonResponse({"ok": False, "message": _("Sign in to do this.")}, status=401)
                 return redirect_to_login(_safe_next(request, "/"))
             back = _safe_next(request, "/")
-            if request.user.is_suspended:
-                return _fail(request, _("Your account is suspended."), 403, back)
+            if not can_write(request.user):
+                return _fail(request, write_blocked_message(request.user), 403, back)
             if is_limited(name, request.user.pk, limit=limit, window=window):
                 return _fail(request, _("Too many changes in a short time. Try again in a few minutes."), 429, back)
             return view(request, *args, **kwargs)
@@ -73,8 +76,8 @@ def social_action(name, limit, window):
 # ---------- Follow ----------
 
 def _person(username):
-    # Suspended users look the same as missing ones.
-    return get_object_or_404(User, username__iexact=username, is_suspended=False)
+    # Suspended and banned users look the same as missing ones.
+    return get_object_or_404(visible_users(User.objects.all()), username__iexact=username)
 
 
 def _follow_change(request, username, follow):
@@ -106,9 +109,7 @@ def unfollow(request, username):
 def _likeable(username, slug):
     """Published and not suspended: anything else is a 404, drafts of other people included."""
     return get_object_or_404(
-        Project.objects.select_related("owner"),
-        owner__username__iexact=username, slug=slug,
-        status=Project.Status.PUBLISHED, owner__is_suspended=False,
+        queries.published_projects().select_related("owner"), owner__username__iexact=username, slug=slug,
     )
 
 

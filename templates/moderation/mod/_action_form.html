@@ -1,0 +1,37 @@
+{% load i18n ui %}{# One form for every decision (moderation/forms.py ActionForm). Limits are checked on the server. #}
+{% if protected %}
+  <p class="notice notice--sanction" role="status">{{ protected }}</p>
+{% endif %}
+{% if form %}
+<form method="post" class="panel stack mod-form" novalidate>
+  {% csrf_token %}
+  <h2>{% translate "Decision" %}</h2>
+  {% include "includes/form_errors.html" %}
+  <fieldset class="field fieldset">
+    <legend class="field__label">{{ form.action.label }}</legend>
+    <div class="mod-form__choices">{% for radio in form.action %}<label class="check" for="{{ radio.id_for_label }}">{{ radio.tag }}<span>{{ radio.choice_label }}</span></label>{% endfor %}</div>
+    {% for error in form.action.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
+  </fieldset>
+  {% if form.category %}{% include "includes/form_field.html" with field=form.category %}{% endif %}
+  {% include "includes/form_field.html" with field=form.reason %}
+  {% if form.fields %}
+    <fieldset class="field fieldset">
+      <legend class="field__label">{{ form.fields.label }} <span class="muted">({% translate "for Clear profile fields" %})</span></legend>
+      <div class="mod-form__choices">{% for box in form.fields %}<label class="check" for="{{ box.id_for_label }}">{{ box.tag }}<span>{{ box.choice_label }}</span></label>{% endfor %}</div>
+      {% for error in form.fields.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
+    </fieldset>
+  {% endif %}
+  {% if form.length %}
+    <fieldset class="field fieldset">
+      <legend class="field__label">{% translate "Length (for Mute and Ban)" %}</legend>
+      <p class="field__hint">{% if user.is_superuser %}{% translate "Superusers have no limit." %}{% else %}{% translate "Moderators: mute up to 7 days, ban up to 14 days." %}{% endif %}</p>
+      <div class="mod-form__length">
+        {% include "includes/form_field.html" with field=form.length %}
+        {% include "includes/form_field.html" with field=form.unit %}
+      </div>
+      {% if form.permanent %}{% include "includes/form_field.html" with field=form.permanent %}{% endif %}
+    </fieldset>
+  {% endif %}
+  <div><button class="btn btn--primary" type="submit">{% translate "Apply decision" %}</button></div>
+</form>
+{% endif %}

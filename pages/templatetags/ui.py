@@ -82,6 +82,27 @@ def user_marks(person):
     }
 
 
+@register.inclusion_tag("moderation/_menu.html", takes_context=True)
+def moderate_menu(context, project=None, person=None, entry=None):
+    """The "Moderate" menu on project pages, profiles, feed cards and log entries. Moderators only, never
+    on their own things. The /mod/ views check everything again."""
+    viewer, user = context.get("viewer"), context.get("user")
+    if viewer is None or not viewer.can_moderate:
+        return {"links": []}
+    links = []
+    if entry is not None:
+        links.append((reverse("moderation:act_log_entry", args=[entry.pk]), gettext("Moderate this update")))
+    if project is not None and project.owner_id != user.pk:
+        links.append((reverse("moderation:act_project", args=[project.pk]), gettext("Moderate this project")))
+    owner = person or (project.owner if project is not None else None)
+    if owner is not None and owner.pk != user.pk:
+        links.append((reverse("moderation:act_user", args=[owner.username]),
+                      gettext("Moderate the profile @%(username)s") % {"username": owner.username}))
+    if entry is not None and project is not None and project.owner_id == user.pk:
+        links = []
+    return {"links": links}
+
+
 # ---------- Relative dates ----------
 
 @register.filter
@@ -313,7 +334,11 @@ def site_header(context, demo="", compact=False):
         settings_url = _url("accounts:settings")
         logout_url = _url("account_logout")
 
+    viewer = context.get("viewer")
+    moderator = bool(not demo and viewer is not None and viewer.can_moderate)
     return {
+        "mod_url": reverse("moderation:queue") if moderator else "",
+        "mod_count": viewer.open_reports if moderator else 0,
         "brand": context.get("brand"),
         "home_url": reverse("pages:landing"),
         "links": links,

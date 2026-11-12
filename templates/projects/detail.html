@@ -23,10 +23,16 @@
         <p class="owner-bar__state is-{{ project.status }}">
           {% if project.status == "published" %}{% translate "Published" %}
           {% elif project.status == "hidden" %}{% translate "Hidden by moderators. Only you can see this page." %}
+          {% elif project.status == "removed" %}{% translate "Removed by moderators. Only you can see this page." %}
           {% else %}{% translate "Draft. Only you can see this page." %}{% endif %}
         </p>
         <div class="owner-bar__actions">
+          {% if project.status == "removed" %}
+            <p class="owner-bar__reason"><span class="label">{% translate "Reason" %}</span> {{ project.removed_reason }}
+              <span class="muted">{% blocktranslate with email=brand.CONTACT_EMAIL %}Questions or an appeal: <a href="mailto:{{ email }}">{{ email }}</a>{% endblocktranslate %}</span></p>
+          {% else %}
           <a class="btn btn--secondary" href="{% url 'projects:edit' person.username project.slug %}">{% translate "Edit project" %}</a>
+          {% endif %}
           {% if project.status == "draft" %}
             <form method="post" action="{% url 'projects:publish' person.username project.slug %}">{% csrf_token %}<button class="btn btn--primary" type="submit">{% translate "Publish project" %}</button></form>
           {% elif project.status == "published" %}
@@ -58,7 +64,7 @@
           {% if project.status == "published" %}
             <div class="project__social">
               {% include "social/_like.html" with count=like_count liked=liked %}
-              {% if not is_owner %}<a class="btn btn--quiet" href="{% url 'moderation:report_project' person.username project.slug %}">{% translate "Report" %}</a>{% endif %}
+              {% if not is_owner %}<a class="btn btn--quiet" href="{% url 'moderation:report_project' person.username project.slug %}">{% translate "Report" %}</a>{% moderate_menu project=project %}{% endif %}
             </div>
           {% endif %}
         </div>

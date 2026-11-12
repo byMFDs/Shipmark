@@ -10,7 +10,7 @@ from unfold.decorators import action
 
 from . import actions, sanctions
 from .adminbase import AuditedModelAdmin, ReadOnlyModelAdmin
-from .models import AuditLog, Report, Sanction
+from .models import AuditLog, BannedIdentity, Notice, Report, Sanction
 
 
 @admin.register(Report)
@@ -18,12 +18,12 @@ class ReportAdmin(AuditedModelAdmin):
     list_display = ("target_repr", "kind", "reason", "status", "reporter", "created_at", "handled_by")
     list_filter = ("status", "reason", "created_at")
     search_fields = ("target_repr", "details", "reporter__username")
-    list_select_related = ("reporter", "handled_by", "project", "target_user")
+    list_select_related = ("reporter", "handled_by", "project", "target_user", "log_entry")
     date_hierarchy = "created_at"
     actions = ["resolve"]
     # Reports are written by the site and changed only through the actions, so every change is logged.
-    readonly_fields = ("reporter", "target_link", "target_repr", "reason", "details", "status",
-                       "handled_by", "handled_at", "created_at")
+    readonly_fields = ("reporter", "source", "target_link", "target_owner", "target_repr", "reason", "details",
+                       "status", "resolution_note", "handled_by", "handled_at", "created_at")
     fields = readonly_fields
 
     def has_add_permission(self, request):
@@ -31,12 +31,14 @@ class ReportAdmin(AuditedModelAdmin):
 
     @admin.display(description=_("Type"))
     def kind(self, obj):
-        return _("Project") if obj.project_id else _("Profile")
+        return {"project": _("Project"), "profile": _("Profile"), "entry": _("Build-log entry")}.get(obj.kind, "-")
 
     @admin.display(description=_("Target"))
     def target_link(self, obj):
         if obj.project_id:
             url = reverse("admin:projects_project_change", args=[obj.project_id])
+        elif obj.log_entry_id:
+            url = reverse("admin:projects_buildlogentry_change", args=[obj.log_entry_id])
         elif obj.target_user_id:
             url = reverse("admin:accounts_user_change", args=[obj.target_user_id])
         else:
@@ -162,9 +164,36 @@ class SanctionAdmin(ModelAdmin):
             if form.changed_data:
                 sanctions.log_changed(obj, request.user, form.changed_data)
         else:
-            sanctions.log_issued(obj, request.user)
+            sanctions.on_issued(obj, request.user)
 
     @action(description=_("Revoke selected sanctions"), permissions=["change"])
     def revoke(self, request, queryset):
         done = sum(sanctions.revoke(s, request.user) for s in queryset.select_related("user"))
         messages.success(request, _("Revoked %(count)s sanction(s).") % {"count": done})
+
+
+@admin.register(Notice)
+class NoticeAdmin(ReadOnlyModelAdmin):
+    """What affected people were told. Written by moderation.decisions only."""
+
+    list_display = ("created_at", "user", "kind", "target_repr", "dismissed_at")
+    list_filter = ("kind", "created_at")
+    search_fields = ("user__username", "target_repr", "reason")
+    list_select_related = ("user",)
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(BannedIdentity)
+class BannedIdentityAdmin(ReadOnlyModelAdmin):
+    """Salted hashes of banned GitHub ids (never the id). Deleted when the ban ends or is revoked."""
+
+    list_display = ("created_at", "__str__", "expires_at", "sanction")
+    list_select_related = ("sanction",)
+
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_active and request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return False

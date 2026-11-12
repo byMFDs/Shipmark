@@ -28,7 +28,7 @@
         {% if is_me %}
           <p><a class="btn btn--secondary" href="{% url 'accounts:settings' %}">{% translate "Edit profile" %}</a></p>
         {% else %}
-          <div class="profile-head__actions">{% include "social/_follow.html" with count_target="followers-count" %}<a class="btn btn--quiet" href="{% url 'moderation:report_user' person.username %}">{% translate "Report" %}</a></div>
+          <div class="profile-head__actions">{% include "social/_follow.html" with count_target="followers-count" %}<a class="btn btn--quiet" href="{% url 'moderation:report_user' person.username %}">{% translate "Report" %}</a>{% moderate_menu person=person %}</div>
         {% endif %}
       </div>
     </header>

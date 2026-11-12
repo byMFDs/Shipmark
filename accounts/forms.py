@@ -76,6 +76,7 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
         model = User
         fields = ["display_name", "bio", "website", "preferred_language"]
         widgets = {"bio": forms.Textarea(attrs={"rows": 3})}
+        labels = {"bio": _("Bio")}
 
     def clean_website(self):
         url = self.cleaned_data["website"]

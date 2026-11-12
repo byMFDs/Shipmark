@@ -1,0 +1,32 @@
+{% load i18n %}{# Moderation notices for the signed-in user: an active mute, and decisions about their work. #}
+{% if viewer.signed_in %}{% with mute=viewer.mute notices=viewer.notices %}{% if mute or notices %}
+  <div class="container account-notices">
+    {% if mute %}
+      <div class="notice notice--sanction" role="status">
+        <p class="notice__title">{% if mute.expires_at %}{% blocktranslate with date=mute.expires_at|date:"DATETIME_FORMAT" %}Your account is muted until {{ date }}.{% endblocktranslate %}{% else %}{% translate "Your account is muted with no end date." %}{% endif %}</p>
+        <p>{% translate "You can read everything, change your settings, download your data and delete your account, but not create, edit, publish, like, follow or report." %}</p>
+        <p><span class="label">{% translate "Reason" %}</span> {{ mute.reason }}</p>
+        <p class="muted">{% blocktranslate with email=brand.CONTACT_EMAIL %}Questions or an appeal: <a href="mailto:{{ email }}">{{ email }}</a>{% endblocktranslate %}</p>
+      </div>
+    {% endif %}
+    {% for notice in notices %}
+      <div class="notice" role="status">
+        <p class="notice__title">
+          {% if notice.kind == "project_removed" %}{% blocktranslate with name=notice.target_repr %}Moderators removed your project “{{ name }}”. Only you can still see it.{% endblocktranslate %}
+          {% elif notice.kind == "project_restored" %}{% blocktranslate with name=notice.target_repr %}Your project “{{ name }}” was restored.{% endblocktranslate %}
+          {% elif notice.kind == "profile_cleared" %}{% blocktranslate with fields=notice.target_repr %}Moderators cleared these profile fields: {{ fields }}.{% endblocktranslate %}
+          {% elif notice.kind == "report_dismissed" %}{% blocktranslate with name=notice.target_repr %}We reviewed your report about {{ name }} and took no action.{% endblocktranslate %}
+          {% else %}{% blocktranslate with name=notice.target_repr %}We reviewed your report about {{ name }} and took action. Thank you.{% endblocktranslate %}{% endif %}
+        </p>
+        {% if notice.reason %}<p><span class="label">{% translate "Reason" %}</span> {{ notice.reason }}</p>{% endif %}
+        {% if notice.kind == "project_removed" or notice.kind == "profile_cleared" %}
+          <p class="muted">{% blocktranslate with email=brand.CONTACT_EMAIL %}Questions or an appeal: <a href="mailto:{{ email }}">{{ email }}</a>{% endblocktranslate %}</p>
+        {% endif %}
+        <form method="post" action="{% url 'moderation:dismiss_notice' notice.pk %}">
+          {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+          <button class="btn btn--quiet" type="submit">{% translate "Got it" %}</button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}{% endwith %}{% endif %}

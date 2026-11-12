@@ -1,0 +1,21 @@
+{% load i18n %}{# The reported person's history: join date, sanctions, other reports, removed projects. Moderators only. #}
+{% if history %}
+<section class="record" aria-labelledby="history-title">
+  <div class="record__head"><h2 class="label" id="history-title">{% blocktranslate with name=history.person.username %}History of @{{ name }}{% endblocktranslate %}</h2></div>
+  <div class="record__body stack">
+    <p class="muted">{% blocktranslate with date=history.person.date_joined|date:"DATE_FORMAT" %}Joined {{ date }}{% endblocktranslate %}</p>
+    <h3 class="label">{% translate "Sanctions" %}</h3>
+    {% if history.sanctions %}<ul class="mod-history">{% for s in history.sanctions %}
+      <li><strong>{{ s.get_kind_display }}</strong> · {{ s.starts_at|date:"DATE_FORMAT" }} – {% if s.expires_at %}{{ s.expires_at|date:"DATE_FORMAT" }}{% else %}{% translate "no end date" %}{% endif %}{% if s.revoked_at %} · {% translate "revoked" %}{% endif %} · {{ s.reason|truncatechars:120 }}</li>
+    {% endfor %}</ul>{% else %}<p class="muted">{% translate "None." %}</p>{% endif %}
+    <h3 class="label">{% translate "Other reports" %}</h3>
+    {% if history.reports %}<ul class="mod-history">{% for r in history.reports %}
+      <li><a href="{% url 'moderation:report_detail' r.pk %}">{{ r.target_repr }}</a> · {{ r.get_reason_display }} · {{ r.get_status_display }} · {{ r.created_at|date:"DATE_FORMAT" }}</li>
+    {% endfor %}</ul>{% else %}<p class="muted">{% translate "None." %}</p>{% endif %}
+    <h3 class="label">{% translate "Removed projects" %}</h3>
+    {% if history.removed %}<ul class="mod-history">{% for p in history.removed %}
+      <li>{{ p.name }} · {{ p.removed_at|date:"DATE_FORMAT" }} · {{ p.removed_reason|truncatechars:120 }}</li>
+    {% endfor %}</ul>{% else %}<p class="muted">{% translate "None." %}</p>{% endif %}
+  </div>
+</section>
+{% endif %}

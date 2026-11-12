@@ -17,6 +17,7 @@
       <ul class="user-links">
         <li class="user-links__who">{% avatar me.name 32 %}<span>{{ me.name }}{% user_marks me.user %}</span></li>
         {% if profile_url %}<li><a href="{{ profile_url }}">{% translate "Your profile" %}</a></li>{% endif %}
+        {% if mod_url %}<li><a href="{{ mod_url }}">{% translate "Moderation" %} <span class="mono">{{ mod_count }}</span><span class="visually-hidden"> {% translate "open reports" %}</span></a></li>{% endif %}
         {% if settings_url %}<li><a href="{{ settings_url }}">{% translate "Settings" %}</a></li>{% endif %}
         {% if logout_url %}<li><a href="{{ logout_url }}">{% translate "Sign out" %}</a></li>{% endif %}
       </ul>
@@ -29,6 +30,7 @@
         <ul class="user-menu__panel">
           <li class="user-menu__who">{{ me.name }}{% user_marks me.user %}</li>
           {% if profile_url %}<li><a class="user-menu__item" href="{{ profile_url }}">{% translate "Your profile" %}</a></li>{% endif %}
+          {% if mod_url %}<li><a class="user-menu__item" href="{{ mod_url }}">{% translate "Moderation" %} <span class="mono">{{ mod_count }}</span><span class="visually-hidden"> {% translate "open reports" %}</span></a></li>{% endif %}
           {% if settings_url %}<li><a class="user-menu__item" href="{{ settings_url }}">{% translate "Settings" %}</a></li>{% endif %}
           {% if logout_url %}<li><a class="user-menu__item" href="{{ logout_url }}">{% translate "Sign out" %}</a></li>{% endif %}
         </ul>

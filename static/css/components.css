@@ -658,6 +658,42 @@
   vertical-align: 0.1em;
 }
 
+/* ---------- Moderation notices (mute, decisions) and the "Moderate" menu ---------- */
+/* A notice is a framed record with a danger rule on the left for sanctions (it limits what you can do). */
+
+.account-notices { display: grid; gap: var(--s-3); margin-block: var(--s-4); }
+
+.notice {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+}
+
+.notice p { margin: 0; }
+.notice__title { font-weight: 500; }
+.notice--sanction { border-left: 3px solid var(--danger); }
+.notice form { justify-self: start; }
+
+.mod-menu { position: relative; display: inline-block; }
+.mod-menu__button { list-style: none; }
+.mod-menu__button::-webkit-details-marker { display: none; }
+.mod-menu__panel {
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  top: calc(100% + var(--s-1));
+  min-width: 16rem;
+  margin: 0;
+  padding: var(--s-2) 0;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-pop);
+}
+.mod-menu[open] .mod-menu__panel { animation: menu-in var(--t-base) var(--ease-out); }
+
 /* ---------- Hallmark: a flat stamped chip, "✓ Repo owner" ---------- */
 /* Earned: pale green fill, green mono label, a check. Not earned: dashed outline, muted, "Not yet".
    Names stay English in every language (see docs/EDITING.md), so chips keep one width. */

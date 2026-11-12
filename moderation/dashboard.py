@@ -11,6 +11,7 @@ from projects.models import Project
 from verification.uptime import with_uptime
 
 from .models import Report
+from .visibility import visible_owner
 
 
 def open_reports_badge(request):
@@ -20,7 +21,7 @@ def open_reports_badge(request):
 
 def public_projects():
     """Published projects of users who are not suspended: what visitors can see."""
-    return Project.objects.filter(status=Project.Status.PUBLISHED, owner__is_suspended=False)
+    return visible_owner(Project.objects.filter(status=Project.Status.PUBLISHED))
 
 
 def hallmark_counts():

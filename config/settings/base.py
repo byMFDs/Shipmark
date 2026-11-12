@@ -1,6 +1,7 @@
 """Settings shared by all environments. Values come from .env vars (see .env.example)."""
 import sys
 import tempfile
+from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -61,6 +62,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     # Asks for the new Terms after TERMS_VERSION is bumped. Needs request.user.
     "config.middleware.TermsAcceptanceMiddleware",
+    # A ban ends the session and shows the ban page (expiry checked here, per request). Needs request.user.
+    "moderation.middleware.BanMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
@@ -117,6 +120,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "config.context_processors.brand",
+                "moderation.context_processors.account",
             ],
         },
     },
@@ -142,6 +146,12 @@ LOGOUT_REDIRECT_URL = "pages:landing"
 # (terms_version_accepted). After a bump every signed-in user is asked to accept again on their next visit
 # (config.middleware.TermsAcceptanceMiddleware). Also update the date at the top of content/*/terms.md.
 TERMS_VERSION = "2026-11-10"
+
+# Moderation (/mod/). Moderators (moderator badge) stay within these limits; superusers have none and are the
+# only ones who issue permanent sanctions, revoke, restore and purge. Every action needs a reason the user sees.
+MODERATION_MAX_MUTE = timedelta(days=7)
+MODERATION_MAX_BAN = timedelta(days=14)
+MODERATION_ACTIONS_PER_HOUR = 30  # per moderator
 
 # --- django-allauth: GitHub is the only login method ---
 GITHUB_CLIENT_ID = env.str("GITHUB_CLIENT_ID", default="")
@@ -309,6 +319,9 @@ UNFOLD = {
                     {"title": _("Reports"), "icon": "flag", "link": reverse_lazy("admin:moderation_report_changelist"),
                      "badge": "moderation.dashboard.open_reports_badge"},
                     {"title": _("Sanctions"), "icon": "gavel", "link": reverse_lazy("admin:moderation_sanction_changelist")},
+                    {"title": _("Removed projects"), "icon": "delete_sweep",
+                     "link": reverse_lazy("admin:projects_project_changelist", query={"status__exact": "removed"})},
+                    {"title": _("Notices"), "icon": "notifications", "link": reverse_lazy("admin:moderation_notice_changelist")},
                     {"title": _("Follows"), "icon": "group_add", "link": reverse_lazy("admin:social_follow_changelist")},
                     {"title": _("Likes"), "icon": "favorite", "link": reverse_lazy("admin:social_like_changelist")},
                 ],

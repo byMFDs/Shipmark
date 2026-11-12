@@ -9,6 +9,7 @@ from django.utils.cache import patch_cache_control
 from django.views.decorators.http import require_safe
 
 from accounts.profile import profile_projects
+from moderation.visibility import visible_owner, visible_users
 from verification.uptime import with_uptime
 
 from . import badges
@@ -29,9 +30,8 @@ def _svg(svg, max_age):
 @require_safe
 def project_badge(request, username, slug):
     project = (
-        with_uptime(Project.objects.select_related("owner", "repo_link").prefetch_related("domain_verifications"))
-        .filter(owner__username__iexact=username, slug=slug,
-                status=Project.Status.PUBLISHED, owner__is_suspended=False)
+        with_uptime(visible_owner(Project.objects).select_related("owner", "repo_link").prefetch_related("domain_verifications"))
+        .filter(owner__username__iexact=username, slug=slug, status=Project.Status.PUBLISHED)
         .first()
     )
     if project is None:
@@ -42,7 +42,7 @@ def project_badge(request, username, slug):
 
 @require_safe
 def profile_badge(request, username):
-    person = get_user_model().objects.filter(username__iexact=username, is_suspended=False).first()
+    person = visible_users(get_user_model().objects.all()).filter(username__iexact=username).first()
     if person is None:
         return _svg(badges.not_found_badge(), NOT_FOUND_MAX_AGE)
     count = sum(project.hallmarks.earned_count for project in profile_projects(person))

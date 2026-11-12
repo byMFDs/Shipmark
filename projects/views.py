@@ -15,6 +15,9 @@ from django.utils.translation import ngettext
 from django.views.decorators.http import require_http_methods, require_POST
 
 from accounts.github import github_id as github_user_id
+from accounts.roles import can_write
+from moderation.pages import write_blocked_message
+from moderation.visibility import banned
 
 from config.ratelimit import is_limited
 from verification import domain as domains
@@ -36,24 +39,33 @@ TOO_MANY = _("Too many changes in a short time. Try again in a few minutes.")
 
 
 def _locked(request):
-    """Suspended users can read but not write."""
-    return HttpResponseForbidden(_("Your account is suspended."))
+    """Suspended and muted users can read but not write (accounts.roles.can_write)."""
+    return HttpResponseForbidden(write_blocked_message(request.user))
 
 
-def owner_project(view):
+def owner_project(view=None, *, cleanup=False):
     """Loads the project from the URL and makes sure it is the signed-in user's.
 
     Anyone else gets a 404, the same as for a project that does not exist, so URLs
     cannot be used to find out which drafts exist. Used on every owner-only view.
+    POST needs `can_write`; a project removed by moderators accepts no changes. `cleanup=True` (delete,
+    unpublish) stays open to muted owners and for removed projects: taking your own work down is allowed.
+    Suspended owners (an admin decision) change nothing.
     """
+    if view is None:
+        return lambda v: owner_project(v, cleanup=cleanup)
+
     @wraps(view)
     @login_required
     def wrapper(request, username, slug, *args, **kwargs):
         project = get_object_or_404(Project.objects.select_related("owner"), owner__username=username, slug=slug)
         if project.owner_id != request.user.pk:
             raise Http404
-        if request.method == "POST" and request.user.is_suspended:
-            return _locked(request)
+        if request.method == "POST":
+            if request.user.is_suspended or (not cleanup and not can_write(request.user)):
+                return _locked(request)
+            if not cleanup and project.status == Project.Status.REMOVED:
+                return HttpResponseForbidden(_("Moderators removed this project. It cannot be changed."))
         return view(request, project, *args, **kwargs)
     return wrapper
 
@@ -101,7 +113,7 @@ def _publish(project):
 def new(request):
     form = ProjectForm(request.POST or None, request.FILES or None)
     if request.method == "POST":
-        if request.user.is_suspended:
+        if not can_write(request.user):
             return _locked(request)
         if is_limited("project_create", request.user.pk, limit=10, window=3600):
             form.add_error(None, TOO_MANY)
@@ -156,7 +168,7 @@ def edit(request, project):
 @require_POST
 def preview(request):
     """Markdown preview for the editor (JS). Same renderer as the project page."""
-    if request.user.is_suspended:
+    if not can_write(request.user):
         return _locked(request)
     if is_limited("project_preview", request.user.pk, limit=120, window=600):
         return JsonResponse({"error": TOO_MANY}, status=429)
@@ -259,7 +271,7 @@ def publish(request, project):
     return redirect(project)
 
 
-@owner_project
+@owner_project(cleanup=True)
 @require_POST
 def unpublish(request, project):
     if project.status == Project.Status.PUBLISHED:
@@ -269,7 +281,7 @@ def unpublish(request, project):
     return redirect("projects:edit", username=project.owner.username, slug=project.slug)
 
 
-@owner_project
+@owner_project(cleanup=True)
 @require_http_methods(["GET", "POST"])
 def delete(request, project):
     """GET asks for confirmation, POST deletes."""
@@ -416,14 +428,17 @@ def log_delete(request, project, pk):
 
 def _detail_queryset():
     return with_uptime(Project.objects.select_related("owner", "repo_link")
-                       .prefetch_related("tags", "built_with", "screenshots", "domain_verifications"))
+                       .prefetch_related("tags", "built_with", "screenshots", "domain_verifications", "owner__badges")
+                       .annotate(owner_banned=banned("owner")))
 
 
 def detail(request, username, slug):
     project = get_object_or_404(_detail_queryset(), owner__username__iexact=username, slug=slug)
     is_owner = request.user.is_authenticated and request.user.pk == project.owner_id
-    # Drafts, hidden projects and everything of a suspended user: 404 for everyone but the owner.
-    if not is_owner and (project.status != Project.Status.PUBLISHED or project.owner.is_suspended):
+    # Drafts, hidden and removed projects, and everything of a suspended or banned user: 404 for everyone
+    # but the owner (who sees why a removed project is not public).
+    if not is_owner and (project.status != Project.Status.PUBLISHED or project.owner.is_suspended
+                         or project.owner_banned):
         raise Http404
     if project.owner.username != username:  # /u/Name/slug/ -> /u/name/slug/
         return redirect(project, permanent=True)

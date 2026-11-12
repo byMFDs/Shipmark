@@ -14,6 +14,7 @@
           <div class="feed-item__foot">
             <div class="plate-row__marks">{% for h in project.hallmarks %}{% hallmark h.kind "s" h.earned %}{% endfor %}</div>
             {% include "social/_like.html" with project=project count=project.like_count liked=project.liked %}
+            {% moderate_menu project=project %}
           </div>
         </div>
       </li>

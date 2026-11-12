@@ -4,6 +4,7 @@ from collections import namedtuple
 from django.db.models import BooleanField, Count, Exists, OuterRef, Subquery, Value
 from django.db.models.functions import Coalesce
 
+from moderation.visibility import visible_owner
 from projects.models import BuildLogEntry, Project
 from verification.uptime import with_uptime
 
@@ -17,8 +18,8 @@ FeedItem = namedtuple("FeedItem", "kind obj at")
 
 
 def published_projects():
-    """The only projects other people may see: published, and the owner is not suspended."""
-    return Project.objects.filter(status=Project.Status.PUBLISHED, owner__is_suspended=False)
+    """The only projects other people may see: published, and the owner is not suspended or banned."""
+    return visible_owner(Project.objects.filter(status=Project.Status.PUBLISHED))
 
 
 def follower_count(person):
@@ -75,11 +76,10 @@ def following_feed(user, page):
     followed = Follow.objects.filter(follower=user, follower__is_suspended=False).values("following")
     projects = project_rows(published_projects().filter(owner__in=followed), user).order_by("-event_at", "-pk")[:wanted]
     entries = (
-        BuildLogEntry.objects.filter(
+        visible_owner(BuildLogEntry.objects.filter(
             project__status=Project.Status.PUBLISHED,
-            project__owner__is_suspended=False,
             project__owner__in=followed,
-        ).exclude(kind=BuildLogEntry.Kind.LAUNCH)
+        ), "project__owner").exclude(kind=BuildLogEntry.Kind.LAUNCH)
         .select_related("project__owner").prefetch_related("project__owner__badges")
         .order_by("-created_at", "-pk")[:wanted]
     )

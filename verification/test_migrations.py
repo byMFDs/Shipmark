@@ -4,7 +4,8 @@ from django.db.migrations.executor import MigrationExecutor
 from django.test import TransactionTestCase
 from django.utils import timezone
 
-BEFORE = [("verification", "0006_repolink_facts_and_review"), ("moderation", "0002_report")]
+BEFORE = [("verification", "0006_repolink_facts_and_review"), ("moderation", "0002_report"),
+          ("projects", "0004_project_repo_token")]  # later project fields are unknown to this old state
 AFTER = [("verification", "0007_contributor_links_need_recheck")]
 
 

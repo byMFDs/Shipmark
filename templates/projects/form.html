@@ -12,7 +12,7 @@
       <h1>{% if project %}{% translate "Edit project" %}{% else %}{% translate "New project" %}{% endif %}</h1>
       {% if project %}
         <p class="muted">
-          {% if project.status == "published" %}{% translate "Published" %}{% elif project.status == "hidden" %}{% translate "Hidden by moderators" %}{% else %}{% translate "Draft. Only you can see it." %}{% endif %}
+          {% if project.status == "published" %}{% translate "Published" %}{% elif project.status == "hidden" %}{% translate "Hidden by moderators" %}{% elif project.status == "removed" %}{% translate "Removed by moderators. It cannot be changed." %} {{ project.removed_reason }}{% else %}{% translate "Draft. Only you can see it." %}{% endif %}
           · <a href="{{ project.get_absolute_url }}">{% translate "View page" %}</a>
         </p>
       {% else %}

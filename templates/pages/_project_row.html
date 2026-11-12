@@ -10,6 +10,7 @@
     <p class="plate-row__tagline">{{ project.tagline }}</p>
     <div class="feed-item__foot">
       <div class="plate-row__marks">{% for h in project.hallmarks %}{% hallmark h.kind "s" h.earned %}{% endfor %}</div>
+      {% moderate_menu project=project %}
       {% if with_like %}{% include "social/_like.html" with project=project count=project.like_count liked=project.liked %}{% endif %}
     </div>
   </div>

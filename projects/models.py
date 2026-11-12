@@ -40,7 +40,8 @@ class Project(models.Model):
     class Status(models.TextChoices):
         DRAFT = "draft", _("Draft")
         PUBLISHED = "published", _("Published")
-        HIDDEN = "hidden", _("Hidden")  # set by moderation only
+        HIDDEN = "hidden", _("Hidden")  # set by moderation only (admin)
+        REMOVED = "removed", _("Removed")  # by a moderator, with a reason the owner sees; superusers restore or purge
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="projects")
     name = models.CharField(max_length=80)
@@ -56,6 +57,11 @@ class Project(models.Model):
     built_with = models.ManyToManyField(Tool, blank=True, related_name="projects")  # self-declared
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.DRAFT, db_index=True)
     launched_at = models.DateTimeField(null=True, blank=True)
+    removed_reason = models.TextField(blank=True, default="", max_length=1000)
+    removed_at = models.DateTimeField(null=True, blank=True)
+    removed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

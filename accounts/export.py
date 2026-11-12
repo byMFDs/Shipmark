@@ -10,7 +10,7 @@ from django.db.models import Prefetch
 from django.utils import timezone
 
 from config import branding
-from moderation.models import Report
+from moderation.models import Notice, Report, Sanction
 from projects.models import BuildLogEntry, Project
 from social.models import Follow, Like
 
@@ -138,5 +138,18 @@ def build_export(user, absolute=lambda url: url):
                 "status": r.status, "created_at": _dt(r.created_at),
             }
             for r in reports
+        ],
+        # Moderation decisions about you. Who reported you is never included.
+        "sanctions": [
+            {
+                "kind": s.kind, "reason": s.reason, "starts_at": _dt(s.starts_at), "expires_at": _dt(s.expires_at),
+                "revoked_at": _dt(s.revoked_at),
+            }
+            for s in Sanction.objects.filter(user=user).order_by("starts_at", "id")
+        ],
+        "notices": [
+            {"kind": n.kind, "about": n.target_repr, "reason": n.reason, "created_at": _dt(n.created_at),
+             "dismissed_at": _dt(n.dismissed_at)}
+            for n in Notice.objects.filter(user=user).order_by("created_at", "id")
         ],
     }

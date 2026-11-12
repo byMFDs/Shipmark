@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 13:59+0000\n"
+"POT-Creation-Date: 2026-11-12 14:47+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -23,11 +23,17 @@ msgid "Badges (only superusers can change these)"
 msgstr "Insignias (solo los superusuarios pueden cambiarlas)"
 
 #: accounts/admin.py:100 moderation/admin.py:34
-#: templates/accounts/settings.html:17
+#: templates/accounts/settings.html:17 templates/moderation/mod/act.html:11
+#: templates/moderation/mod/queue.html:32
+#: templates/moderation/mod/queue.html:49
 msgid "Profile"
 msgstr "Perfil"
 
-#: accounts/admin.py:101 config/settings/base.py:307
+#: accounts/admin.py:101 config/settings/base.py:317
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:33
+#: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
+#: templates/moderation/mod/queue.html:10
+#: templates/moderation/mod/report.html:3
 msgid "Moderation"
 msgstr "Moderación"
 
@@ -39,7 +45,7 @@ msgstr "Permisos"
 msgid "Terms and dates"
 msgstr "Términos y fechas"
 
-#: accounts/admin.py:120 moderation/dashboard.py:46
+#: accounts/admin.py:120 moderation/dashboard.py:47
 msgid "Published projects"
 msgstr "Proyectos publicados"
 
@@ -82,19 +88,24 @@ msgstr "Tu perfil estará en /u/usuario/. Minúsculas, números, - y _."
 msgid "Automatic (browser language)"
 msgstr "Automático (idioma del navegador)"
 
-#: accounts/forms.py:83
+#: accounts/forms.py:79 moderation/forms.py:59
+#: templates/moderation/mod/report.html:36
+msgid "Bio"
+msgstr "Biografía"
+
+#: accounts/forms.py:84
 msgid "Enter a link that starts with http:// or https://."
 msgstr "Introduce un enlace que empiece por http:// o https://."
 
-#: accounts/forms.py:97
+#: accounts/forms.py:98
 msgid "Accept the updated Terms to keep using your account."
 msgstr "Acepta los Términos actualizados para seguir usando tu cuenta."
 
-#: accounts/forms.py:109
+#: accounts/forms.py:110
 msgid "Type your username to confirm"
 msgstr "Escribe tu nombre de usuario para confirmar"
 
-#: accounts/forms.py:120
+#: accounts/forms.py:121
 msgid "This is not your username. Type it exactly as shown."
 msgstr "Ese no es tu nombre de usuario. Escríbelo exactamente como se muestra."
 
@@ -106,7 +117,8 @@ msgstr "Este nombre de usuario ya está en uso."
 msgid "Official"
 msgstr "Oficial"
 
-#: accounts/models.py:51 templates/includes/user_marks.html:1
+#: accounts/models.py:51 moderation/models.py:64
+#: templates/includes/user_marks.html:1
 msgid "Moderator"
 msgstr "Moderador"
 
@@ -136,36 +148,35 @@ msgstr "Este nombre de usuario está reservado. Elige otro."
 msgid "This name is reserved for official %(site)s accounts."
 msgstr "Este nombre está reservado para las cuentas oficiales de %(site)s."
 
-#: accounts/views.py:51
+#: accounts/views.py:52
 msgid "You are signed out."
 msgstr "Has cerrado sesión."
 
-#: accounts/views.py:63 moderation/views.py:30 projects/views.py:40
-#: social/views.py:65
+#: accounts/views.py:64 moderation/pages.py:26
 msgid "Your account is suspended."
 msgstr "Tu cuenta está suspendida."
 
-#: accounts/views.py:66 projects/views.py:35 social/views.py:67
+#: accounts/views.py:67 projects/views.py:38 social/views.py:70
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Demasiados cambios en poco tiempo. Inténtalo de nuevo en unos minutos."
 
-#: accounts/views.py:71
+#: accounts/views.py:72
 msgid "Settings saved."
 msgstr "Ajustes guardados."
 
-#: accounts/views.py:89
+#: accounts/views.py:90
 msgid "Thank you. You accepted the updated Terms."
 msgstr "Gracias. Has aceptado los Términos actualizados."
 
-#: accounts/views.py:100
+#: accounts/views.py:101
 msgid "Too many downloads in a short time. Try again later."
 msgstr "Demasiadas descargas en poco tiempo. Inténtalo de nuevo más tarde."
 
-#: accounts/views.py:123
+#: accounts/views.py:124
 msgid "Too many attempts. Try again later."
 msgstr "Demasiados intentos. Inténtalo de nuevo más tarde."
 
-#: accounts/views.py:127
+#: accounts/views.py:128
 msgid "Your account and everything in it were deleted."
 msgstr "Tu cuenta y todo lo que contenía se han eliminado."
 
@@ -173,299 +184,529 @@ msgstr "Tu cuenta y todo lo que contenía se han eliminado."
 msgid "Proof, not promises."
 msgstr "Pruebas, no promesas."
 
-#: config/settings/base.py:244
+#: config/settings/base.py:254
 msgid "Admin"
 msgstr "Administración"
 
-#: config/settings/base.py:280 config/settings/base.py:282
-#: moderation/dashboard.py:45
+#: config/settings/base.py:290 config/settings/base.py:292
+#: moderation/dashboard.py:46
 msgid "Users"
 msgstr "Usuarios"
 
-#: config/settings/base.py:283
+#: config/settings/base.py:293
 msgid "Badges"
 msgstr "Insignias"
 
-#: config/settings/base.py:287 config/settings/base.py:289
+#: config/settings/base.py:297 config/settings/base.py:299
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Proyectos"
 
-#: config/settings/base.py:290 templates/pages/landing.html:264
+#: config/settings/base.py:300 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Registro de desarrollo"
 
-#: config/settings/base.py:291 projects/forms.py:47
-#: templates/projects/detail.html:161
+#: config/settings/base.py:301 projects/forms.py:47
+#: templates/projects/detail.html:167
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: config/settings/base.py:292
+#: config/settings/base.py:302
 msgid "Tools"
 msgstr "Herramientas"
 
-#: config/settings/base.py:296
+#: config/settings/base.py:306
 msgid "Verification"
 msgstr "Verificación"
 
-#: config/settings/base.py:298
+#: config/settings/base.py:308
 msgid "Review queue"
 msgstr "Cola de revisión"
 
-#: config/settings/base.py:300
+#: config/settings/base.py:310
 msgid "Repositories"
 msgstr "Repositorios"
 
-#: config/settings/base.py:301
+#: config/settings/base.py:311
 msgid "Domains"
 msgstr "Dominios"
 
-#: config/settings/base.py:302
+#: config/settings/base.py:312
 msgid "Uptime checks"
 msgstr "Comprobaciones de disponibilidad"
 
-#: config/settings/base.py:303
+#: config/settings/base.py:313
 msgid "Blocked repos and domains"
 msgstr "Repositorios y dominios bloqueados"
 
-#: config/settings/base.py:309
+#: config/settings/base.py:319 templates/moderation/mod/queue.html:11
 msgid "Reports"
 msgstr "Denuncias"
 
-#: config/settings/base.py:311
+#: config/settings/base.py:321 templates/moderation/mod/_history.html:7
 msgid "Sanctions"
 msgstr "Sanciones"
 
-#: config/settings/base.py:312
+#: config/settings/base.py:322 templates/moderation/mod/_history.html:15
+msgid "Removed projects"
+msgstr "Proyectos retirados"
+
+#: config/settings/base.py:324
+msgid "Notices"
+msgstr "Avisos"
+
+#: config/settings/base.py:325
 msgid "Follows"
 msgstr "Seguimientos"
 
-#: config/settings/base.py:313 projects/admin.py:44
+#: config/settings/base.py:326 projects/admin.py:46
 msgid "Likes"
 msgstr "Me gusta"
 
-#: config/settings/base.py:317 news/apps.py:8
+#: config/settings/base.py:330 news/apps.py:8
 msgid "News"
 msgstr "Noticias"
 
-#: config/settings/base.py:319
+#: config/settings/base.py:332
 msgid "News posts"
 msgstr "Noticias"
 
-#: config/settings/base.py:323 config/settings/base.py:325
+#: config/settings/base.py:336 config/settings/base.py:338
 msgid "Audit log"
 msgstr "Registro de auditoría"
 
-#: moderation/admin.py:32
+#: moderation/admin.py:32 templates/moderation/mod/queue.html:28
 msgid "Type"
 msgstr "Tipo"
 
-#: moderation/admin.py:34
+#: moderation/admin.py:34 templates/moderation/mod/act.html:11
+#: templates/moderation/mod/queue.html:31
+#: templates/moderation/mod/queue.html:49
 msgid "Project"
 msgstr "Proyecto"
+
+#: moderation/admin.py:34 templates/moderation/mod/act.html:11
+#: templates/moderation/mod/queue.html:33
+#: templates/moderation/mod/queue.html:49
+msgid "Build-log entry"
+msgstr "Entrada del registro de cambios"
 
 #: moderation/admin.py:36
 msgid "Target"
 msgstr "Objetivo"
 
-#: moderation/admin.py:43
+#: moderation/admin.py:45
 #, python-format
 msgid "%(name)s (deleted)"
 msgstr "%(name)s (eliminado)"
 
-#: moderation/admin.py:46
+#: moderation/admin.py:48
 msgid "Resolve selected reports"
 msgstr "Resolver las denuncias seleccionadas"
 
-#: moderation/admin.py:49
+#: moderation/admin.py:51
 #, python-format
 msgid "Resolved %(count)s report(s)."
 msgstr "Denuncias resueltas: %(count)s."
 
-#: moderation/admin.py:85
+#: moderation/admin.py:87
 msgid "The end must be after the start."
 msgstr "El final debe ser posterior al inicio."
 
-#: moderation/admin.py:90
+#: moderation/admin.py:92
 msgid "state"
 msgstr "estado"
 
-#: moderation/admin.py:94 moderation/admin.py:154
+#: moderation/admin.py:96 moderation/admin.py:156
 msgid "Active"
 msgstr "Activa"
 
-#: moderation/admin.py:94 moderation/admin.py:154 news/admin.py:29
+#: moderation/admin.py:96 moderation/admin.py:156 news/admin.py:29
 msgid "Scheduled"
 msgstr "Programada"
 
-#: moderation/admin.py:94 moderation/admin.py:154
+#: moderation/admin.py:96 moderation/admin.py:156
 msgid "Expired"
 msgstr "Vencida"
 
-#: moderation/admin.py:95 moderation/admin.py:155
+#: moderation/admin.py:97 moderation/admin.py:157
 msgid "Revoked"
 msgstr "Revocada"
 
-#: moderation/admin.py:152 news/admin.py:25
+#: moderation/admin.py:154 news/admin.py:25
 msgid "State"
 msgstr "Estado"
 
-#: moderation/admin.py:167
+#: moderation/admin.py:169
 msgid "Revoke selected sanctions"
 msgstr "Revocar las sanciones seleccionadas"
 
-#: moderation/admin.py:170
+#: moderation/admin.py:172
 #, python-format
 msgid "Revoked %(count)s sanction(s)."
 msgstr "Sanciones revocadas: %(count)s."
 
-#: moderation/dashboard.py:47
+#: moderation/dashboard.py:48
 msgid "Signups, last 7 days"
 msgstr "Registros de los últimos 7 días"
 
-#: moderation/dashboard.py:48 projects/admin.py:48
+#: moderation/dashboard.py:49 projects/admin.py:50
 msgid "Open reports"
 msgstr "Denuncias abiertas"
 
-#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:129
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:150
 msgid "Repo owner"
 msgstr "Repo owner"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:130
+#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:151
 msgid "Live"
 msgstr "Live"
 
-#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:131
+#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:152
 msgid "Steady"
 msgstr "Steady"
 
-#: moderation/forms.py:11
+#: moderation/decisions.py:124
+msgid "avatar"
+msgstr "avatar"
+
+#: moderation/decisions.py:124
+msgid "bio"
+msgstr "biografía"
+
+#: moderation/decisions.py:124
+msgid "links"
+msgstr "enlaces"
+
+#: moderation/forms.py:12 templates/includes/account_notices.html:8
+#: templates/includes/account_notices.html:21
+#: templates/moderation/banned.html:14 templates/moderation/mod/queue.html:35
+#: templates/projects/detail.html:31
 msgid "Reason"
 msgstr "Motivo"
 
-#: moderation/forms.py:12
+#: moderation/forms.py:13
 msgid "Choose a reason"
 msgstr "Elige un motivo"
 
-#: moderation/forms.py:13
+#: moderation/forms.py:14
 msgid "Choose a reason."
 msgstr "Elige un motivo."
 
-#: moderation/forms.py:16
+#: moderation/forms.py:17
 msgid "Details (optional)"
 msgstr "Detalles (opcional)"
 
-#: moderation/forms.py:20
+#: moderation/forms.py:21
 msgid "What is wrong, and where? Do not include passwords or private data."
 msgstr "¿Qué falla y dónde? No incluyas contraseñas ni datos privados."
 
-#: moderation/forms.py:27
+#: moderation/forms.py:28
 msgid "Tell us what is wrong."
 msgstr "Cuéntanos qué falla."
 
-#: moderation/models.py:44
-msgid "Spam or advertising"
-msgstr "Spam o publicidad"
+#: moderation/forms.py:33
+msgid "Dismiss: no action"
+msgstr "Descartar: sin medidas"
 
-#: moderation/models.py:45
-msgid "Fake or misleading proof"
-msgstr "Prueba falsa o engañosa"
+#: moderation/forms.py:34
+msgid "Remove the project"
+msgstr "Retirar el proyecto"
 
-#: moderation/models.py:46
-msgid "Impersonation"
-msgstr "Suplantación de identidad"
+#: moderation/forms.py:35
+msgid "Clear profile fields"
+msgstr "Vaciar campos del perfil"
 
-#: moderation/models.py:47
-msgid "Offensive or illegal content"
-msgstr "Contenido ofensivo o ilegal"
-
-#: moderation/models.py:48
-msgid "Copyright or stolen work"
-msgstr "Derechos de autor u obra robada"
-
-#: moderation/models.py:49
-msgid "Something else"
-msgstr "Otra cosa"
-
-#: moderation/models.py:52
-msgid "Open"
-msgstr "Abierta"
-
-#: moderation/models.py:53
-msgid "Resolved"
-msgstr "Resuelta"
-
-#: moderation/models.py:117
+#: moderation/forms.py:36 moderation/models.py:156
 msgid "Mute"
 msgstr "Silencio"
 
-#: moderation/models.py:118
+#: moderation/forms.py:37 moderation/models.py:157
 msgid "Ban"
 msgstr "Bloqueo"
 
-#: moderation/models.py:122
+#: moderation/forms.py:48 templates/moderation/mod/_action_form.html:8
+msgid "Decision"
+msgstr "Decisión"
+
+#: moderation/forms.py:50
+msgid "Reason (the person sees this)"
+msgstr "Motivo (la persona lo verá)"
+
+#: moderation/forms.py:52
+msgid ""
+"Plain and specific: what was wrong and which rule it breaks. Never name the "
+"reporter."
+msgstr ""
+"Claro y concreto: qué estaba mal y qué norma incumple. Nunca nombres a quien "
+"denunció."
+
+#: moderation/forms.py:53
+msgid "Write the reason. The person will see it."
+msgstr "Escribe el motivo. La persona lo verá."
+
+#: moderation/forms.py:54
+msgid "Write at least a short sentence (10 characters)."
+msgstr "Escribe al menos una frase corta (10 caracteres)."
+
+#: moderation/forms.py:56
+msgid "Report reason"
+msgstr "Motivo de la denuncia"
+
+#: moderation/forms.py:58
+msgid "Fields to clear"
+msgstr "Campos que vaciar"
+
+#: moderation/forms.py:59 templates/moderation/mod/report.html:38
+msgid "Avatar"
+msgstr "Avatar"
+
+#: moderation/forms.py:59 templates/moderation/mod/report.html:37
+msgid "Links"
+msgstr "Enlaces"
+
+#: moderation/forms.py:61
+msgid "Length"
+msgstr "Duración"
+
+#: moderation/forms.py:62
+msgid "Unit"
+msgstr "Unidad"
+
+#: moderation/forms.py:62
+msgid "hours"
+msgstr "horas"
+
+#: moderation/forms.py:62
+msgid "days"
+msgstr "días"
+
+#: moderation/forms.py:64
+msgid "Permanent (superusers only)"
+msgstr "Permanente (solo superusuarios)"
+
+#: moderation/forms.py:96
+msgid "Say how long."
+msgstr "Indica cuánto tiempo."
+
+#: moderation/forms.py:106
+msgid "Choose at least one field."
+msgstr "Elige al menos un campo."
+
+#: moderation/mod_views.py:42
+msgid "A muted account cannot moderate."
+msgstr "Una cuenta silenciada no puede moderar."
+
+#: moderation/mod_views.py:131
+msgid "Too many moderation actions in a short time. Try again later."
+msgstr "Demasiadas acciones de moderación en poco tiempo. Inténtalo más tarde."
+
+#: moderation/mod_views.py:136
+msgid "Report dismissed."
+msgstr "Denuncia descartada."
+
+#: moderation/mod_views.py:139
+msgid "Project removed. The owner sees the reason."
+msgstr "Proyecto retirado. Su dueño ve el motivo."
+
+#: moderation/mod_views.py:142
+msgid "Profile fields cleared."
+msgstr "Campos del perfil vaciados."
+
+#: moderation/mod_views.py:145
+msgid "Muted."
+msgstr "Silenciada."
+
+#: moderation/mod_views.py:145
+msgid "Banned."
+msgstr "Bloqueada."
+
+#: moderation/mod_views.py:147
+msgid "You cannot do this."
+msgstr "No puedes hacer esto."
+
+#: moderation/mod_views.py:179
+msgid "This report is closed."
+msgstr "Esta denuncia está cerrada."
+
+#: moderation/models.py:49
+msgid "Spam or advertising"
+msgstr "Spam o publicidad"
+
+#: moderation/models.py:50
+msgid "Fake or misleading proof"
+msgstr "Prueba falsa o engañosa"
+
+#: moderation/models.py:51
+msgid "Impersonation"
+msgstr "Suplantación de identidad"
+
+#: moderation/models.py:52
+msgid "Offensive or illegal content"
+msgstr "Contenido ofensivo o ilegal"
+
+#: moderation/models.py:53
+msgid "Copyright or stolen work"
+msgstr "Derechos de autor u obra robada"
+
+#: moderation/models.py:54
+msgid "Something else"
+msgstr "Otra cosa"
+
+#: moderation/models.py:57 templates/moderation/mod/queue.html:17
+msgid "Open"
+msgstr "Abierta"
+
+#: moderation/models.py:58
+msgid "In review"
+msgstr "En revisión"
+
+#: moderation/models.py:59 templates/moderation/mod/queue.html:18
+msgid "Resolved"
+msgstr "Resuelta"
+
+#: moderation/models.py:60 templates/moderation/mod/queue.html:19
+msgid "Dismissed"
+msgstr "Descartada"
+
+#: moderation/models.py:63
+msgid "User report"
+msgstr "Denuncia de usuario"
+
+#: moderation/models.py:161
 msgid "Shown to the user."
 msgstr "Se muestra al usuario."
 
-#: moderation/models.py:124
+#: moderation/models.py:163
 msgid "Empty: permanent (superusers only)."
 msgstr "Vacío: permanente (solo superusuarios)."
 
-#: moderation/models.py:146
+#: moderation/models.py:185
 msgid "sanction"
 msgstr "sanción"
 
-#: moderation/models.py:147
+#: moderation/models.py:186
 msgid "sanctions"
 msgstr "sanciones"
 
-#: moderation/sanctions.py:18
+#: moderation/models.py:228
+msgid "banned identity"
+msgstr "identidad bloqueada"
+
+#: moderation/models.py:229
+msgid "banned identities"
+msgstr "identidades bloqueadas"
+
+#: moderation/models.py:243
+msgid "Project removed"
+msgstr "Proyecto retirado"
+
+#: moderation/models.py:244
+msgid "Project restored"
+msgstr "Proyecto restaurado"
+
+#: moderation/models.py:245
+msgid "Profile fields cleared"
+msgstr "Campos del perfil vaciados"
+
+#: moderation/models.py:246
+msgid "Report reviewed, no action"
+msgstr "Denuncia revisada, sin medidas"
+
+#: moderation/models.py:247
+msgid "Report reviewed, action taken"
+msgstr "Denuncia revisada, se tomaron medidas"
+
+#: moderation/pages.py:23
+msgid ""
+"Your account is muted. You can read and use your settings, but not post."
+msgstr ""
+"Tu cuenta está silenciada. Puedes leer y usar tus ajustes, pero no publicar."
+
+#: moderation/pages.py:24
+#, python-format
+msgid ""
+"Your account is muted until %(date)s. You can read and use your settings, "
+"but not post."
+msgstr ""
+"Tu cuenta está silenciada hasta el %(date)s. Puedes leer y usar tus ajustes, "
+"pero no publicar."
+
+#: moderation/sanctions.py:25
+msgid "You cannot moderate."
+msgstr "No puedes moderar."
+
+#: moderation/sanctions.py:27
 msgid "You cannot sanction yourself."
 msgstr "No puedes sancionarte a ti mismo."
 
-#: moderation/sanctions.py:20
+#: moderation/sanctions.py:29
 msgid "The system account cannot be sanctioned."
 msgstr "La cuenta del sistema no se puede sancionar."
 
-#: moderation/sanctions.py:22
+#: moderation/sanctions.py:33
 msgid "Only a superuser can sanction a superuser."
 msgstr "Solo un superusuario puede sancionar a un superusuario."
 
-#: moderation/sanctions.py:24
-msgid "Only a superuser can sanction an official account."
-msgstr "Solo un superusuario puede sancionar una cuenta oficial."
+#: moderation/sanctions.py:35
+msgid "Only a superuser can act on an official account or a moderator."
+msgstr ""
+"Solo un superusuario puede actuar sobre una cuenta oficial o un moderador."
 
-#: moderation/views.py:32
+#: moderation/sanctions.py:42
+msgid "Only a superuser can issue a permanent sanction."
+msgstr "Solo un superusuario puede imponer una sanción permanente."
+
+#: moderation/sanctions.py:45
+msgid "Choose a length above zero."
+msgstr "Elige una duración mayor que cero."
+
+#: moderation/sanctions.py:52
+#, python-format
+msgid "Moderators can ban for at most %(days)s days."
+msgstr "Los moderadores pueden bloquear como máximo %(days)s días."
+
+#: moderation/sanctions.py:54
+#, python-format
+msgid "Moderators can mute for at most %(days)s days."
+msgstr "Los moderadores pueden silenciar como máximo %(days)s días."
+
+#: moderation/views.py:35
 msgid "Too many reports in a short time. Try again later."
 msgstr "Demasiadas denuncias en poco tiempo. Inténtalo de nuevo más tarde."
 
-#: moderation/views.py:35
+#: moderation/views.py:38
 msgid "You already reported this. We will look at it."
 msgstr "Ya lo denunciaste. Lo revisaremos."
 
-#: moderation/views.py:46
+#: moderation/views.py:49
 msgid "Thank you. We will review your report."
 msgstr "Gracias. Revisaremos tu denuncia."
 
-#: moderation/views.py:61
+#: moderation/views.py:67 moderation/views.py:97
 msgid "You cannot report your own project."
 msgstr "No puedes denunciar tu propio proyecto."
 
-#: moderation/views.py:65
+#: moderation/views.py:71
 #, python-format
 msgid "Report %(name)s"
 msgstr "Denunciar %(name)s"
 
-#: moderation/views.py:75
+#: moderation/views.py:82
 msgid "You cannot report yourself."
 msgstr "No puedes denunciarte."
 
-#: moderation/views.py:79
+#: moderation/views.py:86
 #, python-format
 msgid "Report @%(username)s"
 msgstr "Denunciar a @%(username)s"
+
+#: moderation/views.py:102
+#, python-format
+msgid "Report an update on %(name)s"
+msgstr "Denunciar una entrada de %(name)s"
 
 #: news/admin.py:28 projects/models.py:41
 msgid "Draft"
@@ -494,7 +735,8 @@ msgstr "slug"
 
 #: news/models.py:21
 msgid "Part of the address: /news/<slug>/. Do not change it after publishing."
-msgstr "Parte de la dirección: /news/<slug>/. No lo cambies después de publicar."
+msgstr ""
+"Parte de la dirección: /news/<slug>/. No lo cambies después de publicar."
 
 #: news/models.py:22
 msgid "body"
@@ -502,7 +744,8 @@ msgstr "texto"
 
 #: news/models.py:23
 msgid "Markdown. Rendered and sanitized like project descriptions; no HTML."
-msgstr "Markdown. Se procesa y limpia como las descripciones de proyectos; sin HTML."
+msgstr ""
+"Markdown. Se procesa y limpia como las descripciones de proyectos; sin HTML."
 
 #: news/models.py:24
 msgid "published at"
@@ -544,7 +787,8 @@ msgstr "Más gustados"
 msgid "Most proven"
 msgstr "Más verificados"
 
-#: pages/explore.py:28
+#: pages/explore.py:28 templates/moderation/mod/queue.html:30
+#: templates/moderation/mod/queue.html:37
 msgid "Any"
 msgstr "Cualquiera"
 
@@ -554,41 +798,54 @@ msgid "Official %(site)s account"
 msgstr "Cuenta oficial de %(site)s"
 
 #: pages/templatetags/ui.py:94
+msgid "Moderate this update"
+msgstr "Moderar esta entrada"
+
+#: pages/templatetags/ui.py:96
+msgid "Moderate this project"
+msgstr "Moderar este proyecto"
+
+#: pages/templatetags/ui.py:100
+#, python-format
+msgid "Moderate the profile @%(username)s"
+msgstr "Moderar el perfil @%(username)s"
+
+#: pages/templatetags/ui.py:115
 msgid "just now"
 msgstr "ahora mismo"
 
-#: pages/templatetags/ui.py:95
+#: pages/templatetags/ui.py:116
 #, python-format
 msgid "%(time)s ago"
 msgstr "hace %(time)s"
 
-#: pages/templatetags/ui.py:277 templates/social/feed.html:4
+#: pages/templatetags/ui.py:298 templates/social/feed.html:4
 #: templates/social/feed.html:5 templates/social/feed.html:12
 msgid "Feed"
 msgstr "Novedades"
 
-#: pages/templatetags/ui.py:277 templates/pages/explore.html:4
+#: pages/templatetags/ui.py:298 templates/pages/explore.html:4
 #: templates/pages/explore.html:5 templates/pages/explore.html:16
 msgid "Explore"
 msgstr "Explorar"
 
-#: pages/templatetags/ui.py:279
+#: pages/templatetags/ui.py:300
 msgid "About"
 msgstr "Acerca de"
 
-#: pages/templatetags/ui.py:280 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:301 templates/pages/landing.html:279
 msgid "How proof works"
 msgstr "Cómo funciona la verificación"
 
-#: pages/templatetags/ui.py:281
+#: pages/templatetags/ui.py:302
 msgid "Privacy"
 msgstr "Privacidad"
 
-#: pages/templatetags/ui.py:282
+#: pages/templatetags/ui.py:303
 msgid "Terms"
 msgstr "Términos"
 
-#: pages/templatetags/ui.py:283
+#: pages/templatetags/ui.py:304
 msgid "Cookies"
 msgstr "Cookies"
 
@@ -603,41 +860,63 @@ msgid_plural "%(n)s projects"
 msgstr[0] "%(n)s proyecto"
 msgstr[1] "%(n)s proyectos"
 
-#: projects/admin.py:33
+#: projects/admin.py:34
+msgid "Removed by a moderator"
+msgstr "Retirado por un moderador"
+
+#: projects/admin.py:35
 msgid "Content"
 msgstr "Contenido"
 
-#: projects/admin.py:34
+#: projects/admin.py:36
 msgid "Proof"
 msgstr "Prueba"
 
-#: projects/admin.py:35
+#: projects/admin.py:37
 msgid "Dates"
 msgstr "Fechas"
 
-#: projects/admin.py:52
+#: projects/admin.py:54
 msgid "Hallmarks (computed now)"
 msgstr "Sellos (calculados ahora)"
 
-#: projects/admin.py:65
+#: projects/admin.py:67
 msgid "Hide selected projects"
 msgstr "Ocultar los proyectos seleccionados"
 
-#: projects/admin.py:68
+#: projects/admin.py:70
 #, python-format
 msgid "Hid %(count)s project(s)."
 msgstr "Proyectos ocultados: %(count)s."
 
-#: projects/admin.py:70
+#: projects/admin.py:72
 msgid "Unhide selected projects"
 msgstr "Mostrar los proyectos seleccionados"
 
-#: projects/admin.py:73
+#: projects/admin.py:75
 #, python-format
 msgid "Unhid %(count)s project(s)."
 msgstr "Proyectos mostrados de nuevo: %(count)s."
 
-#: projects/admin.py:84
+#: projects/admin.py:77
+msgid "Restore selected removed projects"
+msgstr "Restaurar los proyectos retirados seleccionados"
+
+#: projects/admin.py:80
+#, python-format
+msgid "Restored %(count)s project(s)."
+msgstr "Proyectos restaurados: %(count)s."
+
+#: projects/admin.py:82
+msgid "Purge selected removed projects (deletes them for good)"
+msgstr "Purgar los proyectos retirados seleccionados (los borra para siempre)"
+
+#: projects/admin.py:85
+#, python-format
+msgid "Purged %(count)s removed project(s)."
+msgstr "Proyectos purgados: %(count)s."
+
+#: projects/admin.py:100
 msgid "Text"
 msgstr "Texto"
 
@@ -695,7 +974,7 @@ msgstr "Introduce una dirección web pública, como https://example.com."
 msgid "Use the form owner/name, for example octocat/hello-world."
 msgstr "Usa el formato propietario/nombre, por ejemplo octocat/hello-world."
 
-#: projects/forms.py:116 projects/views.py:303
+#: projects/forms.py:116 projects/views.py:315
 msgid "A project can have at most 4 screenshots. Remove one first."
 msgstr ""
 "Un proyecto puede tener como máximo 4 capturas de pantalla. Elimina una "
@@ -781,11 +1060,15 @@ msgstr "Este archivo no es una imagen válida."
 msgid "Hidden"
 msgstr "Oculto"
 
-#: projects/models.py:142
+#: projects/models.py:44
+msgid "Removed"
+msgstr "Retirado"
+
+#: projects/models.py:148
 msgid "Update"
 msgstr "Actualización"
 
-#: projects/models.py:143 templates/projects/_log_entry.html:4
+#: projects/models.py:149 templates/projects/_log_entry.html:4
 msgid "Launched"
 msgstr "Lanzado"
 
@@ -1004,7 +1287,7 @@ msgstr ""
 "El repositorio contiene el archivo de verificación de este proyecto, y "
 "%(domain)s está verificado para el mismo proyecto."
 
-#: projects/proof.py:215 templates/projects/detail.html:102
+#: projects/proof.py:215 templates/projects/detail.html:108
 msgid "Uptime"
 msgstr "Disponibilidad"
 
@@ -1016,59 +1299,63 @@ msgstr ""
 "%(ok)s de %(total)s comprobaciones de los últimos 30 días recibieron "
 "respuesta de %(domain)s."
 
-#: projects/views.py:113
+#: projects/views.py:68
+msgid "Moderators removed this project. It cannot be changed."
+msgstr "Los moderadores retiraron este proyecto. No se puede cambiar."
+
+#: projects/views.py:125
 msgid "Draft saved."
 msgstr "Borrador guardado."
 
-#: projects/views.py:113
+#: projects/views.py:125
 msgid "Draft saved. Add screenshots, then publish."
 msgstr "Borrador guardado. Añade capturas de pantalla y después publica."
 
-#: projects/views.py:134 projects/views.py:258
+#: projects/views.py:146 projects/views.py:270
 msgid "Published."
 msgstr "Publicado."
 
-#: projects/views.py:138
+#: projects/views.py:150
 #, python-format
 msgid "Changes saved. %(count)d screenshot added."
 msgid_plural "Changes saved. %(count)d screenshots added."
 msgstr[0] "Cambios guardados. %(count)d captura añadida."
 msgstr[1] "Cambios guardados. %(count)d capturas añadidas."
 
-#: projects/views.py:141
+#: projects/views.py:153
 msgid "Changes saved."
 msgstr "Cambios guardados."
 
-#: projects/views.py:165
+#: projects/views.py:177
 msgid "The description is too long."
 msgstr "La descripción es demasiado larga."
 
-#: projects/views.py:177
+#: projects/views.py:189
 msgid "Add a GitHub repository and save the project first."
 msgstr "Primero añade un repositorio de GitHub y guarda el proyecto."
 
-#: projects/views.py:179
+#: projects/views.py:191
 msgid "Sign in with GitHub to check a repository."
 msgstr "Inicia sesión con GitHub para comprobar un repositorio."
 
-#: projects/views.py:181
+#: projects/views.py:193
 msgid ""
 "This repository was checked a moment ago. You can check again in 10 minutes."
 msgstr ""
 "Este repositorio se comprobó hace un momento. Puedes volver a comprobarlo en "
 "10 minutos."
 
-#: projects/views.py:189
+#: projects/views.py:201
 msgid "Repository checked. Repo owner earned."
 msgstr "Repositorio comprobado. Repo owner conseguido."
 
-#: projects/views.py:191
+#: projects/views.py:203
 msgid "Repository checked. Repo owner will appear after a short manual review."
 msgstr ""
 "Repositorio comprobado. Repo owner aparecerá después de una breve revisión "
 "manual."
 
-#: projects/views.py:193
+#: projects/views.py:205
 msgid ""
 "This repository is a fork. Forks cannot earn Repo owner; link the original "
 "repository."
@@ -1076,7 +1363,7 @@ msgstr ""
 "Este repositorio es un fork. Los forks no pueden conseguir Repo owner; "
 "enlaza el repositorio original."
 
-#: projects/views.py:195
+#: projects/views.py:207
 msgid ""
 "This repository is not owned by your personal GitHub account, and its "
 "verification file was not found."
@@ -1084,39 +1371,39 @@ msgstr ""
 "Este repositorio no pertenece a tu cuenta personal de GitHub y no se "
 "encontró en él el archivo de verificación."
 
-#: projects/views.py:233
+#: projects/views.py:245
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr "Demasiadas comprobaciones. Espera unos minutos y vuelve a verificar."
 
-#: projects/views.py:242
+#: projects/views.py:254
 msgid "Verified. Confirmed again."
 msgstr "Verificado. Confirmado de nuevo."
 
-#: projects/views.py:242
+#: projects/views.py:254
 msgid "Verified. Live earned."
 msgstr "Verificado. Live conseguido."
 
-#: projects/views.py:268
+#: projects/views.py:280
 msgid "Moved back to drafts."
 msgstr "Devuelto a borradores."
 
-#: projects/views.py:278
+#: projects/views.py:290
 msgid "Project deleted."
 msgstr "Proyecto eliminado."
 
-#: projects/views.py:292
+#: projects/views.py:304
 msgid "Choose an image first."
 msgstr "Elige primero una imagen."
 
-#: projects/views.py:305
+#: projects/views.py:317
 msgid "Screenshot added."
 msgstr "Captura de pantalla añadida."
 
-#: projects/views.py:323
+#: projects/views.py:335
 msgid "Screenshot removed."
 msgstr "Captura de pantalla eliminada."
 
-#: projects/views.py:371
+#: projects/views.py:383
 #, python-format
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
@@ -1124,45 +1411,45 @@ msgstr ""
 "Un proyecto puede recibir como máximo %(n)s entradas del registro de "
 "desarrollo al día. Inténtalo de nuevo mañana."
 
-#: projects/views.py:384
+#: projects/views.py:396
 msgid "Posted. Launch date set to today."
 msgstr "Publicado. Fecha de lanzamiento fijada en hoy."
 
-#: projects/views.py:384
+#: projects/views.py:396
 msgid "Posted."
 msgstr "Publicado."
 
-#: projects/views.py:410 projects/views.py:411
+#: projects/views.py:422 projects/views.py:423
 msgid "Entry deleted."
 msgstr "Entrada eliminada."
 
-#: social/views.py:61
+#: social/views.py:64
 msgid "Sign in to do this."
 msgstr "Inicia sesión para hacer esto."
 
-#: social/views.py:84
+#: social/views.py:87
 msgid "You cannot follow yourself."
 msgstr "No puedes seguirte."
 
-#: social/views.py:87
+#: social/views.py:90
 #, python-format
 msgid "Following @%(username)s."
 msgstr "Ahora sigues a @%(username)s."
 
-#: social/views.py:90
+#: social/views.py:93
 #, python-format
 msgid "Unfollowed @%(username)s."
 msgstr "Has dejado de seguir a @%(username)s."
 
-#: social/views.py:121
+#: social/views.py:122
 msgid "You cannot like your own project."
 msgstr "No puedes dar me gusta a tu propio proyecto."
 
-#: social/views.py:124
+#: social/views.py:125
 msgid "Liked."
 msgstr "Te gusta."
 
-#: social/views.py:127
+#: social/views.py:128
 msgid "Like removed."
 msgstr "Me gusta retirado."
 
@@ -1284,7 +1571,7 @@ msgstr "Eliminar cuenta"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
 #: templates/accounts/logout.html:14 templates/accounts/settings.html:42
-#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:33
+#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:35
 msgid "Sign out"
 msgstr "Cerrar sesión"
 
@@ -1409,7 +1696,7 @@ msgstr "Seguir con la sesión iniciada"
 msgid "Projects shipped and verified on"
 msgstr "Proyectos publicados y verificados en"
 
-#: templates/accounts/profile.html:26
+#: templates/accounts/profile.html:26 templates/moderation/mod/_history.html:6
 #, python-format
 msgid "Joined %(date)s"
 msgstr "Se unió el %(date)s"
@@ -1418,7 +1705,9 @@ msgstr "Se unió el %(date)s"
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: templates/accounts/profile.html:31 templates/projects/detail.html:61
+#: templates/accounts/profile.html:31 templates/moderation/mod/report.html:3
+#: templates/moderation/mod/report.html:17 templates/projects/_log_entry.html:9
+#: templates/projects/detail.html:67
 msgid "Report"
 msgstr "Denunciar"
 
@@ -1459,13 +1748,13 @@ msgstr "Tus borradores"
 msgid "Only you see these."
 msgstr "Solo los ves tú."
 
-#: templates/accounts/profile.html:85 templates/projects/detail.html:29
+#: templates/accounts/profile.html:85 templates/projects/detail.html:34
 #: templates/projects/form.html:4 templates/projects/form.html:12
 msgid "Edit project"
 msgstr "Editar proyecto"
 
 #: templates/accounts/settings.html:4 templates/accounts/settings.html:11
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:32
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:34
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -1545,7 +1834,7 @@ msgstr "Error"
 msgid "Go to your feed"
 msgstr "Ir a tus novedades"
 
-#: templates/errors/_body.html:17
+#: templates/errors/_body.html:17 templates/moderation/banned.html:18
 msgid "Go to the front page"
 msgstr "Ir a la página principal"
 
@@ -1569,6 +1858,59 @@ msgstr ""
 #: templates/errors/standalone.html:24
 msgid "Start page"
 msgstr "Página principal"
+
+#: templates/includes/account_notices.html:6
+#, python-format
+msgid "Your account is muted until %(date)s."
+msgstr "Tu cuenta está silenciada hasta el %(date)s."
+
+#: templates/includes/account_notices.html:6
+msgid "Your account is muted with no end date."
+msgstr "Tu cuenta está silenciada sin fecha de fin."
+
+#: templates/includes/account_notices.html:7
+msgid ""
+"You can read everything, change your settings, download your data and delete "
+"your account, but not create, edit, publish, like, follow or report."
+msgstr ""
+"Puedes leer todo, cambiar tus ajustes, descargar tus datos y eliminar tu "
+"cuenta, pero no crear, editar, publicar, dar me gusta, seguir ni denunciar."
+
+#: templates/includes/account_notices.html:9
+#: templates/includes/account_notices.html:23 templates/projects/detail.html:32
+#, python-format
+msgid "Questions or an appeal: <a href=\"mailto:%(email)s\">%(email)s</a>"
+msgstr "Preguntas o apelaciones: <a href=\"mailto:%(email)s\">%(email)s</a>"
+
+#: templates/includes/account_notices.html:15
+#, python-format
+msgid "Moderators removed your project “%(name)s”. Only you can still see it."
+msgstr ""
+"Los moderadores retiraron tu proyecto «%(name)s». Solo tú puedes verlo."
+
+#: templates/includes/account_notices.html:16
+#, python-format
+msgid "Your project “%(name)s” was restored."
+msgstr "Tu proyecto «%(name)s» fue restaurado."
+
+#: templates/includes/account_notices.html:17
+#, python-format
+msgid "Moderators cleared these profile fields: %(fields)s."
+msgstr "Los moderadores vaciaron estos campos del perfil: %(fields)s."
+
+#: templates/includes/account_notices.html:18
+#, python-format
+msgid "We reviewed your report about %(name)s and took no action."
+msgstr "Revisamos tu denuncia sobre %(name)s y no tomamos medidas."
+
+#: templates/includes/account_notices.html:19
+#, python-format
+msgid "We reviewed your report about %(name)s and took action. Thank you."
+msgstr "Revisamos tu denuncia sobre %(name)s y tomamos medidas. Gracias."
+
+#: templates/includes/account_notices.html:27
+msgid "Got it"
+msgstr "Entendido"
 
 #: templates/includes/form_errors.html:5
 msgid "Please fix these problems and try again."
@@ -1612,16 +1954,20 @@ msgstr "Principal"
 msgid "New project"
 msgstr "Nuevo proyecto"
 
-#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:31
+#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:32
 msgid "Your profile"
 msgstr "Tu perfil"
 
-#: templates/includes/site_nav.html:26
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:33
+msgid "open reports"
+msgstr "denuncias abiertas"
+
+#: templates/includes/site_nav.html:27
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Menú de la cuenta de %(name)s"
 
-#: templates/includes/site_nav.html:38 templates/pages/_sign_in.html:9
+#: templates/includes/site_nav.html:40 templates/pages/_sign_in.html:9
 #: templates/pages/_sign_in.html:12 templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Iniciar sesión con GitHub"
@@ -1629,6 +1975,210 @@ msgstr "Iniciar sesión con GitHub"
 #: templates/includes/toast.html:1
 msgid "Dismiss"
 msgstr "Descartar"
+
+#: templates/moderation/_menu.html:3 templates/moderation/mod/act.html:3
+#: templates/moderation/mod/act.html:11
+msgid "Moderate"
+msgstr "Moderar"
+
+#: templates/moderation/banned.html:4
+msgid "Account banned"
+msgstr "Cuenta bloqueada"
+
+#: templates/moderation/banned.html:11
+msgid "This account is banned"
+msgstr "Esta cuenta está bloqueada"
+
+#: templates/moderation/banned.html:12
+msgid "You have been signed out and cannot sign in while the ban lasts."
+msgstr "Se cerró tu sesión y no puedes iniciarla mientras dure el bloqueo."
+
+#: templates/moderation/banned.html:15
+msgid "Ends"
+msgstr "Termina"
+
+#: templates/moderation/banned.html:15
+msgid "No end date."
+msgstr "Sin fecha de fin."
+
+#: templates/moderation/banned.html:17
+#, python-format
+msgid ""
+"Questions, an appeal, or a copy or deletion of your data: write to <a "
+"href=\"mailto:%(email)s\">%(email)s</a>."
+msgstr ""
+"Preguntas, apelaciones o una copia o el borrado de tus datos: escribe a <a "
+"href=\"mailto:%(email)s\">%(email)s</a>."
+
+#: templates/moderation/mod/_action_form.html:19
+msgid "for Clear profile fields"
+msgstr "para «Vaciar campos del perfil»"
+
+#: templates/moderation/mod/_action_form.html:26
+msgid "Length (for Mute and Ban)"
+msgstr "Duración (para silenciar y bloquear)"
+
+#: templates/moderation/mod/_action_form.html:27
+msgid "Superusers have no limit."
+msgstr "Los superusuarios no tienen límite."
+
+#: templates/moderation/mod/_action_form.html:27
+msgid "Moderators: mute up to 7 days, ban up to 14 days."
+msgstr "Moderadores: silenciar hasta 7 días, bloquear hasta 14 días."
+
+#: templates/moderation/mod/_action_form.html:35
+msgid "Apply decision"
+msgstr "Aplicar la decisión"
+
+#: templates/moderation/mod/_history.html:4
+#, python-format
+msgid "History of @%(name)s"
+msgstr "Historial de @%(name)s"
+
+#: templates/moderation/mod/_history.html:9
+msgid "no end date"
+msgstr "sin fecha de fin"
+
+#: templates/moderation/mod/_history.html:9
+msgid "revoked"
+msgstr "revocada"
+
+#: templates/moderation/mod/_history.html:10
+#: templates/moderation/mod/_history.html:14
+#: templates/moderation/mod/_history.html:18
+msgid "None."
+msgstr "Ninguno."
+
+#: templates/moderation/mod/_history.html:11
+msgid "Other reports"
+msgstr "Otras denuncias"
+
+#: templates/moderation/mod/act.html:9
+msgid "Back"
+msgstr "Volver"
+
+#: templates/moderation/mod/act.html:13
+#, python-format
+msgid "%(counter)s open report about this. The decision is added to it."
+msgid_plural ""
+"%(counter)s open reports about this. The decision is added to the newest."
+msgstr[0] ""
+"%(counter)s denuncia abierta sobre esto. La decisión se añade a ella."
+msgstr[1] ""
+"%(counter)s denuncias abiertas sobre esto. La decisión se añade a la más "
+"reciente."
+
+#: templates/moderation/mod/act.html:13
+msgid ""
+"No report about this yet. A report in your name is created, so there is one "
+"history."
+msgstr ""
+"Aún no hay denuncias sobre esto. Se crea una a tu nombre para que haya un "
+"solo historial."
+
+#: templates/moderation/mod/queue.html:12
+#, python-format
+msgid "%(counter)s report needs a decision."
+msgid_plural "%(counter)s reports need a decision."
+msgstr[0] "%(counter)s denuncia necesita una decisión."
+msgstr[1] "%(counter)s denuncias necesitan una decisión."
+
+#: templates/moderation/mod/queue.html:15
+msgid "Report status"
+msgstr "Estado de las denuncias"
+
+#: templates/moderation/mod/queue.html:20
+msgid "All"
+msgstr "Todas"
+
+#: templates/moderation/mod/queue.html:25
+msgid "Filters"
+msgstr "Filtros"
+
+#: templates/moderation/mod/queue.html:40
+msgid "Apply filters"
+msgstr "Aplicar filtros"
+
+#: templates/moderation/mod/queue.html:49
+msgid "Deleted"
+msgstr "Eliminado"
+
+#: templates/moderation/mod/queue.html:49
+msgid "by a moderator"
+msgstr "de un moderador"
+
+#: templates/moderation/mod/queue.html:57 templates/pages/explore.html:82
+#: templates/social/feed.html:45
+msgid "Pages"
+msgstr "Páginas"
+
+#: templates/moderation/mod/queue.html:58 templates/social/feed.html:46
+msgid "Newer"
+msgstr "Más recientes"
+
+#: templates/moderation/mod/queue.html:59
+msgid "More"
+msgstr "Más"
+
+#: templates/moderation/mod/queue.html:62
+msgid "Nothing here."
+msgstr "Aquí no hay nada."
+
+#: templates/moderation/mod/queue.html:62
+msgid "No reports match these filters."
+msgstr "Ninguna denuncia coincide con estos filtros."
+
+#: templates/moderation/mod/report.html:9
+msgid "Back to reports"
+msgstr "Volver a las denuncias"
+
+#: templates/moderation/mod/report.html:19
+msgid "From"
+msgstr "De"
+
+#: templates/moderation/mod/report.html:19
+msgid "a moderator"
+msgstr "un moderador"
+
+#: templates/moderation/mod/report.html:19
+msgid "deleted account"
+msgstr "cuenta eliminada"
+
+#: templates/moderation/mod/report.html:19
+msgid "never shown to the reported person"
+msgstr "nunca se muestra a la persona denunciada"
+
+#: templates/moderation/mod/report.html:20
+msgid "Sent"
+msgstr "Enviada"
+
+#: templates/moderation/mod/report.html:21
+msgid "Details"
+msgstr "Detalles"
+
+#: templates/moderation/mod/report.html:22
+msgid "Handled"
+msgstr "Gestionada"
+
+#: templates/moderation/mod/report.html:27
+msgid "Reported"
+msgstr "Lo denunciado"
+
+#: templates/moderation/mod/report.html:32
+msgid "Open the project page"
+msgstr "Abrir la página del proyecto"
+
+#: templates/moderation/mod/report.html:38
+msgid "set"
+msgstr "definido"
+
+#: templates/moderation/mod/report.html:40
+msgid "Open the profile"
+msgstr "Abrir el perfil"
+
+#: templates/moderation/mod/report.html:45
+msgid "The reported item was deleted."
+msgstr "El elemento denunciado fue eliminado."
 
 #: templates/moderation/report.html:13
 msgid ""
@@ -1696,10 +2246,6 @@ msgstr "Borrar filtros"
 #: templates/pages/explore.html:75
 msgid "most hallmarks first, then newest"
 msgstr "primero los que tienen más sellos, luego los más recientes"
-
-#: templates/pages/explore.html:82 templates/social/feed.html:45
-msgid "Pages"
-msgstr "Páginas"
 
 #: templates/pages/explore.html:83
 msgid "Previous page"
@@ -1837,7 +2383,7 @@ msgstr "Gestión de proyectos tranquila para equipos pequeños."
 msgid "self-declared"
 msgstr "declarado por el autor"
 
-#: templates/pages/landing.html:70 templates/projects/detail.html:94
+#: templates/pages/landing.html:70 templates/projects/detail.html:100
 msgid "Checked, not self-reported"
 msgstr "Comprobado, no autodeclarado"
 
@@ -2362,7 +2908,7 @@ msgstr ""
 "para un sitio web: pégalo donde quieras que aparezca la insignia, por "
 "ejemplo en el pie de página."
 
-#: templates/projects/_hallmark_info.html:5 templates/projects/detail.html:144
+#: templates/projects/_hallmark_info.html:5 templates/projects/detail.html:150
 msgid "What this means"
 msgstr "Qué significa"
 
@@ -2380,7 +2926,7 @@ msgstr "Cómo se comprueba y cómo se puede perder"
 msgid "Launched %(date)s"
 msgstr "Lanzado el %(date)s"
 
-#: templates/projects/_log_entry.html:11
+#: templates/projects/_log_entry.html:14
 msgid "Delete entry"
 msgstr "Eliminar entrada"
 
@@ -2427,7 +2973,7 @@ msgstr ""
 "Has llegado al límite de 4 capturas de pantalla. Quita una para añadir otra."
 
 #: templates/projects/delete.html:4 templates/projects/delete.html:15
-#: templates/projects/detail.html:35 templates/projects/form.html:122
+#: templates/projects/detail.html:41 templates/projects/form.html:122
 #: templates/projects/form.html:124
 msgid "Delete project"
 msgstr "Eliminar proyecto"
@@ -2459,102 +3005,106 @@ msgid "Hidden by moderators. Only you can see this page."
 msgstr "Oculto por los moderadores. Solo tú puedes ver esta página."
 
 #: templates/projects/detail.html:26
+msgid "Removed by moderators. Only you can see this page."
+msgstr "Retirado por los moderadores. Solo tú ves esta página."
+
+#: templates/projects/detail.html:27
 msgid "Draft. Only you can see this page."
 msgstr "Borrador. Solo tú puedes ver esta página."
 
-#: templates/projects/detail.html:31 templates/projects/form.html:110
+#: templates/projects/detail.html:37 templates/projects/form.html:110
 msgid "Publish project"
 msgstr "Publicar proyecto"
 
-#: templates/projects/detail.html:33 templates/projects/form.html:114
+#: templates/projects/detail.html:39 templates/projects/form.html:114
 msgid "Unpublish project"
 msgstr "Despublicar proyecto"
 
-#: templates/projects/detail.html:54
+#: templates/projects/detail.html:60
 msgid "Open live site"
 msgstr "Abrir el sitio en vivo"
 
-#: templates/projects/detail.html:55
+#: templates/projects/detail.html:61
 msgid "Unverified link"
 msgstr "Enlace sin verificar"
 
-#: templates/projects/detail.html:70
+#: templates/projects/detail.html:76
 #, python-format
 msgid "Screenshot 1 of %(name)s"
 msgstr "Captura de pantalla 1 de %(name)s"
 
-#: templates/projects/detail.html:74
+#: templates/projects/detail.html:80
 #, python-format
 msgid "Screenshot %(n)s of %(name)s"
 msgstr "Captura de pantalla %(n)s de %(name)s"
 
-#: templates/projects/detail.html:83
+#: templates/projects/detail.html:89
 msgid "About this project"
 msgstr "Sobre este proyecto"
 
-#: templates/projects/detail.html:106
+#: templates/projects/detail.html:112
 #, python-format
 msgid "of %(n)s check in the last 30 days"
 msgid_plural "of %(n)s checks in the last 30 days"
 msgstr[0] "de %(n)s comprobación en los últimos 30 días"
 msgstr[1] "de %(n)s comprobaciones en los últimos 30 días"
 
-#: templates/projects/detail.html:109
+#: templates/projects/detail.html:115
 msgid "No checks in the last 30 days yet. The site is checked every few hours."
 msgstr ""
 "Aún no hay comprobaciones en los últimos 30 días. El sitio se comprueba cada "
 "pocas horas."
 
-#: templates/projects/detail.html:112
+#: templates/projects/detail.html:118
 #, python-format
 msgid "Last checked %(time)s ago"
 msgstr "Última comprobación hace %(time)s"
 
-#: templates/projects/detail.html:115
+#: templates/projects/detail.html:121
 msgid "Daily results, last 30 days"
 msgstr "Resultados diarios, últimos 30 días"
 
-#: templates/projects/detail.html:118
+#: templates/projects/detail.html:124
 msgid "no checks"
 msgstr "sin comprobaciones"
 
-#: templates/projects/detail.html:118
+#: templates/projects/detail.html:124
 #, python-format
 msgid "%(ok)s of %(total)s checks up"
 msgstr "%(ok)s de %(total)s comprobaciones correctas"
 
-#: templates/projects/detail.html:123
+#: templates/projects/detail.html:129
 msgid "30 days ago"
 msgstr "hace 30 días"
 
-#: templates/projects/detail.html:123
+#: templates/projects/detail.html:129
 msgctxt "uptime"
 msgid "Today"
 msgstr "Hoy"
 
-#: templates/projects/detail.html:125
+#: templates/projects/detail.html:131
 msgctxt "uptime"
 msgid "Up"
 msgstr "Activo"
 
-#: templates/projects/detail.html:126
+#: templates/projects/detail.html:132
 msgid "Some checks failed"
 msgstr "Algunas comprobaciones fallaron"
 
-#: templates/projects/detail.html:127
+#: templates/projects/detail.html:133
 msgctxt "uptime"
 msgid "Down"
 msgstr "Caído"
 
-#: templates/projects/detail.html:128
+#: templates/projects/detail.html:134
 msgid "No checks"
 msgstr "Sin comprobaciones"
 
-#: templates/projects/detail.html:138
+#: templates/projects/detail.html:144
 msgid "What was checked"
 msgstr "Qué se comprobó"
 
-#: templates/projects/detail.html:144
+#: templates/projects/detail.html:150
 msgid ""
 "We check ownership, control of the domain and uptime. We cannot check who "
 "wrote the code."
@@ -2562,13 +3112,17 @@ msgstr ""
 "Comprobamos la propiedad, el control del dominio y la disponibilidad. No "
 "podemos comprobar quién escribió el código."
 
-#: templates/projects/detail.html:153 templates/projects/form.html:52
+#: templates/projects/detail.html:159 templates/projects/form.html:52
 msgid "Built with (self-declared)"
 msgstr "Creado con (declarado por el autor)"
 
 #: templates/projects/form.html:15
 msgid "Hidden by moderators"
 msgstr "Oculto por los moderadores"
+
+#: templates/projects/form.html:15
+msgid "Removed by moderators. It cannot be changed."
+msgstr "Retirado por los moderadores. No se puede cambiar."
 
 #: templates/projects/form.html:15
 msgid "Draft. Only you can see it."
@@ -2714,7 +3268,7 @@ msgstr "Siguiendo"
 msgid "Follow"
 msgstr "Seguir"
 
-#: templates/social/_items.html:28
+#: templates/social/_items.html:29
 msgid "posted an update on"
 msgstr "publicó una actualización en"
 
@@ -2768,10 +3322,6 @@ msgstr "Aún no hay lanzamientos"
 #: templates/social/feed.html:40
 msgid "Published projects appear here, newest first."
 msgstr "Los proyectos publicados aparecen aquí, los más recientes primero."
-
-#: templates/social/feed.html:46
-msgid "Newer"
-msgstr "Más recientes"
 
 #: templates/social/feed.html:47
 msgid "Could not load more. Try again."

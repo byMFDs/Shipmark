@@ -12,6 +12,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 
 from config.ratelimit import is_limited
+from moderation.visibility import visible_users
 from projects.badges import embed_snippets
 from social.queries import is_following
 
@@ -132,7 +133,7 @@ def delete_account_page(request):
 def profile(request, username):
     """Public profile. Unknown and suspended users give the same 404: no hint that the account exists."""
     try:
-        person = User.objects.get(username__iexact=username, is_suspended=False)
+        person = visible_users(User.objects.all()).get(username__iexact=username)
     except User.DoesNotExist:
         raise Http404
     if person.username != username:  # /u/Danylo/ -> /u/danylo/

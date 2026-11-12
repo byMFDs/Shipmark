@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}{% translate "Moderation" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/mod.css' %}">{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="container page mod">
+    <header class="page-head">
+      <p class="label">{% translate "Moderation" %}</p>
+      <h1>{% translate "Reports" %}</h1>
+      <p class="lede">{% blocktranslate count counter=counts.open %}{{ counter }} report needs a decision.{% plural %}{{ counter }} reports need a decision.{% endblocktranslate %}</p>
+    </header>
+
+    <nav class="tabs" aria-label="{% translate 'Report status' %}">
+      <ul class="tabs__list">
+        <li><a class="tabs__link" href="?status=open"{% if status == "open" %} aria-current="page"{% endif %}>{% translate "Open" %} <span class="mono">{{ counts.open }}</span></a></li>
+        <li><a class="tabs__link" href="?status=resolved"{% if status == "resolved" %} aria-current="page"{% endif %}>{% translate "Resolved" %} <span class="mono">{{ counts.resolved }}</span></a></li>
+        <li><a class="tabs__link" href="?status=dismissed"{% if status == "dismissed" %} aria-current="page"{% endif %}>{% translate "Dismissed" %} <span class="mono">{{ counts.dismissed }}</span></a></li>
+        <li><a class="tabs__link" href="?status=all"{% if status == "all" %} aria-current="page"{% endif %}>{% translate "All" %}</a></li>
+      </ul>
+    </nav>
+
+    <form class="record mod-filters" method="get">
+      <div class="record__head"><h2 class="label">{% translate "Filters" %}</h2></div>
+      <div class="mod-filters__body">
+        <input type="hidden" name="status" value="{{ status }}">
+        <label class="field"><span class="field__label">{% translate "Type" %}</span>
+          <span class="select-wrap"><select class="select" name="kind">
+            <option value="">{% translate "Any" %}</option>
+            <option value="project"{% if kind == "project" %} selected{% endif %}>{% translate "Project" %}</option>
+            <option value="profile"{% if kind == "profile" %} selected{% endif %}>{% translate "Profile" %}</option>
+            <option value="entry"{% if kind == "entry" %} selected{% endif %}>{% translate "Build-log entry" %}</option>
+          </select></span></label>
+        <label class="field"><span class="field__label">{% translate "Reason" %}</span>
+          <span class="select-wrap"><select class="select" name="reason">
+            <option value="">{% translate "Any" %}</option>
+            {% for value, label in reasons %}<option value="{{ value }}"{% if reason == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
+          </select></span></label>
+        <div><button class="btn btn--secondary" type="submit">{% translate "Apply filters" %}</button></div>
+      </div>
+    </form>
+
+    {% if reports %}
+      <ul class="plate-list mod-list">
+        {% for report in reports %}
+          <li class="plate-row mod-row">
+            <div class="mod-row__main">
+              <p class="label">{% if report.kind == "project" %}{% translate "Project" %}{% elif report.kind == "profile" %}{% translate "Profile" %}{% elif report.kind == "entry" %}{% translate "Build-log entry" %}{% else %}{% translate "Deleted" %}{% endif %} · {{ report.get_reason_display }} · {{ report.get_status_display }}{% if report.source == "moderator" %} · {% translate "by a moderator" %}{% endif %}</p>
+              <p class="plate-row__name"><a href="{% url 'moderation:report_detail' report.pk %}">{{ report.target_repr }}</a></p>
+              {% if report.details %}<p class="plate-row__tagline">{{ report.details|truncatechars:160 }}</p>{% endif %}
+            </div>
+            <p class="muted mod-row__time"><time datetime="{{ report.created_at|date:'c' }}">{{ report.created_at|date:"DATETIME_FORMAT" }}</time></p>
+          </li>
+        {% endfor %}
+      </ul>
+      <nav class="pager" aria-label="{% translate 'Pages' %}">
+        {% if page > 1 %}<a class="btn btn--secondary" href="?status={{ status }}&amp;kind={{ kind }}&amp;reason={{ reason }}&amp;page={{ page|add:-1 }}">{% translate "Newer" %}</a>{% endif %}
+        {% if has_next %}<a class="btn btn--secondary" href="?status={{ status }}&amp;kind={{ kind }}&amp;reason={{ reason }}&amp;page={{ page|add:1 }}">{% translate "More" %}</a>{% endif %}
+      </nav>
+    {% else %}
+      <section class="empty"><h2 class="empty__title">{% translate "Nothing here." %}</h2><p class="empty__text">{% translate "No reports match these filters." %}</p></section>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -4,7 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline
 from unfold.decorators import action
 
-from moderation import actions, audit
+from moderation import actions, audit, decisions
+from moderation.models import OPEN_STATES
 from moderation.adminbase import AuditedModelAdmin
 
 from .models import BuildLogEntry, Project, Screenshot, Tag, Tool
@@ -25,11 +26,12 @@ class ProjectAdmin(AuditedModelAdmin):
     raw_id_fields = ("owner",)
     filter_horizontal = ("tags", "built_with")
     date_hierarchy = "created_at"
-    actions = ["hide", "unhide"]
+    actions = ["hide", "unhide", "restore", "purge"]
     inlines = [ScreenshotInline]
-    readonly_fields = ("hallmark_summary", "created_at", "updated_at")
+    readonly_fields = ("hallmark_summary", "created_at", "updated_at", "removed_reason", "removed_at", "removed_by")
     fieldsets = (
         (None, {"fields": ("owner", "name", "slug", "tagline", "status")}),
+        (_("Removed by a moderator"), {"fields": ("removed_reason", "removed_at", "removed_by")}),
         (_("Content"), {"fields": ("description", "live_url", "repo_full_name", "tags", "built_with")}),
         (_("Proof"), {"fields": ("hallmark_summary",)}),
         (_("Dates"), {"fields": ("launched_at", "created_at", "updated_at")}),
@@ -38,7 +40,7 @@ class ProjectAdmin(AuditedModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
             _likes=Count("likes", distinct=True),
-            _open_reports=Count("reports", filter=Q(reports__status="open"), distinct=True),
+            _open_reports=Count("reports", filter=Q(reports__status__in=OPEN_STATES), distinct=True),
         )
 
     @admin.display(description=_("Likes"), ordering="_likes")
@@ -71,6 +73,20 @@ class ProjectAdmin(AuditedModelAdmin):
     def unhide(self, request, queryset):
         done = sum(actions.unhide_project(p, request.user) for p in queryset.select_related("owner"))
         messages.success(request, _("Unhid %(count)s project(s).") % {"count": done})
+
+    @action(description=_("Restore selected removed projects"), permissions=["superuser"])
+    def restore(self, request, queryset):
+        done = sum(decisions.restore_project(p, request.user) for p in queryset.select_related("owner"))
+        messages.success(request, _("Restored %(count)s project(s).") % {"count": done})
+
+    @action(description=_("Purge selected removed projects (deletes them for good)"), permissions=["superuser"])
+    def purge(self, request, queryset):
+        done = sum(decisions.purge_project(p, request.user) for p in queryset.select_related("owner"))
+        messages.success(request, _("Purged %(count)s removed project(s).") % {"count": done})
+
+    def has_superuser_permission(self, request):
+        """Restore and purge: superusers only (moderators never reach the admin's actions)."""
+        return request.user.is_active and request.user.is_superuser
 
 
 @admin.register(BuildLogEntry)

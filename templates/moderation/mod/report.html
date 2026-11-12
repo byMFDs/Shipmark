@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}{% translate "Report" %} · {% translate "Moderation" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/mod.css' %}">{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="container page mod">
+    <p><a href="{% url 'moderation:queue' %}">{% translate "Back to reports" %}</a></p>
+    <header class="page-head">
+      <p class="label">{{ report.get_reason_display }} · {{ report.get_status_display }}</p>
+      <h1>{{ report.target_repr }}</h1>
+    </header>
+    <div class="mod-detail">
+      <div class="mod-detail__main stack">
+        <section class="record" aria-labelledby="report-title">
+          <div class="record__head"><h2 class="label" id="report-title">{% translate "Report" %}</h2></div>
+          <dl class="record__body mod-facts">
+            <div><dt>{% translate "From" %}</dt><dd>{% if report.source == "moderator" %}{% translate "a moderator" %}: {% endif %}{% if report.reporter %}@{{ report.reporter.username }}{% else %}{% translate "deleted account" %}{% endif %} <span class="muted">({% translate "never shown to the reported person" %})</span></dd></div>
+            <div><dt>{% translate "Sent" %}</dt><dd>{{ report.created_at|date:"DATETIME_FORMAT" }}</dd></div>
+            {% if report.details %}<div><dt>{% translate "Details" %}</dt><dd>{{ report.details|linebreaksbr }}</dd></div>{% endif %}
+            {% if report.handled_by %}<div><dt>{% translate "Handled" %}</dt><dd>@{{ report.handled_by.username }} · {{ report.handled_at|date:"DATETIME_FORMAT" }} · {{ report.resolution_note }}</dd></div>{% endif %}
+          </dl>
+        </section>
+
+        <section class="record" aria-labelledby="target-title">
+          <div class="record__head"><h2 class="label" id="target-title">{% translate "Reported" %}</h2></div>
+          <div class="record__body stack">
+            {% if kind == "project" and project %}
+              <p class="plate-row__name">{{ project.name }} <span class="muted">· {{ project.get_status_display }}</span></p>
+              <p>{{ project.tagline }}</p>
+              {% if project.status == "published" %}<p><a href="{{ project.get_absolute_url }}">{% translate "Open the project page" %}</a></p>{% endif %}
+            {% elif kind == "profile" and owner %}
+              <p class="plate-row__name">{{ owner.display_name|default:owner.username }} <span class="muted">@{{ owner.username }}</span></p>
+              <dl class="mod-facts">
+                <div><dt>{% translate "Bio" %}</dt><dd>{{ owner.bio|default:"—" }}</dd></div>
+                <div><dt>{% translate "Links" %}</dt><dd>{{ owner.website|default:"—" }}</dd></div>
+                <div><dt>{% translate "Avatar" %}</dt><dd>{% if owner.avatar_url %}{% translate "set" %}{% else %}—{% endif %}</dd></div>
+              </dl>
+              <p><a href="{% url 'accounts:profile' owner.username %}">{% translate "Open the profile" %}</a></p>
+            {% elif kind == "entry" and entry %}
+              <div class="prose">{{ entry.text_html|safe }}</div>
+              <p><a href="{{ entry.project.get_absolute_url }}#log-{{ entry.pk }}">{{ entry.project.name }}</a></p>
+            {% else %}
+              <p class="muted">{% translate "The reported item was deleted." %}</p>
+            {% endif %}
+          </div>
+        </section>
+        {% include "moderation/mod/_action_form.html" %}
+      </div>
+      <div class="mod-detail__aside">{% include "moderation/mod/_history.html" %}</div>
+    </div>
+  </div>
+{% endblock %}

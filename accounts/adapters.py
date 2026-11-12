@@ -2,10 +2,12 @@
 import re
 
 from allauth.account.adapter import DefaultAccountAdapter
+from allauth.core.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django.db import transaction
 
 from . import github
+from .roles import active_ban
 from .usernames import generate_username, looks_official
 
 
@@ -33,9 +35,24 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         return True  # GitHub sign-up is open
 
     def pre_social_login(self, request, sociallogin):
-        """Every GitHub sign-in. allauth has already refreshed `extra_data` from GET /user by now."""
+        """Every GitHub sign-in. allauth has already refreshed `extra_data` from GET /user by now.
+
+        A banned person sees the ban page instead of being signed in: an existing account by its active ban,
+        a new signup by the salted hash of the GitHub id (moderation/bans.py), so deleting the account and
+        signing up again does not end a ban.
+        """
+        from moderation import bans
+        from moderation.pages import ban_response
+
         if sociallogin.is_existing:
+            ban = active_ban(sociallogin.user)
+            if ban is not None:
+                raise ImmediateHttpResponse(ban_response(request, ban.reason, ban.expires_at))
             github.refresh_login(sociallogin.user, sociallogin.account.extra_data)
+            return
+        identity = bans.find(sociallogin.account.uid)
+        if identity is not None:
+            raise ImmediateHttpResponse(ban_response(request, identity.reason, identity.expires_at))
 
     def save_user(self, request, sociallogin, form=None):
         """First sign-in: an old local account may still hold this login (its owner renamed on GitHub)."""

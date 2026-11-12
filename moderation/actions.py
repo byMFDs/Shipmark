@@ -50,7 +50,7 @@ def unsuspend_user(user, actor):
 
 
 def resolve_report(report, actor):
-    if report.status == Report.Status.RESOLVED:
+    if not report.is_open:
         return False
     report.status = Report.Status.RESOLVED
     report.handled_by = actor

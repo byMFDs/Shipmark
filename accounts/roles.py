@@ -46,3 +46,50 @@ def can_moderate(user):
 def can_manage_badges(user):
     """Only superusers grant or revoke badges, in the admin or with `grant_badge`."""
     return bool(getattr(user, "is_authenticated", False) and user.is_active and user.is_superuser)
+
+
+# ---------- Sanctions (moderation.Sanction), evaluated per request ----------
+
+def active_sanctions(user):
+    """Mutes and bans in force now, cached on the user object (one query per request)."""
+    if user is None or not getattr(user, "pk", None):
+        return ()
+    cached = getattr(user, "_active_sanctions", None)
+    if cached is None:
+        from moderation.models import Sanction  # here: moderation imports accounts
+
+        cached = tuple(Sanction.objects.active().filter(user_id=user.pk).order_by("-starts_at", "-pk"))
+        user._active_sanctions = cached
+    return cached
+
+
+def forget_sanctions(user):
+    user.__dict__.pop("_active_sanctions", None)
+
+
+def _longest(sanctions):
+    """The one that ends last (a permanent one wins)."""
+    if not sanctions:
+        return None
+    return max(sanctions, key=lambda s: (s.expires_at is None, s.expires_at or s.starts_at))
+
+
+def active_ban(user):
+    return _longest([s for s in active_sanctions(user) if s.kind == "ban"])
+
+
+def active_mute(user):
+    return _longest([s for s in active_sanctions(user) if s.kind == "mute"])
+
+
+def can_write(user):
+    """Create, edit, publish, log, like, follow, report, upload. Not: suspended, muted or banned users.
+    Reading, own settings, export and account deletion stay open to muted users."""
+    if not getattr(user, "is_authenticated", False) or not user.is_active or user.is_suspended:
+        return False
+    return not active_sanctions(user)
+
+
+def is_protected(target):
+    """Accounts a moderator (who is not a superuser) may never act on."""
+    return bool(target.is_superuser or is_official(target) or has_moderator_badge(target))

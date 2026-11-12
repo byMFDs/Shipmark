@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/mod.css' %}">{% endblock %}
+{% block title %}{% translate "Account banned" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="container page">
+    <section class="panel stack sanction-page" aria-labelledby="ban-title">
+      <p class="label">{% translate "Moderation" %}</p>
+      <h1 id="ban-title">{% translate "This account is banned" %}</h1>
+      <p>{% translate "You have been signed out and cannot sign in while the ban lasts." %}</p>
+      <dl class="sanction-facts">
+        <div><dt>{% translate "Reason" %}</dt><dd>{{ reason|linebreaksbr }}</dd></div>
+        <div><dt>{% translate "Ends" %}</dt><dd>{% if expires_at %}<time datetime="{{ expires_at|date:'c' }}">{{ expires_at|date:"DATETIME_FORMAT" }}</time>{% else %}{% translate "No end date." %}{% endif %}</dd></div>
+      </dl>
+      <p>{% blocktranslate with email=contact_email %}Questions, an appeal, or a copy or deletion of your data: write to <a href="mailto:{{ email }}">{{ email }}</a>.{% endblocktranslate %}</p>
+      <p><a class="btn btn--secondary" href="{% url 'pages:landing' %}">{% translate "Go to the front page" %}</a></p>
+    </section>
+  </div>
+{% endblock %}
