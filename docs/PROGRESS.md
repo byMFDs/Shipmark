@@ -117,3 +117,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-12: Trust hardening, stage 2 (branch trust-hardening, commits A–F + token file). Repo owner only for own non-fork repos (or the project's `.shipmark-verify` file); ids instead of names; login refreshed at every sign-in; review states + admin queue + blocks; weekly `reverify_repos`; uptime must answer from the verified domain; shared-host apexes refused; "What was checked" panel; texts in 7 languages; attack tests a–l.
   Next: run the one-time steps in `docs/DEPLOY_NOTES.md` ("Trust hardening") on a DB copy, then production; add the `reverify_repos` cron line.
+
+- 2026-11-12: Features round, stage 0 (plan only, no code). `docs/FEATURES_PLAN.md`: model changes (badges, news, sanctions, reports, profile fields), URL map, permission matrix, "For you" formula, risks, 10 open questions. `docs/FEATURES_STATUS.md` created.
+  Next: answers to the open questions, then "GO 1" (screenshots bug first, then badges, news models, sanctions).
