@@ -4,7 +4,10 @@ import re
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.core.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from django.conf import settings
 from django.db import transaction
+from django.utils import translation
+from django.utils.translation import gettext as _
 
 from . import github
 from .roles import active_ban
@@ -28,6 +31,29 @@ class AccountAdapter(DefaultAccountAdapter):
         if commit:
             user.save()
         return user
+
+    def post_login(self, request, user, **kwargs):
+        """Switch this request to the person's saved language before the "signed in" message is written.
+
+        The GitHub callback starts anonymous, so it runs in the cookie or browser language, while the next page
+        uses the saved preference (CLAUDE.md section 8). Without this the toast and the page could differ.
+        UserLocaleMiddleware also stores the language in the language cookie, so it stays after signing out.
+        """
+        saved = user.preferred_language
+        if saved in dict(settings.LANGUAGES):
+            translation.activate(saved)
+            request.LANGUAGE_CODE = saved
+            request.saved_language = saved
+        return super().post_login(request, user, **kwargs)
+
+    def add_message(self, request, level, message_template=None, message_context=None, extra_tags="", message=None):
+        """Our own short texts for sign-in and sign-out (in our translations), written in the active language."""
+        if message_template == "account/messages/logged_in.txt":
+            user = (message_context or {}).get("user") or request.user
+            message = _("Signed in as %(name)s.") % {"name": user.display_name or user.username}
+        elif message_template == "account/messages/logged_out.txt":
+            message = _("You are signed out.")
+        return super().add_message(request, level, message_template, message_context, extra_tags, message)
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):

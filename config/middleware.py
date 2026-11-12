@@ -80,13 +80,30 @@ class UserLocaleMiddleware(LocaleMiddleware):
         if saved in dict(settings.LANGUAGES):
             translation.activate(saved)
             request.LANGUAGE_CODE = translation.get_language()
+            request.saved_language = saved
             return
         super().process_request(request)
 
     def process_response(self, request, response):
         if request.path_info.startswith(BADGE_PREFIX):
             return response
-        return super().process_response(request, response)
+        response = super().process_response(request, response)
+        # Keep the language cookie equal to the saved preference (also set at sign-in, see AccountAdapter.post_login),
+        # so pages and messages stay in the same language after signing out. Written only when it differs.
+        saved = getattr(request, "saved_language", "")
+        if saved and request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME) != saved:
+            set_language_cookie(response, saved)
+        return response
+
+
+def set_language_cookie(response, code):
+    """The same cookie Django's set_language view writes."""
+    response.set_cookie(
+        settings.LANGUAGE_COOKIE_NAME, code,
+        max_age=settings.LANGUAGE_COOKIE_AGE, path=settings.LANGUAGE_COOKIE_PATH, domain=settings.LANGUAGE_COOKIE_DOMAIN,
+        secure=settings.LANGUAGE_COOKIE_SECURE, httponly=settings.LANGUAGE_COOKIE_HTTPONLY,
+        samesite=settings.LANGUAGE_COOKIE_SAMESITE,
+    )
 
 
 class TermsAcceptanceMiddleware:

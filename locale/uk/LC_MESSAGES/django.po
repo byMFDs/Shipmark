@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 17:08+0000\n"
+"POT-Creation-Date: 2026-11-12 17:59+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -16,6 +16,15 @@ msgstr ""
 "11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: accounts/adapters.py:53 pages/test_languages.py:200
+#, python-format
+msgid "Signed in as %(name)s."
+msgstr "Ви увійшли як %(name)s."
+
+#: accounts/adapters.py:55 accounts/views.py:57 pages/test_languages.py:219
+msgid "You are signed out."
+msgstr "Ви вийшли з акаунта."
 
 #: accounts/admin.py:39 accounts/models.py:98
 msgid "badge"
@@ -218,7 +227,7 @@ msgid "Pin at most 3 projects."
 msgstr "Закріпіть не більше 3 проєктів."
 
 #: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:72
-#: projects/views.py:38 social/views.py:73
+#: projects/views.py:39 social/views.py:73
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Забагато змін за короткий час. Спробуйте за кілька хвилин."
 
@@ -357,10 +366,6 @@ msgstr "Це імʼя зарезервоване. Оберіть інше."
 #, python-format
 msgid "This name is reserved for official %(site)s accounts."
 msgstr "Це імʼя зарезервоване для офіційних акаунтів %(site)s."
-
-#: accounts/views.py:57
-msgid "You are signed out."
-msgstr "Ви вийшли з акаунта."
 
 #: accounts/views.py:69 moderation/pages.py:26
 msgid "Your account is suspended."
@@ -1070,11 +1075,11 @@ msgstr "Умови"
 msgid "Cookies"
 msgstr "Файли cookie"
 
-#: pages/test_languages.py:38 templates/pages/explore.html:69
+#: pages/test_languages.py:45 templates/pages/explore.html:69
 msgid "Show projects"
 msgstr "Показати проєкти"
 
-#: pages/test_languages.py:65 templates/pages/explore.html:75
+#: pages/test_languages.py:72 templates/pages/explore.html:75
 #, python-format
 msgid "%(n)s project"
 msgid_plural "%(n)s projects"
@@ -1197,7 +1202,7 @@ msgstr "Вкажіть публічну веб-адресу, наприклад 
 msgid "Use the form owner/name, for example octocat/hello-world."
 msgstr "Використайте вигляд власник/назва, наприклад octocat/hello-world."
 
-#: projects/forms.py:116 projects/views.py:315
+#: projects/forms.py:116 projects/views.py:353
 msgid "A project can have at most 4 screenshots. Remove one first."
 msgstr "У проєкта може бути не більше 4 скріншотів. Спершу видаліть один."
 
@@ -1312,7 +1317,9 @@ msgstr ""
 msgid ""
 "Domain verified, and at least 95% of uptime checks succeeded over the last "
 "30 days, with at least 40 checks."
-msgstr "Є позначка «Домен підтверджено», і щонайменше 95% перевірок доступності за останні 30 днів успішні, за щонайменше 40 перевірок."
+msgstr ""
+"Є позначка «Домен підтверджено», і щонайменше 95% перевірок доступності за "
+"останні 30 днів успішні, за щонайменше 40 перевірок."
 
 #: projects/proof.py:77
 msgid "No repository linked."
@@ -1513,23 +1520,23 @@ msgstr ""
 msgid "Tags use letters, digits, spaces and + # . - (up to 30 characters)."
 msgstr "У тегах можна літери, цифри, пробіли та + # . - (до 30 символів)."
 
-#: projects/views.py:68
+#: projects/views.py:69
 msgid "Moderators removed this project. It cannot be changed."
 msgstr "Модератори вилучили цей проєкт. Його не можна змінити."
 
-#: projects/views.py:125
+#: projects/views.py:126
 msgid "Draft saved."
 msgstr "Чернетку збережено."
 
-#: projects/views.py:125
+#: projects/views.py:126
 msgid "Draft saved. Add screenshots, then publish."
 msgstr "Чернетку збережено. Додайте скріншоти, потім опублікуйте."
 
-#: projects/views.py:146 projects/views.py:270
+#: projects/views.py:147 projects/views.py:308
 msgid "Published."
 msgstr "Опубліковано."
 
-#: projects/views.py:150
+#: projects/views.py:151
 #, python-format
 msgid "Changes saved. %(count)d screenshot added."
 msgid_plural "Changes saved. %(count)d screenshots added."
@@ -1538,38 +1545,58 @@ msgstr[1] "Зміни збережено. Додано %(count)d скріншо�
 msgstr[2] "Зміни збережено. Додано %(count)d скріншотів."
 msgstr[3] "Зміни збережено. Додано %(count)d скріншота."
 
-#: projects/views.py:153
+#: projects/views.py:154
 msgid "Changes saved."
 msgstr "Зміни збережено."
 
-#: projects/views.py:177
+#: projects/views.py:180
 msgid "The description is too long."
 msgstr "Опис задовгий."
 
-#: projects/views.py:189
+#: projects/views.py:198
+#, python-format
+msgid ""
+"%(repo)s was checked a moment ago. You can check it again in %(count)d "
+"minute."
+msgid_plural ""
+"%(repo)s was checked a moment ago. You can check it again in %(count)d "
+"minutes."
+msgstr[0] "%(repo)s щойно перевіряли. Перевірити знову можна через %(count)d хвилину."
+msgstr[1] "%(repo)s щойно перевіряли. Перевірити знову можна через %(count)d хвилини."
+msgstr[2] "%(repo)s щойно перевіряли. Перевірити знову можна через %(count)d хвилин."
+msgstr[3] "%(repo)s щойно перевіряли. Перевірити знову можна через %(count)d хвилини."
+
+#: projects/views.py:217
 msgid "Add a GitHub repository and save the project first."
 msgstr "Спершу вкажіть репозиторій GitHub і збережіть проєкт."
 
-#: projects/views.py:191
+#: projects/views.py:219
 msgid "Sign in with GitHub to check a repository."
 msgstr "Увійдіть через GitHub, щоб перевірити репозиторій."
 
-#: projects/views.py:193
+#: projects/views.py:229
+#, python-format
 msgid ""
-"This repository was checked a moment ago. You can check again in 10 minutes."
-msgstr "Репозиторій щойно перевіряли. Повторити можна за 10 хвилин."
+"That is enough checks for this hour. You can check again in %(count)d minute."
+msgid_plural ""
+"That is enough checks for this hour. You can check again in %(count)d "
+"minutes."
+msgstr[0] "На цю годину перевірок досить. Перевірити знову можна через %(count)d хвилину."
+msgstr[1] "На цю годину перевірок досить. Перевірити знову можна через %(count)d хвилини."
+msgstr[2] "На цю годину перевірок досить. Перевірити знову можна через %(count)d хвилин."
+msgstr[3] "На цю годину перевірок досить. Перевірити знову можна через %(count)d хвилини."
 
-#: projects/views.py:201
+#: projects/views.py:239
 msgid "Repository checked. Repo owner earned."
 msgstr "Репозиторій перевірено. Позначку «Власник репозиторію» отримано."
 
-#: projects/views.py:203
+#: projects/views.py:241
 msgid "Repository checked. Repo owner will appear after a short manual review."
 msgstr ""
 "Репозиторій перевірено. «Власник репозиторію» з'явиться після короткої "
 "ручної перевірки."
 
-#: projects/views.py:205
+#: projects/views.py:243
 msgid ""
 "This repository is a fork. Forks cannot earn Repo owner; link the original "
 "repository."
@@ -1577,7 +1604,7 @@ msgstr ""
 "Цей репозиторій є форком. Форки не можуть отримати «Власник репозиторію»; "
 "вкажіть оригінальний репозиторій."
 
-#: projects/views.py:207
+#: projects/views.py:245
 msgid ""
 "This repository is not owned by your personal GitHub account, and its "
 "verification file was not found."
@@ -1585,39 +1612,39 @@ msgstr ""
 "Цей репозиторій не належить вашому особистому акаунту на GitHub, і файл "
 "підтвердження в ньому не знайдено."
 
-#: projects/views.py:245
+#: projects/views.py:283
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr "Забагато перевірок. Зачекайте кілька хвилин і перевірте знову."
 
-#: projects/views.py:254
+#: projects/views.py:292
 msgid "Verified. Confirmed again."
 msgstr "Підтверджено. Перевірку оновлено."
 
-#: projects/views.py:254
+#: projects/views.py:292
 msgid "Verified. Domain verified earned."
 msgstr "Підтверджено. Отримано позначку «Домен підтверджено»."
 
-#: projects/views.py:280
+#: projects/views.py:318
 msgid "Moved back to drafts."
 msgstr "Повернуто до чернеток."
 
-#: projects/views.py:290
+#: projects/views.py:328
 msgid "Project deleted."
 msgstr "Проєкт видалено."
 
-#: projects/views.py:304
+#: projects/views.py:342
 msgid "Choose an image first."
 msgstr "Спершу виберіть зображення."
 
-#: projects/views.py:317
+#: projects/views.py:355
 msgid "Screenshot added."
 msgstr "Скріншот додано."
 
-#: projects/views.py:335
+#: projects/views.py:373
 msgid "Screenshot removed."
 msgstr "Скріншот видалено."
 
-#: projects/views.py:383
+#: projects/views.py:421
 #, python-format
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
@@ -1625,15 +1652,15 @@ msgstr ""
 "Проєкт може мати щонайбільше %(n)s записів у журналі за добу. Спробуйте "
 "завтра."
 
-#: projects/views.py:396
+#: projects/views.py:434
 msgid "Posted. Launch date set to today."
 msgstr "Опубліковано. Дату запуску змінено на сьогодні."
 
-#: projects/views.py:396
+#: projects/views.py:434
 msgid "Posted."
 msgstr "Опубліковано."
 
-#: projects/views.py:422 projects/views.py:423
+#: projects/views.py:460 projects/views.py:461
 msgid "Entry deleted."
 msgstr "Запис видалено."
 
@@ -2148,7 +2175,7 @@ msgstr "Останні відкриті скарги"
 msgid "No open reports."
 msgstr "Відкритих скарг немає."
 
-#: templates/base.html:46
+#: templates/base.html:47
 msgid "Skip to content"
 msgstr "Перейти до вмісту"
 
@@ -2290,8 +2317,8 @@ msgstr "відкритих скарг"
 msgid "Account menu for %(name)s"
 msgstr "Меню акаунта: %(name)s"
 
-#: templates/includes/site_nav.html:40 templates/pages/_sign_in.html:9
-#: templates/pages/_sign_in.html:12 templates/social/feed.html:25
+#: templates/includes/site_nav.html:40 templates/pages/_sign_in.html:10
+#: templates/pages/_sign_in.html:13 templates/social/feed.html:25
 #: templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Увійти через GitHub"
@@ -2653,7 +2680,9 @@ msgstr "Більше запусків."
 msgid ""
 "Show what you shipped with AI. %(name)s verifies your domain and repository "
 "and shows your site's uptime history."
-msgstr "Покажи, що ти запустив із ШІ. %(name)s перевіряє домен і репозиторій та показує історію доступності сайту."
+msgstr ""
+"Покажи, що ти запустив із ШІ. %(name)s перевіряє домен і репозиторій та "
+"показує історію доступності сайту."
 
 #: templates/pages/landing.html:27
 msgid "Built with AI. Backed by evidence."
@@ -3053,7 +3082,10 @@ msgid ""
 "Domain verified is earned when you prove that you control the domain of your "
 "live URL. www is ignored: example.com and www.example.com are the same "
 "domain."
-msgstr "Позначку «Домен підтверджено» отримує той, хто довів, що керує доменом адреси сайту. www не враховується: example.com і www.example.com — це той самий домен."
+msgstr ""
+"Позначку «Домен підтверджено» отримує той, хто довів, що керує доменом "
+"адреси сайту. www не враховується: example.com і www.example.com — це той "
+"самий домен."
 
 #: templates/projects/_domain.html:17
 msgid "Method"
@@ -3210,13 +3242,17 @@ msgstr "Востаннє підтверджено %(date)s. Повторна п�
 msgid ""
 "Last confirmed %(date)s. Domain verified is paused until the domain is "
 "confirmed again."
-msgstr "Востаннє підтверджено %(date)s. Позначку «Домен підтверджено» призупинено, доки домен не буде підтверджено знову."
+msgstr ""
+"Востаннє підтверджено %(date)s. Позначку «Домен підтверджено» призупинено, "
+"доки домен не буде підтверджено знову."
 
 #: templates/projects/_domain_status.html:8
 msgid ""
 "Verification lost. The last automatic check did not find your token, so "
 "Domain verified was removed."
-msgstr "Підтвердження втрачено. Остання автоматична перевірка не знайшла ваш токен, тому позначку «Домен підтверджено» знято."
+msgstr ""
+"Підтвердження втрачено. Остання автоматична перевірка не знайшла ваш токен, "
+"тому позначку «Домен підтверджено» знято."
 
 #: templates/projects/_domain_status.html:8
 msgid "Fix it and verify again."
@@ -3327,8 +3363,8 @@ msgid "You have reached the limit of 4 screenshots. Remove one to add another."
 msgstr "Ви досягли ліміту в 4 скріншоти. Видаліть один, щоб додати інший."
 
 #: templates/projects/delete.html:4 templates/projects/delete.html:15
-#: templates/projects/detail.html:41 templates/projects/form.html:122
-#: templates/projects/form.html:124
+#: templates/projects/detail.html:41 templates/projects/form.html:123
+#: templates/projects/form.html:125
 msgid "Delete project"
 msgstr "Видалити проєкт"
 
@@ -3365,11 +3401,11 @@ msgstr "Вилучено модераторами. Цю сторінку бач�
 msgid "Draft. Only you can see this page."
 msgstr "Чернетка. Цю сторінку бачите лише ви."
 
-#: templates/projects/detail.html:37 templates/projects/form.html:110
+#: templates/projects/detail.html:37 templates/projects/form.html:111
 msgid "Publish project"
 msgstr "Опублікувати проєкт"
 
-#: templates/projects/detail.html:39 templates/projects/form.html:114
+#: templates/projects/detail.html:39 templates/projects/form.html:115
 msgid "Unpublish project"
 msgstr "Зняти з публікації"
 
@@ -3576,33 +3612,35 @@ msgstr ""
 msgid "Check repository"
 msgstr "Перевірити репозиторій"
 
-#: templates/projects/form.html:97
-msgid "Uses the repository saved above. Once every 10 minutes."
-msgstr "Береться збережений вище репозиторій. Не частіше ніж раз на 10 хвилин."
+#: templates/projects/form.html:98
+msgid ""
+"Uses the repository saved above. The same repository can be checked once "
+"every 10 minutes; a different one right away."
+msgstr "Береться збережений вище репозиторій. Той самий репозиторій можна перевіряти раз на 10 хвилин, інший — одразу."
 
-#: templates/projects/form.html:99
+#: templates/projects/form.html:100
 msgid "Add a GitHub repository above and save to check it."
 msgstr "Вкажіть репозиторій GitHub вище й збережіть, щоб його перевірити."
 
-#: templates/projects/form.html:106
+#: templates/projects/form.html:107
 msgid "Visibility"
 msgstr "Видимість"
 
-#: templates/projects/form.html:108
+#: templates/projects/form.html:109
 msgid "This project is a draft. Publishing makes the page public."
 msgstr "Цей проєкт — чернетка. Після публікації сторінка стане публічною."
 
-#: templates/projects/form.html:112
+#: templates/projects/form.html:113
 msgid "This project is public."
 msgstr "Цей проєкт публічний."
 
-#: templates/projects/form.html:117
+#: templates/projects/form.html:118
 msgid ""
 "Moderators hid this project. Contact support if you think this is a mistake."
 msgstr ""
 "Модератори приховали цей проєкт. Якщо це помилка, напишіть у підтримку."
 
-#: templates/projects/form.html:123
+#: templates/projects/form.html:124
 msgid "This removes the project and its screenshots for good."
 msgstr "Проєкт і його скріншоти буде видалено назавжди."
 
@@ -3722,7 +3760,9 @@ msgstr "Привʼяжіть репозиторій GitHub, щоб отрима�
 
 #: templates/social/feed.html:103
 msgid "Verify your domain to earn Domain verified; steady uptime earns Steady."
-msgstr "Підтвердьте домен, щоб отримати «Домен підтверджено»; стабільна доступність дає «Стабільний»."
+msgstr ""
+"Підтвердьте домен, щоб отримати «Домен підтверджено»; стабільна доступність "
+"дає «Стабільний»."
 
 #: templates/social/feed.html:104
 msgid "Write a short build-log update when you ship something."

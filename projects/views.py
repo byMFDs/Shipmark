@@ -1,3 +1,4 @@
+import math
 from datetime import timedelta
 from functools import wraps
 
@@ -19,7 +20,7 @@ from accounts.roles import can_write
 from moderation.pages import write_blocked_message
 from moderation.visibility import banned
 
-from config.ratelimit import is_limited
+from config.ratelimit import claim_cooldown, cooldown_left, is_limited, limited_for, release_cooldown
 from verification import domain as domains
 from verification.models import DomainVerification
 from social.queries import like_state
@@ -157,7 +158,9 @@ def edit(request, project):
         "project": project,
         "screenshots": screenshots,
         "max_screenshots": MAX_SCREENSHOTS,
-        "repo_link": getattr(project, "repo_link", None),
+        "repo_link": _current_repo_link(project),
+        "repo_wait": (_repo_wait_text(project, wait)
+                      if project.repo_full_name and (wait := cooldown_left("repo_check", _repo_key(project))) else ""),
         "repo_token": repo_token_for(project) if project.repo_full_name else "",
         "repo_token_file": TOKEN_FILE,
         **_domain_context(project, domains.verification_for(project, create=True)),
@@ -180,6 +183,31 @@ def preview(request):
 
 # ---------- Repository check ----------
 
+REPO_CHECK_COOLDOWN = 600       # seconds between checks of the same repository for one project
+REPO_CHECKS_PER_HOUR = 6        # per project, any repository (typos, switching repositories)
+REPO_CHECKS_PER_USER_HOUR = 20  # per person, all projects together: each check is several GitHub API calls
+
+
+def _repo_key(project):
+    return f"{project.pk}:{project.repo_full_name.lower()}"
+
+
+def _repo_wait_text(project, seconds):
+    minutes = math.ceil(seconds / 60)
+    return ngettext(
+        "%(repo)s was checked a moment ago. You can check it again in %(count)d minute.",
+        "%(repo)s was checked a moment ago. You can check it again in %(count)d minutes.", minutes,
+    ) % {"repo": project.repo_full_name, "count": minutes}
+
+
+def _current_repo_link(project):
+    """The check result for the repository saved now. A result for an older name is stale: show nothing."""
+    link = getattr(project, "repo_link", None)
+    if link is None or not project.repo_full_name or link.repo_full_name.lower() != project.repo_full_name.lower():
+        return None
+    return link
+
+
 @owner_project
 @require_POST
 def repo_check(request, project):
@@ -189,8 +217,18 @@ def repo_check(request, project):
         messages.error(request, _("Add a GitHub repository and save the project first."))
     elif github_id is None:
         messages.error(request, _("Sign in with GitHub to check a repository."))
-    elif is_limited("repo_check", project.pk, limit=1, window=600):  # after the cheap checks, so they do not use it up
-        messages.error(request, _("This repository was checked a moment ago. You can check again in 10 minutes."))
+    # After the cheap checks, so they do not use anything up. The cooldown belongs to this project AND this
+    # repository: after fixing a typo or linking another repository the owner can check it at once.
+    elif wait := claim_cooldown("repo_check", _repo_key(project), REPO_CHECK_COOLDOWN):
+        messages.info(request, _repo_wait_text(project, wait))
+    elif wait := max(limited_for("repo_check_hour", project.pk, REPO_CHECKS_PER_HOUR, 3600),
+                     limited_for("repo_check_user", request.user.pk, REPO_CHECKS_PER_USER_HOUR, 3600)):
+        release_cooldown("repo_check", _repo_key(project))  # nothing was checked, so no cooldown either
+        minutes = math.ceil(wait / 60)
+        messages.info(request, ngettext(
+            "That is enough checks for this hour. You can check again in %(count)d minute.",
+            "That is enough checks for this hour. You can check again in %(count)d minutes.", minutes,
+        ) % {"count": minutes})
     else:
         try:
             result = run_check(project, github_id, actor=request.user)

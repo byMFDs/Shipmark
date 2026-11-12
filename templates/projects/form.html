@@ -94,7 +94,8 @@
             <form method="post" action="{% url 'projects:repo_check' project.owner.username project.slug %}">
               {% csrf_token %}<button class="btn btn--secondary" type="submit">{% translate "Check repository" %}</button>
             </form>
-            <p class="field__hint">{% translate "Uses the repository saved above. Once every 10 minutes." %}</p>
+            {% if repo_wait %}<p class="field__hint" role="status">{{ repo_wait }}</p>
+            {% else %}<p class="field__hint">{% translate "Uses the repository saved above. The same repository can be checked once every 10 minutes; a different one right away." %}</p>{% endif %}
           {% else %}
             <p class="muted">{% translate "Add a GitHub repository above and save to check it." %}</p>
           {% endif %}

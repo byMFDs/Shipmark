@@ -2,10 +2,17 @@
 has a complete catalog, and has the same content pages as English."""
 import re
 
+from allauth.account.adapter import get_adapter
 from django.conf import settings
-from django.test import SimpleTestCase, TestCase
+from django.contrib.messages import get_messages
+from django.contrib.messages.middleware import MessageMiddleware
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.test import RequestFactory, SimpleTestCase, TestCase
+from django.urls import reverse
 from django.utils import translation
 from django.utils.translation import gettext, ngettext
+
+from projects.tests import make_user
 
 CODES = [code for code, _name in settings.LANGUAGES]
 OTHER_CODES = [code for code in CODES if code != "en"]
@@ -169,3 +176,49 @@ class AboutPageTests(TestCase):
                     self.assertIn(f'id="{anchor}"', html)
                 for leftover in ("This page is a placeholder", "Ta strona jest tymczasowa", "Це тимчасова сторінка", "{{"):
                     self.assertNotIn(leftover, html.split("<main", 1)[1])
+
+
+class SignInLanguageTests(TestCase):
+    """The "signed in" / "signed out" toasts are in the same language as the page that shows them."""
+
+    def setUp(self):
+        self.user = make_user("olena")
+        self.user.preferred_language = "uk"
+        self.user.save(update_fields=["preferred_language"])
+
+    def test_signed_in_message_uses_the_saved_language(self):
+        # The GitHub callback starts in the browser language (English here), not in the saved one.
+        request = RequestFactory().get("/accounts/github/login/callback/", headers={"Accept-Language": "en"})
+        SessionMiddleware(lambda r: None).process_request(request)
+        MessageMiddleware(lambda r: None).process_request(request)
+        request.user = self.user  # allauth calls post_login right after logging the person in
+        with translation.override("en"):
+            get_adapter(request).post_login(request, self.user, email_verification="none", signal_kwargs=None,
+                                            email=None, signup=False, redirect_url=None)
+            texts = [str(m) for m in get_messages(request)]
+            self.assertEqual(translation.get_language(), "uk")
+        with translation.override("uk"):
+            expected = gettext("Signed in as %(name)s.") % {"name": self.user.display_name or self.user.username}
+        self.assertEqual(texts, [expected])
+        self.assertNotEqual(expected, "Signed in as olena.")
+        self.assertEqual(request.saved_language, "uk")  # the middleware writes it to the language cookie
+
+    def test_language_cookie_follows_the_saved_preference(self):
+        self.client.force_login(self.user)
+        response = self.client.get("/explore/", headers={"Accept-Language": "en"})
+        self.assertEqual(response.cookies[settings.LANGUAGE_COOKIE_NAME].value, "uk")
+        again = self.client.get("/explore/")
+        self.assertNotIn(settings.LANGUAGE_COOKIE_NAME, again.cookies)  # written only when it differs
+
+    def test_signed_out_page_and_message_stay_in_the_saved_language(self):
+        self.client.force_login(self.user)
+        self.client.get("/explore/", headers={"Accept-Language": "en"})  # syncs the cookie
+        response = self.client.post(reverse("account_logout"), follow=True, headers={"Accept-Language": "en"})
+        html = response.content.decode()
+        self.assertIn('<html lang="uk">', html)
+        with translation.override("uk"):
+            self.assertIn(gettext("You are signed out."), html)
+
+    def test_anonymous_requests_never_get_a_language_cookie(self):
+        response = self.client.get("/explore/", headers={"Accept-Language": "de"})
+        self.assertNotIn(settings.LANGUAGE_COOKIE_NAME, response.cookies)

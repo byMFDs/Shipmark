@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 17:08+0000\n"
+"POT-Creation-Date: 2026-11-12 17:59+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -13,6 +13,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: accounts/adapters.py:53 pages/test_languages.py:200
+#, python-format
+msgid "Signed in as %(name)s."
+msgstr "Sesión iniciada como %(name)s."
+
+#: accounts/adapters.py:55 accounts/views.py:57 pages/test_languages.py:219
+msgid "You are signed out."
+msgstr "Has cerrado sesión."
 
 #: accounts/admin.py:39 accounts/models.py:98
 msgid "badge"
@@ -214,7 +223,7 @@ msgid "Pin at most 3 projects."
 msgstr "Fija como máximo 3 proyectos."
 
 #: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:72
-#: projects/views.py:38 social/views.py:73
+#: projects/views.py:39 social/views.py:73
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Demasiados cambios en poco tiempo. Inténtalo de nuevo en unos minutos."
 
@@ -354,10 +363,6 @@ msgstr "Este nombre de usuario está reservado. Elige otro."
 #, python-format
 msgid "This name is reserved for official %(site)s accounts."
 msgstr "Este nombre está reservado para las cuentas oficiales de %(site)s."
-
-#: accounts/views.py:57
-msgid "You are signed out."
-msgstr "Has cerrado sesión."
 
 #: accounts/views.py:69 moderation/pages.py:26
 msgid "Your account is suspended."
@@ -1068,11 +1073,11 @@ msgstr "Términos"
 msgid "Cookies"
 msgstr "Cookies"
 
-#: pages/test_languages.py:38 templates/pages/explore.html:69
+#: pages/test_languages.py:45 templates/pages/explore.html:69
 msgid "Show projects"
 msgstr "Mostrar proyectos"
 
-#: pages/test_languages.py:65 templates/pages/explore.html:75
+#: pages/test_languages.py:72 templates/pages/explore.html:75
 #, python-format
 msgid "%(n)s project"
 msgid_plural "%(n)s projects"
@@ -1193,7 +1198,7 @@ msgstr "Introduce una dirección web pública, como https://example.com."
 msgid "Use the form owner/name, for example octocat/hello-world."
 msgstr "Usa el formato propietario/nombre, por ejemplo octocat/hello-world."
 
-#: projects/forms.py:116 projects/views.py:315
+#: projects/forms.py:116 projects/views.py:353
 msgid "A project can have at most 4 screenshots. Remove one first."
 msgstr ""
 "Un proyecto puede tener como máximo 4 capturas de pantalla. Elimina una "
@@ -1312,7 +1317,9 @@ msgstr ""
 msgid ""
 "Domain verified, and at least 95% of uptime checks succeeded over the last "
 "30 days, with at least 40 checks."
-msgstr "Domain verified, y al menos el 95 % de las comprobaciones de disponibilidad fueron correctas en los últimos 30 días, con al menos 40 comprobaciones."
+msgstr ""
+"Domain verified, y al menos el 95 % de las comprobaciones de disponibilidad "
+"fueron correctas en los últimos 30 días, con al menos 40 comprobaciones."
 
 #: projects/proof.py:77
 msgid "No repository linked."
@@ -1517,63 +1524,77 @@ msgid "Tags use letters, digits, spaces and + # . - (up to 30 characters)."
 msgstr ""
 "Las etiquetas usan letras, números, espacios y + # . - (hasta 30 caracteres)."
 
-#: projects/views.py:68
+#: projects/views.py:69
 msgid "Moderators removed this project. It cannot be changed."
 msgstr "Los moderadores retiraron este proyecto. No se puede cambiar."
 
-#: projects/views.py:125
+#: projects/views.py:126
 msgid "Draft saved."
 msgstr "Borrador guardado."
 
-#: projects/views.py:125
+#: projects/views.py:126
 msgid "Draft saved. Add screenshots, then publish."
 msgstr "Borrador guardado. Añade capturas de pantalla y después publica."
 
-#: projects/views.py:146 projects/views.py:270
+#: projects/views.py:147 projects/views.py:308
 msgid "Published."
 msgstr "Publicado."
 
-#: projects/views.py:150
+#: projects/views.py:151
 #, python-format
 msgid "Changes saved. %(count)d screenshot added."
 msgid_plural "Changes saved. %(count)d screenshots added."
 msgstr[0] "Cambios guardados. %(count)d captura añadida."
 msgstr[1] "Cambios guardados. %(count)d capturas añadidas."
 
-#: projects/views.py:153
+#: projects/views.py:154
 msgid "Changes saved."
 msgstr "Cambios guardados."
 
-#: projects/views.py:177
+#: projects/views.py:180
 msgid "The description is too long."
 msgstr "La descripción es demasiado larga."
 
-#: projects/views.py:189
+#: projects/views.py:198
+#, python-format
+msgid ""
+"%(repo)s was checked a moment ago. You can check it again in %(count)d "
+"minute."
+msgid_plural ""
+"%(repo)s was checked a moment ago. You can check it again in %(count)d "
+"minutes."
+msgstr[0] "%(repo)s se comprobó hace un momento. Puedes volver a comprobarlo en %(count)d minuto."
+msgstr[1] "%(repo)s se comprobó hace un momento. Puedes volver a comprobarlo en %(count)d minutos."
+
+#: projects/views.py:217
 msgid "Add a GitHub repository and save the project first."
 msgstr "Primero añade un repositorio de GitHub y guarda el proyecto."
 
-#: projects/views.py:191
+#: projects/views.py:219
 msgid "Sign in with GitHub to check a repository."
 msgstr "Inicia sesión con GitHub para comprobar un repositorio."
 
-#: projects/views.py:193
+#: projects/views.py:229
+#, python-format
 msgid ""
-"This repository was checked a moment ago. You can check again in 10 minutes."
-msgstr ""
-"Este repositorio se comprobó hace un momento. Puedes volver a comprobarlo en "
-"10 minutos."
+"That is enough checks for this hour. You can check again in %(count)d minute."
+msgid_plural ""
+"That is enough checks for this hour. You can check again in %(count)d "
+"minutes."
+msgstr[0] "Ya hay suficientes comprobaciones por esta hora. Puedes volver a comprobar en %(count)d minuto."
+msgstr[1] "Ya hay suficientes comprobaciones por esta hora. Puedes volver a comprobar en %(count)d minutos."
 
-#: projects/views.py:201
+#: projects/views.py:239
 msgid "Repository checked. Repo owner earned."
 msgstr "Repositorio comprobado. Repo owner conseguido."
 
-#: projects/views.py:203
+#: projects/views.py:241
 msgid "Repository checked. Repo owner will appear after a short manual review."
 msgstr ""
 "Repositorio comprobado. Repo owner aparecerá después de una breve revisión "
 "manual."
 
-#: projects/views.py:205
+#: projects/views.py:243
 msgid ""
 "This repository is a fork. Forks cannot earn Repo owner; link the original "
 "repository."
@@ -1581,7 +1602,7 @@ msgstr ""
 "Este repositorio es un fork. Los forks no pueden conseguir Repo owner; "
 "enlaza el repositorio original."
 
-#: projects/views.py:207
+#: projects/views.py:245
 msgid ""
 "This repository is not owned by your personal GitHub account, and its "
 "verification file was not found."
@@ -1589,39 +1610,39 @@ msgstr ""
 "Este repositorio no pertenece a tu cuenta personal de GitHub y no se "
 "encontró en él el archivo de verificación."
 
-#: projects/views.py:245
+#: projects/views.py:283
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr "Demasiadas comprobaciones. Espera unos minutos y vuelve a verificar."
 
-#: projects/views.py:254
+#: projects/views.py:292
 msgid "Verified. Confirmed again."
 msgstr "Verificado. Confirmado de nuevo."
 
-#: projects/views.py:254
+#: projects/views.py:292
 msgid "Verified. Domain verified earned."
 msgstr "Verificado. Domain verified conseguido."
 
-#: projects/views.py:280
+#: projects/views.py:318
 msgid "Moved back to drafts."
 msgstr "Devuelto a borradores."
 
-#: projects/views.py:290
+#: projects/views.py:328
 msgid "Project deleted."
 msgstr "Proyecto eliminado."
 
-#: projects/views.py:304
+#: projects/views.py:342
 msgid "Choose an image first."
 msgstr "Elige primero una imagen."
 
-#: projects/views.py:317
+#: projects/views.py:355
 msgid "Screenshot added."
 msgstr "Captura de pantalla añadida."
 
-#: projects/views.py:335
+#: projects/views.py:373
 msgid "Screenshot removed."
 msgstr "Captura de pantalla eliminada."
 
-#: projects/views.py:383
+#: projects/views.py:421
 #, python-format
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
@@ -1629,15 +1650,15 @@ msgstr ""
 "Un proyecto puede recibir como máximo %(n)s entradas del registro de "
 "desarrollo al día. Inténtalo de nuevo mañana."
 
-#: projects/views.py:396
+#: projects/views.py:434
 msgid "Posted. Launch date set to today."
 msgstr "Publicado. Fecha de lanzamiento fijada en hoy."
 
-#: projects/views.py:396
+#: projects/views.py:434
 msgid "Posted."
 msgstr "Publicado."
 
-#: projects/views.py:422 projects/views.py:423
+#: projects/views.py:460 projects/views.py:461
 msgid "Entry deleted."
 msgstr "Entrada eliminada."
 
@@ -2156,7 +2177,7 @@ msgstr "Últimas denuncias abiertas"
 msgid "No open reports."
 msgstr "No hay denuncias abiertas."
 
-#: templates/base.html:46
+#: templates/base.html:47
 msgid "Skip to content"
 msgstr "Saltar al contenido"
 
@@ -2298,8 +2319,8 @@ msgstr "denuncias abiertas"
 msgid "Account menu for %(name)s"
 msgstr "Menú de la cuenta de %(name)s"
 
-#: templates/includes/site_nav.html:40 templates/pages/_sign_in.html:9
-#: templates/pages/_sign_in.html:12 templates/social/feed.html:25
+#: templates/includes/site_nav.html:40 templates/pages/_sign_in.html:10
+#: templates/pages/_sign_in.html:13 templates/social/feed.html:25
 #: templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Iniciar sesión con GitHub"
@@ -2660,7 +2681,9 @@ msgstr "Más lanzamientos."
 msgid ""
 "Show what you shipped with AI. %(name)s verifies your domain and repository "
 "and shows your site's uptime history."
-msgstr "Muestra lo que has lanzado con IA. %(name)s verifica tu dominio y tu repositorio y muestra el historial de disponibilidad de tu sitio."
+msgstr ""
+"Muestra lo que has lanzado con IA. %(name)s verifica tu dominio y tu "
+"repositorio y muestra el historial de disponibilidad de tu sitio."
 
 #: templates/pages/landing.html:27
 msgid "Built with AI. Backed by evidence."
@@ -3058,7 +3081,10 @@ msgid ""
 "Domain verified is earned when you prove that you control the domain of your "
 "live URL. www is ignored: example.com and www.example.com are the same "
 "domain."
-msgstr "Domain verified se consigue al demostrar que controlas el dominio de tu URL pública. El www se ignora: example.com y www.example.com son el mismo dominio."
+msgstr ""
+"Domain verified se consigue al demostrar que controlas el dominio de tu URL "
+"pública. El www se ignora: example.com y www.example.com son el mismo "
+"dominio."
 
 #: templates/projects/_domain.html:17
 msgid "Method"
@@ -3215,13 +3241,17 @@ msgstr "Última confirmación el %(date)s. Se vuelve a comprobar cada 30 días."
 msgid ""
 "Last confirmed %(date)s. Domain verified is paused until the domain is "
 "confirmed again."
-msgstr "Última confirmación el %(date)s. Domain verified queda en pausa hasta que se confirme el dominio de nuevo."
+msgstr ""
+"Última confirmación el %(date)s. Domain verified queda en pausa hasta que se "
+"confirme el dominio de nuevo."
 
 #: templates/projects/_domain_status.html:8
 msgid ""
 "Verification lost. The last automatic check did not find your token, so "
 "Domain verified was removed."
-msgstr "Verificación perdida. La última comprobación automática no encontró tu token, así que se retiró Domain verified."
+msgstr ""
+"Verificación perdida. La última comprobación automática no encontró tu "
+"token, así que se retiró Domain verified."
 
 #: templates/projects/_domain_status.html:8
 msgid "Fix it and verify again."
@@ -3335,8 +3365,8 @@ msgstr ""
 "Has llegado al límite de 4 capturas de pantalla. Quita una para añadir otra."
 
 #: templates/projects/delete.html:4 templates/projects/delete.html:15
-#: templates/projects/detail.html:41 templates/projects/form.html:122
-#: templates/projects/form.html:124
+#: templates/projects/detail.html:41 templates/projects/form.html:123
+#: templates/projects/form.html:125
 msgid "Delete project"
 msgstr "Eliminar proyecto"
 
@@ -3374,11 +3404,11 @@ msgstr "Retirado por los moderadores. Solo tú ves esta página."
 msgid "Draft. Only you can see this page."
 msgstr "Borrador. Solo tú puedes ver esta página."
 
-#: templates/projects/detail.html:37 templates/projects/form.html:110
+#: templates/projects/detail.html:37 templates/projects/form.html:111
 msgid "Publish project"
 msgstr "Publicar proyecto"
 
-#: templates/projects/detail.html:39 templates/projects/form.html:114
+#: templates/projects/detail.html:39 templates/projects/form.html:115
 msgid "Unpublish project"
 msgstr "Despublicar proyecto"
 
@@ -3582,35 +3612,37 @@ msgstr ""
 msgid "Check repository"
 msgstr "Comprobar repositorio"
 
-#: templates/projects/form.html:97
-msgid "Uses the repository saved above. Once every 10 minutes."
-msgstr "Usa el repositorio guardado arriba. Una vez cada 10 minutos."
+#: templates/projects/form.html:98
+msgid ""
+"Uses the repository saved above. The same repository can be checked once "
+"every 10 minutes; a different one right away."
+msgstr "Usa el repositorio guardado arriba. El mismo repositorio se puede comprobar una vez cada 10 minutos; uno distinto, enseguida."
 
-#: templates/projects/form.html:99
+#: templates/projects/form.html:100
 msgid "Add a GitHub repository above and save to check it."
 msgstr "Añade arriba un repositorio de GitHub y guarda para comprobarlo."
 
-#: templates/projects/form.html:106
+#: templates/projects/form.html:107
 msgid "Visibility"
 msgstr "Visibilidad"
 
-#: templates/projects/form.html:108
+#: templates/projects/form.html:109
 msgid "This project is a draft. Publishing makes the page public."
 msgstr ""
 "Este proyecto es un borrador. Al publicarlo, la página pasa a ser pública."
 
-#: templates/projects/form.html:112
+#: templates/projects/form.html:113
 msgid "This project is public."
 msgstr "Este proyecto es público."
 
-#: templates/projects/form.html:117
+#: templates/projects/form.html:118
 msgid ""
 "Moderators hid this project. Contact support if you think this is a mistake."
 msgstr ""
 "Los moderadores ocultaron este proyecto. Contacta con soporte si crees que "
 "es un error."
 
-#: templates/projects/form.html:123
+#: templates/projects/form.html:124
 msgid "This removes the project and its screenshots for good."
 msgstr "Esto elimina el proyecto y sus capturas de pantalla para siempre."
 
@@ -3729,7 +3761,9 @@ msgstr "Vincula tu repositorio de GitHub para obtener Repo owner."
 
 #: templates/social/feed.html:103
 msgid "Verify your domain to earn Domain verified; steady uptime earns Steady."
-msgstr "Verifica tu dominio para obtener Domain verified; una disponibilidad estable da Steady."
+msgstr ""
+"Verifica tu dominio para obtener Domain verified; una disponibilidad estable "
+"da Steady."
 
 #: templates/social/feed.html:104
 msgid "Write a short build-log update when you ship something."

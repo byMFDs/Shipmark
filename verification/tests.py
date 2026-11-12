@@ -11,11 +11,13 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
+from config.ratelimit import cooldown_left
 from moderation.models import AuditLog
 from projects.forms import ProjectForm
 from projects.models import Project
 from projects.proof import compute_hallmarks
 from projects.tests import make_project, make_user
+from projects.views import REPO_CHECKS_PER_HOUR, REPO_CHECKS_PER_USER_HOUR
 
 from .models import RepoLink
 from .repo import AUTHORED, FORK, NOT_YOURS, RepoCheckError, repo_token_for, run_check
@@ -246,7 +248,51 @@ class RepoCheckViewTests(RepoCheckTestCase):
         with patcher:
             response = self.client.post(self.url, follow=True)
         self.assertEqual(seen, [])  # GitHub was not called
-        self.assertContains(response, "10 minutes")
+        self.assertContains(response, "me/tool was checked a moment ago. You can check it again in 10 minutes.")
+        message = list(response.context["messages"])[0]
+        self.assertEqual(message.level_tag, "info")  # a neutral note, not an error
+        # The edit page says the same until the cooldown ends.
+        edit = self.client.get(reverse("projects:edit", args=["me", self.project.slug]))
+        self.assertContains(edit, "You can check it again in 10 minutes.")
+
+    def test_another_repository_can_be_checked_at_once(self):
+        self.post(repo=repo_json(owner_id=5), contributors=[[]])  # wrong repository: not owned
+        Project.objects.filter(pk=self.project.pk).update(repo_full_name="me/tool-v2")
+        patcher, seen = mock_github(repo=repo_json(name="me/tool-v2"), contributors=[[person()]])
+        with patcher:
+            response = self.client.post(self.url, follow=True)
+        self.assertNotEqual(seen, [])  # the new repository was checked right away
+        self.assertContains(response, "Repo owner earned")
+
+    def test_hourly_cap_across_repositories(self):
+        for i in range(REPO_CHECKS_PER_HOUR):
+            Project.objects.filter(pk=self.project.pk).update(repo_full_name=f"me/try-{i}")
+            self.post(repo=repo_json(name=f"me/try-{i}", owner_id=5), contributors=[[]])
+        Project.objects.filter(pk=self.project.pk).update(repo_full_name="me/one-more")
+        patcher, seen = mock_github(repo=repo_json(name="me/one-more"))
+        with patcher:
+            response = self.client.post(self.url, follow=True)
+        self.assertEqual(seen, [])
+        self.assertContains(response, "That is enough checks for this hour. You can check again in 60 minutes.")
+        # Refused checks do not start the 10-minute cooldown of that repository.
+        self.assertEqual(cooldown_left("repo_check", f"{self.project.pk}:me/one-more"), 0)
+
+    def test_hourly_cap_per_person(self):
+        projects = [make_project(self.user, name=f"P{i}", repo_full_name=f"me/p-{i}")
+                    for i in range(REPO_CHECKS_PER_USER_HOUR + 1)]
+        for i, project in enumerate(projects):
+            patcher, seen = mock_github(repo=repo_json(name=f"me/p-{i}", owner_id=5), contributors=[[]])
+            with patcher:
+                response = self.client.post(reverse("projects:repo_check", args=["me", project.slug]), follow=True)
+        self.assertEqual(seen, [])  # the 21st check in an hour, on a fresh project, still waits
+        self.assertContains(response, "enough checks for this hour")
+
+    def test_stale_result_for_an_older_name_is_not_shown(self):
+        self.post(contributors=[[person()]])
+        Project.objects.filter(pk=self.project.pk).update(repo_full_name="me/renamed")  # no form, so the link stays
+        edit = self.client.get(reverse("projects:edit", args=["me", self.project.slug]))
+        self.assertNotContains(edit, "Repo owner: me/tool")
+        self.assertContains(edit, "Not checked yet.")
 
     def test_no_repo_set_does_not_use_up_the_limit(self):
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="")
