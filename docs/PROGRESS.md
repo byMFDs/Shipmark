@@ -120,3 +120,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-12: Features round, stage 0 (plan only, no code). `docs/FEATURES_PLAN.md`: model changes (badges, news, sanctions, reports, profile fields), URL map, permission matrix, "For you" formula, risks, 10 open questions. `docs/FEATURES_STATUS.md` created.
   Next: answers to the open questions, then "GO 1" (screenshots bug first, then badges, news models, sanctions).
+
+- 2026-11-12: Features stage 1. Screenshots fixed (cause: separate upload form; now one form with Save/Publish, tests). `UserBadge` + `accounts/roles.py` (moderation only from the badge), badge admin (superusers only) + `grant_badge`, reserved names, system account `shipmark`, official/moderator marks next to names. `news` app (model + admin). `Sanction` model + admin. Staff can no longer grant themselves superuser in the admin. 7 languages, 672 tests.
+  Next: "GO 2" (moderation: /mod/, report statuses, enforcement of mute/ban).

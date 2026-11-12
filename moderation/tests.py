@@ -73,7 +73,8 @@ class AdminAccessTests(ModerationTestCase):
         self.client.force_login(self.boss)
         names = ["accounts_user", "projects_project", "projects_buildlogentry", "projects_tag", "projects_tool",
                  "verification_repolink", "verification_domainverification", "verification_uptimecheck",
-                 "moderation_report", "moderation_auditlog", "social_follow", "social_like"]
+                 "moderation_report", "moderation_auditlog", "social_follow", "social_like",
+                 "accounts_userbadge", "moderation_sanction", "news_newspost"]
         self.assertEqual(self.client.get(reverse("admin:index")).status_code, 200)
         for name in names:
             with self.subTest(model=name):
@@ -81,8 +82,15 @@ class AdminAccessTests(ModerationTestCase):
                 self.assertEqual(response.status_code, 200)
                 response = self.client.get(reverse(f"admin:{name}_changelist") + "?q=ana")
                 self.assertEqual(response.status_code, 200)
+        from accounts.models import UserBadge
+        from news.models import NewsPost
+        from .models import Sanction
+        sanction = Sanction.objects.create(user=self.visitor, kind="mute", reason="x")
+        post = NewsPost.objects.create(title="Hello", slug="hello", body="**Hi**")
         for name, obj in (("accounts_user", self.ana), ("projects_project", self.project),
-                          ("moderation_report", Report.objects.get()), ("moderation_auditlog", AuditLog.objects.get())):
+                          ("moderation_report", Report.objects.get()), ("moderation_auditlog", AuditLog.objects.get()),
+                          ("accounts_userbadge", UserBadge.objects.first()), ("moderation_sanction", sanction),
+                          ("news_newspost", post)):
             with self.subTest(change=name):
                 self.assertEqual(self.client.get(reverse(f"admin:{name}_change", args=[obj.pk])).status_code, 200)
 

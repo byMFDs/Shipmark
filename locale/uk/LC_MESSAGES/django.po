@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 13:40+0000\n"
+"POT-Creation-Date: 2026-11-12 13:59+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -17,48 +17,56 @@ msgstr ""
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: accounts/admin.py:41 moderation/admin.py:30
+#: accounts/admin.py:39 accounts/models.py:64
+msgid "badge"
+msgstr "бейдж"
+
+#: accounts/admin.py:40
+msgid "Badges (only superusers can change these)"
+msgstr "Бейджі (змінювати можуть лише суперкористувачі)"
+
+#: accounts/admin.py:100 moderation/admin.py:34
 #: templates/accounts/settings.html:17
 msgid "Profile"
 msgstr "Профіль"
 
-#: accounts/admin.py:42 config/settings/base.py:305
+#: accounts/admin.py:101 config/settings/base.py:307
 msgid "Moderation"
 msgstr "Модерація"
 
-#: accounts/admin.py:43
+#: accounts/admin.py:102
 msgid "Permissions"
 msgstr "Права доступу"
 
-#: accounts/admin.py:44
+#: accounts/admin.py:103
 msgid "Terms and dates"
 msgstr "Умови та дати"
 
-#: accounts/admin.py:53 moderation/dashboard.py:45
+#: accounts/admin.py:120 moderation/dashboard.py:46
 msgid "Published projects"
 msgstr "Опубліковані проєкти"
 
-#: accounts/admin.py:64
+#: accounts/admin.py:149
 msgid "Suspend selected users"
 msgstr "Призупинити вибраних користувачів"
 
-#: accounts/admin.py:69
+#: accounts/admin.py:154
 #, python-format
 msgid "Skipped %(name)s: staff cannot suspend themselves or a superuser."
 msgstr ""
 "Пропущено %(name)s: співробітник не може призупинити себе чи "
 "суперкористувача."
 
-#: accounts/admin.py:72
+#: accounts/admin.py:157
 #, python-format
 msgid "Suspended %(count)s user(s). Their projects are hidden everywhere."
 msgstr "Призупинено користувачів: %(count)s. Їхні проєкти приховано всюди."
 
-#: accounts/admin.py:74
+#: accounts/admin.py:159
 msgid "Unsuspend selected users"
 msgstr "Зняти призупинення з вибраних користувачів"
 
-#: accounts/admin.py:77
+#: accounts/admin.py:162
 #, python-format
 msgid "Unsuspended %(count)s user(s)."
 msgstr "Знято призупинення з користувачів: %(count)s."
@@ -81,15 +89,15 @@ msgstr "Автоматично (мова браузера)"
 msgid "Enter a link that starts with http:// or https://."
 msgstr "Введіть посилання, що починається з http:// або https://."
 
-#: accounts/forms.py:95
+#: accounts/forms.py:97
 msgid "Accept the updated Terms to keep using your account."
 msgstr "Щоб і далі користуватися акаунтом, прийміть оновлені Умови."
 
-#: accounts/forms.py:107
+#: accounts/forms.py:109
 msgid "Type your username to confirm"
 msgstr "Введіть своє імʼя користувача для підтвердження"
 
-#: accounts/forms.py:118
+#: accounts/forms.py:120
 msgid "This is not your username. Type it exactly as shown."
 msgstr "Це не ваше імʼя користувача. Введіть його точно так, як показано."
 
@@ -97,12 +105,24 @@ msgstr "Це не ваше імʼя користувача. Введіть йо�
 msgid "This username is already taken."
 msgstr "Це імʼя користувача вже зайняте."
 
-#: accounts/usernames.py:26
+#: accounts/models.py:50
+msgid "Official"
+msgstr "Офіційний"
+
+#: accounts/models.py:51 templates/includes/user_marks.html:1
+msgid "Moderator"
+msgstr "Модератор"
+
+#: accounts/models.py:65
+msgid "badges"
+msgstr "бейджі"
+
+#: accounts/usernames.py:35
 #, python-format
 msgid "Use %(min)d to %(max)d characters."
 msgstr "Використайте від %(min)d до %(max)d символів."
 
-#: accounts/usernames.py:31
+#: accounts/usernames.py:40
 msgid ""
 "Use only lowercase letters, digits, hyphens and underscores, starting with a "
 "letter or digit."
@@ -110,9 +130,14 @@ msgstr ""
 "Лише малі латинські літери, цифри, дефіси та підкреслення; починати з літери "
 "або цифри."
 
-#: accounts/usernames.py:35
+#: accounts/usernames.py:44
 msgid "This username is reserved. Please choose another."
 msgstr "Це імʼя зарезервоване. Оберіть інше."
+
+#: accounts/usernames.py:92
+#, python-format
+msgid "This name is reserved for official %(site)s accounts."
+msgstr "Це імʼя зарезервоване для офіційних акаунтів %(site)s."
 
 #: accounts/views.py:51
 msgid "You are signed out."
@@ -151,118 +176,171 @@ msgstr "Ваш акаунт і все, що в ньому було, видале
 msgid "Proof, not promises."
 msgstr "Докази, а не обіцянки."
 
-#: config/settings/base.py:243
+#: config/settings/base.py:244
 msgid "Admin"
 msgstr "Адмінка"
 
-#: config/settings/base.py:279 config/settings/base.py:281
-#: moderation/dashboard.py:44
+#: config/settings/base.py:280 config/settings/base.py:282
+#: moderation/dashboard.py:45
 msgid "Users"
 msgstr "Користувачі"
 
-#: config/settings/base.py:285 config/settings/base.py:287
+#: config/settings/base.py:283
+msgid "Badges"
+msgstr "Бейджі"
+
+#: config/settings/base.py:287 config/settings/base.py:289
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:288 templates/pages/landing.html:264
+#: config/settings/base.py:290 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
-#: config/settings/base.py:289 projects/forms.py:47
+#: config/settings/base.py:291 projects/forms.py:47
 #: templates/projects/detail.html:161
 msgid "Tags"
 msgstr "Теги"
 
-#: config/settings/base.py:290
+#: config/settings/base.py:292
 msgid "Tools"
 msgstr "Інструменти"
 
-#: config/settings/base.py:294
+#: config/settings/base.py:296
 msgid "Verification"
 msgstr "Підтвердження"
 
-#: config/settings/base.py:296
+#: config/settings/base.py:298
 msgid "Review queue"
 msgstr "Черга перевірки"
 
-#: config/settings/base.py:298
+#: config/settings/base.py:300
 msgid "Repositories"
 msgstr "Репозиторії"
 
-#: config/settings/base.py:299
+#: config/settings/base.py:301
 msgid "Domains"
 msgstr "Домени"
 
-#: config/settings/base.py:300
+#: config/settings/base.py:302
 msgid "Uptime checks"
 msgstr "Перевірки доступності"
 
-#: config/settings/base.py:301
+#: config/settings/base.py:303
 msgid "Blocked repos and domains"
 msgstr "Заблоковані репозиторії й домени"
 
-#: config/settings/base.py:307
+#: config/settings/base.py:309
 msgid "Reports"
 msgstr "Скарги"
 
-#: config/settings/base.py:309
+#: config/settings/base.py:311
+msgid "Sanctions"
+msgstr "Санкції"
+
+#: config/settings/base.py:312
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:310 projects/admin.py:44
+#: config/settings/base.py:313 projects/admin.py:44
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:314 config/settings/base.py:316
+#: config/settings/base.py:317 news/apps.py:8
+msgid "News"
+msgstr "Новини"
+
+#: config/settings/base.py:319
+msgid "News posts"
+msgstr "Новини"
+
+#: config/settings/base.py:323 config/settings/base.py:325
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
-#: moderation/admin.py:28
+#: moderation/admin.py:32
 msgid "Type"
 msgstr "Тип"
 
-#: moderation/admin.py:30
+#: moderation/admin.py:34
 msgid "Project"
 msgstr "Проєкт"
 
-#: moderation/admin.py:32
+#: moderation/admin.py:36
 msgid "Target"
 msgstr "Обʼєкт"
 
-#: moderation/admin.py:39
+#: moderation/admin.py:43
 #, python-format
 msgid "%(name)s (deleted)"
 msgstr "%(name)s (видалено)"
 
-#: moderation/admin.py:42
+#: moderation/admin.py:46
 msgid "Resolve selected reports"
 msgstr "Позначити вибрані скарги розглянутими"
 
-#: moderation/admin.py:45
+#: moderation/admin.py:49
 #, python-format
 msgid "Resolved %(count)s report(s)."
 msgstr "Розглянуто скарг: %(count)s."
 
-#: moderation/dashboard.py:46
+#: moderation/admin.py:85
+msgid "The end must be after the start."
+msgstr "Кінець має бути пізніше за початок."
+
+#: moderation/admin.py:90
+msgid "state"
+msgstr "стан"
+
+#: moderation/admin.py:94 moderation/admin.py:154
+msgid "Active"
+msgstr "Діє"
+
+#: moderation/admin.py:94 moderation/admin.py:154 news/admin.py:29
+msgid "Scheduled"
+msgstr "Заплановано"
+
+#: moderation/admin.py:94 moderation/admin.py:154
+msgid "Expired"
+msgstr "Завершилася"
+
+#: moderation/admin.py:95 moderation/admin.py:155
+msgid "Revoked"
+msgstr "Скасовано"
+
+#: moderation/admin.py:152 news/admin.py:25
+msgid "State"
+msgstr "Стан"
+
+#: moderation/admin.py:167
+msgid "Revoke selected sanctions"
+msgstr "Скасувати вибрані санкції"
+
+#: moderation/admin.py:170
+#, python-format
+msgid "Revoked %(count)s sanction(s)."
+msgstr "Скасовано санкцій: %(count)s."
+
+#: moderation/dashboard.py:47
 msgid "Signups, last 7 days"
 msgstr "Реєстрації за 7 днів"
 
-#: moderation/dashboard.py:47 projects/admin.py:48
+#: moderation/dashboard.py:48 projects/admin.py:48
 msgid "Open reports"
 msgstr "Відкриті скарги"
 
-#: moderation/dashboard.py:51 pages/explore.py:28 pages/templatetags/ui.py:115
+#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:129
 msgid "Repo owner"
 msgstr "Власник репозиторію"
 
-#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:116
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:130
 msgid "Live"
 msgstr "Працює"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:117
+#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:131
 msgid "Steady"
 msgstr "Стабільний"
 
@@ -290,37 +368,77 @@ msgstr "Що не так і де саме? Не вказуйте паролі ч
 msgid "Tell us what is wrong."
 msgstr "Опишіть, що не так."
 
-#: moderation/models.py:42
+#: moderation/models.py:44
 msgid "Spam or advertising"
 msgstr "Спам або реклама"
 
-#: moderation/models.py:43
+#: moderation/models.py:45
 msgid "Fake or misleading proof"
 msgstr "Підроблене або оманливе підтвердження"
 
-#: moderation/models.py:44
+#: moderation/models.py:46
 msgid "Impersonation"
 msgstr "Видавання себе за іншу особу"
 
-#: moderation/models.py:45
+#: moderation/models.py:47
 msgid "Offensive or illegal content"
 msgstr "Образливий або незаконний вміст"
 
-#: moderation/models.py:46
+#: moderation/models.py:48
 msgid "Copyright or stolen work"
 msgstr "Авторські права або вкрадена робота"
 
-#: moderation/models.py:47
+#: moderation/models.py:49
 msgid "Something else"
 msgstr "Інше"
 
-#: moderation/models.py:50
+#: moderation/models.py:52
 msgid "Open"
 msgstr "Відкрита"
 
-#: moderation/models.py:51
+#: moderation/models.py:53
 msgid "Resolved"
 msgstr "Розглянута"
+
+#: moderation/models.py:117
+msgid "Mute"
+msgstr "Обмеження"
+
+#: moderation/models.py:118
+msgid "Ban"
+msgstr "Блокування"
+
+#: moderation/models.py:122
+msgid "Shown to the user."
+msgstr "Користувач це побачить."
+
+#: moderation/models.py:124
+msgid "Empty: permanent (superusers only)."
+msgstr "Порожньо: безстроково (лише суперкористувачі)."
+
+#: moderation/models.py:146
+msgid "sanction"
+msgstr "санкція"
+
+#: moderation/models.py:147
+msgid "sanctions"
+msgstr "санкції"
+
+#: moderation/sanctions.py:18
+msgid "You cannot sanction yourself."
+msgstr "Не можна застосувати санкцію до себе."
+
+#: moderation/sanctions.py:20
+msgid "The system account cannot be sanctioned."
+msgstr "До системного акаунта не можна застосувати санкцію."
+
+#: moderation/sanctions.py:22
+msgid "Only a superuser can sanction a superuser."
+msgstr "Лише суперкористувач може застосувати санкцію до суперкористувача."
+
+#: moderation/sanctions.py:24
+msgid "Only a superuser can sanction an official account."
+msgstr "Лише суперкористувач може застосувати санкцію до офіційного акаунта."
 
 #: moderation/views.py:32
 msgid "Too many reports in a short time. Try again later."
@@ -352,6 +470,71 @@ msgstr "Не можна скаржитися на себе."
 msgid "Report @%(username)s"
 msgstr "Скарга на @%(username)s"
 
+#: news/admin.py:28 projects/models.py:41
+msgid "Draft"
+msgstr "Чернетка"
+
+#: news/admin.py:29 projects/models.py:42 templates/projects/detail.html:24
+#: templates/projects/form.html:15
+msgid "Published"
+msgstr "Опубліковано"
+
+#: news/admin.py:31 templates/projects/form.html:42
+msgid "Preview"
+msgstr "Попередній перегляд"
+
+#: news/admin.py:34
+msgid "Save to see the preview."
+msgstr "Збережіть, щоб побачити попередній перегляд."
+
+#: news/models.py:19
+msgid "title"
+msgstr "заголовок"
+
+#: news/models.py:20
+msgid "slug"
+msgstr "slug"
+
+#: news/models.py:21
+msgid "Part of the address: /news/<slug>/. Do not change it after publishing."
+msgstr "Частина адреси: /news/<slug>/. Не змінюйте після публікації."
+
+#: news/models.py:22
+msgid "body"
+msgstr "текст"
+
+#: news/models.py:23
+msgid "Markdown. Rendered and sanitized like project descriptions; no HTML."
+msgstr "Markdown. Обробляється й очищується так само, як описи проєктів; без HTML."
+
+#: news/models.py:24
+msgid "published at"
+msgstr "час публікації"
+
+#: news/models.py:25
+msgid "Empty: draft. A time in the future: scheduled."
+msgstr "Порожньо: чернетка. Час у майбутньому: заплановано."
+
+#: news/models.py:26
+msgid "pinned"
+msgstr "закріплено"
+
+#: news/models.py:26
+msgid "Shown first in the news list."
+msgstr "Показується першою в списку новин."
+
+#: news/models.py:29
+msgid "created by"
+msgstr "автор"
+
+#: news/models.py:38
+msgid "news post"
+msgstr "новина"
+
+#: news/models.py:39
+msgid "news posts"
+msgstr "новини"
+
 #: pages/explore.py:27
 msgid "Newest"
 msgstr "Найновіші"
@@ -368,42 +551,47 @@ msgstr "Найбільше доказів"
 msgid "Any"
 msgstr "Будь-яка"
 
-#: pages/templatetags/ui.py:80
+#: pages/templatetags/ui.py:81
+#, python-format
+msgid "Official %(site)s account"
+msgstr "Офіційний акаунт %(site)s"
+
+#: pages/templatetags/ui.py:94
 msgid "just now"
 msgstr "щойно"
 
-#: pages/templatetags/ui.py:81
+#: pages/templatetags/ui.py:95
 #, python-format
 msgid "%(time)s ago"
 msgstr "%(time)s тому"
 
-#: pages/templatetags/ui.py:263 templates/social/feed.html:4
+#: pages/templatetags/ui.py:277 templates/social/feed.html:4
 #: templates/social/feed.html:5 templates/social/feed.html:12
 msgid "Feed"
 msgstr "Стрічка"
 
-#: pages/templatetags/ui.py:263 templates/pages/explore.html:4
+#: pages/templatetags/ui.py:277 templates/pages/explore.html:4
 #: templates/pages/explore.html:5 templates/pages/explore.html:16
 msgid "Explore"
 msgstr "Огляд"
 
-#: pages/templatetags/ui.py:265
+#: pages/templatetags/ui.py:279
 msgid "About"
 msgstr "Про проєкт"
 
-#: pages/templatetags/ui.py:266 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:280 templates/pages/landing.html:279
 msgid "How proof works"
 msgstr "Як працюють підтвердження"
 
-#: pages/templatetags/ui.py:267
+#: pages/templatetags/ui.py:281
 msgid "Privacy"
 msgstr "Приватність"
 
-#: pages/templatetags/ui.py:268
+#: pages/templatetags/ui.py:282
 msgid "Terms"
 msgstr "Умови"
 
-#: pages/templatetags/ui.py:269
+#: pages/templatetags/ui.py:283
 msgid "Cookies"
 msgstr "Файли cookie"
 
@@ -470,7 +658,9 @@ msgstr "Додати скріншоти"
 msgid ""
 "Up to 4 images in total, PNG, JPEG or WebP, 5 MB each. You can choose "
 "several at once. The first one is the cover."
-msgstr "Разом до 4 зображень, PNG, JPEG або WebP, до 5 МБ кожне. Можна вибрати кілька одразу. Перше стає обкладинкою."
+msgstr ""
+"Разом до 4 зображень, PNG, JPEG або WebP, до 5 МБ кожне. Можна вибрати "
+"кілька одразу. Перше стає обкладинкою."
 
 #: projects/forms.py:62 templates/pages/landing.html:123
 msgid "GitHub repository"
@@ -519,13 +709,16 @@ msgstr "У проєкта може бути не більше 4 скріншот
 msgid ""
 "A project can have at most 4 screenshots. You chose %(chosen)d; you can add "
 "%(left)d more."
-msgstr "У проєкта може бути не більше 4 скріншотів. Ви вибрали %(chosen)d, можна додати ще %(left)d."
+msgstr ""
+"У проєкта може бути не більше 4 скріншотів. Ви вибрали %(chosen)d, можна "
+"додати ще %(left)d."
 
 #: projects/forms.py:139
 msgid ""
 "Your images were not saved because of the problems above. Choose them again, "
 "then save."
-msgstr "Зображення не збережено через помилки вище. Виберіть їх ще раз і збережіть."
+msgstr ""
+"Зображення не збережено через помилки вище. Виберіть їх ще раз і збережіть."
 
 #: projects/forms.py:150
 msgid "Tags use letters, digits, spaces and + # . - (up to 30 characters)."
@@ -584,15 +777,6 @@ msgstr "У зображення забагато пікселів."
 #: projects/images.py:41
 msgid "This file is not a valid image."
 msgstr "Цей файл не є коректним зображенням."
-
-#: projects/models.py:41
-msgid "Draft"
-msgstr "Чернетка"
-
-#: projects/models.py:42 templates/projects/detail.html:24
-#: templates/projects/form.html:15
-msgid "Published"
-msgstr "Опубліковано"
 
 #: projects/models.py:43
 msgid "Hidden"
@@ -2226,7 +2410,8 @@ msgstr "Вибрано зображень: %%(count)s. Вони завантаж
 #: templates/projects/_screenshots_field.html:33
 #, python-format
 msgid "A project can have at most %(max)s screenshots. Choose fewer images."
-msgstr "У проєкта може бути не більше %(max)s скріншотів. Виберіть менше зображень."
+msgstr ""
+"У проєкта може бути не більше %(max)s скріншотів. Виберіть менше зображень."
 
 #: templates/projects/_screenshots_field.html:36
 msgid "You have reached the limit of 4 screenshots. Remove one to add another."
@@ -2393,15 +2578,13 @@ msgstr "Спочатку це чернетка. Ніхто її не бачит�
 msgid ""
 "You chose images but did not upload them yet. Press Save first, or press "
 "this button again to continue without them."
-msgstr "Ви вибрали зображення, але ще не завантажили їх. Спершу натисніть «Зберегти» або натисніть цю кнопку ще раз, щоб продовжити без них."
+msgstr ""
+"Ви вибрали зображення, але ще не завантажили їх. Спершу натисніть «Зберегти» "
+"або натисніть цю кнопку ще раз, щоб продовжити без них."
 
 #: templates/projects/form.html:42
 msgid "Preview is not available right now."
 msgstr "Попередній перегляд зараз недоступний."
-
-#: templates/projects/form.html:42
-msgid "Preview"
-msgstr "Попередній перегляд"
 
 #: templates/projects/form.html:64
 msgid "Save changes"

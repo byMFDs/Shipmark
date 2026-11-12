@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 13:40+0000\n"
+"POT-Creation-Date: 2026-11-12 13:59+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
@@ -14,49 +14,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: accounts/admin.py:41 moderation/admin.py:30
+#: accounts/admin.py:39 accounts/models.py:64
+msgid "badge"
+msgstr "badge"
+
+#: accounts/admin.py:40
+msgid "Badges (only superusers can change these)"
+msgstr "Badges (seuls les super-utilisateurs peuvent les modifier)"
+
+#: accounts/admin.py:100 moderation/admin.py:34
 #: templates/accounts/settings.html:17
 msgid "Profile"
 msgstr "Profil"
 
-#: accounts/admin.py:42 config/settings/base.py:305
+#: accounts/admin.py:101 config/settings/base.py:307
 msgid "Moderation"
 msgstr "Modération"
 
-#: accounts/admin.py:43
+#: accounts/admin.py:102
 msgid "Permissions"
 msgstr "Autorisations"
 
-#: accounts/admin.py:44
+#: accounts/admin.py:103
 msgid "Terms and dates"
 msgstr "Conditions et dates"
 
-#: accounts/admin.py:53 moderation/dashboard.py:45
+#: accounts/admin.py:120 moderation/dashboard.py:46
 msgid "Published projects"
 msgstr "Projets publiés"
 
-#: accounts/admin.py:64
+#: accounts/admin.py:149
 msgid "Suspend selected users"
 msgstr "Suspendre les utilisateurs sélectionnés"
 
-#: accounts/admin.py:69
+#: accounts/admin.py:154
 #, python-format
 msgid "Skipped %(name)s: staff cannot suspend themselves or a superuser."
 msgstr ""
 "%(name)s ignoré : l’équipe ne peut pas se suspendre elle-même ni suspendre "
 "un superutilisateur."
 
-#: accounts/admin.py:72
+#: accounts/admin.py:157
 #, python-format
 msgid "Suspended %(count)s user(s). Their projects are hidden everywhere."
 msgstr ""
 "%(count)s utilisateur(s) suspendu(s). Leurs projets sont masqués partout."
 
-#: accounts/admin.py:74
+#: accounts/admin.py:159
 msgid "Unsuspend selected users"
 msgstr "Lever la suspension des utilisateurs sélectionnés"
 
-#: accounts/admin.py:77
+#: accounts/admin.py:162
 #, python-format
 msgid "Unsuspended %(count)s user(s)."
 msgstr "Suspension levée pour %(count)s utilisateur(s)."
@@ -79,16 +87,16 @@ msgstr "Automatique (langue du navigateur)"
 msgid "Enter a link that starts with http:// or https://."
 msgstr "Saisissez un lien qui commence par http:// ou https://."
 
-#: accounts/forms.py:95
+#: accounts/forms.py:97
 msgid "Accept the updated Terms to keep using your account."
 msgstr ""
 "Acceptez les Conditions mises à jour pour continuer à utiliser votre compte."
 
-#: accounts/forms.py:107
+#: accounts/forms.py:109
 msgid "Type your username to confirm"
 msgstr "Saisissez votre nom d’utilisateur pour confirmer"
 
-#: accounts/forms.py:118
+#: accounts/forms.py:120
 msgid "This is not your username. Type it exactly as shown."
 msgstr ""
 "Ce n’est pas votre nom d’utilisateur. Saisissez-le exactement comme indiqué."
@@ -97,12 +105,24 @@ msgstr ""
 msgid "This username is already taken."
 msgstr "Ce nom d’utilisateur est déjà pris."
 
-#: accounts/usernames.py:26
+#: accounts/models.py:50
+msgid "Official"
+msgstr "Officiel"
+
+#: accounts/models.py:51 templates/includes/user_marks.html:1
+msgid "Moderator"
+msgstr "Modérateur"
+
+#: accounts/models.py:65
+msgid "badges"
+msgstr "badges"
+
+#: accounts/usernames.py:35
 #, python-format
 msgid "Use %(min)d to %(max)d characters."
 msgstr "Utilisez entre %(min)d et %(max)d caractères."
 
-#: accounts/usernames.py:31
+#: accounts/usernames.py:40
 msgid ""
 "Use only lowercase letters, digits, hyphens and underscores, starting with a "
 "letter or digit."
@@ -110,9 +130,14 @@ msgstr ""
 "Utilisez uniquement des lettres minuscules, des chiffres, des tirets et des "
 "tirets bas, en commençant par une lettre ou un chiffre."
 
-#: accounts/usernames.py:35
+#: accounts/usernames.py:44
 msgid "This username is reserved. Please choose another."
 msgstr "Ce nom d’utilisateur est réservé. Choisissez-en un autre."
+
+#: accounts/usernames.py:92
+#, python-format
+msgid "This name is reserved for official %(site)s accounts."
+msgstr "Ce nom est réservé aux comptes officiels %(site)s."
 
 #: accounts/views.py:51
 msgid "You are signed out."
@@ -152,118 +177,171 @@ msgstr "Votre compte et tout son contenu ont été supprimés."
 msgid "Proof, not promises."
 msgstr "Des preuves, pas des promesses."
 
-#: config/settings/base.py:243
+#: config/settings/base.py:244
 msgid "Admin"
 msgstr "Administration"
 
-#: config/settings/base.py:279 config/settings/base.py:281
-#: moderation/dashboard.py:44
+#: config/settings/base.py:280 config/settings/base.py:282
+#: moderation/dashboard.py:45
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: config/settings/base.py:285 config/settings/base.py:287
+#: config/settings/base.py:283
+msgid "Badges"
+msgstr "Badges"
+
+#: config/settings/base.py:287 config/settings/base.py:289
 #: templates/accounts/profile.html:37 templates/accounts/profile.html:43
 #: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Projets"
 
-#: config/settings/base.py:288 templates/pages/landing.html:264
+#: config/settings/base.py:290 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Journal de développement"
 
-#: config/settings/base.py:289 projects/forms.py:47
+#: config/settings/base.py:291 projects/forms.py:47
 #: templates/projects/detail.html:161
 msgid "Tags"
 msgstr "Étiquettes"
 
-#: config/settings/base.py:290
+#: config/settings/base.py:292
 msgid "Tools"
 msgstr "Outils"
 
-#: config/settings/base.py:294
+#: config/settings/base.py:296
 msgid "Verification"
 msgstr "Vérification"
 
-#: config/settings/base.py:296
+#: config/settings/base.py:298
 msgid "Review queue"
 msgstr "File de vérification"
 
-#: config/settings/base.py:298
+#: config/settings/base.py:300
 msgid "Repositories"
 msgstr "Dépôts"
 
-#: config/settings/base.py:299
+#: config/settings/base.py:301
 msgid "Domains"
 msgstr "Domaines"
 
-#: config/settings/base.py:300
+#: config/settings/base.py:302
 msgid "Uptime checks"
 msgstr "Contrôles de disponibilité"
 
-#: config/settings/base.py:301
+#: config/settings/base.py:303
 msgid "Blocked repos and domains"
 msgstr "Dépôts et domaines bloqués"
 
-#: config/settings/base.py:307
+#: config/settings/base.py:309
 msgid "Reports"
 msgstr "Signalements"
 
-#: config/settings/base.py:309
+#: config/settings/base.py:311
+msgid "Sanctions"
+msgstr "Sanctions"
+
+#: config/settings/base.py:312
 msgid "Follows"
 msgstr "Abonnements"
 
-#: config/settings/base.py:310 projects/admin.py:44
+#: config/settings/base.py:313 projects/admin.py:44
 msgid "Likes"
 msgstr "J’aime"
 
-#: config/settings/base.py:314 config/settings/base.py:316
+#: config/settings/base.py:317 news/apps.py:8
+msgid "News"
+msgstr "Actualités"
+
+#: config/settings/base.py:319
+msgid "News posts"
+msgstr "Articles d’actualité"
+
+#: config/settings/base.py:323 config/settings/base.py:325
 msgid "Audit log"
 msgstr "Journal d’audit"
 
-#: moderation/admin.py:28
+#: moderation/admin.py:32
 msgid "Type"
 msgstr "Type"
 
-#: moderation/admin.py:30
+#: moderation/admin.py:34
 msgid "Project"
 msgstr "Projet"
 
-#: moderation/admin.py:32
+#: moderation/admin.py:36
 msgid "Target"
 msgstr "Cible"
 
-#: moderation/admin.py:39
+#: moderation/admin.py:43
 #, python-format
 msgid "%(name)s (deleted)"
 msgstr "%(name)s (supprimé)"
 
-#: moderation/admin.py:42
+#: moderation/admin.py:46
 msgid "Resolve selected reports"
 msgstr "Traiter les signalements sélectionnés"
 
-#: moderation/admin.py:45
+#: moderation/admin.py:49
 #, python-format
 msgid "Resolved %(count)s report(s)."
 msgstr "%(count)s signalement(s) traité(s)."
 
-#: moderation/dashboard.py:46
+#: moderation/admin.py:85
+msgid "The end must be after the start."
+msgstr "La fin doit être après le début."
+
+#: moderation/admin.py:90
+msgid "state"
+msgstr "état"
+
+#: moderation/admin.py:94 moderation/admin.py:154
+msgid "Active"
+msgstr "Active"
+
+#: moderation/admin.py:94 moderation/admin.py:154 news/admin.py:29
+msgid "Scheduled"
+msgstr "Planifiée"
+
+#: moderation/admin.py:94 moderation/admin.py:154
+msgid "Expired"
+msgstr "Expirée"
+
+#: moderation/admin.py:95 moderation/admin.py:155
+msgid "Revoked"
+msgstr "Révoquée"
+
+#: moderation/admin.py:152 news/admin.py:25
+msgid "State"
+msgstr "État"
+
+#: moderation/admin.py:167
+msgid "Revoke selected sanctions"
+msgstr "Révoquer les sanctions sélectionnées"
+
+#: moderation/admin.py:170
+#, python-format
+msgid "Revoked %(count)s sanction(s)."
+msgstr "Sanctions révoquées : %(count)s."
+
+#: moderation/dashboard.py:47
 msgid "Signups, last 7 days"
 msgstr "Inscriptions des 7 derniers jours"
 
-#: moderation/dashboard.py:47 projects/admin.py:48
+#: moderation/dashboard.py:48 projects/admin.py:48
 msgid "Open reports"
 msgstr "Signalements ouverts"
 
-#: moderation/dashboard.py:51 pages/explore.py:28 pages/templatetags/ui.py:115
+#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:129
 msgid "Repo owner"
 msgstr "Repo owner"
 
-#: moderation/dashboard.py:52 pages/explore.py:28 pages/templatetags/ui.py:116
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:130
 msgid "Live"
 msgstr "Live"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:117
+#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:131
 msgid "Steady"
 msgstr "Steady"
 
@@ -293,37 +371,77 @@ msgstr ""
 msgid "Tell us what is wrong."
 msgstr "Dites-nous ce qui ne va pas."
 
-#: moderation/models.py:42
+#: moderation/models.py:44
 msgid "Spam or advertising"
 msgstr "Spam ou publicité"
 
-#: moderation/models.py:43
+#: moderation/models.py:45
 msgid "Fake or misleading proof"
 msgstr "Preuve falsifiée ou trompeuse"
 
-#: moderation/models.py:44
+#: moderation/models.py:46
 msgid "Impersonation"
 msgstr "Usurpation d’identité"
 
-#: moderation/models.py:45
+#: moderation/models.py:47
 msgid "Offensive or illegal content"
 msgstr "Contenu choquant ou illégal"
 
-#: moderation/models.py:46
+#: moderation/models.py:48
 msgid "Copyright or stolen work"
 msgstr "Droit d’auteur ou travail volé"
 
-#: moderation/models.py:47
+#: moderation/models.py:49
 msgid "Something else"
 msgstr "Autre chose"
 
-#: moderation/models.py:50
+#: moderation/models.py:52
 msgid "Open"
 msgstr "Ouvert"
 
-#: moderation/models.py:51
+#: moderation/models.py:53
 msgid "Resolved"
 msgstr "Traité"
+
+#: moderation/models.py:117
+msgid "Mute"
+msgstr "Mise en sourdine"
+
+#: moderation/models.py:118
+msgid "Ban"
+msgstr "Bannissement"
+
+#: moderation/models.py:122
+msgid "Shown to the user."
+msgstr "Affiché à la personne."
+
+#: moderation/models.py:124
+msgid "Empty: permanent (superusers only)."
+msgstr "Vide : permanent (super-utilisateurs uniquement)."
+
+#: moderation/models.py:146
+msgid "sanction"
+msgstr "sanction"
+
+#: moderation/models.py:147
+msgid "sanctions"
+msgstr "sanctions"
+
+#: moderation/sanctions.py:18
+msgid "You cannot sanction yourself."
+msgstr "Vous ne pouvez pas vous sanctionner vous-même."
+
+#: moderation/sanctions.py:20
+msgid "The system account cannot be sanctioned."
+msgstr "Le compte système ne peut pas être sanctionné."
+
+#: moderation/sanctions.py:22
+msgid "Only a superuser can sanction a superuser."
+msgstr "Seul un super-utilisateur peut sanctionner un super-utilisateur."
+
+#: moderation/sanctions.py:24
+msgid "Only a superuser can sanction an official account."
+msgstr "Seul un super-utilisateur peut sanctionner un compte officiel."
 
 #: moderation/views.py:32
 msgid "Too many reports in a short time. Try again later."
@@ -355,6 +473,71 @@ msgstr "Vous ne pouvez pas vous signaler."
 msgid "Report @%(username)s"
 msgstr "Signaler @%(username)s"
 
+#: news/admin.py:28 projects/models.py:41
+msgid "Draft"
+msgstr "Brouillon"
+
+#: news/admin.py:29 projects/models.py:42 templates/projects/detail.html:24
+#: templates/projects/form.html:15
+msgid "Published"
+msgstr "Publié"
+
+#: news/admin.py:31 templates/projects/form.html:42
+msgid "Preview"
+msgstr "Aperçu"
+
+#: news/admin.py:34
+msgid "Save to see the preview."
+msgstr "Enregistrez pour voir l’aperçu."
+
+#: news/models.py:19
+msgid "title"
+msgstr "titre"
+
+#: news/models.py:20
+msgid "slug"
+msgstr "slug"
+
+#: news/models.py:21
+msgid "Part of the address: /news/<slug>/. Do not change it after publishing."
+msgstr "Partie de l’adresse : /news/<slug>/. Ne la changez pas après publication."
+
+#: news/models.py:22
+msgid "body"
+msgstr "texte"
+
+#: news/models.py:23
+msgid "Markdown. Rendered and sanitized like project descriptions; no HTML."
+msgstr "Markdown. Rendu et nettoyé comme les descriptions de projets ; pas de HTML."
+
+#: news/models.py:24
+msgid "published at"
+msgstr "publié le"
+
+#: news/models.py:25
+msgid "Empty: draft. A time in the future: scheduled."
+msgstr "Vide : brouillon. Une date future : planifiée."
+
+#: news/models.py:26
+msgid "pinned"
+msgstr "épinglé"
+
+#: news/models.py:26
+msgid "Shown first in the news list."
+msgstr "Affiché en premier dans la liste des actualités."
+
+#: news/models.py:29
+msgid "created by"
+msgstr "créé par"
+
+#: news/models.py:38
+msgid "news post"
+msgstr "article d’actualité"
+
+#: news/models.py:39
+msgid "news posts"
+msgstr "articles d’actualité"
+
 #: pages/explore.py:27
 msgid "Newest"
 msgstr "Les plus récents"
@@ -371,42 +554,47 @@ msgstr "Les mieux prouvés"
 msgid "Any"
 msgstr "Tous"
 
-#: pages/templatetags/ui.py:80
+#: pages/templatetags/ui.py:81
+#, python-format
+msgid "Official %(site)s account"
+msgstr "Compte officiel %(site)s"
+
+#: pages/templatetags/ui.py:94
 msgid "just now"
 msgstr "à l’instant"
 
-#: pages/templatetags/ui.py:81
+#: pages/templatetags/ui.py:95
 #, python-format
 msgid "%(time)s ago"
 msgstr "il y a %(time)s"
 
-#: pages/templatetags/ui.py:263 templates/social/feed.html:4
+#: pages/templatetags/ui.py:277 templates/social/feed.html:4
 #: templates/social/feed.html:5 templates/social/feed.html:12
 msgid "Feed"
 msgstr "Fil"
 
-#: pages/templatetags/ui.py:263 templates/pages/explore.html:4
+#: pages/templatetags/ui.py:277 templates/pages/explore.html:4
 #: templates/pages/explore.html:5 templates/pages/explore.html:16
 msgid "Explore"
 msgstr "Explorer"
 
-#: pages/templatetags/ui.py:265
+#: pages/templatetags/ui.py:279
 msgid "About"
 msgstr "À propos"
 
-#: pages/templatetags/ui.py:266 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:280 templates/pages/landing.html:279
 msgid "How proof works"
 msgstr "Comment fonctionne la preuve"
 
-#: pages/templatetags/ui.py:267
+#: pages/templatetags/ui.py:281
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: pages/templatetags/ui.py:268
+#: pages/templatetags/ui.py:282
 msgid "Terms"
 msgstr "Conditions"
 
-#: pages/templatetags/ui.py:269
+#: pages/templatetags/ui.py:283
 msgid "Cookies"
 msgstr "Cookies"
 
@@ -472,7 +660,9 @@ msgstr "Ajouter des captures d’écran"
 msgid ""
 "Up to 4 images in total, PNG, JPEG or WebP, 5 MB each. You can choose "
 "several at once. The first one is the cover."
-msgstr "Jusqu’à 4 images au total, PNG, JPEG ou WebP, 5 Mo chacune. Vous pouvez en choisir plusieurs à la fois. La première sert de couverture."
+msgstr ""
+"Jusqu’à 4 images au total, PNG, JPEG ou WebP, 5 Mo chacune. Vous pouvez en "
+"choisir plusieurs à la fois. La première sert de couverture."
 
 #: projects/forms.py:62 templates/pages/landing.html:123
 msgid "GitHub repository"
@@ -522,13 +712,17 @@ msgstr ""
 msgid ""
 "A project can have at most 4 screenshots. You chose %(chosen)d; you can add "
 "%(left)d more."
-msgstr "Un projet peut avoir au plus 4 captures d’écran. Vous en avez choisi %(chosen)d ; vous pouvez en ajouter encore %(left)d."
+msgstr ""
+"Un projet peut avoir au plus 4 captures d’écran. Vous en avez choisi "
+"%(chosen)d ; vous pouvez en ajouter encore %(left)d."
 
 #: projects/forms.py:139
 msgid ""
 "Your images were not saved because of the problems above. Choose them again, "
 "then save."
-msgstr "Vos images n’ont pas été enregistrées à cause des problèmes ci-dessus. Choisissez-les à nouveau, puis enregistrez."
+msgstr ""
+"Vos images n’ont pas été enregistrées à cause des problèmes ci-dessus. "
+"Choisissez-les à nouveau, puis enregistrez."
 
 #: projects/forms.py:150
 msgid "Tags use letters, digits, spaces and + # . - (up to 30 characters)."
@@ -589,15 +783,6 @@ msgstr "L’image comporte trop de pixels."
 #: projects/images.py:41
 msgid "This file is not a valid image."
 msgstr "Ce fichier n’est pas une image valide."
-
-#: projects/models.py:41
-msgid "Draft"
-msgstr "Brouillon"
-
-#: projects/models.py:42 templates/projects/detail.html:24
-#: templates/projects/form.html:15
-msgid "Published"
-msgstr "Publié"
 
 #: projects/models.py:43
 msgid "Hidden"
@@ -2254,12 +2439,15 @@ msgstr "Retirer"
 #: templates/projects/_screenshots_field.html:32
 #, python-format
 msgid "Images chosen: %%(count)s. They upload when you save."
-msgstr "Images choisies : %%(count)s. Elles seront envoyées à l’enregistrement."
+msgstr ""
+"Images choisies : %%(count)s. Elles seront envoyées à l’enregistrement."
 
 #: templates/projects/_screenshots_field.html:33
 #, python-format
 msgid "A project can have at most %(max)s screenshots. Choose fewer images."
-msgstr "Un projet peut avoir au plus %(max)s captures d’écran. Choisissez moins d’images."
+msgstr ""
+"Un projet peut avoir au plus %(max)s captures d’écran. Choisissez moins "
+"d’images."
 
 #: templates/projects/_screenshots_field.html:36
 msgid "You have reached the limit of 4 screenshots. Remove one to add another."
@@ -2429,15 +2617,14 @@ msgstr ""
 msgid ""
 "You chose images but did not upload them yet. Press Save first, or press "
 "this button again to continue without them."
-msgstr "Vous avez choisi des images mais ne les avez pas encore envoyées. Appuyez d’abord sur Enregistrer, ou appuyez à nouveau sur ce bouton pour continuer sans elles."
+msgstr ""
+"Vous avez choisi des images mais ne les avez pas encore envoyées. Appuyez "
+"d’abord sur Enregistrer, ou appuyez à nouveau sur ce bouton pour continuer "
+"sans elles."
 
 #: templates/projects/form.html:42
 msgid "Preview is not available right now."
 msgstr "L’aperçu n’est pas disponible pour le moment."
-
-#: templates/projects/form.html:42
-msgid "Preview"
-msgstr "Aperçu"
 
 #: templates/projects/form.html:64
 msgid "Save changes"

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "social",
     "pages",
     "moderation",
+    "news",
 ]
 
 MIDDLEWARE = [
@@ -279,6 +280,7 @@ UNFOLD = {
                 "title": _("Users"),
                 "items": [
                     {"title": _("Users"), "icon": "person", "link": reverse_lazy("admin:accounts_user_changelist")},
+                    {"title": _("Badges"), "icon": "verified", "link": reverse_lazy("admin:accounts_userbadge_changelist")},
                 ],
             },
             {
@@ -306,8 +308,15 @@ UNFOLD = {
                 "items": [
                     {"title": _("Reports"), "icon": "flag", "link": reverse_lazy("admin:moderation_report_changelist"),
                      "badge": "moderation.dashboard.open_reports_badge"},
+                    {"title": _("Sanctions"), "icon": "gavel", "link": reverse_lazy("admin:moderation_sanction_changelist")},
                     {"title": _("Follows"), "icon": "group_add", "link": reverse_lazy("admin:social_follow_changelist")},
                     {"title": _("Likes"), "icon": "favorite", "link": reverse_lazy("admin:social_like_changelist")},
+                ],
+            },
+            {
+                "title": _("News"),
+                "items": [
+                    {"title": _("News posts"), "icon": "campaign", "link": reverse_lazy("admin:news_newspost_changelist")},
                 ],
             },
             {
