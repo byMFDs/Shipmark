@@ -1,12 +1,16 @@
+from django import forms
 from django.contrib import admin, messages
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
 from unfold.decorators import action
 
-from . import actions
+from . import actions, sanctions
 from .adminbase import AuditedModelAdmin, ReadOnlyModelAdmin
-from .models import AuditLog, Report
+from .models import AuditLog, Report, Sanction
 
 
 @admin.register(Report)
@@ -57,3 +61,110 @@ class AuditLogAdmin(ReadOnlyModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+class SanctionForm(forms.ModelForm):
+    """Admin form. `actor` is set by SanctionAdmin.get_form; the target rules live in moderation.sanctions."""
+
+    actor = None
+
+    class Meta:
+        model = Sanction
+        fields = ("user", "kind", "reason", "starts_at", "expires_at", "report")
+
+    def clean(self):
+        data = super().clean()
+        user = data.get("user") or getattr(self.instance, "user", None)
+        if user is not None and not self.instance.pk:
+            try:
+                sanctions.check_target(user, self.actor)
+            except PermissionDenied as error:
+                raise ValidationError(str(error)) from None
+        starts, expires = data.get("starts_at"), data.get("expires_at")
+        if starts and expires and expires <= starts:
+            self.add_error("expires_at", _("The end must be after the start."))
+        return data
+
+
+class SanctionStateFilter(admin.SimpleListFilter):
+    title = _("state")
+    parameter_name = "state"
+
+    def lookups(self, request, model_admin):
+        return [("active", _("Active")), ("scheduled", _("Scheduled")), ("expired", _("Expired")),
+                ("revoked", _("Revoked"))]
+
+    def queryset(self, request, queryset):
+        now = timezone.now()
+        value = self.value()
+        if value == "active":
+            return queryset.active(now)
+        if value == "scheduled":
+            return queryset.filter(revoked_at__isnull=True, starts_at__gt=now)
+        if value == "expired":
+            return queryset.filter(revoked_at__isnull=True, expires_at__lte=now)
+        if value == "revoked":
+            return queryset.filter(revoked_at__isnull=False)
+        return queryset
+
+
+@admin.register(Sanction)
+class SanctionAdmin(ModelAdmin):
+    """Superusers issue, change and revoke here (any length, also permanent). Other staff only look.
+    Sanctions are never deleted, only revoked, so the history stays."""
+
+    form = SanctionForm
+    list_display = ("user", "kind", "state_label", "starts_at", "expires_at", "issued_by", "report")
+    list_filter = (SanctionStateFilter, "kind", "starts_at")
+    search_fields = ("user__username", "reason")
+    list_select_related = ("user", "issued_by", "revoked_by", "report")
+    autocomplete_fields = ("user",)
+    raw_id_fields = ("report",)
+    date_hierarchy = "starts_at"
+    actions = ["revoke"]
+    readonly_fields = ("issued_by", "created_at", "revoked_at", "revoked_by")
+
+    def get_fields(self, request, obj=None):
+        fields = ["user", "kind", "reason", "starts_at", "expires_at", "report"]
+        return fields + list(self.readonly_fields) if obj else fields
+
+    def get_readonly_fields(self, request, obj=None):
+        # The person and the kind never change; revoke and issue a new one instead.
+        return self.readonly_fields + (("user", "kind") if obj else ())
+
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        form = super().get_form(request, obj, change=change, **kwargs)
+        form.actor = request.user
+        return form
+
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_active and request.user.is_staff
+
+    def has_add_permission(self, request):
+        return request.user.is_active and request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_active and request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    @admin.display(description=_("State"))
+    def state_label(self, obj):
+        return {"active": _("Active"), "scheduled": _("Scheduled"), "expired": _("Expired"),
+                "revoked": _("Revoked")}[obj.state()]
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.issued_by = request.user
+        super().save_model(request, obj, form, change)
+        if change:
+            if form.changed_data:
+                sanctions.log_changed(obj, request.user, form.changed_data)
+        else:
+            sanctions.log_issued(obj, request.user)
+
+    @action(description=_("Revoke selected sanctions"), permissions=["change"])
+    def revoke(self, request, queryset):
+        done = sum(sanctions.revoke(s, request.user) for s in queryset.select_related("user"))
+        messages.success(request, _("Revoked %(count)s sanction(s).") % {"count": done})

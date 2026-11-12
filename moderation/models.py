@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 MAX_DETAILS = 1000
@@ -91,3 +93,78 @@ class Report(models.Model):
     @property
     def target(self):
         return self.project or self.target_user
+
+
+class SanctionQuerySet(models.QuerySet):
+    def active(self, now=None):
+        """In force right now: started, not expired, not revoked. Evaluated per request; no cron needed."""
+        now = now or timezone.now()
+        return self.filter(revoked_at__isnull=True, starts_at__lte=now).filter(
+            Q(expires_at__isnull=True) | Q(expires_at__gt=now),
+        )
+
+
+class Sanction(models.Model):
+    """A mute or a ban. The reason is shown to the user, with the end date and the appeals contact.
+
+    Mute: can read and use own settings, export and delete; cannot create, edit, publish, log, like,
+    follow, report or upload. Ban: cannot sign in; projects hidden from public lists while it lasts.
+    expires_at None = permanent (superusers only). A sanction is never deleted: it is revoked, so the
+    history stays (also in AuditLog).
+    """
+
+    class Kind(models.TextChoices):
+        MUTE = "mute", _("Mute")
+        BAN = "ban", _("Ban")
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sanctions")
+    kind = models.CharField(max_length=10, choices=Kind.choices)
+    reason = models.TextField(max_length=MAX_DETAILS, help_text=_("Shown to the user."))
+    starts_at = models.DateTimeField(default=timezone.now)
+    expires_at = models.DateTimeField(null=True, blank=True, help_text=_("Empty: permanent (superusers only)."))
+    issued_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+",
+    )
+    report = models.ForeignKey(Report, null=True, blank=True, on_delete=models.SET_NULL, related_name="sanctions")
+    created_at = models.DateTimeField(auto_now_add=True)
+    revoked_at = models.DateTimeField(null=True, blank=True)
+    revoked_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+",
+    )
+
+    objects = SanctionQuerySet.as_manager()
+
+    class Meta:
+        ordering = ["-starts_at", "-pk"]
+        indexes = [models.Index(fields=["user", "kind"])]
+        constraints = [
+            models.CheckConstraint(
+                condition=Q(expires_at__isnull=True) | Q(expires_at__gt=models.F("starts_at")),
+                name="sanction_ends_after_it_starts",
+            ),
+        ]
+        verbose_name = _("sanction")
+        verbose_name_plural = _("sanctions")
+
+    def __str__(self):
+        return f"{self.get_kind_display()}: {self.user}"
+
+    @property
+    def is_permanent(self):
+        return self.expires_at is None
+
+    def is_active(self, now=None):
+        now = now or timezone.now()
+        return (self.revoked_at is None and self.starts_at <= now
+                and (self.expires_at is None or self.expires_at > now))
+
+    def state(self, now=None):
+        """"active", "scheduled", "expired" or "revoked" (for lists)."""
+        now = now or timezone.now()
+        if self.revoked_at is not None:
+            return "revoked"
+        if self.starts_at > now:
+            return "scheduled"
+        if self.expires_at is not None and self.expires_at <= now:
+            return "expired"
+        return "active"
