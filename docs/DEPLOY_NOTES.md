@@ -58,7 +58,7 @@ Things that must be true on the server:
 - Static files: if `collectstatic` or a page fails with "Missing staticfiles manifest entry", a template points to a
   file that does not exist in `static/`. Fix the reference; do not work around it.
 
-### Serving media (screenshots, later avatars and covers)
+### Serving media (screenshots, avatars, covers)
 
 Django serves uploads only when `DEBUG` is on (`config/urls.py`, development). With `DEBUG` off it does not serve
 `/media/` at all, so without a proxy rule every screenshot is a broken image while the rows exist in the database.
@@ -72,7 +72,7 @@ location /media/ {
 }
 ```
 
-Files are always re-encoded WebP with random names (`screenshots/<32 hex>.webp`), never the user's bytes or name, so
+Files are always re-encoded WebP with random names (`screenshots/`, `avatars/`, `covers/` + 32 hex + `.webp`), never the user's bytes or name, so
 the folder holds no executable content. Do not enable directory listing. Check after deploy: upload a screenshot, open
 the project page, the image loads (status 200, `Content-Type: image/webp`). Backups: see "Backups" (the media folder is
 backed up daily together with the database; restore both from the same day).

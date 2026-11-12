@@ -126,3 +126,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-12: Features stage 2 (moderation). Report statuses + log-entry reports; `/mod/` queue, detail, "Moderate" while browsing; decisions with a reason the person sees (dismiss, remove project, clear profile, mute ≤7 d, ban ≤14 d; restore/purge superuser-only); guardrails + rate limit; mute enforced via `can_write`, ban ends sessions and refuses sign-in; salted GitHub-id hash against ban evasion (`prune_bans` cron); notices; legal texts in 7 languages. 708 tests.
   Next: "GO 3" (profiles).
+
+- 2026-11-12: Features stage 3 (profiles). New profile fields, links, skills, pinned projects; avatar and cover (upload or one-time GitHub download via `safe_fetch`, cropped, re-encoded, local files, deleted with the account); profile card with tabs Projects / Build log / About; settings as grouped sections with a live preview; export and moderation "clear profile" updated; 7 languages; 750 tests. Not checked in a real browser.
+  Next: "GO 4" (feed and news pages).
