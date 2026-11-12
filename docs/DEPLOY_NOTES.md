@@ -279,19 +279,27 @@ Say so on the privacy page.
 
 ## Rotating SECRET_KEY
 
-What depends on it: sessions, CSRF tokens. Nothing in the database is encrypted with it (verification tokens are random
-values stored as they are, GitHub tokens are not stored), so rotating can never make data unreadable.
-Worst case: everyone has to sign in with GitHub again.
+What depends on it: sessions, CSRF tokens, and the **ban hashes** (`BannedIdentity`: HMAC of the GitHub id keyed from
+SECRET_KEY, `moderation/bans.py`; the salt string itself is a constant in the code, the secret part is this key).
+Nothing in the database is encrypted with it (verification tokens are random values stored as they are, GitHub tokens
+are not stored), so rotating can never make data unreadable. Worst case: everyone has to sign in with GitHub again,
+and bans no longer recognise a banned GitHub account that signs up again (see the ban note below).
+
+**Ban note:** a hash made with the old key is only recognised while that key is in `SECRET_KEY_FALLBACKS`. Hashes cannot
+be re-made (the GitHub id is not stored). So before you remove a fallback key, check `Moderation > Sanctions` for bans
+that are still active (permanent ones especially); keep the old key in the fallback list until they have ended, or accept
+that those banned people can sign up again. Bans of existing accounts keep working either way (they are checked by account).
 
 **Planned rotation (nobody is signed out):**
 
 1. Generate a new key: `python -c "import secrets; print(secrets.token_urlsafe(50))"`.
 2. In `.env`: put the **old** key into `SECRET_KEY_FALLBACKS=` and the **new** key into `SECRET_KEY=`.
 3. Restart gunicorn. Existing sessions and forms signed with the old key are still accepted.
-4. After 2 weeks (sessions live 14 days) delete the `SECRET_KEY_FALLBACKS` line and restart again.
+4. After 2 weeks (sessions live 14 days) delete the `SECRET_KEY_FALLBACKS` line and restart again, unless a ban made
+   before the rotation is still active (see the ban note above).
 
 **If the key leaked:** do the same but leave `SECRET_KEY_FALLBACKS` empty. The old key stops working at once,
-everyone is signed out, nothing else breaks. Also rotate `GITHUB_CLIENT_SECRET` and the database password if the whole `.env` leaked.
+everyone is signed out and current ban hashes stop matching (see the ban note above). Also rotate `GITHUB_CLIENT_SECRET` and the database password if the whole `.env` leaked.
 
 Do not use the same key as in development, and never commit it.
 

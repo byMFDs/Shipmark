@@ -239,6 +239,43 @@ class GuardrailTests(ModTestCase):
         with self.assertRaises(PermissionDenied):
             sanctions.issue(system_user(), "ban", REASON, self.boss, length=timedelta(days=1))
 
+    def protected_accounts(self):
+        official = make_user("teamacc")
+        badges.grant(official, "official")
+        other_mod = make_user("otto")
+        badges.grant(other_mod, "moderator")
+        return {"superuser": self.boss, "official": official, "moderator": other_mod, "self": self.mira}
+
+    def test_moderator_cannot_remove_projects_or_clear_profiles_of_protected_accounts(self):
+        for label, owner in self.protected_accounts().items():
+            project = make_project(owner, name=f"Of {label}")
+            with self.assertRaises(PermissionDenied, msg=label):
+                decisions.remove_project(project, self.mira, REASON)
+            with self.assertRaises(PermissionDenied, msg=label):
+                decisions.clear_profile(owner, ["avatar", "bio", "links"], self.mira, REASON)
+            project.refresh_from_db()
+            self.assertEqual(project.status, Project.Status.PUBLISHED, label)
+
+    def test_forged_actions_cannot_get_around_the_protection(self):
+        self.client.force_login(self.mira)
+        for label, owner in self.protected_accounts().items():
+            project = make_project(owner, name=f"Of {label}")
+            # Moderate-while-browsing: refused outright.
+            url = reverse("moderation:act_project", args=[project.pk])
+            self.assertEqual(self.client.post(url, {"action": "remove_project", "reason": REASON,
+                                                    "category": "spam"}).status_code, 403, label)
+            # A report about it: only "dismiss" is offered, so a forged "remove_project" is an invalid choice.
+            report = Report.objects.create(reporter=self.bob, project=project, target_owner=owner,
+                                           target_repr=str(project), reason="spam")
+            response = self.client.post(reverse("moderation:report_detail", args=[report.pk]),
+                                        {"action": "remove_project", "reason": REASON})
+            self.assertEqual(response.status_code, 200, label)
+            project.refresh_from_db()
+            report.refresh_from_db()
+            self.assertEqual(project.status, Project.Status.PUBLISHED, label)
+            self.assertTrue(report.is_open, label)  # nothing was decided
+        self.assertFalse(Notice.objects.filter(kind="project_removed").exists())
+
     def test_report_about_a_protected_account_can_only_be_dismissed(self):
         official = make_user("teamacc")
         badges.grant(official, "official")
@@ -422,6 +459,28 @@ class BanTests(ModTestCase):
         call_command("prune_bans", stdout=out)
         self.assertIn("Deleted 1", out.getvalue())
         self.assertIsNone(bans.find("4242"))
+
+    def test_revoking_a_ban_in_the_admin_deletes_its_hash_at_once(self):
+        ban = self.ban()
+        self.assertEqual(BannedIdentity.objects.count(), 1)
+        self.client.force_login(self.boss)
+        self.client.post(reverse("admin:moderation_sanction_changelist"),
+                         {"action": "revoke", "_selected_action": [ban.pk]})
+        ban.refresh_from_db()
+        self.assertEqual(ban.revoked_by, self.boss)
+        self.assertFalse(BannedIdentity.objects.exists())
+        self.assertIsNone(bans.find("4242"))
+
+    def test_prune_keeps_running_bans_and_permanent_ones(self):
+        running = self.ban(days=3)
+        permanent = sanctions.issue(self.ana, "ban", REASON, self.boss, length=None)
+        past = sanctions.issue(self.ana, "ban", REASON, self.mira, length=timedelta(days=1))
+        BannedIdentity.objects.filter(sanction=past).update(expires_at=timezone.now() - timedelta(seconds=1))
+        out = StringIO()
+        call_command("prune_bans", stdout=out)
+        call_command("prune_bans", stdout=out)  # running it again changes nothing
+        self.assertEqual(out.getvalue().count("Deleted 1"), 1)
+        self.assertEqual({row.sanction_id for row in BannedIdentity.objects.all()}, {running.pk, permanent.pk})
 
     def test_rotating_secret_key_keeps_the_ban(self):
         from django.conf import settings
