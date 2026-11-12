@@ -7,16 +7,19 @@ from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme, urlencode
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET, require_POST
 
 from accounts.roles import can_write
 from config.ratelimit import is_limited
+from news.views import news_author
 from moderation.pages import write_blocked_message
 from moderation.visibility import visible_users
 from projects.models import Project
 
+from . import feed as feeds
 from . import queries
 from .models import Follow, Like
 
@@ -142,45 +145,41 @@ def unlike(request, username, slug):
 
 # ---------- Feed ----------
 
-TABS = ("following", "latest")
-
-
-def _page_number(request):
-    try:
-        page = int(request.GET.get("page", 1))
-    except ValueError:
-        return 1
-    if page > queries.MAX_PAGE:
-        raise Http404
-    return max(page, 1)
-
-
-def _page_url(tab, page):
-    return f"{reverse('social:feed')}?{urlencode({'tab': tab, 'page': page})}"
-
-
 @require_GET
 def feed(request):
-    """Tab "following" needs an account; a signed-out visitor always gets "latest"."""
+    """/feed/: tabs For you (default), Following, News; filters in the URL (social/feed.py); "Load more" as JSON."""
     user = request.user
-    tab = request.GET.get("tab")
-    if tab not in TABS or not user.is_authenticated:
-        tab = "following" if user.is_authenticated else "latest"
-    page = _page_number(request)
-    items, has_next = (queries.following_feed if tab == "following" else queries.latest_launches)(user, page)
-    next_url = _page_url(tab, page + 1) if has_next else ""
+    params = feeds.FeedForm(request.GET).values(user)
+    tab, page = params["tab"], params["page"]
+    if page > queries.MAX_PAGE:
+        raise Http404
+    now = timezone.now()
+    if tab == "news":
+        items, has_next = feeds.news_items(page)
+    elif tab == "following":
+        items, has_next = queries.following_feed(user, page)
+    else:
+        items, has_next = feeds.for_you(user, params, now)
+    next_url = feeds.feed_url(params, page=page + 1) if has_next else ""
+    author = news_author() if tab == "news" else None
 
     if _wants_json(request):  # "Load more"
         return JsonResponse({
-            "html": render_to_string("social/_items.html", {"items": items}, request=request),
+            "html": render_to_string("social/_items.html", {"items": items, "news_author": author}, request=request),
             "next_url": next_url,
         })
+    base = {**params, "page": 1}
     return render(request, "social/feed.html", {
-        "tab": tab,
-        "items": items,
-        "page": page,
+        "tab": tab, "params": params, "items": items, "page": page, "news_author": author,
         "next_url": next_url,
-        "prev_url": _page_url(tab, page - 1) if page > 1 else "",
-        "latest_url": _page_url("latest", 1),
-        "following_url": _page_url("following", 1),
+        "prev_url": feeds.feed_url(params, page=page - 1) if page > 1 else "",
+        "foryou_url": feeds.feed_url({**base, "tab": "foryou"}),
+        "following_url": feeds.feed_url({**base, "tab": "following"}),
+        "news_url": feeds.feed_url({**base, "tab": "news"}),
+        "clear_url": feeds.feed_url({**base, "tag": "", "tool": "", "mark": "", "range": "all", "sort": "popular"}),
+        "has_filters": feeds.has_filters(params),
+        "ranges": feeds.RANGES, "sorts": feeds.SORTS, "marks": feeds.MARKS,
+        "tags": feeds.tag_options(params["tag"]) if tab == "foryou" else [],
+        "tools": feeds.tool_options() if tab == "foryou" else [],
+        "latest_news": feeds.latest_news() if tab != "news" else [],
     })

@@ -120,6 +120,11 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 - Settings (`settings.html`): one multipart form in grouped `.panel` sections (picture and cover, about you, links, pinned
   projects, language); the left column holds a live preview card (`profile-preview.js`, copies text only; a chosen image is read
   in the browser as a data: URL, so the CSP is unchanged).
+- Feed (`social/feed.html`, `feed.css`): a 12-line grid is not used; the page declares its columns: 1 on phones (tabs `position:
+  sticky`, filters folded in a `<details>`), `1fr 17rem` from 48em, `1fr 37.5rem 1fr` from 72em (navigation, 640px feed, panel;
+  equal sides). `.feed-card`: frame + hairline, no shadow; cover 16:10 from the thumbnail, head (avatar, name + marks, handle,
+  time, follow), name in Manrope, tagline, marks, the latest update with a 2px rule (3 lines max), actions. `.empty--plain` is an
+  empty state without the dashed frame. News cards (`.news-card`) share the same frame.
 - Marks after a name (`{% user_marks person %}`, `.user-mark`): official = filled ink diamond with a cut check,
   `title` + hidden text "Official Shipmark account" (no colour: it is neither proof nor an action); moderator = quiet
   mono "MODERATOR" label with a `--line-strong` outline. Lists prefetch `owner__badges`.

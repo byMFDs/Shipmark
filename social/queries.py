@@ -58,6 +58,16 @@ def project_rows(queryset, user):
     ), user).annotate(event_at=_event_at())
 
 
+def project_cards(queryset, user):
+    """project_rows plus what a feed card shows: the newest build-log update and whether `user` follows the owner."""
+    from .ranking import with_latest_update
+
+    queryset = with_latest_update(project_rows(queryset, user))
+    if user.is_authenticated:
+        return queryset.annotate(owner_followed=Exists(Follow.objects.filter(follower=user, following=OuterRef("owner"))))
+    return queryset.annotate(owner_followed=Value(False, output_field=BooleanField()))
+
+
 def latest_launches(user, page):
     """Everyone's recently launched projects. Returns (items, has_next)."""
     start = (page - 1) * PAGE_SIZE
@@ -74,7 +84,7 @@ def following_feed(user, page):
     """
     wanted = page * PAGE_SIZE + 1
     followed = Follow.objects.filter(follower=user, follower__is_suspended=False).values("following")
-    projects = project_rows(published_projects().filter(owner__in=followed), user).order_by("-event_at", "-pk")[:wanted]
+    projects = project_cards(published_projects().filter(owner__in=followed), user).order_by("-event_at", "-pk")[:wanted]
     entries = (
         visible_owner(BuildLogEntry.objects.filter(
             project__status=Project.Status.PUBLISHED,

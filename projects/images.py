@@ -63,3 +63,19 @@ def clean_avatar(upload):
 
 def clean_cover(upload):
     return clean_image(upload, fit=COVER_SIZE)
+
+
+THUMB_BOX = (640, 640)  # longest sides; lists show it at 80-640 CSS pixels, so this is enough for 2x screens
+
+
+def make_thumbnail(fileobj):
+    """A small WebP copy of an already cleaned image (clean_image output), for lists and cards. Returns ContentFile.
+
+    The full image stays for the project page; feeds, profiles and Explore load this one (a few KB, not hundreds)."""
+    image = Image.open(fileobj)
+    image.load()
+    image = image.convert("RGBA" if "A" in image.getbands() or image.mode == "P" else "RGB")
+    image.thumbnail(THUMB_BOX, Image.Resampling.LANCZOS)
+    buffer = io.BytesIO()
+    image.save(buffer, format="WEBP", quality=78, method=4)
+    return ContentFile(buffer.getvalue(), name="thumb.webp")

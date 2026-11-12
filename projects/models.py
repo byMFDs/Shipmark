@@ -123,11 +123,20 @@ def screenshot_path(instance, filename):
     return f"screenshots/{uuid.uuid4().hex}.webp"
 
 
+def thumb_path(instance, filename):
+    return f"screenshots/thumbs/{uuid.uuid4().hex}.webp"
+
+
 class Screenshot(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="screenshots")
     image = models.ImageField(upload_to=screenshot_path, width_field="width", height_field="height")
     width = models.PositiveIntegerField(default=0)
     height = models.PositiveIntegerField(default=0)
+    # A small copy made on save (lists, cards, rows). Empty for rows older than the feature until
+    # `manage.py make_thumbs` runs; `list_image` falls back to the full image, so nothing breaks meanwhile.
+    thumb = models.ImageField(upload_to=thumb_path, blank=True, width_field="thumb_width", height_field="thumb_height")
+    thumb_width = models.PositiveIntegerField(default=0)
+    thumb_height = models.PositiveIntegerField(default=0)
     order = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
@@ -135,6 +144,37 @@ class Screenshot(models.Model):
 
     def __str__(self):
         return f"{self.project} #{self.order}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.image and not self.thumb:
+            self.make_thumb()
+
+    def make_thumb(self):
+        """(Re)build the small copy through the storage API. Returns True when it was made."""
+        from .images import make_thumbnail  # here: images imports nothing from models, but keep models light
+
+        try:
+            with self.image.open("rb") as handle:
+                content = make_thumbnail(handle)
+        except (OSError, ValueError, SyntaxError):  # a missing or broken file: lists keep using the full image
+            return False
+        self.thumb.save("thumb.webp", content, save=False)
+        super().save(update_fields=["thumb", "thumb_width", "thumb_height"])
+        return True
+
+    @property
+    def list_image(self):
+        """The file lists and cards show: the small copy, or the full image while there is none."""
+        return self.thumb if self.thumb else self.image
+
+    @property
+    def list_width(self):
+        return self.thumb_width if self.thumb else self.width
+
+    @property
+    def list_height(self):
+        return self.thumb_height if self.thumb else self.height
 
 
 MAX_LOG_LENGTH = 500

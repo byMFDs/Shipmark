@@ -1,0 +1,11 @@
+{% load i18n ui %}{# One news post as a card (news list, feed News tab). Needs: post, author. #}
+<article class="news-card{% if post.pinned %} is-pinned{% endif %}">
+  <p class="news-card__meta">
+    {% include "news/_byline.html" %}
+    <span class="muted">· <time datetime="{{ post.published_at|date:'c' }}" title="{{ post.published_at|date:'DATETIME_FORMAT' }}">{{ post.published_at|date:"DATE_FORMAT" }}</time></span>
+    {% if post.pinned %}<span class="label news-card__pin">{% translate "Pinned" %}</span>{% endif %}
+  </p>
+  <h2 class="news-card__title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+  <p class="news-card__excerpt">{{ post.excerpt }}</p>
+  <p><a class="link-arrow" href="{{ post.get_absolute_url }}">{% translate "Read the post" %}<span class="visually-hidden">: {{ post.title }}</span>{% icon "arrow-up-right" "arrow" %}</a></p>
+</article>

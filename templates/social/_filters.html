@@ -1,0 +1,17 @@
+{% load i18n ui %}{# Feed filters: a plain GET form, so it works without JS. Needs: prefix (unique ids), params, tags, tools, ranges, sorts, marks. #}
+<form class="feed-filters" method="get" action="{% url 'social:feed' %}">
+  <label class="field" for="f-{{ prefix }}-sort"><span class="field__label">{% translate "Sort" %}</span>
+    <span class="select-wrap"><select class="select" id="f-{{ prefix }}-sort" name="sort">{% for value, label in sorts %}<option value="{{ value }}"{% if params.sort == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>{% icon "chevron-down" %}</span></label>
+  <label class="field" for="f-{{ prefix }}-range"><span class="field__label">{% translate "Time range" %}</span>
+    <span class="select-wrap"><select class="select" id="f-{{ prefix }}-range" name="range">{% for value, label in ranges %}<option value="{{ value }}"{% if params.range == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>{% icon "chevron-down" %}</span></label>
+  <label class="field" for="f-{{ prefix }}-mark"><span class="field__label">{% translate "Hallmark" %}</span>
+    <span class="select-wrap"><select class="select" id="f-{{ prefix }}-mark" name="mark">{% for value, label in marks %}<option value="{{ value }}"{% if params.mark == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>{% icon "chevron-down" %}</span></label>
+  <label class="field" for="f-{{ prefix }}-tag"><span class="field__label">{% translate "Tag" %}</span>
+    <span class="select-wrap"><select class="select" id="f-{{ prefix }}-tag" name="tag"><option value="">{% translate "Any" %}</option>{% for tag in tags %}<option value="{{ tag.slug }}"{% if params.tag == tag.slug %} selected{% endif %}>{{ tag.name }}</option>{% endfor %}</select>{% icon "chevron-down" %}</span></label>
+  <label class="field" for="f-{{ prefix }}-tool"><span class="field__label">{% translate "Built with" %}</span>
+    <span class="select-wrap"><select class="select" id="f-{{ prefix }}-tool" name="tool"><option value="">{% translate "Any" %}</option>{% for tool in tools %}<option value="{{ tool.slug }}"{% if params.tool == tool.slug %} selected{% endif %}>{{ tool.name }}</option>{% endfor %}</select>{% icon "chevron-down" %}</span></label>
+  <div class="feed-filters__actions">
+    <button class="btn btn--secondary" type="submit">{% translate "Apply filters" %}</button>
+    {% if has_filters %}<a class="btn btn--quiet" href="{{ clear_url }}">{% translate "Clear filters" %}</a>{% endif %}
+  </div>
+</form>

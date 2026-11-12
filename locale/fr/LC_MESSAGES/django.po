@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 15:26+0000\n"
+"POT-Creation-Date: 2026-11-12 16:07+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
@@ -32,7 +32,7 @@ msgstr "Profil"
 msgid "Pictures"
 msgstr "Images"
 
-#: accounts/admin.py:109 config/settings/base.py:317
+#: accounts/admin.py:109 config/settings/base.py:322
 #: templates/includes/site_nav.html:20 templates/includes/site_nav.html:33
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
@@ -219,7 +219,7 @@ msgid "Pin at most 3 projects."
 msgstr "Épinglez 3 projets au maximum."
 
 #: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:72
-#: projects/views.py:38 social/views.py:70
+#: projects/views.py:38 social/views.py:73
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr ""
 "Trop de modifications en peu de temps. Réessayez dans quelques minutes."
@@ -394,97 +394,100 @@ msgstr "Votre compte et tout son contenu ont été supprimés."
 msgid "Proof, not promises."
 msgstr "Des preuves, pas des promesses."
 
-#: config/settings/base.py:254
+#: config/settings/base.py:259
 msgid "Admin"
 msgstr "Administration"
 
-#: config/settings/base.py:290 config/settings/base.py:292
+#: config/settings/base.py:295 config/settings/base.py:297
 #: moderation/dashboard.py:46
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: config/settings/base.py:293
+#: config/settings/base.py:298
 msgid "Badges"
 msgstr "Badges"
 
-#: config/settings/base.py:297 config/settings/base.py:299
+#: config/settings/base.py:302 config/settings/base.py:304
 #: templates/accounts/profile.html:53 templates/accounts/profile.html:67
 #: templates/accounts/profile.html:75 templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Projets"
 
-#: config/settings/base.py:300 templates/accounts/profile.html:68
+#: config/settings/base.py:305 templates/accounts/profile.html:68
 #: templates/accounts/profile.html:115 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Journal de développement"
 
-#: config/settings/base.py:301 projects/forms.py:47
+#: config/settings/base.py:306 projects/forms.py:47
 #: templates/projects/detail.html:167
 msgid "Tags"
 msgstr "Étiquettes"
 
-#: config/settings/base.py:302
+#: config/settings/base.py:307
 msgid "Tools"
 msgstr "Outils"
 
-#: config/settings/base.py:306
+#: config/settings/base.py:311
 msgid "Verification"
 msgstr "Vérification"
 
-#: config/settings/base.py:308
+#: config/settings/base.py:313
 msgid "Review queue"
 msgstr "File de vérification"
 
-#: config/settings/base.py:310
+#: config/settings/base.py:315
 msgid "Repositories"
 msgstr "Dépôts"
 
-#: config/settings/base.py:311
+#: config/settings/base.py:316
 msgid "Domains"
 msgstr "Domaines"
 
-#: config/settings/base.py:312
+#: config/settings/base.py:317
 msgid "Uptime checks"
 msgstr "Contrôles de disponibilité"
 
-#: config/settings/base.py:313
+#: config/settings/base.py:318
 msgid "Blocked repos and domains"
 msgstr "Dépôts et domaines bloqués"
 
-#: config/settings/base.py:319 templates/moderation/mod/queue.html:11
+#: config/settings/base.py:324 templates/moderation/mod/queue.html:11
 msgid "Reports"
 msgstr "Signalements"
 
-#: config/settings/base.py:321 templates/moderation/mod/_history.html:7
+#: config/settings/base.py:326 templates/moderation/mod/_history.html:7
 msgid "Sanctions"
 msgstr "Sanctions"
 
-#: config/settings/base.py:322 templates/moderation/mod/_history.html:15
+#: config/settings/base.py:327 templates/moderation/mod/_history.html:15
 msgid "Removed projects"
 msgstr "Projets retirés"
 
-#: config/settings/base.py:324
+#: config/settings/base.py:329
 msgid "Notices"
 msgstr "Avis"
 
-#: config/settings/base.py:325
+#: config/settings/base.py:330
 msgid "Follows"
 msgstr "Abonnements"
 
-#: config/settings/base.py:326 projects/admin.py:46
+#: config/settings/base.py:331 projects/admin.py:46
 msgid "Likes"
 msgstr "J’aime"
 
-#: config/settings/base.py:330 news/apps.py:8
+#: config/settings/base.py:335 news/apps.py:8 pages/templatetags/ui.py:342
+#: templates/news/list.html:4 templates/news/list.html:5
+#: templates/news/list.html:14 templates/social/feed.html:18
+#: templates/social/feed.html:35
 msgid "News"
 msgstr "Actualités"
 
-#: config/settings/base.py:332
+#: config/settings/base.py:337
 msgid "News posts"
 msgstr "Articles d’actualité"
 
-#: config/settings/base.py:336 config/settings/base.py:338
+#: config/settings/base.py:341 config/settings/base.py:343
 msgid "Audit log"
 msgstr "Journal d’audit"
 
@@ -567,15 +570,18 @@ msgstr "Inscriptions des 7 derniers jours"
 msgid "Open reports"
 msgstr "Signalements ouverts"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:186
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:194
+#: social/feed.py:29
 msgid "Repo owner"
 msgstr "Repo owner"
 
-#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:187
+#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:195
+#: social/feed.py:29
 msgid "Live"
 msgstr "Live"
 
-#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:188
+#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:196
+#: social/feed.py:29
 msgid "Steady"
 msgstr "Steady"
 
@@ -810,31 +816,31 @@ msgstr "sanction"
 msgid "sanctions"
 msgstr "sanctions"
 
-#: moderation/models.py:228
+#: moderation/models.py:236
 msgid "banned identity"
 msgstr "identité bannie"
 
-#: moderation/models.py:229
+#: moderation/models.py:237
 msgid "banned identities"
 msgstr "identités bannies"
 
-#: moderation/models.py:243
+#: moderation/models.py:251
 msgid "Project removed"
 msgstr "Projet retiré"
 
-#: moderation/models.py:244
+#: moderation/models.py:252
 msgid "Project restored"
 msgstr "Projet rétabli"
 
-#: moderation/models.py:245
+#: moderation/models.py:253
 msgid "Profile fields cleared"
 msgstr "Champs du profil effacés"
 
-#: moderation/models.py:246
+#: moderation/models.py:254
 msgid "Report reviewed, no action"
 msgstr "Signalement examiné, aucune mesure"
 
-#: moderation/models.py:247
+#: moderation/models.py:255
 msgid "Report reviewed, action taken"
 msgstr "Signalement examiné, mesure prise"
 
@@ -945,57 +951,57 @@ msgstr "Aperçu"
 msgid "Save to see the preview."
 msgstr "Enregistrez pour voir l’aperçu."
 
-#: news/models.py:19
+#: news/models.py:21
 msgid "title"
 msgstr "titre"
 
-#: news/models.py:20
+#: news/models.py:22
 msgid "slug"
 msgstr "slug"
 
-#: news/models.py:21
+#: news/models.py:23
 msgid "Part of the address: /news/<slug>/. Do not change it after publishing."
 msgstr ""
 "Partie de l’adresse : /news/<slug>/. Ne la changez pas après publication."
 
-#: news/models.py:22
+#: news/models.py:24
 msgid "body"
 msgstr "texte"
 
-#: news/models.py:23
+#: news/models.py:25
 msgid "Markdown. Rendered and sanitized like project descriptions; no HTML."
 msgstr ""
 "Markdown. Rendu et nettoyé comme les descriptions de projets ; pas de HTML."
 
-#: news/models.py:24
+#: news/models.py:26
 msgid "published at"
 msgstr "publié le"
 
-#: news/models.py:25
+#: news/models.py:27
 msgid "Empty: draft. A time in the future: scheduled."
 msgstr "Vide : brouillon. Une date future : planifiée."
 
-#: news/models.py:26
+#: news/models.py:28
 msgid "pinned"
 msgstr "épinglé"
 
-#: news/models.py:26
+#: news/models.py:28
 msgid "Shown first in the news list."
 msgstr "Affiché en premier dans la liste des actualités."
 
-#: news/models.py:29
+#: news/models.py:31
 msgid "created by"
 msgstr "créé par"
 
-#: news/models.py:38
+#: news/models.py:40
 msgid "news post"
 msgstr "article d’actualité"
 
-#: news/models.py:39
+#: news/models.py:41
 msgid "news posts"
 msgstr "articles d’actualité"
 
-#: pages/explore.py:27
+#: pages/explore.py:27 social/feed.py:28
 msgid "Newest"
 msgstr "Les plus récents"
 
@@ -1007,8 +1013,9 @@ msgstr "Les plus aimés"
 msgid "Most proven"
 msgstr "Les mieux prouvés"
 
-#: pages/explore.py:28 templates/moderation/mod/queue.html:30
-#: templates/moderation/mod/queue.html:37
+#: pages/explore.py:28 social/feed.py:29 templates/moderation/mod/queue.html:30
+#: templates/moderation/mod/queue.html:37 templates/social/_filters.html:10
+#: templates/social/_filters.html:12
 msgid "Any"
 msgstr "Tous"
 
@@ -1039,33 +1046,35 @@ msgstr "à l’instant"
 msgid "%(time)s ago"
 msgstr "il y a %(time)s"
 
-#: pages/templatetags/ui.py:334 templates/social/feed.html:4
-#: templates/social/feed.html:5 templates/social/feed.html:12
+#: pages/templatetags/ui.py:342 templates/social/feed.html:4
+#: templates/social/feed.html:5 templates/social/feed.html:11
 msgid "Feed"
 msgstr "Fil"
 
-#: pages/templatetags/ui.py:334 templates/pages/explore.html:4
+#: pages/templatetags/ui.py:342 templates/pages/explore.html:4
 #: templates/pages/explore.html:5 templates/pages/explore.html:16
+#: templates/social/feed.html:20
 msgid "Explore"
 msgstr "Explorer"
 
-#: pages/templatetags/ui.py:336
+#: pages/templatetags/ui.py:344
 msgid "About"
 msgstr "À propos"
 
-#: pages/templatetags/ui.py:337 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:345 templates/pages/landing.html:279
+#: templates/social/feed.html:106
 msgid "How proof works"
 msgstr "Comment fonctionne la preuve"
 
-#: pages/templatetags/ui.py:338
+#: pages/templatetags/ui.py:346
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: pages/templatetags/ui.py:339
+#: pages/templatetags/ui.py:347
 msgid "Terms"
 msgstr "Conditions"
 
-#: pages/templatetags/ui.py:340
+#: pages/templatetags/ui.py:348
 msgid "Cookies"
 msgstr "Cookies"
 
@@ -1279,11 +1288,11 @@ msgstr "Masqué"
 msgid "Removed"
 msgstr "Retiré"
 
-#: projects/models.py:148
+#: projects/models.py:188
 msgid "Update"
 msgstr "Mise à jour"
 
-#: projects/models.py:149 templates/accounts/profile.html:121
+#: projects/models.py:189 templates/accounts/profile.html:121
 #: templates/projects/_log_entry.html:4
 msgid "Launched"
 msgstr "Lancé"
@@ -1647,33 +1656,53 @@ msgstr "Publié."
 msgid "Entry deleted."
 msgstr "Entrée supprimée."
 
-#: social/views.py:64
+#: social/feed.py:26
+msgid "All time"
+msgstr "Depuis toujours"
+
+#: social/feed.py:26
+msgid "Last 24 hours"
+msgstr "Dernières 24 heures"
+
+#: social/feed.py:26
+msgid "Last 7 days"
+msgstr "7 derniers jours"
+
+#: social/feed.py:26
+msgid "Last 30 days"
+msgstr "30 derniers jours"
+
+#: social/feed.py:28
+msgid "Popular"
+msgstr "Populaires"
+
+#: social/views.py:67
 msgid "Sign in to do this."
 msgstr "Connectez-vous pour faire cela."
 
-#: social/views.py:87
+#: social/views.py:90
 msgid "You cannot follow yourself."
 msgstr "Vous ne pouvez pas vous suivre."
 
-#: social/views.py:90
+#: social/views.py:93
 #, python-format
 msgid "Following @%(username)s."
 msgstr "Vous suivez @%(username)s."
 
-#: social/views.py:93
+#: social/views.py:96
 #, python-format
 msgid "Unfollowed @%(username)s."
 msgstr "Vous ne suivez plus @%(username)s."
 
-#: social/views.py:122
+#: social/views.py:125
 msgid "You cannot like your own project."
 msgstr "Vous ne pouvez pas aimer votre propre projet."
 
-#: social/views.py:125
+#: social/views.py:128
 msgid "Liked."
 msgstr "Aimé."
 
-#: social/views.py:128
+#: social/views.py:131
 msgid "Like removed."
 msgstr "J’aime retiré."
 
@@ -1950,7 +1979,7 @@ msgstr "Poinçons"
 msgid "Followers"
 msgstr "Abonnés"
 
-#: templates/accounts/profile.html:60
+#: templates/accounts/profile.html:60 templates/news/_card.html:6
 msgid "Pinned"
 msgstr "Épinglés"
 
@@ -2008,7 +2037,7 @@ msgid "%(name)s has not posted a build-log update yet."
 msgstr ""
 "%(name)s n’a pas encore publié de mise à jour du journal de construction."
 
-#: templates/accounts/profile.html:144 templates/social/feed.html:33
+#: templates/accounts/profile.html:144 templates/social/feed.html:51
 msgid "Nothing here yet"
 msgstr "Rien ici pour l’instant"
 
@@ -2048,7 +2077,9 @@ msgstr ""
 msgid ""
 "Your account is muted, so your public profile cannot be changed right now. "
 "You can still change the language."
-msgstr "Votre compte est en sourdine, votre profil public ne peut donc pas être modifié pour le moment. Vous pouvez toujours changer la langue."
+msgstr ""
+"Votre compte est en sourdine, votre profil public ne peut donc pas être "
+"modifié pour le moment. Vous pouvez toujours changer la langue."
 
 #: templates/accounts/settings.html:42
 msgid "Your current cover image"
@@ -2278,11 +2309,12 @@ msgid "Main"
 msgstr "Principal"
 
 #: templates/includes/site_nav.html:14 templates/projects/form.html:4
-#: templates/projects/form.html:12
+#: templates/projects/form.html:12 templates/social/feed.html:23
 msgid "New project"
 msgstr "Nouveau projet"
 
 #: templates/includes/site_nav.html:19 templates/includes/site_nav.html:32
+#: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Votre profil"
 
@@ -2296,7 +2328,8 @@ msgid "Account menu for %(name)s"
 msgstr "Menu du compte de %(name)s"
 
 #: templates/includes/site_nav.html:40 templates/pages/_sign_in.html:9
-#: templates/pages/_sign_in.html:12 templates/socialaccount/login.html:10
+#: templates/pages/_sign_in.html:12 templates/social/feed.html:25
+#: templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Se connecter avec GitHub"
 
@@ -2421,11 +2454,12 @@ msgstr "État des signalements"
 msgid "All"
 msgstr "Tous"
 
-#: templates/moderation/mod/queue.html:25
+#: templates/moderation/mod/queue.html:25 templates/social/feed.html:42
+#: templates/social/feed.html:84
 msgid "Filters"
 msgstr "Filtres"
 
-#: templates/moderation/mod/queue.html:40
+#: templates/moderation/mod/queue.html:40 templates/social/_filters.html:14
 msgid "Apply filters"
 msgstr "Appliquer les filtres"
 
@@ -2437,12 +2471,13 @@ msgstr "Supprimé"
 msgid "by a moderator"
 msgstr "d’un modérateur"
 
-#: templates/moderation/mod/queue.html:57 templates/pages/explore.html:82
-#: templates/social/feed.html:45
+#: templates/moderation/mod/queue.html:57 templates/news/list.html:20
+#: templates/pages/explore.html:82 templates/social/feed.html:74
 msgid "Pages"
 msgstr "Pages"
 
-#: templates/moderation/mod/queue.html:58 templates/social/feed.html:46
+#: templates/moderation/mod/queue.html:58 templates/news/list.html:21
+#: templates/social/feed.html:75
 msgid "Newer"
 msgstr "Plus récents"
 
@@ -2518,6 +2553,37 @@ msgstr ""
 msgid "Send report"
 msgstr "Envoyer le signalement"
 
+#: templates/news/_card.html:10
+msgid "Read the post"
+msgstr "Lire l’article"
+
+#: templates/news/detail.html:19 templates/social/feed.html:96
+msgid "All news"
+msgstr "Toutes les actualités"
+
+#: templates/news/list.html:6 templates/news/list.html:8
+#, python-format
+msgid "Official news from %(name)s."
+msgstr "Actualités officielles de %(name)s."
+
+#: templates/news/list.html:15
+msgid ""
+"What changed, what is next, and how proof works. Written by the team, nobody "
+"else can post here."
+msgstr "Ce qui a changé, la suite, et comment fonctionne la preuve. Écrit par l’équipe ; personne d’autre ne peut publier ici."
+
+#: templates/news/list.html:22
+msgid "Older"
+msgstr "Plus anciens"
+
+#: templates/news/list.html:26 templates/social/feed.html:57
+msgid "No news yet"
+msgstr "Pas encore d’actualités"
+
+#: templates/news/list.html:26 templates/social/feed.html:58
+msgid "Announcements from the team appear here."
+msgstr "Les annonces de l’équipe apparaissent ici."
+
 #: templates/pages/explore.html:6 templates/pages/explore.html:9
 #: templates/pages/explore.html:17
 msgid ""
@@ -2539,7 +2605,7 @@ msgstr "Rechercher"
 msgid "Project name or tagline"
 msgstr "Nom ou accroche du projet"
 
-#: templates/pages/explore.html:31
+#: templates/pages/explore.html:31 templates/social/_filters.html:9
 msgid "Tag"
 msgstr "Étiquette"
 
@@ -2549,7 +2615,7 @@ msgstr "Toute étiquette"
 
 #: templates/pages/explore.html:41 templates/pages/landing.html:67
 #: templates/pages/landing.html:192 templates/pages/landing.html:214
-#: templates/pages/landing.html:236
+#: templates/pages/landing.html:236 templates/social/_filters.html:11
 msgid "Built with"
 msgstr "Créé avec"
 
@@ -2557,7 +2623,7 @@ msgstr "Créé avec"
 msgid "Any tool"
 msgstr "Tout outil"
 
-#: templates/pages/explore.html:51
+#: templates/pages/explore.html:51 templates/social/_filters.html:7
 msgid "Hallmark"
 msgstr "Poinçon"
 
@@ -2566,6 +2632,7 @@ msgid "Sort by"
 msgstr "Trier par"
 
 #: templates/pages/explore.html:70 templates/pages/explore.html:90
+#: templates/social/_filters.html:15 templates/social/feed.html:64
 msgid "Clear filters"
 msgstr "Effacer les filtres"
 
@@ -3592,11 +3659,24 @@ msgstr ""
 msgid "This removes the project and its screenshots for good."
 msgstr "Cela supprime définitivement le projet et ses captures d’écran."
 
+#: templates/social/_card.html:24
+msgid "Latest update"
+msgstr "Dernière mise à jour"
+
+#: templates/social/_filters.html:3
+msgid "Sort"
+msgstr "Tri"
+
+#: templates/social/_filters.html:5
+msgid "Time range"
+msgstr "Période"
+
 #: templates/social/_follow.html:9 templates/social/_like.html:9
 msgid "Could not save. Try again."
 msgstr "Enregistrement impossible. Réessayez."
 
-#: templates/social/_follow.html:13 templates/social/feed.html:19
+#: templates/social/_follow.html:13 templates/social/feed.html:17
+#: templates/social/feed.html:34
 msgid "Following"
 msgstr "Abonné"
 
@@ -3604,7 +3684,7 @@ msgstr "Abonné"
 msgid "Follow"
 msgstr "S’abonner"
 
-#: templates/social/_items.html:29
+#: templates/social/_items.html:18
 msgid "posted an update on"
 msgstr "a publié une mise à jour sur"
 
@@ -3623,19 +3703,23 @@ msgstr "Aimé"
 msgid "Like"
 msgstr "J’aime"
 
-#: templates/social/feed.html:7 templates/social/feed.html:13
-msgid "Recently launched projects with verified proof."
-msgstr "Projets lancés récemment avec une preuve vérifiée."
+#: templates/social/feed.html:7
+msgid "Projects people shipped with verified proof, and official news."
+msgstr "Des projets lancés par des gens, avec une preuve vérifiée, et les actualités officielles."
 
-#: templates/social/feed.html:17
+#: templates/social/feed.html:14
+msgid "Feed navigation"
+msgstr "Navigation du fil"
+
+#: templates/social/feed.html:16 templates/social/feed.html:33
+msgid "For you"
+msgstr "Pour vous"
+
+#: templates/social/feed.html:31
 msgid "Feed sections"
 msgstr "Sections du fil"
 
-#: templates/social/feed.html:20 templates/social/feed.html:24
-msgid "Latest launches"
-msgstr "Derniers lancements"
-
-#: templates/social/feed.html:34
+#: templates/social/feed.html:52
 msgid ""
 "Projects and updates from people you follow show up here. Follow someone "
 "from their profile."
@@ -3643,25 +3727,57 @@ msgstr ""
 "Les projets et mises à jour des personnes que vous suivez apparaissent ici. "
 "Abonnez-vous à quelqu’un depuis son profil."
 
-#: templates/social/feed.html:35
-msgid "See latest launches"
-msgstr "Voir les derniers lancements"
+#: templates/social/feed.html:53
+msgid "See projects for you"
+msgstr "Voir les projets pour vous"
 
-#: templates/social/feed.html:39
+#: templates/social/feed.html:62
+msgid "No projects match"
+msgstr "Aucun projet ne correspond"
+
+#: templates/social/feed.html:63
+msgid "Try a wider time range or fewer filters."
+msgstr "Essayez une période plus large ou moins de filtres."
+
+#: templates/social/feed.html:68
 msgid "No launches yet"
 msgstr "Aucun lancement pour l’instant"
 
-#: templates/social/feed.html:40
-msgid "Published projects appear here, newest first."
-msgstr "Les projets publiés apparaissent ici, les plus récents d’abord."
+#: templates/social/feed.html:69
+msgid "Published projects appear here."
+msgstr "Les projets publiés apparaissent ici."
 
-#: templates/social/feed.html:47
+#: templates/social/feed.html:76
 msgid "Could not load more. Try again."
 msgstr "Impossible de charger davantage. Réessayez."
 
-#: templates/social/feed.html:47
+#: templates/social/feed.html:76
 msgid "Load more"
 msgstr "Charger plus"
+
+#: templates/social/feed.html:81
+msgid "Filters, news and tips"
+msgstr "Filtres, actualités et conseils"
+
+#: templates/social/feed.html:90
+msgid "Latest news"
+msgstr "Dernières actualités"
+
+#: templates/social/feed.html:100
+msgid "Tips"
+msgstr "Conseils"
+
+#: templates/social/feed.html:102
+msgid "Link your GitHub repository to earn Repo owner."
+msgstr "Liez votre dépôt GitHub pour obtenir Repo owner."
+
+#: templates/social/feed.html:103
+msgid "Verify your domain to earn Live; steady uptime earns Steady."
+msgstr "Vérifiez votre domaine pour obtenir Live ; une disponibilité stable donne Steady."
+
+#: templates/social/feed.html:104
+msgid "Write a short build-log update when you ship something."
+msgstr "Écrivez une courte mise à jour du journal de construction quand vous publiez quelque chose."
 
 #: templates/socialaccount/authentication_error.html:4
 #: templates/socialaccount/authentication_error.html:10

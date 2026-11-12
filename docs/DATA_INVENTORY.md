@@ -52,7 +52,7 @@ OAuth scopes: `read:user`, `user:email` only. No access to private repositories.
 |---|---|---|---|---|---|
 | `Project` name, slug, tagline, description, live URL, repo name, tags, status, dates | The user | The project page | Until the project or account is deleted | Published: public. Draft and hidden: owner and staff | yes |
 | `built_with` (AI tools) | The user, **self-declared** | Shown as "Built with (self-declared)" | Same | Same as the project | yes |
-| `Screenshot` image files | Upload by the user. Re-encoded to WebP (metadata such as EXIF/GPS removed), random file name | Project page | Until removed; the file is deleted with the row | Same as the project (files under `/media/` are reachable by URL) | yes (URLs) |
+| `Screenshot` image files, and their thumbnails (`thumb`, a derived WebP copy up to 640 px) | Upload by the user. Re-encoded to WebP (metadata such as EXIF/GPS removed), random file name; the thumbnail is made from the stored image | Project page (full image); feed, profile rows, Explore and landing cards (thumbnail) | Until removed; both files are deleted with the row | Same as the project (files under `/media/` are reachable by URL) | yes (URLs) |
 | `BuildLogEntry` text, kind, date | The user | Timeline on the project page and feed | Until deleted | Same as the project | yes |
 
 ## 4. Verification (`verification`)

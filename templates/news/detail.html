@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{{ post.title }} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{{ post.title }} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_description %}{{ post.excerpt }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/news.css' %}">{% endblock %}
+{% block meta %}
+  <meta name="description" content="{{ post.excerpt }}">
+  <meta property="article:published_time" content="{{ post.published_at|date:'c' }}">
+  <meta property="article:author" content="{{ brand.SITE_NAME }}">
+  <link rel="canonical" href="{% canonical_url %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container page news">
+    <article class="news-post">
+      <p><a class="link-arrow" href="{% url 'news:list' %}">{% translate "All news" %}</a></p>
+      <header class="news-post__head">
+        <h1>{{ post.title }}</h1>
+        <p class="news-card__meta">
+          {% include "news/_byline.html" %}
+          <span class="muted">· <time datetime="{{ post.published_at|date:'c' }}" title="{{ post.published_at|date:'DATETIME_FORMAT' }}">{{ post.published_at|date:"DATE_FORMAT" }}</time></span>
+        </p>
+      </header>
+      <div class="prose news-post__body">{{ post.body_html|safe }}</div>
+    </article>
+  </div>
+{% endblock %}

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 15:26+0000\n"
+"POT-Creation-Date: 2026-11-12 16:07+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -35,7 +35,7 @@ msgstr "Профіль"
 msgid "Pictures"
 msgstr "Зображення"
 
-#: accounts/admin.py:109 config/settings/base.py:317
+#: accounts/admin.py:109 config/settings/base.py:322
 #: templates/includes/site_nav.html:20 templates/includes/site_nav.html:33
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
@@ -218,7 +218,7 @@ msgid "Pin at most 3 projects."
 msgstr "Закріпіть не більше 3 проєктів."
 
 #: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:72
-#: projects/views.py:38 social/views.py:70
+#: projects/views.py:38 social/views.py:73
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Забагато змін за короткий час. Спробуйте за кілька хвилин."
 
@@ -390,97 +390,100 @@ msgstr "Ваш акаунт і все, що в ньому було, видале
 msgid "Proof, not promises."
 msgstr "Докази, а не обіцянки."
 
-#: config/settings/base.py:254
+#: config/settings/base.py:259
 msgid "Admin"
 msgstr "Адмінка"
 
-#: config/settings/base.py:290 config/settings/base.py:292
+#: config/settings/base.py:295 config/settings/base.py:297
 #: moderation/dashboard.py:46
 msgid "Users"
 msgstr "Користувачі"
 
-#: config/settings/base.py:293
+#: config/settings/base.py:298
 msgid "Badges"
 msgstr "Бейджі"
 
-#: config/settings/base.py:297 config/settings/base.py:299
+#: config/settings/base.py:302 config/settings/base.py:304
 #: templates/accounts/profile.html:53 templates/accounts/profile.html:67
 #: templates/accounts/profile.html:75 templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:300 templates/accounts/profile.html:68
+#: config/settings/base.py:305 templates/accounts/profile.html:68
 #: templates/accounts/profile.html:115 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
-#: config/settings/base.py:301 projects/forms.py:47
+#: config/settings/base.py:306 projects/forms.py:47
 #: templates/projects/detail.html:167
 msgid "Tags"
 msgstr "Теги"
 
-#: config/settings/base.py:302
+#: config/settings/base.py:307
 msgid "Tools"
 msgstr "Інструменти"
 
-#: config/settings/base.py:306
+#: config/settings/base.py:311
 msgid "Verification"
 msgstr "Підтвердження"
 
-#: config/settings/base.py:308
+#: config/settings/base.py:313
 msgid "Review queue"
 msgstr "Черга перевірки"
 
-#: config/settings/base.py:310
+#: config/settings/base.py:315
 msgid "Repositories"
 msgstr "Репозиторії"
 
-#: config/settings/base.py:311
+#: config/settings/base.py:316
 msgid "Domains"
 msgstr "Домени"
 
-#: config/settings/base.py:312
+#: config/settings/base.py:317
 msgid "Uptime checks"
 msgstr "Перевірки доступності"
 
-#: config/settings/base.py:313
+#: config/settings/base.py:318
 msgid "Blocked repos and domains"
 msgstr "Заблоковані репозиторії й домени"
 
-#: config/settings/base.py:319 templates/moderation/mod/queue.html:11
+#: config/settings/base.py:324 templates/moderation/mod/queue.html:11
 msgid "Reports"
 msgstr "Скарги"
 
-#: config/settings/base.py:321 templates/moderation/mod/_history.html:7
+#: config/settings/base.py:326 templates/moderation/mod/_history.html:7
 msgid "Sanctions"
 msgstr "Санкції"
 
-#: config/settings/base.py:322 templates/moderation/mod/_history.html:15
+#: config/settings/base.py:327 templates/moderation/mod/_history.html:15
 msgid "Removed projects"
 msgstr "Вилучені проєкти"
 
-#: config/settings/base.py:324
+#: config/settings/base.py:329
 msgid "Notices"
 msgstr "Повідомлення"
 
-#: config/settings/base.py:325
+#: config/settings/base.py:330
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:326 projects/admin.py:46
+#: config/settings/base.py:331 projects/admin.py:46
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:330 news/apps.py:8
+#: config/settings/base.py:335 news/apps.py:8 pages/templatetags/ui.py:342
+#: templates/news/list.html:4 templates/news/list.html:5
+#: templates/news/list.html:14 templates/social/feed.html:18
+#: templates/social/feed.html:35
 msgid "News"
 msgstr "Новини"
 
-#: config/settings/base.py:332
+#: config/settings/base.py:337
 msgid "News posts"
 msgstr "Новини"
 
-#: config/settings/base.py:336 config/settings/base.py:338
+#: config/settings/base.py:341 config/settings/base.py:343
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
@@ -563,15 +566,18 @@ msgstr "Реєстрації за 7 днів"
 msgid "Open reports"
 msgstr "Відкриті скарги"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:186
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:194
+#: social/feed.py:29
 msgid "Repo owner"
 msgstr "Власник репозиторію"
 
-#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:187
+#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:195
+#: social/feed.py:29
 msgid "Live"
 msgstr "Працює"
 
-#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:188
+#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:196
+#: social/feed.py:29
 msgid "Steady"
 msgstr "Стабільний"
 
@@ -804,31 +810,31 @@ msgstr "санкція"
 msgid "sanctions"
 msgstr "санкції"
 
-#: moderation/models.py:228
+#: moderation/models.py:236
 msgid "banned identity"
 msgstr "заблокована особа"
 
-#: moderation/models.py:229
+#: moderation/models.py:237
 msgid "banned identities"
 msgstr "заблоковані особи"
 
-#: moderation/models.py:243
+#: moderation/models.py:251
 msgid "Project removed"
 msgstr "Проєкт вилучено"
 
-#: moderation/models.py:244
+#: moderation/models.py:252
 msgid "Project restored"
 msgstr "Проєкт відновлено"
 
-#: moderation/models.py:245
+#: moderation/models.py:253
 msgid "Profile fields cleared"
 msgstr "Поля профілю очищено"
 
-#: moderation/models.py:246
+#: moderation/models.py:254
 msgid "Report reviewed, no action"
 msgstr "Скаргу розглянуто, без дій"
 
-#: moderation/models.py:247
+#: moderation/models.py:255
 msgid "Report reviewed, action taken"
 msgstr "Скаргу розглянуто, вжито заходів"
 
@@ -938,56 +944,56 @@ msgstr "Попередній перегляд"
 msgid "Save to see the preview."
 msgstr "Збережіть, щоб побачити попередній перегляд."
 
-#: news/models.py:19
+#: news/models.py:21
 msgid "title"
 msgstr "заголовок"
 
-#: news/models.py:20
+#: news/models.py:22
 msgid "slug"
 msgstr "slug"
 
-#: news/models.py:21
+#: news/models.py:23
 msgid "Part of the address: /news/<slug>/. Do not change it after publishing."
 msgstr "Частина адреси: /news/<slug>/. Не змінюйте після публікації."
 
-#: news/models.py:22
+#: news/models.py:24
 msgid "body"
 msgstr "текст"
 
-#: news/models.py:23
+#: news/models.py:25
 msgid "Markdown. Rendered and sanitized like project descriptions; no HTML."
 msgstr ""
 "Markdown. Обробляється й очищується так само, як описи проєктів; без HTML."
 
-#: news/models.py:24
+#: news/models.py:26
 msgid "published at"
 msgstr "час публікації"
 
-#: news/models.py:25
+#: news/models.py:27
 msgid "Empty: draft. A time in the future: scheduled."
 msgstr "Порожньо: чернетка. Час у майбутньому: заплановано."
 
-#: news/models.py:26
+#: news/models.py:28
 msgid "pinned"
 msgstr "закріплено"
 
-#: news/models.py:26
+#: news/models.py:28
 msgid "Shown first in the news list."
 msgstr "Показується першою в списку новин."
 
-#: news/models.py:29
+#: news/models.py:31
 msgid "created by"
 msgstr "автор"
 
-#: news/models.py:38
+#: news/models.py:40
 msgid "news post"
 msgstr "новина"
 
-#: news/models.py:39
+#: news/models.py:41
 msgid "news posts"
 msgstr "новини"
 
-#: pages/explore.py:27
+#: pages/explore.py:27 social/feed.py:28
 msgid "Newest"
 msgstr "Найновіші"
 
@@ -999,8 +1005,9 @@ msgstr "Найбільше вподобань"
 msgid "Most proven"
 msgstr "Найбільше доказів"
 
-#: pages/explore.py:28 templates/moderation/mod/queue.html:30
-#: templates/moderation/mod/queue.html:37
+#: pages/explore.py:28 social/feed.py:29 templates/moderation/mod/queue.html:30
+#: templates/moderation/mod/queue.html:37 templates/social/_filters.html:10
+#: templates/social/_filters.html:12
 msgid "Any"
 msgstr "Будь-яка"
 
@@ -1031,33 +1038,35 @@ msgstr "щойно"
 msgid "%(time)s ago"
 msgstr "%(time)s тому"
 
-#: pages/templatetags/ui.py:334 templates/social/feed.html:4
-#: templates/social/feed.html:5 templates/social/feed.html:12
+#: pages/templatetags/ui.py:342 templates/social/feed.html:4
+#: templates/social/feed.html:5 templates/social/feed.html:11
 msgid "Feed"
 msgstr "Стрічка"
 
-#: pages/templatetags/ui.py:334 templates/pages/explore.html:4
+#: pages/templatetags/ui.py:342 templates/pages/explore.html:4
 #: templates/pages/explore.html:5 templates/pages/explore.html:16
+#: templates/social/feed.html:20
 msgid "Explore"
 msgstr "Огляд"
 
-#: pages/templatetags/ui.py:336
+#: pages/templatetags/ui.py:344
 msgid "About"
 msgstr "Про проєкт"
 
-#: pages/templatetags/ui.py:337 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:345 templates/pages/landing.html:279
+#: templates/social/feed.html:106
 msgid "How proof works"
 msgstr "Як працюють підтвердження"
 
-#: pages/templatetags/ui.py:338
+#: pages/templatetags/ui.py:346
 msgid "Privacy"
 msgstr "Приватність"
 
-#: pages/templatetags/ui.py:339
+#: pages/templatetags/ui.py:347
 msgid "Terms"
 msgstr "Умови"
 
-#: pages/templatetags/ui.py:340
+#: pages/templatetags/ui.py:348
 msgid "Cookies"
 msgstr "Файли cookie"
 
@@ -1270,11 +1279,11 @@ msgstr "Приховано"
 msgid "Removed"
 msgstr "Вилучено"
 
-#: projects/models.py:148
+#: projects/models.py:188
 msgid "Update"
 msgstr "Оновлення"
 
-#: projects/models.py:149 templates/accounts/profile.html:121
+#: projects/models.py:189 templates/accounts/profile.html:121
 #: templates/projects/_log_entry.html:4
 msgid "Launched"
 msgstr "Запуск"
@@ -1630,33 +1639,53 @@ msgstr "Опубліковано."
 msgid "Entry deleted."
 msgstr "Запис видалено."
 
-#: social/views.py:64
+#: social/feed.py:26
+msgid "All time"
+msgstr "За весь час"
+
+#: social/feed.py:26
+msgid "Last 24 hours"
+msgstr "Останні 24 години"
+
+#: social/feed.py:26
+msgid "Last 7 days"
+msgstr "Останні 7 днів"
+
+#: social/feed.py:26
+msgid "Last 30 days"
+msgstr "Останні 30 днів"
+
+#: social/feed.py:28
+msgid "Popular"
+msgstr "Популярні"
+
+#: social/views.py:67
 msgid "Sign in to do this."
 msgstr "Увійдіть, щоб це зробити."
 
-#: social/views.py:87
+#: social/views.py:90
 msgid "You cannot follow yourself."
 msgstr "Не можна підписатися на себе."
 
-#: social/views.py:90
+#: social/views.py:93
 #, python-format
 msgid "Following @%(username)s."
 msgstr "Ви підписані на @%(username)s."
 
-#: social/views.py:93
+#: social/views.py:96
 #, python-format
 msgid "Unfollowed @%(username)s."
 msgstr "Ви відписалися від @%(username)s."
 
-#: social/views.py:122
+#: social/views.py:125
 msgid "You cannot like your own project."
 msgstr "Не можна лайкнути власний проєкт."
 
-#: social/views.py:125
+#: social/views.py:128
 msgid "Liked."
 msgstr "Вподобано."
 
-#: social/views.py:128
+#: social/views.py:131
 msgid "Like removed."
 msgstr "Вподобання знято."
 
@@ -1924,7 +1953,7 @@ msgstr "Позначки"
 msgid "Followers"
 msgstr "Підписники"
 
-#: templates/accounts/profile.html:60
+#: templates/accounts/profile.html:60 templates/news/_card.html:6
 msgid "Pinned"
 msgstr "Закріплене"
 
@@ -1981,7 +2010,7 @@ msgstr ""
 msgid "%(name)s has not posted a build-log update yet."
 msgstr "%(name)s ще не публікує оновлень у build log."
 
-#: templates/accounts/profile.html:144 templates/social/feed.html:33
+#: templates/accounts/profile.html:144 templates/social/feed.html:51
 msgid "Nothing here yet"
 msgstr "Тут поки порожньо"
 
@@ -2020,7 +2049,9 @@ msgstr ""
 msgid ""
 "Your account is muted, so your public profile cannot be changed right now. "
 "You can still change the language."
-msgstr "Ваш акаунт обмежено, тому публічний профіль зараз змінити не можна. Мову змінити можна."
+msgstr ""
+"Ваш акаунт обмежено, тому публічний профіль зараз змінити не можна. Мову "
+"змінити можна."
 
 #: templates/accounts/settings.html:42
 msgid "Your current cover image"
@@ -2243,11 +2274,12 @@ msgid "Main"
 msgstr "Головна навігація"
 
 #: templates/includes/site_nav.html:14 templates/projects/form.html:4
-#: templates/projects/form.html:12
+#: templates/projects/form.html:12 templates/social/feed.html:23
 msgid "New project"
 msgstr "Новий проєкт"
 
 #: templates/includes/site_nav.html:19 templates/includes/site_nav.html:32
+#: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Ваш профіль"
 
@@ -2261,7 +2293,8 @@ msgid "Account menu for %(name)s"
 msgstr "Меню акаунта: %(name)s"
 
 #: templates/includes/site_nav.html:40 templates/pages/_sign_in.html:9
-#: templates/pages/_sign_in.html:12 templates/socialaccount/login.html:10
+#: templates/pages/_sign_in.html:12 templates/social/feed.html:25
+#: templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Увійти через GitHub"
 
@@ -2386,11 +2419,12 @@ msgstr "Стан скарг"
 msgid "All"
 msgstr "Усі"
 
-#: templates/moderation/mod/queue.html:25
+#: templates/moderation/mod/queue.html:25 templates/social/feed.html:42
+#: templates/social/feed.html:84
 msgid "Filters"
 msgstr "Фільтри"
 
-#: templates/moderation/mod/queue.html:40
+#: templates/moderation/mod/queue.html:40 templates/social/_filters.html:14
 msgid "Apply filters"
 msgstr "Застосувати фільтри"
 
@@ -2402,12 +2436,13 @@ msgstr "Видалено"
 msgid "by a moderator"
 msgstr "від модератора"
 
-#: templates/moderation/mod/queue.html:57 templates/pages/explore.html:82
-#: templates/social/feed.html:45
+#: templates/moderation/mod/queue.html:57 templates/news/list.html:20
+#: templates/pages/explore.html:82 templates/social/feed.html:74
 msgid "Pages"
 msgstr "Сторінки"
 
-#: templates/moderation/mod/queue.html:58 templates/social/feed.html:46
+#: templates/moderation/mod/queue.html:58 templates/news/list.html:21
+#: templates/social/feed.html:75
 msgid "Newer"
 msgstr "Новіші"
 
@@ -2483,6 +2518,37 @@ msgstr ""
 msgid "Send report"
 msgstr "Надіслати скаргу"
 
+#: templates/news/_card.html:10
+msgid "Read the post"
+msgstr "Читати допис"
+
+#: templates/news/detail.html:19 templates/social/feed.html:96
+msgid "All news"
+msgstr "Усі новини"
+
+#: templates/news/list.html:6 templates/news/list.html:8
+#, python-format
+msgid "Official news from %(name)s."
+msgstr "Офіційні новини %(name)s."
+
+#: templates/news/list.html:15
+msgid ""
+"What changed, what is next, and how proof works. Written by the team, nobody "
+"else can post here."
+msgstr "Що змінилось, що далі і як працює доказ. Пише команда, більше ніхто тут публікувати не може."
+
+#: templates/news/list.html:22
+msgid "Older"
+msgstr "Старіші"
+
+#: templates/news/list.html:26 templates/social/feed.html:57
+msgid "No news yet"
+msgstr "Новин ще немає"
+
+#: templates/news/list.html:26 templates/social/feed.html:58
+msgid "Announcements from the team appear here."
+msgstr "Тут зʼявляються оголошення від команди."
+
 #: templates/pages/explore.html:6 templates/pages/explore.html:9
 #: templates/pages/explore.html:17
 msgid ""
@@ -2504,7 +2570,7 @@ msgstr "Пошук"
 msgid "Project name or tagline"
 msgstr "Назва або опис проєкту"
 
-#: templates/pages/explore.html:31
+#: templates/pages/explore.html:31 templates/social/_filters.html:9
 msgid "Tag"
 msgstr "Тег"
 
@@ -2514,7 +2580,7 @@ msgstr "Будь-який тег"
 
 #: templates/pages/explore.html:41 templates/pages/landing.html:67
 #: templates/pages/landing.html:192 templates/pages/landing.html:214
-#: templates/pages/landing.html:236
+#: templates/pages/landing.html:236 templates/social/_filters.html:11
 msgid "Built with"
 msgstr "Створено з"
 
@@ -2522,7 +2588,7 @@ msgstr "Створено з"
 msgid "Any tool"
 msgstr "Будь-який інструмент"
 
-#: templates/pages/explore.html:51
+#: templates/pages/explore.html:51 templates/social/_filters.html:7
 msgid "Hallmark"
 msgstr "Позначка"
 
@@ -2531,6 +2597,7 @@ msgid "Sort by"
 msgstr "Сортувати"
 
 #: templates/pages/explore.html:70 templates/pages/explore.html:90
+#: templates/social/_filters.html:15 templates/social/feed.html:64
 msgid "Clear filters"
 msgstr "Скинути фільтри"
 
@@ -3540,11 +3607,24 @@ msgstr ""
 msgid "This removes the project and its screenshots for good."
 msgstr "Проєкт і його скріншоти буде видалено назавжди."
 
+#: templates/social/_card.html:24
+msgid "Latest update"
+msgstr "Останнє оновлення"
+
+#: templates/social/_filters.html:3
+msgid "Sort"
+msgstr "Сортування"
+
+#: templates/social/_filters.html:5
+msgid "Time range"
+msgstr "Період"
+
 #: templates/social/_follow.html:9 templates/social/_like.html:9
 msgid "Could not save. Try again."
 msgstr "Не вдалося зберегти. Спробуйте ще раз."
 
-#: templates/social/_follow.html:13 templates/social/feed.html:19
+#: templates/social/_follow.html:13 templates/social/feed.html:17
+#: templates/social/feed.html:34
 msgid "Following"
 msgstr "Ви підписані"
 
@@ -3552,7 +3632,7 @@ msgstr "Ви підписані"
 msgid "Follow"
 msgstr "Підписатися"
 
-#: templates/social/_items.html:29
+#: templates/social/_items.html:18
 msgid "posted an update on"
 msgstr "опублікував(-ла) оновлення в"
 
@@ -3573,19 +3653,23 @@ msgstr "Вподобано"
 msgid "Like"
 msgstr "Вподобати"
 
-#: templates/social/feed.html:7 templates/social/feed.html:13
-msgid "Recently launched projects with verified proof."
-msgstr "Нещодавно запущені проєкти з підтвердженими доказами."
+#: templates/social/feed.html:7
+msgid "Projects people shipped with verified proof, and official news."
+msgstr "Проєкти, які люди запустили, з перевіреним доказом, і офіційні новини."
 
-#: templates/social/feed.html:17
+#: templates/social/feed.html:14
+msgid "Feed navigation"
+msgstr "Навігація стрічки"
+
+#: templates/social/feed.html:16 templates/social/feed.html:33
+msgid "For you"
+msgstr "Для вас"
+
+#: templates/social/feed.html:31
 msgid "Feed sections"
 msgstr "Розділи стрічки"
 
-#: templates/social/feed.html:20 templates/social/feed.html:24
-msgid "Latest launches"
-msgstr "Нові запуски"
-
-#: templates/social/feed.html:34
+#: templates/social/feed.html:52
 msgid ""
 "Projects and updates from people you follow show up here. Follow someone "
 "from their profile."
@@ -3593,25 +3677,57 @@ msgstr ""
 "Тут з'являються проєкти й оновлення людей, на яких ви підписані. Підпишіться "
 "на когось із його профілю."
 
-#: templates/social/feed.html:35
-msgid "See latest launches"
-msgstr "Дивитися нові запуски"
+#: templates/social/feed.html:53
+msgid "See projects for you"
+msgstr "Дивитися проєкти для вас"
 
-#: templates/social/feed.html:39
+#: templates/social/feed.html:62
+msgid "No projects match"
+msgstr "Нічого не підійшло"
+
+#: templates/social/feed.html:63
+msgid "Try a wider time range or fewer filters."
+msgstr "Спробуйте ширший період або менше фільтрів."
+
+#: templates/social/feed.html:68
 msgid "No launches yet"
 msgstr "Запусків ще немає"
 
-#: templates/social/feed.html:40
-msgid "Published projects appear here, newest first."
-msgstr "Тут з'являються опубліковані проєкти, найновіші першими."
+#: templates/social/feed.html:69
+msgid "Published projects appear here."
+msgstr "Тут зʼявляються опубліковані проєкти."
 
-#: templates/social/feed.html:47
+#: templates/social/feed.html:76
 msgid "Could not load more. Try again."
 msgstr "Не вдалося завантажити більше. Спробуйте ще раз."
 
-#: templates/social/feed.html:47
+#: templates/social/feed.html:76
 msgid "Load more"
 msgstr "Завантажити ще"
+
+#: templates/social/feed.html:81
+msgid "Filters, news and tips"
+msgstr "Фільтри, новини й поради"
+
+#: templates/social/feed.html:90
+msgid "Latest news"
+msgstr "Останні новини"
+
+#: templates/social/feed.html:100
+msgid "Tips"
+msgstr "Поради"
+
+#: templates/social/feed.html:102
+msgid "Link your GitHub repository to earn Repo owner."
+msgstr "Привʼяжіть репозиторій GitHub, щоб отримати Repo owner."
+
+#: templates/social/feed.html:103
+msgid "Verify your domain to earn Live; steady uptime earns Steady."
+msgstr "Підтвердьте домен, щоб отримати Live; стабільна доступність дає Steady."
+
+#: templates/social/feed.html:104
+msgid "Write a short build-log update when you ship something."
+msgstr "Коли щось випускаєте, напишіть коротке оновлення в build log."
 
 #: templates/socialaccount/authentication_error.html:4
 #: templates/socialaccount/authentication_error.html:10

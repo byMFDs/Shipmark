@@ -3,7 +3,9 @@ no public write endpoints. On the site the author is always the system account "
 official badge; `created_by` (the staff member) is only shown in the admin."""
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
+from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 
 from projects.rendering import MAX_LENGTH, render_user_markdown
@@ -44,6 +46,15 @@ class NewsPost(models.Model):
     @property
     def body_html(self):
         return render_user_markdown(self.body)
+
+    @property
+    def excerpt(self):
+        """Plain text for cards and page descriptions: the first ~200 characters of the body, without markup."""
+        text = " ".join(strip_tags(self.body_html).split())
+        return text if len(text) <= 200 else text[:199].rsplit(" ", 1)[0] + "…"
+
+    def get_absolute_url(self):
+        return reverse("news:detail", args=[self.slug])
 
     def is_published(self, now=None):
         return self.published_at is not None and self.published_at <= (now or timezone.now())

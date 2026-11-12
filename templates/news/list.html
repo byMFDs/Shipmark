@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% translate "News" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{% translate "News" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_description %}{% blocktranslate with name=brand.SITE_NAME %}Official news from {{ name }}.{% endblocktranslate %}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/news.css' %}">{% endblock %}
+{% block meta %}<meta name="description" content="{% blocktranslate with name=brand.SITE_NAME %}Official news from {{ name }}.{% endblocktranslate %}">{% if page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}<link rel="canonical" href="{% canonical_url %}">{% endblock %}
+
+{% block content %}
+  <div class="container page news">
+    <header class="page-head">
+      <p class="label">{{ brand.SITE_NAME }}</p>
+      <h1>{% translate "News" %}</h1>
+      <p class="lede">{% translate "What changed, what is next, and how proof works. Written by the team, nobody else can post here." %}</p>
+    </header>
+    {% if posts %}
+      <div class="news__list">{% for post in posts %}{% include "news/_card.html" %}{% endfor %}</div>
+      {% if has_prev or has_next %}
+        <nav class="pager" aria-label="{% translate 'Pages' %}">
+          {% if has_prev %}<a class="btn btn--secondary" rel="prev" href="?page={{ page|add:-1 }}">{% translate "Newer" %}</a>{% endif %}
+          {% if has_next %}<a class="btn btn--secondary" rel="next" href="?page={{ page|add:1 }}">{% translate "Older" %}</a>{% endif %}
+        </nav>
+      {% endif %}
+    {% else %}
+      <section class="empty empty--plain"><h2 class="empty__title">{% translate "No news yet" %}</h2><p class="empty__text">{% translate "Announcements from the team appear here." %}</p></section>
+    {% endif %}
+  </div>
+{% endblock %}

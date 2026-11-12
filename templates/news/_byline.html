@@ -1,0 +1,2 @@
+{% load i18n ui %}{# "Shipmark" with the official badge. Needs: author (the system account, badges prefetched). #}
+<span class="news-byline">{% user_avatar author 24 name=brand.SITE_NAME %}<span class="news-byline__name">{{ brand.SITE_NAME }}</span>{% user_marks author %}</span>

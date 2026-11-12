@@ -8,6 +8,7 @@ from .models import Screenshot
 @receiver(post_delete, sender=Screenshot)
 def delete_screenshot_file(sender, instance, **kwargs):
     """Remove the file when a screenshot row goes away (also when a project is deleted)."""
-    if instance.image:
-        storage, name = instance.image.storage, instance.image.name
-        transaction.on_commit(lambda: storage.delete(name))
+    for field in (instance.image, instance.thumb):
+        if field:
+            storage, name = field.storage, field.name
+            transaction.on_commit(lambda storage=storage, name=name: storage.delete(name))

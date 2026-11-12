@@ -1,0 +1,33 @@
+{% load i18n ui %}{# A project card. Needs: project (social.queries.project_cards), item (for the time). #}
+<li class="feed-card" data-feed-item tabindex="-1">
+  {% with cover=project.cover %}
+    {% if cover %}
+      <a class="feed-card__cover" href="{{ project.get_absolute_url }}" tabindex="-1" aria-hidden="true">
+        <img src="{{ cover.list_image.url }}" width="{{ cover.list_width }}" height="{{ cover.list_height }}" alt="" loading="lazy">
+      </a>
+    {% endif %}
+  {% endwith %}
+  <div class="feed-card__body">
+    <header class="feed-card__head">
+      {% user_avatar project.owner 32 %}
+      <p class="feed-card__by">
+        <a class="feed-card__owner" href="{% url 'accounts:profile' project.owner.username %}">{{ project.owner.display_name|default:project.owner.username }}</a>{% user_marks project.owner %}
+        <span class="muted feed-card__handle">@{{ project.owner.username }} · <time datetime="{{ item.at|date:'c' }}" title="{{ item.at|date:'DATETIME_FORMAT' }}">{{ item.at|ago }}</time></span>
+      </p>
+      {% include "social/_follow.html" with person=project.owner following=project.owner_followed %}
+    </header>
+    <h3 class="feed-card__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
+    <p class="feed-card__tagline">{{ project.tagline }}</p>
+    <div class="plate-row__marks">{% for h in project.hallmarks %}{% hallmark h.kind "s" h.earned %}{% endfor %}</div>
+    {% if project.update_text %}
+      <div class="feed-card__update">
+        <p class="label">{% translate "Latest update" %} · <time datetime="{{ project.update_at|date:'c' }}">{{ project.update_at|ago }}</time></p>
+        <div class="feed-card__update-text">{{ project.update_text|log_html }}</div>
+      </div>
+    {% endif %}
+    <footer class="feed-card__foot">
+      {% include "social/_like.html" with project=project count=project.like_count liked=project.liked %}
+      {% moderate_menu project=project %}
+    </footer>
+  </div>
+</li>

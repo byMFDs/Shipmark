@@ -147,19 +147,22 @@ class CoverTests(ProjectTestCase):
 
     def test_profile_row(self):
         response = self.client.get(reverse("accounts:profile", args=[self.owner.username]))
-        self.assertContains(response, f'class="project-thumb" src="{self.cover.image.url}" width="80" height="56"')
+        # Lists show the small copy, not the full image.
+        self.assertContains(response, f'class="project-thumb" src="{self.cover.thumb.url}" width="80" height="56"')
+        self.assertNotContains(response, self.cover.image.url)
         self.assertNotContains(response, "project-thumb--empty")
 
     def test_feed_card_and_explore(self):
         for url in (reverse("social:feed") + "?tab=latest", reverse("pages:explore")):
             with self.subTest(url=url):
                 response = self.client.get(url)
-                self.assertContains(response, self.cover.image.url)
+                self.assertContains(response, self.cover.thumb.url)
+                self.assertNotContains(response, self.cover.image.url)
                 self.assertNotContains(response, "project-thumb--empty")
 
     def test_placeholder_only_without_an_image(self):
         other = make_project(self.owner, name="Plainly")
         response = self.client.get(reverse("accounts:profile", args=[self.owner.username]))
         self.assertContains(response, "project-thumb--empty", count=1)
-        self.assertContains(response, self.cover.image.url)
+        self.assertContains(response, self.cover.thumb.url)
         self.assertContains(response, other.name)

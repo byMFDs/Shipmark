@@ -1,52 +1,113 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static ui %}
 
 {% block title %}{% translate "Feed" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_title %}{% translate "Feed" %} · {{ brand.SITE_NAME }}{% endblock %}
-{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}">{% endblock %}
-{% block meta %}<meta name="description" content="{% translate 'Recently launched projects with verified proof.' %}">{% if page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}">{% if tab == "news" %}<link rel="stylesheet" href="{% static 'css/pages/news.css' %}">{% endif %}{% endblock %}
+{% block meta %}<meta name="description" content="{% translate 'Projects people shipped with verified proof, and official news.' %}">{% if page > 1 or has_filters or tab != "foryou" %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
 
 {% block content %}
   <div class="container page feed">
-    <header class="page-head">
-      <h1>{% translate "Feed" %}</h1>
-      <p class="lede">{% translate "Recently launched projects with verified proof." %}</p>
-    </header>
+    <h1 class="visually-hidden">{% translate "Feed" %}</h1>
+    <div class="feed-layout">
 
-    {% if user.is_authenticated %}
-      <nav class="tabs" aria-label="{% translate 'Feed sections' %}">
-        <ul class="tabs__list">
-          <li><a class="tabs__link" href="{{ following_url }}"{% if tab == "following" %} aria-current="page"{% endif %}>{% translate "Following" %}</a></li>
-          <li><a class="tabs__link" href="{{ latest_url }}"{% if tab == "latest" %} aria-current="page"{% endif %}>{% translate "Latest launches" %}</a></li>
+      <aside class="feed-nav" aria-label="{% translate 'Feed navigation' %}">
+        <ul class="feed-nav__list">
+          <li><a class="feed-nav__link" href="{{ foryou_url }}"{% if tab == "foryou" %} aria-current="page"{% endif %}>{% translate "For you" %}</a></li>
+          {% if user.is_authenticated %}<li><a class="feed-nav__link" href="{{ following_url }}"{% if tab == "following" %} aria-current="page"{% endif %}>{% translate "Following" %}</a></li>{% endif %}
+          <li><a class="feed-nav__link" href="{{ news_url }}"{% if tab == "news" %} aria-current="page"{% endif %}>{% translate "News" %}</a></li>
+          <li class="feed-nav__rule" aria-hidden="true"></li>
+          <li><a class="feed-nav__link" href="{% url 'pages:explore' %}">{% translate "Explore" %}</a></li>
+          {% if user.is_authenticated %}
+            <li><a class="feed-nav__link" href="{% url 'accounts:profile' user.username %}">{% translate "Your profile" %}</a></li>
+            <li><a class="btn btn--primary feed-nav__new" href="{% url 'projects:new' %}">{% icon "plus" %}{% translate "New project" %}</a></li>
+          {% else %}
+            <li><a class="btn btn--secondary feed-nav__new" href="{% url 'account_login' %}">{% translate "Sign in with GitHub" %}</a></li>
+          {% endif %}
         </ul>
-      </nav>
-    {% else %}
-      <h2 class="feed__subtitle label">{% translate "Latest launches" %}</h2>
-    {% endif %}
+      </aside>
 
-    {% if items %}
-      <ul class="plate-list feed__list" data-feed-list>
-        {% include "social/_items.html" %}
-      </ul>
-    {% elif tab == "following" %}
-      <div class="empty">
-        <h2 class="empty__title">{% translate "Nothing here yet" %}</h2>
-        <p class="empty__text">{% translate "Projects and updates from people you follow show up here. Follow someone from their profile." %}</p>
-        <a class="btn btn--primary" href="{{ latest_url }}">{% translate "See latest launches" %}</a>
-      </div>
-    {% else %}
-      <div class="empty">
-        <h2 class="empty__title">{% translate "No launches yet" %}</h2>
-        <p class="empty__text">{% translate "Published projects appear here, newest first." %}</p>
-      </div>
-    {% endif %}
+      <div class="feed-main">
+        <nav class="feed-tabs" aria-label="{% translate 'Feed sections' %}">
+          <ul class="feed-tabs__list">
+            <li><a class="feed-tabs__link" href="{{ foryou_url }}"{% if tab == "foryou" %} aria-current="page"{% endif %}>{% translate "For you" %}</a></li>
+            {% if user.is_authenticated %}<li><a class="feed-tabs__link" href="{{ following_url }}"{% if tab == "following" %} aria-current="page"{% endif %}>{% translate "Following" %}</a></li>{% endif %}
+            <li><a class="feed-tabs__link" href="{{ news_url }}"{% if tab == "news" %} aria-current="page"{% endif %}>{% translate "News" %}</a></li>
+          </ul>
+        </nav>
 
-    {% if prev_url or next_url %}
-      <nav class="pager" aria-label="{% translate 'Pages' %}" data-feed-pager>
-        {% if prev_url %}<a class="btn btn--secondary" rel="prev" href="{{ prev_url }}" data-prev>{% translate "Newer" %}</a>{% endif %}
-        {% if next_url %}<a class="btn btn--secondary" rel="next" href="{{ next_url }}" data-load-more data-error="{% translate 'Could not load more. Try again.' %}">{% translate "Load more" %}</a>{% endif %}
-      </nav>
-    {% endif %}
+        {% if tab == "foryou" %}
+          {# Phones only: the same filters, folded. From 48em they sit in the right column. #}
+          <details class="feed-filters-fold"{% if has_filters %} open{% endif %}>
+            <summary class="btn btn--secondary">{% icon "chevron-down" %}{% translate "Filters" %}</summary>
+            {% include "social/_filters.html" with prefix="m" %}
+          </details>
+        {% endif %}
+
+        {% if items %}
+          <ul class="feed-list" data-feed-list>{% include "social/_items.html" %}</ul>
+        {% elif tab == "following" %}
+          <section class="empty empty--plain">
+            <h2 class="empty__title">{% translate "Nothing here yet" %}</h2>
+            <p class="empty__text">{% translate "Projects and updates from people you follow show up here. Follow someone from their profile." %}</p>
+            <a class="btn btn--primary" href="{{ foryou_url }}">{% translate "See projects for you" %}</a>
+          </section>
+        {% elif tab == "news" %}
+          <section class="empty empty--plain">
+            <h2 class="empty__title">{% translate "No news yet" %}</h2>
+            <p class="empty__text">{% translate "Announcements from the team appear here." %}</p>
+          </section>
+        {% elif has_filters %}
+          <section class="empty empty--plain">
+            <h2 class="empty__title">{% translate "No projects match" %}</h2>
+            <p class="empty__text">{% translate "Try a wider time range or fewer filters." %}</p>
+            <a class="btn btn--secondary" href="{{ clear_url }}">{% translate "Clear filters" %}</a>
+          </section>
+        {% else %}
+          <section class="empty empty--plain">
+            <h2 class="empty__title">{% translate "No launches yet" %}</h2>
+            <p class="empty__text">{% translate "Published projects appear here." %}</p>
+          </section>
+        {% endif %}
+
+        {% if prev_url or next_url %}
+          <nav class="pager" aria-label="{% translate 'Pages' %}" data-feed-pager>
+            {% if prev_url %}<a class="btn btn--secondary" rel="prev" href="{{ prev_url }}" data-prev>{% translate "Newer" %}</a>{% endif %}
+            {% if next_url %}<a class="btn btn--secondary" rel="next" href="{{ next_url }}" data-load-more data-error="{% translate 'Could not load more. Try again.' %}">{% translate "Load more" %}</a>{% endif %}
+          </nav>
+        {% endif %}
+      </div>
+
+      <aside class="feed-side" aria-label="{% translate 'Filters, news and tips' %}">
+        {% if tab == "foryou" %}
+          <section class="record feed-side__filters" aria-labelledby="filters-title">
+            <div class="record__head"><h2 class="label" id="filters-title">{% translate "Filters" %}</h2></div>
+            <div class="feed-side__body">{% include "social/_filters.html" with prefix="d" %}</div>
+          </section>
+        {% endif %}
+        {% if latest_news %}
+          <section class="record" aria-labelledby="news-title">
+            <div class="record__head"><h2 class="label" id="news-title">{% translate "Latest news" %}</h2></div>
+            <ul class="feed-side__news">
+              {% for post in latest_news %}
+                <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a><span class="muted"> · <time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"DATE_FORMAT" }}</time></span></li>
+              {% endfor %}
+            </ul>
+            <p class="feed-side__more"><a class="link-arrow" href="{% url 'news:list' %}">{% translate "All news" %}</a></p>
+          </section>
+        {% endif %}
+        <section class="record" aria-labelledby="tips-title">
+          <div class="record__head"><h2 class="label" id="tips-title">{% translate "Tips" %}</h2></div>
+          <ul class="feed-side__tips">
+            <li>{% translate "Link your GitHub repository to earn Repo owner." %}</li>
+            <li>{% translate "Verify your domain to earn Live; steady uptime earns Steady." %}</li>
+            <li>{% translate "Write a short build-log update when you ship something." %}</li>
+          </ul>
+          <p class="feed-side__more"><a class="link-arrow" href="{% url 'pages:how_proof_works' %}">{% translate "How proof works" %}</a></p>
+        </section>
+      </aside>
+
+    </div>
   </div>
 {% endblock %}
 {% block scripts %}

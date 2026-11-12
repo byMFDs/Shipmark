@@ -157,6 +157,14 @@ def user_avatar(user, size=32, name=""):
 
 
 @register.filter
+def log_html(text):
+    """Build-log text as sanitized inline HTML (bold, italic, links, code): the same renderer as the project page."""
+    from projects.rendering import render_log_markdown
+
+    return mark_safe(render_log_markdown(text))  # nh3-cleaned inside render_log_markdown
+
+
+@register.filter
 def link_icon(kind):
     """Icon name for a profile link kind."""
     from accounts.links import ICONS
@@ -331,7 +339,7 @@ def maybe_url(name, *args):
 
 
 # Links appear by themselves once these URL names exist.
-NAV_LINKS = [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore"))]
+NAV_LINKS = [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore")), ("news:list", (), _("News"))]
 FOOTER_LINKS = [
     ("pages:about", (), _("About")),
     ("pages:how_proof_works", (), _("How proof works")),

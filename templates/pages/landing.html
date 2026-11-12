@@ -154,7 +154,7 @@
               <article class="card">
                 <div class="card__media">
                   {% with cover=project.cover %}
-                    {% if cover %}<img src="{{ cover.image.url }}" alt="" width="640" height="400" loading="lazy">
+                    {% if cover %}<img src="{{ cover.list_image.url }}" alt="" width="{{ cover.list_width }}" height="{{ cover.list_height }}" loading="lazy">
                     {% else %}<span class="card__placeholder" aria-hidden="true">{{ project.name|slice:":1"|upper }}</span>{% endif %}
                   {% endwith %}
                 </div>

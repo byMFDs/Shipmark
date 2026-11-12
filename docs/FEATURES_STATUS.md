@@ -10,8 +10,8 @@ Order confirmed by the developer (2026-11-12): 2, 3, 4, 5, 6. Stage 2 is not pos
 | 0 | Plan | done 2026-11-12 |
 | 1 | Foundations: I (screenshots bug, first), A, B models/admin, Sanction model/admin | done 2026-11-12 |
 | 2 | Moderation: C | done 2026-11-12 |
-| 3 | Profiles: D | done 2026-11-12, waiting for "GO 4" |
-| 4 | Feed and news pages: E, public B | not started |
+| 3 | Profiles: D | done 2026-11-12 |
+| 4 | Feed and news pages: E, public B | done 2026-11-12, waiting for "GO 5" |
 | 5 | Design pass, buttons, effect, motion, copy: F, G | not started |
 | 6 | Leftovers, docs, legal, final tests: H | not started |
 
@@ -71,6 +71,26 @@ Order confirmed by the developer (2026-11-12): 2, 3, 4, 5, 6. Stage 2 is not pos
 - Muted users: the whole public profile is read-only (decided after review); they keep the language setting, export and
   deletion. Rate limits: 20 picture uploads and 5 GitHub downloads per hour per user.
 - To do later: drop the deprecated `User.bio` / `User.website` columns (stage 6 or after).
+
+## Stage 4 (done)
+- `/feed/`: three tabs For you (default for everyone), Following, News. Desktop three columns (navigation, feed 640px,
+  panel with filters, latest 3 news, tips), tablet two, phones one with sticky tabs and folded filters. Empty states have no
+  dashed frame (`.empty--plain`).
+- Filters in the URL, plain GET form (no JS needed): tag, tool, hallmark, time range, sort. They belong to For you.
+  `?tab=latest` is kept as the old name (For you, newest first). "Load more" JSON plus Newer / Load more links.
+- Ranking in SQL (`social/ranking.py`, formula and decay steps documented there): `(2 likes + followers/5 + 3 marks + 1) x decay`
+  in whole numbers. SQL marks only rank; cards and the hallmark filter use `compute_hallmarks`. Parity test with 25 cases;
+  the one known difference (verified row of an old domain) can only rank a project higher.
+- Cards: small cover (thumbnail), owner with badges, tagline, marks, latest build-log update, like and follow (optimistic, social.js).
+  Removed, hidden, draft, suspended and banned content excluded everywhere (tabs, filters, tag list, JSON).
+- `/news/`, `/news/<slug>/`: public, anonymous OK, byline Shipmark + official badge, OG tags, sanitized markdown, drafts and
+  scheduled posts 404, no write endpoints, plain pagination.
+- Screenshots get a small WebP copy (`Screenshot.thumb`, max 640px) on save; feed cards, profile rows, Explore rows and landing
+  cards use it; `manage.py make_thumbs` backfills old rows (once after deploy). The project page keeps the full image.
+- Query counts do not depend on the number of cards (tested for every tab, filter path, signed in and out, JSON).
+- Explore untouched; "News" added to the header navigation. Merge proposal: `docs/FEATURES_PLAN.md` section 7.
+- Time range uses the launch time (`launched_at`, else `created_at`); no separate `published_at` column was needed.
+- Stage 5 to do: tips and filter text still say "Live" (display name becomes "Domain verified" there).
 
 ## Decisions taken without answers (plan section 6, change if needed)
 - `is_suspended` kept as it is (admin-level; suspended owners also cannot delete or unpublish projects).

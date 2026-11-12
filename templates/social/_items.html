@@ -1,36 +1,22 @@
-{% load i18n ui %}{# Feed rows. Rendered in the page and returned as JSON "html" by "Load more". #}
+{% load i18n ui %}{# Feed items. Rendered in the page and returned as JSON "html" by "Load more". #}
 {% for item in items %}
   {% if item.kind == "project" %}
-    {% with project=item.obj %}
-      <li class="plate-row feed-item" data-feed-item tabindex="-1">
-        {% include "projects/_thumb.html" with project=project %}
-        <div class="feed-item__body">
-          <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></p>
-          <p class="feed-item__by muted">
-            <a href="{% url 'accounts:profile' project.owner.username %}">@{{ project.owner.username }}</a>{% user_marks project.owner %}
-            · <time datetime="{{ item.at|date:'c' }}" title="{{ item.at|date:'DATETIME_FORMAT' }}">{{ item.at|ago }}</time>
-          </p>
-          <p class="plate-row__tagline">{{ project.tagline }}</p>
-          <div class="feed-item__foot">
-            <div class="plate-row__marks">{% for h in project.hallmarks %}{% hallmark h.kind "s" h.earned %}{% endfor %}</div>
-            {% include "social/_like.html" with project=project count=project.like_count liked=project.liked %}
-            {% moderate_menu project=project %}
-          </div>
-        </div>
-      </li>
-    {% endwith %}
+    {% with project=item.obj %}{% include "social/_card.html" %}{% endwith %}
+  {% elif item.kind == "news" %}
+    <li class="feed-news" data-feed-item tabindex="-1">{% include "news/_card.html" with post=item.obj author=news_author %}</li>
   {% else %}
     {% with entry=item.obj %}
-      <li class="plate-row feed-item feed-item--entry" data-feed-item tabindex="-1">
-        {% user_avatar entry.project.owner 56 %}
-        <div class="feed-item__body">
-          <p class="feed-item__by">
-            <a href="{% url 'accounts:profile' entry.project.owner.username %}">@{{ entry.project.owner.username }}</a>{% user_marks entry.project.owner %}
-            {% translate "posted an update on" %}
-            <a href="{{ entry.project.get_absolute_url }}#log-{{ entry.pk }}">{{ entry.project.name }}</a>
-            <span class="muted">· <time datetime="{{ item.at|date:'c' }}" title="{{ item.at|date:'DATETIME_FORMAT' }}">{{ item.at|ago }}</time></span>
-          </p>
-          <div class="feed-item__text">{{ entry.text_html|safe }}</div>
+      <li class="feed-card feed-card--entry" data-feed-item tabindex="-1">
+        <div class="feed-card__body">
+          <header class="feed-card__head">
+            {% user_avatar entry.project.owner 32 %}
+            <p class="feed-card__by">
+              <a class="feed-card__owner" href="{% url 'accounts:profile' entry.project.owner.username %}">{{ entry.project.owner.display_name|default:entry.project.owner.username }}</a>{% user_marks entry.project.owner %}
+              <span class="muted feed-card__handle">@{{ entry.project.owner.username }} · <time datetime="{{ item.at|date:'c' }}" title="{{ item.at|date:'DATETIME_FORMAT' }}">{{ item.at|ago }}</time></span>
+            </p>
+          </header>
+          <p class="feed-card__tagline">{% translate "posted an update on" %} <a href="{{ entry.project.get_absolute_url }}#log-{{ entry.pk }}">{{ entry.project.name }}</a></p>
+          <div class="feed-card__update-text">{{ entry.text_html|safe }}</div>
         </div>
       </li>
     {% endwith %}

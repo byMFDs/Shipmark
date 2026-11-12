@@ -222,19 +222,23 @@ class FeedTests(SocialTestCase):
     def names(self, response):
         return [i.obj.name for i in response.context["items"] if i.kind == "project"]
 
-    def test_signed_out_sees_latest_only(self):
+    def test_signed_out_sees_for_you_only(self):
         for response in (self.feed(), self.feed("following")):
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.context["tab"], "latest")
+            self.assertEqual(response.context["tab"], "foryou")
             self.assertEqual(self.names(response), ["Tallyhook"])
-            self.assertNotContains(response, 'class="tabs"')
+            self.assertNotContains(response, 'class="feed-nav__link" href="/feed/?tab=following"')
+            self.assertNotContains(response, 'class="feed-tabs__link" href="/feed/?tab=following"')
 
-    def test_signed_in_defaults_to_following(self):
+    def test_signed_in_defaults_to_for_you_and_can_open_following(self):
         self.client.force_login(self.me)
         response = self.feed()
+        self.assertEqual(response.context["tab"], "foryou")
+        self.assertEqual(self.names(response), ["Tallyhook"])
+        self.assertContains(response, "?tab=following")
+        response = self.feed("following")
         self.assertEqual(response.context["tab"], "following")
         self.assertContains(response, "Nothing here yet")
-        self.assertContains(response, 'class="tabs"')
 
     def test_latest_hides_drafts_hidden_and_suspended(self):
         make_project(self.ana, name="Draft", status=Project.Status.DRAFT)
@@ -300,7 +304,7 @@ class FeedTests(SocialTestCase):
             make_project(self.ana, name=f"P{n}")
         first = self.feed("latest")
         self.assertEqual(len(first.context["items"]), queries.PAGE_SIZE)
-        self.assertEqual(first.context["next_url"], "/feed/?tab=latest&page=2")
+        self.assertEqual(first.context["next_url"], "/feed/?sort=newest&page=2")  # "latest" = For you, newest first
         self.assertContains(first, 'rel="next"')
         self.assertNotContains(first, 'rel="prev"')
         second = self.feed("latest", 2)
@@ -343,6 +347,9 @@ class FeedTests(SocialTestCase):
         self.assertEqual((item.like_count, item.liked), (1, True))
 
 
+FOLLOWING_QUERIES = 12
+
+
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)  # make_shot stores real files
 class FeedQueryCountTests(SocialTestCase):
     """The feed must be a fixed number of queries, however many projects are on the page."""
@@ -381,13 +388,13 @@ class FeedQueryCountTests(SocialTestCase):
         Follow.objects.create(follower=self.me, following=self.ana)
         self.populate(5)
         self.client.force_login(self.me)
-        # Session + user + the user's active sanctions (ban check), then: projects, screenshots, domain checks,
-        # owners' badges (+ build log entries and their owners' badges on "following"), and for the header the
-        # signed-in user's badges and unread moderation notices.
-        with self.assertNumQueries(9):
+        # Signed in: session, user, the user's active sanctions (ban check) | projects, screenshots, domain checks,
+        # owners' badges | tags, tools (filter panel), latest news | the user's badges and unread notices (header).
+        with self.assertNumQueries(12):
             self.client.get(reverse("social:feed"), {"tab": "latest"})
-        with self.assertNumQueries(11):
+        # Following: no filter panel (no tags, tools), but build-log entries and their owners' badges.
+        with self.assertNumQueries(FOLLOWING_QUERIES):
             self.client.get(reverse("social:feed"), {"tab": "following"})
         self.client.logout()
-        with self.assertNumQueries(4):  # no session, no user, no header badges
+        with self.assertNumQueries(7):  # no session, user, sanctions, header badges, notices
             self.client.get(reverse("social:feed"))

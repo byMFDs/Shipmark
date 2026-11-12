@@ -1444,6 +1444,9 @@ html:not(.js) .toasts:not(:empty) {
   border: 1px dashed var(--line-strong);
 }
 
+/* Without the dashed frame: for pages where the empty state sits in a column of content (feed, news). */
+.empty--plain { border: 0; padding-inline: 0; }
+
 .empty__marks {
   display: flex;
   flex-wrap: wrap;

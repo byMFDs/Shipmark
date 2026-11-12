@@ -78,6 +78,11 @@ the folder holds no executable content. Do not enable directory listing. Check a
 the project page, the image loads (status 200, `Content-Type: image/webp`). Backups: see "Backups" (the media folder is
 backed up daily together with the database; restore both from the same day).
 
+**Thumbnails (once after this release):** `python manage.py make_thumbs`. New screenshots get a small copy
+(`screenshots/thumbs/<32 hex>.webp`, max 640 px) when they are saved; this command builds it for the ones saved before.
+Safe to repeat; a file it cannot read is reported and skipped (the list then shows the full image). Lists, the feed and
+profile rows read the thumbnail, the project page reads the full image; both are in `MEDIA_ROOT` and in the media backup.
+
 ### Uploads and later S3-compatible storage
 
 Screenshots are stored on the server's disk in `MEDIA_ROOT`. This is fine for one server, but the folder is part of the
