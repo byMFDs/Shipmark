@@ -1,6 +1,6 @@
 {% load i18n ui %}{% comment %}Shared body of the error pages. Needs: code, title, text, mark (hallmark id).
   From config/errors.py: home_url, home_is_feed, back_url, request_id, contact_email.{% endcomment %}
-<div class="container page">
+<div class="container shell shell--narrow">
   <section class="error-page" aria-labelledby="error-title">
     <p class="error-page__code"><span class="visually-hidden">{% translate "Error" %} </span>{{ code }}</p>
     <div class="error-page__text">

@@ -275,11 +275,28 @@ hr {
   flex: 1 0 auto;
 }
 
-/* Space between the header and a page's first content. */
-.page { padding-top: var(--s-6); }
+/* ---------- Page shell: every page below the header (docs/DESIGN.md "Layout") ----------
+   <div class="container shell [shell--narrow|shell--card]">
+     <header class="page-head"> eyebrow, h1, lede, actions </header>   (components.css)
+     content: one column, a .sheet (aside 4 + main 8) or a page grid of its own
+   </div>
+   Widths are centred in the 1200px container, so a narrow page sits in the middle, never against the left edge.
+   Text inside stays left-aligned. */
+
+.shell {
+  padding-top: var(--s-6);
+  padding-bottom: var(--s-8);
+}
+
+/* Reading width: legal and content pages, a news post, confirmations, errors. */
+.shell--narrow { max-width: calc(var(--shell-narrow) + 2 * var(--pad)); }
+
+/* One card in the middle: sign in, sign out, sign-up, report form, accept terms. */
+.shell--card { max-width: calc(var(--shell-card) + 2 * var(--pad)); }
 
 @media (min-width: 64em) {
-  .page { padding-top: var(--s-7); }
+  .shell { padding-top: var(--s-7); padding-bottom: var(--s-9); }
+  .shell--card { padding-top: var(--s-8); }
 }
 
 /* ---------- Utilities ---------- */

@@ -11,8 +11,8 @@ Order confirmed by the developer (2026-11-12): 2, 3, 4, 5, 6. Stage 2 is not pos
 | 1 | Foundations: I (screenshots bug, first), A, B models/admin, Sanction model/admin | done 2026-11-12 |
 | 2 | Moderation: C | done 2026-11-12 |
 | 3 | Profiles: D | done 2026-11-12 |
-| 4 | Feed and news pages: E, public B | done 2026-11-12, waiting for "GO 5" |
-| 5 | Design pass, buttons, effect, motion, copy: F, G | not started |
+| 4 | Feed and news pages: E, public B | done 2026-11-12 |
+| 5 | Design pass, buttons, effect, motion, copy: F, G | done 2026-11-12, waiting for "GO 6" |
 | 6 | Leftovers, docs, legal, final tests: H | not started |
 
 ## Decisions (proposed in the plan, change if the developer disagrees)
@@ -90,7 +90,22 @@ Order confirmed by the developer (2026-11-12): 2, 3, 4, 5, 6. Stage 2 is not pos
 - Query counts do not depend on the number of cards (tested for every tab, filter path, signed in and out, JSON).
 - Explore untouched; "News" added to the header navigation. Merge proposal: `docs/FEATURES_PLAN.md` section 7.
 - Time range uses the launch time (`launched_at`, else `created_at`); no separate `published_at` column was needed.
-- Stage 5 to do: tips and filter text still say "Live" (display name becomes "Domain verified" there).
+
+## Stage 5 (done)
+- G: hero eyebrow "For builders who ship with AI", supporting text replaced (uk as given in the brief), headline kept.
+  "Live" is displayed as "Domain verified" (uk "Домен підтверджено", other languages keep the English name like "Repo owner")
+  in chips, filters, tips, domain panel, admin actions, SVG badges, landing example and about / how-proof-works / terms /
+  privacy in 7 languages. Internal id `live` unchanged. Steady wording untouched.
+- F: page shell for every page (`.container.shell`, `--narrow` 46rem, `--card` 32rem, centred), `.page-head` header block with a
+  hairline, `.sheet` panels reach the right edge, feed side columns equal (16rem, outer edges), profile stats full width.
+- Buttons: 10px radius token, variant variables, press colour on touch, loading ring (`busy.js`, export forms opt out).
+- Halo: GitHub sign-in buttons (header, login, feed nav, hero, closing), "New project", "Publish project"; idle shimmer on the
+  hero button only. The specimen drift loop was removed so the hero keeps 3 loops (test guards one idle shimmer).
+- Motion on inner pages: page rise, staggered lists, card hover/press, count-up on profile stats, empty-state marks.
+- Fixed on the way: feed cards on phones put the marks in a second grid column (names wrapped letter by letter).
+- Tests that hard-coded the placeholder contact email now read `branding.CONTACT_EMAIL` (the developer set a real one).
+- Checked in headless Firefox (reduced motion) at 1440 and 390 px, light and dark: feed, explore, profile, project, edit, settings,
+  login, how proof works, news, /mod/, landing. Not checked: real iOS/Android, the moving halo (screenshots are static).
 
 ## Decisions taken without answers (plan section 6, change if needed)
 - `is_suspended` kept as it is (admin-level; suspended owners also cannot delete or unpublish projects).

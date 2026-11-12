@@ -2,8 +2,6 @@
    48em (feed + panel), three from 72em (navigation + feed + panel, symmetrical sides around a 640px feed).
    Rows (.feed-item) below are shared with Explore and the landing page. */
 
-.feed { padding-bottom: var(--s-8); }
-
 .feed-layout { display: grid; gap: var(--s-5); grid-template-columns: minmax(0, 1fr); }
 .feed-main { min-width: 0; display: grid; gap: var(--s-4); align-content: start; }
 .feed-nav { display: none; }
@@ -100,6 +98,8 @@
 .feed-card__name a { color: inherit; text-decoration: none; }
 .feed-card__name a:hover { text-decoration: underline; }
 .feed-card__tagline { margin: 0; overflow-wrap: anywhere; }
+/* The marks reuse the list-row class, whose column placement belongs to rows: in a card they are one more line. */
+.feed-card .plate-row__marks { grid-column: auto; justify-content: flex-start; }
 
 .feed-card__update { display: grid; gap: var(--s-1); padding-left: var(--s-3); border-left: 2px solid var(--line-strong); min-width: 0; }
 .feed-card__update .label { margin: 0; color: var(--muted); }
@@ -125,8 +125,9 @@
 @media (min-width: 72em) {
   /* Equal sides around a 640px feed: the navigation on the left, the panel on the right. */
   .feed-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 37.5rem) minmax(0, 1fr); gap: var(--s-6); }
-  .feed-nav { display: block; position: sticky; top: var(--s-5); align-self: start; max-width: 15rem; }
-  .feed-side { max-width: 17rem; }
+  /* Both side columns are the same width and sit on the outer edges, so the feed is the centre of the page. */
+  .feed-nav { display: block; position: sticky; top: var(--s-5); align-self: start; justify-self: start; width: 100%; max-width: 16rem; }
+  .feed-side { justify-self: end; width: 100%; max-width: 16rem; }
   .feed-tabs { display: none; }
 }
 

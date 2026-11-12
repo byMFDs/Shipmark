@@ -22,8 +22,8 @@
         <p class="eyebrow">{% translate "For builders who ship with AI" %}</p>
         <h1 class="hero__title" id="hero-title"><span>{% translate "Less claim." %}</span> <span>{% translate "More shipped." %}</span></h1>
         <p class="lede hero__lede">{% blocktranslate with name=brand.SITE_NAME trimmed %}Show what you shipped with AI. {{ name }} verifies your domain and repository and shows your site's uptime history.{% endblocktranslate %}</p>
-        <div class="hero__actions">
-          {% include "pages/_sign_in.html" with label=submit_label next=new_url size="lg" %}
+        <div class="hero__actions" data-loop>
+          {% include "pages/_sign_in.html" with label=submit_label next=new_url size="lg" idle=True %}
           <p class="label">{% translate "Built with AI. Backed by evidence." %}</p>
         </div>
         <div class="hero__compare">
@@ -32,9 +32,9 @@
         </div>
       </div>
 
-      {# Illustrative only: a made-up project shown with the real rules. The caption says so. Strike, pulse, tick and drift: motion.css. #}
+      {# Illustrative only: a made-up project shown with the real rules. The caption says so. Strike, pulse and tick: motion.css; the third loop on screen is the shimmer on the sign-in button. #}
       <figure class="hero__figure" aria-labelledby="specimen-caption" data-loop>
-        <article class="record specimen drift">
+        <article class="record specimen">
           <div class="record__head">
             <span class="label">{% blocktranslate with name=brand.SITE_NAME %}{{ name }} / Project record{% endblocktranslate %}</span>
             <span class="label numeric">№ 0042</span>

@@ -133,7 +133,7 @@ class FollowTests(SocialTestCase):
         Follow.objects.create(follower=self.me, following=self.ana)
         self.client.force_login(self.me)
         response = self.client.get(reverse("accounts:profile", args=["ana"]))
-        self.assertContains(response, 'id="followers-count">1<')
+        self.assertContains(response, 'id="followers-count" data-count>1<')
         self.assertContains(response, "data-social-form")
         mine = self.client.get(reverse("accounts:profile", args=["me"]))
         self.assertNotContains(mine, "data-social-form")  # no button on your own profile

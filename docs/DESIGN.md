@@ -1,9 +1,11 @@
 # Design system (values live in `static/css/tokens.css`)
 
 A public record of shipped work: each project is a framed record, and proof is a flat mark on it.
-Warm paper, hairline frames, square corners, one action color. Rules:
+Warm paper, hairline frames, square corners (buttons excepted), one action color. Rules:
 - Depth comes from surface color (paper < surface) and hairlines. No bevels, gradients, glow or tinted
-  sections; the only shadow is `--shadow-pop`, on floating menus and toasts. Square corners everywhere; only people (avatars) are round.
+  sections; the only shadow is `--shadow-pop`, on floating menus and toasts. One gradient on purpose: the halo ring on a few
+  buttons (Components). Records, panels, fields and marks are square; buttons have 10px corners (they are pressed, records
+  are not); people (avatars) are round.
 - Terracotta (`--accent`) is the one action color: the primary button, nothing else.
   Green (`--proof`) means proof only: earned marks, the uptime strip, "public" status.
   Danger red is for errors and destructive actions only.
@@ -75,30 +77,52 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
   (`.doc`) does not in en and uk.
 
 ## Space, radii, depth
-- Space (4px base): s-1 .25rem ... s-9 6rem. Radius 0 (`--radius`). Focus: 2px `--focus` outline, offset 2px.
+- Space (4px base): s-1 .25rem ... s-9 6rem. Radius 0 (`--radius`), buttons 10px (`--radius-btn`, changed 2026-11-12 in the
+  features round). Focus: 2px `--focus` outline, offset 2px (3px on buttons; the outline follows the rounded corners).
 - Frames: 1px `--line` hairline; control edges use `--line-strong` (3:1). Press: buttons scale .98.
 
 ## Layout
 - Content max 1200px; side padding max(1rem, safe-area inset) -> 1.5rem at 48em -> 2rem at 64em (`.container`).
+- Page shell (`base.css`), used by every page except the landing: `<div class="container shell">`. Widths: default 1200px (feed,
+  explore, profile, project, sheets, /mod/), `.shell--narrow` 46rem (legal and content pages, news, delete confirmation, ban page,
+  errors), `.shell--card` 32rem (sign in/out, sign-up, accept terms, report form). Narrow widths are centred, so nothing hangs
+  against the left edge; text inside stays left-aligned. The shell owns the space above (s-6, s-7 from 64em) and below (s-8 / s-9);
+  page CSS does not add its own bottom padding.
+- Header block: `.page-head` = optional mono eyebrow, h1, one lede, optional `.page-head__actions` (right of the text from 48em),
+  closed by a hairline. Sheet pages use `.sheet__intro` in the left column instead.
 - There is no global grid class. Pages that need columns declare them in their own CSS: 12 columns from 64em
   (project page, landing, `.sheet`), one column on phones.
 - Project page: head across the top, then main (8: cover, about, build log) and proof column (4: marks,
   uptime, built with, tags, embed). On phones the order is head, cover, marks, about, log, facts, embed.
-- Form pages (`.sheet`): title left (4), framed `.panel` sections right (8) from 64em; one column below.
+- Form pages (`.sheet`): title left (4), framed `.panel` sections right (8) from 64em, both reaching the container edges (the old
+  46rem cap on the panels left an empty strip on the right); one column below.
 - Owner bar on phones: one column, every button full width.
 - Targets >= 44px (`--control-h`); on `pointer: fine` only chips, tag links and the theme switch may be smaller
   (theme switch is 44px on `pointer: coarse`). Inline links inside sentences are exempt (WCAG 2.5.8).
 
 ## Hallmark
-- Flat chip: check glyph + mono label ("Repo owner", "Live", "Steady"); names stay English in every language.
+- Flat chip: check glyph + mono label ("Repo owner", "Domain verified", "Steady"); names stay English in every language
+  except Ukrainian (docs/EDITING.md). "Domain verified" was "Live" until 2026-11-12; the internal id is still `live`.
   Earned: `--proof-bg` fill, `--proof` text. Not earned: dashed `--line-strong` outline, muted, "Not yet".
 - Sizes: S (lists, label may hide state) · M · L (project page: chip + one fact line, opens a panel).
 - The first mark proves repository ownership (or 10+ commits), never who wrote the code. Internal id stays
   `authored`; only display text says "Repo owner".
 
 ## Components (`components.css`)
-- Buttons (44px, Inter 500): primary = accent fill (label dark in dark theme) · secondary = surface +
-  `--line-strong` · quiet = text only · danger = danger outline, filled only on the final confirmation.
+- Buttons (44px, `.btn--lg` 52px, `.btn--icon` 44px square; Inter 500; 10px corners): primary = accent fill (label dark in dark
+  theme) · secondary = surface + `--line-strong` · quiet = text only · danger = danger outline, filled only on the final
+  confirmation. Each variant sets `--btn-bg`, `--btn-fg`, `--btn-edge`; states change only those: hover (darker fill or ink edge),
+  press (scale .98 + hover colour, also on touch), focus (2px ring, offset 3px), disabled (45% opacity, not-allowed), loading
+  (`aria-busy` blocks clicks; `busy.js` adds `data-busy-ring` to the button that submitted a normal form: label transparent, a
+  turning ring in its place, same size; cleared when the page comes back from the Back-button cache; data-export forms opt out
+  with `data-no-busy`).
+- Halo (`.btn--halo`): every "Sign in with GitHub" / "Continue with GitHub" button (header, login page, feed navigation, landing
+  hero and closing action) plus "New project" (header) and "Publish project". An oversized conic gradient (`::before`, 200% of the
+  width) turns behind the button with `transform: rotate` only, clipped by the rounded button; the fill (`::after`) sits 2px
+  inside, so a 2px ring shows. At rest the ring is the button's edge colour. Hover (mouse only), keyboard focus and loading light it
+  and turn it every 2.4 s. Colours: grey (`--line-strong`), ink (`--text`) and one terracotta spark; on primary buttons the spark is
+  paper, since terracotta would vanish on the fill. `.btn--halo-idle` (the landing hero button only): a faint ring that turns once
+  every 12 s while on screen. Reduced motion: the same ring, standing still. Forced colours: a plain 1px border.
 - Fields: surface, `--line-strong` border, >= 16px text, error = danger border + message with icon,
   `aria-invalid` + `aria-describedby`. Checkbox and radio: 20px control inside a 44px row. `.code-value` +
   `.btn--copy`: a literal value to paste.
@@ -122,7 +146,7 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
   in the browser as a data: URL, so the CSP is unchanged).
 - Feed (`social/feed.html`, `feed.css`): a 12-line grid is not used; the page declares its columns: 1 on phones (tabs `position:
   sticky`, filters folded in a `<details>`), `1fr 17rem` from 48em, `1fr 37.5rem 1fr` from 72em (navigation, 640px feed, panel;
-  equal sides). `.feed-card`: frame + hairline, no shadow; cover 16:10 from the thumbnail, head (avatar, name + marks, handle,
+  equal sides: navigation and panel are both 16rem and sit on the outer edges). `.feed-card`: frame + hairline, no shadow; cover 16:10 from the thumbnail, head (avatar, name + marks, handle,
   time, follow), name in Manrope, tagline, marks, the latest update with a 2px rule (3 lines max), actions. `.empty--plain` is an
   empty state without the dashed frame. News cards (`.news-card`) share the same frame.
 - Marks after a name (`{% user_marks person %}`, `.user-mark`): official = filled ink diamond with a cut check,
@@ -138,11 +162,19 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
   shows its final state.
 - Reduced motion: `base.css` turns off every animation and transition, so each element shows its final state;
   no reveal, no page transition, the tick head is hidden.
-- Landing: strike (once), live pulse + uptime tick + drift in the hero (3 loops, the maximum), closing cursor
-  (far below the hero, never visible together with it), section reveal (once). Drift is desktop + hover only.
+- Landing: strike (once), live pulse + uptime tick in the specimen and the idle shimmer on the hero sign-in button (3 loops,
+  the maximum; the old specimen drift was removed to make room), closing cursor (far below the hero, never visible together
+  with it), section reveal (once). A hovered or focused halo is an answer to the person, not an ambient loop.
+- Inner pages (every `.shell`), once, CSS only, `animation-fill-mode: backwards` (nothing keeps a transform afterwards, clicks work
+  during it): the shell's children rise 10px into place (60 ms apart); list items (`.feed-list`, `.plate-list`, `.news__list`,
+  `.mod-list`) follow one after another (first 8, 50 ms apart; later ones and "Load more" together); the three dashed marks of an
+  empty state are set down and the first is pressed once and does not take. Cards (`.feed-card`, `.news-card`, `.card`): the frame
+  firms up to `--line-strong` and the cover scales 1.03 inside its frame on hover; a press on the card's own link pushes it to
+  .995. Profile stats count up once when in view (`[data-count]`, motion.js; skipped with reduced motion; the HTML has the real
+  number).
 - Error pages: one mark comes down, does not take and lifts away (once, 1.3 s); the dashed "Not yet" mark stays.
 - Project page: marks strike in order on load (300 / 650 / 1000 ms), one tick highlight over the 30 uptime
-  cells (1 loop). Elsewhere: hover, press and focus answers, like/follow pop, menu and toast fades, page
+  cells (1 loop). Everywhere: hover, press and focus answers, like/follow pop, menu and toast fades, page
   cross-fade.
 - Page cross-fade is `@view-transition` (180 ms) inside `prefers-reduced-motion: no-preference`. Browsers
   without view transitions ignore the rule and navigate normally; `view-transition-name: site-header` is
@@ -152,8 +184,8 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 - Self-hosted woff2 only (Latin set per page ~88 KB: Inter 48, Manrope 25, Plex Mono 15; Cyrillic and Latin-ext
   load only when the text needs them, by `unicode-range`). Inter + Manrope Latin (and Cyrillic for `uk`) are
   preloaded. Fallback fonts are size-adjusted, so the swap does not move the layout.
-- Core CSS per page (tokens, base, components, motion): 55 KB raw, 14 KB gzip; one page file on top. Core JS
-  (5 small ES modules, deferred by `type="module"`): 5.9 KB raw, 2.7 KB gzip. Only `theme-init.js` is blocking
+- Core CSS per page (tokens, base, components, motion): 69 KB raw, 16 KB gzip (2026-11-12); one page file on top. Core JS
+  (6 small ES modules, deferred by `type="module"`): 8.7 KB raw, 3.1 KB gzip. Only `theme-init.js` is blocking
   (it sets the theme and `.js` before first paint).
 - Images carry width/height and `loading="lazy"` (the first project screenshot is not lazy). Production
   `collectstatic` hashes every file (`CompressedManifestStaticFilesStorage`).

@@ -5,7 +5,7 @@
 {% block meta %}<meta name="robots" content="noindex">{% endblock %}
 
 {% block content %}
-  <div class="container page mod">
+  <div class="container shell mod">
     <p><a href="{{ back }}">{% translate "Back" %}</a></p>
     <header class="page-head">
       <p class="label">{% translate "Moderate" %} · {% if kind == "project" %}{% translate "Project" %}{% elif kind == "profile" %}{% translate "Profile" %}{% else %}{% translate "Build-log entry" %}{% endif %}</p>

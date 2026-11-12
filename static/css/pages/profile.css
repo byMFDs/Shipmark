@@ -101,7 +101,10 @@
   font-variant-numeric: tabular-nums;
 }
 
-.profile-projects { padding-bottom: var(--s-7); }
+/* Sections under the tabs: a clear gap between projects, drafts and the badge. */
+.profile-projects + .profile-projects,
+.profile-projects + .embed { margin-top: var(--s-7); }
+
 .profile-projects__title { font-size: var(--fs-2); margin-bottom: var(--s-4); }
 .profile-projects__note { margin: calc(-1 * var(--s-2)) 0 var(--s-4); }
 
@@ -109,18 +112,16 @@
 .profile .plate-row > :nth-child(3):not(.plate-row__marks) { grid-column: 2; justify-self: start; }
 @media (min-width: 48em) { .profile .plate-row > :nth-child(3):not(.plate-row__marks) { grid-column: auto; justify-self: end; } }
 
-.profile .embed { margin-bottom: var(--s-8); }
 
 .profile-pinned { margin-bottom: var(--s-6); }
 .profile-tabs { margin-bottom: var(--s-5); }
 
-.profile-log { list-style: none; margin: 0 0 var(--s-7); padding: 0; }
+.profile-log { list-style: none; margin: 0; padding: 0; }
 .profile-log__item { display: grid; gap: var(--s-2); padding: var(--s-4); min-width: 0; }
 .profile-log__item + .profile-log__item { border-top: 1px solid var(--line); }
 .profile-log__item .log-entry__meta { margin: 0; }
 .profile-log__item .log-entry__text { overflow-wrap: anywhere; }
 
-.profile-about { padding-bottom: var(--s-7); }
 .profile-about__text { max-width: 68ch; }
 .profile-about__label { margin: var(--s-6) 0 var(--s-3); }
 
@@ -128,7 +129,6 @@
   .profile-card__body { grid-template-columns: auto minmax(0, 1fr); gap: var(--s-6); align-items: start; padding: var(--s-6); }
   .has-cover .profile-card__avatar { margin-top: calc(-4rem - var(--s-6)); }
   .profile-head__name { font-size: var(--fs-5); }
-  .profile-stats { max-width: 34rem; }
   .profile-stats > div { padding-inline: var(--s-5); }
   .profile-stats dd { font-size: var(--fs-4); }
 }

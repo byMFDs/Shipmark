@@ -25,15 +25,25 @@
 
 /* ---------- Buttons ---------- */
 
+/* Each variant sets three values: --btn-bg (fill), --btn-fg (label) and --btn-edge (border). States change only
+   those, so hover, press, focus, disabled and loading look the same on every variant.
+   Sizes: default 44px (--control-h), .btn--lg 52px; .btn--icon is a 44px square. Radius: --radius-btn (10px). */
+
 .btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--text);
+  --btn-edge: transparent; /* transparent edges still show in forced-colors mode */
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--s-2);
   min-height: var(--control-h);
   padding: 0 1.25rem;
-  border: 1px solid transparent; /* visible in forced-colors mode */
-  border-radius: var(--radius);
+  border: 1px solid var(--btn-edge);
+  border-radius: var(--radius-btn);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
   font-weight: 500;
   line-height: 1.2;
   text-align: center;
@@ -54,44 +64,29 @@
 /* The arrow sits at the right edge of wide buttons, like the hero action in the sketches. */
 .btn--lg .arrow { margin-left: var(--s-3); }
 
-.btn--primary {
-  background: var(--accent);
-  color: var(--on-accent);
-}
-
-.btn--secondary {
-  background: var(--surface);
-  color: var(--text);
-  border-color: var(--line-strong);
-}
-
-.btn--quiet {
-  background: transparent;
-  color: var(--text);
-  padding-inline: var(--s-3);
-}
-
-.btn--danger {
-  background: transparent;
-  color: var(--danger);
-  border-color: var(--danger);
-}
+.btn--primary { --btn-bg: var(--accent); --btn-fg: var(--on-accent); --btn-edge: var(--accent); }
+.btn--secondary { --btn-bg: var(--surface); --btn-fg: var(--text); --btn-edge: var(--line-strong); }
+.btn--quiet { padding-inline: var(--s-3); }
+.btn--danger { --btn-fg: var(--danger); --btn-edge: var(--danger); }
 
 /* Filled danger: only for the final confirmation of a destructive action. */
-.btn--danger-solid {
-  background: var(--danger);
-  color: var(--on-danger);
-}
+.btn--danger-solid { --btn-bg: var(--danger); --btn-fg: var(--on-danger); --btn-edge: var(--danger); }
 
 @media (hover: hover) {
-  .btn--primary:hover { background: var(--accent-hover); }
-  .btn--secondary:hover { border-color: var(--text); }
-  .btn--quiet:hover { background: var(--tint); }
-  .btn--danger:hover { background: var(--danger-tint); }
-  .btn--danger-solid:hover { background: var(--danger-hover); }
+  .btn--primary:hover { --btn-bg: var(--accent-hover); --btn-edge: var(--accent-hover); }
+  .btn--secondary:hover { --btn-edge: var(--text); }
+  .btn--quiet:hover { --btn-bg: var(--tint); }
+  .btn--danger:hover { --btn-bg: var(--danger-tint); }
+  .btn--danger-solid:hover { --btn-bg: var(--danger-hover); --btn-edge: var(--danger-hover); }
 }
 
-.btn--quiet:active { background: var(--tint); }
+/* Press: a small scale (above) plus the hover colour, so touch screens get an answer too. */
+.btn--primary:active { --btn-bg: var(--accent-hover); --btn-edge: var(--accent-hover); }
+.btn--secondary:active { --btn-bg: var(--tint); --btn-edge: var(--text); }
+.btn--quiet:active { --btn-bg: var(--tint); }
+
+/* Focus follows the rounded corners (outline does, in current browsers). */
+.btn:focus-visible { outline-offset: 3px; }
 
 .btn:disabled,
 .btn[aria-disabled="true"] {
@@ -100,12 +95,120 @@
   transform: none;
 }
 
+/* Loading: aria-busy="true" (any script) blocks further clicks. busy.js also sets data-busy-ring on the button
+   that submitted a normal form: the label turns transparent and a ring turns in its place, so the button keeps its
+   size. Scripts with their own busy text (domain check) and like/follow (optimistic) keep their label. */
+.btn[aria-busy="true"] { cursor: progress; pointer-events: none; }
+
+.btn[data-busy-ring]:not(.btn--halo) { color: transparent; }
+
+.btn[data-busy-ring]:not(.btn--halo)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: -0.5625rem 0 0 -0.5625rem;
+  border: 2px solid var(--btn-fg);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 700ms linear infinite;
+}
+
+@keyframes btn-spin { to { transform: rotate(1turn); } }
+
+/* Reduced motion: the ring stands still (base.css stops it); the transparent label still says "busy". */
+
 .btn--icon {
   width: var(--control-h);
   padding: 0;
 }
 
 .btn--block { width: 100%; }
+
+/* ---------- Halo: a light that runs around the edge (sign-in buttons and one or two main actions) ----------
+   ::before is an oversized conic gradient behind the button, turned with transform: rotate only and clipped by the
+   rounded button; ::after is the fill, 2px smaller, so only a thin ring of the gradient shows. At rest the ring
+   is the button's own edge colour. Hover (mouse), keyboard focus and loading turn the light on and spin it;
+   .btn--halo-idle (the hero button only) keeps a faint, very slow turn while it is on screen (one of the
+   three loops). Reduced motion: the same gradient ring, standing still. Colours: ink, grey and one accent spark. */
+
+.btn--halo {
+  --halo-w: 2px;
+  isolation: isolate;
+  overflow: hidden;
+  border: 0;
+  background: var(--btn-edge);
+}
+
+.btn--halo::before,
+.btn--halo::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.btn--halo::before {
+  z-index: -2;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  aspect-ratio: 1;
+  background: conic-gradient(from 0deg, transparent 0 30%, var(--line-strong) 50%, var(--text) 72%, var(--accent) 86%, var(--text) 94%, transparent 100%);
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(0deg);
+  transition: opacity var(--t-base) var(--ease-out);
+}
+
+/* On the accent fill the spark would vanish, so the primary halo runs ink and paper. */
+.btn--halo.btn--primary::before {
+  background: conic-gradient(from 0deg, transparent 0 30%, var(--accent-hover) 50%, var(--text) 74%, var(--paper) 88%, var(--text) 95%, transparent 100%);
+}
+
+.btn--halo::after {
+  z-index: -1;
+  inset: var(--halo-w);
+  border-radius: calc(var(--radius-btn) - var(--halo-w));
+  background: var(--btn-bg);
+  transition: background-color var(--t-fast);
+}
+
+.btn--halo:focus-visible::before,
+.btn--halo[aria-busy="true"]::before {
+  opacity: 1;
+  animation: halo-spin 2.4s linear infinite;
+}
+
+@media (hover: hover) {
+  .btn--halo:hover::before {
+    opacity: 1;
+    animation: halo-spin 2.4s linear infinite;
+  }
+}
+
+/* The hero button: a faint ring that turns once every 12 seconds, only while it is on screen. */
+.btn--halo-idle::before { opacity: 0.6; }
+
+.js [data-loop].is-inview .btn--halo-idle:not(:hover, :focus-visible, [aria-busy="true"])::before {
+  animation: halo-spin 12s linear infinite;
+}
+
+@keyframes halo-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(1turn); }
+}
+
+/* Reduced motion: no turning, but the ring still lights up as a static gradient on hover and focus. */
+@media (prefers-reduced-motion: reduce) {
+  .btn--halo::before { transform: translate(-50%, -50%) rotate(-40deg); }
+}
+
+@media (forced-colors: active) {
+  .btn--halo { border: 1px solid ButtonText; }
+  .btn--halo::before,
+  .btn--halo::after { display: none; }
+}
 
 /* A text link with an arrow, used for "Explore projects ↗" and similar. */
 .link-arrow {
@@ -1469,36 +1572,53 @@ html:not(.js) .toasts:not(:empty) {
   color: var(--muted);
 }
 
-/* ---------- Page head: headline and one lede above a list or a form ---------- */
+/* ---------- Page head: the header block of every inner page ---------- */
+/* Eyebrow (mono label, "Shipmark / Explore"), h1, one lede, and optional actions on the right from 48em.
+   A hairline closes the block, like the header row of a record. Same block on every page, so pages line up. */
 
 .page-head {
   display: grid;
-  gap: var(--s-4);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-3) var(--s-6);
   margin-bottom: var(--s-6);
+  padding-bottom: var(--s-5);
+  border-bottom: 1px solid var(--line);
 }
 
-.page-head h1 { max-width: 18ch; }
+.page-head > * { margin: 0; min-width: 0; }
+.page-head h1 { max-width: 20ch; overflow-wrap: anywhere; }
+.page-head .lede { max-width: 56ch; }
+.page-head__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
 
 @media (min-width: 48em) {
   .page-head h1 { font-size: var(--fs-5); }
+  .page-head:has(> .page-head__actions) { grid-template-columns: minmax(0, 1fr) auto; }
+  .page-head > :not(.page-head__actions) { grid-column: 1; }
+  .page-head > .page-head__actions { grid-column: 2; grid-row: 1 / span 3; align-self: end; }
 }
 
-/* ---------- Sheet: a form page. Phones: one column. From 64em: title left (4), panels right (8) ---------- */
+/* The head of a narrow or card page is a little smaller: the column is narrower. */
+.shell--narrow .page-head h1,
+.shell--card .page-head h1 { font-size: var(--fs-4); }
+
+/* ---------- Sheet: a form page. Phones: one column. From 64em: head and help left (4), panels right (8) ---------- */
+/* Both columns reach the container edges, so the page is balanced and nothing hangs off-centre. */
 
 .sheet {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--s-6);
-  padding-bottom: var(--s-8);
 }
 
-.sheet__intro { display: grid; gap: var(--s-3); align-content: start; }
-.sheet__body { display: grid; gap: var(--s-5); min-width: 0; }
+.sheet__intro { display: grid; gap: var(--s-3); align-content: start; min-width: 0; }
+.sheet__intro > h1 { font-size: var(--fs-4); overflow-wrap: anywhere; }
+.sheet__intro > :is(h1, p) { margin: 0; }
+.sheet__body { display: grid; gap: var(--s-5); min-width: 0; align-content: start; }
 
 @media (min-width: 64em) {
   .sheet { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s-6); }
   .sheet__intro { grid-column: 1 / span 4; position: sticky; top: var(--s-5); }
-  .sheet__body { grid-column: 5 / span 8; max-width: 46rem; }
+  .sheet__body { grid-column: 5 / span 8; }
 }
 
 /* Panel: one framed section of a sheet. Danger rule on top = destructive section. */

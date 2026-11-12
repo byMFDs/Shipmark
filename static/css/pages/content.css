@@ -1,8 +1,6 @@
 /* Long text pages from content/<lang>/*.md: about, how proof works, privacy, terms, cookies.
    The page is one .prose column; headlines are separated by hairlines so a long page reads as sections. */
 
-.doc { padding-bottom: var(--s-7); }
-
 .doc h1 { font-size: var(--fs-4); margin-bottom: var(--s-5); }
 
 @media (min-width: 48em) {

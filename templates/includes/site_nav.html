@@ -11,7 +11,7 @@
 {% if not in_panel and brand.TAGLINE %}<p class="label site-header__tagline">{{ brand.TAGLINE }}</p>{% endif %}
 <div class="site-header__actions">
   {% if signed_in %}
-    {% if new_url %}<a class="btn btn--primary" href="{{ new_url }}">{% icon "plus" %}{% translate "New project" %}</a>{% endif %}
+    {% if new_url %}<a class="btn btn--primary btn--halo" href="{{ new_url }}">{% icon "plus" %}{% translate "New project" %}</a>{% endif %}
     {% if in_panel %}
       {# Phone menu: the account links are listed openly. #}
       <ul class="user-links">
@@ -37,6 +37,6 @@
       </details>
     {% endif %}
   {% elif login_url %}
-    <a class="btn btn--secondary" href="{{ login_url }}">{% icon "github" %}{% translate "Sign in with GitHub" %}{% icon "arrow-up-right" "arrow" %}</a>
+    <a class="btn btn--secondary btn--halo" href="{{ login_url }}">{% icon "github" %}{% translate "Sign in with GitHub" %}{% icon "arrow-up-right" "arrow" %}</a>
   {% endif %}
 </div>

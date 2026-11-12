@@ -1,8 +1,7 @@
-/* News: the public list and a post. One centred column, like reading text. */
+/* News: the public list and a post. One centred column (.shell--narrow), like reading text. */
 
-.news { padding-bottom: var(--s-8); }
-.news__list { display: grid; gap: var(--s-5); max-width: 44rem; }
-.news .pager { max-width: 44rem; }
+.news__list { display: grid; gap: var(--s-5); }
+.news .pager { margin-top: var(--s-6); }
 
 .news-byline { display: inline-flex; align-items: center; gap: var(--s-2); font-weight: 500; }
 .news-byline__name { overflow-wrap: anywhere; }
@@ -25,7 +24,7 @@
 .news-card__excerpt { color: var(--muted); max-width: 60ch; overflow-wrap: anywhere; }
 .news-card.is-pinned { border-color: var(--line-strong); }
 
-.news-post { max-width: 44rem; display: grid; gap: var(--s-5); }
+.news-post { display: grid; gap: var(--s-5); }
 .news-post__head { display: grid; gap: var(--s-3); }
 .news-post__head h1 { font-size: var(--fs-4); overflow-wrap: anywhere; }
 .news-post__head .news-card__meta { margin: 0; }

@@ -51,11 +51,22 @@ class LandingTests(Facts, TestCase):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Less claim.")
-        self.assertContains(response, 'class="record specimen drift"')
+        self.assertContains(response, 'class="record specimen"')
         self.assertContains(response, "Illustrative project · real verification rules")  # the example says it is made up
         self.assertContains(response, "Sign in with GitHub")
         self.assertContains(response, "Submit your project")
         self.assertContains(response, "How proof works")
+
+    def test_halo_on_sign_in_and_one_idle_shimmer(self):
+        # The hero already has two loops (pulse, tick); the idle shimmer is the third and must stay the only one.
+        response = self.client.get("/")
+        html = response.content.decode()
+        self.assertEqual(html.count("btn--halo-idle"), 1)
+        self.assertIn("Show what you shipped with AI.", html)
+        header_sign_in = html.split('class="site-header__actions"', 1)[1]
+        self.assertIn("btn--halo", header_sign_in.split("</div>", 1)[0])
+        login = self.client.get(reverse("account_login")).content.decode()
+        self.assertNotIn("btn--halo-idle", login)
 
     def test_no_code_authorship_claims(self):
         """We check repository ownership, not who wrote the code (en and uk)."""

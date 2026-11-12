@@ -8,7 +8,7 @@
 {% block meta %}<meta name="description" content="{% blocktranslate with name=brand.SITE_NAME %}Official news from {{ name }}.{% endblocktranslate %}">{% if page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}<link rel="canonical" href="{% canonical_url %}">{% endblock %}
 
 {% block content %}
-  <div class="container page news">
+  <div class="container shell shell--narrow news">
     <header class="page-head">
       <p class="label">{{ brand.SITE_NAME }}</p>
       <h1>{% translate "News" %}</h1>

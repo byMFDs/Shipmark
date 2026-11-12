@@ -5,7 +5,7 @@
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
 
 {% block content %}
-  <div class="container page">
+  <div class="container shell">
     <div class="sheet">
       <header class="sheet__intro">
         <h1>{% translate "Delete account" %}</h1>
@@ -32,7 +32,7 @@
           </ul>
         </section>
 
-        <form method="post" action="{% url 'accounts:export' %}" class="panel">
+        <form method="post" action="{% url 'accounts:export' %}" data-no-busy class="panel">
           {% csrf_token %}
           <p>{% translate "Want a copy first?" %}</p>
           <p class="panel__action"><button class="btn btn--secondary" type="submit">{% translate "Download my data" %}</button></p>

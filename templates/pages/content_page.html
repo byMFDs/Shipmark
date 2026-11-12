@@ -6,7 +6,7 @@
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/content.css' %}">{% endblock %}
 
 {% block content %}
-  <div class="container page">
+  <div class="container shell shell--narrow">
     <article class="prose doc"{% if page.language != LANGUAGE_CODE %} lang="{{ page.language }}"{% endif %}>
       {{ page.html|safe }}
     </article>

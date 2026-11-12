@@ -35,11 +35,15 @@
   --s-9: 6rem;
   --section: var(--s-8);
 
-  /* Square corners everywhere: records are cut, not rounded. People (avatars) stay round. */
+  /* Records, panels, fields and marks are cut square. Buttons are the one rounded object (they are pressed,
+     records are not), and people (avatars) stay round. */
   --radius: 0;
+  --radius-btn: 10px;
 
   /* Layout. --pad is the side padding of .container. */
   --container: 1200px;
+  --shell-narrow: 46rem; /* reading pages: about 68ch of body text */
+  --shell-card: 32rem;   /* single-card pages: sign in, report */
   --measure: 68ch;
   --pad: 1rem;
   --control-h: 2.75rem;

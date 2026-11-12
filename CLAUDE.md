@@ -57,7 +57,7 @@ Never store the level as truth; derive it from facts. Cache if needed.
 | Hallmark | Earned when |
 |---|---|
 | **Repo owner** (id `authored`; never claim code authorship) | Linked public GitHub repo is owned by the user's GitHub account, OR user has ≥10 commits in it |
-| **Live** | User proved control of the project domain (DNS TXT or meta tag), re-confirmed in the last 35 days |
+| **Live** (shown as "Domain verified"; id `live`) | User proved control of the project domain (DNS TXT or meta tag), re-confirmed in the last 35 days |
 | **Steady** | Has Live AND ≥95% successful uptime checks over the last 30 days, with ≥40 checks |
 | *(Used)* | Post-MVP. Do not build. Show nothing for it. |
 
@@ -206,19 +206,26 @@ eyebrows; that is part of the style now. Do not put mono caps on long sentences.
 
 Objects: **records** (`.record`: frame + mono header row) hold a project's proof, build log, embed badge and
 filters; **panels** (`.panel`) are form sections; list rows (`.plate-row`) and landing cards are quieter.
-Hallmarks are flat chips (check + mono label, "Repo owner" / "Live" / "Steady"), pale green when earned,
+Hallmarks are flat chips (check + mono label, "Repo owner" / "Domain verified" / "Steady"), pale green when earned,
 dashed outline + "Not yet" when not. Depth = surface color + hairlines; no bevels or gradients, one shadow only on floating menus and toasts.
-Radius 0 (avatars stay round). Icons: own inline SVG set, 1.5px stroke. No icon fonts, no emoji as icons.
-Layout: left-aligned text, max width 1200px; pages declare their own 12-column grids from 64em (no global grid
-class), one column on phones. Logo: mark C "struck slash" + lowercase wordmark "shipmark" (Manrope 700, outlined);
+One gradient on purpose: the "halo" (`.btn--halo`), a rotating light ring on GitHub sign-in buttons, "New project" and
+"Publish project", on hover/focus/loading only (plus a slow idle turn on the landing hero button).
+Radius 0 everywhere except buttons (`--radius-btn` 10px; states: hover, press, focus, disabled, loading)
+and avatars (round). Icons: own inline SVG set, 1.5px stroke. No icon fonts, no emoji as icons.
+Layout: left-aligned text, max width 1200px. Every page uses the shell: `.container.shell` (`--narrow` 46rem for reading,
+`--card` 32rem for single cards, both centred) + `.page-head` header block (eyebrow, h1, lede, actions, hairline) or a
+`.sheet` (head/aside 4 + panels 8, both to the edges). Pages declare their own 12-column grids from 64em; one column on phones.
+Logo: mark C "struck slash" + lowercase wordmark "shipmark" (Manrope 700, outlined);
 `SITE_NAME` stays "Shipmark" in running text, `SITE_DOMAIN` is `shipmark.me`.
 
 Motion (`motion.css`, `motion.js`): animations are transform and opacity only (plus hover colour/border fades, no
 layout); loops run only while on screen and pause in a hidden tab (pause rules need `.js`, so without JS nothing
 freezes); at most 3 loops visible at once; `prefers-reduced-motion` shows the final state everywhere. Landing: the
-hero strike, pulse, tick, drift (3 loops), closing cursor, section reveal. Project page: marks strike in order on
-load, one tick over the uptime strip. Elsewhere only hover/press/focus answers, menu/toast fades and a page
-cross-fade (`@view-transition`, ignored where unsupported).
+hero strike, pulse, tick, sign-in button shimmer (3 loops), closing cursor, section reveal. Project page: marks strike
+in order on load, one tick over the uptime strip. Every inner page (once; CSS except the count-up): the page rises in, list items
+enter one after another, cards answer hover/press, profile stats count up (`[data-count]`), empty-state marks are set
+down and the first fails to stamp. Plus hover/press/focus answers, menu/toast fades and a page cross-fade
+(`@view-transition`, ignored where unsupported).
 
 Contrast (measured both themes, table in `docs/DESIGN.md`): every text pair >= 4.5:1, every control edge and
 focus ring >= 3:1. Recheck after any token change. Performance and accessibility numbers are in the same file.

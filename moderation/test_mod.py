@@ -25,6 +25,7 @@ from accounts.adapters import SocialAccountAdapter
 from accounts.deletion import delete_account
 from accounts.models import ProfileLink, User
 from accounts.system import system_user
+from config import branding
 from projects.models import BuildLogEntry, Project
 from projects.tests import image_file, make_project, make_user
 from social.models import Follow
@@ -378,7 +379,7 @@ class MuteTests(ModTestCase):
         response = self.client.get(reverse("pages:explore"))
         self.assertContains(response, "Your account is muted until")
         self.assertContains(response, REASON)
-        self.assertContains(response, "hello@example.com")
+        self.assertContains(response, branding.CONTACT_EMAIL)
 
     def test_mute_does_not_hide_projects(self):
         self.client.logout()
@@ -421,7 +422,7 @@ class BanTests(ModTestCase):
         self.assertEqual(response.status_code, 403)
         self.assertContains(response, "This account is banned", status_code=403)
         self.assertContains(response, REASON, status_code=403)
-        self.assertContains(response, "hello@example.com", status_code=403)
+        self.assertContains(response, branding.CONTACT_EMAIL, status_code=403)
         self.assertNotIn("_auth_user_id", self.client.session)
         self.assertEqual(self.client.get(reverse("accounts:settings")).status_code, 302)  # signed out now
 

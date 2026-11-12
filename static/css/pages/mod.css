@@ -35,7 +35,6 @@
 
 .pager { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 
-.sanction-page { max-width: 40rem; }
 .sanction-facts { display: grid; gap: var(--s-3); margin: 0; }
 .sanction-facts dt { font-family: var(--font-mono); font-size: var(--fs--2); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .sanction-facts dd { margin: 0; overflow-wrap: anywhere; }

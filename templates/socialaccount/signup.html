@@ -5,7 +5,7 @@
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
 
 {% block content %}
-  <div class="container page">
+  <div class="container shell shell--card">
     <section class="auth">
       <h1>{% translate "Create your account" %}</h1>
       <p>{% blocktranslate with login=account.extra_data.login %}You signed in with GitHub as <strong>{{ login }}</strong>. Confirm your username and accept the Terms to finish.{% endblocktranslate %}</p>

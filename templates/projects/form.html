@@ -6,7 +6,7 @@
 {% block meta %}<meta name="robots" content="noindex">{% endblock %}
 
 {% block content %}
-  <div class="container page">
+  <div class="container shell">
     <div class="sheet">
       <header class="sheet__intro">
       <h1>{% if project %}{% translate "Edit project" %}{% else %}{% translate "New project" %}{% endif %}</h1>
@@ -107,7 +107,7 @@
           {% if project.status == "draft" %}
             <p class="muted">{% translate "This project is a draft. Publishing makes the page public." %}</p>
             {# Part of the main form: publishing also saves the fields and uploads chosen screenshots. #}
-            <div><button class="btn btn--primary" type="submit" form="project-form" name="publish" value="1">{% translate "Publish project" %}</button></div>
+            <div><button class="btn btn--primary btn--halo" type="submit" form="project-form" name="publish" value="1">{% translate "Publish project" %}</button></div>
           {% elif project.status == "published" %}
             <p class="muted">{% translate "This project is public." %}</p>
             <form method="post" action="{% url 'projects:unpublish' project.owner.username project.slug %}">

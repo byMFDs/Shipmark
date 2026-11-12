@@ -171,19 +171,6 @@ html.js.is-paused .cursor[data-loop]::after,
   to { transform: translateX(calc((var(--cells) - 1) * (100% + 2px))); }
 }
 
-/* ---------- Loop 3: slow drift of a featured object (desktop only) ---------- */
-
-@media (min-width: 64em) and (hover: hover) {
-  .js [data-loop].is-inview .drift {
-    animation: drift 10s ease-in-out infinite alternate;
-  }
-}
-
-@keyframes drift {
-  from { transform: translate3d(0, -4px, 0); }
-  to { transform: translate3d(0, 4px, 0); }
-}
-
 /* ---------- Blinking cursor after a mono label ---------- */
 
 .cursor::after {
@@ -216,3 +203,77 @@ html.js.is-paused .cursor[data-loop]::after,
   40% { transform: scale(1.18); }
   100% { transform: scale(1); }
 }
+
+/* ---------- Inner pages: enter, lists, cards, empty states ----------
+   All of it runs once, on load, with CSS only (no script needed, nothing waits for one). "backwards" fill: the
+   start state applies only during the delay, so nothing keeps a transform (or a stacking context) afterwards.
+   Content is never hidden for longer than the 0.6 s an entrance takes, and clicks work during it. */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Page enter: the head, then the content, rise a few pixels into place. */
+  .shell > * { animation: rise 420ms var(--ease-out) backwards; }
+  .shell > :nth-child(2) { animation-delay: 60ms; }
+  .shell > :nth-child(3) { animation-delay: 120ms; }
+  .shell > :nth-child(n + 4) { animation-delay: 160ms; }
+
+  /* Lists: cards and rows come in one after another (the first eight; later ones, also "Load more", together). */
+  :is(.feed-list, .plate-list, .news__list, .mod-list, .explore__list) > * { animation: rise 380ms var(--ease-out) 140ms backwards; }
+  :is(.feed-list, .plate-list, .news__list, .mod-list, .explore__list) > :nth-child(2) { animation-delay: 190ms; }
+  :is(.feed-list, .plate-list, .news__list, .mod-list, .explore__list) > :nth-child(3) { animation-delay: 240ms; }
+  :is(.feed-list, .plate-list, .news__list, .mod-list, .explore__list) > :nth-child(4) { animation-delay: 290ms; }
+  :is(.feed-list, .plate-list, .news__list, .mod-list, .explore__list) > :nth-child(5) { animation-delay: 340ms; }
+  :is(.feed-list, .plate-list, .news__list, .mod-list, .explore__list) > :nth-child(6) { animation-delay: 380ms; }
+  :is(.feed-list, .plate-list, .news__list, .mod-list, .explore__list) > :nth-child(7) { animation-delay: 420ms; }
+  :is(.feed-list, .plate-list, .news__list, .mod-list, .explore__list) > :nth-child(n + 8) { animation-delay: 460ms; }
+
+  /* Empty state: the three dashed marks are set down one by one, the first one is pressed once and does not take. */
+  .empty__marks > * { animation: rise 360ms var(--ease-out) backwards; }
+  .empty__marks > :nth-child(1) { animation-delay: 200ms; }
+  .empty__marks > :nth-child(2) { animation-delay: 280ms; }
+  .empty__marks > :nth-child(3) { animation-delay: 360ms; }
+  .empty__marks > :first-child .hallmark__chip { animation: try-stamp 520ms var(--ease-press) 900ms; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes try-stamp {
+  0% { transform: none; }
+  35% { transform: scale(0.94); }
+  65% { transform: scale(1.03); }
+  100% { transform: none; }
+}
+
+/* Cards answer the pointer: the frame firms up and the cover moves in a little. A press on the card's own link
+   (not on a button inside it) pushes the card down a touch. No lift, no shadow. */
+.feed-card,
+.news-card,
+.card {
+  transition: border-color var(--t-base) var(--ease-out), transform var(--t-fast) var(--ease-press);
+}
+
+.feed-card__cover,
+.card__media,
+.project-thumb { overflow: hidden; }
+
+.feed-card__cover img,
+.card__media img,
+.project-thumb img { transition: transform 500ms var(--ease-out); }
+
+@media (hover: hover) {
+  .feed-card:hover,
+  .news-card:hover,
+  .card:hover { border-color: var(--line-strong); }
+
+  .feed-card:hover .feed-card__cover img,
+  .card:hover .card__media img,
+  .plate-row:hover .project-thumb img { transform: scale(1.03); }
+}
+
+:is(.feed-card, .news-card, .card):has(a:not(.btn):active) { transform: scale(0.995); }
+
+/* ---------- Count-up: a number on a stats row counts up once when it comes into view (motion.js) ---------- */
+/* The real number is in the HTML; the script only animates it, and not at all with reduced motion. */
+[data-count] { font-variant-numeric: tabular-nums; }

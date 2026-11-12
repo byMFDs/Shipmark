@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container page profile">
+  <div class="container shell profile">
     <header class="profile-card{% if person.cover %} has-cover{% endif %}">
       {% if person.cover %}<div class="profile-card__cover"><img src="{{ person.cover.url }}" width="1500" height="500" alt=""></div>{% endif %}
       <div class="profile-card__body">
@@ -50,9 +50,9 @@
     </header>
 
     <dl class="profile-stats">
-      <div><dt>{% translate "Projects" %}</dt><dd>{{ stats.projects }}</dd></div>
-      <div><dt>{% translate "Hallmarks" %}</dt><dd>{{ stats.hallmarks }}</dd></div>
-      <div><dt>{% translate "Followers" %}</dt><dd id="followers-count">{{ stats.followers }}</dd></div>
+      <div><dt>{% translate "Projects" %}</dt><dd data-count>{{ stats.projects }}</dd></div>
+      <div><dt>{% translate "Hallmarks" %}</dt><dd data-count>{{ stats.hallmarks }}</dd></div>
+      <div><dt>{% translate "Followers" %}</dt><dd id="followers-count" data-count>{{ stats.followers }}</dd></div>
     </dl>
 
     {% if pinned %}

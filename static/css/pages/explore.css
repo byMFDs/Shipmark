@@ -1,7 +1,5 @@
 /* Explore: a filter record above a list of rows (row styles come from feed.css). Mobile first. */
 
-.explore { padding-bottom: var(--s-8); }
-
 /* Phones: one column. 30em: two columns. 64em: search full width, then one row of four selects. */
 .explore-filters__grid {
   display: grid;
