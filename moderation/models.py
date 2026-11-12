@@ -1,3 +1,5 @@
+from itertools import combinations
+
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
@@ -34,11 +36,23 @@ class AuditLog(models.Model):
 
 OPEN_STATES = ("open", "in_review")  # a report that still needs a decision
 
+# A report points at one of these (or at none, once the target was deleted).
+REPORT_TARGETS = ("project", "target_user", "log_entry", "thread", "reply")
+
+
+def _at_most_one_target():
+    """No two target fields are set at once: of every pair, at least one is empty."""
+    condition = Q()
+    for first, second in combinations(REPORT_TARGETS, 2):
+        condition &= Q(**{f"{first}__isnull": True}) | Q(**{f"{second}__isnull": True})
+    return condition
+
 
 class Report(models.Model):
-    """A report about a project, a profile or a build-log entry. Handled in /mod/ and the admin.
+    """A report about a project, a profile, a build-log entry, a community thread or a reply. Handled in /mod/
+    and the admin.
 
-    The target is one of `project`, `target_user`, `log_entry` (never two). They are SET_NULL, so the report
+    The target is one of `project`, `target_user`, `log_entry`, `thread`, `reply` (never two). They are SET_NULL, so the report
     survives when the target is deleted, and `target_repr` keeps a readable name. `target_owner` is the person
     the report is about (for their history). The reporter is shown only to moderators and staff, never to
     the reported person. When the reporter deletes their account the report is kept but anonymized.
@@ -75,6 +89,12 @@ class Report(models.Model):
     log_entry = models.ForeignKey(
         "projects.BuildLogEntry", null=True, blank=True, on_delete=models.SET_NULL, related_name="reports",
     )
+    thread = models.ForeignKey(
+        "community.Thread", null=True, blank=True, on_delete=models.SET_NULL, related_name="reports",
+    )
+    reply = models.ForeignKey(
+        "community.Reply", null=True, blank=True, on_delete=models.SET_NULL, related_name="reports",
+    )
     target_owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="reports_about",
     )
@@ -93,12 +113,7 @@ class Report(models.Model):
     class Meta:
         ordering = ["-created_at"]
         constraints = [
-            models.CheckConstraint(
-                condition=(Q(project__isnull=True) & Q(target_user__isnull=True))
-                | (Q(project__isnull=True) & Q(log_entry__isnull=True))
-                | (Q(target_user__isnull=True) & Q(log_entry__isnull=True)),
-                name="report_one_target",
-            ),
+            models.CheckConstraint(condition=_at_most_one_target(), name="report_at_most_one_target"),
             # One open report per person and target: repeating it adds nothing but noise.
             models.UniqueConstraint(
                 fields=["reporter", "project"], condition=Q(status__in=OPEN_STATES), name="one_open_report_per_project",
@@ -109,6 +124,12 @@ class Report(models.Model):
             models.UniqueConstraint(
                 fields=["reporter", "log_entry"], condition=Q(status__in=OPEN_STATES), name="one_open_report_per_entry",
             ),
+            models.UniqueConstraint(
+                fields=["reporter", "thread"], condition=Q(status__in=OPEN_STATES), name="one_open_report_per_thread",
+            ),
+            models.UniqueConstraint(
+                fields=["reporter", "reply"], condition=Q(status__in=OPEN_STATES), name="one_open_report_per_reply",
+            ),
         ]
 
     def __str__(self):
@@ -116,17 +137,21 @@ class Report(models.Model):
 
     @property
     def target(self):
-        return self.project or self.target_user or self.log_entry
+        return self.project or self.target_user or self.log_entry or self.thread or self.reply
 
     @property
     def kind(self):
-        """"project", "profile" or "entry" ("" when the target is gone)."""
+        """"project", "profile", "entry", "thread" or "reply" ("" when the target is gone)."""
         if self.project_id:
             return "project"
         if self.target_user_id:
             return "profile"
         if self.log_entry_id:
             return "entry"
+        if self.thread_id:
+            return "thread"
+        if self.reply_id:
+            return "reply"
         return ""
 
     @property
@@ -253,6 +278,11 @@ class Notice(models.Model):
         PROFILE_CLEARED = "profile_cleared", _("Profile fields cleared")
         REPORT_DISMISSED = "report_dismissed", _("Report reviewed, no action")
         REPORT_ACTIONED = "report_actioned", _("Report reviewed, action taken")
+        THREAD_REMOVED = "thread_removed", _("Thread removed")
+        REPLY_REMOVED = "reply_removed", _("Reply removed")
+        THREAD_LOCKED = "thread_locked", _("Thread locked")
+        THREAD_PINNED = "thread_pinned", _("Thread pinned")
+        POST_RESTORED = "post_restored", _("Post restored")
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notices")
     kind = models.CharField(max_length=20, choices=Kind.choices)

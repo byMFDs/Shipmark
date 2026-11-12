@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% translate "Edit reply" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="container shell shell--narrow">
+    <header class="page-head">
+      <p class="label">{{ reply.thread.title }}</p>
+      <h1>{% translate "Edit reply" %}</h1>
+    </header>
+    {% if block %}<p class="notice" role="status">{{ block }}</p>{% endif %}
+    <form method="post" class="panel stack" novalidate>
+      {% csrf_token %}
+      {% include "includes/form_errors.html" %}
+      {% include "includes/form_field.html" with field=form.body %}
+      <div class="owner-bar">
+        <button class="btn btn--primary" type="submit">{% translate "Save changes" %}</button>
+        <a class="btn btn--secondary" href="{{ reply.get_absolute_url }}">{% translate "Cancel" %}</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

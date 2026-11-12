@@ -1,0 +1,9 @@
+{% load i18n %}{# Upvote button with the score. Needs: action (url), voted (bool), score, own (bool: no button on your own post). #}
+{% if user.is_authenticated and not own %}
+  <form method="post" action="{{ action }}">
+    {% csrf_token %}<input type="hidden" name="value" value="{% if voted %}0{% else %}1{% endif %}">
+    <button class="btn btn--quiet" type="submit" aria-pressed="{% if voted %}true{% else %}false{% endif %}">{% if voted %}{% translate "Remove upvote" %}{% else %}{% translate "Upvote" %}{% endif %} · <span class="mono">{{ score }}</span></button>
+  </form>
+{% else %}
+  <span class="muted">{% blocktranslate count counter=score %}{{ counter }} upvote{% plural %}{{ counter }} upvotes{% endblocktranslate %}</span>
+{% endif %}

@@ -1,0 +1,8 @@
+{% load i18n ui %}{# One thread in a list. Needs: thread (with board and author loaded). #}
+<li class="plate-row">
+  <div>
+    <p class="label">{{ thread.board.display_name }}{% if thread.pinned %} · {% translate "Pinned" %}{% endif %}{% if thread.is_locked %} · {% translate "Locked" %}{% endif %}</p>
+    <p class="plate-row__name"><a href="{{ thread.get_absolute_url }}">{{ thread.title }}</a></p>
+    <p class="muted">{% include "community/_author.html" with author=thread.author %} · <time datetime="{{ thread.created_at|date:'c' }}" title="{{ thread.created_at|date:'DATETIME_FORMAT' }}">{{ thread.created_at|ago }}</time> · {% blocktranslate count counter=thread.score %}{{ counter }} upvote{% plural %}{{ counter }} upvotes{% endblocktranslate %} · {% blocktranslate count counter=thread.reply_count %}{{ counter }} reply{% plural %}{{ counter }} replies{% endblocktranslate %}</p>
+  </div>
+</li>

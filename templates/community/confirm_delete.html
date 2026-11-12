@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% if reply %}{% translate "Delete this reply?" %}{% else %}{% translate "Delete this thread?" %}{% endif %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="container shell shell--card">
+    <form method="post" class="auth" novalidate>
+      {% csrf_token %}
+      <h1>{% if reply %}{% translate "Delete this reply?" %}{% else %}{% translate "Delete this thread?" %}{% endif %}</h1>
+      <p>{% translate "The text and the images are deleted for good. If other people already replied, their replies stay and yours shows as “[deleted]”." %}</p>
+      <div class="auth__actions">
+        <button class="btn btn--danger" type="submit">{% translate "Delete" %}</button>
+        <a class="btn btn--secondary" href="{{ back }}">{% translate "Cancel" %}</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

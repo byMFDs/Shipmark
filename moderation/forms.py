@@ -33,6 +33,12 @@ ACTION_LABELS = {
     "dismiss": _("Dismiss: no action"),
     "remove_project": _("Remove the project"),
     "clear_profile": _("Clear profile fields"),
+    "remove_thread": _("Remove the thread"),
+    "remove_reply": _("Remove the reply"),
+    "lock_thread": _("Lock the thread: only moderators can reply"),
+    "unlock_thread": _("Unlock the thread"),
+    "pin_thread": _("Pin the thread"),
+    "unpin_thread": _("Unpin the thread"),
     "mute": _("Mute"),
     "ban": _("Ban"),
 }

@@ -42,8 +42,16 @@ domain verification (DNS TXT or meta tag) · uptime checks · hallmarks · build
 follow + like · feed · explore/search · SVG badges · reports + moderation ·
 beautiful admin · legal pages · account deletion + data export · i18n (en, uk, later more).
 
+### Community (`community/`, branch `community-1`, behind `COMMUNITY_ENABLED`)
+A small forum inside Shipmark: boards, threads, replies (depth max 3), upvotes only (no downvotes,
+none on your own post), own sticker set, images through the one image pipeline, in-app reply
+notifications (no email). Moderation is the existing system (/mod/, Report, Sanction, Notice, AuditLog).
+Flag off (production default): every community route is 404, no link, no code path runs; export and
+account deletion still cover existing rows. Plan, rules and numbers: `docs/COMMUNITY_PLAN.md`,
+progress: `docs/COMMUNITY_STATUS.md`. Raise `TERMS_VERSION` when Community ships.
+
 ### MVP: out of scope (do not build)
-Payments, subscriptions, messaging/DMs, comments, company/investor accounts,
+Payments, subscriptions, messaging/DMs, comments on projects (discussion lives in Community), company/investor accounts,
 notifications by email, revenue/analytics integrations, native apps, AI features,
 Celery/Redis, Docker (unless asked), any social login except GitHub.
 

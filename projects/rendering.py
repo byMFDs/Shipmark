@@ -32,9 +32,10 @@ def _parser():
     return md
 
 
-def render_user_markdown(text):
-    """Markdown to sanitized HTML. Images are not allowed (screenshots have their own upload)."""
-    text = (text or "")[:MAX_LENGTH]
+def render_user_markdown(text, max_length=MAX_LENGTH):
+    """Markdown to sanitized HTML. Images are not allowed (screenshots have their own upload).
+    `max_length` is for callers with their own limit (community threads)."""
+    text = (text or "")[:max_length]
     html = _HEADING.sub(_demote, _parser().convert(text))
     return nh3.clean(
         html,

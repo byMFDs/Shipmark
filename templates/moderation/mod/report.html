@@ -42,6 +42,15 @@
             {% elif kind == "entry" and entry %}
               <div class="prose">{{ entry.text_html|safe }}</div>
               <p><a href="{{ entry.project.get_absolute_url }}#log-{{ entry.pk }}">{{ entry.project.name }}</a></p>
+            {% elif kind == "thread" and post %}
+              <p class="plate-row__name">{{ post.title }} <span class="muted">· {{ post.get_status_display }}{% if post.is_deleted %} · {% translate "deleted by the author" %}{% endif %}</span></p>
+              <div class="prose">{{ post.body_html|safe }}</div>
+              <p><a href="{{ post.get_absolute_url }}">{% translate "Open the thread" %}</a></p>
+            {% elif kind == "reply" and post %}
+              <p class="muted">{{ post.thread.title }} · {{ post.get_status_display }}{% if post.is_deleted %} · {% translate "deleted by the author" %}{% endif %}</p>
+              <div class="prose">{{ post.body_html|safe }}</div>
+              {% if post.sticker_key %}<p class="mono">:{{ post.sticker_label }}:</p>{% endif %}
+              <p><a href="{{ post.get_absolute_url }}">{% translate "Open the thread" %}</a></p>
             {% else %}
               <p class="muted">{% translate "The reported item was deleted." %}</p>
             {% endif %}

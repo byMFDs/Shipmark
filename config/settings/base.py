@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "pages",
     "moderation",
     "news",
+    # Always installed (its tables exist either way); COMMUNITY_ENABLED below decides whether anyone can reach it.
+    "community",
 ]
 
 MIDDLEWARE = [
@@ -152,6 +154,11 @@ TERMS_VERSION = "2026-11-10"
 MODERATION_MAX_MUTE = timedelta(days=7)
 MODERATION_MAX_BAN = timedelta(days=14)
 MODERATION_ACTIONS_PER_HOUR = 30  # per moderator
+
+# Community (/community/): threads, replies, images, upvotes. Off: every community route is a 404, no link is
+# shown and no community code runs (data export and account deletion still cover rows that already exist).
+# Off by default; dev.py turns it on. Production: leave it off until moderators are ready (docs/COMMUNITY_PLAN.md).
+COMMUNITY_ENABLED = env.bool("COMMUNITY_ENABLED", default=False)
 
 # Secret for the ban-evasion hash of a GitHub id (moderation/bans.py). Its own key, not SECRET_KEY, so rotating
 # SECRET_KEY cannot free banned people. Production requires it (prod.py); dev.py fills in an insecure default.
@@ -329,6 +336,15 @@ UNFOLD = {
                     {"title": _("Notices"), "icon": "notifications", "link": reverse_lazy("admin:moderation_notice_changelist")},
                     {"title": _("Follows"), "icon": "group_add", "link": reverse_lazy("admin:social_follow_changelist")},
                     {"title": _("Likes"), "icon": "favorite", "link": reverse_lazy("admin:social_like_changelist")},
+                ],
+            },
+            {
+                "title": _("Community"),
+                "items": [
+                    {"title": _("Boards"), "icon": "forum", "link": reverse_lazy("admin:community_board_changelist")},
+                    {"title": _("Threads"), "icon": "chat", "link": reverse_lazy("admin:community_thread_changelist")},
+                    {"title": _("Replies"), "icon": "reply", "link": reverse_lazy("admin:community_reply_changelist")},
+                    {"title": _("Images"), "icon": "image", "link": reverse_lazy("admin:community_communityimage_changelist")},
                 ],
             },
             {

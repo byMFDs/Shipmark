@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% if board %}{{ board.display_name }} · {% endif %}{% translate "Community" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{% if board %}{{ board.display_name }} · {% endif %}{% translate "Community" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block meta %}{% if page > 1 or query or sort != "hot" %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
+
+{% block content %}
+  <div class="container shell">
+    <header class="page-head">
+      <p class="label">{% if board %}<a href="{% url 'community:home' %}">{% translate "Community" %}</a>{% else %}{{ brand.SITE_NAME }}{% endif %}</p>
+      <h1>{% if board %}{{ board.display_name }}{% else %}{% translate "Community" %}{% endif %}</h1>
+      <p class="lede">{% if board %}{{ board.display_description }}{% else %}{% translate "Ask for help, show what you shipped, find people to build with." %}{% endif %}</p>
+      <div class="page-head__actions">
+        {% if user.is_authenticated %}<a class="btn btn--primary" href="{% url 'community:new' %}{% if board %}?board={{ board.slug }}{% endif %}">{% icon "plus" %}{% translate "New thread" %}</a>
+        {% else %}<a class="btn btn--secondary" href="{% url 'account_login' %}?next={{ request.path|urlencode }}">{% translate "Sign in with GitHub" %}</a>{% endif %}
+      </div>
+    </header>
+
+    <form method="get" class="panel stack" role="search" aria-label="{% translate 'Search threads' %}">
+      <div class="field">
+        <label class="field__label" for="community-q">{% translate "Search threads by title" %}</label>
+        <input class="input" type="search" id="community-q" name="q" value="{{ query }}" maxlength="80">
+      </div>
+      <div class="field">
+        <label class="field__label" for="community-sort">{% translate "Sort" %}</label>
+        <span class="select-wrap"><select class="select" id="community-sort" name="sort">
+          <option value="hot"{% if sort == "hot" %} selected{% endif %}>{% translate "Hot" %}</option>
+          <option value="new"{% if sort == "new" %} selected{% endif %}>{% translate "Newest" %}</option>
+          <option value="top"{% if sort == "top" %} selected{% endif %}>{% translate "Most upvoted" %}</option>
+        </select>{% icon "chevron-down" %}</span>
+      </div>
+      <div class="field">
+        <label class="field__label" for="community-t">{% translate "Period (for Most upvoted)" %}</label>
+        <span class="select-wrap"><select class="select" id="community-t" name="t">
+          <option value="week"{% if window == "week" %} selected{% endif %}>{% translate "This week" %}</option>
+          <option value="month"{% if window == "month" %} selected{% endif %}>{% translate "This month" %}</option>
+          <option value="all"{% if window == "all" %} selected{% endif %}>{% translate "All time" %}</option>
+        </select>{% icon "chevron-down" %}</span>
+      </div>
+      <div><button class="btn btn--secondary" type="submit">{% translate "Apply filters" %}</button></div>
+    </form>
+
+    <section aria-labelledby="boards-title">
+      <h2 class="label" id="boards-title">{% translate "Boards" %}</h2>
+      <ul class="plate-list">
+        {% for item in boards %}
+          <li class="plate-row">
+            <div>
+              <p class="plate-row__name"><a href="{{ item.get_absolute_url }}"{% if board and board.pk == item.pk %} aria-current="page"{% endif %}>{{ item.display_name }}</a></p>
+              <p class="muted">{{ item.display_description }} · {% blocktranslate count counter=item.thread_count %}{{ counter }} thread{% plural %}{{ counter }} threads{% endblocktranslate %}</p>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    {% if pinned %}
+      <section aria-labelledby="pinned-title">
+        <h2 class="label" id="pinned-title">{% translate "Pinned" %}</h2>
+        <ul class="plate-list">{% for thread in pinned %}{% include "community/_row.html" %}{% endfor %}</ul>
+      </section>
+    {% endif %}
+
+    <section aria-labelledby="threads-title">
+      <h2 class="label" id="threads-title">{% translate "Threads" %}</h2>
+      {% if threads %}
+        <ul class="plate-list">{% for thread in threads %}{% include "community/_row.html" %}{% endfor %}</ul>
+        {% if page > 1 or has_next %}
+          <nav class="pager" aria-label="{% translate 'Pages' %}">
+            {% if page > 1 %}<a class="btn btn--secondary" rel="prev" href="?q={{ query|urlencode }}&amp;sort={{ sort }}&amp;t={{ window }}&amp;page={{ page|add:-1 }}">{% translate "Previous page" %}</a>{% endif %}
+            {% if has_next %}<a class="btn btn--secondary" rel="next" href="?q={{ query|urlencode }}&amp;sort={{ sort }}&amp;t={{ window }}&amp;page={{ page|add:1 }}">{% translate "Next page" %}</a>{% endif %}
+          </nav>
+        {% endif %}
+      {% elif query %}
+        <section class="empty empty--plain"><h3 class="empty__title">{% translate "No threads match this search" %}</h3><p class="empty__text">{% translate "Try another word from the title." %}</p></section>
+      {% else %}
+        <section class="empty empty--plain"><h3 class="empty__title">{% translate "No threads here yet" %}</h3><p class="empty__text">{% translate "Start the first one." %}</p></section>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

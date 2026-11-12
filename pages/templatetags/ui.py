@@ -83,13 +83,18 @@ def user_marks(person):
 
 
 @register.inclusion_tag("moderation/_menu.html", takes_context=True)
-def moderate_menu(context, project=None, person=None, entry=None):
-    """The "Moderate" menu on project pages, profiles, feed cards and log entries. Moderators only, never
-    on their own things. The /mod/ views check everything again."""
+def moderate_menu(context, project=None, person=None, entry=None, thread=None, reply=None):
+    """The "Moderate" menu on project pages, profiles, feed cards, log entries, community threads and replies.
+    Moderators only, never on their own things (except pinning their own thread). The /mod/ views check
+    everything again."""
     viewer, user = context.get("viewer"), context.get("user")
     if viewer is None or not viewer.can_moderate:
         return {"links": []}
     links = []
+    if thread is not None:
+        links.append((reverse("moderation:act_thread", args=[thread.pk]), gettext("Moderate this thread")))
+    if reply is not None and reply.author_id != user.pk:
+        links.append((reverse("moderation:act_reply", args=[reply.pk]), gettext("Moderate this reply")))
     if entry is not None:
         links.append((reverse("moderation:act_log_entry", args=[entry.pk]), gettext("Moderate this update")))
     if project is not None and project.owner_id != user.pk:
@@ -339,7 +344,8 @@ def maybe_url(name, *args):
 
 
 # Links appear by themselves once these URL names exist.
-NAV_LINKS = [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore")), ("news:list", (), _("News"))]
+NAV_LINKS = [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore")), ("news:list", (), _("News")),
+             ("community:home", (), _("Community"))]  # the last one only while COMMUNITY_ENABLED is on
 FOOTER_LINKS = [
     ("pages:about", (), _("About")),
     ("pages:how_proof_works", (), _("How proof works")),
@@ -358,6 +364,8 @@ def site_header(context, demo="", compact=False):
     path = request.path if request else ""
     links = []
     for name, args, label in NAV_LINKS:
+        if name.startswith("community:") and not settings.COMMUNITY_ENABLED:
+            continue
         url = "#" if demo else _url(name, *args)
         if url:
             links.append({"url": url, "label": label, "current": url != "#" and path.startswith(url)})

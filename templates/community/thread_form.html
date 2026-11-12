@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% if thread %}{% translate "Edit thread" %}{% else %}{% translate "New thread" %}{% endif %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <div class="container shell shell--narrow">
+    <header class="page-head">
+      <p class="label">{% translate "Community" %}</p>
+      <h1>{% if thread %}{% translate "Edit thread" %}{% else %}{% translate "New thread" %}{% endif %}</h1>
+      {% if thread and not title_editable %}<p class="lede">{% translate "The title can be changed during the first 15 minutes. After that, edits show an “edited” mark." %}</p>{% endif %}
+    </header>
+    {% if block %}<p class="notice" role="status">{{ block }}</p>{% endif %}
+    <form method="post" enctype="multipart/form-data" class="panel stack" novalidate>
+      {% csrf_token %}
+      {% include "includes/form_errors.html" %}
+      {% if form.board %}{% include "includes/form_field.html" with field=form.board %}{% endif %}
+      {% if form.title %}{% include "includes/form_field.html" with field=form.title %}{% endif %}
+      {% include "includes/form_field.html" with field=form.body %}
+      {% if form.images %}{% include "includes/form_field.html" with field=form.images %}{% endif %}
+      <div class="owner-bar">
+        <button class="btn btn--primary" type="submit">{% if thread %}{% translate "Save changes" %}{% else %}{% translate "Post thread" %}{% endif %}</button>
+        <a class="btn btn--secondary" href="{% if thread %}{{ thread.get_absolute_url }}{% else %}{% url 'community:home' %}{% endif %}">{% translate "Cancel" %}</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

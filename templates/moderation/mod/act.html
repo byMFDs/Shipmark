@@ -8,7 +8,7 @@
   <div class="container shell mod">
     <p><a href="{{ back }}">{% translate "Back" %}</a></p>
     <header class="page-head">
-      <p class="label">{% translate "Moderate" %} · {% if kind == "project" %}{% translate "Project" %}{% elif kind == "profile" %}{% translate "Profile" %}{% else %}{% translate "Build-log entry" %}{% endif %}</p>
+      <p class="label">{% translate "Moderate" %} · {% if kind == "project" %}{% translate "Project" %}{% elif kind == "profile" %}{% translate "Profile" %}{% elif kind == "thread" %}{% translate "Thread" %}{% elif kind == "reply" %}{% translate "Reply" %}{% else %}{% translate "Build-log entry" %}{% endif %}</p>
       <h1>{{ target_repr }}</h1>
       <p class="lede">{% if open_reports %}{% blocktranslate count counter=open_reports %}{{ counter }} open report about this. The decision is added to it.{% plural %}{{ counter }} open reports about this. The decision is added to the newest.{% endblocktranslate %}{% else %}{% translate "No report about this yet. A report in your name is created, so there is one history." %}{% endif %}</p>
     </header>

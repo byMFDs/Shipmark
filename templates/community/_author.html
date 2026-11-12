@@ -1,0 +1,2 @@
+{% load i18n ui %}{# Who wrote a post. A deleted account has no name, picture or link. Needs: author (User or None). #}
+{% if author %}<a href="{% url 'accounts:profile' author.username %}">@{{ author.username }}</a>{% user_marks author %}{% else %}<span class="muted">{% translate "[deleted]" %}</span>{% endif %}

@@ -177,6 +177,18 @@ class RenderedPagesTests(TestCase):
         cls.project = make_project(cls.ann, name="Tallyhook", live_url="https://tallyhook.test")
         make_project(cls.ann, name="Draftbox", status=Project.Status.DRAFT)
         BuildLogEntry.objects.create(project=cls.project, text="v2 out", kind=BuildLogEntry.Kind.UPDATE)
+        from datetime import timedelta
+
+        from django.utils import timezone
+
+        from community import services
+        from community.models import Board, Thread
+
+        User = type(cls.ann)
+        User.objects.filter(pk__in=[cls.ann.pk, cls.bob.pk]).update(date_joined=timezone.now() - timedelta(days=30))
+        cls.thread = Thread.objects.create(board=Board.objects.get(slug="help"), author=cls.ann, title="Tallyhook DNS",
+                                           body="TXT record", pinned=True)
+        services.create_reply(cls.bob, cls.thread, body="TTL", sticker_key="rocket")
 
     def pages(self):
         p = self.project
@@ -184,7 +196,10 @@ class RenderedPagesTests(TestCase):
                   "/legal/privacy/", "/login/"] + [f"/_dev/errors/{c}/" for c in ("400", "403", "404", "500", "csrf")]
         owner = ["/feed/", "/u/ann/", p.get_absolute_url(), "/new/", f"{p.get_absolute_url()}edit/",
                  f"{p.get_absolute_url()}delete/", "/settings/", "/settings/delete/"]
-        other = [f"/report/project/ann/{p.slug}/"]
+        t = self.thread
+        public += ["/community/", "/community/b/help/", t.get_absolute_url()]
+        owner += [t.get_absolute_url(), "/community/new/", f"/community/t/{t.pk}/edit/", f"/community/t/{t.pk}/delete/"]
+        other = [f"/report/project/ann/{p.slug}/", t.get_absolute_url(), f"/report/thread/{t.pk}/"]
         return [(None, url) for url in public] + [(self.ann, url) for url in owner] + [(self.bob, url) for url in other]
 
     def test_no_english_ui_text_in_other_languages(self):

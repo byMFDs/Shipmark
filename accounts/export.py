@@ -9,6 +9,7 @@ from allauth.socialaccount.models import SocialAccount
 from django.db.models import Prefetch
 from django.utils import timezone
 
+from community.models import CommunityImage, Reply, Thread, Vote
 from config import branding
 from moderation.models import Notice, Report, Sanction
 from projects.models import BuildLogEntry, Project
@@ -114,6 +115,40 @@ def _project(project, absolute):
     }
 
 
+def _community(user, absolute):
+    """The person's threads, replies, images and upvotes. Text they deleted is not stored any more, so it is
+    not here either; a post removed by moderators is included with the reason."""
+    images = {}
+    for image in CommunityImage.objects.filter(uploader=user).order_by("order", "id"):
+        images.setdefault(("thread", image.thread_id) if image.thread_id else ("reply", image.reply_id), []).append(
+            {"url": absolute(image.image.url), "width": image.width, "height": image.height, "alt": image.alt})
+    votes = Vote.objects.filter(user=user).select_related("thread", "reply__thread").order_by("created_at", "id")
+    return {
+        "threads": [
+            {
+                "url": absolute(t.get_absolute_url()), "board": t.board.slug, "title": t.title, "text": t.body,
+                "status": t.status, "pinned": t.pinned, "created_at": _dt(t.created_at), "edited_at": _dt(t.edited_at),
+                "deleted_at": _dt(t.deleted_at), "removed_at": _dt(t.removed_at), "removed_reason": t.removed_reason,
+                "images": images.get(("thread", t.pk), []),
+            }
+            for t in Thread.objects.filter(author=user).select_related("board").order_by("created_at", "id")
+        ],
+        "replies": [
+            {
+                "url": absolute(r.get_absolute_url()), "thread": r.thread.title, "text": r.body,
+                "sticker": r.sticker_key, "status": r.status, "created_at": _dt(r.created_at),
+                "edited_at": _dt(r.edited_at), "deleted_at": _dt(r.deleted_at), "removed_at": _dt(r.removed_at),
+                "removed_reason": r.removed_reason, "images": images.get(("reply", r.pk), []),
+            }
+            for r in Reply.objects.filter(author=user).select_related("thread").order_by("created_at", "id")
+        ],
+        "upvotes": [
+            {"url": absolute((v.thread or v.reply).get_absolute_url()), "created_at": _dt(v.created_at)}
+            for v in votes
+        ],
+    }
+
+
 def build_export(user, absolute=lambda url: url):
     """A JSON-ready dict. `absolute` turns site paths into full URLs (config.site.absolute_url: SITE_URL)."""
     projects = (
@@ -140,6 +175,7 @@ def build_export(user, absolute=lambda url: url):
             for like in likes
         ],
         "following": [{"username": f.following.username, "created_at": _dt(f.created_at)} for f in follows],
+        "community": _community(user, absolute),
         "reports_made": [
             {
                 "target": r.target_repr, "reason": r.reason, "details": r.details,

@@ -20,6 +20,9 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods, require_POST
 
 from accounts.roles import can_moderate, can_write
+from community import flags as community_flags
+from community.flags import community_view
+from community.models import Reply, Thread
 from config.ratelimit import is_limited
 from projects.models import BuildLogEntry, Project
 
@@ -53,7 +56,8 @@ STATUS_FILTERS = {
     "all": None,
 }
 KIND_FILTERS = {"project": Q(project__isnull=False), "profile": Q(target_user__isnull=False),
-                "entry": Q(log_entry__isnull=False)}
+                "entry": Q(log_entry__isnull=False), "thread": Q(thread__isnull=False),
+                "reply": Q(reply__isnull=False)}
 
 
 @moderator_required
@@ -84,7 +88,7 @@ def queue(request):
     return render(request, "moderation/mod/queue.html", {
         "reports": rows[:PAGE_SIZE], "has_next": len(rows) > PAGE_SIZE, "page": page,
         "status": status, "kind": kind, "reason": reason, "counts": counts,
-        "reasons": Report.Reason.choices,
+        "reasons": Report.Reason.choices, "community_enabled": community_flags.enabled(),
     })
 
 
@@ -116,13 +120,30 @@ def _protection(owner, actor):
     return ""
 
 
-def _actions_for(kind, has_report):
+def _actions_for(kind, has_report, post=None):
+    """Every decision that makes sense for this kind of target in its current state (`post`: thread or reply)."""
     actions = ["dismiss"] if has_report else []
+    if kind == "thread" and post is not None and not post.is_removed:
+        actions += [decisions.REMOVE_THREAD,
+                    decisions.UNLOCK_THREAD if post.is_locked else decisions.LOCK_THREAD,
+                    decisions.UNPIN_THREAD if post.pinned else decisions.PIN_THREAD]
+    elif kind == "reply" and post is not None and not post.is_removed:
+        actions += [decisions.REMOVE_REPLY]
     actions += {"project": ["remove_project"], "profile": ["clear_profile"], "entry": ["remove_project"]}.get(kind, [])
     return actions + ["mute", "ban"]
 
 
-def _perform(request, form, *, report, owner, project=None):
+def _limit(actions, owner, protected):
+    """Drops what may not be done here. A protected owner (or the moderator's own thread): only dismiss and
+    pin. No owner (deleted account, or the target is gone): only dismiss and decisions about the post itself."""
+    if protected:
+        return [a for a in actions if a in decisions.ALLOWED_ON_PROTECTED]
+    if owner is None:
+        return [a for a in actions if a == "dismiss" or a in decisions.POST_ACTIONS]
+    return actions
+
+
+def _perform(request, form, *, report, owner, project=None, post=None):
     """Runs the chosen decision. Returns None when done, or an HttpResponse for a refusal."""
     actor = request.user
     data = form.cleaned_data
@@ -140,6 +161,9 @@ def _perform(request, form, *, report, owner, project=None):
         elif action == decisions.CLEAR_PROFILE:
             decisions.clear_profile(owner, data["fields"], actor, reason, report=report)
             messages.success(request, _("Profile fields cleared."))
+        elif action in decisions.POST_DECISIONS:
+            decisions.POST_DECISIONS[action](post, actor, reason, report=report)
+            messages.success(request, _("Decision applied."))
         else:
             decisions.sanction(owner, decisions.KINDS[action], actor, reason, data["timedelta"], report=report)
             messages.success(request, _("Muted.") if action == decisions.MUTE else _("Banned."))
@@ -149,11 +173,13 @@ def _perform(request, form, *, report, owner, project=None):
 
 
 def _target_of(report):
-    """(kind, owner, project, entry) for a report; None parts when the target is gone."""
+    """(kind, owner, project, entry, post) for a report; None parts when the target is gone.
+    `post` is the community thread or reply."""
     entry = report.log_entry
     project = report.project or (entry.project if entry else None)
-    owner = report.target_owner or (project.owner if project else report.target_user)
-    return report.kind, owner, project, entry
+    post = report.thread or report.reply
+    owner = report.target_owner or (project.owner if project else report.target_user) or (post.author if post else None)
+    return report.kind, owner, project, entry, post
 
 
 @moderator_required
@@ -161,32 +187,31 @@ def _target_of(report):
 def report_detail(request, pk):
     report = get_object_or_404(
         Report.objects.select_related("reporter", "project__owner", "target_user", "log_entry__project__owner",
-                                      "target_owner", "handled_by"), pk=pk)
-    kind, owner, project, entry = _target_of(report)
+                                      "target_owner", "handled_by", "thread__author", "thread__board",
+                                      "reply__author", "reply__thread"), pk=pk)
+    kind, owner, project, entry, post = _target_of(report)
+    if kind in ("thread", "reply") and not community_flags.enabled():
+        raise Http404
     if request.method == "GET" and report.status == Report.Status.OPEN:
         report.status = Report.Status.IN_REVIEW
         report.save(update_fields=["status"])
         audit.log("moderation.report.in_review", report, actor=request.user)
-    actions = _actions_for(kind, True) if report.is_open else []
-    if owner is None and actions:
-        actions = ["dismiss"]
     protected = _protection(owner, request.user)
-    if protected:
-        actions = ["dismiss"] if report.is_open else []
+    actions = _limit(_actions_for(kind, True, post), owner, protected) if report.is_open else []
     form = ActionForm(request.POST or None, actions=actions, actor=request.user) if actions else None
     if request.method == "POST":
         if form is None:
             return HttpResponseForbidden(_("This report is closed."))
         if form.is_valid():
-            if form.cleaned_data["action"] != "dismiss" and protected:
+            if protected and form.cleaned_data["action"] not in decisions.ALLOWED_ON_PROTECTED:
                 return HttpResponseForbidden(protected)
-            refusal = _perform(request, form, report=report, owner=owner, project=project)
+            refusal = _perform(request, form, report=report, owner=owner, project=project, post=post)
             if refusal:
                 return refusal
             if refusal is None:
                 return redirect("moderation:queue")
     return render(request, "moderation/mod/report.html", {
-        "report": report, "kind": kind, "owner": owner, "project": project, "entry": entry,
+        "report": report, "kind": kind, "owner": owner, "project": project, "entry": entry, "post": post,
         "history": _owner_history(owner, exclude_report=report), "protected": protected, "form": form,
     })
 
@@ -205,18 +230,18 @@ def _linked_report(actor, owner, target_repr, category, **target):
     return report
 
 
-def _act(request, *, kind, owner, target_repr, back, project=None, target):
+def _act(request, *, kind, owner, target_repr, back, project=None, post=None, target):
     protected = _protection(owner, request.user)
-    if protected:
+    actions = _limit(_actions_for(kind, False, post), owner, protected)
+    if not actions:
         if request.method == "POST":
-            return HttpResponseForbidden(protected)
+            return HttpResponseForbidden(protected or _("There is nothing to decide here."))
         form = None
     else:
-        form = ActionForm(request.POST or None, actions=_actions_for(kind, False), actor=request.user,
-                          with_category=True)
+        form = ActionForm(request.POST or None, actions=actions, actor=request.user, with_category=True)
     if request.method == "POST" and form.is_valid():
         report = _linked_report(request.user, owner, target_repr, form.cleaned_data["category"], **target)
-        refusal = _perform(request, form, report=report, owner=owner, project=project)
+        refusal = _perform(request, form, report=report, owner=owner, project=project, post=post)
         if refusal:
             return refusal
         if refusal is None:
@@ -256,6 +281,24 @@ def act_log_entry(request, pk):
     project = entry.project
     return _act(request, kind="entry", owner=project.owner, target_repr=f"{project} · {entry.text[:80]}",
                 project=project, back=f"{project.get_absolute_url()}#log-{entry.pk}", target={"log_entry": entry})
+
+
+@community_view
+@moderator_required
+@require_http_methods(["GET", "POST"])
+def act_thread(request, pk):
+    thread = get_object_or_404(Thread.objects.select_related("author", "board"), pk=pk)
+    return _act(request, kind="thread", owner=thread.author, target_repr=thread.title, post=thread,
+                back=thread.get_absolute_url(), target={"thread": thread})
+
+
+@community_view
+@moderator_required
+@require_http_methods(["GET", "POST"])
+def act_reply(request, pk):
+    reply = get_object_or_404(Reply.objects.select_related("author", "thread"), pk=pk)
+    return _act(request, kind="reply", owner=reply.author, target_repr=decisions.reply_repr(reply), post=reply,
+                back=reply.get_absolute_url(), target={"reply": reply})
 
 
 # ---------- Notices ----------

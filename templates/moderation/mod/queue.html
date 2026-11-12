@@ -31,6 +31,8 @@
             <option value="project"{% if kind == "project" %} selected{% endif %}>{% translate "Project" %}</option>
             <option value="profile"{% if kind == "profile" %} selected{% endif %}>{% translate "Profile" %}</option>
             <option value="entry"{% if kind == "entry" %} selected{% endif %}>{% translate "Build-log entry" %}</option>
+            {% if community_enabled %}<option value="thread"{% if kind == "thread" %} selected{% endif %}>{% translate "Thread" %}</option>
+            <option value="reply"{% if kind == "reply" %} selected{% endif %}>{% translate "Reply" %}</option>{% endif %}
           </select></span></label>
         <label class="field"><span class="field__label">{% translate "Reason" %}</span>
           <span class="select-wrap"><select class="select" name="reason">
@@ -46,7 +48,7 @@
         {% for report in reports %}
           <li class="plate-row mod-row">
             <div class="mod-row__main">
-              <p class="label">{% if report.kind == "project" %}{% translate "Project" %}{% elif report.kind == "profile" %}{% translate "Profile" %}{% elif report.kind == "entry" %}{% translate "Build-log entry" %}{% else %}{% translate "Deleted" %}{% endif %} · {{ report.get_reason_display }} · {{ report.get_status_display }}{% if report.source == "moderator" %} · {% translate "by a moderator" %}{% endif %}</p>
+              <p class="label">{% if report.kind == "project" %}{% translate "Project" %}{% elif report.kind == "profile" %}{% translate "Profile" %}{% elif report.kind == "entry" %}{% translate "Build-log entry" %}{% elif report.kind == "thread" %}{% translate "Thread" %}{% elif report.kind == "reply" %}{% translate "Reply" %}{% else %}{% translate "Deleted" %}{% endif %} · {{ report.get_reason_display }} · {{ report.get_status_display }}{% if report.source == "moderator" %} · {% translate "by a moderator" %}{% endif %}</p>
               <p class="plate-row__name"><a href="{% url 'moderation:report_detail' report.pk %}">{{ report.target_repr }}</a></p>
               {% if report.details %}<p class="plate-row__tagline">{{ report.details|truncatechars:160 }}</p>{% endif %}
             </div>

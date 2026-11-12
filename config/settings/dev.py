@@ -9,6 +9,9 @@ BAN_HASH_KEY = BAN_HASH_KEY or "dev-insecure-ban-hash-key-do-not-use-in-producti
 
 SITE_URL = SITE_URL or "http://localhost:8000"  # noqa: F405
 
+# On for local work and for the tests; production keeps the default (off) until it is switched on in .env.
+COMMUNITY_ENABLED = env.bool("COMMUNITY_ENABLED", default=True)  # noqa: F405
+
 if not ALLOWED_HOSTS:  # noqa: F405
     ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]"]
 

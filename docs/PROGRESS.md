@@ -147,3 +147,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-12: Community round, stage 0 (plan only, no code; branch `community-1`). `docs/COMMUNITY_PLAN.md`: models, URL map, permission matrix, hot formula, abuse numbers, 32 stickers, image pipeline, risks, 10 open questions. `docs/COMMUNITY_STATUS.md` created. Baseline: 858 tests green (serial run; `test --parallel` crashes with a pickling error, not looked into).
   Next: answers to the open questions (2, 3, 4, 5, 9 affect stage 1), then "GO 1" (backend).
+
+- 2026-11-13: Community stage 1 (backend). App `community/` behind `COMMUNITY_ENABLED` (dev on, prod off): boards, threads, replies (depth 3), images, upvotes; reports on threads/replies in /mod/; remove/lock/pin with reasons, notices, AuditLog; age, link, image, rate and duplicate limits; Hot/New/Top in SQL; deletion and export cover it; minimal templates; 7 languages. Details: `docs/COMMUNITY_STATUS.md`.
+  Next: "GO 2a" (reply notifications, sticker files), then 2b (UI).

@@ -15,11 +15,16 @@
           {% if notice.kind == "project_removed" %}{% blocktranslate with name=notice.target_repr %}Moderators removed your project “{{ name }}”. Only you can still see it.{% endblocktranslate %}
           {% elif notice.kind == "project_restored" %}{% blocktranslate with name=notice.target_repr %}Your project “{{ name }}” was restored.{% endblocktranslate %}
           {% elif notice.kind == "profile_cleared" %}{% blocktranslate with fields=notice.target_repr %}Moderators cleared these profile fields: {{ fields }}.{% endblocktranslate %}
+          {% elif notice.kind == "thread_removed" %}{% blocktranslate with name=notice.target_repr %}Moderators removed your thread “{{ name }}”. Only you can still see it.{% endblocktranslate %}
+          {% elif notice.kind == "reply_removed" %}{% blocktranslate with name=notice.target_repr %}Moderators removed your reply in “{{ name }}”.{% endblocktranslate %}
+          {% elif notice.kind == "thread_locked" %}{% blocktranslate with name=notice.target_repr %}Moderators locked your thread “{{ name }}”. It stays readable; only moderators can reply.{% endblocktranslate %}
+          {% elif notice.kind == "thread_pinned" %}{% blocktranslate with name=notice.target_repr %}Moderators pinned your thread “{{ name }}”.{% endblocktranslate %}
+          {% elif notice.kind == "post_restored" %}{% blocktranslate with name=notice.target_repr %}Your post “{{ name }}” was restored.{% endblocktranslate %}
           {% elif notice.kind == "report_dismissed" %}{% blocktranslate with name=notice.target_repr %}We reviewed your report about {{ name }} and took no action.{% endblocktranslate %}
           {% else %}{% blocktranslate with name=notice.target_repr %}We reviewed your report about {{ name }} and took action. Thank you.{% endblocktranslate %}{% endif %}
         </p>
         {% if notice.reason %}<p><span class="label">{% translate "Reason" %}</span> {{ notice.reason }}</p>{% endif %}
-        {% if notice.kind == "project_removed" or notice.kind == "profile_cleared" %}
+        {% if notice.kind == "project_removed" or notice.kind == "profile_cleared" or notice.kind == "thread_removed" or notice.kind == "reply_removed" or notice.kind == "thread_locked" %}
           <p class="muted">{% blocktranslate with email=brand.CONTACT_EMAIL %}Questions or an appeal: <a href="mailto:{{ email }}">{{ email }}</a>{% endblocktranslate %}</p>
         {% endif %}
         <form method="post" action="{% url 'moderation:dismiss_notice' notice.pk %}">

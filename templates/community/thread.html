@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{{ thread.title }} · {% translate "Community" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{{ thread.title }} · {{ brand.SITE_NAME }}{% endblock %}
+{% block meta %}{% if thread.is_removed or page > 1 or sort != "best" %}<meta name="robots" content="noindex">{% endif %}{% endblock %}
+
+{% block content %}
+  <div class="container shell shell--narrow">
+    <p><a href="{{ thread.board.get_absolute_url }}">{{ thread.board.display_name }}</a></p>
+    <header class="page-head">
+      <p class="label">{% translate "Thread" %}{% if thread.pinned %} · {% translate "Pinned" %}{% endif %}{% if thread.is_locked %} · {% translate "Locked" %}{% endif %}{% if thread.is_removed %} · {% translate "Removed" %}{% endif %}</p>
+      <h1>{{ thread.title }}</h1>
+      <p class="muted">{% include "community/_author.html" with author=thread.author %} · <time datetime="{{ thread.created_at|date:'c' }}" title="{{ thread.created_at|date:'DATETIME_FORMAT' }}">{{ thread.created_at|ago }}</time>{% if thread.edited_at %} · {% translate "edited" %}{% endif %}</p>
+    </header>
+
+    {% if thread.is_removed %}
+      <div class="notice notice--sanction" role="status">
+        <p class="notice__title">{% translate "Moderators removed this thread. Only the author and moderators can see it." %}</p>
+        <p><span class="label">{% translate "Reason" %}</span> {{ thread.removed_reason }}</p>
+      </div>
+    {% elif thread.is_locked %}
+      <div class="notice" role="status">
+        <p class="notice__title">{% translate "This thread is locked. Only moderators can reply." %}</p>
+        {% if thread.lock_reason %}<p><span class="label">{% translate "Reason" %}</span> {{ thread.lock_reason }}</p>{% endif %}
+      </div>
+    {% endif %}
+
+    <article class="stack">
+      {% if thread.is_deleted %}<p class="muted">{% translate "[deleted]" %}</p>{% else %}<div class="prose">{{ thread.body_html|safe }}</div>{% endif %}
+      {% include "community/_images.html" %}
+      <div class="owner-bar">
+        {% if not thread.is_removed and not thread.is_deleted %}{% url 'community:vote_thread' thread.pk as vote_url %}{% include "community/_vote.html" with action=vote_url voted=voted_thread score=thread.score own=is_author %}{% endif %}
+        {% if is_author %}
+          {% if can_edit %}<a href="{% url 'community:thread_edit' thread.pk %}">{% translate "Edit" %}</a>{% endif %}
+          {% if not thread.is_deleted %}<a href="{% url 'community:thread_delete' thread.pk %}">{% translate "Delete" %}</a>{% endif %}
+        {% elif user.is_authenticated and not thread.is_removed %}
+          <a href="{% url 'moderation:report_thread' thread.pk %}">{% translate "Report" %}</a>
+        {% endif %}
+        {% moderate_menu thread=thread %}
+      </div>
+    </article>
+
+    <section class="stack" aria-labelledby="replies-title">
+      <h2 id="replies-title">{% blocktranslate count counter=thread.reply_count %}{{ counter }} reply{% plural %}{{ counter }} replies{% endblocktranslate %}</h2>
+      <p class="muted">{% translate "Sort" %}: {% if sort == "best" %}<strong>{% translate "Best" %}</strong>{% else %}<a href="?sort=best">{% translate "Best" %}</a>{% endif %} · {% if sort == "new" %}<strong>{% translate "Newest" %}</strong>{% else %}<a href="?sort=new">{% translate "Newest" %}</a>{% endif %}</p>
+      {% if nodes %}<ul>{% for node in nodes %}{% include "community/_reply.html" %}{% endfor %}</ul>{% endif %}
+      {% if page > 1 or has_next %}
+        <nav class="pager" aria-label="{% translate 'Pages' %}">
+          {% if page > 1 %}<a class="btn btn--secondary" rel="prev" href="?sort={{ sort }}&amp;page={{ page|add:-1 }}">{% translate "Previous page" %}</a>{% endif %}
+          {% if has_next %}<a class="btn btn--secondary" rel="next" href="?sort={{ sort }}&amp;page={{ page|add:1 }}">{% translate "Next page" %}</a>{% endif %}
+        </nav>
+      {% endif %}
+    </section>
+
+    <section id="reply-form" aria-labelledby="reply-title">
+      {% if form %}
+        <form method="post" action="{% url 'community:reply' thread.pk %}" enctype="multipart/form-data" class="panel stack" novalidate>
+          {% csrf_token %}
+          <h2 id="reply-title">{% if parent %}{% if parent.author %}{% blocktranslate with name=parent.author.username %}Reply to @{{ name }}{% endblocktranslate %}{% else %}{% translate "Reply to a reply" %}{% endif %}{% else %}{% translate "Reply to the thread" %}{% endif %}</h2>
+          {% if parent %}<input type="hidden" name="parent" value="{{ parent.pk }}"><p><a href="{{ thread.get_absolute_url }}#reply-form">{% translate "Reply to the thread instead" %}</a></p>{% endif %}
+          {% include "includes/form_errors.html" %}
+          {% include "includes/form_field.html" with field=form.body %}
+          {{ form.sticker }}
+          {% include "includes/form_field.html" with field=form.images %}
+          <div><button class="btn btn--primary" type="submit">{% translate "Send reply" %}</button></div>
+        </form>
+      {% elif not user.is_authenticated %}
+        <p><a class="btn btn--secondary" href="{% url 'account_login' %}?next={{ request.path|urlencode }}">{% translate "Sign in with GitHub" %}</a> <span class="muted">{% translate "Sign in to reply and vote." %}</span></p>
+      {% elif block %}
+        <p class="notice" role="status">{{ block }}</p>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

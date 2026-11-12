@@ -1,18 +1,22 @@
-"""Report a project, a profile or a build-log entry. Signed-in users who can write; moderators handle them in /mod/."""
+"""Report a project, a profile, a build-log entry, a community thread or a reply. Signed-in users who can write; moderators handle them in /mod/."""
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError, transaction
-from django.http import HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 
 from accounts.roles import can_write
+from community.flags import community_view
+from community.models import Reply, Thread
+from community.permissions import author_hidden
 from config.ratelimit import is_limited
 from projects.models import BuildLogEntry, Project
 
+from .decisions import reply_repr
 from .forms import ReportForm
 from .models import OPEN_STATES, Report
 from .pages import write_blocked_message
@@ -100,4 +104,40 @@ def report_log_entry(request, username, slug, pk):
         request, target_kwargs={"log_entry": entry}, target_owner=project.owner,
         target_repr=f"{project} · {entry.text[:80]}",
         title=_("Report an update on %(name)s") % {"name": project.name}, back_url=back,
+    )
+
+
+# ---------- Community ----------
+
+@community_view
+@login_required
+@require_http_methods(["GET", "POST"])
+def report_thread(request, pk):
+    thread = get_object_or_404(Thread.objects.public().select_related("author"), pk=pk)
+    back = thread.get_absolute_url()
+    if thread.author_id == request.user.pk:
+        messages.error(request, _("You cannot report your own post."))
+        return redirect(back)
+    return _handle(
+        request, target_kwargs={"thread": thread}, target_owner=thread.author, target_repr=thread.title,
+        title=_("Report the thread “%(name)s”") % {"name": thread.title}, back_url=back,
+    )
+
+
+@community_view
+@login_required
+@require_http_methods(["GET", "POST"])
+def report_reply(request, pk):
+    reply = get_object_or_404(
+        Reply.objects.filter(status=Reply.Status.PUBLISHED, deleted_at__isnull=True, thread__in=Thread.objects.public())
+        .select_related("author", "thread"), pk=pk)
+    if author_hidden(reply.author):
+        raise Http404
+    back = reply.get_absolute_url()
+    if reply.author_id == request.user.pk:
+        messages.error(request, _("You cannot report your own post."))
+        return redirect(back)
+    return _handle(
+        request, target_kwargs={"reply": reply}, target_owner=reply.author, target_repr=reply_repr(reply),
+        title=_("Report a reply in “%(name)s”") % {"name": reply.thread.title}, back_url=back,
     )
