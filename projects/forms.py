@@ -11,20 +11,45 @@ from accounts.forms import StyledFormMixin
 from verification.domain import forget_other_domains
 from verification.repo import remove_link
 
-from .models import MAX_LOG_LENGTH, BuildLogEntry, Project, Tag, Tool, unique_slug
+from .images import clean_screenshot
+from .models import MAX_LOG_LENGTH, MAX_SCREENSHOTS, BuildLogEntry, Project, Tag, Tool, unique_slug
 
 MAX_TAGS = 5
 TAG_RE = re.compile(r"^[\w+#.-]+(?: [\w+#.-]+)*$")
 REPO_RE = re.compile(r"^[A-Za-z0-9_.-]{1,39}/[A-Za-z0-9_.-]{1,100}$")
 
 
+class MultipleImageInput(forms.FileInput):
+    allow_multiple_selected = True
+
+
+class ScreenshotsField(forms.FileField):
+    """Several files from one <input type=file multiple>. Returns a list (empty when nothing was chosen)."""
+
+    def __init__(self, **kwargs):
+        kwargs.setdefault("widget", MultipleImageInput(attrs={"accept": "image/png,image/jpeg,image/webp"}))
+        super().__init__(**kwargs)
+
+    def clean(self, data, initial=None):
+        files = data if isinstance(data, (list, tuple)) else [data]
+        return [super(ScreenshotsField, self).clean(f, initial) for f in files if f]
+
+
 class ProjectForm(StyledFormMixin, forms.ModelForm):
-    """Create/edit. Status, slug and owner are not here: they are set by views, never by the user."""
+    """Create/edit. Status, slug and owner are not here: they are set by views, never by the user.
+
+    Screenshots chosen in this form are uploaded with the same Save, so a chosen file cannot be lost by
+    pressing another button. They are validated and re-encoded here; the view stores them.
+    """
 
     live_url = forms.URLField(required=False, max_length=200, assume_scheme="https")
     tags_text = forms.CharField(
         required=False, max_length=200, label=_("Tags"),
         help_text=_("Up to 5, separated by commas. For example: devtools, webhooks."),
+    )
+    screenshots = ScreenshotsField(
+        required=False, label=_("Add screenshots"),
+        help_text=_("Up to 4 images in total, PNG, JPEG or WebP, 5 MB each. You can choose several at once. The first one is the cover."),
     )
 
     class Meta:
@@ -43,8 +68,10 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
             "built_with": _("Self-declared: we do not check this."),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, existing_screenshots=0, **kwargs):
         super().__init__(*args, **kwargs)
+        self.existing_screenshots = existing_screenshots
+        self.fields["screenshots"].widget.attrs.update({"class": "input input--file", "data-shot-input": ""})
         self.fields["built_with"].queryset = Tool.objects.all()
         self.fields["built_with"].widget.attrs["class"] = "checkbox"  # StyledFormMixin gave it "input"
         self.fields["repo_full_name"].widget.attrs.update({"autocapitalize": "none", "spellcheck": "false"})
@@ -78,6 +105,40 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
         if value and not REPO_RE.match(value):
             raise ValidationError(_("Use the form owner/name, for example octocat/hello-world."))
         return value
+
+    def clean_screenshots(self):
+        """A list of re-encoded images (ContentFile). The view checks the count again under a lock."""
+        files = self.cleaned_data["screenshots"]
+        if not files:
+            return []
+        left = MAX_SCREENSHOTS - self.existing_screenshots
+        if left <= 0:
+            raise ValidationError(_("A project can have at most 4 screenshots. Remove one first."), code="too_many")
+        if len(files) > left:
+            raise ValidationError(
+                _("A project can have at most 4 screenshots. You chose %(chosen)d; you can add %(left)d more."),
+                code="too_many", params={"chosen": len(files), "left": left},
+            )
+        images, errors = [], []
+        for upload in files:
+            try:
+                images.append(clean_screenshot(upload))
+            except ValidationError as error:
+                errors.append(ValidationError("%(name)s: %(error)s" % {
+                    "name": (upload.name or "")[:60], "error": error.messages[0],
+                }))
+        if errors:
+            raise ValidationError(errors)
+        return images
+
+    def _post_clean(self):
+        super()._post_clean()
+        # A browser cannot keep a chosen file after a failed submit, so say what happened and what to do.
+        if self._errors and self.cleaned_data.get("screenshots") and "screenshots" not in self._errors:
+            self.add_error("screenshots", ValidationError(
+                _("Your images were not saved because of the problems above. Choose them again, then save."),
+                code="not_saved",
+            ))
 
     def clean_tags_text(self):
         tags = {}

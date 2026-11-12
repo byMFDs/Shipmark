@@ -51,12 +51,31 @@ Things that must be true on the server:
 
 - The reverse proxy **overwrites** `X-Forwarded-Proto` (never passes the client's value through). Django trusts it
   (`SECURE_PROXY_SSL_HEADER`); if gunicorn is reachable directly, anyone can fake HTTPS.
-- The proxy serves `/media/` from `MEDIA_ROOT` and allows request bodies a bit above the 5 MB image limit
-  (nginx: `client_max_body_size 10m;`).
+- The proxy serves `/media/` from `MEDIA_ROOT` and allows request bodies a bit above 20 MB: the project form
+  uploads up to 4 screenshots of 5 MB each with one Save (nginx: `client_max_body_size 25m;`). See "Serving media".
 - The user running gunicorn can write to `MEDIA_ROOT`. Static files need nothing from the proxy: WhiteNoise serves them
   (hashed names, gzip/brotli, far-future cache) from `staticfiles/`, so run `collectstatic` before every restart.
 - Static files: if `collectstatic` or a page fails with "Missing staticfiles manifest entry", a template points to a
   file that does not exist in `static/`. Fix the reference; do not work around it.
+
+### Serving media (screenshots, later avatars and covers)
+
+Django serves uploads only when `DEBUG` is on (`config/urls.py`, development). With `DEBUG` off it does not serve
+`/media/` at all, so without a proxy rule every screenshot is a broken image while the rows exist in the database.
+The web server in front of gunicorn must map `MEDIA_URL` (`/media/`) to `MEDIA_ROOT`, for example in nginx:
+
+```nginx
+location /media/ {
+    alias /srv/shipmark/media/;      # MEDIA_ROOT, with the trailing slash
+    add_header X-Content-Type-Options nosniff;
+    expires 30d;                      # file names are random and never reused
+}
+```
+
+Files are always re-encoded WebP with random names (`screenshots/<32 hex>.webp`), never the user's bytes or name, so
+the folder holds no executable content. Do not enable directory listing. Check after deploy: upload a screenshot, open
+the project page, the image loads (status 200, `Content-Type: image/webp`). Backups: see "Backups" (the media folder is
+backed up daily together with the database; restore both from the same day).
 
 ### Uploads and later S3-compatible storage
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 23:28+0000\n"
+"POT-Creation-Date: 2026-11-12 13:40+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
@@ -118,12 +118,12 @@ msgstr "Ce nom d’utilisateur est réservé. Choisissez-en un autre."
 msgid "You are signed out."
 msgstr "Vous êtes déconnecté."
 
-#: accounts/views.py:63 moderation/views.py:30 projects/views.py:39
+#: accounts/views.py:63 moderation/views.py:30 projects/views.py:40
 #: social/views.py:65
 msgid "Your account is suspended."
 msgstr "Votre compte est suspendu."
 
-#: accounts/views.py:66 projects/views.py:34 social/views.py:67
+#: accounts/views.py:66 projects/views.py:35 social/views.py:67
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr ""
 "Trop de modifications en peu de temps. Réessayez dans quelques minutes."
@@ -172,7 +172,7 @@ msgstr "Projets"
 msgid "Build log"
 msgstr "Journal de développement"
 
-#: config/settings/base.py:289 projects/forms.py:26
+#: config/settings/base.py:289 projects/forms.py:47
 #: templates/projects/detail.html:161
 msgid "Tags"
 msgstr "Étiquettes"
@@ -459,20 +459,30 @@ msgstr "%(count)s projet(s) de nouveau affiché(s)."
 msgid "Text"
 msgstr "Texte"
 
-#: projects/forms.py:27
+#: projects/forms.py:48
 msgid "Up to 5, separated by commas. For example: devtools, webhooks."
 msgstr ""
 "Jusqu’à 5, séparées par des virgules. Par exemple : devtools, webhooks."
 
-#: projects/forms.py:37 templates/pages/landing.html:123
+#: projects/forms.py:51
+msgid "Add screenshots"
+msgstr "Ajouter des captures d’écran"
+
+#: projects/forms.py:52
+msgid ""
+"Up to 4 images in total, PNG, JPEG or WebP, 5 MB each. You can choose "
+"several at once. The first one is the cover."
+msgstr "Jusqu’à 4 images au total, PNG, JPEG ou WebP, 5 Mo chacune. Vous pouvez en choisir plusieurs à la fois. La première sert de couverture."
+
+#: projects/forms.py:62 templates/pages/landing.html:123
 msgid "GitHub repository"
 msgstr "Dépôt GitHub"
 
-#: projects/forms.py:39
+#: projects/forms.py:64
 msgid "One line, up to 120 characters."
 msgstr "Une ligne, jusqu’à 120 caractères."
 
-#: projects/forms.py:40
+#: projects/forms.py:65
 msgid ""
 "Markdown works. Links, lists, bold and code are allowed; HTML and images are "
 "not."
@@ -480,58 +490,76 @@ msgstr ""
 "Le Markdown fonctionne. Les liens, listes, gras et code sont autorisés ; le "
 "HTML et les images ne le sont pas."
 
-#: projects/forms.py:41
+#: projects/forms.py:66
 msgid "The address where people can use it."
 msgstr "L’adresse où l’on peut l’utiliser."
 
-#: projects/forms.py:42
+#: projects/forms.py:67
 msgid "Like owner/name, or paste the GitHub link. It is checked later."
 msgstr ""
 "Sous la forme propriétaire/nom, ou collez le lien GitHub. Il est vérifié "
 "plus tard."
 
-#: projects/forms.py:43
+#: projects/forms.py:68
 msgid "Self-declared: we do not check this."
 msgstr "Déclaré par l’auteur : nous ne le vérifions pas."
 
-#: projects/forms.py:68
+#: projects/forms.py:95
 msgid "Enter a public web address, like https://example.com."
 msgstr "Saisissez une adresse web publique, comme https://example.com."
 
-#: projects/forms.py:79 verification/repo.py:280
+#: projects/forms.py:106 verification/repo.py:280
 msgid "Use the form owner/name, for example octocat/hello-world."
 msgstr "Utilisez la forme propriétaire/nom, par exemple octocat/hello-world."
 
-#: projects/forms.py:89
+#: projects/forms.py:116 projects/views.py:303
+msgid "A project can have at most 4 screenshots. Remove one first."
+msgstr ""
+"Un projet peut avoir 4 captures d’écran au maximum. Supprimez-en une d’abord."
+
+#: projects/forms.py:119
+#, python-format
+msgid ""
+"A project can have at most 4 screenshots. You chose %(chosen)d; you can add "
+"%(left)d more."
+msgstr "Un projet peut avoir au plus 4 captures d’écran. Vous en avez choisi %(chosen)d ; vous pouvez en ajouter encore %(left)d."
+
+#: projects/forms.py:139
+msgid ""
+"Your images were not saved because of the problems above. Choose them again, "
+"then save."
+msgstr "Vos images n’ont pas été enregistrées à cause des problèmes ci-dessus. Choisissez-les à nouveau, puis enregistrez."
+
+#: projects/forms.py:150
 msgid "Tags use letters, digits, spaces and + # . - (up to 30 characters)."
 msgstr ""
 "Les étiquettes utilisent des lettres, des chiffres, des espaces et + # . - "
 "(jusqu’à 30 caractères)."
 
-#: projects/forms.py:92
+#: projects/forms.py:153
 msgid "Use at most 5 tags."
 msgstr "Utilisez 5 étiquettes au maximum."
 
-#: projects/forms.py:129
+#: projects/forms.py:190
 msgid "What changed?"
 msgstr "Qu’est-ce qui a changé ?"
 
-#: projects/forms.py:130
+#: projects/forms.py:191
 msgid ""
 "Up to 500 characters. **Bold**, *italic*, [links](https://…) and `code` work."
 msgstr ""
 "Jusqu’à 500 caractères. **Gras**, *italique*, [liens](https://…) et `code` "
 "fonctionnent."
 
-#: projects/forms.py:132
+#: projects/forms.py:193
 msgid "Write a few words about the update first."
 msgstr "Écrivez d’abord quelques mots sur la mise à jour."
 
-#: projects/forms.py:135
+#: projects/forms.py:196
 msgid "This is the launch"
 msgstr "C’est le lancement"
 
-#: projects/forms.py:136
+#: projects/forms.py:197
 msgid ""
 "Marks this entry as Launched and sets the project's launch date to today. "
 "Only one per project."
@@ -539,7 +567,7 @@ msgstr ""
 "Marque cette entrée comme Lancement et fixe la date de lancement du projet à "
 "aujourd’hui. Une seule par projet."
 
-#: projects/forms.py:146 projects/forms.py:159
+#: projects/forms.py:207 projects/forms.py:220
 msgid ""
 "This project already has a launch entry. Delete it first to mark another one."
 msgstr ""
@@ -588,7 +616,10 @@ msgid ""
 "The linked public GitHub repository is owned by the author's personal GitHub "
 "account, or holds this project's verification file, which needs write access "
 "to the repository. Forks never count."
-msgstr "Le dépôt GitHub public lié appartient au compte GitHub personnel de l’auteur, ou contient le fichier de vérification de ce projet, ce qui exige un accès en écriture au dépôt. Les forks ne comptent jamais."
+msgstr ""
+"Le dépôt GitHub public lié appartient au compte GitHub personnel de "
+"l’auteur, ou contient le fichier de vérification de ce projet, ce qui exige "
+"un accès en écriture au dépôt. Les forks ne comptent jamais."
 
 #: projects/proof.py:31
 msgid ""
@@ -723,7 +754,9 @@ msgstr ""
 msgid ""
 "%(repo)s holds this project's verification file, which needs write access. "
 "Checked %(date)s."
-msgstr "%(repo)s contient le fichier de vérification de ce projet, ce qui exige un accès en écriture. Contrôlé le %(date)s."
+msgstr ""
+"%(repo)s contient le fichier de vérification de ce projet, ce qui exige un "
+"accès en écriture. Contrôlé le %(date)s."
 
 #: projects/proof.py:177
 msgid "Not a fork."
@@ -791,7 +824,9 @@ msgstr "Le champ Website du dépôt sur GitHub pointe vers %(domain)s."
 msgid ""
 "The repository holds this project's verification file, and %(domain)s is "
 "verified for the same project."
-msgstr "Le dépôt contient le fichier de vérification de ce projet, et %(domain)s est vérifié pour le même projet."
+msgstr ""
+"Le dépôt contient le fichier de vérification de ce projet, et %(domain)s est "
+"vérifié pour le même projet."
 
 #: projects/proof.py:215 templates/projects/detail.html:102
 msgid "Uptime"
@@ -805,43 +840,58 @@ msgstr ""
 "%(ok)s contrôles sur %(total)s des 30 derniers jours ont reçu une réponse de "
 "%(domain)s."
 
-#: projects/views.py:73
+#: projects/views.py:113
+msgid "Draft saved."
+msgstr "Brouillon enregistré."
+
+#: projects/views.py:113
 msgid "Draft saved. Add screenshots, then publish."
 msgstr "Brouillon enregistré. Ajoutez des captures d’écran, puis publiez."
 
-#: projects/views.py:87
+#: projects/views.py:134 projects/views.py:258
+msgid "Published."
+msgstr "Publié."
+
+#: projects/views.py:138
+#, python-format
+msgid "Changes saved. %(count)d screenshot added."
+msgid_plural "Changes saved. %(count)d screenshots added."
+msgstr[0] "Modifications enregistrées. %(count)d capture ajoutée."
+msgstr[1] "Modifications enregistrées. %(count)d captures ajoutées."
+
+#: projects/views.py:141
 msgid "Changes saved."
 msgstr "Modifications enregistrées."
 
-#: projects/views.py:111
+#: projects/views.py:165
 msgid "The description is too long."
 msgstr "La description est trop longue."
 
-#: projects/views.py:123
+#: projects/views.py:177
 msgid "Add a GitHub repository and save the project first."
 msgstr "Ajoutez d’abord un dépôt GitHub et enregistrez le projet."
 
-#: projects/views.py:125
+#: projects/views.py:179
 msgid "Sign in with GitHub to check a repository."
 msgstr "Connectez-vous avec GitHub pour contrôler un dépôt."
 
-#: projects/views.py:127
+#: projects/views.py:181
 msgid ""
 "This repository was checked a moment ago. You can check again in 10 minutes."
 msgstr ""
 "Ce dépôt vient d’être contrôlé. Vous pourrez le contrôler à nouveau dans 10 "
 "minutes."
 
-#: projects/views.py:135
+#: projects/views.py:189
 msgid "Repository checked. Repo owner earned."
 msgstr "Dépôt contrôlé. Repo owner obtenu."
 
-#: projects/views.py:137
+#: projects/views.py:191
 msgid "Repository checked. Repo owner will appear after a short manual review."
 msgstr ""
 "Dépôt contrôlé. Repo owner apparaîtra après une courte vérification manuelle."
 
-#: projects/views.py:139
+#: projects/views.py:193
 msgid ""
 "This repository is a fork. Forks cannot earn Repo owner; link the original "
 "repository."
@@ -849,55 +899,48 @@ msgstr ""
 "Ce dépôt est un fork. Les forks ne peuvent pas obtenir Repo owner ; liez le "
 "dépôt d’origine."
 
-#: projects/views.py:141
+#: projects/views.py:195
 msgid ""
 "This repository is not owned by your personal GitHub account, and its "
 "verification file was not found."
-msgstr "Ce dépôt n’appartient pas à votre compte GitHub personnel, et son fichier de vérification est introuvable."
+msgstr ""
+"Ce dépôt n’appartient pas à votre compte GitHub personnel, et son fichier de "
+"vérification est introuvable."
 
-#: projects/views.py:179
+#: projects/views.py:233
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr ""
 "Trop de contrôles. Patientez quelques minutes, puis vérifiez à nouveau."
 
-#: projects/views.py:188
+#: projects/views.py:242
 msgid "Verified. Confirmed again."
 msgstr "Vérifié. Confirmé à nouveau."
 
-#: projects/views.py:188
+#: projects/views.py:242
 msgid "Verified. Live earned."
 msgstr "Vérifié. Live obtenu."
 
-#: projects/views.py:208
-msgid "Published."
-msgstr "Publié."
-
-#: projects/views.py:218
+#: projects/views.py:268
 msgid "Moved back to drafts."
 msgstr "Remis en brouillon."
 
-#: projects/views.py:228
+#: projects/views.py:278
 msgid "Project deleted."
 msgstr "Projet supprimé."
 
-#: projects/views.py:241
+#: projects/views.py:292
 msgid "Choose an image first."
 msgstr "Choisissez d’abord une image."
 
-#: projects/views.py:257
-msgid "A project can have at most 4 screenshots. Remove one first."
-msgstr ""
-"Un projet peut avoir 4 captures d’écran au maximum. Supprimez-en une d’abord."
-
-#: projects/views.py:260
+#: projects/views.py:305
 msgid "Screenshot added."
 msgstr "Capture d’écran ajoutée."
 
-#: projects/views.py:278
+#: projects/views.py:323
 msgid "Screenshot removed."
 msgstr "Capture d’écran supprimée."
 
-#: projects/views.py:326
+#: projects/views.py:371
 #, python-format
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
@@ -905,15 +948,15 @@ msgstr ""
 "Un projet peut recevoir au maximum %(n)s entrées du journal de développement "
 "par jour. Réessayez demain."
 
-#: projects/views.py:339
+#: projects/views.py:384
 msgid "Posted. Launch date set to today."
 msgstr "Publié. Date de lancement fixée à aujourd’hui."
 
-#: projects/views.py:339
+#: projects/views.py:384
 msgid "Posted."
 msgstr "Publié."
 
-#: projects/views.py:365 projects/views.py:366
+#: projects/views.py:410 projects/views.py:411
 msgid "Entry deleted."
 msgstr "Entrée supprimée."
 
@@ -1970,13 +2013,13 @@ msgstr "Nom (Host)"
 
 #: templates/projects/_domain.html:26 templates/projects/_domain.html:28
 #: templates/projects/_domain.html:51 templates/projects/_embed_badge.html:15
-#: templates/projects/_embed_badge.html:20 templates/projects/form.html:82
+#: templates/projects/_embed_badge.html:20 templates/projects/form.html:91
 msgid "Copied"
 msgstr "Copié"
 
 #: templates/projects/_domain.html:26 templates/projects/_domain.html:28
 #: templates/projects/_domain.html:51 templates/projects/_embed_badge.html:15
-#: templates/projects/_embed_badge.html:20 templates/projects/form.html:82
+#: templates/projects/_embed_badge.html:20 templates/projects/form.html:91
 msgid "Copy"
 msgstr "Copier"
 
@@ -2182,9 +2225,51 @@ msgstr "Lancé le %(date)s"
 msgid "Delete entry"
 msgstr "Supprimer l’entrée"
 
+#: templates/projects/_screenshots_field.html:7
+msgid "Screenshots"
+msgstr "Captures d’écran"
+
+#: templates/projects/_screenshots_field.html:14
+#: templates/projects/_screenshots_field.html:16
+#, python-format
+msgid "Screenshot %(n)s"
+msgstr "Capture d’écran %(n)s"
+
+#: templates/projects/_screenshots_field.html:16
+msgid "Cover"
+msgstr "Couverture"
+
+#: templates/projects/_screenshots_field.html:18
+msgid "Move up"
+msgstr "Monter"
+
+#: templates/projects/_screenshots_field.html:19
+msgid "Move down"
+msgstr "Descendre"
+
+#: templates/projects/_screenshots_field.html:20
+msgid "Remove"
+msgstr "Retirer"
+
+#: templates/projects/_screenshots_field.html:32
+#, python-format
+msgid "Images chosen: %%(count)s. They upload when you save."
+msgstr "Images choisies : %%(count)s. Elles seront envoyées à l’enregistrement."
+
+#: templates/projects/_screenshots_field.html:33
+#, python-format
+msgid "A project can have at most %(max)s screenshots. Choose fewer images."
+msgstr "Un projet peut avoir au plus %(max)s captures d’écran. Choisissez moins d’images."
+
+#: templates/projects/_screenshots_field.html:36
+msgid "You have reached the limit of 4 screenshots. Remove one to add another."
+msgstr ""
+"Vous avez atteint la limite de 4 captures d’écran. Retirez-en une pour en "
+"ajouter une autre."
+
 #: templates/projects/delete.html:4 templates/projects/delete.html:15
-#: templates/projects/detail.html:35 templates/projects/form.html:154
-#: templates/projects/form.html:156
+#: templates/projects/detail.html:35 templates/projects/form.html:122
+#: templates/projects/form.html:124
 msgid "Delete project"
 msgstr "Supprimer le projet"
 
@@ -2218,11 +2303,11 @@ msgstr "Masqué par les modérateurs. Vous seul pouvez voir cette page."
 msgid "Draft. Only you can see this page."
 msgstr "Brouillon. Vous seul pouvez voir cette page."
 
-#: templates/projects/detail.html:31 templates/projects/form.html:141
+#: templates/projects/detail.html:31 templates/projects/form.html:110
 msgid "Publish project"
 msgstr "Publier le projet"
 
-#: templates/projects/detail.html:33 templates/projects/form.html:146
+#: templates/projects/detail.html:33 templates/projects/form.html:114
 msgid "Unpublish project"
 msgstr "Dépublier le projet"
 
@@ -2318,7 +2403,7 @@ msgstr ""
 "Nous contrôlons la propriété, le contrôle du domaine et la disponibilité. "
 "Nous ne pouvons pas contrôler qui a écrit le code."
 
-#: templates/projects/detail.html:153 templates/projects/form.html:51
+#: templates/projects/detail.html:153 templates/projects/form.html:52
 msgid "Built with (self-declared)"
 msgstr "Créé avec (déclaré par l’auteur)"
 
@@ -2340,39 +2425,45 @@ msgstr ""
 "Il commence comme brouillon. Personne ne le voit tant que vous ne l’avez pas "
 "publié."
 
-#: templates/projects/form.html:41
+#: templates/projects/form.html:26
+msgid ""
+"You chose images but did not upload them yet. Press Save first, or press "
+"this button again to continue without them."
+msgstr "Vous avez choisi des images mais ne les avez pas encore envoyées. Appuyez d’abord sur Enregistrer, ou appuyez à nouveau sur ce bouton pour continuer sans elles."
+
+#: templates/projects/form.html:42
 msgid "Preview is not available right now."
 msgstr "L’aperçu n’est pas disponible pour le moment."
 
-#: templates/projects/form.html:41
+#: templates/projects/form.html:42
 msgid "Preview"
 msgstr "Aperçu"
 
-#: templates/projects/form.html:61
+#: templates/projects/form.html:64
 msgid "Save changes"
 msgstr "Enregistrer les modifications"
 
-#: templates/projects/form.html:61
+#: templates/projects/form.html:64
 msgid "Save draft"
 msgstr "Enregistrer le brouillon"
 
-#: templates/projects/form.html:66
+#: templates/projects/form.html:75
 msgid "Repository check"
 msgstr "Contrôle du dépôt"
 
-#: templates/projects/form.html:69
+#: templates/projects/form.html:78
 #, python-format
 msgid "Repo owner: %(name)s, %(counter)s commit by you."
 msgid_plural "Repo owner: %(name)s, %(counter)s commits by you."
 msgstr[0] "Repo owner : %(name)s, %(counter)s commit de vous."
 msgstr[1] "Repo owner : %(name)s, %(counter)s commits de vous."
 
-#: templates/projects/form.html:70
+#: templates/projects/form.html:79
 #, python-format
 msgid "Checked %(date)s."
 msgstr "Contrôlé le %(date)s."
 
-#: templates/projects/form.html:72
+#: templates/projects/form.html:81
 #, python-format
 msgid ""
 "%(name)s passed the check. Repo owner will appear after a short manual "
@@ -2381,7 +2472,7 @@ msgstr ""
 "%(name)s a passé le contrôle. Repo owner apparaîtra après une courte "
 "vérification manuelle ; vous n’avez rien à faire."
 
-#: templates/projects/form.html:74
+#: templates/projects/form.html:83
 msgid ""
 "The rules for Repo owner changed. Check the repository again; it takes a few "
 "seconds."
@@ -2389,7 +2480,7 @@ msgstr ""
 "Les règles de Repo owner ont changé. Contrôlez à nouveau le dépôt ; cela "
 "prend quelques secondes."
 
-#: templates/projects/form.html:76
+#: templates/projects/form.html:85
 msgid ""
 "Not checked yet. Repo owner is earned when the public repository is owned by "
 "your personal GitHub account and is not a fork."
@@ -2397,100 +2488,61 @@ msgstr ""
 "Pas encore contrôlé. Repo owner s’obtient quand le dépôt public appartient à "
 "votre compte GitHub personnel et n’est pas un fork."
 
-#: templates/projects/form.html:79
+#: templates/projects/form.html:88
 msgid "Organisation or team repository?"
 msgstr "Dépôt d’une organisation ou d’une équipe ?"
 
-#: templates/projects/form.html:80
+#: templates/projects/form.html:89
 #, python-format
 msgid ""
 "Add a file named %(file)s to the root of the default branch, with only this "
 "text in it:"
-msgstr "Ajoutez à la racine de la branche par défaut un fichier nommé %(file)s qui contient uniquement ce texte :"
+msgstr ""
+"Ajoutez à la racine de la branche par défaut un fichier nommé %(file)s qui "
+"contient uniquement ce texte :"
 
-#: templates/projects/form.html:83
+#: templates/projects/form.html:92
 msgid ""
 "Then press Check repository. Only people who can push to the repository can "
 "add the file, so it proves write access. Keep it: it is checked again every "
 "week."
-msgstr "Cliquez ensuite sur « Contrôler le dépôt ». Seules les personnes qui peuvent pousser dans le dépôt peuvent ajouter ce fichier : il prouve donc un accès en écriture. Gardez-le, il est contrôlé à nouveau chaque semaine."
+msgstr ""
+"Cliquez ensuite sur « Contrôler le dépôt ». Seules les personnes qui peuvent "
+"pousser dans le dépôt peuvent ajouter ce fichier : il prouve donc un accès "
+"en écriture. Gardez-le, il est contrôlé à nouveau chaque semaine."
 
-#: templates/projects/form.html:86
+#: templates/projects/form.html:95
 msgid "Check repository"
 msgstr "Contrôler le dépôt"
 
-#: templates/projects/form.html:88
+#: templates/projects/form.html:97
 msgid "Uses the repository saved above. Once every 10 minutes."
 msgstr "Utilise le dépôt enregistré ci-dessus. Une fois toutes les 10 minutes."
 
-#: templates/projects/form.html:90
+#: templates/projects/form.html:99
 msgid "Add a GitHub repository above and save to check it."
 msgstr "Ajoutez un dépôt GitHub ci-dessus et enregistrez pour le contrôler."
 
-#: templates/projects/form.html:97
-msgid "Screenshots"
-msgstr "Captures d’écran"
-
-#: templates/projects/form.html:98
-#, python-format
-msgid ""
-"Up to %(max)s images, PNG, JPEG or WebP, 5 MB each. The first one is the "
-"cover."
-msgstr ""
-"Jusqu’à %(max)s images, PNG, JPEG ou WebP, 5 Mo chacune. La première sert de "
-"couverture."
-
-#: templates/projects/form.html:103
-#, python-format
-msgid "Screenshot %(n)s"
-msgstr "Capture d’écran %(n)s"
-
-#: templates/projects/form.html:107
-msgid "Move up"
-msgstr "Monter"
-
-#: templates/projects/form.html:111
-msgid "Move down"
-msgstr "Descendre"
-
-#: templates/projects/form.html:115
-msgid "Remove"
-msgstr "Retirer"
-
-#: templates/projects/form.html:126
-msgid "Add a screenshot"
-msgstr "Ajouter une capture d’écran"
-
-#: templates/projects/form.html:129
-msgid "Upload screenshot"
-msgstr "Téléverser la capture d’écran"
-
-#: templates/projects/form.html:132
-msgid "You have reached the limit of 4 screenshots. Remove one to add another."
-msgstr ""
-"Vous avez atteint la limite de 4 captures d’écran. Retirez-en une pour en "
-"ajouter une autre."
-
-#: templates/projects/form.html:137
+#: templates/projects/form.html:106
 msgid "Visibility"
 msgstr "Visibilité"
 
-#: templates/projects/form.html:139
+#: templates/projects/form.html:108
 msgid "This project is a draft. Publishing makes the page public."
 msgstr "Ce projet est un brouillon. La publication rend la page publique."
 
-#: templates/projects/form.html:144
+#: templates/projects/form.html:112
 msgid "This project is public."
 msgstr "Ce projet est public."
 
-#: templates/projects/form.html:149
+#: templates/projects/form.html:117
 msgid ""
 "Moderators hid this project. Contact support if you think this is a mistake."
 msgstr ""
 "Les modérateurs ont masqué ce projet. Contactez le support si vous pensez "
 "que c’est une erreur."
 
-#: templates/projects/form.html:155
+#: templates/projects/form.html:123
 msgid "This removes the project and its screenshots for good."
 msgstr "Cela supprime définitivement le projet et ses captures d’écran."
 

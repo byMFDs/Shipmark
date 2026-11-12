@@ -469,7 +469,45 @@
   border: 1px solid var(--line);
 }
 
+.shot__body { display: grid; gap: var(--s-2); min-width: 0; }
+
+.shot__label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .shot__actions { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+/* Screenshots field inside the main project form. */
+.shots { display: grid; gap: var(--s-3); }
+.shots .shot-list { margin-block: var(--s-1); }
+.field__label--sub { margin-top: var(--s-1); }
+
+.input--file { padding: var(--s-2); cursor: pointer; }
+
+.input--file::file-selector-button {
+  min-height: 2.5rem;
+  margin-right: var(--s-3);
+  padding: 0 var(--s-3);
+  background: var(--paper);
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--t-fast);
+}
+
+@media (hover: hover) {
+  .input--file:hover::file-selector-button { border-color: var(--text); }
+}
+
+.shots__chosen[hidden] { display: none; }
 
 @media (min-width: 48em) {
   .shot { grid-template-columns: 14rem minmax(0, 1fr); gap: var(--s-4); }

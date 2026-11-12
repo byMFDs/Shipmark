@@ -11,6 +11,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.utils.translation import ngettext
 from django.views.decorators.http import require_http_methods, require_POST
 
 from accounts.github import github_id as github_user_id
@@ -59,37 +60,90 @@ def owner_project(view):
 
 # ---------- Create, edit ----------
 
+def _edit_url(project, anchor=""):
+    return reverse("projects:edit", args=[project.owner.username, project.slug]) + anchor
+
+
+def _uploads_limited(request, images):
+    """One rate-limit hit per image (20 per hour per user), so several files count like several uploads."""
+    return any([is_limited("screenshot_add", request.user.pk, limit=20, window=3600) for _image in images])
+
+
+def store_screenshots(project, images):
+    """Saves already validated images after the existing ones. Returns how many were stored.
+
+    The project row is locked, so two parallel saves cannot both pass the limit (PostgreSQL; SQLite
+    serializes writes anyway). Extra images over the limit are dropped, never stored.
+    """
+    if not images:
+        return 0
+    with transaction.atomic():
+        Project.objects.select_for_update().get(pk=project.pk)
+        count = project.screenshots.count()
+        room = max(MAX_SCREENSHOTS - count, 0)
+        for offset, content in enumerate(images[:room]):
+            Screenshot.objects.create(project=project, image=content, order=count + offset)
+    return min(len(images), room)
+
+
+def _publish(project):
+    """Only drafts can be published. A hidden project is a moderation decision; the owner cannot undo it."""
+    if project.status != Project.Status.DRAFT:
+        return False
+    project.status = Project.Status.PUBLISHED
+    project.launched_at = project.launched_at or timezone.now()
+    project.save(update_fields=["status", "launched_at", "updated_at"])
+    return True
+
+
 @login_required
 @require_http_methods(["GET", "POST"])
 def new(request):
-    form = ProjectForm(request.POST or None)
+    form = ProjectForm(request.POST or None, request.FILES or None)
     if request.method == "POST":
         if request.user.is_suspended:
             return _locked(request)
         if is_limited("project_create", request.user.pk, limit=10, window=3600):
             form.add_error(None, TOO_MANY)
+        elif form.is_valid() and _uploads_limited(request, form.cleaned_data["screenshots"]):
+            form.add_error("screenshots", TOO_MANY)
         elif form.is_valid():
             project = form.save(owner=request.user)
-            messages.success(request, _("Draft saved. Add screenshots, then publish."))
-            return redirect("projects:edit", username=request.user.username, slug=project.slug)
-    return render(request, "projects/form.html", {"form": form, "project": None})
+            stored = store_screenshots(project, form.cleaned_data["screenshots"])
+            messages.success(request, _("Draft saved.") if stored else _("Draft saved. Add screenshots, then publish."))
+            return redirect(_edit_url(project, "#screenshots" if stored else ""))
+    return render(request, "projects/form.html", {"form": form, "project": None, "max_screenshots": MAX_SCREENSHOTS})
 
 
 @owner_project
 @require_http_methods(["GET", "POST"])
 def edit(request, project):
-    form = ProjectForm(request.POST or None, instance=project)
+    """Saves the fields and the chosen screenshots together. "Publish project" in the same form saves, then publishes."""
+    screenshots = list(project.screenshots.all())
+    form = ProjectForm(request.POST or None, request.FILES or None, instance=project,
+                       existing_screenshots=len(screenshots))
     if request.method == "POST":
         if is_limited("project_edit", request.user.pk, limit=60, window=600):
             form.add_error(None, TOO_MANY)
+        elif form.is_valid() and _uploads_limited(request, form.cleaned_data["screenshots"]):
+            form.add_error("screenshots", TOO_MANY)
         elif form.is_valid():
             form.save()
+            stored = store_screenshots(project, form.cleaned_data["screenshots"])
+            if "publish" in request.POST and _publish(project):
+                messages.success(request, _("Published."))
+                return redirect(project)
+            if stored:
+                messages.success(request, ngettext(
+                    "Changes saved. %(count)d screenshot added.", "Changes saved. %(count)d screenshots added.", stored,
+                ) % {"count": stored})
+                return redirect(_edit_url(project, "#screenshots"))
             messages.success(request, _("Changes saved."))
-            return redirect("projects:edit", username=project.owner.username, slug=project.slug)
+            return redirect(_edit_url(project))
     return render(request, "projects/form.html", {
         "form": form,
         "project": project,
-        "screenshots": list(project.screenshots.all()),
+        "screenshots": screenshots,
         "max_screenshots": MAX_SCREENSHOTS,
         "repo_link": getattr(project, "repo_link", None),
         "repo_token": repo_token_for(project) if project.repo_full_name else "",
@@ -200,11 +254,7 @@ def domain_verify(request, project):
 @owner_project
 @require_POST
 def publish(request, project):
-    """Only drafts can be published. A hidden project is a moderation decision; the owner cannot undo it."""
-    if project.status == Project.Status.DRAFT:
-        project.status = Project.Status.PUBLISHED
-        project.launched_at = project.launched_at or timezone.now()
-        project.save(update_fields=["status", "launched_at", "updated_at"])
+    if _publish(project):
         messages.success(request, _("Published."))
     return redirect(project)
 
@@ -235,7 +285,8 @@ def delete(request, project):
 @owner_project
 @require_POST
 def screenshot_add(request, project):
-    edit_url = redirect("projects:edit", username=project.owner.username, slug=project.slug)
+    """Upload without the rest of the form (one file, field "image"). The editor uses the main form."""
+    edit_url = redirect(_edit_url(project, "#screenshots"))
     upload = request.FILES.get("image")
     if not upload:
         messages.error(request, _("Choose an image first."))
@@ -248,15 +299,9 @@ def screenshot_add(request, project):
     except ValidationError as error:
         messages.error(request, error.messages[0])
         return edit_url
-    with transaction.atomic():
-        # Lock the project row so two parallel uploads cannot both pass the count (PostgreSQL;
-        # SQLite serializes writes anyway).
-        Project.objects.select_for_update().get(pk=project.pk)
-        count = project.screenshots.count()
-        if count >= MAX_SCREENSHOTS:
-            messages.error(request, _("A project can have at most 4 screenshots. Remove one first."))
-            return edit_url
-        Screenshot.objects.create(project=project, image=content, order=count)
+    if not store_screenshots(project, [content]):
+        messages.error(request, _("A project can have at most 4 screenshots. Remove one first."))
+        return edit_url
     messages.success(request, _("Screenshot added."))
     return edit_url
 
@@ -276,7 +321,7 @@ def screenshot_delete(request, project, pk):
     shot.delete()
     _renumber(project)
     messages.success(request, _("Screenshot removed."))
-    return redirect("projects:edit", username=project.owner.username, slug=project.slug)
+    return redirect(_edit_url(project, "#screenshots"))
 
 
 @owner_project
@@ -294,7 +339,7 @@ def screenshot_move(request, project, pk):
         for i, s in enumerate(shots):
             s.order = i
         Screenshot.objects.bulk_update(shots, ["order"])
-    return redirect("projects:edit", username=project.owner.username, slug=project.slug)
+    return redirect(_edit_url(project, "#screenshots"))
 
 
 # ---------- Build log ----------

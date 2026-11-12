@@ -1,0 +1,45 @@
+{% load i18n ui %}
+{# Screenshots inside the main project form: chosen files upload with the same Save (or Publish).    #}
+{# Move/Remove buttons belong to small forms after the main form (projects/form.html) via            #}
+{# the form="" attribute, because forms cannot be nested. Works without JS.                           #}
+{% with field=form.screenshots %}
+<fieldset class="field fieldset shots" id="screenshots">
+  <legend class="field__label">{% translate "Screenshots" %}</legend>
+  <p class="field__hint" id="{{ field.auto_id }}_hint">{{ field.help_text }}</p>
+
+  {% if screenshots %}
+    <ol class="shot-list">
+      {% for shot in screenshots %}
+        <li class="shot">
+          <img src="{{ shot.image.url }}" width="{{ shot.width }}" height="{{ shot.height }}" alt="{% blocktranslate with n=forloop.counter %}Screenshot {{ n }}{% endblocktranslate %}" loading="lazy">
+          <div class="shot__body">
+            <p class="shot__label">{% if forloop.first %}{% translate "Cover" %}{% else %}{% blocktranslate with n=forloop.counter %}Screenshot {{ n }}{% endblocktranslate %}{% endif %}</p>
+            <div class="shot__actions">
+              <button class="btn btn--quiet" type="submit" form="shot-move-{{ shot.pk }}" name="direction" value="up"{% if forloop.first %} disabled{% endif %}>{% translate "Move up" %}</button>
+              <button class="btn btn--quiet" type="submit" form="shot-move-{{ shot.pk }}" name="direction" value="down"{% if forloop.last %} disabled{% endif %}>{% translate "Move down" %}</button>
+              <button class="btn btn--danger" type="submit" form="shot-delete-{{ shot.pk }}">{% translate "Remove" %}</button>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  {% endif %}
+
+  {% if screenshots|length < max_screenshots %}
+    <label class="field__label field__label--sub" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    <p class="field__hint shots__chosen" data-shot-status aria-live="polite" hidden
+       data-chosen="{% translate "Images chosen: %(count)s. They upload when you save." %}"
+       data-over="{% blocktranslate with max=max_screenshots %}A project can have at most {{ max }} screenshots. Choose fewer images.{% endblocktranslate %}"
+       data-max="{{ max_screenshots }}" data-existing="{{ screenshots|length }}"></p>
+  {% else %}
+    <p class="muted">{% translate "You have reached the limit of 4 screenshots. Remove one to add another." %}</p>
+  {% endif %}
+
+  {% if field.errors %}
+    <div id="{{ field.auto_id }}_error">
+      {% for error in field.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
+    </div>
+  {% endif %}
+</fieldset>
+{% endwith %}

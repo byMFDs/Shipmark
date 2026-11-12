@@ -22,7 +22,8 @@
 
       <div class="sheet__body">
 
-      <form method="post" class="panel stack" novalidate data-project-form data-preview-url="{% url 'projects:preview' %}">
+      <form method="post" enctype="multipart/form-data" class="panel stack" id="project-form" novalidate data-project-form data-preview-url="{% url 'projects:preview' %}"
+            data-unsaved="{% translate "You chose images but did not upload them yet. Press Save first, or press this button again to continue without them." %}">
         {% csrf_token %}
         {% include "includes/form_errors.html" %}
         {% include "includes/form_field.html" with field=form.name %}
@@ -58,8 +59,16 @@
           {% for error in form.built_with.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
         </fieldset>
 
+        {% include "projects/_screenshots_field.html" %}
+
         <div><button class="btn btn--primary" type="submit">{% if project %}{% translate "Save changes" %}{% else %}{% translate "Save draft" %}{% endif %}</button></div>
       </form>
+
+      {# Targets of the Move/Remove buttons in the screenshots list (form="" attribute; forms cannot be nested). #}
+      {% for shot in screenshots %}
+        <form method="post" id="shot-move-{{ shot.pk }}" action="{% url 'projects:screenshot_move' project.owner.username project.slug shot.pk %}" hidden>{% csrf_token %}</form>
+        <form method="post" id="shot-delete-{{ shot.pk }}" action="{% url 'projects:screenshot_delete' project.owner.username project.slug shot.pk %}" hidden>{% csrf_token %}</form>
+      {% endfor %}
 
       {% if project %}
         <section class="panel stack" aria-labelledby="repo-title">
@@ -93,53 +102,12 @@
 
         {% include "projects/_domain.html" %}
 
-        <section class="panel stack" aria-labelledby="shots-title">
-          <h2 id="shots-title">{% translate "Screenshots" %}</h2>
-          <p class="field__hint">{% blocktranslate with max=max_screenshots %}Up to {{ max }} images, PNG, JPEG or WebP, 5 MB each. The first one is the cover.{% endblocktranslate %}</p>
-          {% if screenshots %}
-            <ol class="shot-list">
-              {% for shot in screenshots %}
-                <li class="shot">
-                  <img src="{{ shot.image.url }}" width="{{ shot.width }}" height="{{ shot.height }}" alt="{% blocktranslate with n=forloop.counter %}Screenshot {{ n }}{% endblocktranslate %}" loading="lazy">
-                  <div class="shot__actions">
-                    <form method="post" action="{% url 'projects:screenshot_move' project.owner.username project.slug shot.pk %}">
-                      {% csrf_token %}<input type="hidden" name="direction" value="up">
-                      <button class="btn btn--quiet" type="submit"{% if forloop.first %} disabled{% endif %}>{% translate "Move up" %}</button>
-                    </form>
-                    <form method="post" action="{% url 'projects:screenshot_move' project.owner.username project.slug shot.pk %}">
-                      {% csrf_token %}<input type="hidden" name="direction" value="down">
-                      <button class="btn btn--quiet" type="submit"{% if forloop.last %} disabled{% endif %}>{% translate "Move down" %}</button>
-                    </form>
-                    <form method="post" action="{% url 'projects:screenshot_delete' project.owner.username project.slug shot.pk %}">
-                      {% csrf_token %}
-                      <button class="btn btn--danger" type="submit">{% translate "Remove" %}</button>
-                    </form>
-                  </div>
-                </li>
-              {% endfor %}
-            </ol>
-          {% endif %}
-          {% if screenshots|length < max_screenshots %}
-            <form method="post" enctype="multipart/form-data" class="stack" action="{% url 'projects:screenshot_add' project.owner.username project.slug %}">
-              {% csrf_token %}
-              <div class="field">
-                <label class="field__label" for="screenshot-file">{% translate "Add a screenshot" %}</label>
-                <input class="input" id="screenshot-file" type="file" name="image" accept="image/png,image/jpeg,image/webp" required>
-              </div>
-              <div><button class="btn btn--secondary" type="submit">{% translate "Upload screenshot" %}</button></div>
-            </form>
-          {% else %}
-            <p class="muted">{% translate "You have reached the limit of 4 screenshots. Remove one to add another." %}</p>
-          {% endif %}
-        </section>
-
         <section class="panel stack" aria-labelledby="status-title">
           <h2 id="status-title">{% translate "Visibility" %}</h2>
           {% if project.status == "draft" %}
             <p class="muted">{% translate "This project is a draft. Publishing makes the page public." %}</p>
-            <form method="post" action="{% url 'projects:publish' project.owner.username project.slug %}">
-              {% csrf_token %}<button class="btn btn--primary" type="submit">{% translate "Publish project" %}</button>
-            </form>
+            {# Part of the main form: publishing also saves the fields and uploads chosen screenshots. #}
+            <div><button class="btn btn--primary" type="submit" form="project-form" name="publish" value="1">{% translate "Publish project" %}</button></div>
           {% elif project.status == "published" %}
             <p class="muted">{% translate "This project is public." %}</p>
             <form method="post" action="{% url 'projects:unpublish' project.owner.username project.slug %}">
