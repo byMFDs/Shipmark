@@ -1,6 +1,6 @@
 # Privacy policy
 
-> **Draft**, last updated 11 November 2026. This text has not been reviewed by a lawyer yet.
+> **Draft**, last updated 12 November 2026. This text has not been reviewed by a lawyer yet.
 
 This page explains what {{ site_name }} stores about you, why, for how long, and what you can do about it. It describes what the site actually does.
 
@@ -13,7 +13,9 @@ Questions or requests: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **When you sign in with GitHub.** We receive from GitHub your account id, login, name, bio, avatar link and the other public fields of your GitHub profile, plus the email addresses on your GitHub account. We ask GitHub only for `read:user` and `user:email`: we never get access to your repositories, private or public, through your account. We do not keep your GitHub access token after sign-in. We need this to create your account and to recognise you next time (performance of our agreement with you). Your GitHub login is refreshed at every sign-in, so your profile always links to your current GitHub account.
 
-**Your profile.** Username, display name, bio, website and language. The name and bio start as your GitHub values; you can change them in Settings. Your username, display name, bio, website, GitHub login and the month you joined are **public**.
+**Your profile.** Username, display name, headline, About, location, a status (for example "open to work"), up to 10 skills, up to 6 links, up to 3 pinned projects and your language. Everything except the username is optional. The display name and About start as your GitHub name and bio; you can change or remove them in Settings. We also store the address of your GitHub picture, only so that "Use my GitHub picture" can copy it; it is never shown. Your username, display name, headline, About, location, status, skills, links, pinned projects, GitHub login and the month you joined are **public**.
+
+**Profile picture and cover.** You can upload a picture and a wide cover image, or copy your GitHub picture once with "Use my GitHub picture". Every image is re-encoded (the picture to 512×512, the cover to 1500×500), which removes hidden metadata such as GPS location, gets a random file name and is stored on our own server: pages never load your picture from GitHub. Both are **public**. When you remove or replace one, or delete your account, the file is deleted; copies stay in backups for up to 14 days. Without a picture, your initials are shown.
 
 **Your email address.** Stored with your account and visible only to our staff. It is never shown on the site. The site does not send email; we would use the address only to contact you about your account or a report.
 
@@ -29,7 +31,7 @@ The results are shown on your public project page.
 
 **Follows and likes.** We store whom you follow and which projects you like. Others see only the counts, not the lists.
 
-**Reports and moderation.** If you report a project, a profile or a build-log update, we store the reason and the details you write. Moderators (people with the moderator badge) and staff see reports; the person you report is never told who reported them. When moderators act, we store the decision and its reason: a removed project keeps its content and the reason (only you and staff see it), cleared profile fields are deleted, and mutes and bans are stored with their reason, start and end. You see the reason in a notice on the site, which we keep until you delete your account. Decisions about you and these notices are included in "Download my data".
+**Reports and moderation.** If you report a project, a profile or a build-log update, we store the reason and the details you write. Reports are seen by moderators (people with the moderator badge) and staff. To decide, they also see the reported content and the reported person's history on {{ site_name }}: when they joined, earlier sanctions, other reports about them and removed projects. The moderation pages do not show email addresses. The person you report is never told who reported them. When moderators act, we store the decision and its reason: a removed project keeps its content and the reason (only you, moderators and staff see it), cleared profile fields (picture and cover, headline and About, or links) are deleted, and mutes and bans are stored with their reason, start and end. You see the reason in a notice on the site, which we keep until you delete your account. Decisions about you and these notices are included in "Download my data". To appeal a decision, write to [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Ban evasion.** When an account is banned, we store a salted one-way hash of its GitHub user id (never the id itself), with the reason and the end date. It only lets us recognise the same GitHub account if it signs up again during the ban. It is deleted when the ban ends or is lifted, also when the banned account was deleted in the meantime.
 
@@ -47,11 +49,12 @@ The results are shown on your public project page.
 
 **Analytics and tracking.** There are none: no analytics, no advertising and no tracking scripts. Fonts are served from our own server.
 
-**Backups.** Every day we back up the database and the uploaded screenshots and keep each backup for 14 days. If you delete your account, your data stays in those backups until the last one that contains it is replaced, up to 14 days later.
+**Backups.** Every day we back up the database and the uploaded images (screenshots, profile pictures and covers) and keep each backup for 14 days. If you delete your account, your data stays in those backups until the last one that contains it is replaced, up to 14 days later.
 
 ## How long we keep it {#retention}
 
 - Your account, profile, projects, follows and likes: until you delete them or your account.
+- Profile picture and cover: until you remove or replace them, or delete your account.
 - Uptime checks: 90 days.
 - Moderation decisions about you (mutes, bans, removed projects) and notices: while your account exists; they are deleted with it. Reports about you stay without a link to your account, with only the name shown at the time.
 - Ban hash of a GitHub id: only until the ban ends or is lifted.
@@ -73,9 +76,9 @@ We do not sell your data and do not share it for advertising.
 
 ## Your rights {#rights}
 
-- **See and download your data:** Settings → "Download my data" gives you a JSON file with your profile, GitHub details, projects, build log, likes, follows and reports you made.
+- **See and download your data:** Settings → "Download my data" gives you a JSON file with your profile (with your links, skills, pinned projects and the addresses of your picture and cover), GitHub details, projects, build log, likes, follows, reports you made, and moderation decisions and notices about you.
 - **Correct it:** edit your profile in Settings and your projects on their pages.
-- **Delete it:** Settings → "Delete account". This removes your profile and all your projects, likes and follows at once and cannot be undone. Your username becomes free.
+- **Delete it:** Settings → "Delete account". This removes your profile, your picture and cover, and all your projects, likes and follows at once and cannot be undone. Your username becomes free.
 - **Object or complain:** write to [{{ contact_email }}](mailto:{{ contact_email }}). If you live in the EU, UK or Ukraine, you can also complain to your data protection authority.
 
 ## Cookies {#cookies}

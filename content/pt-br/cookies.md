@@ -1,6 +1,6 @@
 # Política de cookies
 
-> **Rascunho**, última atualização em 10 de novembro de 2026. Este texto ainda não foi revisado por um advogado.
+> **Rascunho**, última atualização em 12 de novembro de 2026. Este texto ainda não foi revisado por um advogado.
 >
 > Tradução por conveniência; a versão em inglês prevalece.
 
@@ -12,7 +12,7 @@ O {{ site_name }} usa apenas os cookies de que o site precisa para funcionar. N�
 |---|---|---|
 | `sessionid` | Mantém você conectado e guarda o estado do login enquanto você está no GitHub | 2 semanas, ou até você sair da conta |
 | `csrftoken` | Protege os formulários contra envio por outros sites | 1 ano |
-| `django_language` | Lembra o idioma que você escolheu no seletor | 1 ano |
+| `django_language` | Lembra seu idioma: o que você escolheu no seletor ou o salvo na sua conta (definido ao entrar, por isso continua depois de sair) | 1 ano |
 | `messages` | Mostra um aviso único, como “Você saiu da conta” | Até o aviso ser exibido |
 
 ## Guardado apenas no seu navegador {#local}

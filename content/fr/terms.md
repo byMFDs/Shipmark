@@ -1,6 +1,6 @@
 # Conditions d’utilisation
 
-> **Brouillon**, dernière mise à jour le 10 novembre 2026 (version {{ terms_version }}). Ce texte n’a pas encore été relu par un juriste.
+> **Brouillon**, dernière mise à jour le 12 novembre 2026 (version {{ terms_version }}). Ce texte n’a pas encore été relu par un juriste.
 >
 > Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
@@ -18,7 +18,7 @@ Un lieu public pour présenter des logiciels que vous avez livrés, avec des poi
 
 ## Votre contenu {#content}
 
-- Vous conservez tous les droits sur les projets, textes et captures d’écran que vous publiez.
+- Vous conservez tous les droits sur les projets, textes, captures d’écran et images de profil que vous publiez.
 - Vous nous autorisez à les stocker, les afficher et les partager sur {{ site_name }} (pages de projet, profils, fil, recherche et badges) tant qu’ils sont publiés. Cette autorisation prend fin lorsque vous les supprimez, sauf pour les copies que d’autres ont déjà intégrées ou enregistrées.
 - Ne publiez que ce que vous avez le droit de publier. Ne présentez pas le travail d’autrui comme le vôtre.
 - Les outils d’IA que vous indiquez sous « Créé avec » sont votre propre déclaration. Nous les affichons comme déclarés par l’auteur et ne les contrôlons pas.
@@ -38,7 +38,7 @@ Les poinçons sont calculés à partir de nos derniers contrôles. Ils peuvent c
 
 ## Modération {#moderation}
 
-Toute personne connectée peut signaler un projet, un profil ou une entrée du journal de construction. Les modérateurs peuvent rejeter un signalement, retirer un projet, effacer des champs du profil (avatar, bio, liens), mettre un compte en sourdine jusqu’à 7 jours (vous pouvez toujours lire, modifier vos paramètres, télécharger ou supprimer vos données, mais pas publier) ou le bannir jusqu’à 14 jours (vous êtes déconnecté, ne pouvez pas vous connecter, et votre profil et vos projets ne sont pas publics). Chaque décision est accompagnée d’un motif que vous voyez. Les sanctions plus longues ou permanentes sont décidées uniquement par les administrateurs du site, qui peuvent aussi masquer des projets ou suspendre des comptes. Supprimer votre compte ne met pas fin à un bannissement (voir la [Politique de confidentialité](/legal/privacy/)). Si vous pensez que nous nous sommes trompés, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
+Toute personne connectée peut signaler un projet, un profil ou une entrée du journal de construction. Les modérateurs peuvent rejeter un signalement, retirer un projet, effacer des champs du profil (photo et couverture, phrase d’accroche et « À propos », liens), mettre un compte en sourdine jusqu’à 7 jours (vous pouvez toujours lire, modifier vos paramètres, télécharger ou supprimer vos données, mais pas publier) ou le bannir jusqu’à 14 jours (vous êtes déconnecté, ne pouvez pas vous connecter, et votre profil et vos projets ne sont pas publics). Chaque décision est accompagnée d’un motif que vous voyez. Les sanctions plus longues ou permanentes sont décidées uniquement par les administrateurs du site, qui peuvent aussi masquer des projets ou suspendre des comptes. Supprimer votre compte ne met pas fin à un bannissement (voir la [Politique de confidentialité](/legal/privacy/)). Si vous pensez que nous nous sommes trompés, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Fin du service {#ending}
 

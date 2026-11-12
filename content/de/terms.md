@@ -1,6 +1,6 @@
 # Nutzungsbedingungen
 
-> **Entwurf**, zuletzt aktualisiert am 10. November 2026 (Version {{ terms_version }}). Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
+> **Entwurf**, zuletzt aktualisiert am 12. November 2026 (Version {{ terms_version }}). Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
 >
 > Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
@@ -18,7 +18,7 @@ Ein öffentlicher Ort, um veröffentlichte Software zu zeigen, mit Prüfzeichen,
 
 ## Deine Inhalte {#content}
 
-- Du behältst alle Rechte an den Projekten, Texten und Screenshots, die du einstellst.
+- Du behältst alle Rechte an den Projekten, Texten, Screenshots und Profilbildern, die du einstellst.
 - Du erlaubst uns, sie auf {{ site_name }} zu speichern, anzuzeigen und zu teilen (Projektseiten, Profile, Feed, Suche und Badges), solange sie veröffentlicht sind. Diese Erlaubnis endet, wenn du sie löschst, außer für Kopien, die andere bereits eingebettet oder gespeichert haben.
 - Stelle nur ein, wozu du berechtigt bist. Gib die Arbeit anderer nicht als deine aus.
 - Die KI-Tools, die du unter „Gebaut mit“ nennst, sind deine eigene Angabe. Wir zeigen sie als selbst angegeben an und prüfen sie nicht.
@@ -38,7 +38,7 @@ Prüfzeichen werden aus unseren neuesten Prüfungen berechnet. Sie können sich 
 
 ## Moderation {#moderation}
 
-Alle angemeldeten Personen können ein Projekt, ein Profil oder einen Build-Log-Eintrag melden. Moderatoren können eine Meldung ablehnen, ein Projekt entfernen, Profilfelder leeren (Avatar, Bio, Links), ein Konto bis zu 7 Tage stummschalten (du kannst weiter lesen, Einstellungen ändern, deine Daten herunterladen oder löschen, aber nichts veröffentlichen) oder es bis zu 14 Tage sperren (du wirst abgemeldet, kannst dich nicht anmelden, und Profil und Projekte sind nicht öffentlich). Jede Entscheidung hat einen Grund, den du siehst. Über längere oder dauerhafte Sanktionen entscheiden nur die Administratoren der Website; sie können auch Projekte verbergen oder Konten sperren. Das Löschen deines Kontos beendet keine Sperre (siehe [Datenschutzerklärung](/legal/privacy/)). Wenn du denkst, dass wir einen Fehler gemacht haben, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
+Alle angemeldeten Personen können ein Projekt, ein Profil oder einen Build-Log-Eintrag melden. Moderatoren können eine Meldung ablehnen, ein Projekt entfernen, Profilfelder leeren (Profil- und Titelbild, Kurzbeschreibung und „Über mich“, Links), ein Konto bis zu 7 Tage stummschalten (du kannst weiter lesen, Einstellungen ändern, deine Daten herunterladen oder löschen, aber nichts veröffentlichen) oder es bis zu 14 Tage sperren (du wirst abgemeldet, kannst dich nicht anmelden, und Profil und Projekte sind nicht öffentlich). Jede Entscheidung hat einen Grund, den du siehst. Über längere oder dauerhafte Sanktionen entscheiden nur die Administratoren der Website; sie können auch Projekte verbergen oder Konten sperren. Das Löschen deines Kontos beendet keine Sperre (siehe [Datenschutzerklärung](/legal/privacy/)). Wenn du denkst, dass wir einen Fehler gemacht haben, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Beendigung {#ending}
 

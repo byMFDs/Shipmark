@@ -1,6 +1,6 @@
 # Politique de confidentialité
 
-> **Brouillon**, dernière mise à jour le 11 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
+> **Brouillon**, dernière mise à jour le 12 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
 >
 > Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
@@ -15,7 +15,9 @@ Questions ou demandes : [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Lorsque vous vous connectez avec GitHub.** Nous recevons de GitHub l’identifiant de votre compte, votre login, votre nom, votre bio, le lien de votre avatar et les autres champs publics de votre profil GitHub, ainsi que les adresses e-mail de votre compte GitHub. Nous demandons à GitHub uniquement `read:user` et `user:email` : nous n’obtenons jamais d’accès à vos dépôts, privés ou publics, via votre compte. Nous ne conservons pas votre jeton d’accès GitHub après la connexion. Nous avons besoin de ces données pour créer votre compte et vous reconnaître la fois suivante (exécution de notre accord avec vous). Votre identifiant GitHub est mis à jour à chaque connexion, pour que votre profil mène toujours à votre compte GitHub actuel.
 
-**Votre profil.** Nom d’utilisateur, nom affiché, bio, site web et langue. Le nom et la bio reprennent d’abord vos valeurs GitHub ; vous pouvez les modifier dans les Réglages. Votre nom d’utilisateur, votre nom affiché, votre bio, votre site web, votre login GitHub et le mois de votre inscription sont **publics**.
+**Votre profil.** Nom d’utilisateur, nom affiché, phrase d’accroche, « À propos », localisation, un statut (par exemple « Ouvert aux offres »), jusqu’à 10 compétences, jusqu’à 6 liens, jusqu’à 3 projets épinglés et votre langue. Tout sauf le nom d’utilisateur est facultatif. Le nom affiché et « À propos » reprennent d’abord votre nom et votre bio GitHub ; vous pouvez les modifier ou les retirer dans les Réglages. Nous enregistrons aussi l’adresse de votre image GitHub, uniquement pour que « Utiliser mon image GitHub » puisse la copier ; elle n’est jamais affichée. Votre nom d’utilisateur, nom affiché, phrase d’accroche, « À propos », localisation, statut, compétences, liens, projets épinglés, identifiant GitHub et le mois de votre inscription sont **publics**.
+
+**Photo de profil et couverture.** Vous pouvez envoyer une photo et une image de couverture large, ou copier une fois votre image GitHub. Chaque image est réencodée (la photo en 512×512, la couverture en 1500×500), ce qui supprime les métadonnées cachées comme la position GPS, reçoit un nom de fichier aléatoire et est stockée sur notre propre serveur : les pages ne chargent jamais votre photo depuis GitHub. Les deux sont **publiques**. Quand vous en retirez ou remplacez une, ou supprimez votre compte, le fichier est supprimé ; des copies restent dans les sauvegardes jusqu’à 14 jours. Sans photo, vos initiales sont affichées.
 
 **Votre adresse e-mail.** Elle est conservée avec votre compte et n’est visible que par notre équipe. Elle n’est jamais affichée sur le site. Le site n’envoie pas d’e-mails ; nous n’utiliserions l’adresse que pour vous contacter au sujet de votre compte ou d’un signalement.
 
@@ -31,7 +33,7 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 **Abonnements et mentions J’aime.** Nous conservons les personnes que vous suivez et les projets que vous aimez. Les autres ne voient que les totaux, pas les listes.
 
-**Signalements et modération.** Si vous signalez un projet, un profil ou une entrée du journal de construction (build log), nous conservons le motif et les détails que vous écrivez. Les modérateurs (personnes ayant le badge de modérateur) et notre équipe voient les signalements ; la personne signalée n’apprend jamais qui l’a signalée. Quand les modérateurs décident, nous conservons la décision et son motif : un projet retiré garde son contenu et le motif (seuls vous et l’équipe le voyez), les champs de profil effacés sont supprimés, et les mises en sourdine et bannissements sont conservés avec leur motif, leur début et leur fin. Vous voyez le motif dans un avis sur le site, que nous gardons jusqu’à la suppression de votre compte. Les décisions vous concernant et ces avis figurent dans « Télécharger mes données ».
+**Signalements et modération.** Si vous signalez un projet, un profil ou une entrée du journal de développement, nous enregistrons le motif et les détails que vous écrivez. Les signalements sont vus par les modérateurs (personnes ayant le badge de modérateur) et l’équipe. Pour décider, ils voient aussi le contenu signalé et l’historique de la personne signalée sur {{ site_name }} : sa date d’inscription, ses sanctions précédentes, les autres signalements la concernant et ses projets retirés. Les pages de modération n’affichent pas les adresses e-mail. La personne signalée n’apprend jamais qui l’a signalée. Quand les modérateurs agissent, nous enregistrons la décision et son motif : un projet retiré garde son contenu et le motif (seuls vous, les modérateurs et l’équipe le voient), les champs de profil effacés (photo et couverture, phrase d’accroche et « À propos », ou liens) sont supprimés, et les mises en sourdine et bannissements sont enregistrés avec leur motif, leur début et leur fin. Vous voyez le motif dans un avis sur le site, que nous gardons jusqu’à la suppression de votre compte. Les décisions vous concernant et ces avis figurent dans « Télécharger mes données ». Pour contester une décision, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Contournement d’un bannissement.** Quand un compte est banni, nous conservons une empreinte à sens unique, salée, de son identifiant GitHub (jamais l’identifiant lui-même), avec le motif et la date de fin. Elle sert uniquement à reconnaître le même compte GitHub s’il se réinscrit pendant le bannissement. Elle est supprimée quand le bannissement prend fin ou est levé, y compris si le compte banni a été supprimé entre-temps.
 
@@ -49,11 +51,12 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 **Analyse et suivi.** Il n’y en a pas : ni analyse, ni publicité, ni script de suivi. Les polices sont servies depuis notre propre serveur.
 
-**Sauvegardes.** Chaque jour, nous sauvegardons la base de données et les captures d’écran envoyées, et nous conservons chaque sauvegarde 14 jours. Si vous supprimez votre compte, vos données restent dans ces sauvegardes jusqu’au remplacement de la dernière qui les contient, soit 14 jours au plus.
+**Sauvegardes.** Chaque jour, nous sauvegardons la base de données et les images envoyées (captures, photos de profil et couvertures) et gardons chaque sauvegarde 14 jours. Si vous supprimez votre compte, vos données restent dans ces sauvegardes jusqu’au remplacement de la dernière qui les contient, soit au plus 14 jours.
 
 ## Combien de temps nous les conservons {#retention}
 
 - Votre compte, profil, projets, abonnements et mentions J’aime : jusqu’à ce que vous les supprimiez, ou que vous supprimiez votre compte.
+- Photo de profil et couverture : jusqu’à ce que vous les retiriez ou remplaciez, ou supprimiez votre compte.
 - Contrôles de disponibilité : 90 jours.
 - Décisions de modération vous concernant (mises en sourdine, bannissements, projets retirés) et avis : tant que votre compte existe ; ils sont supprimés avec lui. Les signalements à votre sujet restent sans lien avec votre compte, avec seulement le nom affiché à l’époque.
 - Empreinte de l’identifiant GitHub d’un compte banni : seulement jusqu’à la fin ou la levée du bannissement.
@@ -75,9 +78,9 @@ Nous ne vendons pas vos données et ne les partageons pas à des fins publicitai
 
 ## Vos droits {#rights}
 
-- **Consulter et télécharger vos données :** Réglages → « Télécharger mes données » vous donne un fichier JSON avec votre profil, vos informations GitHub, vos projets, votre journal de développement, vos mentions J’aime, vos abonnements et les signalements que vous avez faits.
+- **Consulter et télécharger vos données :** Réglages → « Télécharger mes données » vous donne un fichier JSON avec votre profil (avec vos liens, compétences, projets épinglés et les adresses de votre photo et de votre couverture), vos informations GitHub, vos projets, votre journal de développement, vos mentions J’aime, vos abonnements, les signalements que vous avez faits, ainsi que les décisions de modération et avis vous concernant.
 - **Les corriger :** modifiez votre profil dans les Réglages et vos projets sur leurs pages.
-- **Les supprimer :** Réglages → « Supprimer le compte ». Cela supprime aussitôt votre profil et tous vos projets, mentions J’aime et abonnements, et c’est irréversible. Votre nom d’utilisateur redevient libre.
+- **Les supprimer :** Réglages → « Supprimer le compte ». Cela supprime aussitôt votre profil, votre photo et votre couverture et tous vos projets, mentions J’aime et abonnements, et c’est irréversible. Votre nom d’utilisateur redevient libre.
 - **Vous opposer ou réclamer :** écrivez à [{{ contact_email }}](mailto:{{ contact_email }}). Si vous vivez dans l’UE, au Royaume-Uni ou en Ukraine, vous pouvez aussi introduire une réclamation auprès de votre autorité de protection des données.
 
 ## Cookies {#cookies}

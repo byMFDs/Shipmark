@@ -95,32 +95,36 @@ prod only: `gunicorn`, `psycopg[binary]`. Dev only: `pip-audit`.
 
 ```
 config/            settings/{base,dev,prod}.py, urls.py, branding.py
-accounts/          custom User (AbstractUser), profiles, settings, data export, deletion
-projects/          Project, Tag, Screenshot, BuildLogEntry, proof.py
+accounts/          custom User (AbstractUser), profiles, badges + roles.py, settings, data export, deletion
+projects/          Project, Tag, Screenshot, BuildLogEntry, proof.py, images.py (the one image pipeline)
 verification/      net.py (safe_fetch), repo.py, domain.py, uptime.py, commands
-social/            Follow, Like, feed
+social/            Follow, Like, feed + ranking.py
 pages/             landing, explore, legal and content pages, styleguide (DEBUG only)
-moderation/        Report, admin actions
+moderation/        Report, Sanction, Notice, BannedIdentity, AuditLog, /mod/, decisions, admin actions
+news/              NewsPost (written in the admin only, published as the system account "shipmark")
 templates/  static/{css,js,fonts,brand,img}/  content/<lang>/*.md  locale/  docs/
 ```
 
 URLs: `/` landing · `/feed/` · `/explore/` · `/new/` · `/settings/` ·
 `/u/<username>/` · `/u/<username>/<project-slug>/` · `/badge/<username>.svg` ·
-`/badge/<username>/<project-slug>.svg` · `/legal/<slug>/` · `/how-proof-works/` ·
-admin at `ADMIN_URL` from env (never `/admin/` in production).
+`/badge/<username>/<project-slug>.svg` · `/legal/<slug>/` · `/how-proof-works/` · `/news/` ·
+`/mod/` (moderator badge or superuser) · admin at `ADMIN_URL` from env (never `/admin/` in production).
 
 Reserved usernames: admin, api, static, media, badge, legal, settings, new, feed,
-explore, login, logout, signup, u, p, help, about, support, root, system.
+explore, login, logout, signup, u, p, help, about, support, root, system, shipmark, official,
+moderator, mod, team, staff, news.
 
 ---
 
 ## 5. Data model (MVP)
 
-- **User**: username, display_name, bio (≤280), website, github_login, avatar_url,
-  preferred_language, terms_version_accepted, terms_accepted_at, is_suspended.
+- **User**: username, display_name, headline (≤80), about (markdown ≤1000), location, status, skills (M2M Tag ≤10),
+  avatar, avatar_source, cover, github_login, avatar_url (never shown), preferred_language, terms_version_accepted,
+  terms_accepted_at, is_suspended. `bio` and `website` are deprecated (not editable, to be dropped).
+  **ProfileLink** (≤6), **PinnedProject** (≤3), **UserBadge** (official / moderator; `can_moderate` comes from it).
 - **Project**: owner, name, slug (unique per owner), tagline (≤120),
   description (markdown), live_url, repo_full_name, tags (M2M Tag),
-  built_with (M2M Tool, self-declared), status (draft/published/hidden),
+  built_with (M2M Tool, self-declared), status (draft/published/hidden/removed),
   launched_at, created_at, updated_at.
 - **Screenshot**: project, image, order (max 4 per project).
 - **RepoLink**: project (1:1), repo_full_name (unique), is_owner, user_commit_count,
@@ -130,7 +134,9 @@ explore, login, logout, signup, u, p, help, about, support, root, system.
 - **UptimeCheck**: project, checked_at, ok, status_code, response_ms. Keep 90 days.
 - **BuildLogEntry**: project, text (≤500, limited markdown), kind (update/launch), created_at.
 - **Follow**: follower, following (unique pair). **Like**: user, project (unique pair).
-- **Report**: reporter, target (project or user), reason, details, status, handled_by.
+- **Report**: reporter, target (project, user or build-log entry), reason, details, status
+  (open/in review/resolved/dismissed), resolution note, handled_by. **Sanction** (mute/ban, reason, start, end),
+  **Notice** (what the person is told), **BannedIdentity** (HMAC of a banned GitHub id). **NewsPost**.
 - **AuditLog**: actor, action, target, metadata JSON, created_at
   (hallmark changes, moderation actions, account deletion).
 
@@ -182,6 +188,8 @@ Always use `select_related`/`prefetch_related` on lists. No N+1 queries.
 - MVP: `en` (default), `uk`. Later: `pl`, `de`, `es`, `fr`, `pt-br`.
   **Never add Russian.**
 - No language prefixes in URLs. Switcher in the footer and the account menu.
+- The language cookie follows the saved preference (written at sign-in and when it differs), so pages and the
+  "signed in / signed out" notices stay in one language, also after signing out.
 - User-generated content is never auto-translated.
 
 ---

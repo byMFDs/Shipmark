@@ -1,6 +1,6 @@
 # Regulamin
 
-> **Wersja robocza**, ostatnia aktualizacja: 10 listopada 2026 (wersja {{ terms_version }}). Ten tekst nie został jeszcze sprawdzony przez prawnika.
+> **Wersja robocza**, ostatnia aktualizacja: 12 listopada 2026 (wersja {{ terms_version }}). Ten tekst nie został jeszcze sprawdzony przez prawnika.
 >
 > Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
@@ -18,7 +18,7 @@ Publiczne miejsce na pokazanie oprogramowania, które trafiło do użytkowników
 
 ## Twoje treści {#content}
 
-- Zachowujesz wszystkie prawa do projektów, tekstów i zrzutów ekranu, które publikujesz.
+- Zachowujesz wszystkie prawa do projektów, tekstów, zrzutów ekranu i zdjęć profilowych, które publikujesz.
 - Dajesz nam zgodę na przechowywanie, wyświetlanie i udostępnianie ich w {{ site_name }} (strony projektów, profile, aktualności, wyszukiwarka i plakietki), dopóki są opublikowane. Zgoda wygasa, gdy je usuniesz, z wyjątkiem kopii, które inni już osadzili lub zapisali.
 - Publikuj tylko to, do czego masz prawo. Nie podawaj cudzej pracy za swoją.
 - Narzędzia AI wymienione w „Zbudowano z” to Twoje własne oświadczenie. Pokazujemy je jako deklarację autora i nie sprawdzamy ich.
@@ -38,7 +38,7 @@ Znaki są obliczane na podstawie naszych najnowszych sprawdzeń. Mogą się zmie
 
 ## Moderacja {#moderation}
 
-Każda zalogowana osoba może zgłosić projekt, profil lub wpis w dzienniku zmian. Moderatorzy mogą odrzucić zgłoszenie, usunąć projekt, wyczyścić pola profilu (awatar, bio, linki), wyciszyć konto na maksymalnie 7 dni (nadal możesz czytać, zmieniać ustawienia, pobrać lub usunąć swoje dane, ale nie publikować) albo zablokować je na maksymalnie 14 dni (zostajesz wylogowany, nie możesz się zalogować, a profil i projekty nie są publiczne). Każda decyzja ma powód, który widzisz. O dłuższych lub stałych sankcjach decydują tylko administratorzy serwisu, którzy mogą też ukrywać projekty lub zawieszać konta. Usunięcie konta nie kończy blokady (zob. [Politykę prywatności](/legal/privacy/)). Jeśli uważasz, że popełniliśmy błąd, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
+Każda zalogowana osoba może zgłosić projekt, profil lub wpis w dzienniku zmian. Moderatorzy mogą odrzucić zgłoszenie, usunąć projekt, wyczyścić pola profilu (zdjęcie i obraz w tle, krótki opis i „O mnie”, linki), wyciszyć konto na maksymalnie 7 dni (nadal możesz czytać, zmieniać ustawienia, pobrać lub usunąć swoje dane, ale nie publikować) albo zablokować je na maksymalnie 14 dni (zostajesz wylogowany, nie możesz się zalogować, a profil i projekty nie są publiczne). Każda decyzja ma powód, który widzisz. O dłuższych lub stałych sankcjach decydują tylko administratorzy serwisu, którzy mogą też ukrywać projekty lub zawieszać konta. Usunięcie konta nie kończy blokady (zob. [Politykę prywatności](/legal/privacy/)). Jeśli uważasz, że popełniliśmy błąd, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Zakończenie {#ending}
 

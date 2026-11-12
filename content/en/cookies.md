@@ -1,6 +1,6 @@
 # Cookie policy
 
-> **Draft**, last updated 10 November 2026. This text has not been reviewed by a lawyer yet.
+> **Draft**, last updated 12 November 2026. This text has not been reviewed by a lawyer yet.
 
 {{ site_name }} uses only cookies that the site needs to work. There are no analytics, advertising or third-party cookies, so we do not ask for consent with a banner.
 
@@ -10,7 +10,7 @@
 |---|---|---|
 | `sessionid` | Keeps you signed in, and holds the sign-in state while you are on GitHub | 2 weeks, or until you sign out |
 | `csrftoken` | Protects forms from being sent by other websites | 1 year |
-| `django_language` | Remembers the language you picked in the switcher | 1 year |
+| `django_language` | Remembers your language: the one you picked in the switcher, or the one saved in your account (set when you sign in, so it stays after you sign out) | 1 year |
 | `messages` | Shows a one-time notice, such as "You are signed out" | Until the notice is shown |
 
 ## Stored in your browser only {#local}

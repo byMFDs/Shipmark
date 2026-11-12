@@ -1,6 +1,6 @@
 # Datenschutzerklärung
 
-> **Entwurf**, zuletzt aktualisiert am 11. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
+> **Entwurf**, zuletzt aktualisiert am 12. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
 >
 > Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
@@ -15,7 +15,9 @@ Fragen oder Anliegen: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Wenn du dich mit GitHub anmeldest.** Von GitHub erhalten wir deine Konto-ID, deinen Login, deinen Namen, deine Bio, den Link zu deinem Avatar und die übrigen öffentlichen Felder deines GitHub-Profils sowie die E-Mail-Adressen deines GitHub-Kontos. Wir fragen GitHub nur nach `read:user` und `user:email`: Über dein Konto bekommen wir nie Zugriff auf deine Repositories, weder private noch öffentliche. Dein GitHub-Zugriffstoken behalten wir nach der Anmeldung nicht. Wir brauchen das, um dein Konto anzulegen und dich beim nächsten Mal wiederzuerkennen (Erfüllung unserer Vereinbarung mit dir). Dein GitHub-Login wird bei jeder Anmeldung aktualisiert, damit dein Profil immer auf dein aktuelles GitHub-Konto verweist.
 
-**Dein Profil.** Benutzername, Anzeigename, Bio, Website und Sprache. Name und Bio beginnen mit deinen GitHub-Werten; du kannst sie in den Einstellungen ändern. Dein Benutzername, Anzeigename, deine Bio, Website, dein GitHub-Login und der Monat deines Beitritts sind **öffentlich**.
+**Dein Profil.** Benutzername, Anzeigename, Kurzbeschreibung, „Über mich“, Ort, ein Status (zum Beispiel „Offen für Jobs“), bis zu 10 Fähigkeiten, bis zu 6 Links, bis zu 3 angeheftete Projekte und deine Sprache. Alles außer dem Benutzernamen ist freiwillig. Anzeigename und „Über mich“ werden anfangs aus deinem GitHub-Namen und deiner GitHub-Bio übernommen; du kannst sie in den Einstellungen ändern oder entfernen. Wir speichern außerdem die Adresse deines GitHub-Bildes, nur damit „Mein GitHub-Bild verwenden“ es kopieren kann; sie wird nirgends angezeigt. Benutzername, Anzeigename, Kurzbeschreibung, „Über mich“, Ort, Status, Fähigkeiten, Links, angeheftete Projekte, GitHub-Login und der Monat deiner Registrierung sind **öffentlich**.
+
+**Profilbild und Titelbild.** Du kannst ein Bild und ein breites Titelbild hochladen oder dein GitHub-Bild einmal kopieren lassen. Jedes Bild wird neu kodiert (das Profilbild auf 512×512, das Titelbild auf 1500×500), was versteckte Metadaten wie den GPS-Standort entfernt, bekommt einen zufälligen Dateinamen und wird auf unserem eigenen Server gespeichert: Die Seiten laden dein Bild nie von GitHub. Beide sind **öffentlich**. Wenn du ein Bild entfernst oder ersetzt oder dein Konto löschst, wird die Datei gelöscht; Kopien bleiben bis zu 14 Tage in den Backups. Ohne Bild werden deine Initialen gezeigt.
 
 **Deine E-Mail-Adresse.** Sie wird mit deinem Konto gespeichert und ist nur für unser Team sichtbar. Sie wird nie auf der Seite angezeigt. Die Seite versendet keine E-Mails; wir würden die Adresse nur nutzen, um dich zu deinem Konto oder zu einer Meldung zu kontaktieren.
 
@@ -31,7 +33,7 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 **Follows und Likes.** Wir speichern, wem du folgst und welche Projekte du geliked hast. Andere sehen nur die Zahlen, nicht die Listen.
 
-**Meldungen und Moderation.** Wenn du ein Projekt, ein Profil oder einen Build-Log-Eintrag meldest, speichern wir den Grund und die Details, die du schreibst. Meldungen sehen Moderatoren (Personen mit dem Moderator-Abzeichen) und unser Team; die gemeldete Person erfährt nie, wer sie gemeldet hat. Wenn Moderatoren entscheiden, speichern wir die Entscheidung und ihren Grund: Ein entferntes Projekt behält Inhalt und Grund (nur du und das Team sehen es), geleerte Profilfelder werden gelöscht, und Stummschaltungen und Sperren werden mit Grund, Beginn und Ende gespeichert. Den Grund siehst du in einem Hinweis auf der Website, den wir aufbewahren, bis du dein Konto löschst. Entscheidungen über dich und diese Hinweise sind in „Meine Daten herunterladen“ enthalten.
+**Meldungen und Moderation.** Wenn du ein Projekt, ein Profil oder einen Build-Log-Eintrag meldest, speichern wir den Grund und die Details, die du schreibst. Meldungen sehen Moderatorinnen und Moderatoren (Personen mit dem Moderator-Abzeichen) und das Team. Für ihre Entscheidung sehen sie auch den gemeldeten Inhalt und die Vorgeschichte der gemeldeten Person auf {{ site_name }}: wann sie beigetreten ist, frühere Sanktionen, andere Meldungen über sie und entfernte Projekte. Die Moderationsseiten zeigen keine E-Mail-Adressen. Die gemeldete Person erfährt nie, wer sie gemeldet hat. Wenn die Moderation handelt, speichern wir die Entscheidung und ihren Grund: Ein entferntes Projekt behält seinen Inhalt und den Grund (nur du, die Moderation und das Team sehen ihn), geleerte Profilfelder (Profilbild und Titelbild, Kurzbeschreibung und „Über mich“ oder Links) werden gelöscht, und Stummschaltungen und Sperren werden mit Grund, Beginn und Ende gespeichert. Den Grund siehst du in einem Hinweis auf der Website, den wir behalten, bis du dein Konto löschst. Entscheidungen über dich und diese Hinweise sind in „Meine Daten herunterladen“ enthalten. Um eine Entscheidung anzufechten, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Umgehung einer Sperre.** Wird ein Konto gesperrt, speichern wir einen gesalzenen Einweg-Hash seiner GitHub-Nutzer-ID (nie die ID selbst) zusammen mit Grund und Enddatum. Er dient nur dazu, dasselbe GitHub-Konto zu erkennen, wenn es sich während der Sperre neu registriert. Er wird gelöscht, wenn die Sperre endet oder aufgehoben wird, auch wenn das gesperrte Konto inzwischen gelöscht wurde.
 
@@ -49,11 +51,12 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 **Analyse und Tracking.** Gibt es nicht: keine Analyse, keine Werbung und keine Tracking-Skripte. Schriften werden von unserem eigenen Server ausgeliefert.
 
-**Backups.** Jeden Tag sichern wir die Datenbank und die hochgeladenen Screenshots und bewahren jede Sicherung 14 Tage auf. Wenn du dein Konto löschst, bleiben deine Daten in diesen Sicherungen, bis die letzte, die sie enthält, ersetzt ist – bis zu 14 Tage.
+**Backups.** Jeden Tag sichern wir die Datenbank und die hochgeladenen Bilder (Screenshots, Profilbilder und Titelbilder) und bewahren jedes Backup 14 Tage auf. Wenn du dein Konto löschst, bleiben deine Daten in diesen Backups, bis das letzte, das sie enthält, ersetzt wird, also höchstens 14 Tage.
 
 ## Wie lange wir es aufbewahren {#retention}
 
 - Dein Konto, Profil, deine Projekte, Follows und Likes: bis du sie oder dein Konto löschst.
+- Profilbild und Titelbild: bis du sie entfernst oder ersetzt oder dein Konto löschst.
 - Uptime-Prüfungen: 90 Tage.
 - Moderationsentscheidungen über dich (Stummschaltungen, Sperren, entfernte Projekte) und Hinweise: solange dein Konto besteht; sie werden mit ihm gelöscht. Meldungen über dich bleiben ohne Verbindung zu deinem Konto, nur mit dem damaligen Namen.
 - Hash der GitHub-ID eines gesperrten Kontos: nur bis die Sperre endet oder aufgehoben wird.
@@ -75,9 +78,9 @@ Wir verkaufen deine Daten nicht und geben sie nicht für Werbung weiter.
 
 ## Deine Rechte {#rights}
 
-- **Deine Daten ansehen und herunterladen:** Unter Einstellungen → „Meine Daten herunterladen“ bekommst du eine JSON-Datei mit deinem Profil, deinen GitHub-Angaben, Projekten, dem Build-Log, Likes, Follows und deinen Meldungen.
+- **Deine Daten ansehen und herunterladen:** Unter Einstellungen → „Meine Daten herunterladen“ bekommst du eine JSON-Datei mit deinem Profil (mit Links, Fähigkeiten, angehefteten Projekten und den Adressen von Profil- und Titelbild), deinen GitHub-Angaben, Projekten, dem Build-Log, Likes, Follows, deinen Meldungen sowie Moderationsentscheidungen und Hinweisen über dich.
 - **Korrigieren:** Bearbeite dein Profil in den Einstellungen und deine Projekte auf ihren Seiten.
-- **Löschen:** Einstellungen → „Konto löschen“. Das entfernt sofort dein Profil und alle deine Projekte, Likes und Follows und lässt sich nicht rückgängig machen. Dein Benutzername wird wieder frei.
+- **Löschen:** Einstellungen → „Konto löschen“. Das entfernt sofort dein Profil, dein Profil- und Titelbild und alle deine Projekte, Likes und Follows und lässt sich nicht rückgängig machen. Dein Benutzername wird wieder frei.
 - **Widerspruch oder Beschwerde:** Schreib an [{{ contact_email }}](mailto:{{ contact_email }}). Wenn du in der EU, im Vereinigten Königreich oder in der Ukraine lebst, kannst du dich auch bei deiner Datenschutzbehörde beschweren.
 
 ## Cookies {#cookies}

@@ -1,6 +1,6 @@
 # Cookie-Richtlinie
 
-> **Entwurf**, zuletzt aktualisiert am 10. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
+> **Entwurf**, zuletzt aktualisiert am 12. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
 >
 > Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
@@ -12,7 +12,7 @@
 |---|---|---|
 | `sessionid` | Hält dich angemeldet und speichert den Anmeldestatus, solange du bei GitHub bist | 2 Wochen oder bis zum Abmelden |
 | `csrftoken` | Schützt Formulare davor, von anderen Websites abgeschickt zu werden | 1 Jahr |
-| `django_language` | Merkt sich die Sprache, die du im Umschalter gewählt hast | 1 Jahr |
+| `django_language` | Merkt sich deine Sprache: die im Umschalter gewählte oder die in deinem Konto gespeicherte (wird bei der Anmeldung gesetzt und bleibt nach der Abmeldung) | 1 Jahr |
 | `messages` | Zeigt einen einmaligen Hinweis, zum Beispiel „Du bist abgemeldet“ | Bis der Hinweis angezeigt wurde |
 
 ## Nur in deinem Browser gespeichert {#local}

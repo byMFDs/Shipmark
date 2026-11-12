@@ -1,6 +1,6 @@
 # Política de privacidade
 
-> **Rascunho**, última atualização em 11 de novembro de 2026. Este texto ainda não foi revisado por um advogado.
+> **Rascunho**, última atualização em 12 de novembro de 2026. Este texto ainda não foi revisado por um advogado.
 >
 > Tradução por conveniência; a versão em inglês prevalece.
 
@@ -15,7 +15,9 @@ Dúvidas ou solicitações: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Quando você entra com o GitHub.** Recebemos do GitHub o id da sua conta, seu login, nome, bio, o link do seu avatar e os demais campos públicos do seu perfil do GitHub, além dos endereços de e-mail da sua conta do GitHub. Pedimos ao GitHub apenas `read:user` e `user:email`: nunca obtemos acesso aos seus repositórios, privados ou públicos, por meio da sua conta. Não guardamos seu token de acesso do GitHub depois do login. Precisamos disso para criar sua conta e reconhecer você na próxima vez (execução do nosso acordo com você). O seu login do GitHub é atualizado a cada entrada, então o seu perfil sempre leva à sua conta atual do GitHub.
 
-**Seu perfil.** Nome de usuário, nome de exibição, bio, site e idioma. O nome e a bio começam com os seus valores do GitHub; você pode alterá-los em Configurações. Seu nome de usuário, nome de exibição, bio, site, login do GitHub e o mês em que você entrou são **públicos**.
+**Seu perfil.** Nome de usuário, nome de exibição, resumo curto, “Sobre”, localização, um status (por exemplo, “Aberto a trabalho”), até 10 habilidades, até 6 links, até 3 projetos fixados e seu idioma. Tudo, exceto o nome de usuário, é opcional. O nome de exibição e o “Sobre” começam com seu nome e sua bio do GitHub; você pode mudá-los ou removê-los em Configurações. Também guardamos o endereço da sua imagem do GitHub, só para que “Usar minha imagem do GitHub” possa copiá-la; ela nunca é exibida. Seu nome de usuário, nome de exibição, resumo curto, “Sobre”, localização, status, habilidades, links, projetos fixados, login do GitHub e o mês em que você entrou são **públicos**.
+
+**Foto de perfil e capa.** Você pode enviar uma foto e uma imagem de capa larga, ou copiar uma vez sua imagem do GitHub. Cada imagem é recodificada (a foto em 512×512, a capa em 1500×500), o que remove metadados ocultos como a localização GPS, recebe um nome de arquivo aleatório e é guardada no nosso próprio servidor: as páginas nunca carregam sua foto do GitHub. As duas são **públicas**. Quando você remove ou substitui uma delas, ou exclui sua conta, o arquivo é apagado; cópias ficam nos backups por até 14 dias. Sem foto, mostramos suas iniciais.
 
 **Seu endereço de e-mail.** É guardado com a sua conta e visível apenas para a nossa equipe. Nunca é exibido no site. O site não envia e-mails; usaríamos o endereço apenas para falar com você sobre a conta ou uma denúncia.
 
@@ -31,7 +33,7 @@ Os resultados aparecem na página pública do seu projeto.
 
 **Quem você segue e curtidas.** Guardamos quem você segue e quais projetos você curtiu. Os outros veem apenas os totais, não as listas.
 
-**Denúncias e moderação.** Se você denunciar um projeto, um perfil ou uma entrada do registro de mudanças (build log), guardamos o motivo e os detalhes que você escrever. As denúncias são vistas pelos moderadores (pessoas com o selo de moderador) e pela nossa equipe; a pessoa denunciada nunca é informada de quem a denunciou. Quando os moderadores decidem, guardamos a decisão e o motivo: um projeto removido mantém o conteúdo e o motivo (só você e a equipe veem), campos de perfil limpos são apagados, e silenciamentos e banimentos são guardados com motivo, início e fim. Você vê o motivo em um aviso no site, que guardamos até você excluir a conta. As decisões sobre você e esses avisos estão em “Baixar meus dados”.
+**Denúncias e moderação.** Se você denunciar um projeto, um perfil ou uma entrada do diário de desenvolvimento, guardamos o motivo e os detalhes que você escrever. As denúncias são vistas pelos moderadores (pessoas com o selo de moderador) e pela equipe. Para decidir, eles também veem o conteúdo denunciado e o histórico da pessoa denunciada no {{ site_name }}: quando ela entrou, sanções anteriores, outras denúncias sobre ela e projetos removidos. As páginas de moderação não mostram endereços de e-mail. A pessoa denunciada nunca fica sabendo quem a denunciou. Quando os moderadores agem, guardamos a decisão e o motivo: um projeto removido mantém o conteúdo e o motivo (só você, os moderadores e a equipe veem), os campos de perfil limpos (foto e capa, resumo curto e “Sobre”, ou links) são apagados, e silenciamentos e banimentos são guardados com motivo, início e fim. Você vê o motivo em um aviso no site, que guardamos até você excluir sua conta. As decisões sobre você e esses avisos estão em “Baixar meus dados”. Para recorrer de uma decisão, escreva para [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Evasão de banimento.** Quando uma conta é banida, guardamos um hash de mão única, com sal, do id de usuário do GitHub (nunca o id em si), com o motivo e a data de fim. Ele serve apenas para reconhecer a mesma conta do GitHub se ela se cadastrar de novo durante o banimento. É apagado quando o banimento termina ou é revogado, também se a conta banida tiver sido excluída nesse meio-tempo.
 
@@ -49,11 +51,12 @@ Os resultados aparecem na página pública do seu projeto.
 
 **Análise de uso e rastreamento.** Não há: nem análise de uso, nem publicidade, nem scripts de rastreamento. As fontes são servidas pelo nosso próprio servidor.
 
-**Backups.** Todos os dias fazemos uma cópia do banco de dados e das capturas de tela enviadas e guardamos cada cópia por 14 dias. Se você excluir a conta, seus dados ficam nessas cópias até a última que os contém ser substituída, em até 14 dias.
+**Backups.** Todos os dias fazemos uma cópia do banco de dados e das imagens enviadas (capturas de tela, fotos de perfil e capas) e guardamos cada cópia por 14 dias. Se você excluir sua conta, seus dados ficam nesses backups até que o último que os contém seja substituído, no máximo 14 dias depois.
 
 ## Por quanto tempo guardamos {#retention}
 
 - Sua conta, perfil, projetos, quem você segue e curtidas: até você excluí-los ou excluir a conta.
+- Foto de perfil e capa: até você removê-las ou substituí-las, ou excluir sua conta.
 - Verificações de disponibilidade: 90 dias.
 - Decisões de moderação sobre você (silenciamentos, banimentos, projetos removidos) e avisos: enquanto sua conta existir; são apagados com ela. Denúncias sobre você ficam sem vínculo com a conta, só com o nome mostrado na época.
 - Hash do id do GitHub de uma conta banida: só até o banimento terminar ou ser revogado.
@@ -75,9 +78,9 @@ Não vendemos seus dados nem os compartilhamos para publicidade.
 
 ## Seus direitos {#rights}
 
-- **Ver e baixar seus dados:** em Configurações → “Baixar meus dados” você recebe um arquivo JSON com seu perfil, dados do GitHub, projetos, diário de desenvolvimento, curtidas, quem você segue e as denúncias que fez.
+- **Ver e baixar seus dados:** em Configurações → “Baixar meus dados” você recebe um arquivo JSON com seu perfil (com seus links, habilidades, projetos fixados e os endereços da sua foto e da sua capa), dados do GitHub, projetos, diário de desenvolvimento, curtidas, quem você segue, as denúncias que fez e as decisões de moderação e avisos sobre você.
 - **Corrigi-los:** edite seu perfil em Configurações e seus projetos nas páginas deles.
-- **Excluí-los:** Configurações → “Excluir conta”. Isso remove na hora seu perfil e todos os seus projetos, curtidas e quem você segue, e não pode ser desfeito. Seu nome de usuário fica livre.
+- **Excluí-los:** Configurações → “Excluir conta”. Isso remove na hora seu perfil, sua foto e sua capa e todos os seus projetos, curtidas e quem você segue, e não pode ser desfeito. Seu nome de usuário fica livre.
 - **Se opor ou reclamar:** escreva para [{{ contact_email }}](mailto:{{ contact_email }}). Se você mora na UE, no Reino Unido ou na Ucrânia, também pode reclamar à sua autoridade de proteção de dados.
 
 ## Cookies {#cookies}

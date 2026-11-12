@@ -12,8 +12,8 @@ Order confirmed by the developer (2026-11-12): 2, 3, 4, 5, 6. Stage 2 is not pos
 | 2 | Moderation: C | done 2026-11-12 |
 | 3 | Profiles: D | done 2026-11-12 |
 | 4 | Feed and news pages: E, public B | done 2026-11-12 |
-| 5 | Design pass, buttons, effect, motion, copy: F, G | done 2026-11-12, waiting for "GO 6" |
-| 6 | Leftovers, docs, legal, final tests: H | not started |
+| 5 | Design pass, buttons, effect, motion, copy: F, G | done 2026-11-12 |
+| 6 | Leftovers, docs, legal, final tests: H | done 2026-11-12 (round complete, ready for review) |
 
 ## Decisions (proposed in the plan, change if the developer disagrees)
 - Roles from one module `accounts/roles.py`; `can_moderate` = moderator badge or superuser, never `is_staff`.
@@ -107,6 +107,22 @@ Order confirmed by the developer (2026-11-12): 2, 3, 4, 5, 6. Stage 2 is not pos
 - Checked in headless Firefox (reduced motion) at 1440 and 390 px, light and dark: feed, explore, profile, project, edit, settings,
   login, how proof works, news, /mod/, landing. Not checked: real iOS/Android, the moving halo (screenshots are static).
 
+## Stage 6 (done)
+- Repo check: the 10-minute cooldown belongs to project + repository name, so a fixed typo or another repository is checked
+  at once; hourly caps 6 per project and 20 per person; refused checks start no cooldown; the wait is a neutral (info) toast
+  with the minutes left, and the edit page shows it too; a stored result for an older repository name is not shown.
+- Sign-in toast language: the callback switches to the saved language before allauth writes the message; our own texts
+  "Signed in as …" / "You are signed out." (7 languages); the language cookie follows the saved preference, so the page
+  after sign-out stays in the same language.
+- Footer: already printed `brand.LEGAL_OWNER_NAME` (config/branding.py); "YOUR NAME" was the old placeholder in a mono
+  uppercase label. The same value fills "run by …" in privacy and terms (EDITING.md explains).
+- Legal drafts (7 languages, dated 12 November 2026): privacy (profile fields, picture and cover pipeline and deletion,
+  moderator access and what moderators see, appeals contact, retention, export and deletion), terms (pictures, cleared
+  fields), cookies (language cookie). `TERMS_VERSION` not bumped (site not public yet; DEPLOY_NOTES says when to bump).
+- Docs: CLAUDE.md (structure, data model, reserved names, language cookie), EDITING.md, DEPLOY_NOTES (uploads, outbound
+  hosts, deletion, backups and restore), DATA_INVENTORY (language cookie, cooldown keys). DESIGN.md: no UI change here.
+- 858 tests, `check --deploy` clean with production settings.
+
 ## Decisions taken without answers (plan section 6, change if needed)
 - `is_suspended` kept as it is (admin-level; suspended owners also cannot delete or unpublish projects).
 - Publicly, a ban hides the person like a suspension: profile and projects 404, left out of every list and badge.
@@ -118,7 +134,5 @@ Order confirmed by the developer (2026-11-12): 2, 3, 4, 5, 6. Stage 2 is not pos
 ## Open questions
 - Plan section 6, questions 1-10: still open.
 - Plan question 8 changed: banned users cannot export or delete in the app (they are signed out); OK?
-- Public privacy/terms/cookies texts for the new personal data (avatar, location, links, status) are written in stage 6
-  (DATA_INVENTORY is already updated).
 - Reports on build-log entries can lead to removing the whole project, mute or ban; there is no "remove one entry"
   action yet (not in the brief).

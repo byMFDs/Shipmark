@@ -141,3 +141,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-12: Features stage 5 (design pass + copy). Hero text for builders, "Live" shown as "Domain verified" everywhere (7 languages, id unchanged). One page shell on every page (centred narrow/card widths, header block, balanced sheets and feed), 10px buttons with full states and a loading ring, rotating "halo" border on GitHub sign-in and two main actions (idle shimmer on the hero only; specimen drift removed to stay at 3 loops), inner-page motion (rise, staggered lists, card hover/press, count-up, empty marks). Feed card marks on phones fixed. 850 tests.
   Next: "GO 6" (leftovers, docs, legal, final tests).
+
+- 2026-11-12: Features stage 6 (leftovers). Repo check: cooldown per project + repository, hourly caps, neutral wait message with minutes, no stale result. Sign-in/sign-out toasts in the page's language (saved language at sign-in, language cookie follows it). Legal drafts updated in 7 languages (profile data, pictures, moderator access, appeals, retention, language cookie). CLAUDE.md, EDITING, DEPLOY_NOTES, DATA_INVENTORY updated. 858 tests, `check --deploy` clean.
+  Next: review the whole features-1 branch, set a real `LEGAL_OWNER_NAME`, lawyer review of the legal drafts, then merge; later drop `User.bio` / `User.website`.

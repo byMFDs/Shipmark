@@ -1,6 +1,6 @@
 # Polityka plików cookie
 
-> **Wersja robocza**, ostatnia aktualizacja: 10 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
+> **Wersja robocza**, ostatnia aktualizacja: 12 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
 >
 > Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
@@ -12,7 +12,7 @@
 |---|---|---|
 | `sessionid` | Utrzymuje sesję logowania i przechowuje jej stan, gdy jesteś na GitHubie | 2 tygodnie lub do wylogowania |
 | `csrftoken` | Chroni formularze przed wysłaniem z innych stron | 1 rok |
-| `django_language` | Zapamiętuje język wybrany w przełączniku | 1 rok |
+| `django_language` | Zapamiętuje Twój język: wybrany w przełączniku albo zapisany na koncie (ustawiany przy logowaniu, więc zostaje po wylogowaniu) | 1 rok |
 | `messages` | Pokazuje jednorazowe powiadomienie, np. „Wylogowano” | Do wyświetlenia powiadomienia |
 
 ## Zapisywane tylko w Twojej przeglądarce {#local}

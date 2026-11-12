@@ -1,6 +1,6 @@
 # Política de privacidad
 
-> **Borrador**, última actualización el 11 de noviembre de 2026. Este texto aún no ha sido revisado por un abogado.
+> **Borrador**, última actualización el 12 de noviembre de 2026. Este texto aún no ha sido revisado por un abogado.
 >
 > Traducción de cortesía; prevalece la versión en inglés.
 
@@ -15,7 +15,9 @@ Preguntas o solicitudes: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Cuando inicias sesión con GitHub.** Recibimos de GitHub el id de tu cuenta, tu login, tu nombre, tu biografía, el enlace a tu avatar y los demás campos públicos de tu perfil de GitHub, además de las direcciones de correo de tu cuenta de GitHub. Solo pedimos a GitHub `read:user` y `user:email`: nunca obtenemos acceso a tus repositorios, ni privados ni públicos, a través de tu cuenta. No conservamos tu token de acceso de GitHub después de iniciar sesión. Necesitamos estos datos para crear tu cuenta y reconocerte la próxima vez (ejecución de nuestro acuerdo contigo). Tu usuario de GitHub se actualiza cada vez que inicias sesión, así tu perfil siempre enlaza a tu cuenta actual de GitHub.
 
-**Tu perfil.** Nombre de usuario, nombre visible, biografía, sitio web e idioma. El nombre y la biografía empiezan con tus valores de GitHub; puedes cambiarlos en Ajustes. Tu nombre de usuario, nombre visible, biografía, sitio web, login de GitHub y el mes en que te uniste son **públicos**.
+**Tu perfil.** Nombre de usuario, nombre visible, descripción breve, «Acerca de», ubicación, un estado (por ejemplo, «Abierto a trabajo»), hasta 10 habilidades, hasta 6 enlaces, hasta 3 proyectos fijados y tu idioma. Todo salvo el nombre de usuario es opcional. El nombre visible y «Acerca de» empiezan con tu nombre y tu biografía de GitHub; puedes cambiarlos o quitarlos en Ajustes. También guardamos la dirección de tu imagen de GitHub, solo para que «Usar mi imagen de GitHub» pueda copiarla; nunca se muestra. Tu nombre de usuario, nombre visible, descripción breve, «Acerca de», ubicación, estado, habilidades, enlaces, proyectos fijados, usuario de GitHub y el mes en que te uniste son **públicos**.
+
+**Foto de perfil y portada.** Puedes subir una foto y una imagen de portada ancha, o copiar una vez tu imagen de GitHub. Cada imagen se vuelve a codificar (la foto a 512×512, la portada a 1500×500), lo que elimina metadatos ocultos como la ubicación GPS, recibe un nombre de archivo aleatorio y se guarda en nuestro propio servidor: las páginas nunca cargan tu foto desde GitHub. Ambas son **públicas**. Cuando quitas o reemplazas una, o eliminas tu cuenta, el archivo se borra; las copias quedan en las copias de seguridad hasta 14 días. Sin foto, se muestran tus iniciales.
 
 **Tu dirección de correo.** Se guarda con tu cuenta y solo la ve nuestro equipo. Nunca se muestra en el sitio. El sitio no envía correos; usaríamos la dirección solo para contactarte sobre tu cuenta o una denuncia.
 
@@ -31,7 +33,7 @@ Los resultados se muestran en la página pública de tu proyecto.
 
 **Seguimientos y me gusta.** Guardamos a quién sigues y qué proyectos te gustan. Los demás solo ven los totales, no las listas.
 
-**Denuncias y moderación.** Si denuncias un proyecto, un perfil o una entrada del registro de cambios (build log), guardamos el motivo y los detalles que escribas. Las ven los moderadores (personas con la insignia de moderador) y nuestro equipo; a la persona denunciada nunca se le dice quién la denunció. Cuando los moderadores deciden, guardamos la decisión y su motivo: un proyecto retirado conserva su contenido y el motivo (solo lo ves tú y el equipo), los campos de perfil vaciados se borran, y los silencios y bloqueos se guardan con su motivo, inicio y fin. Ves el motivo en un aviso en el sitio, que guardamos hasta que elimines tu cuenta. Las decisiones sobre ti y estos avisos se incluyen en «Descargar mis datos».
+**Denuncias y moderación.** Si denuncias un proyecto, un perfil o una entrada del registro de desarrollo, guardamos el motivo y los detalles que escribas. Las denuncias las ven los moderadores (personas con la insignia de moderador) y el equipo. Para decidir, también ven el contenido denunciado y el historial de la persona denunciada en {{ site_name }}: cuándo se unió, sanciones anteriores, otras denuncias sobre ella y proyectos retirados. Las páginas de moderación no muestran direcciones de correo. A la persona denunciada nunca se le dice quién la denunció. Cuando los moderadores actúan, guardamos la decisión y su motivo: un proyecto retirado conserva su contenido y el motivo (solo lo ven tú, los moderadores y el equipo), los campos de perfil vaciados (foto y portada, descripción breve y «Acerca de», o enlaces) se borran, y los silencios y bloqueos se guardan con su motivo, inicio y fin. Ves el motivo en un aviso en el sitio, que guardamos hasta que eliminas tu cuenta. Las decisiones sobre ti y estos avisos se incluyen en «Descargar mis datos». Para recurrir una decisión, escribe a [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Evasión de bloqueos.** Cuando se bloquea una cuenta, guardamos un hash unidireccional con sal de su id de usuario de GitHub (nunca el id), con el motivo y la fecha de fin. Solo sirve para reconocer la misma cuenta de GitHub si vuelve a registrarse durante el bloqueo. Se borra cuando el bloqueo termina o se levanta, también si la cuenta bloqueada se eliminó entretanto.
 
@@ -49,11 +51,12 @@ Los resultados se muestran en la página pública de tu proyecto.
 
 **Analítica y seguimiento.** No hay: ni analítica, ni publicidad, ni scripts de seguimiento. Las fuentes se sirven desde nuestro propio servidor.
 
-**Copias de seguridad.** Cada día hacemos una copia de la base de datos y de las capturas de pantalla subidas, y conservamos cada copia 14 días. Si eliminas tu cuenta, tus datos permanecen en esas copias hasta que se sustituya la última que los contiene, como máximo 14 días después.
+**Copias de seguridad.** Cada día hacemos una copia de la base de datos y de las imágenes subidas (capturas, fotos de perfil y portadas) y guardamos cada copia 14 días. Si eliminas tu cuenta, tus datos siguen en esas copias hasta que se reemplaza la última que los contiene, como máximo 14 días después.
 
 ## Cuánto tiempo lo conservamos {#retention}
 
 - Tu cuenta, perfil, proyectos, seguimientos y me gusta: hasta que los elimines a ellos o a tu cuenta.
+- Foto de perfil y portada: hasta que las quites o reemplaces, o elimines tu cuenta.
 - Comprobaciones de disponibilidad: 90 días.
 - Decisiones de moderación sobre ti (silencios, bloqueos, proyectos retirados) y avisos: mientras exista tu cuenta; se borran con ella. Las denuncias sobre ti se conservan sin vínculo con tu cuenta, solo con el nombre de ese momento.
 - Hash del id de GitHub de una cuenta bloqueada: solo hasta que el bloqueo termine o se levante.
@@ -75,9 +78,9 @@ No vendemos tus datos ni los compartimos con fines publicitarios.
 
 ## Tus derechos {#rights}
 
-- **Ver y descargar tus datos:** en Ajustes → «Descargar mis datos» obtienes un archivo JSON con tu perfil, tus datos de GitHub, proyectos, registro de desarrollo, me gusta, seguimientos y las denuncias que hiciste.
+- **Ver y descargar tus datos:** en Ajustes → «Descargar mis datos» obtienes un archivo JSON con tu perfil (con tus enlaces, habilidades, proyectos fijados y las direcciones de tu foto y tu portada), tus datos de GitHub, proyectos, registro de desarrollo, me gusta, seguimientos, las denuncias que hiciste y las decisiones de moderación y avisos sobre ti.
 - **Corregirlos:** edita tu perfil en Ajustes y tus proyectos en sus páginas.
-- **Eliminarlos:** Ajustes → «Eliminar cuenta». Esto elimina de inmediato tu perfil y todos tus proyectos, me gusta y seguimientos, y no se puede deshacer. Tu nombre de usuario queda libre.
+- **Eliminarlos:** Ajustes → «Eliminar cuenta». Esto elimina de inmediato tu perfil, tu foto y tu portada y todos tus proyectos, me gusta y seguimientos, y no se puede deshacer. Tu nombre de usuario queda libre.
 - **Oponerte o reclamar:** escribe a [{{ contact_email }}](mailto:{{ contact_email }}). Si vives en la UE, el Reino Unido o Ucrania, también puedes reclamar ante tu autoridad de protección de datos.
 
 ## Cookies {#cookies}

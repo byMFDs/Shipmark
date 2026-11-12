@@ -1,6 +1,6 @@
 # Política de cookies
 
-> **Borrador**, última actualización el 10 de noviembre de 2026. Este texto aún no ha sido revisado por un abogado.
+> **Borrador**, última actualización el 12 de noviembre de 2026. Este texto aún no ha sido revisado por un abogado.
 >
 > Traducción de cortesía; prevalece la versión en inglés.
 
@@ -12,7 +12,7 @@
 |---|---|---|
 | `sessionid` | Mantiene tu sesión iniciada y guarda el estado del inicio de sesión mientras estás en GitHub | 2 semanas, o hasta que cierres sesión |
 | `csrftoken` | Protege los formularios de ser enviados desde otros sitios web | 1 año |
-| `django_language` | Recuerda el idioma que elegiste en el selector | 1 año |
+| `django_language` | Recuerda tu idioma: el que elegiste en el selector o el guardado en tu cuenta (se fija al iniciar sesión, así que se mantiene al cerrarla) | 1 año |
 | `messages` | Muestra un aviso de una sola vez, como «Has cerrado sesión» | Hasta que se muestra el aviso |
 
 ## Guardado solo en tu navegador {#local}

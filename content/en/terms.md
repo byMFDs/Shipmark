@@ -1,6 +1,6 @@
 # Terms of use
 
-> **Draft**, last updated 10 November 2026 (version {{ terms_version }}). This text has not been reviewed by a lawyer yet.
+> **Draft**, last updated 12 November 2026 (version {{ terms_version }}). This text has not been reviewed by a lawyer yet.
 
 These terms are the agreement between you and {{ legal_owner_name }}, who runs {{ site_name }}. By creating an account you accept them. Questions: [{{ contact_email }}](mailto:{{ contact_email }}).
 
@@ -16,7 +16,7 @@ A public place to show software you shipped, with hallmarks that we check oursel
 
 ## Your content {#content}
 
-- You keep all rights to the projects, text and screenshots you post.
+- You keep all rights to the projects, text, screenshots and profile pictures you post.
 - You give us permission to store, show and share them on {{ site_name }} (project pages, profiles, feed, search and badges) for as long as they are published. This permission ends when you delete them, except for copies that others already embedded or saved.
 - Post only things you have the right to post. Do not post other people's work as yours.
 - The AI tools you list under "Built with" are your own statement. We show them as self-declared and do not check them.
@@ -36,7 +36,7 @@ Hallmarks are worked out from our latest checks. They can change or disappear wh
 
 ## Moderation {#moderation}
 
-Anyone signed in can report a project, a profile or a build-log update. Moderators can dismiss a report, remove a project, clear profile fields (avatar, bio, links), mute an account for up to 7 days (you can still read, change your settings, download or delete your data, but not post), or ban it for up to 14 days (you are signed out, cannot sign in, and your profile and projects are not public). Every decision comes with a reason that you see. Longer or permanent sanctions are decided only by the site's administrators, who may also hide projects or suspend accounts. Deleting your account does not end a ban (see the [Privacy policy](/legal/privacy/)). If you think we made a mistake, write to [{{ contact_email }}](mailto:{{ contact_email }}).
+Anyone signed in can report a project, a profile or a build-log update. Moderators can dismiss a report, remove a project, clear profile fields (picture and cover, headline and About, links), mute an account for up to 7 days (you can still read, change your settings, download or delete your data, but not post), or ban it for up to 14 days (you are signed out, cannot sign in, and your profile and projects are not public). Every decision comes with a reason that you see. Longer or permanent sanctions are decided only by the site's administrators, who may also hide projects or suspend accounts. Deleting your account does not end a ban (see the [Privacy policy](/legal/privacy/)). If you think we made a mistake, write to [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Ending {#ending}
 

@@ -1,6 +1,6 @@
 # Termos de uso
 
-> **Rascunho**, última atualização em 10 de novembro de 2026 (versão {{ terms_version }}). Este texto ainda não foi revisado por um advogado.
+> **Rascunho**, última atualização em 12 de novembro de 2026 (versão {{ terms_version }}). Este texto ainda não foi revisado por um advogado.
 >
 > Tradução por conveniência; a versão em inglês prevalece.
 
@@ -18,7 +18,7 @@ Um lugar público para mostrar software que você publicou, com selos que nós m
 
 ## Seu conteúdo {#content}
 
-- Você mantém todos os direitos sobre os projetos, textos e capturas de tela que publicar.
+- Você mantém todos os direitos sobre os projetos, textos, capturas de tela e imagens de perfil que publicar.
 - Você nos dá permissão para armazená-los, exibi-los e compartilhá-los no {{ site_name }} (páginas de projeto, perfis, feed, busca e badges) enquanto estiverem publicados. Essa permissão termina quando você os exclui, exceto para cópias que outras pessoas já incorporaram ou salvaram.
 - Publique apenas o que você tem direito de publicar. Não apresente o trabalho de outras pessoas como seu.
 - As ferramentas de IA que você lista em “Feito com” são uma declaração sua. Nós as mostramos como declaradas pelo autor e não as verificamos.
@@ -38,7 +38,7 @@ Os selos são calculados a partir das nossas verificações mais recentes. Podem
 
 ## Moderação {#moderation}
 
-Qualquer pessoa conectada pode denunciar um projeto, um perfil ou uma entrada do registro de mudanças. Os moderadores podem descartar uma denúncia, remover um projeto, limpar campos do perfil (avatar, bio, links), silenciar uma conta por até 7 dias (você ainda pode ler, mudar suas configurações, baixar ou excluir seus dados, mas não publicar) ou bani-la por até 14 dias (você é desconectado, não consegue entrar, e seu perfil e projetos não ficam públicos). Toda decisão vem com um motivo que você vê. Sanções mais longas ou permanentes são decididas só pelos administradores do site, que também podem ocultar projetos ou suspender contas. Excluir a conta não encerra um banimento (veja a [Política de privacidade](/legal/privacy/)). Se você acha que erramos, escreva para [{{ contact_email }}](mailto:{{ contact_email }}).
+Qualquer pessoa conectada pode denunciar um projeto, um perfil ou uma entrada do registro de mudanças. Os moderadores podem descartar uma denúncia, remover um projeto, limpar campos do perfil (foto e capa, resumo curto e “Sobre”, links), silenciar uma conta por até 7 dias (você ainda pode ler, mudar suas configurações, baixar ou excluir seus dados, mas não publicar) ou bani-la por até 14 dias (você é desconectado, não consegue entrar, e seu perfil e projetos não ficam públicos). Toda decisão vem com um motivo que você vê. Sanções mais longas ou permanentes são decididas só pelos administradores do site, que também podem ocultar projetos ou suspender contas. Excluir a conta não encerra um banimento (veja a [Política de privacidade](/legal/privacy/)). Se você acha que erramos, escreva para [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Encerramento {#ending}
 

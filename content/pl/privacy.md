@@ -1,6 +1,6 @@
 # Polityka prywatności
 
-> **Wersja robocza**, ostatnia aktualizacja: 11 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
+> **Wersja robocza**, ostatnia aktualizacja: 12 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
 >
 > Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
@@ -15,7 +15,9 @@ Pytania i wnioski: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Gdy logujesz się przez GitHub.** Od GitHuba otrzymujemy identyfikator Twojego konta, login, imię i nazwisko, bio, link do awatara i pozostałe publiczne pola profilu GitHub, a także adresy e-mail przypisane do Twojego konta GitHub. Prosimy GitHub tylko o `read:user` i `user:email`: przez Twoje konto nigdy nie mamy dostępu do Twoich repozytoriów, ani prywatnych, ani publicznych. Po zalogowaniu nie przechowujemy Twojego tokenu dostępu do GitHuba. Potrzebujemy tych danych, by założyć konto i rozpoznać Cię następnym razem (wykonanie umowy z Tobą). Twój login GitHub jest odświeżany przy każdym logowaniu, więc profil zawsze prowadzi do Twojego obecnego konta GitHub.
 
-**Twój profil.** Nazwa użytkownika, nazwa wyświetlana, bio, strona WWW i język. Nazwa i bio zaczynają od wartości z GitHuba; możesz je zmienić w Ustawieniach. Twoja nazwa użytkownika, nazwa wyświetlana, bio, strona WWW, login GitHub i miesiąc dołączenia są **publiczne**.
+**Twój profil.** Nazwa użytkownika, wyświetlana nazwa, krótki opis, „O mnie”, lokalizacja, status (np. „Szukam pracy”), do 10 umiejętności, do 6 linków, do 3 przypiętych projektów i język. Wszystko poza nazwą użytkownika jest opcjonalne. Wyświetlana nazwa i „O mnie” na początku pochodzą z Twojej nazwy i bio na GitHubie; możesz je zmienić lub usunąć w Ustawieniach. Zapisujemy też adres Twojego obrazu z GitHuba, tylko po to, aby opcja „Użyj mojego obrazu z GitHub” mogła go skopiować; nigdzie go nie pokazujemy. Twoja nazwa użytkownika, wyświetlana nazwa, krótki opis, „O mnie”, lokalizacja, status, umiejętności, linki, przypięte projekty, login GitHub i miesiąc dołączenia są **publiczne**.
+
+**Zdjęcie profilowe i obraz w tle.** Możesz wysłać zdjęcie i szeroki obraz w tle albo raz skopiować swój obraz z GitHuba. Każdy obraz kodujemy na nowo (zdjęcie do 512×512, obraz w tle do 1500×500), co usuwa ukryte metadane, np. lokalizację GPS, nadajemy mu losową nazwę i przechowujemy na własnym serwerze: strony nigdy nie wczytują Twojego zdjęcia z GitHuba. Oba są **publiczne**. Gdy usuniesz lub zastąpisz obraz albo usuniesz konto, plik jest usuwany; kopie zostają w kopiach zapasowych do 14 dni. Bez zdjęcia pokazujemy Twoje inicjały.
 
 **Twój adres e-mail.** Jest przechowywany przy koncie i widoczny tylko dla naszego zespołu. Nigdy nie jest pokazywany w serwisie. Serwis nie wysyła e-maili; użyjemy adresu tylko po to, by skontaktować się z Tobą w sprawie konta lub zgłoszenia.
 
@@ -31,7 +33,7 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 **Obserwowania i polubienia.** Zapisujemy, kogo obserwujesz i które projekty lubisz. Inni widzą tylko liczby, nie listy.
 
-**Zgłoszenia i moderacja.** Jeśli zgłosisz projekt, profil lub wpis w dzienniku zmian (build log), zapisujemy powód i szczegóły, które napiszesz. Zgłoszenia widzą moderatorzy (osoby z odznaką moderatora) i nasz zespół; zgłoszona osoba nigdy nie dowiaduje się, kto ją zgłosił. Gdy moderatorzy podejmują decyzję, zapisujemy ją wraz z powodem: usunięty projekt zachowuje treść i powód (widzisz go tylko Ty i zespół), wyczyszczone pola profilu są kasowane, a wyciszenia i blokady zapisujemy z powodem, początkiem i końcem. Powód widzisz w powiadomieniu na stronie, które przechowujemy do usunięcia konta. Decyzje dotyczące Ciebie i te powiadomienia są w „Pobierz moje dane”.
+**Zgłoszenia i moderacja.** Jeśli zgłosisz projekt, profil lub wpis w dzienniku rozwoju, zapisujemy powód i podane przez Ciebie szczegóły. Zgłoszenia widzą moderatorzy (osoby z odznaką moderatora) i zespół. Aby podjąć decyzję, widzą też zgłoszoną treść i historię zgłoszonej osoby w {{ site_name }}: datę dołączenia, wcześniejsze sankcje, inne zgłoszenia na nią i usunięte projekty. Strony moderacji nie pokazują adresów e-mail. Zgłoszona osoba nigdy nie dowiaduje się, kto ją zgłosił. Gdy moderatorzy podejmują działanie, zapisujemy decyzję i jej powód: usunięty projekt zachowuje treść i powód (widzisz go tylko Ty, moderatorzy i zespół), wyczyszczone pola profilu (zdjęcie i obraz w tle, krótki opis i „O mnie” albo linki) są usuwane, a wyciszenia i blokady są zapisywane z powodem, początkiem i końcem. Powód widzisz w powiadomieniu na stronie, które przechowujemy, dopóki nie usuniesz konta. Decyzje dotyczące Ciebie i te powiadomienia są w „Pobierz moje dane”. Aby odwołać się od decyzji, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Omijanie blokady.** Gdy konto zostaje zablokowane, zapisujemy jednokierunkowy skrót (z solą) jego identyfikatora GitHub, nigdy sam identyfikator, razem z powodem i datą końca. Pozwala on tylko rozpoznać to samo konto GitHub, jeśli zarejestruje się ponownie w czasie blokady. Skrót jest usuwany, gdy blokada się kończy lub zostaje cofnięta, także jeśli zablokowane konto zostało w międzyczasie usunięte.
 
@@ -49,11 +51,12 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 **Analityka i śledzenie.** Nie ma ich: ani analityki, ani reklam, ani skryptów śledzących. Czcionki są serwowane z naszego własnego serwera.
 
-**Kopie zapasowe.** Codziennie robimy kopię bazy danych i wysłanych zrzutów ekranu i przechowujemy każdą kopię 14 dni. Jeśli usuniesz konto, Twoje dane zostają w tych kopiach, dopóki nie zostanie zastąpiona ostatnia, która je zawiera – do 14 dni.
+**Kopie zapasowe.** Codziennie robimy kopię bazy danych i wysłanych obrazów (zrzutów ekranu, zdjęć profilowych i obrazów w tle) i przechowujemy każdą kopię przez 14 dni. Jeśli usuniesz konto, Twoje dane zostają w tych kopiach, dopóki ostatnia, która je zawiera, nie zostanie zastąpiona, czyli do 14 dni.
 
 ## Jak długo to przechowujemy {#retention}
 
 - Konto, profil, projekty, obserwowania i polubienia: dopóki ich nie usuniesz albo nie usuniesz konta.
+- Zdjęcie profilowe i obraz w tle: dopóki ich nie usuniesz lub nie zastąpisz albo nie usuniesz konta.
 - Sprawdzenia dostępności: 90 dni.
 - Decyzje moderacji dotyczące Ciebie (wyciszenia, blokady, usunięte projekty) i powiadomienia: dopóki istnieje Twoje konto; są usuwane razem z nim. Zgłoszenia dotyczące Ciebie zostają bez powiązania z kontem, tylko z ówczesną nazwą.
 - Skrót identyfikatora GitHub zablokowanego konta: tylko do końca lub cofnięcia blokady.
@@ -75,9 +78,9 @@ Nie sprzedajemy Twoich danych i nie udostępniamy ich do celów reklamowych.
 
 ## Twoje prawa {#rights}
 
-- **Zobacz i pobierz swoje dane:** Ustawienia → „Pobierz moje dane” daje plik JSON z Twoim profilem, danymi z GitHuba, projektami, dziennikiem rozwoju, polubieniami, obserwowanymi i wysłanymi zgłoszeniami.
+- **Zobacz i pobierz swoje dane:** Ustawienia → „Pobierz moje dane” daje plik JSON z Twoim profilem (z linkami, umiejętnościami, przypiętymi projektami i adresami zdjęcia i obrazu w tle), danymi z GitHuba, projektami, dziennikiem rozwoju, polubieniami, obserwowanymi, wysłanymi zgłoszeniami oraz decyzjami moderacji i powiadomieniami dotyczącymi Ciebie.
 - **Popraw je:** edytuj profil w Ustawieniach, a projekty na ich stronach.
-- **Usuń je:** Ustawienia → „Usuń konto”. To od razu usuwa Twój profil oraz wszystkie projekty, polubienia i obserwowania i nie można tego cofnąć. Twoja nazwa użytkownika staje się wolna.
+- **Usuń je:** Ustawienia → „Usuń konto”. To od razu usuwa Twój profil, zdjęcie i obraz w tle oraz wszystkie projekty, polubienia i obserwowania i nie można tego cofnąć. Twoja nazwa użytkownika staje się wolna.
 - **Sprzeciw lub skarga:** napisz na [{{ contact_email }}](mailto:{{ contact_email }}). Jeśli mieszkasz w UE, Wielkiej Brytanii lub na Ukrainie, możesz też złożyć skargę do organu ochrony danych.
 
 ## Pliki cookie {#cookies}

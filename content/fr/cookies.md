@@ -1,6 +1,6 @@
 # Politique relative aux cookies
 
-> **Brouillon**, dernière mise à jour le 10 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
+> **Brouillon**, dernière mise à jour le 12 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
 >
 > Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
@@ -12,7 +12,7 @@
 |---|---|---|
 | `sessionid` | Vous garde connecté et conserve l’état de la connexion pendant que vous êtes sur GitHub | 2 semaines, ou jusqu’à la déconnexion |
 | `csrftoken` | Empêche l’envoi de formulaires depuis d’autres sites web | 1 an |
-| `django_language` | Retient la langue choisie dans le sélecteur | 1 an |
+| `django_language` | Retient votre langue : celle choisie dans le sélecteur ou celle enregistrée dans votre compte (définie à la connexion, elle reste après la déconnexion) | 1 an |
 | `messages` | Affiche un avis ponctuel, par exemple « Vous êtes déconnecté » | Jusqu’à l’affichage de l’avis |
 
 ## Stocké uniquement dans votre navigateur {#local}

@@ -85,8 +85,17 @@ profile rows read the thumbnail, the project page reads the full image; both are
 
 ### Uploads and later S3-compatible storage
 
-Screenshots are stored on the server's disk in `MEDIA_ROOT`. This is fine for one server, but the folder is part of the
-data: back it up (below), and it does not follow you if the app runs on more than one machine.
+All uploads are stored on the server's disk in `MEDIA_ROOT`: `screenshots/` (+ `screenshots/thumbs/`), `avatars/`
+(profile pictures, 512×512) and `covers/` (profile covers, 1500×500). This is fine for one server, but the folder is part
+of the data: back it up (below), and it does not follow you if the app runs on more than one machine.
+
+- What goes in: only re-encoded WebP files with random names, made by one Pillow pipeline (`projects/images.py`).
+  "Use my GitHub picture" downloads the picture **once** through `safe_fetch`, only from `avatars.githubusercontent.com`,
+  so the server needs outbound HTTPS to that host (and to `api.github.com` for the repo check). Pages never hotlink GitHub.
+- What goes out: a file is deleted from disk (through the storage API) when the person replaces or removes it, when a
+  moderator clears the picture and cover, when a screenshot or project is deleted, and when the account is deleted.
+  After that the only copies are in the backups, for up to 14 days (the privacy page says so).
+- Limits: 5 MB per upload, 20 profile-picture or cover uploads and 5 GitHub downloads per person per hour.
 `config/settings/prod.py` has a 4-step note for moving to S3-compatible storage. It needs `django-storages`, which is not
 on the allowed list yet, so decide that together first. No model or view changes are needed.
 
@@ -249,8 +258,11 @@ To re-check everything later (for example after changing a threshold in `config/
 
 ## Backups
 
-Two things hold data: the **database** and the **media folder** (screenshots). Back up both, daily, and keep a copy
-**off the server** (another provider or your own machine); a backup on the same disk dies with it.
+Two things hold data: the **database** and the **media folder** (screenshots and their thumbnails, profile pictures,
+covers). Back up both, daily, and keep a copy **off the server** (another provider or your own machine); a backup on
+the same disk dies with it. Restore both from the **same day**: an older media folder with a newer database shows
+broken images (rows point to files that are missing); a newer media folder with an older database only leaves unused
+files on disk.
 
 One-time setup for the user that runs cron (never put the password on the command line):
 
@@ -350,8 +362,9 @@ Accounts and secrets
 Content and law
 - [ ] `config/branding.py`: real site name, `CONTACT_EMAIL`, `LEGAL_OWNER_NAME`; logo files in `static/brand/` replaced.
 - [ ] Privacy, terms and cookies texts reviewed by a lawyer. Update them for: proxy access-log retention (decide it; see
-      `docs/DATA_INVENTORY.md`), backup retention, and the rate-limit counters (the text says "memory", prod uses the database cache).
-      Bump `TERMS_VERSION` if the Terms change.
+      `docs/DATA_INVENTORY.md`) and backup retention. The texts were updated on 2026-11-12 (profile data, pictures,
+      moderator access, appeals, language cookie) without bumping `TERMS_VERSION`, because the site is not public yet.
+      After launch, bump `TERMS_VERSION` whenever the Terms change.
 - [ ] pl, de, es, fr, pt-br translations reviewed by native speakers, or remove those languages from `LANGUAGES` for now.
 
 By hand, on the live site (phone and desktop)
