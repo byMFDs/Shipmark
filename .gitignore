@@ -26,3 +26,6 @@ staticfiles/
 
 # Error logs (LOG_DIR)
 logs/
+docs/promts/
+docs/prompts/
+docs/galochka/
