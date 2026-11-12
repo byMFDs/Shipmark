@@ -29,7 +29,9 @@ The results are shown on your public project page.
 
 **Follows and likes.** We store whom you follow and which projects you like. Others see only the counts, not the lists.
 
-**Reports.** If you report a project or a profile, we store the reason and the details you write. Only staff see reports. The person you report is not told who reported them.
+**Reports and moderation.** If you report a project, a profile or a build-log update, we store the reason and the details you write. Moderators (people with the moderator badge) and staff see reports; the person you report is never told who reported them. When moderators act, we store the decision and its reason: a removed project keeps its content and the reason (only you and staff see it), cleared profile fields are deleted, and mutes and bans are stored with their reason, start and end. You see the reason in a notice on the site, which we keep until you delete your account. Decisions about you and these notices are included in "Download my data".
+
+**Ban evasion.** When an account is banned, we store a salted one-way hash of its GitHub user id (never the id itself), with the reason and the end date. It only lets us recognise the same GitHub account if it signs up again during the ban. It is deleted when the ban ends or is lifted, also when the banned account was deleted in the meantime.
 
 **Terms acceptance.** We store which version of the Terms you accepted and when.
 
@@ -51,6 +53,8 @@ The results are shown on your public project page.
 
 - Your account, profile, projects, follows and likes: until you delete them or your account.
 - Uptime checks: 90 days.
+- Moderation decisions about you (mutes, bans, removed projects) and notices: while your account exists; they are deleted with it. Reports about you stay without a link to your account, with only the name shown at the time.
+- Ban hash of a GitHub id: only until the ban ends or is lifted.
 - Sign-in sessions: 2 weeks, or until you sign out.
 - Reports you made: kept after they are handled. If you delete your account, they stay without your name.
 - Audit log: kept. Entries about a deleted account do not contain the username or email.

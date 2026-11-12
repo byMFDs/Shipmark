@@ -38,7 +38,7 @@ Znaki są obliczane na podstawie naszych najnowszych sprawdzeń. Mogą się zmie
 
 ## Moderacja {#moderation}
 
-Każda zalogowana osoba może zgłosić projekt lub profil. Możemy ukrywać projekty lub zawieszać konta, które łamią ten regulamin. Ukryte projekty i zawieszone profile nie są publiczne. Jeśli uważasz, że popełniliśmy błąd, napisz do nas.
+Każda zalogowana osoba może zgłosić projekt, profil lub wpis w dzienniku zmian. Moderatorzy mogą odrzucić zgłoszenie, usunąć projekt, wyczyścić pola profilu (awatar, bio, linki), wyciszyć konto na maksymalnie 7 dni (nadal możesz czytać, zmieniać ustawienia, pobrać lub usunąć swoje dane, ale nie publikować) albo zablokować je na maksymalnie 14 dni (zostajesz wylogowany, nie możesz się zalogować, a profil i projekty nie są publiczne). Każda decyzja ma powód, który widzisz. O dłuższych lub stałych sankcjach decydują tylko administratorzy serwisu, którzy mogą też ukrywać projekty lub zawieszać konta. Usunięcie konta nie kończy blokady (zob. [Politykę prywatności](/legal/privacy/)). Jeśli uważasz, że popełniliśmy błąd, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Zakończenie {#ending}
 

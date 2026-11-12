@@ -31,7 +31,9 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 **Abonnements et mentions J’aime.** Nous conservons les personnes que vous suivez et les projets que vous aimez. Les autres ne voient que les totaux, pas les listes.
 
-**Signalements.** Si vous signalez un projet ou un profil, nous conservons le motif et les détails que vous écrivez. Seule notre équipe voit les signalements. La personne signalée n’est pas informée de qui l’a signalée.
+**Signalements et modération.** Si vous signalez un projet, un profil ou une entrée du journal de construction (build log), nous conservons le motif et les détails que vous écrivez. Les modérateurs (personnes ayant le badge de modérateur) et notre équipe voient les signalements ; la personne signalée n’apprend jamais qui l’a signalée. Quand les modérateurs décident, nous conservons la décision et son motif : un projet retiré garde son contenu et le motif (seuls vous et l’équipe le voyez), les champs de profil effacés sont supprimés, et les mises en sourdine et bannissements sont conservés avec leur motif, leur début et leur fin. Vous voyez le motif dans un avis sur le site, que nous gardons jusqu’à la suppression de votre compte. Les décisions vous concernant et ces avis figurent dans « Télécharger mes données ».
+
+**Contournement d’un bannissement.** Quand un compte est banni, nous conservons une empreinte à sens unique, salée, de son identifiant GitHub (jamais l’identifiant lui-même), avec le motif et la date de fin. Elle sert uniquement à reconnaître le même compte GitHub s’il se réinscrit pendant le bannissement. Elle est supprimée quand le bannissement prend fin ou est levé, y compris si le compte banni a été supprimé entre-temps.
 
 **Acceptation des Conditions.** Nous conservons la version des Conditions que vous avez acceptée et la date.
 
@@ -53,6 +55,8 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 - Votre compte, profil, projets, abonnements et mentions J’aime : jusqu’à ce que vous les supprimiez, ou que vous supprimiez votre compte.
 - Contrôles de disponibilité : 90 jours.
+- Décisions de modération vous concernant (mises en sourdine, bannissements, projets retirés) et avis : tant que votre compte existe ; ils sont supprimés avec lui. Les signalements à votre sujet restent sans lien avec votre compte, avec seulement le nom affiché à l’époque.
+- Empreinte de l’identifiant GitHub d’un compte banni : seulement jusqu’à la fin ou la levée du bannissement.
 - Sessions de connexion : 2 semaines, ou jusqu’à la déconnexion.
 - Signalements que vous avez faits : conservés après traitement. Si vous supprimez votre compte, ils restent sans votre nom.
 - Journal d’audit : conservé. Les entrées concernant un compte supprimé ne contiennent ni le nom d’utilisateur ni l’e-mail.

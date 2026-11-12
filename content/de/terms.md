@@ -38,7 +38,7 @@ Prüfzeichen werden aus unseren neuesten Prüfungen berechnet. Sie können sich 
 
 ## Moderation {#moderation}
 
-Alle angemeldeten Personen können ein Projekt oder ein Profil melden. Wir können Projekte verbergen oder Konten sperren, die gegen diese Bedingungen verstoßen. Verborgene Projekte und gesperrte Profile sind nicht öffentlich. Wenn du meinst, wir haben uns geirrt, schreib uns.
+Alle angemeldeten Personen können ein Projekt, ein Profil oder einen Build-Log-Eintrag melden. Moderatoren können eine Meldung ablehnen, ein Projekt entfernen, Profilfelder leeren (Avatar, Bio, Links), ein Konto bis zu 7 Tage stummschalten (du kannst weiter lesen, Einstellungen ändern, deine Daten herunterladen oder löschen, aber nichts veröffentlichen) oder es bis zu 14 Tage sperren (du wirst abgemeldet, kannst dich nicht anmelden, und Profil und Projekte sind nicht öffentlich). Jede Entscheidung hat einen Grund, den du siehst. Über längere oder dauerhafte Sanktionen entscheiden nur die Administratoren der Website; sie können auch Projekte verbergen oder Konten sperren. Das Löschen deines Kontos beendet keine Sperre (siehe [Datenschutzerklärung](/legal/privacy/)). Wenn du denkst, dass wir einen Fehler gemacht haben, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Beendigung {#ending}
 

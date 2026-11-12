@@ -31,7 +31,9 @@ Os resultados aparecem na página pública do seu projeto.
 
 **Quem você segue e curtidas.** Guardamos quem você segue e quais projetos você curtiu. Os outros veem apenas os totais, não as listas.
 
-**Denúncias.** Se você denunciar um projeto ou um perfil, guardamos o motivo e os detalhes que você escrever. Só a nossa equipe vê as denúncias. A pessoa denunciada não é informada de quem a denunciou.
+**Denúncias e moderação.** Se você denunciar um projeto, um perfil ou uma entrada do registro de mudanças (build log), guardamos o motivo e os detalhes que você escrever. As denúncias são vistas pelos moderadores (pessoas com o selo de moderador) e pela nossa equipe; a pessoa denunciada nunca é informada de quem a denunciou. Quando os moderadores decidem, guardamos a decisão e o motivo: um projeto removido mantém o conteúdo e o motivo (só você e a equipe veem), campos de perfil limpos são apagados, e silenciamentos e banimentos são guardados com motivo, início e fim. Você vê o motivo em um aviso no site, que guardamos até você excluir a conta. As decisões sobre você e esses avisos estão em “Baixar meus dados”.
+
+**Evasão de banimento.** Quando uma conta é banida, guardamos um hash de mão única, com sal, do id de usuário do GitHub (nunca o id em si), com o motivo e a data de fim. Ele serve apenas para reconhecer a mesma conta do GitHub se ela se cadastrar de novo durante o banimento. É apagado quando o banimento termina ou é revogado, também se a conta banida tiver sido excluída nesse meio-tempo.
 
 **Aceite dos Termos.** Guardamos qual versão dos Termos você aceitou e quando.
 
@@ -53,6 +55,8 @@ Os resultados aparecem na página pública do seu projeto.
 
 - Sua conta, perfil, projetos, quem você segue e curtidas: até você excluí-los ou excluir a conta.
 - Verificações de disponibilidade: 90 dias.
+- Decisões de moderação sobre você (silenciamentos, banimentos, projetos removidos) e avisos: enquanto sua conta existir; são apagados com ela. Denúncias sobre você ficam sem vínculo com a conta, só com o nome mostrado na época.
+- Hash do id do GitHub de uma conta banida: só até o banimento terminar ou ser revogado.
 - Sessões de login: 2 semanas, ou até você sair da conta.
 - Denúncias que você fez: permanecem depois de tratadas. Se você excluir sua conta, ficam sem o seu nome.
 - Registro de auditoria: é mantido. As entradas sobre uma conta excluída não contêm o nome de usuário nem o e-mail.

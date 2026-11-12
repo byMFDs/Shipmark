@@ -36,7 +36,7 @@ Hallmarks are worked out from our latest checks. They can change or disappear wh
 
 ## Moderation {#moderation}
 
-Anyone signed in can report a project or a profile. We may hide projects or suspend accounts that break these terms. Hidden projects and suspended profiles are not public. If you think we made a mistake, write to us.
+Anyone signed in can report a project, a profile or a build-log update. Moderators can dismiss a report, remove a project, clear profile fields (avatar, bio, links), mute an account for up to 7 days (you can still read, change your settings, download or delete your data, but not post), or ban it for up to 14 days (you are signed out, cannot sign in, and your profile and projects are not public). Every decision comes with a reason that you see. Longer or permanent sanctions are decided only by the site's administrators, who may also hide projects or suspend accounts. Deleting your account does not end a ban (see the [Privacy policy](/legal/privacy/)). If you think we made a mistake, write to [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Ending {#ending}
 

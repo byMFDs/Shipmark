@@ -196,6 +196,10 @@ DJANGO_SETTINGS_MODULE=config.settings.prod
 # 7 days old (TRUST_REVERIFY_REPOS_DAYS), plus links waiting for a re-check or for GitHub statistics.
 # Needs GITHUB_API_TOKEN. A rate limit ends the run early; the rest is done the next day.
 45 4 * * *    cd /srv/shipmark && flock -n /tmp/shipmark-repos.lock .venv/bin/python manage.py reverify_repos >> /var/log/shipmark/repos.log 2>&1
+
+# Ban hashes (ban evasion): once a day. Deletes the salted GitHub-id hashes of bans that have ended.
+# Bans themselves need no cron: expiry is checked per request.
+15 4 * * *    cd /srv/shipmark && .venv/bin/python manage.py prune_bans >> /var/log/shipmark/bans.log 2>&1
 ```
 
 Create the log directory once: `mkdir -p /var/log/shipmark` (owned by the user that runs cron).

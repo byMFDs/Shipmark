@@ -31,7 +31,9 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 **Obserwowania i polubienia.** Zapisujemy, kogo obserwujesz i które projekty lubisz. Inni widzą tylko liczby, nie listy.
 
-**Zgłoszenia.** Jeśli zgłosisz projekt lub profil, zapisujemy powód i szczegóły, które napiszesz. Zgłoszenia widzi tylko nasz zespół. Zgłoszona osoba nie dowiaduje się, kto ją zgłosił.
+**Zgłoszenia i moderacja.** Jeśli zgłosisz projekt, profil lub wpis w dzienniku zmian (build log), zapisujemy powód i szczegóły, które napiszesz. Zgłoszenia widzą moderatorzy (osoby z odznaką moderatora) i nasz zespół; zgłoszona osoba nigdy nie dowiaduje się, kto ją zgłosił. Gdy moderatorzy podejmują decyzję, zapisujemy ją wraz z powodem: usunięty projekt zachowuje treść i powód (widzisz go tylko Ty i zespół), wyczyszczone pola profilu są kasowane, a wyciszenia i blokady zapisujemy z powodem, początkiem i końcem. Powód widzisz w powiadomieniu na stronie, które przechowujemy do usunięcia konta. Decyzje dotyczące Ciebie i te powiadomienia są w „Pobierz moje dane”.
+
+**Omijanie blokady.** Gdy konto zostaje zablokowane, zapisujemy jednokierunkowy skrót (z solą) jego identyfikatora GitHub, nigdy sam identyfikator, razem z powodem i datą końca. Pozwala on tylko rozpoznać to samo konto GitHub, jeśli zarejestruje się ponownie w czasie blokady. Skrót jest usuwany, gdy blokada się kończy lub zostaje cofnięta, także jeśli zablokowane konto zostało w międzyczasie usunięte.
 
 **Akceptacja Regulaminu.** Zapisujemy, którą wersję Regulaminu zaakceptowano i kiedy.
 
@@ -53,6 +55,8 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 - Konto, profil, projekty, obserwowania i polubienia: dopóki ich nie usuniesz albo nie usuniesz konta.
 - Sprawdzenia dostępności: 90 dni.
+- Decyzje moderacji dotyczące Ciebie (wyciszenia, blokady, usunięte projekty) i powiadomienia: dopóki istnieje Twoje konto; są usuwane razem z nim. Zgłoszenia dotyczące Ciebie zostają bez powiązania z kontem, tylko z ówczesną nazwą.
+- Skrót identyfikatora GitHub zablokowanego konta: tylko do końca lub cofnięcia blokady.
 - Sesje logowania: 2 tygodnie lub do wylogowania.
 - Zgłoszenia, które wysłano z Twojego konta: zostają po rozpatrzeniu. Jeśli usuniesz konto, zostają bez Twojego imienia.
 - Dziennik audytu: jest zachowywany. Wpisy o usuniętym koncie nie zawierają nazwy użytkownika ani adresu e-mail.

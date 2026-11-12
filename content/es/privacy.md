@@ -31,7 +31,9 @@ Los resultados se muestran en la página pública de tu proyecto.
 
 **Seguimientos y me gusta.** Guardamos a quién sigues y qué proyectos te gustan. Los demás solo ven los totales, no las listas.
 
-**Denuncias.** Si denuncias un proyecto o un perfil, guardamos el motivo y los detalles que escribas. Solo las ve nuestro equipo. La persona denunciada no sabe quién la denunció.
+**Denuncias y moderación.** Si denuncias un proyecto, un perfil o una entrada del registro de cambios (build log), guardamos el motivo y los detalles que escribas. Las ven los moderadores (personas con la insignia de moderador) y nuestro equipo; a la persona denunciada nunca se le dice quién la denunció. Cuando los moderadores deciden, guardamos la decisión y su motivo: un proyecto retirado conserva su contenido y el motivo (solo lo ves tú y el equipo), los campos de perfil vaciados se borran, y los silencios y bloqueos se guardan con su motivo, inicio y fin. Ves el motivo en un aviso en el sitio, que guardamos hasta que elimines tu cuenta. Las decisiones sobre ti y estos avisos se incluyen en «Descargar mis datos».
+
+**Evasión de bloqueos.** Cuando se bloquea una cuenta, guardamos un hash unidireccional con sal de su id de usuario de GitHub (nunca el id), con el motivo y la fecha de fin. Solo sirve para reconocer la misma cuenta de GitHub si vuelve a registrarse durante el bloqueo. Se borra cuando el bloqueo termina o se levanta, también si la cuenta bloqueada se eliminó entretanto.
 
 **Aceptación de los Términos.** Guardamos qué versión de los Términos aceptaste y cuándo.
 
@@ -53,6 +55,8 @@ Los resultados se muestran en la página pública de tu proyecto.
 
 - Tu cuenta, perfil, proyectos, seguimientos y me gusta: hasta que los elimines a ellos o a tu cuenta.
 - Comprobaciones de disponibilidad: 90 días.
+- Decisiones de moderación sobre ti (silencios, bloqueos, proyectos retirados) y avisos: mientras exista tu cuenta; se borran con ella. Las denuncias sobre ti se conservan sin vínculo con tu cuenta, solo con el nombre de ese momento.
+- Hash del id de GitHub de una cuenta bloqueada: solo hasta que el bloqueo termine o se levante.
 - Sesiones de inicio de sesión: 2 semanas, o hasta que cierres sesión.
 - Denuncias que hiciste: se conservan una vez tramitadas. Si eliminas tu cuenta, quedan sin tu nombre.
 - Registro de auditoría: se conserva. Las entradas sobre una cuenta eliminada no contienen el nombre de usuario ni el correo.

@@ -123,3 +123,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-12: Features stage 1. Screenshots fixed (cause: separate upload form; now one form with Save/Publish, tests). `UserBadge` + `accounts/roles.py` (moderation only from the badge), badge admin (superusers only) + `grant_badge`, reserved names, system account `shipmark`, official/moderator marks next to names. `news` app (model + admin). `Sanction` model + admin. Staff can no longer grant themselves superuser in the admin. 7 languages, 672 tests.
   Next: "GO 2" (moderation: /mod/, report statuses, enforcement of mute/ban).
+
+- 2026-11-12: Features stage 2 (moderation). Report statuses + log-entry reports; `/mod/` queue, detail, "Moderate" while browsing; decisions with a reason the person sees (dismiss, remove project, clear profile, mute ≤7 d, ban ≤14 d; restore/purge superuser-only); guardrails + rate limit; mute enforced via `can_write`, ban ends sessions and refuses sign-in; salted GitHub-id hash against ban evasion (`prune_bans` cron); notices; legal texts in 7 languages. 708 tests.
+  Next: "GO 3" (profiles).

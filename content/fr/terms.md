@@ -38,7 +38,7 @@ Les poinçons sont calculés à partir de nos derniers contrôles. Ils peuvent c
 
 ## Modération {#moderation}
 
-Toute personne connectée peut signaler un projet ou un profil. Nous pouvons masquer des projets ou suspendre des comptes qui enfreignent ces conditions. Les projets masqués et les profils suspendus ne sont pas publics. Si vous pensez que nous avons commis une erreur, écrivez-nous.
+Toute personne connectée peut signaler un projet, un profil ou une entrée du journal de construction. Les modérateurs peuvent rejeter un signalement, retirer un projet, effacer des champs du profil (avatar, bio, liens), mettre un compte en sourdine jusqu’à 7 jours (vous pouvez toujours lire, modifier vos paramètres, télécharger ou supprimer vos données, mais pas publier) ou le bannir jusqu’à 14 jours (vous êtes déconnecté, ne pouvez pas vous connecter, et votre profil et vos projets ne sont pas publics). Chaque décision est accompagnée d’un motif que vous voyez. Les sanctions plus longues ou permanentes sont décidées uniquement par les administrateurs du site, qui peuvent aussi masquer des projets ou suspendre des comptes. Supprimer votre compte ne met pas fin à un bannissement (voir la [Politique de confidentialité](/legal/privacy/)). Si vous pensez que nous nous sommes trompés, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Fin du service {#ending}
 

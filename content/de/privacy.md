@@ -31,7 +31,9 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 **Follows und Likes.** Wir speichern, wem du folgst und welche Projekte du geliked hast. Andere sehen nur die Zahlen, nicht die Listen.
 
-**Meldungen.** Wenn du ein Projekt oder ein Profil meldest, speichern wir den Grund und die Details, die du schreibst. Nur unser Team sieht Meldungen. Die gemeldete Person erfährt nicht, wer sie gemeldet hat.
+**Meldungen und Moderation.** Wenn du ein Projekt, ein Profil oder einen Build-Log-Eintrag meldest, speichern wir den Grund und die Details, die du schreibst. Meldungen sehen Moderatoren (Personen mit dem Moderator-Abzeichen) und unser Team; die gemeldete Person erfährt nie, wer sie gemeldet hat. Wenn Moderatoren entscheiden, speichern wir die Entscheidung und ihren Grund: Ein entferntes Projekt behält Inhalt und Grund (nur du und das Team sehen es), geleerte Profilfelder werden gelöscht, und Stummschaltungen und Sperren werden mit Grund, Beginn und Ende gespeichert. Den Grund siehst du in einem Hinweis auf der Website, den wir aufbewahren, bis du dein Konto löschst. Entscheidungen über dich und diese Hinweise sind in „Meine Daten herunterladen“ enthalten.
+
+**Umgehung einer Sperre.** Wird ein Konto gesperrt, speichern wir einen gesalzenen Einweg-Hash seiner GitHub-Nutzer-ID (nie die ID selbst) zusammen mit Grund und Enddatum. Er dient nur dazu, dasselbe GitHub-Konto zu erkennen, wenn es sich während der Sperre neu registriert. Er wird gelöscht, wenn die Sperre endet oder aufgehoben wird, auch wenn das gesperrte Konto inzwischen gelöscht wurde.
 
 **Annahme der Bedingungen.** Wir speichern, welche Version der Nutzungsbedingungen du wann akzeptiert hast.
 
@@ -53,6 +55,8 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 - Dein Konto, Profil, deine Projekte, Follows und Likes: bis du sie oder dein Konto löschst.
 - Uptime-Prüfungen: 90 Tage.
+- Moderationsentscheidungen über dich (Stummschaltungen, Sperren, entfernte Projekte) und Hinweise: solange dein Konto besteht; sie werden mit ihm gelöscht. Meldungen über dich bleiben ohne Verbindung zu deinem Konto, nur mit dem damaligen Namen.
+- Hash der GitHub-ID eines gesperrten Kontos: nur bis die Sperre endet oder aufgehoben wird.
 - Anmelde-Sitzungen: 2 Wochen oder bis zum Abmelden.
 - Meldungen, die du gemacht hast: bleiben nach der Bearbeitung erhalten. Wenn du dein Konto löschst, bleiben sie ohne deinen Namen.
 - Audit-Log: bleibt erhalten. Einträge zu einem gelöschten Konto enthalten weder Benutzername noch E-Mail-Adresse.
