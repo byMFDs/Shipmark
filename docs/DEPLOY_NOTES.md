@@ -13,6 +13,7 @@ Set them in the real environment or in `/srv/shipmark/.env` (gitignored; real va
 | `DJANGO_SETTINGS_MODULE` | yes (`config.settings.prod`) | `wsgi.py` defaults to prod, but `manage.py` defaults to **dev**, so cron and shell commands must set it |
 | `SECRET_KEY` | yes | Signs sessions and CSRF tokens. `python -c "import secrets; print(secrets.token_urlsafe(50))"` |
 | `SECRET_KEY_FALLBACKS` | no | Old keys while rotating (see below) |
+| `BAN_HASH_KEY` | yes | Key for the ban-evasion hash. `python -c "import secrets; print(secrets.token_urlsafe(50))"`, at least 32 characters, not the `SECRET_KEY`. **Never rotate it while a ban is active** (see "BAN_HASH_KEY" below) |
 | `DATABASE_URL` | yes | `postgres://USER:PASSWORD@HOST:5432/DBNAME` (percent-encode special characters in the password) |
 | `ALLOWED_HOSTS` | yes | Comma-separated host names, e.g. `example.com,www.example.com` |
 | `CSRF_TRUSTED_ORIGINS` | yes | With scheme, e.g. `https://example.com` |
@@ -158,6 +159,7 @@ Then try the production settings the way the server will run them (two terminals
 # terminal 1
 export DJANGO_SETTINGS_MODULE=config.settings.prod
 export SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(50))')"
+export BAN_HASH_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(50))')"
 export ADMIN_URL=staff-local/ ALLOWED_HOSTS=localhost
 python manage.py check --deploy                    # "no issues"
 python manage.py createcachetable
@@ -279,29 +281,48 @@ Say so on the privacy page.
 
 ## Rotating SECRET_KEY
 
-What depends on it: sessions, CSRF tokens, and the **ban hashes** (`BannedIdentity`: HMAC of the GitHub id keyed from
-SECRET_KEY, `moderation/bans.py`; the salt string itself is a constant in the code, the secret part is this key).
-Nothing in the database is encrypted with it (verification tokens are random values stored as they are, GitHub tokens
-are not stored), so rotating can never make data unreadable. Worst case: everyone has to sign in with GitHub again,
-and bans no longer recognise a banned GitHub account that signs up again (see the ban note below).
-
-**Ban note:** a hash made with the old key is only recognised while that key is in `SECRET_KEY_FALLBACKS`. Hashes cannot
-be re-made (the GitHub id is not stored). So before you remove a fallback key, check `Moderation > Sanctions` for bans
-that are still active (permanent ones especially); keep the old key in the fallback list until they have ended, or accept
-that those banned people can sign up again. Bans of existing accounts keep working either way (they are checked by account).
+What depends on it: sessions, CSRF tokens. Nothing in the database is encrypted with it (verification tokens are random
+values stored as they are, GitHub tokens are not stored), so rotating can never make data unreadable.
+Worst case: everyone has to sign in with GitHub again. The ban hashes do **not** use it any more (see "BAN_HASH_KEY"),
+except old ones that `rehash_bans` could not convert (see below).
 
 **Planned rotation (nobody is signed out):**
 
 1. Generate a new key: `python -c "import secrets; print(secrets.token_urlsafe(50))"`.
 2. In `.env`: put the **old** key into `SECRET_KEY_FALLBACKS=` and the **new** key into `SECRET_KEY=`.
 3. Restart gunicorn. Existing sessions and forms signed with the old key are still accepted.
-4. After 2 weeks (sessions live 14 days) delete the `SECRET_KEY_FALLBACKS` line and restart again, unless a ban made
-   before the rotation is still active (see the ban note above).
+4. After 2 weeks (sessions live 14 days) delete the `SECRET_KEY_FALLBACKS` line and restart again.
 
 **If the key leaked:** do the same but leave `SECRET_KEY_FALLBACKS` empty. The old key stops working at once,
-everyone is signed out and current ban hashes stop matching (see the ban note above). Also rotate `GITHUB_CLIENT_SECRET` and the database password if the whole `.env` leaked.
+everyone is signed out, nothing else breaks. Also rotate `GITHUB_CLIENT_SECRET` and the database password if the whole `.env` leaked.
 
 Do not use the same key as in development, and never commit it.
+
+## BAN_HASH_KEY
+
+When someone is banned we keep `HMAC-SHA256(BAN_HASH_KEY, "shipmark.moderation.banned-identity:github:<GitHub id>")`
+(`moderation/bans.py`), never the id, so deleting the account and signing up again with the same GitHub account still
+shows the ban page. The label is only a prefix that keeps this HMAC apart from any other; the secret is the key.
+It is separate from `SECRET_KEY` on purpose: rotating `SECRET_KEY` (routine) must not free banned people.
+
+- **Generate it once:** `python -c "import secrets; print(secrets.token_urlsafe(50))"`, put it in `.env` (chmod 600).
+  Production refuses to start if it is missing, shorter than 32 characters, or equal to `SECRET_KEY`.
+  Dev uses an insecure built-in default.
+- **Never rotate it while any ban is active, permanent ones included.** The hashes cannot be recomputed with a new key
+  (the GitHub ids are not stored), so after a rotation every hash made with the old key stops matching and every
+  banned person can sign up again. If you must rotate: do it when `Moderation > Banned identities` is empty (bans end
+  and are pruned daily), or accept that those bans lapse.
+- **Keep it secret like a password.** GitHub ids are small numbers, so anyone who has the key and the hashes could test
+  which ids are banned. Without the key the hashes tell nothing.
+- **Backups:** the key lives in `.env`, not in the database, so a database backup alone does not contain it. Keep a copy
+  of `.env` where your other secrets are, or a restored database cannot match its ban hashes.
+
+**First deploy of this version:** `python manage.py rehash_bans` once (safe to repeat). It converts ban hashes made
+before `BAN_HASH_KEY` existed (they were keyed from `SECRET_KEY`) for every ban whose account still exists. A ban whose
+account was deleted cannot be converted (nothing to compute the new hash from); the command says how many there are,
+and they keep matching through `SECRET_KEY` / `SECRET_KEY_FALLBACKS` until they expire, so do not rotate `SECRET_KEY`
+without a fallback before then. When the command reports "No old-scheme hashes left", `SECRET_KEY` has nothing to do
+with bans any more. **Do not roll the migration back after `rehash_bans`:** converted rows only match with this code.
 
 ## Pre-launch checklist
 
@@ -318,7 +339,7 @@ Server
 
 Accounts and secrets
 - [ ] GitHub OAuth App uses the production callback URL; a real sign-in works end to end.
-- [ ] `.env` is `chmod 600`, owned by the app user; `SECRET_KEY` differs from dev; no secrets in git (`git log -p | grep -i secret`).
+- [ ] `.env` is `chmod 600`, owned by the app user; `SECRET_KEY` and `BAN_HASH_KEY` differ from dev (and from each other), and `.env` is backed up with your other secrets; no secrets in git (`git log -p | grep -i secret`).
 - [ ] After a few days on HTTPS: `SECURE_HSTS_SECONDS=31536000`. Do not use hstspreload.org until you are sure.
 
 Content and law

@@ -37,8 +37,8 @@ python manage.py makemigrations && python manage.py migrate
 ## Settings
 
 - `config.settings.dev` is the default for `manage.py` (SQLite, DEBUG on, insecure dev key).
-- `config.settings.prod` is the default for `wsgi.py`/`asgi.py`. It requires `SECRET_KEY` and
-  `DATABASE_URL` (PostgreSQL) and fails at startup if they are missing.
+- `config.settings.prod` is the default for `wsgi.py`/`asgi.py`. It requires `SECRET_KEY`,
+  `BAN_HASH_KEY` and `DATABASE_URL` (PostgreSQL) and fails at startup if they are missing.
 - All variables are documented in `.env.example`.
 
 ## Production dependencies

@@ -14,6 +14,14 @@ SECRET_KEY = env.str("SECRET_KEY")  # noqa: F405
 # Empty normally. See "Rotating SECRET_KEY" in docs/DEPLOY_NOTES.md.
 SECRET_KEY_FALLBACKS = env.list("SECRET_KEY_FALLBACKS", default=[])  # noqa: F405
 
+# Ban-evasion hash key: required, long, and not the SECRET_KEY. A missing value stops the start (see DEPLOY_NOTES).
+BAN_HASH_KEY = env.str("BAN_HASH_KEY")  # noqa: F405
+if len(BAN_HASH_KEY) < 32 or BAN_HASH_KEY == SECRET_KEY:
+    raise ImproperlyConfigured(
+        "BAN_HASH_KEY must be at least 32 characters and different from SECRET_KEY. "
+        'Generate one: python -c "import secrets; print(secrets.token_urlsafe(50))"'
+    )
+
 # PostgreSQL: DATABASE_URL=postgres://USER:PASSWORD@HOST:5432/DBNAME
 # Connections stay open for 60 s between requests (saves a reconnect per request); a dead one is detected
 # and replaced before use (e.g. after a database restart).

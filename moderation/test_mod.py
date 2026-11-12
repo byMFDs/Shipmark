@@ -1,10 +1,13 @@
 """Stage 2: /mod/, decisions, mute and ban enforcement, ban evasion and the abuse cases."""
+import hashlib
+import hmac
 import json
 from datetime import timedelta
 from io import StringIO
 
 from allauth.core.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.models import SocialAccount, SocialLogin
+from django.conf import settings
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.core.cache import cache
@@ -15,6 +18,7 @@ from django.test import RequestFactory, TestCase, override_settings
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.crypto import salted_hmac
 
 from accounts import badges
 from accounts.adapters import SocialAccountAdapter
@@ -484,18 +488,127 @@ class BanTests(ModTestCase):
         self.assertEqual(out.getvalue().count("Deleted 1"), 1)
         self.assertEqual({row.sanction_id for row in BannedIdentity.objects.all()}, {running.pk, permanent.pk})
 
-    def test_rotating_secret_key_keeps_the_ban(self):
-        from django.conf import settings
-        self.ban()
-        with override_settings(SECRET_KEY="a-brand-new-key-" + "x" * 40, SECRET_KEY_FALLBACKS=[settings.SECRET_KEY]):
-            self.assertIsNotNone(bans.find("4242"))
-
     def test_ban_ends_by_itself(self):
         ban = self.ban()
         Sanction.objects.filter(pk=ban.pk).update(starts_at=timezone.now() - timedelta(days=5), expires_at=timezone.now() - timedelta(seconds=1))
         self.assertEqual(self.client.get(self.project.get_absolute_url()).status_code, 200)
         self.client.force_login(self.ana)
         self.assertEqual(self.client.get(reverse("accounts:settings")).status_code, 200)
+
+
+def expected_hash(uid, key=None):
+    """The documented scheme, written out independently of moderation/bans.py."""
+    return hmac.new((key or settings.BAN_HASH_KEY).encode(), f"shipmark.moderation.banned-identity:github:{uid}".encode(),
+                    hashlib.sha256).hexdigest()
+
+
+def legacy_hash(uid, secret=None):
+    return salted_hmac("shipmark.moderation.banned-identity", f"github:{uid}", secret=secret or settings.SECRET_KEY,
+                       algorithm="sha256").hexdigest()
+
+
+class BanHashKeyTests(ModTestCase):
+    """The ban hash uses its own key (BAN_HASH_KEY), not SECRET_KEY."""
+
+    def setUp(self):
+        super().setUp()
+        SocialAccount.objects.create(user=self.ana, provider="github", uid="4242", extra_data={"login": "ana"})
+
+    def ban(self):
+        return sanctions.issue(self.ana, "ban", REASON, self.mira, length=timedelta(days=3))
+
+    def refuses_signup(self, uid="4242"):
+        try:
+            SocialAccountAdapter().pre_social_login(social_request(), github_login(User(username="newcomer"), uid))
+        except ImmediateHttpResponse as refused:
+            return refused.response
+        return None
+
+    def test_hash_is_hmac_sha256_of_the_id_under_the_ban_key(self):
+        self.ban()
+        row = BannedIdentity.objects.get()
+        self.assertEqual((row.identity_hash, row.hash_scheme), (expected_hash("4242"), "ban_key"))
+        self.assertNotEqual(row.identity_hash, legacy_hash("4242"))
+        self.assertNotIn("4242", row.identity_hash)
+
+    def test_signup_with_a_banned_id_is_refused_with_the_ban_page(self):
+        self.ban()
+        response = self.refuses_signup()
+        self.assertEqual(response.status_code, 403)
+        self.assertIn(REASON, response.content.decode())
+        self.assertIsNone(self.refuses_signup("999"))
+
+    def test_a_wrong_key_does_not_match(self):
+        self.ban()
+        with override_settings(BAN_HASH_KEY="a-different-ban-key-" + "y" * 40):
+            self.assertIsNone(bans.find("4242"))
+            self.assertIsNone(self.refuses_signup())
+        self.assertIsNotNone(bans.find("4242"))
+
+    def test_secret_key_is_not_involved_any_more(self):
+        self.ban()
+        with override_settings(SECRET_KEY="a-brand-new-secret-key-" + "x" * 40, SECRET_KEY_FALLBACKS=[]):
+            self.assertIsNotNone(bans.find("4242"))
+            self.assertIsNotNone(self.refuses_signup())
+
+    def old_row(self, uid="4242", secret=None, sanction=None):
+        return BannedIdentity.objects.create(
+            identity_hash=legacy_hash(uid, secret), hash_scheme="secret_key", sanction=sanction, reason=REASON,
+            expires_at=timezone.now() + timedelta(days=5))
+
+    def test_old_hashes_keep_working_until_rehashed(self):
+        self.old_row()
+        self.assertIsNotNone(bans.find("4242"))
+        self.assertIsNotNone(self.refuses_signup())
+        self.assertIsNone(bans.find("777"))
+        old_key = settings.SECRET_KEY
+        self.old_row("5555", secret=old_key)
+        with override_settings(SECRET_KEY="the-new-secret-key-" + "z" * 40, SECRET_KEY_FALLBACKS=[old_key]):
+            self.assertIsNotNone(bans.find("5555"))  # rotation with a fallback, as before
+        with override_settings(SECRET_KEY="the-new-secret-key-" + "z" * 40, SECRET_KEY_FALLBACKS=[]):
+            self.assertIsNone(bans.find("5555"))
+
+    def test_new_bans_use_the_new_key_even_when_old_rows_exist(self):
+        self.old_row("5555")
+        self.ban()
+        self.assertEqual(BannedIdentity.objects.filter(hash_scheme="ban_key").get().identity_hash, expected_hash("4242"))
+        self.assertEqual(BannedIdentity.objects.filter(hash_scheme="secret_key").count(), 1)
+
+    def test_rehash_converts_rows_whose_account_exists_and_reports_the_rest(self):
+        ban = sanctions.issue(self.ana, "ban", REASON, self.mira, length=timedelta(days=3))
+        BannedIdentity.objects.all().delete()
+        row = self.old_row(sanction=ban)  # an old-scheme row for a live account
+        orphan = self.old_row("8888")  # its account was deleted: no sanction, no id to rehash from
+        out = StringIO()
+        call_command("rehash_bans", stdout=out)
+        row.refresh_from_db()
+        orphan.refresh_from_db()
+        self.assertEqual((row.hash_scheme, row.identity_hash), ("ban_key", expected_hash("4242")))
+        self.assertEqual((orphan.hash_scheme, orphan.identity_hash), ("secret_key", legacy_hash("8888")))
+        self.assertIn("Rehashed 1", out.getvalue())
+        self.assertIn("1 old-scheme hash(es) cannot be converted", out.getvalue())
+        # The converted ban no longer depends on SECRET_KEY; the orphan still matches through the old scheme.
+        with override_settings(SECRET_KEY="the-new-secret-key-" + "z" * 40, SECRET_KEY_FALLBACKS=[]):
+            self.assertIsNotNone(bans.find("4242"))
+            self.assertIsNone(bans.find("8888"))
+        self.assertIsNotNone(bans.find("8888"))
+        call_command("rehash_bans", stdout=StringIO())  # running it again changes nothing
+        self.assertEqual(BannedIdentity.objects.filter(hash_scheme="ban_key").count(), 1)
+
+    def test_rehash_never_converts_on_a_guess(self):
+        ban = sanctions.issue(self.ana, "ban", REASON, self.mira, length=timedelta(days=3))
+        BannedIdentity.objects.all().delete()
+        row = BannedIdentity.objects.create(identity_hash="f" * 64, hash_scheme="secret_key", sanction=ban,
+                                            reason=REASON, expires_at=timezone.now() + timedelta(days=1))
+        self.assertEqual(bans.rehash(), (0, 1))
+        row.refresh_from_db()
+        self.assertEqual((row.hash_scheme, row.identity_hash), ("secret_key", "f" * 64))
+
+    def test_when_nothing_is_left_the_command_says_so(self):
+        self.ban()
+        out = StringIO()
+        call_command("rehash_bans", stdout=out)
+        self.assertIn("No old-scheme hashes left", out.getvalue())
 
 
 # ---------- The reporter stays anonymous ----------

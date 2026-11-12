@@ -212,13 +212,21 @@ class Sanction(models.Model):
 class BannedIdentity(models.Model):
     """Stops a banned person from deleting the account and signing up again with the same GitHub account.
 
-    Only a salted hash of the GitHub user id is kept (HMAC-SHA256 keyed with SECRET_KEY, see
-    moderation/bans.py), never the id itself, and only until the ban ends: rows past `expires_at` are deleted
-    when bans are checked and by `manage.py prune_bans`. `expires_at` None = permanent ban. The reason and the
-    end date are kept so a refused signup sees the same ban page.
+    Only a keyed hash of the GitHub user id is kept (HMAC-SHA256 with settings.BAN_HASH_KEY, see moderation/bans.py),
+    never the id itself, and only until the ban ends: rows past `expires_at` are deleted when bans are checked and by
+    `manage.py prune_bans`. `expires_at` None = permanent ban. The reason and the end date are kept so a refused
+    signup sees the same ban page.
+
+    `hash_scheme` "secret_key" marks hashes made before BAN_HASH_KEY existed (keyed from SECRET_KEY); `rehash_bans`
+    converts those whose account still exists. They are only looked up while such rows exist.
     """
 
+    class HashScheme(models.TextChoices):
+        BAN_KEY = "ban_key", "BAN_HASH_KEY"  # plain labels: a technical field, shown only in the admin
+        SECRET_KEY = "secret_key", "SECRET_KEY (old)"
+
     identity_hash = models.CharField(max_length=64, db_index=True)
+    hash_scheme = models.CharField(max_length=10, choices=HashScheme.choices, default=HashScheme.SECRET_KEY)
     sanction = models.ForeignKey(Sanction, null=True, blank=True, on_delete=models.SET_NULL, related_name="identities")
     reason = models.TextField(max_length=MAX_DETAILS)
     expires_at = models.DateTimeField(null=True, blank=True)

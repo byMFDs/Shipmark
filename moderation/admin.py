@@ -189,7 +189,8 @@ class NoticeAdmin(ReadOnlyModelAdmin):
 class BannedIdentityAdmin(ReadOnlyModelAdmin):
     """Salted hashes of banned GitHub ids (never the id). Deleted when the ban ends or is revoked."""
 
-    list_display = ("created_at", "__str__", "expires_at", "sanction")
+    list_display = ("created_at", "__str__", "hash_scheme", "expires_at", "sanction")
+    list_filter = ("hash_scheme",)
     list_select_related = ("sanction",)
 
     def has_view_permission(self, request, obj=None):

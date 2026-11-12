@@ -153,6 +153,11 @@ MODERATION_MAX_MUTE = timedelta(days=7)
 MODERATION_MAX_BAN = timedelta(days=14)
 MODERATION_ACTIONS_PER_HOUR = 30  # per moderator
 
+# Secret for the ban-evasion hash of a GitHub id (moderation/bans.py). Its own key, not SECRET_KEY, so rotating
+# SECRET_KEY cannot free banned people. Production requires it (prod.py); dev.py fills in an insecure default.
+# Never rotate it while a ban is active: the hashes cannot be recomputed (the GitHub ids are not stored).
+BAN_HASH_KEY = env.str("BAN_HASH_KEY", default="")
+
 # --- django-allauth: GitHub is the only login method ---
 GITHUB_CLIENT_ID = env.str("GITHUB_CLIENT_ID", default="")
 GITHUB_CLIENT_SECRET = env.str("GITHUB_CLIENT_SECRET", default="")

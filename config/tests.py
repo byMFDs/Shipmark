@@ -115,12 +115,17 @@ class AdminLoginThrottleTests(TestCase):
             self.assertEqual(self.client.get(url).status_code, 200)
 
 
+PROD_SECRET = "tést-only-" + "abcdefghijklmnopqrstuvwxyz0123456789" * 2  # module level: other test classes borrow _manage
+
+
 class ProductionSettingsTests(SimpleTestCase):
     def _manage(self, *args, **extra):
         env = {k: v for k, v in os.environ.items() if k not in ("ADMIN_URL", "DEBUG")}
-        env.update({"DJANGO_SETTINGS_MODULE": "config.settings.prod", "SECRET_KEY": "tést-only-" + "abcdefghijklmnopqrstuvwxyz0123456789" * 2,
+        env.update({"DJANGO_SETTINGS_MODULE": "config.settings.prod", "SECRET_KEY": PROD_SECRET,
+                    "BAN_HASH_KEY": "ban-only-" + "zyxwvutsrqponmlkjihgfedcba9876543210" * 2,
                     "DATABASE_URL": "sqlite:////tmp/unused.sqlite3", "ADMIN_URL": "staff-4f8k2/",
                     "ALLOWED_HOSTS": "example.com", "LOG_DIR": str(settings.LOG_DIR), **extra})
+        env = {k: v for k, v in env.items() if v is not None}  # a None value removes the variable
         return subprocess.run([sys.executable, "manage.py", *args], cwd=Path(settings.BASE_DIR), env=env,
                               capture_output=True, text=True)
 
@@ -128,6 +133,15 @@ class ProductionSettingsTests(SimpleTestCase):
         result = self._manage("check", "--deploy")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("no issues", result.stdout + result.stderr)
+
+    def test_production_refuses_to_start_without_a_proper_ban_hash_key(self):
+        cases = {"missing": None, "empty": "", "too short": "short-key", "same as SECRET_KEY": PROD_SECRET}
+        for label, value in cases.items():
+            result = self._manage("check", BAN_HASH_KEY=value)
+            self.assertNotEqual(result.returncode, 0, label)
+            self.assertIn("BAN_HASH_KEY", result.stderr, label)
+        ok = self._manage("shell", "-c", "from django.conf import settings as s; print(len(s.BAN_HASH_KEY))")
+        self.assertEqual(ok.returncode, 0, ok.stderr)
 
     def test_debug_cannot_be_switched_on_in_production(self):
         result = self._manage("shell", "-c", "from django.conf import settings; print('DEBUG=%s' % settings.DEBUG)", DEBUG="true")
