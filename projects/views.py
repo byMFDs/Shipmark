@@ -251,7 +251,7 @@ def domain_verify(request, project):
             message = exc.message
         else:
             ok = True
-            message = _("Verified. Confirmed again.") if was_verified else _("Verified. Live earned.")
+            message = _("Verified. Confirmed again.") if was_verified else _("Verified. Domain verified earned.")
 
     if wants_json:
         html = render_to_string("projects/_domain_status.html", {"project": project, **_domain_context(project, row)},

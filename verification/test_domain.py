@@ -334,7 +334,7 @@ class ViewTests(DomainTestCase):
     def test_plain_post_redirects_with_message(self):
         with self.good_dns:
             response = self.client.post(self.url, {"method": "dns"}, follow=True)
-        self.assertContains(response, "Verified. Live earned.")
+        self.assertContains(response, "Verified. Domain verified earned.")
         self.assertEqual(V.objects.get(pk=self.row.pk).status, V.Status.VERIFIED)
 
     def test_json_post_returns_status_html(self):
@@ -342,7 +342,7 @@ class ViewTests(DomainTestCase):
             response = self.client.post(self.url, {"method": "dns"}, HTTP_ACCEPT="application/json")
         data = response.json()
         self.assertTrue(data["ok"])
-        self.assertIn("Live earned", data["html"])
+        self.assertIn("Domain verified earned", data["html"])
 
     def test_json_failure_message(self):
         with fake_dns({"www.example.com": [], "example.com": []}):

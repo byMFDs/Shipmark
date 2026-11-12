@@ -192,7 +192,7 @@ def status_label(value):
 # (or 10+ commits), never who wrote the code, so it is shown as "Repo owner".
 HALLMARK_LABELS = {
     "authored": _("Repo owner"),
-    "live": _("Live"),
+    "live": _("Domain verified"),
     "steady": _("Steady"),
 }
 

@@ -98,12 +98,12 @@ class DomainVerificationAdmin(ReadOnlyModelAdmin):
     def has_moderate_permission(self, request):
         return request.user.has_perm("verification.change_domainverification")
 
-    @action(description=_("Revoke Live"), permissions=["moderate"])
+    @action(description=_("Revoke Domain verified"), permissions=["moderate"])
     def revoke_live(self, request, queryset):
         done = sum(review.revoke_live(row, request.user) for row in queryset.select_related("project"))
         messages.success(request, _("Revoked %(count)s.") % {"count": done})
 
-    @action(description=_("Block the domain and revoke Live"), permissions=["moderate"])
+    @action(description=_("Block the domain and revoke Domain verified"), permissions=["moderate"])
     def block_domain(self, request, queryset):
         rows = list(queryset.select_related("project"))
         for row in rows:

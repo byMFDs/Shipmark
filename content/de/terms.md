@@ -8,7 +8,7 @@ Diese Bedingungen sind die Vereinbarung zwischen dir und {{ legal_owner_name }},
 
 ## Was {{ site_name }} ist {#service}
 
-Ein öffentlicher Ort, um veröffentlichte Software zu zeigen, mit Prüfzeichen, die wir selbst prüfen: Repo owner (GitHub-Repository), Live (Kontrolle über die Domain) und Steady (Uptime). Wie jede Prüfung funktioniert, steht unter [So funktioniert der Nachweis](/how-proof-works/). Der Dienst ist kostenlos.
+Ein öffentlicher Ort, um veröffentlichte Software zu zeigen, mit Prüfzeichen, die wir selbst prüfen: Repo owner (GitHub-Repository), Domain verified (Kontrolle über die Domain) und Steady (Uptime). Wie jede Prüfung funktioniert, steht unter [So funktioniert der Nachweis](/how-proof-works/). Der Dienst ist kostenlos.
 
 ## Dein Konto {#account}
 

@@ -13,8 +13,8 @@ O GitHub mostra código. O LinkedIn mostra afirmações. O {{ site_name }} tenta
 Um projeto pode ganhar três selos. Cada um é um fato que o nosso servidor verifica, e cada um desaparece quando o fato deixa de ser verdade.
 
 - **Repo owner.** O projeto vincula um repositório público do GitHub. Perguntamos à API pública do GitHub se ele pertence à conta pessoal do GitHub do autor e não é um fork; em repositórios de organizações e equipes, o autor adiciona em vez disso um arquivo com o token deste projeto. Verificamos de novo toda semana.
-- **Live.** O autor prova que controla o domínio do projeto com um token que geramos: um registro TXT no DNS ou uma meta tag na página inicial. Verificamos de novo regularmente, e o selo só vale enquanto o domínio tiver sido confirmado nos últimos 35 dias.
-- **Steady.** Quando um projeto tem Live, abrimos o endereço dele mais ou menos a cada 3 horas. Steady exige pelo menos 40 verificações nos últimos 30 dias, e pelo menos 95% delas precisam receber resposta sem erro em até 5 segundos.
+- **Domain verified.** O autor prova que controla o domínio do projeto com um token que geramos: um registro TXT no DNS ou uma meta tag na página inicial. Verificamos de novo regularmente, e o selo só vale enquanto o domínio tiver sido confirmado nos últimos 35 dias.
+- **Steady.** Quando um projeto tem Domain verified, abrimos o endereço dele mais ou menos a cada 3 horas. Steady exige pelo menos 40 verificações nos últimos 30 dias, e pelo menos 95% delas precisam receber resposta sem erro em até 5 segundos.
 
 As regras completas, incluindo como cada selo pode ser perdido, estão em [Como funciona a comprovação](/how-proof-works/).
 
@@ -27,7 +27,7 @@ As regras completas, incluindo como cada selo pode ser perdido, estão em [Como 
 ## O que você ganha {#builders}
 
 - Um perfil público que reúne seus projetos. Você entra com o GitHub; pedimos só o seu perfil público e seus endereços de e-mail, nunca acesso aos seus repositórios.
-- Uma página para cada projeto com seus selos, capturas de tela, uma faixa de disponibilidade de 30 dias (quando tem Live) e um diário de desenvolvimento: atualizações curtas e notas de lançamento, em ordem.
+- Uma página para cada projeto com seus selos, capturas de tela, uma faixa de disponibilidade de 30 dias (quando tem Domain verified) e um diário de desenvolvimento: atualizações curtas e notas de lançamento, em ordem.
 - Um badge para o README do GitHub ou para o seu site que mostra os selos que o projeto tem agora. O código para colar está na página do projeto.
 - Seguir, curtidas, um feed com novos lançamentos e das pessoas que você segue, e uma página "Explorar" para encontrar projetos por tag, ferramenta ou selo.
 - Controle sobre seus dados: baixe tudo em um arquivo ou exclua sua conta em Configurações. Sem anúncios, sem analytics, sem scripts de rastreamento.
@@ -46,7 +46,7 @@ Planejado depois da primeira versão, sem ordem definida:
 - avatares e mais formas de personalizar um perfil;
 - conquistas;
 - verificações melhores de repositórios, por exemplo com forks, e ligar um repositório ao seu domínio;
-- o que Live deve significar para projetos que não são sites: ferramentas de linha de comando, bibliotecas, apps móveis.
+- o que Domain verified deve significar para projetos que não são sites: ferramentas de linha de comando, bibliotecas, apps móveis.
 
 **TODO (Danylo):** antes de publicar, confira se a lista ainda corresponde aos seus planos.
 

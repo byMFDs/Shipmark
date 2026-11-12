@@ -18,7 +18,7 @@ Les comptes et les dépôts sont comparés par les identifiants numériques de G
 
 **Comment il peut être perdu :** le dépôt est supprimé, rendu privé ou transféré à un autre compte, ou l’auteur lie un autre dépôt. Un dépôt ne peut être lié qu’à un seul projet.
 
-## Live {#live}
+## Domain verified {#live}
 
 **Ce que cela signifie :** l’auteur contrôle le domaine sur lequel le projet fonctionne.
 
@@ -37,7 +37,7 @@ Les comptes et les dépôts sont comparés par les identifiants numériques de G
 - le site ou le DNS ne répond pas : nous réessayons au passage suivant, mais après 35 jours sans confirmation, le poinçon disparaît ;
 - l’auteur change l’URL publique pour un autre domaine.
 
-Chaque fois que Live est obtenu ou retiré, le changement est consigné dans notre journal interne.
+Chaque fois que Domain verified est obtenu ou retiré, le changement est consigné dans notre journal interne.
 
 L’adresse principale d’un hébergeur partagé par de nombreux sites (comme `github.io` ou `vercel.app`) ne peut pas être vérifiée. Votre propre adresse chez lui (`yourname.github.io`) le peut.
 
@@ -45,14 +45,14 @@ L’adresse principale d’un hébergeur partagé par de nombreux sites (comme `
 
 **Ce que cela signifie :** le projet reste en ligne, pas seulement le jour du lancement.
 
-**Comment c’est contrôlé :** tant qu’un projet a Live, nous interrogeons son URL publique environ toutes les 3 heures. Un contrôle réussit lorsque le site répond avec un statut HTTP inférieur à 400 en moins de 5 secondes. Le poinçon est obtenu lorsque, sur les 30 derniers jours :
+**Comment c’est contrôlé :** tant qu’un projet a Domain verified, nous interrogeons son URL publique environ toutes les 3 heures. Un contrôle réussit lorsque le site répond avec un statut HTTP inférieur à 400 en moins de 5 secondes. Le poinçon est obtenu lorsque, sur les 30 derniers jours :
 
 - il y a eu au moins 40 contrôles, et
 - au moins 95 % ont réussi.
 
 La page du projet affiche le pourcentage de disponibilité et une bande de 30 jours. Les résultats sont conservés 90 jours.
 
-**Comment il peut être perdu :** la disponibilité tombe sous 95 %, ou le projet perd Live. Steady exige toujours Live.
+**Comment il peut être perdu :** la disponibilité tombe sous 95 %, ou le projet perd Domain verified. Steady exige toujours Domain verified.
 
 Un contrôle échoue aussi quand le site ne répond qu’après une redirection vers un autre domaine : la réponse doit venir du domaine vérifié.
 
@@ -64,7 +64,7 @@ Ces éléments d’un projet sont rédigés par l’auteur et ne sont **pas** co
 - étiquettes et date de lancement ;
 - « Créé avec », les outils d’IA que l’auteur dit avoir utilisés. C’est toujours indiqué comme « déclaré par l’auteur ».
 
-Les poinçons disent seulement ce qu’ils disent. Repo owner concerne le dépôt, Live le domaine, Steady la disponibilité. Aucun n’est une évaluation du produit.
+Les poinçons disent seulement ce qu’ils disent. Repo owner concerne le dépôt, Domain verified le domaine, Steady la disponibilité. Aucun n’est une évaluation du produit.
 
 ## Ce que nous ne pouvons pas contrôler {#limits}
 

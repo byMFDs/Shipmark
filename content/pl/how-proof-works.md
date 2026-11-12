@@ -18,7 +18,7 @@ Konta i repozytoria porównujemy po numerycznych identyfikatorach GitHuba, nie p
 
 **Jak można go utracić:** repozytorium zostaje usunięte, ustawione jako prywatne lub przeniesione na inne konto albo autor podaje inne repozytorium. Jedno repozytorium można połączyć tylko z jednym projektem.
 
-## Live {#live}
+## Domain verified {#live}
 
 **Co to znaczy:** autor kontroluje domenę, na której działa projekt.
 
@@ -37,7 +37,7 @@ Konta i repozytoria porównujemy po numerycznych identyfikatorach GitHuba, nie p
 - strona lub DNS nie odpowiada: spróbujemy przy następnym przebiegu, ale po 35 dniach bez potwierdzenia znak znika;
 - autor zmienia adres strony na inną domenę.
 
-Każde zdobycie lub usunięcie Live jest zapisywane w naszym wewnętrznym dzienniku.
+Każde zdobycie lub usunięcie Domain verified jest zapisywane w naszym wewnętrznym dzienniku.
 
 Głównego adresu hostingu współdzielonego przez wiele stron (np. `github.io` lub `vercel.app`) nie można zweryfikować. Twój własny adres w tym serwisie (`yourname.github.io`) można.
 
@@ -45,14 +45,14 @@ Głównego adresu hostingu współdzielonego przez wiele stron (np. `github.io` 
 
 **Co to znaczy:** projekt działa nieprzerwanie, a nie tylko w dniu premiery.
 
-**Jak jest sprawdzane:** gdy projekt ma Live, wysyłamy żądanie pod jego adres mniej więcej co 3 godziny. Sprawdzenie kończy się powodzeniem, gdy strona odpowie w ciągu 5 sekund statusem HTTP poniżej 400. Znak jest przyznawany, gdy w ciągu ostatnich 30 dni:
+**Jak jest sprawdzane:** gdy projekt ma Domain verified, wysyłamy żądanie pod jego adres mniej więcej co 3 godziny. Sprawdzenie kończy się powodzeniem, gdy strona odpowie w ciągu 5 sekund statusem HTTP poniżej 400. Znak jest przyznawany, gdy w ciągu ostatnich 30 dni:
 
 - było co najmniej 40 sprawdzeń, oraz
 - co najmniej 95% z nich zakończyło się powodzeniem.
 
 Strona projektu pokazuje odsetek dostępności i pasek z 30 dni. Wyniki przechowujemy przez 90 dni.
 
-**Jak można go utracić:** dostępność spada poniżej 95% albo projekt traci Live. Steady zawsze wymaga Live.
+**Jak można go utracić:** dostępność spada poniżej 95% albo projekt traci Domain verified. Steady zawsze wymaga Domain verified.
 
 Sprawdzenie nie liczy się też wtedy, gdy strona odpowiada dopiero po przekierowaniu na inną domenę: odpowiedź musi przyjść ze zweryfikowanej domeny.
 
@@ -64,7 +64,7 @@ Te elementy projektu pisze autor, a my ich **nie** sprawdzamy:
 - tagi i data premiery;
 - „Zbudowano z”, czyli narzędzia AI, których według autora użył. Zawsze jest oznaczone jako deklaracja autora.
 
-Znaki mówią tylko to, co mówią. Repo owner dotyczy repozytorium, Live domeny, Steady dostępności. Żaden z nich nie jest oceną produktu.
+Znaki mówią tylko to, co mówią. Repo owner dotyczy repozytorium, Domain verified domeny, Steady dostępności. Żaden z nich nie jest oceną produktu.
 
 ## Czego nie możemy sprawdzić {#limits}
 

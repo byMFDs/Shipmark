@@ -26,7 +26,7 @@ TABS = ("foryou", "following", "news")
 RANGES = [("all", _("All time")), ("24h", _("Last 24 hours")), ("7d", _("Last 7 days")), ("30d", _("Last 30 days"))]
 RANGE_DELTAS = {"24h": timedelta(hours=24), "7d": timedelta(days=7), "30d": timedelta(days=30)}
 SORTS = [("popular", _("Popular")), ("newest", _("Newest"))]
-MARKS = [("", _("Any")), ("authored", _("Repo owner")), ("live", _("Live")), ("steady", _("Steady"))]
+MARKS = [("", _("Any")), ("authored", _("Repo owner")), ("live", _("Domain verified")), ("steady", _("Steady"))]
 TAG_OPTIONS = 40
 
 

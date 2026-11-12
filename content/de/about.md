@@ -13,8 +13,8 @@ GitHub zeigt Code. LinkedIn zeigt Behauptungen. {{ site_name }} versucht, Ergebn
 Ein Projekt kann drei Prüfzeichen verdienen. Jedes ist eine Tatsache, die unser Server prüft, und jedes verschwindet, sobald die Tatsache nicht mehr stimmt.
 
 - **Repo owner.** Das Projekt verknüpft ein öffentliches GitHub-Repository. Wir fragen die öffentliche API von GitHub, ob es dem persönlichen GitHub-Konto der Person gehört und kein Fork ist; bei Repositorys von Organisationen und Teams legt die Person stattdessen eine Datei mit dem Token dieses Projekts an. Wir prüfen das jede Woche erneut.
-- **Live.** Die Person weist nach, dass sie die Domain des Projekts kontrolliert, mit einem Token, das wir erzeugen: als DNS-TXT-Eintrag oder als Meta-Tag auf der Startseite. Wir prüfen das regelmäßig erneut, und das Zeichen gilt nur, solange die Domain in den letzten 35 Tagen bestätigt wurde.
-- **Steady.** Sobald ein Projekt Live hat, rufen wir seine Adresse etwa alle 3 Stunden auf. Steady braucht mindestens 40 Prüfungen in den letzten 30 Tagen, und mindestens 95 % davon müssen innerhalb von 5 Sekunden eine Antwort ohne Fehler bekommen.
+- **Domain verified.** Die Person weist nach, dass sie die Domain des Projekts kontrolliert, mit einem Token, das wir erzeugen: als DNS-TXT-Eintrag oder als Meta-Tag auf der Startseite. Wir prüfen das regelmäßig erneut, und das Zeichen gilt nur, solange die Domain in den letzten 35 Tagen bestätigt wurde.
+- **Steady.** Sobald ein Projekt Domain verified hat, rufen wir seine Adresse etwa alle 3 Stunden auf. Steady braucht mindestens 40 Prüfungen in den letzten 30 Tagen, und mindestens 95 % davon müssen innerhalb von 5 Sekunden eine Antwort ohne Fehler bekommen.
 
 Die vollständigen Regeln, auch wie man jedes Zeichen verlieren kann, stehen unter [So funktioniert der Nachweis](/how-proof-works/).
 
@@ -27,7 +27,7 @@ Die vollständigen Regeln, auch wie man jedes Zeichen verlieren kann, stehen unt
 ## Was du bekommst {#builders}
 
 - Ein öffentliches Profil, das deine Projekte sammelt. Du meldest dich mit GitHub an; wir fragen nur nach deinem öffentlichen Profil und deinen E-Mail-Adressen, nie nach Zugriff auf deine Repositories.
-- Eine Seite für jedes Projekt mit seinen Prüfzeichen, Screenshots, einem 30-Tage-Verfügbarkeitsstreifen (sobald es Live hat) und einem Build-Log: kurze Updates und Launch-Notizen, der Reihe nach.
+- Eine Seite für jedes Projekt mit seinen Prüfzeichen, Screenshots, einem 30-Tage-Verfügbarkeitsstreifen (sobald es Domain verified hat) und einem Build-Log: kurze Updates und Launch-Notizen, der Reihe nach.
 - Ein Badge für dein GitHub-README oder deine Website, das die Prüfzeichen zeigt, die das Projekt gerade hat. Den Code zum Einfügen findest du auf der Projektseite.
 - Folgen, Likes, einen Feed mit neuen Launches und von Leuten, denen du folgst, und eine Seite „Entdecken“, auf der du Projekte nach Tag, Werkzeug oder Prüfzeichen findest.
 - Kontrolle über deine Daten: Lade sie alle als Datei herunter oder lösche dein Konto in den Einstellungen. Keine Werbung, keine Analyse, keine Tracking-Skripte.
@@ -46,7 +46,7 @@ Geplant nach der ersten Version, ohne feste Reihenfolge:
 - Avatare und mehr Möglichkeiten, ein Profil zu gestalten;
 - Erfolge;
 - bessere Prüfung von Repositories, zum Beispiel bei Forks, und die Verknüpfung eines Repositorys mit seiner Domain;
-- was Live für Projekte bedeuten soll, die keine Websites sind: Kommandozeilen-Werkzeuge, Bibliotheken, mobile Apps.
+- was Domain verified für Projekte bedeuten soll, die keine Websites sind: Kommandozeilen-Werkzeuge, Bibliotheken, mobile Apps.
 
 **TODO (Danylo):** Prüfe vor der Veröffentlichung, ob die Liste noch zu deinen Plänen passt.
 

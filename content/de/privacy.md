@@ -24,7 +24,7 @@ Fragen oder Anliegen: [{{ contact_email }}](mailto:{{ contact_email }}).
 **Nachweis-Prüfungen.** Um Prüfzeichen zu vergeben, prüfen wir Fakten selbst (unser berechtigtes Interesse an Nachweisen, denen man vertrauen kann):
 
 - *Repo owner:* Wir fragen die öffentliche API von GitHub nach dem Repository, das du verknüpfst, und speichern seine ID, die Konto-ID der Person, der es gehört, ob es dir gehört, sein Erstellungsdatum und sein Website-Feld, den ersten Commit seines Verlaufs (ID und Datum), deine Anzahl an Commits, das Datum deines ersten und letzten Commits, die Anzahl der Wochen mit deinen Commits und den Stand einer manuellen Prüfung, falls eine nötig ist. Wir prüfen das jede Woche erneut. Die Liste der anderen Beitragenden lesen wir während der Prüfung und speichern sie nicht. Wenn du die Bestätigungsdatei für ein Repository einer Organisation nutzt, speichern wir auch, ob sie gefunden wurde.
-- *Live:* Wir fragen die DNS-Einträge der Domain deines Projekts ab oder rufen seine Seite ab, um dein Verifizierungs-Token zu finden.
+- *Domain verified:* Wir fragen die DNS-Einträge der Domain deines Projekts ab oder rufen seine Seite ab, um dein Verifizierungs-Token zu finden.
 - *Steady:* Wir rufen die Adresse deines Projekts alle paar Stunden ab und speichern, ob sie geantwortet hat und wie schnell. Diese Prüfungen werden **90 Tage** aufbewahrt.
 
 Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
@@ -68,7 +68,7 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 ## Wer sonst Daten erhält {#recipients}
 
 - **GitHub, Inc.** Du meldest dich auf github.com an, und unser Server liest dein Profil und öffentliche Repository-Daten über die API von GitHub. Für deine Nutzung von GitHub gilt dessen eigene Datenschutzerklärung.
-- **Die Server deines Projekts.** Für die Live- und Steady-Prüfungen kontaktiert unser Server das DNS deiner Domain und die Adresse deines Projekts. Sie sehen unseren Server, nicht dich.
+- **Die Server deines Projekts.** Für die Prüfungen Domain verified und Steady kontaktiert unser Server das DNS deiner Domain und die Adresse deines Projekts. Sie sehen unseren Server, nicht dich.
 - **Unser Hosting-Anbieter**, der für uns den Server und die Datenbank betreibt.
 
 Wir verkaufen deine Daten nicht und geben sie nicht für Werbung weiter.

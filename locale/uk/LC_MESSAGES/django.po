@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 16:07+0000\n"
+"POT-Creation-Date: 2026-11-12 17:08+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -573,8 +573,8 @@ msgstr "Власник репозиторію"
 
 #: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:195
 #: social/feed.py:29
-msgid "Live"
-msgstr "Працює"
+msgid "Domain verified"
+msgstr "Домен підтверджено"
 
 #: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:196
 #: social/feed.py:29
@@ -1310,11 +1310,9 @@ msgstr ""
 #: projects/proof.py:36
 #, no-python-format
 msgid ""
-"Live, and at least 95% of uptime checks succeeded over the last 30 days, "
-"with at least 40 checks."
-msgstr ""
-"Є позначка «Працює», і щонайменше 95% перевірок доступності за останні 30 "
-"днів успішні, за щонайменше 40 перевірок."
+"Domain verified, and at least 95% of uptime checks succeeded over the last "
+"30 days, with at least 40 checks."
+msgstr "Є позначка «Домен підтверджено», і щонайменше 95% перевірок доступності за останні 30 днів успішні, за щонайменше 40 перевірок."
 
 #: projects/proof.py:77
 msgid "No repository linked."
@@ -1370,8 +1368,8 @@ msgid "Lost: %(domain)s was not confirmed in the last 35 days."
 msgstr "Втрачено: %(domain)s не підтверджено за останні 35 днів."
 
 #: projects/proof.py:114
-msgid "Needs Live first."
-msgstr "Спершу потрібна позначка «Працює»."
+msgid "Needs Domain verified first."
+msgstr "Спершу потрібна позначка «Домен підтверджено»."
 
 #: projects/proof.py:118
 #, python-format
@@ -1596,8 +1594,8 @@ msgid "Verified. Confirmed again."
 msgstr "Підтверджено. Перевірку оновлено."
 
 #: projects/views.py:254
-msgid "Verified. Live earned."
-msgstr "Підтверджено. Отримано позначку Live."
+msgid "Verified. Domain verified earned."
+msgstr "Підтверджено. Отримано позначку «Домен підтверджено»."
 
 #: projects/views.py:280
 msgid "Moved back to drafts."
@@ -2535,7 +2533,9 @@ msgstr "Офіційні новини %(name)s."
 msgid ""
 "What changed, what is next, and how proof works. Written by the team, nobody "
 "else can post here."
-msgstr "Що змінилось, що далі і як працює доказ. Пише команда, більше ніхто тут публікувати не може."
+msgstr ""
+"Що змінилось, що далі і як працює доказ. Пише команда, більше ніхто тут "
+"публікувати не може."
 
 #: templates/news/list.html:22
 msgid "Older"
@@ -2637,8 +2637,8 @@ msgid "Submit your project"
 msgstr "Додати свій проєкт"
 
 #: templates/pages/landing.html:22
-msgid "The internet has enough claims."
-msgstr "В інтернеті вистачає заяв."
+msgid "For builders who ship with AI"
+msgstr "Для тих, хто запускає продукти з ШІ"
 
 #: templates/pages/landing.html:23
 msgid "Less claim."
@@ -2649,8 +2649,11 @@ msgid "More shipped."
 msgstr "Більше запусків."
 
 #: templates/pages/landing.html:24
-msgid "Real projects. Independent checks. Proof you can point to."
-msgstr "Справжні проєкти. Незалежні перевірки. Докази, на які можна послатися."
+#, python-format
+msgid ""
+"Show what you shipped with AI. %(name)s verifies your domain and repository "
+"and shows your site's uptime history."
+msgstr "Покажи, що ти запустив із ШІ. %(name)s перевіряє домен і репозиторій та показує історію доступності сайту."
 
 #: templates/pages/landing.html:27
 msgid "Built with AI. Backed by evidence."
@@ -2977,8 +2980,8 @@ msgstr "У вашому README"
 
 #: templates/pages/landing.html:275
 #, python-format
-msgid "Example %(name)s badge: Repo owner, Live, Steady"
-msgstr "Приклад бейджа %(name)s: Repo owner, Live, Steady"
+msgid "Example %(name)s badge: Repo owner, Domain verified, Steady"
+msgstr "Приклад бейджа %(name)s: Repo owner, Domain verified, Steady"
 
 #: templates/pages/landing.html:283
 msgid "Illustrative project"
@@ -3047,11 +3050,10 @@ msgstr ""
 
 #: templates/projects/_domain.html:11
 msgid ""
-"Live is earned when you prove that you control the domain of your live URL. "
-"www is ignored: example.com and www.example.com are the same domain."
-msgstr ""
-"Позначку Live отримує той, хто довів, що керує доменом адреси сайту. www не "
-"враховується: example.com і www.example.com — це той самий домен."
+"Domain verified is earned when you prove that you control the domain of your "
+"live URL. www is ignored: example.com and www.example.com are the same "
+"domain."
+msgstr "Позначку «Домен підтверджено» отримує той, хто довів, що керує доменом адреси сайту. www не враховується: example.com і www.example.com — це той самий домен."
 
 #: templates/projects/_domain.html:17
 msgid "Method"
@@ -3195,8 +3197,8 @@ msgstr "До 5 перевірок за 10 хвилин."
 
 #: templates/projects/_domain_status.html:3
 #, python-format
-msgid "Verified: %(domain)s. Live earned."
-msgstr "Підтверджено: %(domain)s. Отримано позначку Live."
+msgid "Verified: %(domain)s. Domain verified earned."
+msgstr "Підтверджено: %(domain)s. Отримано позначку «Домен підтверджено»."
 
 #: templates/projects/_domain_status.html:4
 #, python-format
@@ -3206,18 +3208,15 @@ msgstr "Востаннє підтверджено %(date)s. Повторна п�
 #: templates/projects/_domain_status.html:6
 #, python-format
 msgid ""
-"Last confirmed %(date)s. Live is paused until the domain is confirmed again."
-msgstr ""
-"Востаннє підтверджено %(date)s. Позначку Live призупинено, доки домен не "
-"буде підтверджено знову."
+"Last confirmed %(date)s. Domain verified is paused until the domain is "
+"confirmed again."
+msgstr "Востаннє підтверджено %(date)s. Позначку «Домен підтверджено» призупинено, доки домен не буде підтверджено знову."
 
 #: templates/projects/_domain_status.html:8
 msgid ""
-"Verification lost. The last automatic check did not find your token, so Live "
-"was removed."
-msgstr ""
-"Підтвердження втрачено. Остання автоматична перевірка не знайшла ваш токен, "
-"тому позначку Live знято."
+"Verification lost. The last automatic check did not find your token, so "
+"Domain verified was removed."
+msgstr "Підтвердження втрачено. Остання автоматична перевірка не знайшла ваш токен, тому позначку «Домен підтверджено» знято."
 
 #: templates/projects/_domain_status.html:8
 msgid "Fix it and verify again."
@@ -3722,8 +3721,8 @@ msgid "Link your GitHub repository to earn Repo owner."
 msgstr "Привʼяжіть репозиторій GitHub, щоб отримати Repo owner."
 
 #: templates/social/feed.html:103
-msgid "Verify your domain to earn Live; steady uptime earns Steady."
-msgstr "Підтвердьте домен, щоб отримати Live; стабільна доступність дає Steady."
+msgid "Verify your domain to earn Domain verified; steady uptime earns Steady."
+msgstr "Підтвердьте домен, щоб отримати «Домен підтверджено»; стабільна доступність дає «Стабільний»."
 
 #: templates/social/feed.html:104
 msgid "Write a short build-log update when you ship something."
@@ -3826,12 +3825,12 @@ msgstr ""
 "повторити пізніше %(kept)s."
 
 #: verification/admin.py:101
-msgid "Revoke Live"
-msgstr "Відкликати «Працює»"
+msgid "Revoke Domain verified"
+msgstr "Відкликати «Домен підтверджено»"
 
 #: verification/admin.py:106
-msgid "Block the domain and revoke Live"
-msgstr "Заблокувати домен і відкликати «Працює»"
+msgid "Block the domain and revoke Domain verified"
+msgstr "Заблокувати домен і відкликати «Домен підтверджено»"
 
 #: verification/admin.py:113
 msgid "Re-run verification now"
@@ -3989,3 +3988,16 @@ msgstr "Цей репозиторій приватний. Перевіряти �
 #: verification/repo.py:310 verification/repo.py:516
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."
+
+#~ msgid "Live"
+#~ msgstr "Працює"
+
+#~ msgid "The internet has enough claims."
+#~ msgstr "В інтернеті вистачає заяв."
+
+#~ msgid "Real projects. Independent checks. Proof you can point to."
+#~ msgstr ""
+#~ "Справжні проєкти. Незалежні перевірки. Докази, на які можна послатися."
+
+#~ msgid "Revoke Live"
+#~ msgstr "Відкликати «Працює»"

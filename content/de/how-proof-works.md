@@ -18,7 +18,7 @@ Konten und Repositorys werden über die numerischen IDs von GitHub verglichen, n
 
 **Wie es verloren gehen kann:** Das Repository wird gelöscht, privat gemacht oder an ein anderes Konto übertragen, oder die Person verknüpft ein anderes Repository. Ein Repository kann nur mit einem Projekt verknüpft sein.
 
-## Live {#live}
+## Domain verified {#live}
 
 **Was es bedeutet:** Der Autor kontrolliert die Domain, auf der das Projekt läuft.
 
@@ -37,7 +37,7 @@ Konten und Repositorys werden über die numerischen IDs von GitHub verglichen, n
 - die Seite oder das DNS antwortet nicht: Wir versuchen es beim nächsten Durchlauf erneut, aber nach 35 Tagen ohne Bestätigung ist das Zeichen weg;
 - der Autor ändert die Live-URL auf eine andere Domain.
 
-Jedes Mal, wenn Live vergeben oder entfernt wird, halten wir die Änderung in unserem internen Log fest.
+Jedes Mal, wenn Domain verified vergeben oder entfernt wird, halten wir die Änderung in unserem internen Log fest.
 
 Die reine Adresse eines Hosting-Dienstes, den viele Websites teilen (etwa `github.io` oder `vercel.app`), kann nicht bestätigt werden. Deine eigene Adresse darauf (`yourname.github.io`) schon.
 
@@ -45,14 +45,14 @@ Die reine Adresse eines Hosting-Dienstes, den viele Websites teilen (etwa `githu
 
 **Was es bedeutet:** Das Projekt bleibt erreichbar, nicht nur am Tag des Launchs.
 
-**Wie es geprüft wird:** Solange ein Projekt Live hat, rufen wir seine Live-URL etwa alle 3 Stunden ab. Eine Prüfung gilt als erfolgreich, wenn die Seite innerhalb von 5 Sekunden mit einem HTTP-Status unter 400 antwortet. Das Zeichen wird vergeben, wenn in den letzten 30 Tagen:
+**Wie es geprüft wird:** Solange ein Projekt Domain verified hat, rufen wir seine Live-URL etwa alle 3 Stunden ab. Eine Prüfung gilt als erfolgreich, wenn die Seite innerhalb von 5 Sekunden mit einem HTTP-Status unter 400 antwortet. Das Zeichen wird vergeben, wenn in den letzten 30 Tagen:
 
 - mindestens 40 Prüfungen stattfanden und
 - mindestens 95 % davon erfolgreich waren.
 
 Die Projektseite zeigt den Uptime-Anteil und einen Streifen über 30 Tage. Die Ergebnisse speichern wir 90 Tage lang.
 
-**Wie es verloren gehen kann:** Die Uptime fällt unter 95 %, oder das Projekt verliert Live. Steady setzt immer Live voraus.
+**Wie es verloren gehen kann:** Die Uptime fällt unter 95 %, oder das Projekt verliert Domain verified. Steady setzt immer Domain verified voraus.
 
 Eine Prüfung scheitert auch, wenn die Website erst nach einer Weiterleitung auf eine andere Domain antwortet: Die Antwort muss von der bestätigten Domain kommen.
 
@@ -64,7 +64,7 @@ Diese Teile eines Projekts schreibt der Autor, und wir prüfen sie **nicht**:
 - Tags und Launch-Datum;
 - „Gebaut mit“, die KI-Tools, die der Autor nach eigener Aussage genutzt hat. Das ist immer als „selbst angegeben“ gekennzeichnet.
 
-Prüfzeichen sagen nur das, was sie sagen. Repo owner betrifft das Repository, Live die Domain, Steady die Uptime. Keines davon ist eine Bewertung des Produkts.
+Prüfzeichen sagen nur das, was sie sagen. Repo owner betrifft das Repository, Domain verified die Domain, Steady die Uptime. Keines davon ist eine Bewertung des Produkts.
 
 ## Was wir nicht prüfen können {#limits}
 

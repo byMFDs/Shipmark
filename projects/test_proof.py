@@ -211,7 +211,7 @@ class SteadyTests(ProofTestCase):
         self.checks(ok=60)  # perfect uptime, but the domain was never verified
         mark = self.marks()["steady"]
         self.assertFalse(mark.earned)
-        self.assertEqual(mark.reason, "Needs Live first.")
+        self.assertEqual(mark.reason, "Needs Domain verified first.")
         self.verify(confirmed_days_ago=36)  # verified once, but not confirmed in time
         self.assertFalse(self.marks()["steady"].earned)
 
@@ -251,7 +251,7 @@ class PageTests(ProofTestCase):
         response = self.client.get(self.project.get_absolute_url())
         self.assertContains(response, 'class="hallmark-info"', count=3)
         self.assertContains(response, "ann/tally is owned by the author&#x27;s GitHub account.")
-        self.assertContains(response, "Needs Live first.")
+        self.assertContains(response, "Needs Domain verified first.")
         self.assertContains(response, "needs write access to the repository")  # the rule
         self.assertContains(response, 'href="/how-proof-works/#live"')
 

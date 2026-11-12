@@ -8,7 +8,7 @@ Estos términos son el acuerdo entre tú y {{ legal_owner_name }}, que gestiona 
 
 ## Qué es {{ site_name }} {#service}
 
-Un lugar público para mostrar el software que has publicado, con sellos que comprobamos nosotros mismos: Repo owner (repositorio de GitHub), Live (control del dominio) y Steady (disponibilidad). Cómo funciona cada comprobación se explica en [Cómo funciona la verificación](/how-proof-works/). El servicio es gratuito.
+Un lugar público para mostrar el software que has publicado, con sellos que comprobamos nosotros mismos: Repo owner (repositorio de GitHub), Domain verified (control del dominio) y Steady (disponibilidad). Cómo funciona cada comprobación se explica en [Cómo funciona la verificación](/how-proof-works/). El servicio es gratuito.
 
 ## Tu cuenta {#account}
 

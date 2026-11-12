@@ -18,7 +18,7 @@ Accounts and repositories are compared by GitHub's numeric ids, not by names: re
 
 **How it can be lost:** the repository is deleted, made private or transferred to another account, or the author links a different repository. One repository can be linked to only one project.
 
-## Live {#live}
+## Domain verified {#live}
 
 **What it means:** the author controls the domain the project runs on.
 
@@ -37,7 +37,7 @@ Accounts and repositories are compared by GitHub's numeric ids, not by names: re
 - the site or DNS does not answer: we try again on the next run, but after 35 days without a confirmation the mark is gone;
 - the author changes the live URL to another domain.
 
-Every time Live is earned or removed, the change is recorded in our internal log.
+Every time Domain verified is earned or removed, the change is recorded in our internal log.
 
 The bare address of a hosting service shared by many sites (such as `github.io` or `vercel.app`) cannot be verified. Your own address on it (`yourname.github.io`) can.
 
@@ -45,14 +45,14 @@ The bare address of a hosting service shared by many sites (such as `github.io` 
 
 **What it means:** the project stays up, not just on launch day.
 
-**How it is checked:** while a project has Live, we request its live URL about every 3 hours. A check succeeds when the site answers with an HTTP status below 400 within 5 seconds. The mark is earned when, over the last 30 days:
+**How it is checked:** while a project has Domain verified, we request its live URL about every 3 hours. A check succeeds when the site answers with an HTTP status below 400 within 5 seconds. The mark is earned when, over the last 30 days:
 
 - there were at least 40 checks, and
 - at least 95% of them succeeded.
 
 The project page shows the uptime percentage and a 30-day strip. Results are kept for 90 days.
 
-**How it can be lost:** uptime falls below 95%, or the project loses Live. Steady always requires Live.
+**How it can be lost:** uptime falls below 95%, or the project loses Domain verified. Steady always requires Domain verified.
 
 A check also fails when the site answers only after redirecting to another domain: the answer has to come from the domain that was verified.
 
@@ -64,7 +64,7 @@ These parts of a project are written by the author and **not** checked by us:
 - tags and the launch date;
 - "Built with", the AI tools the author says they used. It is always labeled "self-declared".
 
-Hallmarks only say what they say. Repo owner is about the repository, Live about the domain, Steady about uptime. None of them is a review of the product.
+Hallmarks only say what they say. Repo owner is about the repository, Domain verified about the domain, Steady about uptime. None of them is a review of the product.
 
 ## What we cannot check {#limits}
 

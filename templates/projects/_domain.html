@@ -8,7 +8,7 @@
   {% elif domain_shared %}
     <p class="muted">{{ domain_shared }}</p>
   {% else %}
-    <p class="field__hint">{% translate "Live is earned when you prove that you control the domain of your live URL. www is ignored: example.com and www.example.com are the same domain." %}</p>
+    <p class="field__hint">{% translate "Domain verified is earned when you prove that you control the domain of your live URL. www is ignored: example.com and www.example.com are the same domain." %}</p>
     <div data-domain-status aria-live="polite">{% include "projects/_domain_status.html" %}</div>
 
     <form method="post" class="stack" action="{% url 'projects:domain_verify' project.owner.username project.slug %}" data-domain-form>

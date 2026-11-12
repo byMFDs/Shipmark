@@ -24,7 +24,7 @@ Preguntas o solicitudes: [{{ contact_email }}](mailto:{{ contact_email }}).
 **Comprobaciones de la prueba.** Para conceder sellos comprobamos los hechos nosotros mismos (nuestro interés legítimo en mostrar pruebas en las que se pueda confiar):
 
 - *Repo owner:* consultamos la API pública de GitHub sobre el repositorio que enlazas y guardamos su identificador, el identificador de la cuenta propietaria, si es tuyo, su fecha de creación y su campo Website, el primer commit de su historial (identificador y fecha), tu número de commits, las fechas de tu primer y último commit, el número de semanas con commits tuyos y el estado de una revisión manual cuando hace falta. Lo volvemos a comprobar cada semana. La lista de otras personas que contribuyen se lee durante la comprobación y no se guarda. Si usas el archivo de verificación para un repositorio de una organización, también guardamos si se encontró.
-- *Live:* consultamos los registros DNS del dominio de tu proyecto o descargamos su página para encontrar tu token de verificación.
+- *Domain verified:* consultamos los registros DNS del dominio de tu proyecto o descargamos su página para encontrar tu token de verificación.
 - *Steady:* solicitamos la dirección de tu proyecto cada pocas horas y guardamos si respondió y con qué rapidez. Estas comprobaciones se conservan **90 días**.
 
 Los resultados se muestran en la página pública de tu proyecto.
@@ -68,7 +68,7 @@ Los resultados se muestran en la página pública de tu proyecto.
 ## Quién más recibe datos {#recipients}
 
 - **GitHub, Inc.** Inicias sesión en github.com y nuestro servidor lee tu perfil y los datos públicos de repositorios desde la API de GitHub. La declaración de privacidad propia de GitHub se aplica a tu uso de GitHub.
-- **Los servidores de tu proyecto.** Para las comprobaciones de Live y Steady, nuestro servidor contacta con el DNS de tu dominio y con la dirección de tu proyecto. Ven nuestro servidor, no a ti.
+- **Los servidores de tu proyecto.** Para las comprobaciones de Domain verified y Steady, nuestro servidor contacta con el DNS de tu dominio y con la dirección de tu proyecto. Ven nuestro servidor, no a ti.
 - **Nuestro proveedor de alojamiento**, que ejecuta el servidor y la base de datos por nosotros.
 
 No vendemos tus datos ni los compartimos con fines publicitarios.

@@ -25,7 +25,7 @@ MAX_PAGE = 200
 TAG_OPTIONS = 40  # most used tags offered in the filter
 
 SORTS = [("newest", _("Newest")), ("liked", _("Most liked")), ("proven", _("Most proven"))]
-HALLMARK_CHOICES = [("", _("Any")), ("authored", _("Repo owner")), ("live", _("Live")), ("steady", _("Steady"))]
+HALLMARK_CHOICES = [("", _("Any")), ("authored", _("Repo owner")), ("live", _("Domain verified")), ("steady", _("Steady"))]
 
 
 class ExploreForm(forms.Form):

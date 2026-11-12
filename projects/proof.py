@@ -33,7 +33,7 @@ RULES = {
     ),
     "steady": gettext_lazy(
         # xgettext:no-python-format
-        "Live, and at least 95% of uptime checks succeeded over the last 30 days, "
+        "Domain verified, and at least 95% of uptime checks succeeded over the last 30 days, "
         "with at least 40 checks."
     ),
 }
@@ -111,7 +111,7 @@ def _live(project, now):
 
 def _steady(project, live, now):
     if not live.earned:
-        return Hallmark("steady", False, _("Needs Live first."))
+        return Hallmark("steady", False, _("Needs Domain verified first."))
     ok, total = uptime.window_counts(project, now)
     if uptime.steady_rule(ok, total):
         return Hallmark("steady", True, ngettext(

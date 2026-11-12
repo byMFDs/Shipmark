@@ -13,8 +13,8 @@ GitHub pokazuje kod. LinkedIn pokazuje deklaracje. {{ site_name }} próbuje poka
 Projekt może zdobyć trzy znaki. Każdy z nich to fakt sprawdzany przez nasz serwer i każdy znika, gdy fakt przestaje być prawdziwy.
 
 - **Repo owner.** Projekt wskazuje publiczne repozytorium GitHub. Pytamy publiczne API GitHuba, czy należy ono do osobistego konta GitHub autora i nie jest forkiem; w repozytoriach organizacji i zespołów autor zamiast tego dodaje plik z tokenem tego projektu. Sprawdzamy to ponownie co tydzień.
-- **Live.** Autor udowadnia, że kontroluje domenę projektu, za pomocą wygenerowanego przez nas tokenu: rekordu TXT w DNS albo metatagu na stronie głównej. Regularnie sprawdzamy to ponownie, a znak obowiązuje tylko, dopóki domena była potwierdzona w ciągu ostatnich 35 dni.
-- **Steady.** Gdy projekt ma Live, otwieramy jego adres mniej więcej co 3 godziny. Steady wymaga co najmniej 40 sprawdzeń w ostatnich 30 dniach, z których co najmniej 95% musi dostać odpowiedź bez błędu w ciągu 5 sekund.
+- **Domain verified.** Autor udowadnia, że kontroluje domenę projektu, za pomocą wygenerowanego przez nas tokenu: rekordu TXT w DNS albo metatagu na stronie głównej. Regularnie sprawdzamy to ponownie, a znak obowiązuje tylko, dopóki domena była potwierdzona w ciągu ostatnich 35 dni.
+- **Steady.** Gdy projekt ma Domain verified, otwieramy jego adres mniej więcej co 3 godziny. Steady wymaga co najmniej 40 sprawdzeń w ostatnich 30 dniach, z których co najmniej 95% musi dostać odpowiedź bez błędu w ciągu 5 sekund.
 
 Pełne zasady, w tym to, jak można stracić każdy znak, są na stronie [Jak działa dowód](/how-proof-works/).
 
@@ -27,7 +27,7 @@ Pełne zasady, w tym to, jak można stracić każdy znak, są na stronie [Jak dz
 ## Co dostają twórcy {#builders}
 
 - Publiczny profil, który zbiera Twoje projekty. Logujesz się przez GitHub; prosimy tylko o publiczny profil i adresy e-mail, nigdy o dostęp do repozytoriów.
-- Stronę każdego projektu ze znakami, zrzutami ekranu, 30-dniowym paskiem dostępności (gdy projekt ma Live) i dziennikiem rozwoju: krótkimi aktualizacjami i notatkami o premierze, po kolei.
+- Stronę każdego projektu ze znakami, zrzutami ekranu, 30-dniowym paskiem dostępności (gdy projekt ma Domain verified) i dziennikiem rozwoju: krótkimi aktualizacjami i notatkami o premierze, po kolei.
 - Plakietkę do README na GitHubie lub na stronę, która pokazuje znaki, jakie projekt ma w tej chwili. Kod do wklejenia jest na stronie projektu.
 - Obserwowanie, polubienia, aktualności z nowymi premierami i od osób, które obserwujesz, oraz stronę „Przeglądaj”, gdzie projekty można szukać po tagu, narzędziu lub znaku.
 - Kontrolę nad danymi: pobierz je wszystkie jako plik albo usuń konto w Ustawieniach. Bez reklam, bez analityki, bez skryptów śledzących.
@@ -46,7 +46,7 @@ Zaplanowane po pierwszej wersji, bez ustalonej kolejności:
 - awatary i więcej możliwości dopasowania profilu;
 - osiągnięcia;
 - lepsze sprawdzanie repozytoriów, na przykład forków, oraz powiązanie repozytorium z domeną;
-- co ma znaczyć Live dla projektów, które nie są stronami: narzędzi wiersza poleceń, bibliotek, aplikacji mobilnych.
+- co ma znaczyć Domain verified dla projektów, które nie są stronami: narzędzi wiersza poleceń, bibliotek, aplikacji mobilnych.
 
 **TODO (Danylo):** przed publikacją sprawdź, czy lista nadal zgadza się z planami.
 

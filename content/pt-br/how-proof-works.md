@@ -18,7 +18,7 @@ Contas e repositórios são comparados pelos ids numéricos do GitHub, não pelo
 
 **Como pode ser perdido:** o repositório é apagado, fica privado ou é transferido para outra conta, ou o autor vincula outro repositório. Um repositório só pode estar vinculado a um projeto.
 
-## Live {#live}
+## Domain verified {#live}
 
 **O que significa:** o autor controla o domínio em que o projeto roda.
 
@@ -37,7 +37,7 @@ Contas e repositórios são comparados pelos ids numéricos do GitHub, não pelo
 - o site ou o DNS não responde: tentamos de novo na próxima execução, mas depois de 35 dias sem confirmação o selo some;
 - o autor muda a URL pública para outro domínio.
 
-Toda vez que Live é conquistado ou removido, a mudança fica registrada no nosso registro interno.
+Toda vez que Domain verified é conquistado ou removido, a mudança fica registrada no nosso registro interno.
 
 O endereço principal de um serviço de hospedagem compartilhado por muitos sites (como `github.io` ou `vercel.app`) não pode ser verificado. O seu próprio endereço nele (`yourname.github.io`) pode.
 
@@ -45,14 +45,14 @@ O endereço principal de um serviço de hospedagem compartilhado por muitos site
 
 **O que significa:** o projeto continua no ar, não só no dia do lançamento.
 
-**Como é verificado:** enquanto um projeto tem Live, acessamos a URL pública dele cerca de a cada 3 horas. Uma verificação tem sucesso quando o site responde com status HTTP abaixo de 400 em até 5 segundos. O selo é conquistado quando, nos últimos 30 dias:
+**Como é verificado:** enquanto um projeto tem Domain verified, acessamos a URL pública dele cerca de a cada 3 horas. Uma verificação tem sucesso quando o site responde com status HTTP abaixo de 400 em até 5 segundos. O selo é conquistado quando, nos últimos 30 dias:
 
 - houve pelo menos 40 verificações, e
 - pelo menos 95% delas tiveram sucesso.
 
 A página do projeto mostra a porcentagem de disponibilidade e uma faixa de 30 dias. Os resultados são guardados por 90 dias.
 
-**Como pode ser perdido:** a disponibilidade cai abaixo de 95%, ou o projeto perde Live. Steady sempre exige Live.
+**Como pode ser perdido:** a disponibilidade cai abaixo de 95%, ou o projeto perde Domain verified. Steady sempre exige Domain verified.
 
 Uma verificação também falha quando o site só responde depois de redirecionar para outro domínio: a resposta precisa vir do domínio verificado.
 
@@ -64,7 +64,7 @@ Estas partes de um projeto são escritas pelo autor e **não** são verificadas 
 - tags e data de lançamento;
 - “Feito com”, as ferramentas de IA que o autor diz ter usado. Sempre aparece como “declarado pelo autor”.
 
-Os selos dizem só o que dizem. Repo owner trata do repositório, Live do domínio, Steady da disponibilidade. Nenhum deles é uma avaliação do produto.
+Os selos dizem só o que dizem. Repo owner trata do repositório, Domain verified do domínio, Steady da disponibilidade. Nenhum deles é uma avaliação do produto.
 
 ## O que não podemos verificar {#limits}
 

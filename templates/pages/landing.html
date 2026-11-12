@@ -19,9 +19,9 @@
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__grid">
       <div class="hero__text">
-        <p class="eyebrow">{% translate "The internet has enough claims." %}</p>
+        <p class="eyebrow">{% translate "For builders who ship with AI" %}</p>
         <h1 class="hero__title" id="hero-title"><span>{% translate "Less claim." %}</span> <span>{% translate "More shipped." %}</span></h1>
-        <p class="lede hero__lede">{% translate "Real projects. Independent checks. Proof you can point to." %}</p>
+        <p class="lede hero__lede">{% blocktranslate with name=brand.SITE_NAME trimmed %}Show what you shipped with AI. {{ name }} verifies your domain and repository and shows your site's uptime history.{% endblocktranslate %}</p>
         <div class="hero__actions">
           {% include "pages/_sign_in.html" with label=submit_label next=new_url size="lg" %}
           <p class="label">{% translate "Built with AI. Backed by evidence." %}</p>
@@ -272,9 +272,9 @@
               <p class="label">{% translate "In your README" %}</p>
               <div class="readme">
                 {# A picture of the badge: badges are always English (docs/EDITING.md). The real one is on the owner's project page. #}
-                <p class="badge-preview" role="img" aria-label="{% blocktranslate with name=brand.SITE_NAME %}Example {{ name }} badge: Repo owner, Live, Steady{% endblocktranslate %}">
+                <p class="badge-preview" role="img" aria-label="{% blocktranslate with name=brand.SITE_NAME %}Example {{ name }} badge: Repo owner, Domain verified, Steady{% endblocktranslate %}">
                   <span class="badge-preview__site">{% inline_svg brand.LOGO "badge-preview__logo" %}</span>
-                  <span class="badge-preview__marks">{% icon "check" %}Repo owner · Live · Steady</span>
+                  <span class="badge-preview__marks">{% icon "check" %}Repo owner · Domain verified · Steady</span>
                 </p>
                 {% if proof_url %}<a class="link-arrow" href="{{ proof_url }}"><span>{% translate "How proof works" %}</span>{% icon "arrow-up-right" "arrow" %}</a>{% endif %}
               </div>

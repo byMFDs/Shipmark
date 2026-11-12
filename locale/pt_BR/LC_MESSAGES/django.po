@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 16:07+0000\n"
+"POT-Creation-Date: 2026-11-12 17:08+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Brazilian Portuguese\n"
@@ -569,8 +569,8 @@ msgstr "Repo owner"
 
 #: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:195
 #: social/feed.py:29
-msgid "Live"
-msgstr "Live"
+msgid "Domain verified"
+msgstr "Domain verified"
 
 #: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:196
 #: social/feed.py:29
@@ -1303,11 +1303,9 @@ msgstr ""
 #: projects/proof.py:36
 #, no-python-format
 msgid ""
-"Live, and at least 95% of uptime checks succeeded over the last 30 days, "
-"with at least 40 checks."
-msgstr ""
-"Live, e pelo menos 95% das verificações de disponibilidade tiveram sucesso "
-"nos últimos 30 dias, com pelo menos 40 verificações."
+"Domain verified, and at least 95% of uptime checks succeeded over the last "
+"30 days, with at least 40 checks."
+msgstr "Domain verified, e pelo menos 95% das verificações de disponibilidade tiveram sucesso nos últimos 30 dias, com pelo menos 40 verificações."
 
 #: projects/proof.py:77
 msgid "No repository linked."
@@ -1365,8 +1363,8 @@ msgid "Lost: %(domain)s was not confirmed in the last 35 days."
 msgstr "Perdido: %(domain)s não foi confirmado nos últimos 35 dias."
 
 #: projects/proof.py:114
-msgid "Needs Live first."
-msgstr "Precisa primeiro de Live."
+msgid "Needs Domain verified first."
+msgstr "Precisa primeiro de Domain verified."
 
 #: projects/proof.py:118
 #, python-format
@@ -1592,8 +1590,8 @@ msgid "Verified. Confirmed again."
 msgstr "Verificado. Confirmado de novo."
 
 #: projects/views.py:254
-msgid "Verified. Live earned."
-msgstr "Verificado. Live conquistado."
+msgid "Verified. Domain verified earned."
+msgstr "Verificado. Domain verified conquistado."
 
 #: projects/views.py:280
 msgid "Moved back to drafts."
@@ -2531,7 +2529,9 @@ msgstr "Novidades oficiais do %(name)s."
 msgid ""
 "What changed, what is next, and how proof works. Written by the team, nobody "
 "else can post here."
-msgstr "O que mudou, o que vem a seguir e como a prova funciona. Escrito pela equipe; mais ninguém pode publicar aqui."
+msgstr ""
+"O que mudou, o que vem a seguir e como a prova funciona. Escrito pela "
+"equipe; mais ninguém pode publicar aqui."
 
 #: templates/news/list.html:22
 msgid "Older"
@@ -2634,8 +2634,8 @@ msgid "Submit your project"
 msgstr "Envie seu projeto"
 
 #: templates/pages/landing.html:22
-msgid "The internet has enough claims."
-msgstr "A internet já tem afirmações demais."
+msgid "For builders who ship with AI"
+msgstr "Para quem cria e lança com IA"
 
 #: templates/pages/landing.html:23
 msgid "Less claim."
@@ -2646,9 +2646,11 @@ msgid "More shipped."
 msgstr "Mais entregas."
 
 #: templates/pages/landing.html:24
-msgid "Real projects. Independent checks. Proof you can point to."
-msgstr ""
-"Projetos reais. Verificações independentes. Provas que você pode mostrar."
+#, python-format
+msgid ""
+"Show what you shipped with AI. %(name)s verifies your domain and repository "
+"and shows your site's uptime history."
+msgstr "Mostre o que você lançou com IA. %(name)s verifica seu domínio e seu repositório e mostra o histórico de disponibilidade do seu site."
 
 #: templates/pages/landing.html:27
 msgid "Built with AI. Backed by evidence."
@@ -2975,8 +2977,8 @@ msgstr "No seu README"
 
 #: templates/pages/landing.html:275
 #, python-format
-msgid "Example %(name)s badge: Repo owner, Live, Steady"
-msgstr "Exemplo de badge do %(name)s: Repo owner, Live, Steady"
+msgid "Example %(name)s badge: Repo owner, Domain verified, Steady"
+msgstr "Exemplo de badge do %(name)s: Repo owner, Domain verified, Steady"
 
 #: templates/pages/landing.html:283
 msgid "Illustrative project"
@@ -3043,11 +3045,10 @@ msgstr ""
 
 #: templates/projects/_domain.html:11
 msgid ""
-"Live is earned when you prove that you control the domain of your live URL. "
-"www is ignored: example.com and www.example.com are the same domain."
-msgstr ""
-"Live é conquistado quando você comprova que controla o domínio da sua URL "
-"pública. O www é ignorado: example.com e www.example.com são o mesmo domínio."
+"Domain verified is earned when you prove that you control the domain of your "
+"live URL. www is ignored: example.com and www.example.com are the same "
+"domain."
+msgstr "Domain verified é conquistado quando você comprova que controla o domínio da sua URL pública. O www é ignorado: example.com e www.example.com são o mesmo domínio."
 
 #: templates/projects/_domain.html:17
 msgid "Method"
@@ -3193,8 +3194,8 @@ msgstr "Até 5 verificações a cada 10 minutos."
 
 #: templates/projects/_domain_status.html:3
 #, python-format
-msgid "Verified: %(domain)s. Live earned."
-msgstr "Verificado: %(domain)s. Live conquistado."
+msgid "Verified: %(domain)s. Domain verified earned."
+msgstr "Verificado: %(domain)s. Domain verified conquistado."
 
 #: templates/projects/_domain_status.html:4
 #, python-format
@@ -3204,18 +3205,15 @@ msgstr "Última confirmação em %(date)s. Verificado de novo a cada 30 dias."
 #: templates/projects/_domain_status.html:6
 #, python-format
 msgid ""
-"Last confirmed %(date)s. Live is paused until the domain is confirmed again."
-msgstr ""
-"Última confirmação em %(date)s. Live fica em pausa até o domínio ser "
-"confirmado de novo."
+"Last confirmed %(date)s. Domain verified is paused until the domain is "
+"confirmed again."
+msgstr "Última confirmação em %(date)s. Domain verified fica em pausa até o domínio ser confirmado de novo."
 
 #: templates/projects/_domain_status.html:8
 msgid ""
-"Verification lost. The last automatic check did not find your token, so Live "
-"was removed."
-msgstr ""
-"Verificação perdida. A última verificação automática não encontrou seu "
-"token, então Live foi removido."
+"Verification lost. The last automatic check did not find your token, so "
+"Domain verified was removed."
+msgstr "Verificação perdida. A última verificação automática não encontrou seu token, então Domain verified foi removido."
 
 #: templates/projects/_domain_status.html:8
 msgid "Fix it and verify again."
@@ -3652,7 +3650,8 @@ msgstr "Curtir"
 
 #: templates/social/feed.html:7
 msgid "Projects people shipped with verified proof, and official news."
-msgstr "Projetos que as pessoas lançaram, com prova verificada, e novidades oficiais."
+msgstr ""
+"Projetos que as pessoas lançaram, com prova verificada, e novidades oficiais."
 
 #: templates/social/feed.html:14
 msgid "Feed navigation"
@@ -3719,12 +3718,13 @@ msgid "Link your GitHub repository to earn Repo owner."
 msgstr "Vincule seu repositório do GitHub para ganhar Repo owner."
 
 #: templates/social/feed.html:103
-msgid "Verify your domain to earn Live; steady uptime earns Steady."
-msgstr "Verifique seu domínio para ganhar Live; disponibilidade estável dá Steady."
+msgid "Verify your domain to earn Domain verified; steady uptime earns Steady."
+msgstr "Verifique seu domínio para ganhar Domain verified; disponibilidade estável dá Steady."
 
 #: templates/social/feed.html:104
 msgid "Write a short build-log update when you ship something."
-msgstr "Escreva uma atualização curta no registro de mudanças quando lançar algo."
+msgstr ""
+"Escreva uma atualização curta no registro de mudanças quando lançar algo."
 
 #: templates/socialaccount/authentication_error.html:4
 #: templates/socialaccount/authentication_error.html:10
@@ -3823,12 +3823,12 @@ msgstr ""
 "tentar de novo depois %(kept)s."
 
 #: verification/admin.py:101
-msgid "Revoke Live"
-msgstr "Revogar Live"
+msgid "Revoke Domain verified"
+msgstr "Revogar Domain verified"
 
 #: verification/admin.py:106
-msgid "Block the domain and revoke Live"
-msgstr "Bloquear o domínio e revogar Live"
+msgid "Block the domain and revoke Domain verified"
+msgstr "Bloquear o domínio e revogar Domain verified"
 
 #: verification/admin.py:113
 msgid "Re-run verification now"
@@ -3994,3 +3994,16 @@ msgstr ""
 #: verification/repo.py:310 verification/repo.py:516
 msgid "This repository is already linked to another project."
 msgstr "Este repositório já está vinculado a outro projeto."
+
+#~ msgid "Live"
+#~ msgstr "Live"
+
+#~ msgid "The internet has enough claims."
+#~ msgstr "A internet já tem afirmações demais."
+
+#~ msgid "Real projects. Independent checks. Proof you can point to."
+#~ msgstr ""
+#~ "Projetos reais. Verificações independentes. Provas que você pode mostrar."
+
+#~ msgid "Revoke Live"
+#~ msgstr "Revogar Live"

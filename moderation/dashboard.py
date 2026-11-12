@@ -51,7 +51,7 @@ def dashboard_callback(request, context):
         ],
         "hallmark_stats": [
             {"label": _("Repo owner"), "value": marks["authored"]},
-            {"label": _("Live"), "value": marks["live"]},
+            {"label": _("Domain verified"), "value": marks["live"]},
             {"label": _("Steady"), "value": marks["steady"]},
         ],
         "latest_reports": list(open_reports.select_related("reporter").order_by("-created_at")[:5]),

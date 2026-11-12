@@ -24,7 +24,7 @@ Questions ou demandes : [{{ contact_email }}](mailto:{{ contact_email }}).
 **Contrôles de preuve.** Pour attribuer des poinçons, nous contrôlons nous-mêmes les faits (notre intérêt légitime à montrer des preuves fiables) :
 
 - *Repo owner :* nous interrogeons l’API publique de GitHub sur le dépôt que vous liez et enregistrons son identifiant, l’identifiant du compte propriétaire, s’il vous appartient, sa date de création et son champ Website, le premier commit de son historique (identifiant et date), votre nombre de commits, les dates de votre premier et de votre dernier commit, le nombre de semaines avec vos commits et l’état d’une vérification manuelle si elle est nécessaire. Nous le recontrôlons chaque semaine. La liste des autres contributeurs est lue pendant le contrôle et n’est pas enregistrée. Si vous utilisez le fichier de vérification pour le dépôt d’une organisation, nous enregistrons aussi s’il a été trouvé.
-- *Live :* nous consultons les enregistrements DNS du domaine de votre projet ou récupérons sa page pour y trouver votre jeton de vérification.
+- *Domain verified :* nous consultons les enregistrements DNS du domaine de votre projet ou récupérons sa page pour y trouver votre jeton de vérification.
 - *Steady :* nous interrogeons l’adresse de votre projet toutes les quelques heures et conservons si elle a répondu et à quelle vitesse. Ces contrôles sont conservés **90 jours**.
 
 Les résultats sont affichés sur la page publique de votre projet.
@@ -68,7 +68,7 @@ Les résultats sont affichés sur la page publique de votre projet.
 ## Qui d’autre reçoit des données {#recipients}
 
 - **GitHub, Inc.** Vous vous connectez sur github.com et notre serveur lit votre profil et les données publiques de dépôts depuis l’API de GitHub. La politique de confidentialité propre à GitHub s’applique à votre usage de GitHub.
-- **Les serveurs de votre projet.** Pour les contrôles Live et Steady, notre serveur contacte le DNS de votre domaine et l’adresse de votre projet. Ils voient notre serveur, pas vous.
+- **Les serveurs de votre projet.** Pour les contrôles Domain verified et Steady, notre serveur contacte le DNS de votre domaine et l’adresse de votre projet. Ils voient notre serveur, pas vous.
 - **Notre hébergeur**, qui exploite pour nous le serveur et la base de données.
 
 Nous ne vendons pas vos données et ne les partageons pas à des fins publicitaires.

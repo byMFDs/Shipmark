@@ -24,7 +24,7 @@ Dúvidas ou solicitações: [{{ contact_email }}](mailto:{{ contact_email }}).
 **Verificações de comprovação.** Para conceder selos, verificamos os fatos nós mesmos (nosso interesse legítimo em mostrar comprovações confiáveis):
 
 - *Repo owner:* consultamos a API pública do GitHub sobre o repositório que você vincula e guardamos o id dele, o id da conta dona, se ele é seu, a data de criação e o campo Website, o primeiro commit do histórico (id e data), o seu número de commits, as datas do seu primeiro e último commit, o número de semanas com commits seus e o estado de uma revisão manual, quando for necessária. Verificamos de novo toda semana. A lista de outras pessoas que contribuem é lida durante a verificação e não é guardada. Se você usa o arquivo de verificação em um repositório de organização, também guardamos se ele foi encontrado.
-- *Live:* consultamos os registros DNS do domínio do seu projeto ou acessamos a página dele para encontrar seu token de verificação.
+- *Domain verified:* consultamos os registros DNS do domínio do seu projeto ou acessamos a página dele para encontrar seu token de verificação.
 - *Steady:* acessamos o endereço do seu projeto a cada poucas horas e guardamos se ele respondeu e com que rapidez. Essas verificações ficam guardadas por **90 dias**.
 
 Os resultados aparecem na página pública do seu projeto.
@@ -68,7 +68,7 @@ Os resultados aparecem na página pública do seu projeto.
 ## Quem mais recebe dados {#recipients}
 
 - **GitHub, Inc.** Você entra em github.com, e o nosso servidor lê seu perfil e dados públicos de repositórios pela API do GitHub. A declaração de privacidade do próprio GitHub vale para o seu uso do GitHub.
-- **Os servidores do seu projeto.** Nas verificações de Live e Steady, o nosso servidor acessa o DNS do seu domínio e o endereço do seu projeto. Eles veem o nosso servidor, não você.
+- **Os servidores do seu projeto.** Nas verificações de Domain verified e Steady, o nosso servidor acessa o DNS do seu domínio e o endereço do seu projeto. Eles veem o nosso servidor, não você.
 - **Nosso provedor de hospedagem**, que mantém o servidor e o banco de dados para nós.
 
 Não vendemos seus dados nem os compartilhamos para publicidade.
