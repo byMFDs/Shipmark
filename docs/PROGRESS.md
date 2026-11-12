@@ -144,3 +144,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-12: Features stage 6 (leftovers). Repo check: cooldown per project + repository, hourly caps, neutral wait message with minutes, no stale result. Sign-in/sign-out toasts in the page's language (saved language at sign-in, language cookie follows it). Legal drafts updated in 7 languages (profile data, pictures, moderator access, appeals, retention, language cookie). CLAUDE.md, EDITING, DEPLOY_NOTES, DATA_INVENTORY updated. 858 tests, `check --deploy` clean.
   Next: review the whole features-1 branch, set a real `LEGAL_OWNER_NAME`, lawyer review of the legal drafts, then merge; later drop `User.bio` / `User.website`.
+
+- 2026-11-12: Community round, stage 0 (plan only, no code; branch `community-1`). `docs/COMMUNITY_PLAN.md`: models, URL map, permission matrix, hot formula, abuse numbers, 32 stickers, image pipeline, risks, 10 open questions. `docs/COMMUNITY_STATUS.md` created. Baseline: 858 tests green (serial run; `test --parallel` crashes with a pickling error, not looked into).
+  Next: answers to the open questions (2, 3, 4, 5, 9 affect stage 1), then "GO 1" (backend).
