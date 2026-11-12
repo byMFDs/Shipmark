@@ -7,15 +7,17 @@ from unittest import mock
 import httpx
 from allauth.socialaccount.models import SocialAccount
 from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import connection
 from django.test import TestCase, override_settings
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
+from django.utils import timezone
 from PIL import Image
 
 from moderation import decisions, sanctions
-from moderation.models import AuditLog
+from moderation.models import AuditLog, Sanction
 from projects.models import BuildLogEntry, Project, Tool
 from projects.tests import TEMP_MEDIA, image_file, make_project, make_user
 from verification.net import FetchError, FetchResult
@@ -155,6 +157,67 @@ class AvatarTests(ProfileTestCase):
         self.assertFalse(self.fresh().avatar)
 
 
+def one_bit_png(size):
+    """A huge image that is a tiny file: all pixels the same, 1 bit each."""
+    buffer = io.BytesIO()
+    Image.new("1", size).save(buffer, format="PNG")
+    return buffer.getvalue()
+
+
+class ImageLimitTests(ProfileTestCase):
+    """Avatars and covers use the same pipeline and limits as project screenshots (projects/images.py)."""
+
+    CASES = {
+        "too many pixels": lambda: SimpleUploadedFile("a.png", one_bit_png((6000, 5000)), content_type="image/png"),
+        "decompression bomb": lambda: SimpleUploadedFile("a.png", one_bit_png((20000, 10000)), content_type="image/png"),
+        "over 5 MB": lambda: SimpleUploadedFile("a.png", image_file("PNG").read() + b"\0" * (5 * 1024 * 1024),
+                                                content_type="image/png"),
+        "gif": lambda: image_file("GIF", name="a.gif"),
+        "svg": lambda: SimpleUploadedFile("a.png", b"<svg xmlns='http://www.w3.org/2000/svg'><script>1</script></svg>",
+                                          content_type="image/png"),
+        "not an image": lambda: SimpleUploadedFile("a.png", b"hello", content_type="image/png"),
+        "empty": lambda: SimpleUploadedFile("a.png", b"", content_type="image/png"),
+    }
+
+    def test_one_pipeline_and_the_same_limits(self):
+        from projects import images
+        self.assertEqual((images.MAX_BYTES, images.MAX_PIXELS), (5 * 1024 * 1024, 25_000_000))
+        for name, make in self.CASES.items():
+            outcomes = []
+            for cleaner in (images.clean_screenshot, images.clean_avatar, images.clean_cover):
+                with self.assertRaises(ValidationError, msg=name) as caught:
+                    cleaner(make())
+                outcomes.append((caught.exception.code, caught.exception.messages))
+            self.assertEqual(outcomes[0], outcomes[1], name)
+            self.assertEqual(outcomes[0], outcomes[2], name)
+
+    def test_valid_files_are_reencoded_by_all_three(self):
+        from projects import images
+        for fmt in ("PNG", "JPEG", "WEBP"):
+            for cleaner, size in ((images.clean_screenshot, None), (images.clean_avatar, (512, 512)),
+                                  (images.clean_cover, (1500, 500))):
+                content = cleaner(image_file(fmt, size=(300, 200), mode="RGB"))
+                with Image.open(io.BytesIO(content.read())) as out:
+                    self.assertEqual(out.format, "WEBP")
+                    self.assertEqual(len(out.getexif()), 0)
+                    if size:
+                        self.assertEqual(out.size, size)
+
+    def test_huge_images_are_refused_in_settings_for_avatar_and_cover(self):
+        def stored():
+            return sorted(str(f) for f in Path(TEMP_MEDIA).rglob("*") if f.is_file() and f.parent.name in ("avatars", "covers"))
+
+        before = stored()
+        for field in ("avatar_file", "cover_file"):
+            for name in ("too many pixels", "decompression bomb"):
+                response = self.post({field: self.CASES[name]()}, display_name="Changed")
+                self.assertEqual(response.status_code, 200, (field, name))
+                self.assertContains(response, 'role="alert"')
+        ana = self.fresh()
+        self.assertEqual((bool(ana.avatar), bool(ana.cover), ana.display_name), (False, False, "Ana"))
+        self.assertEqual(stored(), before)  # nothing was written
+
+
 class GitHubAvatarTests(ProfileTestCase):
     def test_downloaded_once_through_safe_fetch_and_stored_locally(self):
         with mock.patch("accounts.avatars.safe_fetch", return_value=fetch_result()) as fetch:
@@ -214,28 +277,64 @@ class GitHubAvatarTests(ProfileTestCase):
 
 
 class MuteTests(ProfileTestCase):
+    """A muted person keeps the language setting (and export, deletion); every public profile field is frozen."""
+
     def setUp(self):
         super().setUp()
-        boss = User.objects.create_superuser("boss", "b@example.com", "pw")
-        sanctions.issue(self.ana, "mute", "Spam avatar uploads, against the rules.", boss, length=timedelta(days=1))
+        self.project = make_project(self.ana, name="Quillbox")
+        self.post({"avatar_file": image_file(), "cover_file": image_file()}, headline="Before", about="About before",
+                  location="Kyiv", status="hiring", skills_text="python", link0_kind="website",
+                  link0_url="https://before.example", pinned=[self.project.pk])
+        self.before = self.snapshot()
+        self.boss = User.objects.create_superuser("boss", "b@example.com", "pw")
+        self.mute = sanctions.issue(self.ana, "mute", "Spam in the profile, against the rules.", self.boss,
+                                    length=timedelta(days=1))
 
-    def test_muted_user_cannot_upload_pictures_but_can_edit_text(self):
-        with mock.patch("accounts.avatars.safe_fetch") as fetch:
-            for data in ({"files": {"avatar_file": image_file()}}, {"files": {"cover_file": image_file()}},
-                         {"use_github_avatar": "on"}):
-                files = data.pop("files", None)
-                response = self.post(files, display_name="Changed", **data)
-                self.assertEqual(response.status_code, 200)
-                self.assertContains(response, "muted")
-        fetch.assert_not_called()
+    def snapshot(self):
         ana = self.fresh()
-        self.assertEqual((ana.display_name, bool(ana.avatar), bool(ana.cover)), ("Ana", False, False))
-        response = self.post(headline="Still me")
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(self.fresh().headline, "Still me")
+        return {
+            "display_name": ana.display_name, "headline": ana.headline, "about": ana.about,
+            "location": ana.location, "status": ana.status, "avatar": ana.avatar.name, "cover": ana.cover.name,
+            "avatar_source": ana.avatar_source, "skills": sorted(t.slug for t in ana.skills.all()),
+            "links": [(l.kind, l.url) for l in ana.links.all()], "pins": [p.project_id for p in ana.pins.all()],
+        }
 
-    def test_the_page_says_pictures_are_locked(self):
-        self.assertContains(self.client.get(self.url), "pictures cannot be changed")
+    def test_nothing_public_can_be_changed_but_the_language_is_saved(self):
+        other = make_project(self.ana, name="Another")
+        with mock.patch("accounts.avatars.safe_fetch") as fetch:
+            response = self.post(
+                {"avatar_file": image_file(size=(50, 50)), "cover_file": image_file(size=(50, 50))},
+                display_name="Changed", headline="Changed", about="Changed", location="Elsewhere", status="hiring",
+                skills_text="rust, go", link0_kind="github", link0_url="https://github.com/changed",
+                link1_kind="website", link1_url="https://new.example", pinned=[other.pk, self.project.pk],
+                use_github_avatar="on", remove_avatar="on", remove_cover="on", preferred_language="uk",
+            )
+        fetch.assert_not_called()
+        self.assertRedirects(response, self.url, fetch_redirect_response=False)
+        self.assertEqual(self.snapshot(), self.before)
+        self.assertEqual(self.fresh().preferred_language, "uk")
+
+    def test_only_the_language_column_is_written(self):
+        User.objects.filter(pk=self.ana.pk).update(display_name="Odd   spacing")  # would be tidied by a full save
+        self.post(preferred_language="pl")
+        ana = self.fresh()
+        self.assertEqual((ana.display_name, ana.preferred_language), ("Odd   spacing", "pl"))
+
+    def test_the_page_shows_the_profile_read_only(self):
+        page = self.client.get(self.url)
+        self.assertContains(page, "your public profile cannot be changed")
+        html = page.content.decode()
+        for name in ("headline", "about", "location", "status", "skills_text", "avatar_file", "cover_file",
+                     "link0_url", "link0_kind", "display_name"):
+            self.assertRegex(html, rf'<[^>]*name="{name}"[^>]*\bdisabled\b', name)
+        self.assertNotRegex(html, r'<[^>]*name="preferred_language"[^>]*\bdisabled\b')
+        self.assertContains(page, "Before")  # the saved values are still shown
+
+    def test_when_the_mute_ends_editing_works_again(self):
+        Sanction.objects.filter(pk=self.mute.pk).update(
+            starts_at=timezone.now() - timedelta(days=5), expires_at=timezone.now() - timedelta(seconds=1))
+        self.post(headline="After the mute")
+        self.assertEqual(self.fresh().headline, "After the mute")
 
 
 # ---------- Fields ----------
@@ -290,6 +389,52 @@ class LinkTests(ProfileTestCase):
         for kind, url in bad:
             with self.assertRaises(Exception, msg=(kind, url)):
                 clean_link(kind, url)
+
+    def test_lookalike_hosts_are_rejected_for_every_fixed_kind(self):
+        bad = {
+            "github": [
+                "https://github.com.evil.example/ana", "https://evilgithub.com/ana", "https://github.com@evil.example/ana",
+                "https://GITHUB.COM.EVIL.EXAMPLE/ana", "https://GitHub.com.Evil.example/ana",
+                "https://xn--githb-hqa.com/ana", "https://g\u0456thub.com/ana",  # punycode, and a Cyrillic i
+                "https://evil.example\\.github.com/ana", "https://evil.example\\@github.com/ana",
+                "https://github.com%2eevil.example/", "https://user:pw@github.com/ana", "https://github.com.evil.example",
+            ],
+            "x": ["https://x.com.evil.example/a", "https://evilx.com/a", "https://notx.com/a",
+                  "https://twitter.com.evil.example/a", "https://faketwitter.com/a", "https://x.com@evil.example/a"],
+            "linkedin": ["https://linkedin.com.evil.example/in/a", "https://evillinkedin.com/in/a",
+                         "https://linkedin.com@evil.example/in/a"],
+            "telegram": ["https://t.me.evil.example/a", "https://not-t.me/a", "https://t.me@evil.example/a",
+                         "https://telegram.me.evil.example/a"],
+        }
+        for kind, urls in bad.items():
+            for url in urls:
+                with self.assertRaises(ValidationError, msg=(kind, url)):
+                    clean_link(kind, url)
+
+    def test_real_hosts_pass_in_any_case_and_x_accepts_both_domains(self):
+        good = [("github", "https://GitHub.com/ana"), ("github", "https://WWW.GITHUB.COM/ana"),
+                ("x", "https://x.com/ana"), ("x", "https://twitter.com/ana"), ("x", "https://www.x.com/ana"),
+                ("x", "https://mobile.twitter.com/ana"), ("x", "https://X.COM/ana"),
+                ("linkedin", "https://www.linkedin.com/in/ana"), ("telegram", "https://t.me/ana")]
+        for kind, url in good:
+            self.assertEqual(clean_link(kind, url), url, (kind, url))
+
+    def test_dangerous_schemes_are_rejected_for_every_kind(self):
+        schemes = ["javascript:alert(1)", "JaVaScRiPt:alert(1)", " javascript:alert(1)", "java\tscript:alert(1)",
+                   "data:text/html,<script>alert(1)</script>", "DATA:text/html;base64,PHNjcmlwdD4=", "vbscript:msgbox(1)",
+                   "file:///etc/passwd", "ftp://example.com/x", "//evil.example/x", "mailto:a@example.com",
+                   "blob:https://example.com/x"]
+        for kind in ProfileLink.Kind.values:
+            for url in schemes:
+                with self.assertRaises(ValidationError, msg=(kind, url)):
+                    clean_link(kind, url)
+
+    def test_lookalikes_are_refused_through_the_form_too(self):
+        for url in ("https://github.com.evil.example/ana", "https://evil.example\\.github.com/ana",
+                    "https://github.com@evil.example/ana", "javascript:alert(1)", "data:text/html,hi"):
+            response = self.post(link0_kind="github", link0_url=url)
+            self.assertEqual(response.status_code, 200, url)
+            self.assertFalse(self.ana.links.exists(), url)
 
     def test_save_replace_order_and_dedupe(self):
         self.post(link0_kind="website", link0_url="https://ana.example", link1_kind="github",
@@ -502,6 +647,8 @@ class DataRightsTests(ProfileTestCase):
         self.assertEqual(profile["links"], [{"kind": "website", "url": "https://ana.example"}])
         self.assertEqual(profile["pinned_projects"], ["pinned-one"])
         self.assertTrue(profile["avatar"].startswith("https://shipmark.me/media/avatars/"))
+        self.assertNotIn("bio", profile)  # the deprecated columns are not exported (nothing to duplicate)
+        self.assertNotIn("website", profile)
         text = str(data)
         self.assertNotIn("bob secret headline", text)
         self.assertNotIn("bob-private", text)

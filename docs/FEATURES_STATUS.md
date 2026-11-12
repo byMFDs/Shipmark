@@ -68,8 +68,9 @@ Order confirmed by the developer (2026-11-12): 2, 3, 4, 5, 6. Stage 2 is not pos
   (built-with summary labelled self-declared), inviting empty states, picture as the social preview image.
 - Settings: one form with grouped sections and a live preview card; data export has the new fields; moderators' "clear
   profile fields" now means picture and cover / headline and About / links.
-- Muted users can edit profile text but not upload pictures (uploads are on the mute list). Rate limits: 20 picture
-  uploads and 5 GitHub downloads per hour per user.
+- Muted users: the whole public profile is read-only (decided after review); they keep the language setting, export and
+  deletion. Rate limits: 20 picture uploads and 5 GitHub downloads per hour per user.
+- To do later: drop the deprecated `User.bio` / `User.website` columns (stage 6 or after).
 
 ## Decisions taken without answers (plan section 6, change if needed)
 - `is_suspended` kept as it is (admin-level; suspended owners also cannot delete or unpublish projects).
@@ -84,7 +85,5 @@ Order confirmed by the developer (2026-11-12): 2, 3, 4, 5, 6. Stage 2 is not pos
 - Plan question 8 changed: banned users cannot export or delete in the app (they are signed out); OK?
 - Public privacy/terms/cookies texts for the new personal data (avatar, location, links, status) are written in stage 6
   (DATA_INVENTORY is already updated).
-- Muted users may still edit profile text (headline, About, links). Should a mute also freeze those? (Brief says "use own
-  settings", so I left it; moderators can clear the fields.)
 - Reports on build-log entries can lead to removing the whole project, mute or ban; there is no "remove one entry"
   action yet (not in the brief).

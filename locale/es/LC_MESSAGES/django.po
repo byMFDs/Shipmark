@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 15:12+0000\n"
+"POT-Creation-Date: 2026-11-12 15:26+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -86,156 +86,165 @@ msgstr "No hay imagen de GitHub disponible para esta cuenta."
 msgid "Could not download your GitHub picture right now. Try again later."
 msgstr "No se pudo descargar tu imagen de GitHub ahora. Inténtalo más tarde."
 
-#: accounts/forms.py:56
+#: accounts/forms.py:55
 msgid "You need to accept the Terms to create an account."
 msgstr "Debes aceptar los Términos para crear una cuenta."
 
-#: accounts/forms.py:63
+#: accounts/forms.py:62
 msgid ""
 "Your profile will be at /u/username/. Lowercase letters, digits, - and _."
 msgstr "Tu perfil estará en /u/usuario/. Minúsculas, números, - y _."
 
-#: accounts/forms.py:89
+#: accounts/forms.py:88
 msgid "Upload a picture"
 msgstr "Subir una imagen"
 
-#: accounts/forms.py:91
+#: accounts/forms.py:90
 msgid "PNG, JPEG or WebP, up to 5 MB. It is cropped to a square."
 msgstr "PNG, JPEG o WebP, hasta 5 MB. Se recorta en cuadrado."
 
-#: accounts/forms.py:93
+#: accounts/forms.py:92
 msgid "Use my GitHub picture instead"
 msgstr "Usar mi imagen de GitHub en su lugar"
 
-#: accounts/forms.py:94
+#: accounts/forms.py:93
 msgid "Remove my picture (show initials)"
 msgstr "Quitar mi imagen (mostrar iniciales)"
 
-#: accounts/forms.py:96
+#: accounts/forms.py:95
 msgid "Cover image"
 msgstr "Imagen de portada"
 
-#: accounts/forms.py:98
+#: accounts/forms.py:97
 msgid ""
 "Optional. PNG, JPEG or WebP, up to 5 MB. It is cropped to a wide banner "
 "(3:1)."
-msgstr "Opcional. PNG, JPEG o WebP, hasta 5 MB. Se recorta en un banner ancho (3:1)."
+msgstr ""
+"Opcional. PNG, JPEG o WebP, hasta 5 MB. Se recorta en un banner ancho (3:1)."
 
-#: accounts/forms.py:100
+#: accounts/forms.py:99
 msgid "Remove the cover image"
 msgstr "Quitar la imagen de portada"
 
-#: accounts/forms.py:102 templates/accounts/profile.html:150
+#: accounts/forms.py:101 templates/accounts/profile.html:150
 msgid "Skills"
 msgstr "Habilidades"
 
-#: accounts/forms.py:103
+#: accounts/forms.py:102
 msgid "Up to 10, separated by commas. For example: python, django, design."
 msgstr "Hasta 10, separadas por comas. Por ejemplo: python, django, design."
 
-#: accounts/forms.py:107
+#: accounts/forms.py:106
 msgid "Pinned projects"
 msgstr "Proyectos fijados"
 
-#: accounts/forms.py:108
+#: accounts/forms.py:107
 msgid "Up to 3 of your published projects, shown first on your profile."
-msgstr "Hasta 3 de tus proyectos publicados, que aparecen primero en tu perfil."
+msgstr ""
+"Hasta 3 de tus proyectos publicados, que aparecen primero en tu perfil."
 
-#: accounts/forms.py:112
+#: accounts/forms.py:111
 msgid "Automatic (browser language)"
 msgstr "Automático (idioma del navegador)"
 
-#: accounts/forms.py:120 templates/moderation/mod/report.html:36
+#: accounts/forms.py:119 templates/moderation/mod/report.html:36
 msgid "Headline"
 msgstr "Descripción breve"
 
-#: accounts/forms.py:120
+#: accounts/forms.py:119
 msgid "Location"
 msgstr "Ubicación"
 
-#: accounts/forms.py:120
+#: accounts/forms.py:119
 msgid "Status"
 msgstr "Estado"
 
-#: accounts/forms.py:121 templates/accounts/profile.html:69
+#: accounts/forms.py:120 templates/accounts/profile.html:69
 #: templates/accounts/profile.html:139 templates/moderation/mod/report.html:37
 msgctxt "profile"
 msgid "About"
 msgstr "Acerca de"
 
-#: accounts/forms.py:124
+#: accounts/forms.py:123
 msgid "Shown instead of your username. Optional."
 msgstr "Se muestra en lugar de tu nombre de usuario. Opcional."
 
-#: accounts/forms.py:125
+#: accounts/forms.py:124
 msgid ""
 "One line under your name, up to 80 characters. For example: Building small "
 "tools with AI."
-msgstr "Una línea bajo tu nombre, hasta 80 caracteres. Por ejemplo: Creo pequeñas herramientas con IA."
+msgstr ""
+"Una línea bajo tu nombre, hasta 80 caracteres. Por ejemplo: Creo pequeñas "
+"herramientas con IA."
 
-#: accounts/forms.py:126
+#: accounts/forms.py:125
 msgid "City or country. Optional."
 msgstr "Ciudad o país. Opcional."
 
-#: accounts/forms.py:127
+#: accounts/forms.py:126
 msgid "A small label on your profile. Optional."
 msgstr "Una pequeña etiqueta en tu perfil. Opcional."
 
-#: accounts/forms.py:128
+#: accounts/forms.py:127
 msgid ""
 "Markdown works: links, lists, bold and code. Up to 1000 characters. HTML and "
 "images are not allowed."
-msgstr "Markdown funciona: enlaces, listas, negrita y código. Hasta 1000 caracteres. No se permite HTML ni imágenes."
+msgstr ""
+"Markdown funciona: enlaces, listas, negrita y código. Hasta 1000 caracteres. "
+"No se permite HTML ni imágenes."
 
-#: accounts/forms.py:137
+#: accounts/forms.py:138
 msgid "No status"
 msgstr "Sin estado"
 
-#: accounts/forms.py:155 templates/accounts/settings.html:61
+#: accounts/forms.py:156 templates/accounts/settings.html:61
 msgid "Kind"
 msgstr "Tipo"
 
-#: accounts/forms.py:159 templates/accounts/settings.html:61
+#: accounts/forms.py:160 templates/accounts/settings.html:61
 msgid "Address"
 msgstr "Dirección"
 
-#: accounts/forms.py:189
+#: accounts/forms.py:194
 msgid "Use at most 10 skills."
 msgstr "Usa como máximo 10 habilidades."
 
-#: accounts/forms.py:194
+#: accounts/forms.py:199
 msgid "Pin at most 3 projects."
 msgstr "Fija como máximo 3 proyectos."
 
-#: accounts/forms.py:205 accounts/forms.py:224 accounts/views.py:72
+#: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:72
 #: projects/views.py:38 social/views.py:70
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Demasiados cambios en poco tiempo. Inténtalo de nuevo en unos minutos."
 
-#: accounts/forms.py:278
+#: accounts/forms.py:286
 msgid "Accept the updated Terms to keep using your account."
 msgstr "Acepta los Términos actualizados para seguir usando tu cuenta."
 
-#: accounts/forms.py:290
+#: accounts/forms.py:298
 msgid "Type your username to confirm"
 msgstr "Escribe tu nombre de usuario para confirmar"
 
-#: accounts/forms.py:301
+#: accounts/forms.py:309
 msgid "This is not your username. Type it exactly as shown."
 msgstr "Ese no es tu nombre de usuario. Escríbelo exactamente como se muestra."
 
-#: accounts/links.py:41
+#: accounts/links.py:43
 msgid "Enter a public web address that starts with http:// or https://."
-msgstr "Introduce una dirección web pública que empiece por http:// o https://."
+msgstr ""
+"Introduce una dirección web pública que empiece por http:// o https://."
 
-#: accounts/links.py:45
+#: accounts/links.py:47
 #, python-format
 msgid ""
 "This does not look like a %(kind)s address. Use the kind “Other” for any "
 "other site."
-msgstr "Esto no parece una dirección de %(kind)s. Para cualquier otro sitio usa el tipo «Otro»."
+msgstr ""
+"Esto no parece una dirección de %(kind)s. Para cualquier otro sitio usa el "
+"tipo «Otro»."
 
-#: accounts/links.py:49
+#: accounts/links.py:51
 msgid "The address is too long (200 characters at most)."
 msgstr "La dirección es demasiado larga (200 caracteres como máximo)."
 
@@ -654,7 +663,7 @@ msgstr "Motivo de la denuncia"
 msgid "Fields to clear"
 msgstr "Campos que vaciar"
 
-#: moderation/forms.py:59 templates/accounts/settings.html:35
+#: moderation/forms.py:59 templates/accounts/settings.html:36
 #: templates/moderation/mod/report.html:39
 msgid "Picture and cover"
 msgstr "Imagen y portada"
@@ -1969,12 +1978,15 @@ msgstr "Aún no hay actualizaciones"
 
 #: templates/accounts/profile.html:132
 msgid "Write short updates on a project page. They collect here, newest first."
-msgstr "Escribe actualizaciones cortas en la página de un proyecto. Se reúnen aquí, las más nuevas primero."
+msgstr ""
+"Escribe actualizaciones cortas en la página de un proyecto. Se reúnen aquí, "
+"las más nuevas primero."
 
 #: templates/accounts/profile.html:132
 #, python-format
 msgid "%(name)s has not posted a build-log update yet."
-msgstr "%(name)s aún no ha publicado ninguna actualización del registro de cambios."
+msgstr ""
+"%(name)s aún no ha publicado ninguna actualización del registro de cambios."
 
 #: templates/accounts/profile.html:144 templates/social/feed.html:33
 msgid "Nothing here yet"
@@ -2007,11 +2019,15 @@ msgstr "Vista previa del perfil"
 msgid ""
 "This is how your profile card looks. It updates as you type; nothing is "
 "saved until you press Save settings."
-msgstr "Así se ve la tarjeta de tu perfil. Se actualiza mientras escribes; nada se guarda hasta que pulses «Guardar ajustes»."
+msgstr ""
+"Así se ve la tarjeta de tu perfil. Se actualiza mientras escribes; nada se "
+"guarda hasta que pulses «Guardar ajustes»."
 
-#: templates/accounts/settings.html:36
-msgid "Your account is muted, so pictures cannot be changed right now."
-msgstr "Tu cuenta está silenciada, así que no se pueden cambiar las imágenes ahora."
+#: templates/accounts/settings.html:33
+msgid ""
+"Your account is muted, so your public profile cannot be changed right now. "
+"You can still change the language."
+msgstr "Tu cuenta está silenciada, así que tu perfil público no se puede cambiar ahora. Todavía puedes cambiar el idioma."
 
 #: templates/accounts/settings.html:42
 msgid "Your current cover image"
@@ -2025,7 +2041,9 @@ msgstr "Sobre ti"
 msgid ""
 "Up to 6. Addresses must start with http:// or https://. GitHub, X, LinkedIn "
 "and Telegram links must point to those sites."
-msgstr "Hasta 6. Las direcciones deben empezar por http:// o https://. Los enlaces de GitHub, X, LinkedIn y Telegram deben apuntar a esos sitios."
+msgstr ""
+"Hasta 6. Las direcciones deben empezar por http:// o https://. Los enlaces "
+"de GitHub, X, LinkedIn y Telegram deben apuntar a esos sitios."
 
 #: templates/accounts/settings.html:64
 #, python-format

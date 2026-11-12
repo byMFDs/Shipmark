@@ -45,30 +45,32 @@ def download_github_avatar(user):
     return clean_avatar(ContentFile(result.content))
 
 
-def _drop(file_field):
-    """Delete the stored file after the transaction commits (never before: a rollback must keep it)."""
+def drop(file_field):
+    """Delete the stored file after the transaction commits (never before: a rollback must keep it).
+
+    Only through the field's storage (Django's storage API), so media can move to S3 by settings alone."""
     if file_field:
         storage, name = file_field.storage, file_field.name
         transaction.on_commit(lambda: storage.delete(name))
 
 
 def set_avatar(user, content, source):
-    _drop(user.avatar)
+    drop(user.avatar)
     user.avatar.save("avatar.webp", content, save=False)
     user.avatar_source = source
 
 
 def remove_avatar(user):
-    _drop(user.avatar)
+    drop(user.avatar)
     user.avatar = ""
     user.avatar_source = ""
 
 
 def set_cover(user, content):
-    _drop(user.cover)
+    drop(user.cover)
     user.cover.save("cover.webp", content, save=False)
 
 
 def remove_cover(user):
-    _drop(user.cover)
+    drop(user.cover)
     user.cover = ""

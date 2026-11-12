@@ -8,7 +8,6 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
 
 from config.ratelimit import is_limited
-from moderation.pages import write_blocked_message
 from projects.images import clean_avatar, clean_cover
 from projects.models import Project, Tag
 from projects.tags import parse_tag_names
@@ -128,9 +127,11 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
             "about": _("Markdown works: links, lists, bold and code. Up to 1000 characters. HTML and images are not allowed."),
         }
 
-    def __init__(self, *args, can_upload=True, **kwargs):
+    def __init__(self, *args, can_edit_profile=True, **kwargs):
         super().__init__(*args, **kwargs)
-        self.can_upload = can_upload
+        # A muted person keeps the language setting only: every public profile field is read-only (shown, not
+        # editable) and the server ignores whatever is posted for them (see clean() and save()).
+        self.can_edit_profile = can_edit_profile
         user = self.instance
         self.avatar_content = self.cover_content = None
         self.avatar_source = ""
@@ -163,9 +164,13 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
             self.fields[f"link{i}_url"].widget.attrs.update({
                 "class": "input", "autocapitalize": "none", "spellcheck": "false", "placeholder": "https://",
             })
-        if user.pk and not self.is_bound:
+        if user.pk:
             self.fields["skills_text"].initial = ", ".join(t.name for t in user.skills.all())
             self.fields["pinned"].initial = [pin.project_id for pin in user.pins.all()]
+        if not can_edit_profile:
+            for name, field in self.fields.items():
+                if name != "preferred_language":
+                    field.disabled = True  # rendered as disabled; the posted value is ignored, the saved one is used
 
     @property
     def link_rows(self):
@@ -199,9 +204,7 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
         upload = self.cleaned_data.get(field)
         if not upload:
             return None
-        if not self.can_upload:
-            self.add_error(field, write_blocked_message(self.instance))
-        elif is_limited(limit_name, self.instance.pk, limit=20, window=3600):
+        if is_limited(limit_name, self.instance.pk, limit=20, window=3600):
             self.add_error(field, _("Too many changes in a short time. Try again in a few minutes."))
         else:
             try:
@@ -213,14 +216,15 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
     def clean(self):
         data = super().clean()
         user = self.instance
+        self.links_clean = []
+        if not self.can_edit_profile:
+            return data  # nothing public is read from a muted person's form
         # Pictures: an upload wins over "use my GitHub picture", which wins over "remove".
         self.avatar_content = self._image("avatar_file", clean_avatar, "profile_image")
         if self.avatar_content is not None:
             self.avatar_source = User.AvatarSource.UPLOAD
         elif data.get("use_github_avatar") and "avatar_file" not in self.errors:
-            if not self.can_upload:
-                self.add_error("use_github_avatar", write_blocked_message(user))
-            elif is_limited("avatar_github", user.pk, limit=5, window=3600):
+            if is_limited("avatar_github", user.pk, limit=5, window=3600):
                 self.add_error("use_github_avatar", _("Too many changes in a short time. Try again in a few minutes."))
             else:
                 try:
@@ -230,7 +234,7 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
                     self.add_error("use_github_avatar", error)
         self.cover_content = self._image("cover_file", clean_cover, "profile_image")
         # Links.
-        self.links_clean, seen = [], set()
+        seen = set()
         for i in range(MAX_LINKS):
             url, kind = data.get(f"link{i}_url"), data.get(f"link{i}_kind") or ProfileLink.Kind.WEBSITE
             if not url:
@@ -248,6 +252,10 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         data = self.cleaned_data
+        if not self.can_edit_profile:
+            # Muted: only the language is written, and only that column, whatever else was posted.
+            user.save(update_fields=["preferred_language"])
+            return user
         with transaction.atomic():
             if self.avatar_content is not None:
                 avatars.set_avatar(user, self.avatar_content, self.avatar_source)

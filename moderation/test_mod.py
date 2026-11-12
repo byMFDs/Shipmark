@@ -358,9 +358,11 @@ class MuteTests(ModTestCase):
 
     def test_muted_user_can_read_settings_export_and_delete(self):
         self.assertEqual(self.client.get(reverse("pages:explore")).status_code, 200)
-        response = self.client.post(reverse("accounts:settings"), {"display_name": "Ana B", "about": "",
-                                                                   "preferred_language": ""})
+        response = self.client.post(reverse("accounts:settings"), {"display_name": "Ana B", "headline": "Changed",
+                                                                   "about": "", "preferred_language": "uk"})
         self.assertEqual(response.status_code, 302)
+        ana = User.objects.get(pk=self.ana.pk)  # muted: the language is saved, the public profile is not
+        self.assertEqual((ana.preferred_language, ana.display_name, ana.headline), ("uk", "", "Ana's headline"))
         self.assertEqual(self.client.post(reverse("accounts:export")).status_code, 200)
         self.client.post(reverse("projects:unpublish", args=["ana", self.project.slug]))
         self.project.refresh_from_db()

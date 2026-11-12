@@ -129,3 +129,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-12: Features stage 3 (profiles). New profile fields, links, skills, pinned projects; avatar and cover (upload or one-time GitHub download via `safe_fetch`, cropped, re-encoded, local files, deleted with the account); profile card with tabs Projects / Build log / About; settings as grouped sections with a live preview; export and moderation "clear profile" updated; 7 languages; 750 tests. Not checked in a real browser.
   Next: "GO 4" (feed and news pages).
+
+- 2026-11-12: Stage 3 follow-ups. Muted accounts: the whole public profile (name, headline, About, location, status, skills, links, pinned, pictures) is read-only, only the language is saved; link validator now rejects a backslash and control characters (`https://evil.example\.github.com` passed before); tests for look-alike hosts and schemes, one image pipeline and limits for screenshots/avatars/covers, export without `bio`/`website`. All media deletes go through `storage.delete` (storage API); `media/` is gitignored and untracked.
+  Next: GO 4 (feed and news pages). **Cleanup to do later: remove the deprecated `User.bio` and `User.website` columns** (migration after the stage 6 final check; nothing reads or writes them, `about` and `ProfileLink` replaced them).

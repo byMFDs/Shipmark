@@ -30,10 +30,10 @@
         <form method="post" enctype="multipart/form-data" class="settings-form" novalidate>
           {% csrf_token %}
           {% include "includes/form_errors.html" %}
+          {% if not can_edit_profile %}<p class="notice notice--sanction" role="status">{% translate "Your account is muted, so your public profile cannot be changed right now. You can still change the language." %}</p>{% endif %}
 
           <section class="panel stack" aria-labelledby="pic-title">
             <h2 id="pic-title">{% translate "Picture and cover" %}</h2>
-            {% if not can_upload %}<p class="notice notice--sanction" role="status">{% translate "Your account is muted, so pictures cannot be changed right now." %}</p>{% endif %}
             {% include "includes/form_field.html" with field=form.avatar_file %}
             {% if form.use_github_avatar %}{% include "includes/form_field.html" with field=form.use_github_avatar %}{% endif %}
             {% if user.avatar %}{% include "includes/form_field.html" with field=form.remove_avatar %}{% endif %}

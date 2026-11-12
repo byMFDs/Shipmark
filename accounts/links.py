@@ -36,8 +36,10 @@ def clean_link(kind, url):
     url = (url or "").strip()
     parts = urlsplit(url)
     host = (parts.hostname or "").lower()
+    # A backslash is read as "/" by browsers, so "https://evil.example\\.github.com" would pass a suffix check on the
+    # host but open evil.example. Whitespace and control characters are refused for the same reason.
     if (parts.scheme not in ("http", "https") or "." not in host or parts.username or parts.password
-            or any(ch.isspace() for ch in url)):
+            or "\\" in url or any(ord(ch) <= 32 or ord(ch) == 127 for ch in url)):
         raise ValidationError(_("Enter a public web address that starts with http:// or https://."), code="invalid")
     allowed = HOSTS.get(kind)
     if allowed and not _host_matches(host, allowed):

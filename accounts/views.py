@@ -67,7 +67,7 @@ def settings_page(request):
     if request.method == "POST":
         if user.is_suspended:
             return HttpResponseForbidden(_("Your account is suspended."))
-        form = SettingsForm(request.POST, request.FILES, instance=user, can_upload=can_write(user))
+        form = SettingsForm(request.POST, request.FILES, instance=user, can_edit_profile=can_write(user))
         if is_limited("settings", user.pk, limit=30, window=600):
             form.add_error(None, _("Too many changes in a short time. Try again in a few minutes."))
         elif form.is_valid():
@@ -77,8 +77,8 @@ def settings_page(request):
                 messages.success(request, _("Settings saved."))
             return redirect("accounts:settings")
     else:
-        form = SettingsForm(instance=user, can_upload=can_write(user))
-    return render(request, "accounts/settings.html", {"form": form, "can_upload": can_write(user)})
+        form = SettingsForm(instance=user, can_edit_profile=can_write(user))
+    return render(request, "accounts/settings.html", {"form": form, "can_edit_profile": can_write(user)})
 
 
 @login_required
