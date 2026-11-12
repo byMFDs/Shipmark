@@ -236,7 +236,7 @@ class ExploreSortAndPagesTests(Facts, TestCase):
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class OpenGraphTests(TestCase):
     def setUp(self):
-        self.ann = make_user("ann", bio="I build small tools.")
+        self.ann = make_user("ann", about="I build small tools.")
         self.project = make_project(self.ann)
 
     def og(self, url, prop):

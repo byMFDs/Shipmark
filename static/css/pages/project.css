@@ -487,26 +487,6 @@
 .shots .shot-list { margin-block: var(--s-1); }
 .field__label--sub { margin-top: var(--s-1); }
 
-.input--file { padding: var(--s-2); cursor: pointer; }
-
-.input--file::file-selector-button {
-  min-height: 2.5rem;
-  margin-right: var(--s-3);
-  padding: 0 var(--s-3);
-  background: var(--paper);
-  color: var(--text);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  font: inherit;
-  font-weight: 500;
-  cursor: pointer;
-  transition: border-color var(--t-fast);
-}
-
-@media (hover: hover) {
-  .input--file:hover::file-selector-button { border-color: var(--text); }
-}
-
 .shots__chosen[hidden] { display: none; }
 
 @media (min-width: 48em) {

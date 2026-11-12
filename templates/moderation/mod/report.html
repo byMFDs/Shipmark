@@ -33,9 +33,10 @@
             {% elif kind == "profile" and owner %}
               <p class="plate-row__name">{{ owner.display_name|default:owner.username }} <span class="muted">@{{ owner.username }}</span></p>
               <dl class="mod-facts">
-                <div><dt>{% translate "Bio" %}</dt><dd>{{ owner.bio|default:"—" }}</dd></div>
-                <div><dt>{% translate "Links" %}</dt><dd>{{ owner.website|default:"—" }}</dd></div>
-                <div><dt>{% translate "Avatar" %}</dt><dd>{% if owner.avatar_url %}{% translate "set" %}{% else %}—{% endif %}</dd></div>
+                <div><dt>{% translate "Headline" %}</dt><dd>{{ owner.headline|default:"—" }}</dd></div>
+                <div><dt>{% translate "About" context "profile" %}</dt><dd>{{ owner.about|default:"—"|truncatechars:400 }}</dd></div>
+                <div><dt>{% translate "Links" %}</dt><dd>{% for link in owner.links.all %}{{ link.url }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</dd></div>
+                <div><dt>{% translate "Picture and cover" %}</dt><dd>{% if owner.avatar %}<img class="avatar avatar--48" src="{{ owner.avatar.url }}" width="48" height="48" alt="">{% endif %}{% if owner.cover %} <img src="{{ owner.cover.url }}" width="150" height="50" alt="">{% endif %}{% if not owner.avatar and not owner.cover %}—{% endif %}</dd></div>
               </dl>
               <p><a href="{% url 'accounts:profile' owner.username %}">{% translate "Open the profile" %}</a></p>
             {% elif kind == "entry" and entry %}

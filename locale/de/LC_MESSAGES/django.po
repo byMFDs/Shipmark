@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 14:47+0000\n"
+"POT-Creation-Date: 2026-11-12 15:12+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:39 accounts/models.py:64
+#: accounts/admin.py:39 accounts/models.py:98
 msgid "badge"
 msgstr "Abzeichen"
 
@@ -22,14 +22,17 @@ msgstr "Abzeichen"
 msgid "Badges (only superusers can change these)"
 msgstr "Abzeichen (nur Superuser können sie ändern)"
 
-#: accounts/admin.py:100 moderation/admin.py:34
-#: templates/accounts/settings.html:17 templates/moderation/mod/act.html:11
-#: templates/moderation/mod/queue.html:32
+#: accounts/admin.py:107 moderation/admin.py:34
+#: templates/moderation/mod/act.html:11 templates/moderation/mod/queue.html:32
 #: templates/moderation/mod/queue.html:49
 msgid "Profile"
 msgstr "Profil"
 
-#: accounts/admin.py:101 config/settings/base.py:317
+#: accounts/admin.py:108
+msgid "Pictures"
+msgstr "Bilder"
+
+#: accounts/admin.py:109 config/settings/base.py:317
 #: templates/includes/site_nav.html:20 templates/includes/site_nav.html:33
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
@@ -37,99 +40,295 @@ msgstr "Profil"
 msgid "Moderation"
 msgstr "Moderation"
 
-#: accounts/admin.py:102
+#: accounts/admin.py:110
 msgid "Permissions"
 msgstr "Berechtigungen"
 
-#: accounts/admin.py:103
+#: accounts/admin.py:111
 msgid "Terms and dates"
 msgstr "Nutzungsbedingungen und Daten"
 
-#: accounts/admin.py:120 moderation/dashboard.py:47
+#: accounts/admin.py:128 moderation/dashboard.py:47
 msgid "Published projects"
 msgstr "Veröffentlichte Projekte"
 
-#: accounts/admin.py:149
+#: accounts/admin.py:157
 msgid "Suspend selected users"
 msgstr "Ausgewählte Nutzer sperren"
 
-#: accounts/admin.py:154
+#: accounts/admin.py:162
 #, python-format
 msgid "Skipped %(name)s: staff cannot suspend themselves or a superuser."
 msgstr ""
 "%(name)s übersprungen: Team-Mitglieder können sich selbst oder einen "
 "Superuser nicht sperren."
 
-#: accounts/admin.py:157
+#: accounts/admin.py:165
 #, python-format
 msgid "Suspended %(count)s user(s). Their projects are hidden everywhere."
 msgstr "%(count)s Nutzer gesperrt. Ihre Projekte sind überall verborgen."
 
-#: accounts/admin.py:159
+#: accounts/admin.py:167
 msgid "Unsuspend selected users"
 msgstr "Ausgewählte Nutzer entsperren"
 
-#: accounts/admin.py:162
+#: accounts/admin.py:170
 #, python-format
 msgid "Unsuspended %(count)s user(s)."
 msgstr "%(count)s Nutzer entsperrt."
 
-#: accounts/forms.py:42
+#: accounts/avatars.py:37
+msgid "No GitHub picture is available for this account."
+msgstr "Für dieses Konto ist kein GitHub-Bild verfügbar."
+
+#: accounts/avatars.py:42 accounts/avatars.py:44
+msgid "Could not download your GitHub picture right now. Try again later."
+msgstr "Dein GitHub-Bild konnte gerade nicht heruntergeladen werden. Versuch es später noch einmal."
+
+#: accounts/forms.py:56
 msgid "You need to accept the Terms to create an account."
 msgstr ""
 "Du musst die Nutzungsbedingungen akzeptieren, um ein Konto zu erstellen."
 
-#: accounts/forms.py:49
+#: accounts/forms.py:63
 msgid ""
 "Your profile will be at /u/username/. Lowercase letters, digits, - and _."
 msgstr ""
 "Dein Profil ist unter /u/benutzername/ erreichbar. Kleinbuchstaben, Ziffern, "
 "- und _."
 
-#: accounts/forms.py:72
+#: accounts/forms.py:89
+msgid "Upload a picture"
+msgstr "Bild hochladen"
+
+#: accounts/forms.py:91
+msgid "PNG, JPEG or WebP, up to 5 MB. It is cropped to a square."
+msgstr "PNG, JPEG oder WebP, bis 5 MB. Wird quadratisch zugeschnitten."
+
+#: accounts/forms.py:93
+msgid "Use my GitHub picture instead"
+msgstr "Stattdessen mein GitHub-Bild verwenden"
+
+#: accounts/forms.py:94
+msgid "Remove my picture (show initials)"
+msgstr "Mein Bild entfernen (Initialen anzeigen)"
+
+#: accounts/forms.py:96
+msgid "Cover image"
+msgstr "Titelbild"
+
+#: accounts/forms.py:98
+msgid ""
+"Optional. PNG, JPEG or WebP, up to 5 MB. It is cropped to a wide banner "
+"(3:1)."
+msgstr "Optional. PNG, JPEG oder WebP, bis 5 MB. Wird zu einem breiten Banner (3:1) zugeschnitten."
+
+#: accounts/forms.py:100
+msgid "Remove the cover image"
+msgstr "Titelbild entfernen"
+
+#: accounts/forms.py:102 templates/accounts/profile.html:150
+msgid "Skills"
+msgstr "Fähigkeiten"
+
+#: accounts/forms.py:103
+msgid "Up to 10, separated by commas. For example: python, django, design."
+msgstr "Bis zu 10, durch Kommas getrennt. Zum Beispiel: python, django, design."
+
+#: accounts/forms.py:107
+msgid "Pinned projects"
+msgstr "Angeheftete Projekte"
+
+#: accounts/forms.py:108
+msgid "Up to 3 of your published projects, shown first on your profile."
+msgstr "Bis zu 3 deiner veröffentlichten Projekte, die zuerst in deinem Profil stehen."
+
+#: accounts/forms.py:112
 msgid "Automatic (browser language)"
 msgstr "Automatisch (Browsersprache)"
 
-#: accounts/forms.py:79 moderation/forms.py:59
-#: templates/moderation/mod/report.html:36
-msgid "Bio"
-msgstr "Bio"
+#: accounts/forms.py:120 templates/moderation/mod/report.html:36
+msgid "Headline"
+msgstr "Kurzbeschreibung"
 
-#: accounts/forms.py:84
-msgid "Enter a link that starts with http:// or https://."
-msgstr "Gib einen Link ein, der mit http:// oder https:// beginnt."
+#: accounts/forms.py:120
+msgid "Location"
+msgstr "Ort"
 
-#: accounts/forms.py:98
+#: accounts/forms.py:120
+msgid "Status"
+msgstr "Status"
+
+#: accounts/forms.py:121 templates/accounts/profile.html:69
+#: templates/accounts/profile.html:139 templates/moderation/mod/report.html:37
+msgctxt "profile"
+msgid "About"
+msgstr "Über mich"
+
+#: accounts/forms.py:124
+msgid "Shown instead of your username. Optional."
+msgstr "Wird statt deines Benutzernamens angezeigt. Optional."
+
+#: accounts/forms.py:125
+msgid ""
+"One line under your name, up to 80 characters. For example: Building small "
+"tools with AI."
+msgstr "Eine Zeile unter deinem Namen, bis 80 Zeichen. Zum Beispiel: Ich baue kleine Tools mit KI."
+
+#: accounts/forms.py:126
+msgid "City or country. Optional."
+msgstr "Stadt oder Land. Optional."
+
+#: accounts/forms.py:127
+msgid "A small label on your profile. Optional."
+msgstr "Eine kleine Markierung in deinem Profil. Optional."
+
+#: accounts/forms.py:128
+msgid ""
+"Markdown works: links, lists, bold and code. Up to 1000 characters. HTML and "
+"images are not allowed."
+msgstr "Markdown funktioniert: Links, Listen, Fett und Code. Bis 1000 Zeichen. HTML und Bilder sind nicht erlaubt."
+
+#: accounts/forms.py:137
+msgid "No status"
+msgstr "Kein Status"
+
+#: accounts/forms.py:155 templates/accounts/settings.html:61
+msgid "Kind"
+msgstr "Art"
+
+#: accounts/forms.py:159 templates/accounts/settings.html:61
+msgid "Address"
+msgstr "Adresse"
+
+#: accounts/forms.py:189
+msgid "Use at most 10 skills."
+msgstr "Gib höchstens 10 Fähigkeiten an."
+
+#: accounts/forms.py:194
+msgid "Pin at most 3 projects."
+msgstr "Hefte höchstens 3 Projekte an."
+
+#: accounts/forms.py:205 accounts/forms.py:224 accounts/views.py:72
+#: projects/views.py:38 social/views.py:70
+msgid "Too many changes in a short time. Try again in a few minutes."
+msgstr ""
+"Zu viele Änderungen in kurzer Zeit. Versuche es in ein paar Minuten erneut."
+
+#: accounts/forms.py:278
 msgid "Accept the updated Terms to keep using your account."
 msgstr ""
 "Akzeptiere die aktualisierten Nutzungsbedingungen, um dein Konto weiter zu "
 "nutzen."
 
-#: accounts/forms.py:110
+#: accounts/forms.py:290
 msgid "Type your username to confirm"
 msgstr "Gib zur Bestätigung deinen Benutzernamen ein"
 
-#: accounts/forms.py:121
+#: accounts/forms.py:301
 msgid "This is not your username. Type it exactly as shown."
 msgstr ""
 "Das ist nicht dein Benutzername. Gib ihn genau so ein, wie er angezeigt wird."
 
-#: accounts/models.py:16
+#: accounts/links.py:41
+msgid "Enter a public web address that starts with http:// or https://."
+msgstr "Gib eine öffentliche Webadresse ein, die mit http:// oder https:// beginnt."
+
+#: accounts/links.py:45
+#, python-format
+msgid ""
+"This does not look like a %(kind)s address. Use the kind “Other” for any "
+"other site."
+msgstr "Das sieht nicht wie eine %(kind)s-Adresse aus. Für jede andere Seite wähle die Art „Sonstige“."
+
+#: accounts/links.py:49
+msgid "The address is too long (200 characters at most)."
+msgstr "Die Adresse ist zu lang (höchstens 200 Zeichen)."
+
+#: accounts/models.py:24
+msgid "Open to work"
+msgstr "Offen für Jobs"
+
+#: accounts/models.py:25
+msgid "Open to collaborate"
+msgstr "Offen für Zusammenarbeit"
+
+#: accounts/models.py:26
+msgid "Hiring"
+msgstr "Stellt ein"
+
+#: accounts/models.py:27
+msgid "Building in public"
+msgstr "Baut öffentlich"
+
+#: accounts/models.py:30
+msgid "Initials"
+msgstr "Initialen"
+
+#: accounts/models.py:31
+msgid "Uploaded"
+msgstr "Hochgeladen"
+
+#: accounts/models.py:32
+msgid "From GitHub"
+msgstr "Von GitHub"
+
+#: accounts/models.py:39
 msgid "This username is already taken."
 msgstr "Dieser Benutzername ist bereits vergeben."
 
-#: accounts/models.py:50
+#: accounts/models.py:84
 msgid "Official"
 msgstr "Offiziell"
 
-#: accounts/models.py:51 moderation/models.py:64
+#: accounts/models.py:85 moderation/models.py:64
 #: templates/includes/user_marks.html:1
 msgid "Moderator"
 msgstr "Moderator"
 
-#: accounts/models.py:65
+#: accounts/models.py:99
 msgid "badges"
 msgstr "Abzeichen"
+
+#: accounts/models.py:110
+msgid "Website"
+msgstr "Website"
+
+#: accounts/models.py:111
+msgid "GitHub"
+msgstr "GitHub"
+
+#: accounts/models.py:112
+msgid "X"
+msgstr "X"
+
+#: accounts/models.py:113
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: accounts/models.py:114
+msgid "Telegram"
+msgstr "Telegram"
+
+#: accounts/models.py:115
+msgid "Other"
+msgstr "Sonstige"
+
+#: accounts/models.py:124
+msgid "profile link"
+msgstr "Profil-Link"
+
+#: accounts/models.py:125
+msgid "profile links"
+msgstr "Profil-Links"
+
+#: accounts/models.py:141
+msgid "pinned project"
+msgstr "angeheftetes Projekt"
+
+#: accounts/models.py:142
+msgid "pinned projects"
+msgstr "angeheftete Projekte"
 
 #: accounts/usernames.py:35
 #, python-format
@@ -153,36 +352,31 @@ msgstr "Dieser Benutzername ist reserviert. Bitte wähle einen anderen."
 msgid "This name is reserved for official %(site)s accounts."
 msgstr "Dieser Name ist offiziellen %(site)s-Konten vorbehalten."
 
-#: accounts/views.py:52
+#: accounts/views.py:57
 msgid "You are signed out."
 msgstr "Du bist abgemeldet."
 
-#: accounts/views.py:64 moderation/pages.py:26
+#: accounts/views.py:69 moderation/pages.py:26
 msgid "Your account is suspended."
 msgstr "Dein Konto ist gesperrt."
 
-#: accounts/views.py:67 projects/views.py:38 social/views.py:70
-msgid "Too many changes in a short time. Try again in a few minutes."
-msgstr ""
-"Zu viele Änderungen in kurzer Zeit. Versuche es in ein paar Minuten erneut."
-
-#: accounts/views.py:72
+#: accounts/views.py:77
 msgid "Settings saved."
 msgstr "Einstellungen gespeichert."
 
-#: accounts/views.py:90
+#: accounts/views.py:95
 msgid "Thank you. You accepted the updated Terms."
 msgstr "Danke. Du hast die aktualisierten Nutzungsbedingungen akzeptiert."
 
-#: accounts/views.py:101
+#: accounts/views.py:106
 msgid "Too many downloads in a short time. Try again later."
 msgstr "Zu viele Downloads in kurzer Zeit. Versuche es später erneut."
 
-#: accounts/views.py:124
+#: accounts/views.py:129
 msgid "Too many attempts. Try again later."
 msgstr "Zu viele Versuche. Versuche es später erneut."
 
-#: accounts/views.py:128
+#: accounts/views.py:133
 msgid "Your account and everything in it were deleted."
 msgstr "Dein Konto und alles darin wurden gelöscht."
 
@@ -204,12 +398,13 @@ msgid "Badges"
 msgstr "Abzeichen"
 
 #: config/settings/base.py:297 config/settings/base.py:299
-#: templates/accounts/profile.html:37 templates/accounts/profile.html:43
-#: templates/pages/landing.html:50
+#: templates/accounts/profile.html:53 templates/accounts/profile.html:67
+#: templates/accounts/profile.html:75 templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Projekte"
 
-#: config/settings/base.py:300 templates/pages/landing.html:264
+#: config/settings/base.py:300 templates/accounts/profile.html:68
+#: templates/accounts/profile.html:115 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Build-Log"
@@ -362,27 +557,27 @@ msgstr "Registrierungen der letzten 7 Tage"
 msgid "Open reports"
 msgstr "Offene Meldungen"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:150
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:186
 msgid "Repo owner"
 msgstr "Repo owner"
 
-#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:151
+#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:187
 msgid "Live"
 msgstr "Live"
 
-#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:152
+#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:188
 msgid "Steady"
 msgstr "Steady"
 
-#: moderation/decisions.py:124
-msgid "avatar"
-msgstr "Avatar"
+#: moderation/decisions.py:131
+msgid "picture and cover"
+msgstr "Bild und Titelbild"
 
-#: moderation/decisions.py:124
-msgid "bio"
-msgstr "Bio"
+#: moderation/decisions.py:131
+msgid "headline and About"
+msgstr "Kurzbeschreibung und „Über mich“"
 
-#: moderation/decisions.py:124
+#: moderation/decisions.py:131
 msgid "links"
 msgstr "Links"
 
@@ -465,11 +660,17 @@ msgstr "Meldegrund"
 msgid "Fields to clear"
 msgstr "Zu leerende Felder"
 
-#: moderation/forms.py:59 templates/moderation/mod/report.html:38
-msgid "Avatar"
-msgstr "Avatar"
+#: moderation/forms.py:59 templates/accounts/settings.html:35
+#: templates/moderation/mod/report.html:39
+msgid "Picture and cover"
+msgstr "Bild und Titelbild"
 
-#: moderation/forms.py:59 templates/moderation/mod/report.html:37
+#: moderation/forms.py:59
+msgid "Headline and About"
+msgstr "Kurzbeschreibung und „Über mich“"
+
+#: moderation/forms.py:59 templates/accounts/settings.html:58
+#: templates/moderation/mod/report.html:38
 msgid "Links"
 msgstr "Links"
 
@@ -827,33 +1028,33 @@ msgstr "gerade eben"
 msgid "%(time)s ago"
 msgstr "vor %(time)s"
 
-#: pages/templatetags/ui.py:298 templates/social/feed.html:4
+#: pages/templatetags/ui.py:334 templates/social/feed.html:4
 #: templates/social/feed.html:5 templates/social/feed.html:12
 msgid "Feed"
 msgstr "Feed"
 
-#: pages/templatetags/ui.py:298 templates/pages/explore.html:4
+#: pages/templatetags/ui.py:334 templates/pages/explore.html:4
 #: templates/pages/explore.html:5 templates/pages/explore.html:16
 msgid "Explore"
 msgstr "Entdecken"
 
-#: pages/templatetags/ui.py:300
+#: pages/templatetags/ui.py:336
 msgid "About"
 msgstr "Über uns"
 
-#: pages/templatetags/ui.py:301 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:337 templates/pages/landing.html:279
 msgid "How proof works"
 msgstr "So funktioniert der Nachweis"
 
-#: pages/templatetags/ui.py:302
+#: pages/templatetags/ui.py:338
 msgid "Privacy"
 msgstr "Datenschutz"
 
-#: pages/templatetags/ui.py:303
+#: pages/templatetags/ui.py:339
 msgid "Terms"
 msgstr "Nutzungsbedingungen"
 
-#: pages/templatetags/ui.py:304
+#: pages/templatetags/ui.py:340
 msgid "Cookies"
 msgstr "Cookies"
 
@@ -1003,36 +1204,30 @@ msgstr ""
 "Deine Bilder wurden wegen der Probleme oben nicht gespeichert. Wähle sie "
 "noch einmal aus und speichere dann."
 
-#: projects/forms.py:150
-msgid "Tags use letters, digits, spaces and + # . - (up to 30 characters)."
-msgstr ""
-"Tags bestehen aus Buchstaben, Ziffern, Leerzeichen und + # . - (bis zu 30 "
-"Zeichen)."
-
-#: projects/forms.py:153
+#: projects/forms.py:144
 msgid "Use at most 5 tags."
 msgstr "Verwende höchstens 5 Tags."
 
-#: projects/forms.py:190
+#: projects/forms.py:180
 msgid "What changed?"
 msgstr "Was hat sich geändert?"
 
-#: projects/forms.py:191
+#: projects/forms.py:181
 msgid ""
 "Up to 500 characters. **Bold**, *italic*, [links](https://…) and `code` work."
 msgstr ""
 "Bis zu 500 Zeichen. **Fett**, *kursiv*, [Links](https://…) und `Code` "
 "funktionieren."
 
-#: projects/forms.py:193
+#: projects/forms.py:183
 msgid "Write a few words about the update first."
 msgstr "Schreib zuerst ein paar Worte zum Update."
 
-#: projects/forms.py:196
+#: projects/forms.py:186
 msgid "This is the launch"
 msgstr "Das ist der Launch"
 
-#: projects/forms.py:197
+#: projects/forms.py:187
 msgid ""
 "Marks this entry as Launched and sets the project's launch date to today. "
 "Only one per project."
@@ -1040,26 +1235,26 @@ msgstr ""
 "Markiert diesen Eintrag als Launch und setzt das Launch-Datum des Projekts "
 "auf heute. Nur einer pro Projekt."
 
-#: projects/forms.py:207 projects/forms.py:220
+#: projects/forms.py:197 projects/forms.py:210
 msgid ""
 "This project already has a launch entry. Delete it first to mark another one."
 msgstr ""
 "Dieses Projekt hat bereits einen Launch-Eintrag. Lösche ihn zuerst, um einen "
 "anderen zu markieren."
 
-#: projects/images.py:22
+#: projects/images.py:26
 msgid "The image is larger than 5 MB."
 msgstr "Das Bild ist größer als 5 MB."
 
-#: projects/images.py:29
+#: projects/images.py:33
 msgid "Use a PNG, JPEG or WebP image."
 msgstr "Verwende ein PNG-, JPEG- oder WebP-Bild."
 
-#: projects/images.py:32
+#: projects/images.py:36
 msgid "The image has too many pixels."
 msgstr "Das Bild hat zu viele Pixel."
 
-#: projects/images.py:41
+#: projects/images.py:48
 msgid "This file is not a valid image."
 msgstr "Diese Datei ist kein gültiges Bild."
 
@@ -1075,7 +1270,8 @@ msgstr "Entfernt"
 msgid "Update"
 msgstr "Update"
 
-#: projects/models.py:149 templates/projects/_log_entry.html:4
+#: projects/models.py:149 templates/accounts/profile.html:121
+#: templates/projects/_log_entry.html:4
 msgid "Launched"
 msgstr "Gelauncht"
 
@@ -1304,6 +1500,12 @@ msgid ""
 msgstr ""
 "%(ok)s von %(total)s Prüfungen der letzten 30 Tage bekamen eine Antwort von "
 "%(domain)s."
+
+#: projects/tags.py:19
+msgid "Tags use letters, digits, spaces and + # . - (up to 30 characters)."
+msgstr ""
+"Tags bestehen aus Buchstaben, Ziffern, Leerzeichen und + # . - (bis zu 30 "
+"Zeichen)."
 
 #: projects/views.py:68
 msgid "Moderators removed this project. It cannot be changed."
@@ -1568,19 +1770,19 @@ msgstr ""
 
 #: templates/accounts/accept_terms.html:26
 #: templates/accounts/delete_account.html:38
-#: templates/accounts/settings.html:50
+#: templates/accounts/settings.html:115
 msgid "Download my data"
 msgstr "Meine Daten herunterladen"
 
 #: templates/accounts/accept_terms.html:27
 #: templates/accounts/delete_account.html:4
 #: templates/accounts/delete_account.html:11
-#: templates/accounts/settings.html:55 templates/accounts/settings.html:57
+#: templates/accounts/settings.html:120 templates/accounts/settings.html:122
 msgid "Delete account"
 msgstr "Konto löschen"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
-#: templates/accounts/logout.html:14 templates/accounts/settings.html:42
+#: templates/accounts/logout.html:14 templates/accounts/settings.html:107
 #: templates/includes/site_nav.html:22 templates/includes/site_nav.html:35
 msgid "Sign out"
 msgstr "Abmelden"
@@ -1705,38 +1907,46 @@ msgstr "Du bist als %(name)s angemeldet."
 msgid "Stay signed in"
 msgstr "Angemeldet bleiben"
 
-#: templates/accounts/profile.html:8 templates/accounts/profile.html:10
+#: templates/accounts/profile.html:8 templates/accounts/profile.html:13
 msgid "Projects shipped and verified on"
 msgstr "Projekte, die veröffentlicht und verifiziert wurden auf"
 
-#: templates/accounts/profile.html:26 templates/moderation/mod/_history.html:6
+#: templates/accounts/profile.html:33 templates/moderation/mod/_history.html:6
 #, python-format
 msgid "Joined %(date)s"
 msgstr "Beigetreten am %(date)s"
 
-#: templates/accounts/profile.html:29
+#: templates/accounts/profile.html:44 templates/accounts/profile.html:146
 msgid "Edit profile"
 msgstr "Profil bearbeiten"
 
-#: templates/accounts/profile.html:31 templates/moderation/mod/report.html:3
+#: templates/accounts/profile.html:46 templates/moderation/mod/report.html:3
 #: templates/moderation/mod/report.html:17 templates/projects/_log_entry.html:9
 #: templates/projects/detail.html:67
 msgid "Report"
 msgstr "Melden"
 
-#: templates/accounts/profile.html:38
+#: templates/accounts/profile.html:54
 msgid "Hallmarks"
 msgstr "Prüfzeichen"
 
-#: templates/accounts/profile.html:39
+#: templates/accounts/profile.html:55
 msgid "Followers"
 msgstr "Follower"
 
-#: templates/accounts/profile.html:61 templates/accounts/profile.html:66
+#: templates/accounts/profile.html:60
+msgid "Pinned"
+msgstr "Angeheftet"
+
+#: templates/accounts/profile.html:65
+msgid "Profile sections"
+msgstr "Profilbereiche"
+
+#: templates/accounts/profile.html:81
 msgid "No projects yet"
 msgstr "Noch keine Projekte"
 
-#: templates/accounts/profile.html:62
+#: templates/accounts/profile.html:83
 msgid ""
 "Add something you shipped. It gets its first hallmark when you link the "
 "repository."
@@ -1744,78 +1954,155 @@ msgstr ""
 "Füge etwas hinzu, das du veröffentlicht hast. Das erste Prüfzeichen bekommt "
 "es, sobald du das Repository verknüpfst."
 
-#: templates/accounts/profile.html:64
+#: templates/accounts/profile.html:85
 msgid "Add your first project"
 msgstr "Erstes Projekt hinzufügen"
 
-#: templates/accounts/profile.html:67
+#: templates/accounts/profile.html:87
 #, python-format
 msgid "%(name)s has not published a project yet."
 msgstr "%(name)s hat noch kein Projekt veröffentlicht."
 
-#: templates/accounts/profile.html:75
+#: templates/accounts/profile.html:95
 msgid "Your drafts"
 msgstr "Deine Entwürfe"
 
-#: templates/accounts/profile.html:76
+#: templates/accounts/profile.html:96
 msgid "Only you see these."
 msgstr "Nur du siehst sie."
 
-#: templates/accounts/profile.html:85 templates/projects/detail.html:34
+#: templates/accounts/profile.html:105 templates/projects/detail.html:34
 #: templates/projects/form.html:4 templates/projects/form.html:12
 msgid "Edit project"
 msgstr "Projekt bearbeiten"
 
-#: templates/accounts/settings.html:4 templates/accounts/settings.html:11
+#: templates/accounts/profile.html:131
+msgid "No updates yet"
+msgstr "Noch keine Updates"
+
+#: templates/accounts/profile.html:132
+msgid "Write short updates on a project page. They collect here, newest first."
+msgstr "Schreib kurze Updates auf einer Projektseite. Sie sammeln sich hier, die neuesten zuerst."
+
+#: templates/accounts/profile.html:132
+#, python-format
+msgid "%(name)s has not posted a build-log update yet."
+msgstr "%(name)s hat noch kein Build-Log-Update veröffentlicht."
+
+#: templates/accounts/profile.html:144 templates/social/feed.html:33
+msgid "Nothing here yet"
+msgstr "Noch nichts hier"
+
+#: templates/accounts/profile.html:145
+msgid "Tell people what you build and what you are looking for."
+msgstr "Erzähl, was du baust und wonach du suchst."
+
+#: templates/accounts/profile.html:145
+#, python-format
+msgid "%(name)s has not written anything here yet."
+msgstr "%(name)s hat hier noch nichts geschrieben."
+
+#: templates/accounts/profile.html:154 templates/projects/detail.html:159
+#: templates/projects/form.html:52
+msgid "Built with (self-declared)"
+msgstr "Gebaut mit (selbst angegeben)"
+
+#: templates/accounts/settings.html:4 templates/accounts/settings.html:12
 #: templates/includes/site_nav.html:21 templates/includes/site_nav.html:34
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: templates/accounts/settings.html:23
+#: templates/accounts/settings.html:14
+msgid "Profile preview"
+msgstr "Profilvorschau"
+
+#: templates/accounts/settings.html:24
+msgid ""
+"This is how your profile card looks. It updates as you type; nothing is "
+"saved until you press Save settings."
+msgstr "So sieht deine Profilkarte aus. Sie aktualisiert sich beim Tippen; nichts wird gespeichert, bis du „Einstellungen speichern“ drückst."
+
+#: templates/accounts/settings.html:36
+msgid "Your account is muted, so pictures cannot be changed right now."
+msgstr "Dein Konto ist stummgeschaltet, deshalb können Bilder gerade nicht geändert werden."
+
+#: templates/accounts/settings.html:42
+msgid "Your current cover image"
+msgstr "Dein aktuelles Titelbild"
+
+#: templates/accounts/settings.html:48
+msgid "About you"
+msgstr "Über dich"
+
+#: templates/accounts/settings.html:59
+msgid ""
+"Up to 6. Addresses must start with http:// or https://. GitHub, X, LinkedIn "
+"and Telegram links must point to those sites."
+msgstr "Bis zu 6. Adressen müssen mit http:// oder https:// beginnen. Links für GitHub, X, LinkedIn und Telegram müssen auf diese Seiten zeigen."
+
+#: templates/accounts/settings.html:64
+#, python-format
+msgid "Link %(n)s: kind"
+msgstr "Link %(n)s: Art"
+
+#: templates/accounts/settings.html:65
+#, python-format
+msgid "Link %(n)s: address"
+msgstr "Link %(n)s: Adresse"
+
+#: templates/accounts/settings.html:79
+msgid "Publish a project first, then you can pin it here."
+msgstr "Veröffentliche zuerst ein Projekt, dann kannst du es hier anheften."
+
+#: templates/accounts/settings.html:84 templates/includes/site_footer.html:27
+msgid "Language"
+msgstr "Sprache"
+
+#: templates/accounts/settings.html:88
 msgid "Save settings"
 msgstr "Einstellungen speichern"
 
-#: templates/accounts/settings.html:27 templates/accounts/settings.html:29
+#: templates/accounts/settings.html:92 templates/accounts/settings.html:94
 #: templates/includes/site_footer.html:42
 #: templates/includes/site_footer.html:43
 msgid "Theme"
 msgstr "Design"
 
-#: templates/accounts/settings.html:28
+#: templates/accounts/settings.html:93
 msgid "Saved in this browser only."
 msgstr "Nur in diesem Browser gespeichert."
 
-#: templates/accounts/settings.html:30 templates/includes/site_footer.html:44
+#: templates/accounts/settings.html:95 templates/includes/site_footer.html:44
 msgid "System"
 msgstr "System"
 
-#: templates/accounts/settings.html:31 templates/includes/site_footer.html:45
+#: templates/accounts/settings.html:96 templates/includes/site_footer.html:45
 msgid "Light"
 msgstr "Hell"
 
-#: templates/accounts/settings.html:32 templates/includes/site_footer.html:46
+#: templates/accounts/settings.html:97 templates/includes/site_footer.html:46
 msgid "Dark"
 msgstr "Dunkel"
 
-#: templates/accounts/settings.html:37
+#: templates/accounts/settings.html:102
 msgid "Account"
 msgstr "Konto"
 
-#: templates/accounts/settings.html:39
+#: templates/accounts/settings.html:104
 msgid "Username"
 msgstr "Benutzername"
 
-#: templates/accounts/settings.html:46
+#: templates/accounts/settings.html:111
 msgid "Your data"
 msgstr "Deine Daten"
 
-#: templates/accounts/settings.html:47
+#: templates/accounts/settings.html:112
 msgid "A JSON file with your profile, projects, build log, likes and follows."
 msgstr ""
 "Eine JSON-Datei mit deinem Profil, deinen Projekten, dem Build-Log, Likes "
 "und Follows."
 
-#: templates/accounts/settings.html:56
+#: templates/accounts/settings.html:121
 msgid "Removes your profile and all your projects. This cannot be undone."
 msgstr ""
 "Entfernt dein Profil und alle deine Projekte. Das lässt sich nicht "
@@ -1946,10 +2233,6 @@ msgstr "Startseite von %(name)s"
 #: templates/includes/site_footer.html:13
 msgid "Footer"
 msgstr "Fußbereich"
-
-#: templates/includes/site_footer.html:27
-msgid "Language"
-msgstr "Sprache"
 
 #: templates/includes/site_footer.html:37
 msgid "Change"
@@ -2188,15 +2471,11 @@ msgstr "Gemeldet"
 msgid "Open the project page"
 msgstr "Projektseite öffnen"
 
-#: templates/moderation/mod/report.html:38
-msgid "set"
-msgstr "gesetzt"
-
-#: templates/moderation/mod/report.html:40
+#: templates/moderation/mod/report.html:41
 msgid "Open the profile"
 msgstr "Profil öffnen"
 
-#: templates/moderation/mod/report.html:45
+#: templates/moderation/mod/report.html:46
 msgid "The reported item was deleted."
 msgstr "Das Gemeldete wurde gelöscht."
 
@@ -3140,10 +3419,6 @@ msgstr ""
 "Wir prüfen Eigentum, Kontrolle über die Domain und Erreichbarkeit. Wer den "
 "Code geschrieben hat, können wir nicht prüfen."
 
-#: templates/projects/detail.html:159 templates/projects/form.html:52
-msgid "Built with (self-declared)"
-msgstr "Gebaut mit (selbst angegeben)"
-
 #: templates/projects/form.html:15
 msgid "Hidden by moderators"
 msgstr "Von der Moderation verborgen"
@@ -3328,10 +3603,6 @@ msgstr "Feed-Bereiche"
 #: templates/social/feed.html:20 templates/social/feed.html:24
 msgid "Latest launches"
 msgstr "Neueste Launches"
-
-#: templates/social/feed.html:33
-msgid "Nothing here yet"
-msgstr "Noch nichts hier"
 
 #: templates/social/feed.html:34
 msgid ""

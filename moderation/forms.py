@@ -56,7 +56,7 @@ class ActionForm(StyledFormMixin, forms.Form):
     category = forms.ChoiceField(label=_("Report reason"), choices=Report.Reason.choices, required=False)
     fields = forms.MultipleChoiceField(
         label=_("Fields to clear"), required=False, widget=forms.CheckboxSelectMultiple,
-        choices=[("avatar", _("Avatar")), ("bio", _("Bio")), ("links", _("Links"))],
+        choices=[("avatar", _("Picture and cover")), ("bio", _("Headline and About")), ("links", _("Links"))],
     )
     length = forms.IntegerField(label=_("Length"), min_value=1, max_value=100000, required=False)
     unit = forms.ChoiceField(label=_("Unit"), choices=[("hours", _("hours")), ("days", _("days"))],

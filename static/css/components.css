@@ -881,6 +881,44 @@ a.chip::after {
   border-color: var(--text);
 }
 
+/* File input: the browser's button styled like our secondary button. */
+.input--file { padding: var(--s-2); cursor: pointer; }
+
+.input--file::file-selector-button {
+  min-height: 2.5rem;
+  margin-right: var(--s-3);
+  padding: 0 var(--s-3);
+  background: var(--paper);
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--t-fast);
+}
+
+@media (hover: hover) {
+  .input--file:hover::file-selector-button { border-color: var(--text); }
+}
+
+/* A small flat label, not proof green and not the action colour: it is a statement by the person. */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 1.75rem;
+  padding: 0 0.6em;
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.status-chip::before { content: ""; width: 6px; height: 6px; background: currentColor; }
+
 /* ---------- Avatar (people are round) ---------- */
 
 .avatar {
@@ -898,6 +936,7 @@ a.chip::after {
 .avatar--32 { --size: 2rem; }
 .avatar--48 { --size: 3rem; }
 .avatar--96 { --size: 6rem; }
+.avatar--128 { --size: 8rem; }
 
 .avatar--initials {
   display: inline-grid;

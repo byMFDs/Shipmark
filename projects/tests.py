@@ -473,12 +473,12 @@ class ProfileListTests(ProjectTestCase):
     def test_profile_does_not_run_a_query_per_project(self):
         url = reverse("accounts:profile", args=["owner"])
         make_project(self.owner, "One")
-        # user, projects (+repo link), screenshots, domain verifications, follower count, the person's badges:
-        # the same for 1 or 4 projects
-        with self.assertNumQueries(6):
+        # user, projects (+repo link), screenshots, domain verifications, follower count, the person's badges,
+        # their links and pinned projects: the same for 1 or 4 projects
+        with self.assertNumQueries(8):
             self.client.get(url)
         for name in ("Two", "Three", "Four"):
             project = make_project(self.owner, name)
             make_shot(project)
-        with self.assertNumQueries(6):
+        with self.assertNumQueries(8):
             self.client.get(url)

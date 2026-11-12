@@ -19,7 +19,7 @@ from django.utils import timezone
 from accounts import badges
 from accounts.adapters import SocialAccountAdapter
 from accounts.deletion import delete_account
-from accounts.models import User
+from accounts.models import ProfileLink, User
 from accounts.system import system_user
 from projects.models import BuildLogEntry, Project
 from projects.tests import image_file, make_project, make_user
@@ -37,7 +37,8 @@ class ModTestCase(TestCase):
         self.boss = User.objects.create_superuser("boss", "boss@example.com", "pw")
         self.mira = make_user("mira")  # moderator
         badges.grant(self.mira, "moderator")
-        self.ana = make_user("ana", bio="Ana's bio", website="https://ana.example")
+        self.ana = make_user("ana", headline="Ana's headline", about="Ana's about")
+        ProfileLink.objects.create(user=self.ana, kind="website", url="https://ana.example")
         self.bob = make_user("bob")  # reporter
         self.project = make_project(self.ana, name="Quillbox")
         self.report = Report.objects.create(
@@ -181,7 +182,8 @@ class DecisionTests(ModTestCase):
                                        target_repr="ana", reason="inappropriate")
         self.act({"action": "clear_profile", "reason": REASON, "fields": ["bio", "links"]}, report=report)
         ana = self.fresh(self.ana)
-        self.assertEqual((ana.bio, ana.website), ("", ""))
+        self.assertEqual((ana.headline, ana.about), ("", ""))
+        self.assertFalse(ana.links.exists())
         notice = Notice.objects.get(user=self.ana)
         self.assertEqual(notice.kind, "profile_cleared")
         entry = AuditLog.objects.get(action="moderation.profile.cleared")
@@ -319,7 +321,7 @@ class MuteTests(ModTestCase):
 
     def test_muted_user_can_read_settings_export_and_delete(self):
         self.assertEqual(self.client.get(reverse("pages:explore")).status_code, 200)
-        response = self.client.post(reverse("accounts:settings"), {"display_name": "Ana B", "bio": "", "website": "",
+        response = self.client.post(reverse("accounts:settings"), {"display_name": "Ana B", "about": "",
                                                                    "preferred_language": ""})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(self.client.post(reverse("accounts:export")).status_code, 200)

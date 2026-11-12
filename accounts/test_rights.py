@@ -117,7 +117,7 @@ class ExportTests(TestCase):
     def setUp(self):
         cache.clear()
         self.alice = make_user("alice", email="alice@example.com", display_name="Alice", github_login="alice-gh")
-        self.bob = make_user("bob", email="bob-private@example.com", bio="bob secret bio")
+        self.bob = make_user("bob", email="bob-private@example.com", about="bob secret bio")
         self.mine = make_project(self.alice, "alice-app")
         self.my_draft = make_project(self.alice, "alice-draft", status=Project.Status.DRAFT)
         BuildLogEntry.objects.create(project=self.mine, text="Shipped v1")
@@ -173,13 +173,13 @@ class ExportTests(TestCase):
 
     def test_query_count_does_not_grow_with_projects(self):
         self.client.force_login(self.alice)
-        # 13 + the ban check (active sanctions) + sanctions and notices in the export
-        with self.assertNumQueries(16):
+        # 13 + the ban check (active sanctions) + sanctions and notices + skills, links and pins in the export
+        with self.assertNumQueries(19):
             self.client.post(self.url)
         for i in range(5):
             p = make_project(self.alice, f"more-{i}")
             BuildLogEntry.objects.create(project=p, text="x")
-        with self.assertNumQueries(16):
+        with self.assertNumQueries(19):
             self.client.post(self.url)
 
     def test_rate_limited(self):

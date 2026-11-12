@@ -70,7 +70,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         user.display_name = _one_line(data.get("name"), 80) or login
         if looks_official(user.display_name):  # a GitHub name like "Shipmark Team" is not carried over
             user.display_name = ""
-        user.bio = _one_line(extra.get("bio"), 280)
+        user.about = _one_line(extra.get("bio"), 1000)
         user.avatar_url = extra.get("avatar_url") or ""
         # Not used: allauth's first/last name. We keep one display name.
         user.first_name = user.last_name = ""

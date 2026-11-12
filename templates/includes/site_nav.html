@@ -15,7 +15,7 @@
     {% if in_panel %}
       {# Phone menu: the account links are listed openly. #}
       <ul class="user-links">
-        <li class="user-links__who">{% avatar me.name 32 %}<span>{{ me.name }}{% user_marks me.user %}</span></li>
+        <li class="user-links__who">{% user_avatar me.user 32 name=me.name %}<span>{{ me.name }}{% user_marks me.user %}</span></li>
         {% if profile_url %}<li><a href="{{ profile_url }}">{% translate "Your profile" %}</a></li>{% endif %}
         {% if mod_url %}<li><a href="{{ mod_url }}">{% translate "Moderation" %} <span class="mono">{{ mod_count }}</span><span class="visually-hidden"> {% translate "open reports" %}</span></a></li>{% endif %}
         {% if settings_url %}<li><a href="{{ settings_url }}">{% translate "Settings" %}</a></li>{% endif %}
@@ -25,7 +25,7 @@
       {# Desktop: avatar button opens a small menu. A <details>, so it works without JS; menu.js adds Escape and outside click. #}
       <details class="user-menu" data-menu>
         <summary class="user-menu__button" aria-label="{% blocktranslate with name=me.name %}Account menu for {{ name }}{% endblocktranslate %}">
-          {% avatar me.name 32 %}{% icon "chevron-down" %}
+          {% user_avatar me.user 32 name=me.name %}{% icon "chevron-down" %}
         </summary>
         <ul class="user-menu__panel">
           <li class="user-menu__who">{{ me.name }}{% user_marks me.user %}</li>

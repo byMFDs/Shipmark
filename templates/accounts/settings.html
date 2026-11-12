@@ -3,24 +3,89 @@
 
 {% block title %}{% translate "Settings" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
+{% block scripts %}<script type="module" src="{% static 'js/profile-preview.js' %}"></script>{% endblock %}
 
 {% block content %}
   <div class="container page">
     <div class="sheet">
       <header class="sheet__intro">
         <h1>{% translate "Settings" %}</h1>
+        <section class="record preview-card" data-profile-preview aria-labelledby="preview-title">
+          <div class="record__head"><h2 class="label" id="preview-title">{% translate "Profile preview" %}</h2></div>
+          <div class="preview-card__body">
+            <div data-pv-avatar>{% user_avatar user 96 %}</div>
+            <p class="preview-card__name" data-pv="display_name" data-fallback="{{ user.username }}">{{ form.display_name.value|default:user.username }}</p>
+            <p class="muted mono preview-card__handle">@{{ user.username }}</p>
+            <p class="preview-card__headline" data-pv="headline"{% if not form.headline.value %} hidden{% endif %}>{{ form.headline.value|default:"" }}</p>
+            <p class="preview-card__meta">
+              <span class="status-chip" data-pv="status"{% if not form.status.value %} hidden{% endif %}>{% if form.status.value %}{{ form.status.value|status_label }}{% endif %}</span>
+              <span class="preview-card__place" data-pv="location"{% if not form.location.value %} hidden{% endif %}>{{ form.location.value|default:"" }}</span>
+            </p>
+            <p class="field__hint">{% translate "This is how your profile card looks. It updates as you type; nothing is saved until you press Save settings." %}</p>
+          </div>
+        </section>
       </header>
 
       <div class="sheet__body">
-        <form method="post" class="panel stack" novalidate>
+        <form method="post" enctype="multipart/form-data" class="settings-form" novalidate>
           {% csrf_token %}
-          <h2>{% translate "Profile" %}</h2>
           {% include "includes/form_errors.html" %}
-          {% include "includes/form_field.html" with field=form.display_name %}
-          {% include "includes/form_field.html" with field=form.bio %}
-          {% include "includes/form_field.html" with field=form.website %}
-          {% include "includes/form_field.html" with field=form.preferred_language %}
-          <div><button class="btn btn--primary" type="submit">{% translate "Save settings" %}</button></div>
+
+          <section class="panel stack" aria-labelledby="pic-title">
+            <h2 id="pic-title">{% translate "Picture and cover" %}</h2>
+            {% if not can_upload %}<p class="notice notice--sanction" role="status">{% translate "Your account is muted, so pictures cannot be changed right now." %}</p>{% endif %}
+            {% include "includes/form_field.html" with field=form.avatar_file %}
+            {% if form.use_github_avatar %}{% include "includes/form_field.html" with field=form.use_github_avatar %}{% endif %}
+            {% if user.avatar %}{% include "includes/form_field.html" with field=form.remove_avatar %}{% endif %}
+            {% include "includes/form_field.html" with field=form.cover_file %}
+            {% if user.cover %}
+              <div class="settings-cover"><img src="{{ user.cover.url }}" width="1500" height="500" alt="{% translate 'Your current cover image' %}" loading="lazy"></div>
+              {% include "includes/form_field.html" with field=form.remove_cover %}
+            {% endif %}
+          </section>
+
+          <section class="panel stack" aria-labelledby="you-title">
+            <h2 id="you-title">{% translate "About you" %}</h2>
+            {% include "includes/form_field.html" with field=form.display_name %}
+            {% include "includes/form_field.html" with field=form.headline %}
+            {% include "includes/form_field.html" with field=form.location %}
+            {% include "includes/form_field.html" with field=form.status %}
+            {% include "includes/form_field.html" with field=form.about %}
+            {% include "includes/form_field.html" with field=form.skills_text %}
+          </section>
+
+          <section class="panel stack" aria-labelledby="links-title">
+            <h2 id="links-title">{% translate "Links" %}</h2>
+            <p class="field__hint">{% translate "Up to 6. Addresses must start with http:// or https://. GitHub, X, LinkedIn and Telegram links must point to those sites." %}</p>
+            <div class="link-rows">
+              <div class="link-rows__head" aria-hidden="true"><span class="label">{% translate "Kind" %}</span><span class="label">{% translate "Address" %}</span></div>
+              {% for kind, url in form.link_rows %}
+                <div class="link-row">
+                  <div class="field"><label class="visually-hidden" for="{{ kind.id_for_label }}">{% blocktranslate with n=forloop.counter %}Link {{ n }}: kind{% endblocktranslate %}</label><span class="select-wrap">{{ kind }}{% icon "chevron-down" %}</span></div>
+                  <div class="field"><label class="visually-hidden" for="{{ url.id_for_label }}">{% blocktranslate with n=forloop.counter %}Link {{ n }}: address{% endblocktranslate %}</label>{{ url }}
+                    {% if url.errors %}<div id="{{ url.auto_id }}_error">{% for error in url.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}</div>{% endif %}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </section>
+
+          <section class="panel stack" aria-labelledby="pins-title">
+            <h2 id="pins-title">{{ form.pinned.label }}</h2>
+            <p class="field__hint">{{ form.pinned.help_text }}</p>
+            {% if form.pinned.field.queryset.exists %}
+              <div class="tool-grid">{% for box in form.pinned %}<label class="check" for="{{ box.id_for_label }}">{{ box.tag }}<span>{{ box.choice_label }}</span></label>{% endfor %}</div>
+              {% for error in form.pinned.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}
+            {% else %}
+              <p class="muted">{% translate "Publish a project first, then you can pin it here." %}</p>
+            {% endif %}
+          </section>
+
+          <section class="panel stack" aria-labelledby="lang-title">
+            <h2 id="lang-title">{% translate "Language" %}</h2>
+            {% include "includes/form_field.html" with field=form.preferred_language %}
+          </section>
+
+          <div class="settings-form__actions"><button class="btn btn--primary" type="submit">{% translate "Save settings" %}</button></div>
         </form>
 
         <section class="panel stack needs-js">

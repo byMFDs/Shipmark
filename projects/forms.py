@@ -12,10 +12,10 @@ from verification.domain import forget_other_domains
 from verification.repo import remove_link
 
 from .images import clean_screenshot
+from .tags import parse_tag_names
 from .models import MAX_LOG_LENGTH, MAX_SCREENSHOTS, BuildLogEntry, Project, Tag, Tool, unique_slug
 
 MAX_TAGS = 5
-TAG_RE = re.compile(r"^[\w+#.-]+(?: [\w+#.-]+)*$")
 REPO_RE = re.compile(r"^[A-Za-z0-9_.-]{1,39}/[A-Za-z0-9_.-]{1,100}$")
 
 
@@ -141,17 +141,7 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
             ))
 
     def clean_tags_text(self):
-        tags = {}
-        for raw in self.cleaned_data["tags_text"].split(","):
-            name = " ".join(raw.lower().split())
-            if not name:
-                continue
-            if len(name) > 30 or not TAG_RE.match(name) or not slugify(name, allow_unicode=True):
-                raise ValidationError(_("Tags use letters, digits, spaces and + # . - (up to 30 characters)."))
-            tags[slugify(name, allow_unicode=True)] = name
-        if len(tags) > MAX_TAGS:
-            raise ValidationError(_("Use at most 5 tags."))
-        return tags  # {slug: name}
+        return parse_tag_names(self.cleaned_data["tags_text"], MAX_TAGS, _("Use at most 5 tags."))
 
     def save(self, owner=None):
         project = super().save(commit=False)

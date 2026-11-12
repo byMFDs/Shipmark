@@ -75,7 +75,7 @@ def report_project(request, username, slug):
 @login_required
 @require_http_methods(["GET", "POST"])
 def report_user(request, username):
-    """A profile: name, avatar, bio, links."""
+    """A profile: picture, cover, headline, About, links."""
     person = get_object_or_404(visible_users(User.objects.all()), username__iexact=username)
     back = reverse("accounts:profile", args=[person.username])
     if person.pk == request.user.pk:

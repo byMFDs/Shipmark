@@ -98,30 +98,37 @@ def purge_project(project, actor):
 
 
 def clear_profile(person, fields, actor, reason, report=None):
-    """`fields`: some of "avatar", "bio", "links". Returns the list of fields that were not empty."""
+    """`fields`: some of "avatar" (picture and cover), "bio" (headline and About) and "links" (all links).
+    Returns the list of fields that were not empty. Picture files are deleted from disk."""
+    from accounts import avatars
+
     sanctions.check_target(person, actor)
     changed = []
-    if "avatar" in fields and person.avatar_url:
-        person.avatar_url = ""
-        changed.append("avatar")
-    if "bio" in fields and person.bio:
-        person.bio = ""
-        changed.append("bio")
-    if "links" in fields and person.website:
-        person.website = ""
-        changed.append("links")
     with transaction.atomic():
-        if changed:
-            person.save(update_fields=[{"avatar": "avatar_url", "bio": "bio", "links": "website"}[f] for f in changed])
+        if "avatar" in fields and (person.avatar or person.cover or person.avatar_url):
+            had_file = bool(person.avatar or person.cover)
+            avatars.remove_avatar(person)
+            avatars.remove_cover(person)
+            person.avatar_url = ""  # the GitHub address too, so "use my GitHub picture" cannot bring it back
+            person.save(update_fields=["avatar", "avatar_source", "cover", "avatar_url"])
+            if had_file:
+                changed.append("avatar")
+        if "bio" in fields and (person.headline or person.about):
+            person.headline = person.about = ""
+            person.save(update_fields=["headline", "about"])
+            changed.append("bio")
+        if "links" in fields and person.links.exists():
+            person.links.all().delete()
+            changed.append("links")
         audit.log("moderation.profile.cleared", person, actor=actor, reason=reason, fields=sorted(fields),
                   changed=changed, report=getattr(report, "pk", None))
-        notify(person, Notice.Kind.PROFILE_CLEARED, ", ".join(_field_label(f) for f in fields), reason)
+        notify(person, Notice.Kind.PROFILE_CLEARED, ", ".join(str(_field_label(f)) for f in fields), reason)
         _close_open_reports(report, actor, reason, target_user=person)
     return changed
 
 
 def _field_label(field):
-    return {"avatar": _("avatar"), "bio": _("bio"), "links": _("links")}[field]
+    return {"avatar": _("picture and cover"), "bio": _("headline and About"), "links": _("links")}[field]
 
 
 def sanction(person, kind, actor, reason, length, report=None):

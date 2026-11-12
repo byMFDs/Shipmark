@@ -1,0 +1,74 @@
+"""Profile pictures: the only code that stores or removes them.
+
+Uploads and the GitHub picture both go through projects.images (Pillow: checked, centre-cropped, re-encoded to
+WebP, metadata dropped, random file name). The GitHub picture is downloaded once, through verification.net.safe_fetch
+(the only way the server may fetch a URL), from a GitHub host only, and then stored here: visitors are never sent
+to GitHub, so their IP addresses stay with us.
+"""
+from urllib.parse import urlsplit
+
+from allauth.socialaccount.models import SocialAccount
+from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
+from django.db import transaction
+from django.utils.translation import gettext_lazy as _
+
+from projects.images import clean_avatar
+from verification.net import FetchError, safe_fetch
+
+GITHUB_AVATAR_HOSTS = ("avatars.githubusercontent.com",)  # exact hosts, https only
+GITHUB_AVATAR_SIZE = 512
+
+
+def github_avatar_url(user):
+    """The picture URL GitHub reported at the last sign-in (falls back to the one saved at sign-up), or ""."""
+    account = SocialAccount.objects.filter(user=user, provider="github").first()
+    url = ((account.extra_data or {}).get("avatar_url") if account else "") or user.avatar_url
+    parts = urlsplit(url or "")
+    if parts.scheme != "https" or (parts.hostname or "").lower() not in GITHUB_AVATAR_HOSTS:
+        return ""
+    return url
+
+
+def download_github_avatar(user):
+    """Returns the cropped WebP ContentFile, or raises ValidationError with a message for the person."""
+    url = github_avatar_url(user)
+    if not url:
+        raise ValidationError(_("No GitHub picture is available for this account."), code="no_avatar")
+    separator = "&" if "?" in url else "?"
+    try:
+        result = safe_fetch(f"{url}{separator}s={GITHUB_AVATAR_SIZE}")
+    except FetchError:
+        raise ValidationError(_("Could not download your GitHub picture right now. Try again later."), code="fetch") from None
+    if result.status_code != 200 or not result.content:
+        raise ValidationError(_("Could not download your GitHub picture right now. Try again later."), code="fetch")
+    return clean_avatar(ContentFile(result.content))
+
+
+def _drop(file_field):
+    """Delete the stored file after the transaction commits (never before: a rollback must keep it)."""
+    if file_field:
+        storage, name = file_field.storage, file_field.name
+        transaction.on_commit(lambda: storage.delete(name))
+
+
+def set_avatar(user, content, source):
+    _drop(user.avatar)
+    user.avatar.save("avatar.webp", content, save=False)
+    user.avatar_source = source
+
+
+def remove_avatar(user):
+    _drop(user.avatar)
+    user.avatar = ""
+    user.avatar_source = ""
+
+
+def set_cover(user, content):
+    _drop(user.cover)
+    user.cover.save("cover.webp", content, save=False)
+
+
+def remove_cover(user):
+    _drop(user.cover)
+    user.cover = ""

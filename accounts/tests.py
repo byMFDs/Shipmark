@@ -11,6 +11,7 @@ from django.core.exceptions import ValidationError
 from django.test import RequestFactory, TestCase, override_settings
 from django.urls import reverse
 
+from .models import ProfileLink
 from .forms import SignupConfirmForm
 from .usernames import RESERVED_USERNAMES, generate_username, validate_username
 
@@ -111,14 +112,14 @@ class GitHubSignupTests(TestCase):
         self.assertEqual(user.username, "octo-cat")
         self.assertEqual(user.github_login, "Octo-Cat")
         self.assertEqual(user.display_name, "Octo Cat")
-        self.assertEqual(user.bio, "Builds things with AI")
+        self.assertEqual(user.about, "Builds things with AI")
         self.assertEqual(user.avatar_url, GITHUB_DATA["avatar_url"])
         self.assertEqual(user.email, "octo@example.com")
 
-    def test_long_bio_is_cut_to_280(self):
+    def test_long_bio_is_cut_to_1000(self):
         request = self.request()
-        sociallogin = self.sociallogin(request, {**GITHUB_DATA, "bio": "x" * 500})
-        self.assertEqual(len(sociallogin.user.bio), 280)
+        sociallogin = self.sociallogin(request, {**GITHUB_DATA, "bio": "x" * 1500})
+        self.assertEqual(len(sociallogin.user.about), 1000)
 
     def test_terms_checkbox_is_required(self):
         request = self.request()
@@ -235,8 +236,8 @@ class AuthPageTests(TestCase):
 class SettingsTests(TestCase):
     def setUp(self):
         cache.clear()
-        self.alice = make_user("alice", display_name="Alice", bio="old")
-        self.bob = make_user("bob", display_name="Bob", bio="bob bio")
+        self.alice = make_user("alice", display_name="Alice", about="old")
+        self.bob = make_user("bob", display_name="Bob", about="bob bio")
         self.url = reverse("accounts:settings")
 
     def test_requires_login(self):
@@ -250,38 +251,38 @@ class SettingsTests(TestCase):
     def test_user_can_edit_own_settings(self):
         self.client.force_login(self.alice)
         response = self.client.post(self.url, {
-            "display_name": "  Alice   Liddell ", "bio": "new bio", "website": "example.com",
-            "preferred_language": "uk",
+            "display_name": "  Alice   Liddell ", "headline": " Builds   things ", "about": "new **about**",
+            "location": "Kyiv", "status": "hiring", "preferred_language": "uk",
         })
         self.assertRedirects(response, self.url, fetch_redirect_response=False)
         self.alice.refresh_from_db()
         self.assertEqual(self.alice.display_name, "Alice Liddell")
-        self.assertEqual(self.alice.bio, "new bio")
-        self.assertEqual(self.alice.website, "https://example.com")
+        self.assertEqual((self.alice.headline, self.alice.about), ("Builds things", "new **about**"))
+        self.assertEqual((self.alice.location, self.alice.status), ("Kyiv", "hiring"))
         self.assertEqual(self.alice.preferred_language, "uk")
 
     def test_invalid_form_shows_error_summary_for_screen_readers(self):
         # The summary is role="alert", links to the bad field, and the field points at its error.
         self.client.force_login(self.alice)
-        response = self.client.post(self.url, {"display_name": "Alice", "bio": "x" * 400, "preferred_language": "en"})
+        response = self.client.post(self.url, {"display_name": "Alice", "about": "x" * 1200, "preferred_language": "en"})
         html = response.content.decode()
         self.assertEqual(response.status_code, 200)
         self.assertIn("data-error-summary", html)
         self.assertIn('role="alert"', html)
-        self.assertIn('href="#id_bio"', html)
+        self.assertIn('href="#id_about"', html)
         self.assertIn('aria-invalid="true"', html)
-        self.assertIn("id_bio_error", html)
+        self.assertIn("id_about_error", html)
 
     def test_cannot_edit_another_users_settings(self):
         self.client.force_login(self.alice)
         # Forged fields that try to point at Bob or to change protected fields.
         self.client.post(self.url, {
-            "display_name": "Alice", "bio": "x", "id": self.bob.pk, "pk": self.bob.pk,
+            "display_name": "Alice", "about": "x", "id": self.bob.pk, "pk": self.bob.pk,
             "username": "bob", "user": self.bob.pk, "is_staff": "on", "is_superuser": "on",
             "is_suspended": "on", "github_login": "someone-else",
         })
         self.bob.refresh_from_db()
-        self.assertEqual((self.bob.display_name, self.bob.bio, self.bob.username), ("Bob", "bob bio", "bob"))
+        self.assertEqual((self.bob.display_name, self.bob.about, self.bob.username), ("Bob", "bob bio", "bob"))
         self.alice.refresh_from_db()
         self.assertEqual(self.alice.username, "alice")
         self.assertFalse(self.alice.is_staff or self.alice.is_superuser or self.alice.is_suspended)
@@ -293,13 +294,12 @@ class SettingsTests(TestCase):
         self.assertContains(response, "Alice")
         self.assertNotContains(response, "bob bio")
 
-    def test_website_must_be_http_or_https(self):
+    def test_links_must_be_http_or_https(self):
         self.client.force_login(self.alice)
-        for bad in ["javascript:alert(1)", "ftp://example.com/x"]:
-            response = self.client.post(self.url, {"display_name": "A", "website": bad})
+        for bad in ["javascript:alert(1)", "ftp://example.com/x", "https://user:pw@example.com/"]:
+            response = self.client.post(self.url, {"display_name": "A", "link0_kind": "website", "link0_url": bad})
             self.assertEqual(response.status_code, 200, bad)
-            self.alice.refresh_from_db()
-            self.assertEqual(self.alice.website, "")
+            self.assertFalse(self.alice.links.exists(), bad)
 
     def test_unknown_language_rejected(self):
         self.client.force_login(self.alice)
@@ -328,9 +328,10 @@ class SettingsTests(TestCase):
 class PublicProfileTests(TestCase):
     def setUp(self):
         self.alice = make_user(
-            "alice", email="alice-private@example.com", display_name="Alice A", bio="I build things",
-            website="https://alice.example.org", github_login="alice-gh",
+            "alice", email="alice-private@example.com", display_name="Alice A", headline="I build things",
+            github_login="alice-gh",
         )
+        ProfileLink.objects.create(user=self.alice, kind="website", url="https://alice.example.org")
 
     def url(self, name="alice"):
         return reverse("accounts:profile", args=[name])
@@ -364,8 +365,8 @@ class PublicProfileTests(TestCase):
             self.assertNotIn("alice-private@example.com", html)
             self.assertNotIn("bob-private@example.com", html)
 
-    def test_non_http_website_is_not_a_link(self):
-        User.objects.filter(pk=self.alice.pk).update(website="javascript:alert(1)")
+    def test_non_http_link_is_not_shown(self):
+        ProfileLink.objects.filter(user=self.alice).update(url="javascript:alert(1)")
         self.assertNotContains(self.client.get(self.url()), "javascript:")
 
     def test_uppercase_url_redirects_to_canonical(self):

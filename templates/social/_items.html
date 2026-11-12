@@ -22,7 +22,7 @@
   {% else %}
     {% with entry=item.obj %}
       <li class="plate-row feed-item feed-item--entry" data-feed-item tabindex="-1">
-        {% avatar entry.project.owner.display_name|default:entry.project.owner.username 56 %}
+        {% user_avatar entry.project.owner 56 %}
         <div class="feed-item__body">
           <p class="feed-item__by">
             <a href="{% url 'accounts:profile' entry.project.owner.username %}">@{{ entry.project.owner.username }}</a>{% user_marks entry.project.owner %}

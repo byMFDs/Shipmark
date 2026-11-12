@@ -16,8 +16,12 @@ MAX_SIDE = 1600  # stored size; bigger images are scaled down
 ALLOWED_FORMATS = {"JPEG", "PNG", "WEBP"}
 
 
-def clean_screenshot(upload):
-    """Validate an uploaded file and return (ContentFile with WebP bytes). Raises ValidationError."""
+def clean_image(upload, fit=None):
+    """Validate an uploaded file and return a ContentFile with WebP bytes. Raises ValidationError.
+
+    `fit=(width, height)` scales and centre-crops to exactly that size (avatars, covers); without it the image
+    is only scaled down to MAX_SIDE (screenshots). Metadata is dropped either way.
+    """
     if upload.size > MAX_BYTES:
         raise ValidationError(_("The image is larger than 5 MB."), code="too_big")
     try:
@@ -31,12 +35,31 @@ def clean_screenshot(upload):
         if width < 1 or height < 1 or width * height > MAX_PIXELS:
             raise ValidationError(_("The image has too many pixels."), code="too_large_dimensions")
         image = ImageOps.exif_transpose(image)  # apply the camera rotation before metadata is dropped
-        image.thumbnail((MAX_SIDE, MAX_SIDE))
         image = image.convert("RGBA" if "A" in image.getbands() or image.mode == "P" else "RGB")
+        if fit:
+            image = ImageOps.fit(image, fit, Image.Resampling.LANCZOS, centering=(0.5, 0.5))
+        else:
+            image.thumbnail((MAX_SIDE, MAX_SIDE))
         buffer = io.BytesIO()
         image.save(buffer, format="WEBP", quality=85, method=4)  # no exif= argument: metadata is not copied
     except ValidationError:
         raise
     except (UnidentifiedImageError, Image.DecompressionBombError, OSError, SyntaxError, ValueError):
         raise ValidationError(_("This file is not a valid image."), code="invalid") from None
-    return ContentFile(buffer.getvalue(), name="screenshot.webp")  # real name is random, see screenshot_path
+    return ContentFile(buffer.getvalue(), name="image.webp")  # real name is random, see the upload_to functions
+
+
+def clean_screenshot(upload):
+    return clean_image(upload)
+
+
+AVATAR_SIZE = (512, 512)
+COVER_SIZE = (1500, 500)
+
+
+def clean_avatar(upload):
+    return clean_image(upload, fit=AVATAR_SIZE)
+
+
+def clean_cover(upload):
+    return clean_image(upload, fit=COVER_SIZE)

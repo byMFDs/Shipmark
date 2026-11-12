@@ -47,7 +47,7 @@
     <article class="project">
       <header class="project__head">
         <p class="project__by">
-          {% avatar person.display_name|default:person.username 24 %}
+          {% user_avatar person 24 %}
           <a href="{% url 'accounts:profile' person.username %}">@{{ person.username }}</a>{% user_marks person %}
           <span data-launched>{% include "projects/_launched.html" %}</span>
         </p>

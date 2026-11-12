@@ -10,7 +10,7 @@ from moderation import actions, audit
 from moderation.adminbase import AuditedModelAdmin
 
 from . import badges
-from .models import User, UserBadge
+from .models import ProfileLink, User, UserBadge
 from .roles import can_manage_badges
 
 
@@ -38,6 +38,13 @@ class UserBadgeInline(BadgePermissions, TabularInline):
     readonly_fields = ("granted_by", "granted_at")
     verbose_name = _("badge")
     verbose_name_plural = _("Badges (only superusers can change these)")
+
+
+class ProfileLinkInline(TabularInline):
+    model = ProfileLink
+    fk_name = "user"
+    extra = 0
+    fields = ("kind", "url", "order")
 
 
 @admin.register(UserBadge)
@@ -92,12 +99,13 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
     ordering = ("-date_joined",)
     date_hierarchy = "date_joined"
     actions = ["suspend", "unsuspend"]
-    inlines = [UserBadgeInline]
+    inlines = [UserBadgeInline, ProfileLinkInline]
     readonly_fields = ("last_login", "date_joined", "terms_version_accepted", "terms_accepted_at")
 
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Profile"), {"fields": ("display_name", "bio", "website", "github_login", "avatar_url", "preferred_language", "email")}),
+        (_("Profile"), {"fields": ("display_name", "headline", "about", "location", "status", "github_login", "preferred_language", "email")}),
+        (_("Pictures"), {"fields": ("avatar", "avatar_source", "cover", "avatar_url")}),
         (_("Moderation"), {"fields": ("is_suspended",)}),
         (_("Permissions"), {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
         (_("Terms and dates"), {"fields": ("terms_version_accepted", "terms_accepted_at", "last_login", "date_joined")}),

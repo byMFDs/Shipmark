@@ -142,6 +142,42 @@ def avatar(name, size=32, src=""):
     )
 
 
+@register.simple_tag
+def user_avatar(user, size=32, name=""):
+    """A person's avatar: their stored picture (a file on our disk), else initials of their name.
+    `name` is only for pages that have no User object (the styleguide)."""
+    label = name or (user.display_name or user.username if user is not None and not isinstance(user, dict) else "")
+    picture = getattr(user, "avatar", None)
+    if picture:
+        try:
+            return avatar(label, size, picture.url)
+        except ValueError:  # the file field has no file
+            pass
+    return avatar(label, size)
+
+
+@register.filter
+def link_icon(kind):
+    """Icon name for a profile link kind."""
+    from accounts.links import ICONS
+
+    return ICONS.get(kind, "link")
+
+
+@register.filter
+def link_text(url):
+    from accounts.links import display_url
+
+    return display_url(url)
+
+
+@register.filter
+def status_label(value):
+    from accounts.models import User
+
+    return User.Status(value).label if value in User.Status.values else ""
+
+
 # ---------- Hallmark ----------
 
 # Display names. The internal id "authored" stays; the mark proves repository ownership

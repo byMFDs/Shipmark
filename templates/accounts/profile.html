@@ -5,31 +5,47 @@
 {% block og_title %}{{ person.display_name|default:person.username }} (@{{ person.username }}) · {{ brand.SITE_NAME }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/profile.css' %}">{% if embed %}<link rel="stylesheet" href="{% static 'css/pages/embed.css' %}">{% endif %}{% endblock %}
 {% block og_type %}profile{% endblock %}
-{% block og_description %}{% if person.bio %}{{ person.bio }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}{% endblock %}
+{% block og_description %}{% if person.headline %}{{ person.headline }}{% elif person.about %}{{ about_text|truncatechars:160 }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}{% endblock %}
+{% block og_image %}{% if person.avatar %}<meta property="og:image" content="{% absolute_url person.avatar.url %}">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">{% else %}{{ block.super }}{% endif %}{% endblock %}
 {% block meta %}
-  <meta name="description" content="{% if person.bio %}{{ person.bio }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}">
+  <meta name="description" content="{% if person.headline %}{{ person.headline }}{% elif person.about %}{{ about_text|truncatechars:160 }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}">
   <meta property="profile:username" content="{{ person.username }}">
   <link rel="canonical" href="{% canonical_url %}">
 {% endblock %}
 
 {% block content %}
   <div class="container page profile">
-    <header class="profile-head">
-      {% avatar person.display_name|default:person.username 96 %}
-      <div class="profile-head__text">
-        <h1 class="profile-head__name">{{ person.display_name|default:person.username }}{% user_marks person %}</h1>
-        <p class="profile-head__handle muted">@{{ person.username }}</p>
-        {% if person.bio %}<p class="profile-head__bio">{{ person.bio }}</p>{% endif %}
-        <ul class="profile-head__links">
-          {% if website %}<li><a href="{{ website }}" rel="nofollow ugc noopener">{{ website|cut:"https://"|cut:"http://"|cut:"www."|truncatechars:40 }}</a></li>{% endif %}
-          {% if person.github_login %}<li><a class="with-icon" href="https://github.com/{{ person.github_login }}" rel="noopener">{% icon "github" %}{{ person.github_login }}</a></li>{% endif %}
-          <li class="muted">{% blocktranslate with date=person.date_joined|date:"F Y" %}Joined {{ date }}{% endblocktranslate %}</li>
-        </ul>
-        {% if is_me %}
-          <p><a class="btn btn--secondary" href="{% url 'accounts:settings' %}">{% translate "Edit profile" %}</a></p>
-        {% else %}
-          <div class="profile-head__actions">{% include "social/_follow.html" with count_target="followers-count" %}<a class="btn btn--quiet" href="{% url 'moderation:report_user' person.username %}">{% translate "Report" %}</a>{% moderate_menu person=person %}</div>
-        {% endif %}
+    <header class="profile-card{% if person.cover %} has-cover{% endif %}">
+      {% if person.cover %}<div class="profile-card__cover"><img src="{{ person.cover.url }}" width="1500" height="500" alt=""></div>{% endif %}
+      <div class="profile-card__body">
+        <div class="profile-card__avatar">{% user_avatar person 128 %}</div>
+        <div class="profile-card__text">
+          <div class="profile-card__titles">
+            <h1 class="profile-head__name">{{ person.display_name|default:person.username }}{% user_marks person %}</h1>
+            <p class="profile-head__handle muted">@{{ person.username }}</p>
+          </div>
+          {% if person.headline %}<p class="profile-head__headline">{{ person.headline }}</p>{% endif %}
+          <ul class="profile-meta">
+            {% if person.status %}<li><span class="status-chip is-{{ person.status }}">{{ person.status|status_label }}</span></li>{% endif %}
+            {% if person.location %}<li class="with-icon">{% icon "map-pin" %}<span>{{ person.location }}</span></li>{% endif %}
+            <li class="muted">{% blocktranslate with date=person.date_joined|date:"F Y" %}Joined {{ date }}{% endblocktranslate %}</li>
+          </ul>
+          {% if links or person.github_login %}
+            <ul class="profile-head__links">
+              {% for link in links %}
+                <li><a class="with-icon" href="{{ link.url }}" rel="nofollow ugc noopener" title="{{ link.get_kind_display }}">{% icon link.kind|link_icon %}<span>{{ link.url|link_text }}</span><span class="visually-hidden"> ({{ link.get_kind_display }})</span></a></li>
+              {% endfor %}
+              {% if person.github_login %}<li><a class="with-icon" href="https://github.com/{{ person.github_login }}" rel="noopener">{% icon "github" %}<span>{{ person.github_login }}</span></a></li>{% endif %}
+            </ul>
+          {% endif %}
+          {% if is_me %}
+            <p><a class="btn btn--secondary" href="{% url 'accounts:settings' %}">{% translate "Edit profile" %}</a></p>
+          {% else %}
+            <div class="profile-head__actions">{% include "social/_follow.html" with count_target="followers-count" %}<a class="btn btn--quiet" href="{% url 'moderation:report_user' person.username %}">{% translate "Report" %}</a>{% moderate_menu person=person %}</div>
+          {% endif %}
+        </div>
       </div>
     </header>
 
@@ -39,57 +55,107 @@
       <div><dt>{% translate "Followers" %}</dt><dd id="followers-count">{{ stats.followers }}</dd></div>
     </dl>
 
-    <section class="profile-projects" aria-labelledby="projects-title">
-      <h2 id="projects-title" class="profile-projects__title">{% translate "Projects" %}</h2>
-      {% if projects %}
-        <ul class="plate-list">
-          {% for project in projects %}
-            <li class="plate-row">
-              {% include "projects/_thumb.html" with project=project %}
-              <div class="profile-row__main">
-                <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></p>
-                <p class="plate-row__tagline">{{ project.tagline }}</p>
-              </div>
-              <div class="plate-row__marks">{% for h in project.hallmarks %}{% hallmark h.kind "s" h.earned %}{% endfor %}</div>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <div class="empty">
-          <div class="empty__marks">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
-          {% if is_me %}
-            <h3>{% translate "No projects yet" %}</h3>
-            <p class="empty__text">{% translate "Add something you shipped. It gets its first hallmark when you link the repository." %}</p>
-            {% maybe_url "projects:new" as new_url %}
-            {% if new_url %}<a class="btn btn--primary" href="{{ new_url }}">{% icon "plus" %}{% translate "Add your first project" %}</a>{% endif %}
-          {% else %}
-            <h3>{% translate "No projects yet" %}</h3>
-            <p class="empty__text">{% blocktranslate with name=person.display_name|default:person.username %}{{ name }} has not published a project yet.{% endblocktranslate %}</p>
-          {% endif %}
-        </div>
-      {% endif %}
-    </section>
-
-    {% if drafts %}
-      <section class="profile-projects" aria-labelledby="drafts-title">
-        <h2 id="drafts-title" class="profile-projects__title">{% translate "Your drafts" %}</h2>
-        <p class="muted profile-projects__note">{% translate "Only you see these." %}</p>
-        <ul class="plate-list">
-          {% for project in drafts %}
-            <li class="plate-row">
-              {% include "projects/_thumb.html" with project=project %}
-              <div class="profile-row__main">
-                <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a> <span class="muted">· {{ project.get_status_display }}</span></p>
-                <p class="plate-row__tagline">{{ project.tagline }}</p>
-              </div>
-              <div><a class="btn btn--secondary" href="{% url 'projects:edit' person.username project.slug %}">{% translate "Edit project" %}</a></div>
-            </li>
-          {% endfor %}
-        </ul>
+    {% if pinned %}
+      <section class="profile-pinned" aria-labelledby="pinned-title">
+        <h2 id="pinned-title" class="profile-projects__title">{% translate "Pinned" %}</h2>
+        <ul class="plate-list">{% for project in pinned %}{% include "accounts/_profile_row.html" %}{% endfor %}</ul>
       </section>
     {% endif %}
 
-    {% if embed %}{% include "projects/_embed_badge.html" %}{% endif %}
+    <nav class="tabs profile-tabs" aria-label="{% translate 'Profile sections' %}">
+      <ul class="tabs__list">
+        <li><a class="tabs__link" href="?tab=projects"{% if tab == "projects" %} aria-current="page"{% endif %}>{% translate "Projects" %}</a></li>
+        <li><a class="tabs__link" href="?tab=log"{% if tab == "log" %} aria-current="page"{% endif %}>{% translate "Build log" %}</a></li>
+        <li><a class="tabs__link" href="?tab=about"{% if tab == "about" %} aria-current="page"{% endif %}>{% translate "About" context "profile" %}</a></li>
+      </ul>
+    </nav>
+
+    {% if tab == "projects" %}
+      <section class="profile-projects" aria-labelledby="projects-title">
+        <h2 id="projects-title" class="visually-hidden">{% translate "Projects" %}</h2>
+        {% if projects %}
+          <ul class="plate-list">{% for project in projects %}{% include "accounts/_profile_row.html" %}{% endfor %}</ul>
+        {% else %}
+          <div class="empty">
+            <div class="empty__marks">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
+            <h3>{% translate "No projects yet" %}</h3>
+            {% if is_me %}
+              <p class="empty__text">{% translate "Add something you shipped. It gets its first hallmark when you link the repository." %}</p>
+              {% maybe_url "projects:new" as new_url %}
+              {% if new_url %}<a class="btn btn--primary" href="{{ new_url }}">{% icon "plus" %}{% translate "Add your first project" %}</a>{% endif %}
+            {% else %}
+              <p class="empty__text">{% blocktranslate with name=person.display_name|default:person.username %}{{ name }} has not published a project yet.{% endblocktranslate %}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      </section>
+
+      {% if drafts %}
+        <section class="profile-projects" aria-labelledby="drafts-title">
+          <h2 id="drafts-title" class="profile-projects__title">{% translate "Your drafts" %}</h2>
+          <p class="muted profile-projects__note">{% translate "Only you see these." %}</p>
+          <ul class="plate-list">
+            {% for project in drafts %}
+              <li class="plate-row">
+                {% include "projects/_thumb.html" with project=project %}
+                <div class="profile-row__main">
+                  <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a> <span class="muted">· {{ project.get_status_display }}</span></p>
+                  <p class="plate-row__tagline">{{ project.tagline }}</p>
+                </div>
+                <div><a class="btn btn--secondary" href="{% url 'projects:edit' person.username project.slug %}">{% translate "Edit project" %}</a></div>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+      {% if embed %}{% include "projects/_embed_badge.html" %}{% endif %}
+
+    {% elif tab == "log" %}
+      <section class="profile-projects" aria-labelledby="log-title">
+        <h2 id="log-title" class="visually-hidden">{% translate "Build log" %}</h2>
+        {% if log_entries %}
+          <ol class="record profile-log">
+            {% for entry in log_entries %}
+              <li class="profile-log__item">
+                <p class="log-entry__meta">
+                  {% if entry.is_launch %}<strong class="log-entry__kind">{% translate "Launched" %}</strong>{% endif %}
+                  <a href="{{ entry.project.get_absolute_url }}#log-{{ entry.pk }}">{{ entry.project.name }}</a>
+                  · <time datetime="{{ entry.created_at|date:'c' }}" title="{{ entry.created_at|date:'DATETIME_FORMAT' }}">{{ entry.created_at|ago }}</time>
+                </p>
+                <div class="log-entry__text">{{ entry.text_html|safe }}</div>
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <div class="empty">
+            <h3>{% translate "No updates yet" %}</h3>
+            <p class="empty__text">{% if is_me %}{% translate "Write short updates on a project page. They collect here, newest first." %}{% else %}{% blocktranslate with name=person.display_name|default:person.username %}{{ name }} has not posted a build-log update yet.{% endblocktranslate %}{% endif %}</p>
+          </div>
+        {% endif %}
+      </section>
+
+    {% else %}
+      <section class="profile-about" aria-labelledby="about-title">
+        <h2 id="about-title" class="visually-hidden">{% translate "About" context "profile" %}</h2>
+        {% if about_html %}
+          <div class="prose profile-about__text">{{ about_html|safe }}</div>
+        {% else %}
+          <div class="empty">
+            <h3>{% translate "Nothing here yet" %}</h3>
+            <p class="empty__text">{% if is_me %}{% translate "Tell people what you build and what you are looking for." %}{% else %}{% blocktranslate with name=person.display_name|default:person.username %}{{ name }} has not written anything here yet.{% endblocktranslate %}{% endif %}</p>
+            {% if is_me %}<a class="btn btn--secondary" href="{% url 'accounts:settings' %}">{% translate "Edit profile" %}</a>{% endif %}
+          </div>
+        {% endif %}
+        {% if skills %}
+          <h3 class="label profile-about__label">{% translate "Skills" %}</h3>
+          <ul class="chip-list">{% for tag in skills %}<li><span class="chip">{{ tag.name }}</span></li>{% endfor %}</ul>
+        {% endif %}
+        {% if built_with %}
+          <h3 class="label profile-about__label">{% translate "Built with (self-declared)" %}</h3>
+          <ul class="chip-list">{% for tool in built_with %}<li><span class="chip">{{ tool.name }} <span class="muted">×{{ tool.n }}</span></span></li>{% endfor %}</ul>
+        {% endif %}
+      </section>
+    {% endif %}
   </div>
 {% endblock %}
-{% block scripts %}{% if not is_me %}<script type="module" src="{% static 'js/social.js' %}"></script>{% else %}<script type="module" src="{% static 'js/copy.js' %}"></script>{% endif %}{% endblock %}
+{% block scripts %}{% if not is_me %}<script type="module" src="{% static 'js/social.js' %}"></script>{% elif embed %}<script type="module" src="{% static 'js/copy.js' %}"></script>{% endif %}{% endblock %}

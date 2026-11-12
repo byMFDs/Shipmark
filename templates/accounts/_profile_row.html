@@ -1,0 +1,9 @@
+{% load ui %}{# One public project in a profile list. Needs: project (from profile_projects). #}
+<li class="plate-row">
+  {% include "projects/_thumb.html" with project=project %}
+  <div class="profile-row__main">
+    <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></p>
+    <p class="plate-row__tagline">{{ project.tagline }}</p>
+  </div>
+  <div class="plate-row__marks">{% for h in project.hallmarks %}{% hallmark h.kind "s" h.earned %}{% endfor %}</div>
+</li>

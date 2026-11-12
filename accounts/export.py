@@ -21,12 +21,20 @@ def _dt(value):
     return value.isoformat() if value else None
 
 
-def _profile(user):
+def _profile(user, absolute):
     return {
         "username": user.username,
         "display_name": user.display_name,
-        "bio": user.bio,
-        "website": user.website,
+        "headline": user.headline,
+        "about": user.about,
+        "location": user.location,
+        "status": user.status,
+        "skills": [tag.name for tag in user.skills.all()],
+        "links": [{"kind": link.kind, "url": link.url} for link in user.links.all()],
+        "pinned_projects": [pin.project.slug for pin in user.pins.select_related("project")],
+        "avatar": absolute(user.avatar.url) if user.avatar else "",
+        "avatar_source": user.avatar_source,
+        "cover": absolute(user.cover.url) if user.cover else "",
         "email": user.email,
         "github_login": user.github_login,
         "avatar_url": user.avatar_url,
@@ -124,7 +132,7 @@ def build_export(user, absolute=lambda url: url):
         "format_version": FORMAT_VERSION,
         "site": branding.SITE_NAME,
         "exported_at": _dt(timezone.now()),
-        "profile": _profile(user),
+        "profile": _profile(user, absolute),
         "github": _github(user),
         "projects": [_project(p, absolute) for p in projects],
         "likes": [

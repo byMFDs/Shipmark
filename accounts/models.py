@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -7,7 +9,28 @@ from django.utils.translation import gettext_lazy as _
 from .usernames import MAX_LENGTH, validate_username
 
 
+def avatar_path(instance, filename):
+    """Random file name: the uploaded name (which the user controls) is never used."""
+    return f"avatars/{uuid.uuid4().hex}.webp"
+
+
+def cover_path(instance, filename):
+    return f"covers/{uuid.uuid4().hex}.webp"
+
+
 class User(AbstractUser):
+    class Status(models.TextChoices):
+        # The empty value means "no status": nothing is shown on the profile.
+        OPEN_TO_WORK = "open_to_work", _("Open to work")
+        OPEN_TO_COLLABORATE = "open_to_collaborate", _("Open to collaborate")
+        HIRING = "hiring", _("Hiring")
+        BUILDING_IN_PUBLIC = "building_in_public", _("Building in public")
+
+    class AvatarSource(models.TextChoices):
+        NONE = "", _("Initials")
+        UPLOAD = "upload", _("Uploaded")
+        GITHUB = "github", _("From GitHub")
+
     # Lowercase, URL-safe, not reserved (see usernames.py). Replaces Django's default rules.
     username = models.CharField(
         max_length=MAX_LENGTH,
@@ -16,8 +39,19 @@ class User(AbstractUser):
         error_messages={"unique": _("This username is already taken.")},
     )
     display_name = models.CharField(max_length=80, blank=True)
-    bio = models.CharField(max_length=280, blank=True)
-    website = models.URLField(blank=True)
+    # Deprecated since the profile rework: copied to `about` and to a website ProfileLink by migration 0006.
+    # Nothing reads or writes them any more; a later migration drops both columns.
+    bio = models.CharField(max_length=280, blank=True, editable=False)
+    website = models.URLField(blank=True, editable=False)
+    headline = models.CharField(max_length=80, blank=True)
+    about = models.TextField(max_length=1000, blank=True)  # limited markdown, rendered and sanitized on display
+    location = models.CharField(max_length=60, blank=True)
+    status = models.CharField(max_length=20, blank=True, choices=Status.choices)
+    skills = models.ManyToManyField("projects.Tag", blank=True, related_name="skilled_users")
+    # Pictures are always files on our disk (re-encoded WebP, random names), never hotlinked.
+    avatar = models.ImageField(upload_to=avatar_path, blank=True)
+    avatar_source = models.CharField(max_length=10, blank=True, choices=AvatarSource.choices)
+    cover = models.ImageField(upload_to=cover_path, blank=True)
     github_login = models.CharField(max_length=39, blank=True)
     avatar_url = models.URLField(max_length=500, blank=True)
     preferred_language = models.CharField(max_length=10, blank=True, choices=settings.LANGUAGES)
@@ -66,3 +100,46 @@ class UserBadge(models.Model):
 
     def __str__(self):
         return f"{self.user} · {self.get_kind_display()}"
+
+
+class ProfileLink(models.Model):
+    """Up to 6 links on a profile. http(s) only; GitHub, X, LinkedIn and Telegram must point to their own sites
+    (accounts/links.py), so an icon never leads somewhere else. Shown with rel="nofollow ugc noopener"."""
+
+    class Kind(models.TextChoices):
+        WEBSITE = "website", _("Website")
+        GITHUB = "github", _("GitHub")
+        X = "x", _("X")
+        LINKEDIN = "linkedin", _("LinkedIn")
+        TELEGRAM = "telegram", _("Telegram")
+        OTHER = "other", _("Other")
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="links")
+    kind = models.CharField(max_length=10, choices=Kind.choices, default=Kind.WEBSITE)
+    url = models.URLField(max_length=200)
+    order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = _("profile link")
+        verbose_name_plural = _("profile links")
+
+    def __str__(self):
+        return f"{self.user} · {self.get_kind_display()}"
+
+
+class PinnedProject(models.Model):
+    """Up to 3 of a person's own published projects, shown first on the profile."""
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="pins")
+    project = models.ForeignKey("projects.Project", on_delete=models.CASCADE, related_name="pins")
+    order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+        constraints = [models.UniqueConstraint(fields=["user", "project"], name="one_pin_per_project")]
+        verbose_name = _("pinned project")
+        verbose_name_plural = _("pinned projects")
+
+    def __str__(self):
+        return f"{self.user} · {self.project}"
