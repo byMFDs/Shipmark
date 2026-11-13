@@ -156,3 +156,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-13: Community stage 2b (UI). Pages in the feed shell, community.css, composer with previews, sticker picker, image grids, lightbox, rules page, Load more; adopted and fixed an unapproved draft from `stash@{0}` (kept). 50 UI tests; translations in 6 languages.
   Next: "GO 3" (seed_community, post_welcome, rules in 6 languages, Terms/Privacy/DATA_INVENTORY, DEPLOY_NOTES, `check --deploy`); look at the pages in a browser first.
+
+- 2026-11-13: Community stage 3. `post_welcome` and `seed_community` (DEBUG only) with tests; rules page in 7 languages; Terms/Privacy community sections (drafts), `TERMS_VERSION` 2026-11-13; DATA_INVENTORY 6a; DEPLOY_NOTES (switch-on steps, cron), EDITING, CLAUDE.md. Full suite green, `check --deploy` clean.
+  Next: look at the pages in a browser (both themes, 360-1440 px); native-speaker and lawyer review of the new texts; decide about `stash@{0}`; then review and merge `community-1`.

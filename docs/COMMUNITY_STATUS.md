@@ -10,7 +10,7 @@ Brief: community master brief (kept by the developer in `docs/promts/`, not in g
 | 1 | Backend: data, permissions and abuse limits, flag, moderation integration, admin, abuse-case tests, minimal UI | done 2026-11-13 |
 | 2a | Backend for the UI: reply notifications (in-app), sticker files + manifest test, permissions and abuse tests for them | done 2026-11-13 |
 | 2b | UI: C (picker), D (composer, grids, lightbox, `blob:` preview), E (pages, 3 columns, Load more) | done 2026-11-13 |
-| 3 | Polish: design and motion, legal (Terms, Privacy, rules, `TERMS_VERSION` bump), docs, full tests, `check --deploy` | not started |
+| 3 | Polish: design and motion, legal (Terms, Privacy, rules, `TERMS_VERSION` bump), docs, full tests, `check --deploy` | done 2026-11-13 |
 
 ## Decisions proposed in the plan (change if the developer disagrees)
 - New app `community/`, always installed; `COMMUNITY_ENABLED` is checked by one decorator on every view (404 when off).
@@ -97,9 +97,22 @@ fixed and tested. Commits: pages and layout, composer and picker, lightbox, UI t
   Terms/Privacy/DATA_INVENTORY, DEPLOY_NOTES, `check --deploy`, TERMS_VERSION. Not yet checked by eye at 360-1440 px in
   both themes (needs a browser).
 
+## Stage 3 (done)
+- Commands: `post_welcome` (pinned "Welcome and rules" from the system account, once; `--force`, `--board`; works with
+  the flag off; AuditLog `community.welcome_posted`) and `seed_community` (DEBUG only; `demo-*` people with unusable
+  passwords and `@example.invalid`, threads, depth-3 replies, stickers, pictures through the pipeline, upvotes; again =
+  replace, `--clear` = remove). 10 tests in `community/test_commands.py`.
+- Legal (drafts, 13 November 2026): rules page in all 7 languages; Terms "Community" section; Privacy "Community" and
+  "Reply notifications" paragraphs, retention and rights lines; `TERMS_VERSION` 2026-11-13 (signed-in people accept again).
+  `DATA_INVENTORY.md` section 6a (also `community_notified_at`, duplicate keys, the sticker localStorage key).
+- Docs: DEPLOY_NOTES ("Community: switching it on", `community_daily` cron, media folder `community/`, env row),
+  EDITING (glossary terms, section 7 "Спільнота": rules, boards, stickers, welcome, demo data), CLAUDE.md.
+- Motion checked against the rules: transform/opacity only, no loops, everything under `prefers-reduced-motion:
+  no-preference`. Design not checked by eye in a browser (360-1440 px, both themes): the developer does that.
+- Full suite green, `check --deploy` with production settings: no issues; `COMMUNITY_ENABLED` is False in prod.
+
 ## Open questions
 - Reports about threads/replies stay listed in /mod/ while the flag is off (their detail page is a 404). OK?
-- `community_daily` needs a cron line (daily) when Community ships; added to DEPLOY_NOTES in stage 3.
 
 ## Not touched in this round
 - Footer and the badge component (another task owns them); `feed.css`; Explore; proof rules.

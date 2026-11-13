@@ -24,6 +24,12 @@ source .venv/bin/activate
 | check (перевірити репозиторій) | перевірити | sprawdzić | prüfen | comprobar | contrôler | verificar |
 | self-declared | зазначено автором | deklaracja autora | selbst angegeben | declarado por el autor | déclaré par l'auteur | declarado pelo autor |
 | badge | бейдж | plakietka | Badge | insignia | badge | badge |
+| community | спільнота | społeczność | Community | comunidad | communauté | comunidade |
+| board | розділ | dział | Bereich | sección | rubrique | seção |
+| thread | тред | wątek | Thread | hilo | fil | tópico |
+| reply | відповідь | odpowiedź | Antwort | respuesta | réponse | resposta |
+| upvote | голос | głos | Stimme (Upvote) | voto | vote | voto |
+| sticker | стікер | naklejka | Sticker | sticker | autocollant | figurinha |
 
 Звертання: uk «ви», pl безособово/«Ty», de «du», es «tú», fr «vous», pt-br «você».
 Слово «verify» (домен, DNS) і «check» (репозиторій, uptime) не змішуємо.
@@ -118,6 +124,7 @@ content/<мова>/how-proof-works.md — «Як працюють підтвер
 content/<мова>/privacy.md — Політика конфіденційності (/legal/privacy/)
 content/<мова>/terms.md   — Умови користування (/legal/terms/)
 content/<мова>/cookies.md — Політика cookies (/legal/cookies/)
+content/<мова>/community-rules.md — Правила спільноти (/community/rules/)
 ```
 
 Відкриваєш файл, міняєш текст, зберігаєш, оновлюєш сторінку в браузері. Перезапуск не потрібен.
@@ -198,7 +205,31 @@ python manage.py show_errors --notfound   # які неіснуючі адрес
 Якщо додаєш новий `logger.error(...)` у коді, не передавай туди такі дані: фільтр їх прибирає, але краще не покладатися.
 Файли самі обрізаються: максимум 5 МБ і 5 старих копій кожного.
 
-## 7. Швидка перевірка після змін
+## 7. Спільнота (форум)
+
+Вмикається змінною `COMMUNITY_ENABLED` у `.env` (`true` / `false`). Вимкнено: усі сторінки `/community/` дають 404,
+посилання в меню немає. У розробці вона увімкнена.
+
+- **Правила:** `content/<мова>/community-rules.md`, як і інші довгі сторінки (розділ 4). Короткі правила праворуч на
+  кожній сторінці спільноти — це рядки інтерфейсу в `templates/community/_rules_panel.html` (розділ 3). Якщо міняєш
+  правило, онови обидва місця.
+- **Розділи (boards):** в адмінці, у списку Boards: назва, опис, порядок, «активний». П'ять стандартних розділів
+  перекладаються самі (їхні назви є в `community/boards.py` і в `.po`). Новий розділ, створений в адмінці,
+  показується так, як ти його написав, без перекладу. Розділ із тредами не видаляй, а зроби неактивним.
+- **Стікери:** файли `static/stickers/<ключ>.svg` (96×96, лише фігури й кольори, без тексту, скриптів і посилань) і
+  список `community/stickers.py` (ключ → назва). Новий стікер: додай файл, рядок у список, переклади назви
+  (`makemessages` / `compilemessages`) і запусти `python manage.py test community`: тест перевіряє, що кожен ключ
+  має файл і навпаки, і що SVG безпечний. Ключ старого стікера не видаляй, якщо ним уже користувалися: такі відповіді
+  просто не покажуть картинку.
+- **Привітальний тред:** `python manage.py post_welcome` публікує закріплений тред «Welcome and rules» від імені
+  офіційного акаунта shipmark (один раз). Текст у `community/management/commands/post_welcome.py`, англійською,
+  як і всі дописи (дописи не перекладаємо; посилання на правила відкриє їх мовою читача). Новий текст:
+  зміни файл і запусти `post_welcome --force` (старий тред відкріпиться).
+- **Демо-дані для перегляду сторінок:** `python manage.py seed_community` (лише при `DEBUG`, тобто в розробці).
+  Створює людей `demo-…`, треди, відповіді, картинки й голоси. Ще раз — замінює їх, `--clear` — прибирає.
+- **Щоденне прибирання:** `python manage.py community_daily` (у продакшені — cron, див. `docs/DEPLOY_NOTES.md`).
+
+## 8. Швидка перевірка після змін
 
 ```bash
 python manage.py check

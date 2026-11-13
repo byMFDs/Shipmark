@@ -22,6 +22,7 @@ Set them in the real environment or in `/srv/shipmark/.env` (gitignored; real va
 | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | yes | OAuth App. Callback URL: `https://YOUR.DOMAIN/accounts/github/login/callback/` |
 | `GITHUB_API_TOKEN` | **yes** (for `reverify_repos`) | Fine-grained or classic token with **no scopes** (public data only). Lifts GitHub's limit from 60 to 5000 requests/hour. One repo check costs up to ~10 requests, so without it the weekly re-check of repositories stops at the limit after a handful of repos (nothing breaks: it continues next run) |
 | `MEDIA_ROOT` | no | Folder for uploads. Default `<project>/media` |
+| `COMMUNITY_ENABLED` | no | `true` switches the community on (`/community/`, the header link). Default **false** in prod: every community route is 404. See "Community: switching it on" |
 | `SECURE_HSTS_SECONDS` | no | Default 3600. Raise to 31536000 after HTTPS has worked for a few days |
 | `SECURE_HSTS_INCLUDE_SUBDOMAINS`, `SECURE_HSTS_PRELOAD` | no | Default true |
 | `LOG_LEVEL` | no | Default `INFO` |
@@ -86,7 +87,8 @@ profile rows read the thumbnail, the project page reads the full image; both are
 ### Uploads and later S3-compatible storage
 
 All uploads are stored on the server's disk in `MEDIA_ROOT`: `screenshots/` (+ `screenshots/thumbs/`), `avatars/`
-(profile pictures, 512×512) and `covers/` (profile covers, 1500×500). This is fine for one server, but the folder is part
+(profile pictures, 512×512), `covers/` (profile covers, 1500×500) and `community/<year>/<month>/` (community pictures,
+up to 1600 px, thumbnails of 640 px in `t/` next to them). This is fine for one server, but the folder is part
 of the data: back it up (below), and it does not follow you if the app runs on more than one machine.
 
 - What goes in: only re-encoded WebP files with random names, made by one Pillow pipeline (`projects/images.py`).
@@ -95,7 +97,10 @@ of the data: back it up (below), and it does not follow you if the app runs on m
 - What goes out: a file is deleted from disk (through the storage API) when the person replaces or removes it, when a
   moderator clears the picture and cover, when a screenshot or project is deleted, and when the account is deleted.
   After that the only copies are in the backups, for up to 14 days (the privacy page says so).
-- Limits: 5 MB per upload, 20 profile-picture or cover uploads and 5 GitHub downloads per person per hour.
+- Community pictures leave the disk when the author deletes the post, when a moderator removes it (at once, the text
+  is kept for appeals) and when the uploader deletes the account.
+- Limits: 5 MB per upload, 20 profile-picture or cover uploads and 5 GitHub downloads per person per hour; community:
+  10 pictures per person per hour, 4 per thread, 2 per reply, none in the first 24 hours of an account.
 `config/settings/prod.py` has a 4-step note for moving to S3-compatible storage. It needs `django-storages`, which is not
 on the allowed list yet, so decide that together first. No model or view changes are needed.
 
@@ -216,6 +221,10 @@ DJANGO_SETTINGS_MODULE=config.settings.prod
 # Ban hashes (ban evasion): once a day. Deletes the salted GitHub-id hashes of bans that have ended.
 # Bans themselves need no cron: expiry is checked per request.
 15 4 * * *    cd /srv/shipmark && .venv/bin/python manage.py prune_bans >> /var/log/shipmark/bans.log 2>&1
+
+# Community: once a day. Recounts scores and reply counts (votes of suspended or banned accounts stop counting)
+# and deletes reply notifications older than 90 days (the privacy page promises it). Safe with the flag off.
+0 5 * * *     cd /srv/shipmark && flock -n /tmp/shipmark-community.lock .venv/bin/python manage.py community_daily >> /var/log/shipmark/community.log 2>&1
 ```
 
 Create the log directory once: `mkdir -p /var/log/shipmark` (owned by the user that runs cron).
@@ -341,6 +350,28 @@ and they keep matching through `SECRET_KEY` / `SECRET_KEY_FALLBACKS` until they 
 without a fallback before then. When the command reports "No old-scheme hashes left", `SECRET_KEY` has nothing to do
 with bans any more. **Do not roll the migration back after `rehash_bans`:** converted rows only match with this code.
 
+## Community: switching it on
+
+The community ships switched off (`COMMUNITY_ENABLED` unset = false): no link, every `/community/` route is 404, and
+no community code runs on a request. Export and account deletion handle community rows either way.
+
+1. Back up the database and the media folder (section "Backups"); community pictures go into the same media backup,
+   under `MEDIA_ROOT/community/`, so nothing new is needed there.
+2. Make sure at least one person besides you has the moderator badge (`manage.py grant_badge`): there is no
+   pre-moderation, so reports need someone to answer them (risk 1 in `docs/COMMUNITY_PLAN.md`).
+3. Add the `community_daily` cron line (section "Cron jobs") and run it once by hand.
+4. Post the pinned welcome thread from the official account: `manage.py post_welcome` (once; `--board <slug>` to choose
+   the board, `--force` for a new one). It works with the flag still off, so you can check it in the admin first.
+5. Set `COMMUNITY_ENABLED=true` in `.env` and restart gunicorn. Open `/community/`, post a thread with a picture from a
+   second account, reply with a sticker, report it and handle the report in `/mod/`.
+6. The proxy's upload limit (`client_max_body_size 25m`) already covers a thread with 4 pictures of 5 MB.
+7. The Terms changed for the community (`TERMS_VERSION` 2026-11-13): signed-in people accept them again on their next
+   visit. The texts are drafts: have the community parts of Terms and Privacy reviewed with the rest.
+
+To switch it off again, unset the variable and restart: posts stay in the database and come back when it is on.
+`seed_community` (demo content) refuses to run without `DEBUG`; never copy a development database with demo
+accounts (`demo-*`) to production.
+
 ## Pre-launch checklist
 
 Server
@@ -366,6 +397,8 @@ Content and law
       moderator access, appeals, language cookie) without bumping `TERMS_VERSION`, because the site is not public yet.
       After launch, bump `TERMS_VERSION` whenever the Terms change.
 - [ ] pl, de, es, fr, pt-br translations reviewed by native speakers, or remove those languages from `LANGUAGES` for now.
+- [ ] Community (only if it launches): the steps in "Community: switching it on"; rules, Terms and Privacy community
+      parts reviewed; a second moderator exists.
 
 By hand, on the live site (phone and desktop)
 - [ ] Sign in with GitHub, create a project, **upload a screenshot** (checks the media folder permissions), publish it.

@@ -48,7 +48,8 @@ none on your own post), own sticker set, images through the one image pipeline, 
 notifications (no email). Moderation is the existing system (/mod/, Report, Sanction, Notice, AuditLog).
 Flag off (production default): every community route is 404, no link, no code path runs; export and
 account deletion still cover existing rows. Plan, rules and numbers: `docs/COMMUNITY_PLAN.md`,
-progress: `docs/COMMUNITY_STATUS.md`. Raise `TERMS_VERSION` when Community ships.
+progress: `docs/COMMUNITY_STATUS.md`. Terms/Privacy cover it (`TERMS_VERSION` 2026-11-13); switch-on steps in
+`docs/DEPLOY_NOTES.md`. Rules page: `content/<lang>/community-rules.md`. Pages share `templates/community/_layout.html`.
 
 ### MVP: out of scope (do not build)
 Payments, subscriptions, messaging/DMs, comments on projects (discussion lives in Community), company/investor accounts,
@@ -110,12 +111,13 @@ social/            Follow, Like, feed + ranking.py
 pages/             landing, explore, legal and content pages, styleguide (DEBUG only)
 moderation/        Report, Sanction, Notice, BannedIdentity, AuditLog, /mod/, decisions, admin actions
 news/              NewsPost (written in the admin only, published as the system account "shipmark")
+community/         Board, Thread, Reply, CommunityImage, Vote, ReplyNotification, stickers.py, ranking.py, services.py
 templates/  static/{css,js,fonts,brand,img}/  content/<lang>/*.md  locale/  docs/
 ```
 
 URLs: `/` landing · `/feed/` · `/explore/` · `/new/` · `/settings/` ·
 `/u/<username>/` · `/u/<username>/<project-slug>/` · `/badge/<username>.svg` ·
-`/badge/<username>/<project-slug>.svg` · `/legal/<slug>/` · `/how-proof-works/` · `/news/` ·
+`/badge/<username>/<project-slug>.svg` · `/legal/<slug>/` · `/how-proof-works/` · `/news/` · `/community/` (`b/<slug>/`, `t/<id>-<slug>/`, `new/`, `rules/`) ·
 `/mod/` (moderator badge or superuser) · admin at `ADMIN_URL` from env (never `/admin/` in production).
 
 Reserved usernames: admin, api, static, media, badge, legal, settings, new, feed,
@@ -309,4 +311,7 @@ python manage.py makemigrations && python manage.py migrate
 python manage.py makemessages -l uk --ignore=.venv && python manage.py compilemessages
 python manage.py check_uptime         # cron in production
 python manage.py reverify_domains     # cron in production
+python manage.py community_daily      # cron in production (scores, 90-day notification cleanup)
+python manage.py post_welcome         # once: pinned welcome thread from the system account
+python manage.py seed_community       # DEBUG only: demo community content (--clear removes it)
 ```
