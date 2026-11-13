@@ -7,7 +7,7 @@ Branch `polish-3` (from `polish-2`). Brief: one stage per "GO <n>". Order: 0, 1,
 | 0. Community template leak | done 2026-11-13 | Fix community template leak |
 | 1. Names and copy | done 2026-11-14 | Header: fit long languages · Names: For You, Discover · Copy: plain words in every language · Forms: translate field labels · Legal: easier to read |
 | 7. People search | done 2026-11-14 | People search |
-| 2. Button glow | | |
+| 2. Button glow | done 2026-11-14 | Halo: visible on the light theme |
 | 3a/3b. Design pass | | |
 | 4. Motion | | |
 | 5. Support email + bug sweep | | |
@@ -47,3 +47,14 @@ Branch `polish-3` (from `polish-2`). Brief: one stage per "GO <n>". Order: 0, 1,
   salted IP hash for anonymous visitors. Constant queries (tested). Privacy + DATA_INVENTORY say what is stored.
 - Not tested on PostgreSQL (no local server running); lookups are Django's istartswith/icontains, which escape
   % and _ on both engines.
+
+## Stage 2 notes
+
+- Cause: on hover the secondary ring turned ink (`--btn-edge: var(--text)`), so the ink light ran over an ink ring;
+  the primary ring ran paper white on the paper page. Now the ring keeps its resting colour and the light is
+  `--text` + one accent spark in both themes. Measured >= 3:1 (table in DESIGN.md); `pages/test_halo.py` reads
+  tokens.css and fails if a token change makes the ring too faint.
+- Kept: hover/focus/loading only, idle turn on the hero only, static ring with reduced motion, forced-colours border.
+- Buttons: heights, radius and icon gaps already consistent; the file input's "Browse" button got the button radius.
+- Not changed (listed for 3a): `.composer__preview .btn` (32px remove button on image previews) and
+  `.reply__collapse` (36px, and a duplicate `padding`) are below the 44px tap target.

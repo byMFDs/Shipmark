@@ -119,10 +119,26 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 - Halo (`.btn--halo`): every "Sign in with GitHub" / "Continue with GitHub" button (header, login page, feed navigation, landing
   hero and closing action) plus "New project" (header) and "Publish project". An oversized conic gradient (`::before`, 200% of the
   width) turns behind the button with `transform: rotate` only, clipped by the rounded button; the fill (`::after`) sits 2px
-  inside, so a 2px ring shows. At rest the ring is the button's edge colour. Hover (mouse only), keyboard focus and loading light it
-  and turn it every 2.4 s. Colours: grey (`--line-strong`), ink (`--text`) and one terracotta spark; on primary buttons the spark is
-  paper, since terracotta would vanish on the fill. `.btn--halo-idle` (the landing hero button only): a faint ring that turns once
-  every 12 s while on screen. Reduced motion: the same ring, standing still. Forced colours: a plain 1px border.
+  inside, so a 2px ring shows. The ring keeps its resting colour (`--halo-base`: `--line-strong`, or `--accent` on a primary
+  button) also on hover; hover (mouse only), keyboard focus and loading run a light over it every 2.4 s. The light is `--text`
+  (dark ink on the light theme, near-white on the dark one) with one spark (`--accent`; `--accent-hover` on a primary button).
+  Polish-3 stage 2: before, hover turned the whole ring ink on the light theme (ink light on an ink ring, invisible) and the
+  primary ring ran paper white on the paper page. `.btn--halo-idle` (the landing hero button only): a faint ring that turns once
+  every 12 s while on screen. Reduced motion: the same ring, standing still, still lit on hover and focus. Forced colours: a plain
+  1px border.
+
+  Measured (every colour on the ring, blends between stops at 10% steps, against page and surface):
+
+  | Theme / button | vs paper (min) | vs surface (min) | light vs resting ring |
+  |---|---|---|---|
+  | light, secondary (`#868A80` ring, `#20251F` light, `#BD4B27` spark) | 3.17:1 | 3.49:1 | 4.43:1 |
+  | light, primary (`#BD4B27` ring, `#20251F` light, `#A13D1C` spark) | 4.50:1 | 4.96:1 | 3.12:1 |
+  | dark, secondary (`#6D7771` ring, `#EFEDE4` light, `#F5803F` spark) | 3.80:1 | 3.46:1 | 3.95:1 |
+  | dark, primary (`#F5803F` ring, `#EFEDE4` light, `#FA9A63` spark) | 6.76:1 | 6.15:1 | 2.23:1 (plus a hue change) |
+
+- Button shapes (checked in stage 2): every `.btn` is 44px (`.btn--lg` 52px, `.btn--icon` a 44px square), radius
+  `--radius-btn`, icons 20px with an 8px gap, centred on the label. The file input's "Browse" button now has the same radius.
+  The halo ring is 2px where other edges are 1px: on purpose, it marks the main action.
 - Fields: surface, `--line-strong` border, >= 16px text, error = danger border + message with icon,
   `aria-invalid` + `aria-describedby`. Checkbox and radio: 20px control inside a 44px row. `.code-value` +
   `.btn--copy`: a literal value to paste.

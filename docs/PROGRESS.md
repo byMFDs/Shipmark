@@ -171,3 +171,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-14: Polish-3 stage 7 (people search). Discover tabs Projects / People; username search (prefix first, ≥2 chars, 20 per page, hidden/system/demo accounts excluded, wildcards inert), rows with badges, counts and Follow / "You" / "Sign in to follow"; header search (icon from 80em, field in the menu); rate limit per account or salted IP hash (Privacy + DATA_INVENTORY updated); constant query count; 33 tests; 7 languages.
   Next: "GO 2" (button glow). Not tested on PostgreSQL.
+
+- 2026-11-14: Polish-3 stage 2 (button glow). Halo ring keeps its resting colour on hover; the running light is the text colour + an accent spark in both themes (was invisible on the light theme); every ring colour >= 3:1 on page and surface, measured and tested from tokens.css. File-input button radius matches buttons.
+  Next: "GO 3a" (design audit, POLISH3_DESIGN.md).

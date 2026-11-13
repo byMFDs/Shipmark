@@ -129,17 +129,30 @@
 
 /* ---------- Halo: a light that runs around the edge (sign-in buttons and one or two main actions) ----------
    ::before is an oversized conic gradient behind the button, turned with transform: rotate only and clipped by the
-   rounded button; ::after is the fill, 2px smaller, so only a thin ring of the gradient shows. At rest the ring
-   is the button's own edge colour. Hover (mouse), keyboard focus and loading turn the light on and spin it;
-   .btn--halo-idle (the hero button only) keeps a faint, very slow turn while it is on screen (one of the
-   three loops). Reduced motion: the same gradient ring, standing still. Colours: ink, grey and one accent spark. */
+   rounded button; ::after is the fill, 2px smaller, so only a thin ring of the gradient shows. Hover (mouse),
+   keyboard focus and loading turn the light on and spin it; .btn--halo-idle (the hero button only) keeps a faint,
+   very slow turn while it is on screen (one of the three loops). Reduced motion: the same ring, standing still.
+
+   Colours (POLISH3 stage 2): the ring keeps its resting colour (--halo-base: grey edge, or the accent on a primary
+   button) also on hover, and the light that runs over it is the text colour with one accent spark: dark ink on the
+   light theme, near-white on the dark one. Before, hover turned the whole ring ink on the light theme, so an ink
+   light on an ink ring could not be seen, and the primary ring ran paper white on a paper page. Every colour on the
+   ring, blends included, is >= 3:1 against the page and the surface in both themes (table in docs/DESIGN.md). */
 
 .btn--halo {
   --halo-w: 2px;
+  --halo-base: var(--line-strong);
+  --halo-light: var(--text);
+  --halo-spark: var(--accent);
   isolation: isolate;
   overflow: hidden;
   border: 0;
-  background: var(--btn-edge);
+  background: var(--halo-base);
+}
+
+.btn--halo.btn--primary {
+  --halo-base: var(--accent);
+  --halo-spark: var(--accent-hover);
 }
 
 .btn--halo::before,
@@ -155,15 +168,11 @@
   left: 50%;
   width: 200%;
   aspect-ratio: 1;
-  background: conic-gradient(from 0deg, transparent 0 30%, var(--line-strong) 50%, var(--text) 72%, var(--accent) 86%, var(--text) 94%, transparent 100%);
+  background: conic-gradient(from 0deg, var(--halo-base) 0 34%, var(--halo-light) 62%, var(--halo-spark) 79%,
+                             var(--halo-light) 90%, var(--halo-base) 100%);
   opacity: 0;
   transform: translate(-50%, -50%) rotate(0deg);
   transition: opacity var(--t-base) var(--ease-out);
-}
-
-/* On the accent fill the spark would vanish, so the primary halo runs ink and paper. */
-.btn--halo.btn--primary::before {
-  background: conic-gradient(from 0deg, transparent 0 30%, var(--accent-hover) 50%, var(--text) 74%, var(--paper) 88%, var(--text) 95%, transparent 100%);
 }
 
 .btn--halo::after {
@@ -1088,7 +1097,7 @@ a.chip::after {
   background: var(--paper);
   color: var(--text);
   border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
+  border-radius: var(--radius-btn); /* a button: same corners as .btn */
   font: inherit;
   font-weight: 500;
   cursor: pointer;
