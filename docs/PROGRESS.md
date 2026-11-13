@@ -174,3 +174,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-14: Polish-3 stage 2 (button glow). Halo ring keeps its resting colour on hover; the running light is the text colour + an accent spark in both themes (was invisible on the light theme); every ring colour >= 3:1 on page and surface, measured and tested from tokens.css. File-input button radius matches buttons.
   Next: "GO 3a" (design audit, POLISH3_DESIGN.md).
+
+- 2026-11-14: Polish-3 stage 3a (design audit, no code). 18 pages at 360/768/1024/1440, both themes, CSS scan: 11 layout problems, one spacing / icon / alignment rule set, dark theme proposal with a new `--raised` level and measured contrast, add/remove list. All in docs/POLISH3_DESIGN.md.
+  Next: "GO 3b" (implement the approved parts).

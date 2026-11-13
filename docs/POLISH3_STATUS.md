@@ -8,7 +8,7 @@ Branch `polish-3` (from `polish-2`). Brief: one stage per "GO <n>". Order: 0, 1,
 | 1. Names and copy | done 2026-11-14 | Header: fit long languages · Names: For You, Discover · Copy: plain words in every language · Forms: translate field labels · Legal: easier to read |
 | 7. People search | done 2026-11-14 | People search |
 | 2. Button glow | done 2026-11-14 | Halo: visible on the light theme |
-| 3a/3b. Design pass | | |
+| 3a/3b. Design pass | 3a done 2026-11-14 (plan in POLISH3_DESIGN.md), waiting for "GO 3b" | Design audit (3a) |
 | 4. Motion | | |
 | 5. Support email + bug sweep | | |
 | 6. Code comments (only on "GO 6") | | |
