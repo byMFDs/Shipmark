@@ -1,6 +1,6 @@
 # Política de privacidad
 
-> **Borrador**, última actualización el 12 de noviembre de 2026. Este texto aún no ha sido revisado por un abogado.
+> **Borrador**, última actualización el 13 de noviembre de 2026. Este texto aún no ha sido revisado por un abogado.
 >
 > Traducción de cortesía; prevalece la versión en inglés.
 
@@ -35,6 +35,10 @@ Los resultados se muestran en la página pública de tu proyecto.
 
 **Denuncias y moderación.** Si denuncias un proyecto, un perfil o una entrada del registro de desarrollo, guardamos el motivo y los detalles que escribas. Las denuncias las ven los moderadores (personas con la insignia de moderador) y el equipo. Para decidir, también ven el contenido denunciado y el historial de la persona denunciada en {{ site_name }}: cuándo se unió, sanciones anteriores, otras denuncias sobre ella y proyectos retirados. Las páginas de moderación no muestran direcciones de correo. A la persona denunciada nunca se le dice quién la denunció. Cuando los moderadores actúan, guardamos la decisión y su motivo: un proyecto retirado conserva su contenido y el motivo (solo lo ven tú, los moderadores y el equipo), los campos de perfil vaciados (foto y portada, descripción breve y «Acerca de», o enlaces) se borran, y los silencios y bloqueos se guardan con su motivo, inicio y fin. Ves el motivo en un aviso en el sitio, que guardamos hasta que eliminas tu cuenta. Las decisiones sobre ti y estos avisos se incluyen en «Descargar mis datos». Para recurrir una decisión, escribe a [{{ contact_email }}](mailto:{{ contact_email }}).
 
+**Comunidad.** Cuando publicas en la comunidad guardamos tus hilos (sección, título, texto, fechas y si un hilo fue editado, fijado, cerrado o retirado), tus respuestas (texto, el sticker que elegiste, a qué publicación responden) y las imágenes que adjuntas. Las imágenes se vuelven a codificar como las capturas de pantalla: se eliminan metadatos ocultos como la ubicación GPS, los nombres de archivo son aleatorios y en nuestro propio servidor guardamos una copia de hasta 1600 px y una miniatura de 640 px. Las publicaciones, sus imágenes, su número de votos y tu nombre de usuario en ellas son **públicos**. También guardamos tus votos; nadie ve quién votó qué, ni en el sitio ni en el panel de administración. Cuando eliminas una publicación, su texto, su sticker y sus imágenes se eliminan en el acto (el título de un hilo se queda mientras haya respuestas de otras personas debajo y aparece como «[eliminado]»). Cuando los moderadores retiran una publicación, sus imágenes se eliminan en el acto y su texto se conserva con el motivo, visible solo para ti, los moderadores y el personal. Los moderadores ven las publicaciones denunciadas junto con el historial de su autor, como en otras denuncias.
+
+**Avisos de respuestas.** Cuando alguien responde a tu hilo o a tu respuesta, guardamos un aviso para ti (qué respuesta, cuándo y cuándo abriste la lista), además de la hora del aviso sin leer más reciente, para que el menú pueda mostrar una marca. Solo tú los ves. Se eliminan a los **90 días** o con tu cuenta. Nunca los enviamos por correo.
+
 **Evasión de bloqueos.** Cuando se bloquea una cuenta, guardamos un hash unidireccional con sal de su id de usuario de GitHub (nunca el id), con el motivo y la fecha de fin. Solo sirve para reconocer la misma cuenta de GitHub si vuelve a registrarse durante el bloqueo. Se borra cuando el bloqueo termina o se levanta, también si la cuenta bloqueada se eliminó entretanto.
 
 **Aceptación de los Términos.** Guardamos qué versión de los Términos aceptaste y cuándo.
@@ -56,6 +60,8 @@ Los resultados se muestran en la página pública de tu proyecto.
 ## Cuánto tiempo lo conservamos {#retention}
 
 - Tu cuenta, perfil, proyectos, seguimientos y me gusta: hasta que los elimines a ellos o a tu cuenta.
+- Hilos, respuestas e imágenes de la comunidad: hasta que los elimines o elimines tu cuenta (lo que se queda se explica arriba, en «Comunidad»). Votos: hasta que los retires o elimines tu cuenta.
+- Avisos de respuestas: 90 días.
 - Foto de perfil y portada: hasta que las quites o reemplaces, o elimines tu cuenta.
 - Comprobaciones de disponibilidad: 90 días.
 - Decisiones de moderación sobre ti (silencios, bloqueos, proyectos retirados) y avisos: mientras exista tu cuenta; se borran con ella. Las denuncias sobre ti se conservan sin vínculo con tu cuenta, solo con el nombre de ese momento.
@@ -81,6 +87,7 @@ No vendemos tus datos ni los compartimos con fines publicitarios.
 - **Ver y descargar tus datos:** en Ajustes → «Descargar mis datos» obtienes un archivo JSON con tu perfil (con tus enlaces, habilidades, proyectos fijados y las direcciones de tu foto y tu portada), tus datos de GitHub, proyectos, registro de desarrollo, me gusta, seguimientos, las denuncias que hiciste y las decisiones de moderación y avisos sobre ti.
 - **Corregirlos:** edita tu perfil en Ajustes y tus proyectos en sus páginas.
 - **Eliminarlos:** Ajustes → «Eliminar cuenta». Esto elimina de inmediato tu perfil, tu foto y tu portada y todos tus proyectos, me gusta y seguimientos, y no se puede deshacer. Tu nombre de usuario queda libre.
+- **Comunidad:** «Descargar mis datos» también incluye tus hilos, respuestas, las direcciones de tus imágenes, tus votos y tus avisos de respuestas. Eliminar tu cuenta elimina tus imágenes de la comunidad, tus votos, tus avisos y tus hilos sin respuestas de otras personas; el resto de tus publicaciones se queda sin tu nombre, tu foto ni tu enlace. Las imágenes de la comunidad están en las copias de seguridad diarias, como las demás subidas (14 días).
 - **Oponerte o reclamar:** escribe a [{{ contact_email }}](mailto:{{ contact_email }}). Si vives en la UE, el Reino Unido o Ucrania, también puedes reclamar ante tu autoridad de protección de datos.
 
 ## Cookies {#cookies}

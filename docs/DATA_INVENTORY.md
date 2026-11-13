@@ -5,7 +5,7 @@ Every piece of personal data the code stores or processes. The privacy, terms an
 **When a model gets a new personal field, or data goes somewhere new, update this file, the legal
 pages and `accounts/export.py`.**
 
-Last checked against the code: 2026-11-12 (trust hardening: GitHub login refresh, repository facts, review queue, blocks).
+Last checked against the code: 2026-11-13 (community: threads, replies, images, upvotes, reply notifications).
 
 "Public" means anyone on the internet, signed in or not. "Staff" means people with admin access
 (`is_staff`) at `ADMIN_URL`. Every record below is in the export unless the "Export" column says no.
@@ -80,12 +80,32 @@ Requests to users' sites go through `verification/net.py::safe_fetch` with a fix
 
 | Data | Source | Purpose | Retention | Who can see it | Export |
 |---|---|---|---|---|---|
-| `Report` (reporter, target: project / profile / build-log entry, target owner, target name, source user/moderator, reason, details, status open/in review/resolved/dismissed, resolution note, handled by, dates) | A signed-in user, or a moderator acting while browsing | Moderation | Kept after it is handled (no automatic deletion). When the reporter deletes their account, `reporter` becomes empty. When the target or its owner is deleted, those links become empty; the readable name (`target_repr`, e.g. "alice/my-app") stays | Moderators (moderator badge) and staff. The reported person never sees who reported them | yes (reports you made) |
+| `Report` (reporter, target: project / profile / build-log entry / thread / reply, target owner, target name, source user/moderator, reason, details, status open/in review/resolved/dismissed, resolution note, handled by, dates) | A signed-in user, or a moderator acting while browsing | Moderation | Kept after it is handled (no automatic deletion). When the reporter deletes their account, `reporter` becomes empty. When the target or its owner is deleted, those links become empty; the readable name (`target_repr`, e.g. "alice/my-app") stays | Moderators (moderator badge) and staff. The reported person never sees who reported them | yes (reports you made) |
 | `Sanction` (user, mute/ban, reason, start, end or none = permanent, issued by, report, revoked at/by) | A moderator (mute ≤ 7 days, ban ≤ 14 days) or a superuser (any length, permanent, revoke) | Enforce the terms: a mute blocks posting; a ban signs the person out, blocks sign-in and hides the profile and projects | While the account exists (never deleted, only revoked); deleted with the account | The person (reason and end date: banner or ban page), moderators, staff | yes |
 | `Notice` (user, kind, about, reason, created, dismissed) | System, from a moderator decision | Tell the person what was decided and why (removed project, cleared profile fields, outcome of their report). Never names a reporter | While the account exists; deleted with it | The person, staff | yes |
 | `BannedIdentity` (HMAC-SHA256 of the GitHub user id under `BAN_HASH_KEY`, hash scheme, reason, end date, sanction link) | System, when a ban is issued for an account with GitHub sign-in | Stop a banned person from deleting the account and signing up again during the ban. The GitHub id itself is never stored. The key is its own secret (env `BAN_HASH_KEY`, not in the database, not `SECRET_KEY`); the hash is useless without it. Hashes made before this key existed (scheme `secret_key`) are converted by `rehash_bans` when their account still exists, otherwise they expire on their own | Only until the ban ends or is revoked: deleted on revoke, when sign-ups are checked, and by the daily `prune_bans`. Survives account deletion until then | Superusers (hash only) | no (not linked to an account) |
 | `Project.removed_reason`, `removed_at`, `removed_by` | A moderator | Why a project was removed (owner sees it on the project page) | With the project; superusers restore or purge | Owner, moderators, staff | yes (with the project) |
 | `AuditLog` (actor, action, target type/id, target name, metadata, date) | System and staff | Record of hallmark changes (earned, removed, needs review, needs re-check, repo renamed), GitHub login changes (`account.github_login.renamed` / `.released`, with old and new login), moderation actions (approve, revoke, block), account deletions | Kept (no automatic deletion). Actor becomes empty when that account is deleted. The account-deletion entry has no username or email ("deleted user #<id>") | Staff only, read-only | no (internal record) |
+
+## 6a. Community (`community`, behind `COMMUNITY_ENABLED`)
+
+Export and deletion cover these rows also while the flag is off.
+
+| Data | Source | Purpose | Retention | Who can see it | Export |
+|---|---|---|---|---|---|
+| `Thread` (board, author, title ≤120, body ≤8000 limited markdown, slug, status published/locked/removed, pinned, created, edited, last activity, score, reply count, `deleted_at`, removed reason/at/by, lock reason) | The user; moderators set status, pin, lock and the reasons | Community threads | Author delete: body and images deleted at once; the row (title, "[deleted]") stays only while others replied. Account deletion: threads without others' replies are deleted, the rest lose their author (`SET_NULL`) | Published/locked on an active board with a visible author: public. Removed: author, moderators, staff. Reasons: author, moderators, staff | yes (with removed reason) |
+| `Reply` (thread, parent, root, depth 1-3, author, body ≤4000, sticker key, status, score, created, edited, `deleted_at`, removed reason/at/by) | The user; moderators remove | Answers | Author delete: body, sticker and images deleted at once, the row stays for the answers under it. Account deletion: author emptied | Like the thread; removed text: author, moderators, staff | yes |
+| `CommunityImage` (display copy ≤1600 px and 640 px thumbnail, WebP, width/height, alt, order, uploader, date) in `MEDIA_ROOT/community/<year>/<month>/` (thumbnails in `t/`) | Upload; re-encoded by `projects/images.py` (metadata such as EXIF/GPS removed), random names, through the storage API | Pictures in posts | Deleted with the row and its files (`community/signals.py`) when the author deletes the post, a moderator removes it, or the uploader deletes the account. Then only in backups (14 days) | Same as the post | yes (addresses, sizes) |
+| `Vote` (user, thread or reply, date) | The user | Scores, Hot/Top | Until taken back, or deletion of the user or the post. `community_daily` stops counting votes of suspended or banned accounts | Nobody: only the score is public. Not registered in the admin | yes |
+| `ReplyNotification` (recipient, reply, kind thread/reply, created, read) | System, when someone answers the person's thread or reply (never for their own reply, deleted or inactive accounts) | "Replies to you" list (in-app only, no email) | **90 days** (`community_daily`), or with the account or the reply | The recipient | yes (kind, address, dates; not the other person's name or text) |
+| `User.community_notified_at` | System | The mark in the account menu without a query | Cleared when the list is opened; with the account | The user (as a mark) | no (a cache of the row above) |
+| Duplicate-post keys `community:dup:<kind>:<user id>:<SHA-256 of board/parent + normalized text>` | Django cache (`community/services.py`) | Refuse the same text twice in a row | 10 minutes (reply) or 24 hours (thread) | Nobody | no |
+| `community.recentStickers` (localStorage, not a cookie) | `static/js/composer.js` | The last 8 stickers in the picker | Until cleared in the browser. **Never sent to the server** | n/a | n/a |
+
+Moderators (moderator badge) see reported posts in `/mod/` with the author's history, like other reports, and removed
+posts with their text. The AuditLog records remove, lock, pin, restore and `community.welcome_posted`.
+The demo accounts of `seed_community` (`demo-*`, `@example.invalid`) exist only in development (the command refuses
+to run without `DEBUG`).
 
 ## 7. Cookies and browser storage
 
@@ -97,6 +117,7 @@ Only strictly necessary ones. No analytics, no ads, no third-party scripts or fo
 | `csrftoken` | Django CSRF | Protects forms against cross-site requests | 1 year (Django default) |
 | `django_language` | Language switcher; also written from the saved `preferred_language` at sign-in and on signed-in pages when it differs (`UserLocaleMiddleware`, `AccountAdapter.post_login`) | Remembers the language you chose, so pages and the "signed in / signed out" notices stay in one language, also after signing out | 1 year (`LANGUAGE_COOKIE_AGE`) |
 | `messages` | Django messages | One-time notices ("Settings saved") when there is no session (e.g. right after sign-out) | Until shown, at most the browser session |
+| `community.recentStickers` (localStorage, not a cookie) | `static/js/composer.js` | Recent stickers in the picker | Until cleared in the browser. **Never sent to the server** |
 | `theme` (localStorage, not a cookie) | `static/js/theme.js` | Light/dark choice | Until cleared in the browser. **Never sent to the server** |
 
 ## 8. Server-side, not in models
@@ -125,7 +146,7 @@ Nothing is sold or shared for advertising. No email provider (the site sends no 
 
 - **Export:** Settings → "Download my data" (`accounts/export.py`): JSON of everything marked "yes" above.
 - **Deletion:** Settings → "Delete account" (`accounts/deletion.py`): type the username to confirm. Deletes the
-  user and cascades to everything in sections 1–5. Reports they made are kept with `reporter` emptied.
+  user and cascades to everything in sections 1–5; community content as described in section 6a. Reports they made are kept with `reporter` emptied.
   Writes `AuditLog` action `account.deleted`. The username is free again.
 - **Correction:** profile fields in Settings; project content on the project pages.
 - **Terms re-acceptance:** bump `TERMS_VERSION` in `config/settings/base.py`; signed-in users are asked on their next visit.

@@ -1,6 +1,6 @@
 # Conditions d’utilisation
 
-> **Brouillon**, dernière mise à jour le 12 novembre 2026 (version {{ terms_version }}). Ce texte n’a pas encore été relu par un juriste.
+> **Brouillon**, dernière mise à jour le 13 novembre 2026 (version {{ terms_version }}). Ce texte n’a pas encore été relu par un juriste.
 >
 > Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
@@ -35,6 +35,17 @@ N’essayez pas de :
 ## Poinçons {#hallmarks}
 
 Les poinçons sont calculés à partir de nos derniers contrôles. Ils peuvent changer ou disparaître lorsqu’un contrôle n’est plus réussi. Ils montrent ce que nous avons pu contrôler, rien de plus : ils ne garantissent ni la qualité ni la sécurité d’un projet.
+
+## Communauté {#community}
+
+La communauté (rubriques, fils et réponses) a ses propres [règles de la communauté](/community/rules/), qui font partie de ces conditions.
+
+- Les fils, les réponses et les images que vous y joignez sont publics. La section « Votre contenu » s’y applique : vous gardez vos droits et nous autorisez à les afficher.
+- Sont interdits : le spam et la publicité (présenter votre propre projet dans « Montrez votre projet » est permis), le harcèlement, la haine ou les menaces, le contenu sexuel, tout ce qui implique des mineurs, les logiciels malveillants, les comptes, données ou clés volés, les informations privées d’autrui et les œuvres que vous n’avez pas le droit de partager.
+- Toute personne connectée peut signaler un fil ou une réponse. Les modérateurs peuvent retirer un message (ses images sont supprimées immédiatement), verrouiller un fil pour que seuls les modérateurs puissent répondre, ou l’épingler. Chaque retrait et chaque verrouillage s’accompagne d’un motif que l’auteur voit. Un message retiré reste visible pour son auteur et pour les modérateurs, afin que la décision puisse être revue ; les administrateurs peuvent en restaurer le texte.
+- Vous pouvez modifier et supprimer vos messages. Un message supprimé qui a déjà des réponses reste affiché comme « [supprimé] », pour que les réponses des autres gardent leur place.
+- Si vous supprimez votre compte, vos fils sans réponse d’autres personnes sont supprimés ; vos autres fils et vos réponses restent, sans votre nom, votre photo ni votre lien.
+- Pour contester une décision, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}) en indiquant l’adresse du message.
 
 ## Modération {#moderation}
 

@@ -147,7 +147,7 @@ LOGOUT_REDIRECT_URL = "pages:landing"
 # Bump when the Terms change (use the date of the change). Saved on the user at signup
 # (terms_version_accepted). After a bump every signed-in user is asked to accept again on their next visit
 # (config.middleware.TermsAcceptanceMiddleware). Also update the date at the top of content/*/terms.md.
-TERMS_VERSION = "2026-11-10"
+TERMS_VERSION = "2026-11-13"
 
 # Moderation (/mod/). Moderators (moderator badge) stay within these limits; superusers have none and are the
 # only ones who issue permanent sanctions, revoke, restore and purge. Every action needs a reason the user sees.

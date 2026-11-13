@@ -1,6 +1,6 @@
 # Polityka prywatności
 
-> **Wersja robocza**, ostatnia aktualizacja: 12 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
+> **Wersja robocza**, ostatnia aktualizacja: 13 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
 >
 > Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
@@ -35,6 +35,10 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 **Zgłoszenia i moderacja.** Jeśli zgłosisz projekt, profil lub wpis w dzienniku rozwoju, zapisujemy powód i podane przez Ciebie szczegóły. Zgłoszenia widzą moderatorzy (osoby z odznaką moderatora) i zespół. Aby podjąć decyzję, widzą też zgłoszoną treść i historię zgłoszonej osoby w {{ site_name }}: datę dołączenia, wcześniejsze sankcje, inne zgłoszenia na nią i usunięte projekty. Strony moderacji nie pokazują adresów e-mail. Zgłoszona osoba nigdy nie dowiaduje się, kto ją zgłosił. Gdy moderatorzy podejmują działanie, zapisujemy decyzję i jej powód: usunięty projekt zachowuje treść i powód (widzisz go tylko Ty, moderatorzy i zespół), wyczyszczone pola profilu (zdjęcie i obraz w tle, krótki opis i „O mnie” albo linki) są usuwane, a wyciszenia i blokady są zapisywane z powodem, początkiem i końcem. Powód widzisz w powiadomieniu na stronie, które przechowujemy, dopóki nie usuniesz konta. Decyzje dotyczące Ciebie i te powiadomienia są w „Pobierz moje dane”. Aby odwołać się od decyzji, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
 
+**Społeczność.** Gdy piszesz w społeczności, zapisujemy Twoje wątki (dział, tytuł, tekst, daty oraz to, czy wątek był edytowany, przypięty, zamknięty lub usunięty), Twoje odpowiedzi (tekst, wybraną naklejkę, post, na który odpowiadają) i dołączone obrazy. Obrazy są kodowane na nowo tak jak zrzuty ekranu: ukryte metadane, np. lokalizacja GPS, są usuwane, nazwy plików są losowe, a na naszym serwerze przechowujemy kopię do 1600 px i miniaturę 640 px. Posty, ich obrazy, liczba głosów i Twoja nazwa użytkownika przy nich są **publiczne**. Zapisujemy też Twoje głosy; nikt nie widzi, kto na co głosował, ani na stronie, ani w panelu administracyjnym. Gdy usuwasz post, jego tekst, naklejka i obrazy są kasowane od razu (tytuł wątku zostaje, dopóki są pod nim odpowiedzi innych, i jest widoczny jako „[usunięto]”). Gdy post usuwają moderatorzy, jego obrazy są kasowane od razu, a tekst zostaje zachowany wraz z powodem i widzą go tylko Ty, moderatorzy i personel. Moderatorzy widzą zgłoszony post razem z historią autora, tak jak przy innych zgłoszeniach.
+
+**Powiadomienia o odpowiedziach.** Gdy ktoś odpowie na Twój wątek lub Twoją odpowiedź, zapisujemy dla Ciebie powiadomienie (która odpowiedź, kiedy i kiedy otworzyłeś listę) oraz czas najnowszego nieprzeczytanego, aby menu mogło pokazać znacznik. Widzisz je tylko Ty. Są usuwane po **90 dniach** albo razem z kontem. Nigdy nie wysyłamy ich e-mailem.
+
 **Omijanie blokady.** Gdy konto zostaje zablokowane, zapisujemy jednokierunkowy skrót (z solą) jego identyfikatora GitHub, nigdy sam identyfikator, razem z powodem i datą końca. Pozwala on tylko rozpoznać to samo konto GitHub, jeśli zarejestruje się ponownie w czasie blokady. Skrót jest usuwany, gdy blokada się kończy lub zostaje cofnięta, także jeśli zablokowane konto zostało w międzyczasie usunięte.
 
 **Akceptacja Regulaminu.** Zapisujemy, którą wersję Regulaminu zaakceptowano i kiedy.
@@ -56,6 +60,8 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 ## Jak długo to przechowujemy {#retention}
 
 - Konto, profil, projekty, obserwowania i polubienia: dopóki ich nie usuniesz albo nie usuniesz konta.
+- Wątki, odpowiedzi i obrazy w społeczności: dopóki ich nie usuniesz albo nie usuniesz konta (co zostaje, opisuje sekcja „Społeczność” powyżej). Głosy: dopóki ich nie cofniesz albo nie usuniesz konta.
+- Powiadomienia o odpowiedziach: 90 dni.
 - Zdjęcie profilowe i obraz w tle: dopóki ich nie usuniesz lub nie zastąpisz albo nie usuniesz konta.
 - Sprawdzenia dostępności: 90 dni.
 - Decyzje moderacji dotyczące Ciebie (wyciszenia, blokady, usunięte projekty) i powiadomienia: dopóki istnieje Twoje konto; są usuwane razem z nim. Zgłoszenia dotyczące Ciebie zostają bez powiązania z kontem, tylko z ówczesną nazwą.
@@ -81,6 +87,7 @@ Nie sprzedajemy Twoich danych i nie udostępniamy ich do celów reklamowych.
 - **Zobacz i pobierz swoje dane:** Ustawienia → „Pobierz moje dane” daje plik JSON z Twoim profilem (z linkami, umiejętnościami, przypiętymi projektami i adresami zdjęcia i obrazu w tle), danymi z GitHuba, projektami, dziennikiem rozwoju, polubieniami, obserwowanymi, wysłanymi zgłoszeniami oraz decyzjami moderacji i powiadomieniami dotyczącymi Ciebie.
 - **Popraw je:** edytuj profil w Ustawieniach, a projekty na ich stronach.
 - **Usuń je:** Ustawienia → „Usuń konto”. To od razu usuwa Twój profil, zdjęcie i obraz w tle oraz wszystkie projekty, polubienia i obserwowania i nie można tego cofnąć. Twoja nazwa użytkownika staje się wolna.
+- **Społeczność:** „Pobierz moje dane” zawiera też Twoje wątki, odpowiedzi, adresy Twoich obrazów, głosy i powiadomienia o odpowiedziach. Usunięcie konta kasuje Twoje obrazy w społeczności, głosy, powiadomienia oraz wątki bez odpowiedzi innych osób; pozostałe posty zostają bez Twojej nazwy, zdjęcia i linku. Obrazy ze społeczności trafiają do codziennych kopii zapasowych, jak inne przesłane pliki (14 dni).
 - **Sprzeciw lub skarga:** napisz na [{{ contact_email }}](mailto:{{ contact_email }}). Jeśli mieszkasz w UE, Wielkiej Brytanii lub na Ukrainie, możesz też złożyć skargę do organu ochrony danych.
 
 ## Pliki cookie {#cookies}

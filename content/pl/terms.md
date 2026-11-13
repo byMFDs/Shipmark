@@ -1,6 +1,6 @@
 # Regulamin
 
-> **Wersja robocza**, ostatnia aktualizacja: 12 listopada 2026 (wersja {{ terms_version }}). Ten tekst nie został jeszcze sprawdzony przez prawnika.
+> **Wersja robocza**, ostatnia aktualizacja: 13 listopada 2026 (wersja {{ terms_version }}). Ten tekst nie został jeszcze sprawdzony przez prawnika.
 >
 > Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
@@ -35,6 +35,17 @@ Nie wolno:
 ## Znaki {#hallmarks}
 
 Znaki są obliczane na podstawie naszych najnowszych sprawdzeń. Mogą się zmienić lub zniknąć, gdy sprawdzenie przestanie być zaliczane. Pokazują to, co mogliśmy sprawdzić, i nic więcej: nie są gwarancją jakości ani bezpieczeństwa projektu.
+
+## Społeczność {#community}
+
+Społeczność (działy, wątki i odpowiedzi) ma własne [zasady społeczności](/community/rules/); są one częścią tego regulaminu.
+
+- Wątki, odpowiedzi i dołączone do nich obrazy są publiczne. Dotyczy ich sekcja „Twoje treści” powyżej: zachowujesz swoje prawa i pozwalasz nam je pokazywać.
+- Niedozwolone są: spam i reklama (pokazanie własnego projektu w dziale „Pokaż swój projekt” jest w porządku), nękanie, nienawiść lub groźby, treści seksualne, cokolwiek z udziałem nieletnich, złośliwe oprogramowanie, skradzione konta, dane lub klucze, cudze prywatne informacje oraz utwory, którymi nie masz prawa się dzielić.
+- Każda zalogowana osoba może zgłosić wątek lub odpowiedź. Moderatorzy mogą usunąć post (jego obrazy są kasowane od razu), zamknąć wątek, tak aby odpowiadać mogli tylko moderatorzy, albo go przypiąć. Każde usunięcie i zamknięcie ma powód, który widzi autor. Usunięty post pozostaje widoczny dla autora i moderatorów, aby można było sprawdzić decyzję; administratorzy mogą przywrócić jego tekst.
+- Możesz edytować i usuwać swoje posty. Usunięty post, na który ktoś już odpowiedział, zostaje jako „[usunięto]”, żeby odpowiedzi innych zachowały swoje miejsce.
+- Gdy usuniesz konto, Twoje wątki bez odpowiedzi innych osób zostaną usunięte; pozostałe wątki i Twoje odpowiedzi zostaną, bez Twojej nazwy, zdjęcia i linku.
+- Aby odwołać się od decyzji, napisz na [{{ contact_email }}](mailto:{{ contact_email }}) i podaj adres postu.
 
 ## Moderacja {#moderation}
 

@@ -1,6 +1,6 @@
 # Terms of use
 
-> **Draft**, last updated 12 November 2026 (version {{ terms_version }}). This text has not been reviewed by a lawyer yet.
+> **Draft**, last updated 13 November 2026 (version {{ terms_version }}). This text has not been reviewed by a lawyer yet.
 
 These terms are the agreement between you and {{ legal_owner_name }}, who runs {{ site_name }}. By creating an account you accept them. Questions: [{{ contact_email }}](mailto:{{ contact_email }}).
 
@@ -33,6 +33,17 @@ Do not:
 ## Hallmarks {#hallmarks}
 
 Hallmarks are worked out from our latest checks. They can change or disappear when a check no longer passes. They show what we were able to check, nothing more: they are not a guarantee of quality or safety of a project.
+
+## Community {#community}
+
+The community (boards, threads and replies) has its own [community rules](/community/rules/); they are part of these terms.
+
+- Threads, replies and the images you attach are public. "Your content" above applies to them: you keep your rights and give us permission to show them.
+- Not allowed: spam and advertising (showing your own project in "Show your project" is fine), harassment, hate or threats, sexual content, anything involving minors, malware, stolen accounts, data or keys, other people's private information, and work you have no right to share.
+- Anyone signed in can report a thread or a reply. Moderators can remove a post (its images are deleted at once), lock a thread so that only moderators can reply, or pin it. Every removal and lock comes with a reason that the author sees. A removed post stays visible to its author and to moderators so that it can be reviewed; administrators can restore its text.
+- You can edit and delete your posts. A deleted post that already has replies stays as "[deleted]", so that the replies of others keep their place.
+- When you delete your account, your threads without replies from others are deleted; your other threads and your replies stay, without your name, picture or link.
+- To appeal a decision, write to [{{ contact_email }}](mailto:{{ contact_email }}) with the address of the post.
 
 ## Moderation {#moderation}
 

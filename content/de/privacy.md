@@ -1,6 +1,6 @@
 # Datenschutzerklärung
 
-> **Entwurf**, zuletzt aktualisiert am 12. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
+> **Entwurf**, zuletzt aktualisiert am 13. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
 >
 > Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
@@ -35,6 +35,10 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 **Meldungen und Moderation.** Wenn du ein Projekt, ein Profil oder einen Build-Log-Eintrag meldest, speichern wir den Grund und die Details, die du schreibst. Meldungen sehen Moderatorinnen und Moderatoren (Personen mit dem Moderator-Abzeichen) und das Team. Für ihre Entscheidung sehen sie auch den gemeldeten Inhalt und die Vorgeschichte der gemeldeten Person auf {{ site_name }}: wann sie beigetreten ist, frühere Sanktionen, andere Meldungen über sie und entfernte Projekte. Die Moderationsseiten zeigen keine E-Mail-Adressen. Die gemeldete Person erfährt nie, wer sie gemeldet hat. Wenn die Moderation handelt, speichern wir die Entscheidung und ihren Grund: Ein entferntes Projekt behält seinen Inhalt und den Grund (nur du, die Moderation und das Team sehen ihn), geleerte Profilfelder (Profilbild und Titelbild, Kurzbeschreibung und „Über mich“ oder Links) werden gelöscht, und Stummschaltungen und Sperren werden mit Grund, Beginn und Ende gespeichert. Den Grund siehst du in einem Hinweis auf der Website, den wir behalten, bis du dein Konto löschst. Entscheidungen über dich und diese Hinweise sind in „Meine Daten herunterladen“ enthalten. Um eine Entscheidung anzufechten, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
 
+**Community.** Wenn du in der Community schreibst, speichern wir deine Threads (Bereich, Titel, Text, Daten und ob ein Thread bearbeitet, angeheftet, geschlossen oder entfernt wurde), deine Antworten (Text, den gewählten Sticker, auf welchen Beitrag sie antworten) und die angehängten Bilder. Bilder werden wie Screenshots neu kodiert: Versteckte Metadaten wie der GPS-Standort werden entfernt, die Dateinamen sind zufällig, und auf unserem eigenen Server liegen eine Kopie bis 1600 px und ein Vorschaubild mit 640 px. Beiträge, ihre Bilder, ihre Stimmenzahl und dein Benutzername daran sind **öffentlich**. Wir speichern auch deine Stimmen; niemand sieht, wer wofür gestimmt hat, weder auf der Website noch im Admin-Bereich. Wenn du einen Beitrag löschst, werden sein Text, sein Sticker und seine Bilder sofort gelöscht (der Titel eines Threads bleibt, solange Antworten anderer darunter stehen, und wird als „[gelöscht]“ angezeigt). Wenn Moderatoren einen Beitrag entfernen, werden seine Bilder sofort gelöscht und der Text bleibt mit dem Grund gespeichert, sichtbar nur für dich, Moderatoren und das Team. Moderatoren sehen gemeldete Beiträge zusammen mit der Vorgeschichte der Person, die sie geschrieben hat, wie bei anderen Meldungen.
+
+**Benachrichtigungen über Antworten.** Wenn jemand auf deinen Thread oder deine Antwort antwortet, speichern wir eine Benachrichtigung für dich (welche Antwort, wann und wann du die Liste geöffnet hast) sowie den Zeitpunkt der neuesten ungelesenen, damit das Menü einen Hinweis zeigen kann. Nur du siehst sie. Sie werden nach **90 Tagen** gelöscht oder mit deinem Konto. Wir verschicken sie nie per E-Mail.
+
 **Umgehung einer Sperre.** Wird ein Konto gesperrt, speichern wir einen gesalzenen Einweg-Hash seiner GitHub-Nutzer-ID (nie die ID selbst) zusammen mit Grund und Enddatum. Er dient nur dazu, dasselbe GitHub-Konto zu erkennen, wenn es sich während der Sperre neu registriert. Er wird gelöscht, wenn die Sperre endet oder aufgehoben wird, auch wenn das gesperrte Konto inzwischen gelöscht wurde.
 
 **Annahme der Bedingungen.** Wir speichern, welche Version der Nutzungsbedingungen du wann akzeptiert hast.
@@ -56,6 +60,8 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 ## Wie lange wir es aufbewahren {#retention}
 
 - Dein Konto, Profil, deine Projekte, Follows und Likes: bis du sie oder dein Konto löschst.
+- Threads, Antworten und Bilder in der Community: bis du sie oder dein Konto löschst (was bleibt, steht oben unter „Community“). Stimmen: bis du sie zurücknimmst oder dein Konto löschst.
+- Benachrichtigungen über Antworten: 90 Tage.
 - Profilbild und Titelbild: bis du sie entfernst oder ersetzt oder dein Konto löschst.
 - Uptime-Prüfungen: 90 Tage.
 - Moderationsentscheidungen über dich (Stummschaltungen, Sperren, entfernte Projekte) und Hinweise: solange dein Konto besteht; sie werden mit ihm gelöscht. Meldungen über dich bleiben ohne Verbindung zu deinem Konto, nur mit dem damaligen Namen.
@@ -81,6 +87,7 @@ Wir verkaufen deine Daten nicht und geben sie nicht für Werbung weiter.
 - **Deine Daten ansehen und herunterladen:** Unter Einstellungen → „Meine Daten herunterladen“ bekommst du eine JSON-Datei mit deinem Profil (mit Links, Fähigkeiten, angehefteten Projekten und den Adressen von Profil- und Titelbild), deinen GitHub-Angaben, Projekten, dem Build-Log, Likes, Follows, deinen Meldungen sowie Moderationsentscheidungen und Hinweisen über dich.
 - **Korrigieren:** Bearbeite dein Profil in den Einstellungen und deine Projekte auf ihren Seiten.
 - **Löschen:** Einstellungen → „Konto löschen“. Das entfernt sofort dein Profil, dein Profil- und Titelbild und alle deine Projekte, Likes und Follows und lässt sich nicht rückgängig machen. Dein Benutzername wird wieder frei.
+- **Community:** „Meine Daten herunterladen“ enthält auch deine Threads, Antworten, die Adressen deiner Bilder, deine Stimmen und deine Benachrichtigungen über Antworten. Wenn du dein Konto löschst, werden deine Community-Bilder, Stimmen, Benachrichtigungen und deine Threads ohne Antworten anderer gelöscht; deine übrigen Beiträge bleiben ohne deinen Namen, dein Bild und deinen Link. Community-Bilder sind wie andere Uploads in den täglichen Backups (14 Tage).
 - **Widerspruch oder Beschwerde:** Schreib an [{{ contact_email }}](mailto:{{ contact_email }}). Wenn du in der EU, im Vereinigten Königreich oder in der Ukraine lebst, kannst du dich auch bei deiner Datenschutzbehörde beschweren.
 
 ## Cookies {#cookies}

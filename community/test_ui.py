@@ -57,16 +57,22 @@ class ShellTests(CommunityTestCase):
         self.client.force_login(self.bob)
         self.assertContains(self.client.get(reverse("community:board", args=["help"])), reverse("community:new") + "?board=help")
 
-    def test_rules_page_renders_the_markdown_and_falls_back_to_english(self):
+    def test_rules_page_renders_the_markdown_in_every_language(self):
         page = self.client.get(reverse("community:rules"))
         self.assertContains(page, "<h1")
         self.assertContains(page, "Be kind and specific")
         self.assertNotContains(page, "{{ contact_email }}")
+        for code, _name in settings.LANGUAGES:
+            self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = code
+            with self.subTest(language=code):
+                translated = self.client.get(reverse("community:rules"))
+                self.assertEqual(translated.status_code, 200)
+                if code != "en":
+                    self.assertNotContains(translated, 'community-doc" lang="en"')  # its own file, not the English fallback
+                for anchor in ("short", "posting", "moderation", "notifications"):
+                    self.assertContains(translated, f'id="{anchor}"')
         self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = "uk"
-        uk = self.client.get(reverse("community:rules"))
-        self.assertEqual(uk.status_code, 200)
-        self.assertContains(uk, "Be kind and specific")  # no Ukrainian file yet: the English text, labelled as such
-        self.assertContains(uk, 'lang="en"')
+        self.assertContains(self.client.get(reverse("community:rules")), "Будьте добрими")
 
     def test_rules_page_is_a_404_while_the_flag_is_off(self):
         with override_settings(COMMUNITY_ENABLED=False):

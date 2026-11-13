@@ -1,6 +1,6 @@
 # Nutzungsbedingungen
 
-> **Entwurf**, zuletzt aktualisiert am 12. November 2026 (Version {{ terms_version }}). Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
+> **Entwurf**, zuletzt aktualisiert am 13. November 2026 (Version {{ terms_version }}). Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
 >
 > Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
@@ -35,6 +35,17 @@ Bitte nicht:
 ## Prüfzeichen {#hallmarks}
 
 Prüfzeichen werden aus unseren neuesten Prüfungen berechnet. Sie können sich ändern oder verschwinden, wenn eine Prüfung nicht mehr bestanden wird. Sie zeigen, was wir prüfen konnten, nicht mehr: Sie sind keine Garantie für Qualität oder Sicherheit eines Projekts.
+
+## Community {#community}
+
+Für die Community (Bereiche, Threads und Antworten) gelten eigene [Community-Regeln](/community/rules/); sie sind Teil dieser Bedingungen.
+
+- Threads, Antworten und die angehängten Bilder sind öffentlich. Für sie gilt „Deine Inhalte“ oben: Du behältst deine Rechte und erlaubst uns, sie zu zeigen.
+- Nicht erlaubt sind: Spam und Werbung (dein eigenes Projekt in „Zeig dein Projekt“ vorzustellen ist in Ordnung), Belästigung, Hass oder Drohungen, sexuelle Inhalte, alles mit Minderjährigen, Schadsoftware, gestohlene Konten, Daten oder Schlüssel, private Informationen anderer und Werke, die du nicht teilen darfst.
+- Alle angemeldeten Personen können einen Thread oder eine Antwort melden. Moderatoren können einen Beitrag entfernen (seine Bilder werden sofort gelöscht), einen Thread schließen, sodass nur Moderatoren antworten können, oder ihn anheften. Jede Entfernung und jede Schließung hat einen Grund, den die Person sieht, die den Beitrag geschrieben hat. Ein entfernter Beitrag bleibt für sie und für Moderatoren sichtbar, damit die Entscheidung überprüft werden kann; Administratoren können seinen Text wiederherstellen.
+- Du kannst deine Beiträge bearbeiten und löschen. Ein gelöschter Beitrag, auf den schon geantwortet wurde, bleibt als „[gelöscht]“ stehen, damit die Antworten anderer ihren Platz behalten.
+- Wenn du dein Konto löschst, werden deine Threads ohne Antworten anderer gelöscht; deine übrigen Threads und deine Antworten bleiben, ohne deinen Namen, dein Bild und deinen Link.
+- Um eine Entscheidung anzufechten, schreib an [{{ contact_email }}](mailto:{{ contact_email }}) und nenne die Adresse des Beitrags.
 
 ## Moderation {#moderation}
 

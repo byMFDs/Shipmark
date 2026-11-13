@@ -1,6 +1,6 @@
 # Privacy policy
 
-> **Draft**, last updated 12 November 2026. This text has not been reviewed by a lawyer yet.
+> **Draft**, last updated 13 November 2026. This text has not been reviewed by a lawyer yet.
 
 This page explains what {{ site_name }} stores about you, why, for how long, and what you can do about it. It describes what the site actually does.
 
@@ -33,6 +33,10 @@ The results are shown on your public project page.
 
 **Reports and moderation.** If you report a project, a profile or a build-log update, we store the reason and the details you write. Reports are seen by moderators (people with the moderator badge) and staff. To decide, they also see the reported content and the reported person's history on {{ site_name }}: when they joined, earlier sanctions, other reports about them and removed projects. The moderation pages do not show email addresses. The person you report is never told who reported them. When moderators act, we store the decision and its reason: a removed project keeps its content and the reason (only you, moderators and staff see it), cleared profile fields (picture and cover, headline and About, or links) are deleted, and mutes and bans are stored with their reason, start and end. You see the reason in a notice on the site, which we keep until you delete your account. Decisions about you and these notices are included in "Download my data". To appeal a decision, write to [{{ contact_email }}](mailto:{{ contact_email }}).
 
+**Community.** When you post in the community we store your threads (board, title, text, dates, and whether a thread was edited, pinned, locked or removed), your replies (text, the sticker you picked, which post they answer) and the images you attach. Images are re-encoded like screenshots: hidden metadata such as GPS location is removed, file names are random, and we keep a copy up to 1600 px and a 640 px thumbnail on our own server. Posts, their images, their upvote counts and your username on them are **public**. We also store your upvotes; nobody sees who upvoted what, not on the site and not in the admin. When you delete a post, its text, sticker and images are deleted at once (a thread's title stays while replies of others are under it, shown as "[deleted]"). When moderators remove a post, its images are deleted at once and its text is kept with the reason, visible only to you, moderators and staff. Moderators see reported posts together with the author's history, as for other reports.
+
+**Reply notifications.** When someone replies to your thread or to your reply, we store a notification for you (which reply, when, and when you opened the list), plus the time of your newest unread one so that the menu can show a mark. Only you see them. They are deleted after **90 days**, or with your account. We never send them by email.
+
 **Ban evasion.** When an account is banned, we store a salted one-way hash of its GitHub user id (never the id itself), with the reason and the end date. It only lets us recognise the same GitHub account if it signs up again during the ban. It is deleted when the ban ends or is lifted, also when the banned account was deleted in the meantime.
 
 **Terms acceptance.** We store which version of the Terms you accepted and when.
@@ -54,6 +58,8 @@ The results are shown on your public project page.
 ## How long we keep it {#retention}
 
 - Your account, profile, projects, follows and likes: until you delete them or your account.
+- Community threads, replies and images: until you delete them or your account (see "Community" above for what stays). Upvotes: until you take them back or delete your account.
+- Reply notifications: 90 days.
 - Profile picture and cover: until you remove or replace them, or delete your account.
 - Uptime checks: 90 days.
 - Moderation decisions about you (mutes, bans, removed projects) and notices: while your account exists; they are deleted with it. Reports about you stay without a link to your account, with only the name shown at the time.
@@ -79,6 +85,7 @@ We do not sell your data and do not share it for advertising.
 - **See and download your data:** Settings → "Download my data" gives you a JSON file with your profile (with your links, skills, pinned projects and the addresses of your picture and cover), GitHub details, projects, build log, likes, follows, reports you made, and moderation decisions and notices about you.
 - **Correct it:** edit your profile in Settings and your projects on their pages.
 - **Delete it:** Settings → "Delete account". This removes your profile, your picture and cover, and all your projects, likes and follows at once and cannot be undone. Your username becomes free.
+- **Community:** "Download my data" also contains your threads, replies, the addresses of your images, your upvotes and your reply notifications. Deleting your account deletes your community images, upvotes and notifications, and your threads without replies from others; your other posts stay without your name, picture or link. Community images are in the daily backups like other uploads (14 days).
 - **Object or complain:** write to [{{ contact_email }}](mailto:{{ contact_email }}). If you live in the EU, UK or Ukraine, you can also complain to your data protection authority.
 
 ## Cookies {#cookies}

@@ -1,6 +1,6 @@
 # Termos de uso
 
-> **Rascunho**, última atualização em 12 de novembro de 2026 (versão {{ terms_version }}). Este texto ainda não foi revisado por um advogado.
+> **Rascunho**, última atualização em 13 de novembro de 2026 (versão {{ terms_version }}). Este texto ainda não foi revisado por um advogado.
 >
 > Tradução por conveniência; a versão em inglês prevalece.
 
@@ -35,6 +35,17 @@ Não faça isto:
 ## Selos {#hallmarks}
 
 Os selos são calculados a partir das nossas verificações mais recentes. Podem mudar ou desaparecer quando uma verificação deixa de ser aprovada. Mostram o que conseguimos verificar, nada além disso: não são garantia de qualidade nem de segurança de um projeto.
+
+## Comunidade {#community}
+
+A comunidade (seções, tópicos e respostas) tem as próprias [regras da comunidade](/community/rules/), que fazem parte destes termos.
+
+- Tópicos, respostas e as imagens que você anexa são públicos. A seção “Seu conteúdo” vale para eles: você mantém seus direitos e nos permite exibi-los.
+- Não é permitido: spam e propaganda (mostrar seu próprio projeto em “Mostre seu projeto” pode), assédio, ódio ou ameaças, conteúdo sexual, qualquer coisa envolvendo menores, malware, contas, dados ou chaves roubados, informações privadas de outras pessoas e obras que você não tem direito de compartilhar.
+- Qualquer pessoa conectada pode denunciar um tópico ou uma resposta. Os moderadores podem remover uma publicação (as imagens dela são apagadas na hora), trancar um tópico para que só moderadores respondam ou fixá-lo. Toda remoção e todo trancamento vêm com um motivo que quem escreveu vê. Uma publicação removida continua visível para quem a escreveu e para os moderadores, para que a decisão possa ser revista; os administradores podem restaurar o texto.
+- Você pode editar e excluir suas publicações. Uma publicação excluída que já tem respostas fica como “[excluído]”, para que as respostas dos outros mantenham o lugar.
+- Quando você exclui sua conta, seus tópicos sem respostas de outras pessoas são excluídos; os demais tópicos e suas respostas ficam, sem seu nome, sua foto e seu link.
+- Para contestar uma decisão, escreva para [{{ contact_email }}](mailto:{{ contact_email }}) com o endereço da publicação.
 
 ## Moderação {#moderation}
 

@@ -1,6 +1,6 @@
 # Términos de uso
 
-> **Borrador**, última actualización el 12 de noviembre de 2026 (versión {{ terms_version }}). Este texto aún no ha sido revisado por un abogado.
+> **Borrador**, última actualización el 13 de noviembre de 2026 (versión {{ terms_version }}). Este texto aún no ha sido revisado por un abogado.
 >
 > Traducción de cortesía; prevalece la versión en inglés.
 
@@ -35,6 +35,17 @@ No debes:
 ## Sellos {#hallmarks}
 
 Los sellos se calculan a partir de nuestras últimas comprobaciones. Pueden cambiar o desaparecer cuando una comprobación deja de superarse. Muestran lo que pudimos comprobar y nada más: no son una garantía de calidad ni de seguridad de un proyecto.
+
+## Comunidad {#community}
+
+La comunidad (secciones, hilos y respuestas) tiene sus propias [normas de la comunidad](/community/rules/), que forman parte de estos términos.
+
+- Los hilos, las respuestas y las imágenes que adjuntas son públicos. Se les aplica «Tu contenido»: conservas tus derechos y nos permites mostrarlos.
+- No se permite: spam ni publicidad (mostrar tu propio proyecto en «Muestra tu proyecto» está bien), acoso, odio o amenazas, contenido sexual, nada que involucre a menores, malware, cuentas, datos o claves robados, información privada de otras personas ni obras que no tengas derecho a compartir.
+- Cualquier persona con sesión iniciada puede denunciar un hilo o una respuesta. Los moderadores pueden retirar una publicación (sus imágenes se eliminan en el acto), cerrar un hilo para que solo respondan los moderadores o fijarlo. Cada retirada y cada cierre tienen un motivo que la persona autora ve. Una publicación retirada sigue visible para su autor y para los moderadores, para poder revisar la decisión; los administradores pueden restaurar su texto.
+- Puedes editar y eliminar tus publicaciones. Una publicación eliminada que ya tiene respuestas queda como «[eliminado]», para que las respuestas de los demás conserven su lugar.
+- Si eliminas tu cuenta, se eliminan tus hilos sin respuestas de otras personas; el resto de tus hilos y tus respuestas se quedan, sin tu nombre, tu foto ni tu enlace.
+- Para recurrir una decisión, escribe a [{{ contact_email }}](mailto:{{ contact_email }}) con la dirección de la publicación.
 
 ## Moderación {#moderation}
 

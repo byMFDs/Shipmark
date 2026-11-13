@@ -1,6 +1,6 @@
 # Politique de confidentialité
 
-> **Brouillon**, dernière mise à jour le 12 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
+> **Brouillon**, dernière mise à jour le 13 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
 >
 > Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
@@ -35,6 +35,10 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 **Signalements et modération.** Si vous signalez un projet, un profil ou une entrée du journal de développement, nous enregistrons le motif et les détails que vous écrivez. Les signalements sont vus par les modérateurs (personnes ayant le badge de modérateur) et l’équipe. Pour décider, ils voient aussi le contenu signalé et l’historique de la personne signalée sur {{ site_name }} : sa date d’inscription, ses sanctions précédentes, les autres signalements la concernant et ses projets retirés. Les pages de modération n’affichent pas les adresses e-mail. La personne signalée n’apprend jamais qui l’a signalée. Quand les modérateurs agissent, nous enregistrons la décision et son motif : un projet retiré garde son contenu et le motif (seuls vous, les modérateurs et l’équipe le voient), les champs de profil effacés (photo et couverture, phrase d’accroche et « À propos », ou liens) sont supprimés, et les mises en sourdine et bannissements sont enregistrés avec leur motif, leur début et leur fin. Vous voyez le motif dans un avis sur le site, que nous gardons jusqu’à la suppression de votre compte. Les décisions vous concernant et ces avis figurent dans « Télécharger mes données ». Pour contester une décision, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
 
+**Communauté.** Quand vous publiez dans la communauté, nous conservons vos fils (rubrique, titre, texte, dates, et si un fil a été modifié, épinglé, verrouillé ou retiré), vos réponses (texte, l’autocollant choisi, le message auquel elles répondent) et les images que vous joignez. Les images sont réencodées comme les captures d’écran : les métadonnées cachées comme la position GPS sont supprimées, les noms de fichiers sont aléatoires, et nous conservons sur notre propre serveur une copie jusqu’à 1600 px et une miniature de 640 px. Les messages, leurs images, leur nombre de votes et votre nom d’utilisateur sont **publics**. Nous conservons aussi vos votes ; personne ne voit qui a voté pour quoi, ni sur le site ni dans l’administration. Quand vous supprimez un message, son texte, son autocollant et ses images sont supprimés immédiatement (le titre d’un fil reste tant que des réponses d’autres personnes s’y trouvent, affiché comme « [supprimé] »). Quand les modérateurs retirent un message, ses images sont supprimées immédiatement et son texte est conservé avec le motif, visible seulement par vous, les modérateurs et l’équipe. Les modérateurs voient les messages signalés avec l’historique de leur auteur, comme pour les autres signalements.
+
+**Notifications de réponses.** Quand quelqu’un répond à votre fil ou à votre réponse, nous conservons une notification pour vous (quelle réponse, quand, et quand vous avez ouvert la liste), ainsi que l’heure de la plus récente non lue, pour que le menu puisse afficher une marque. Vous seul les voyez. Elles sont supprimées après **90 jours**, ou avec votre compte. Nous ne les envoyons jamais par e-mail.
+
 **Contournement d’un bannissement.** Quand un compte est banni, nous conservons une empreinte à sens unique, salée, de son identifiant GitHub (jamais l’identifiant lui-même), avec le motif et la date de fin. Elle sert uniquement à reconnaître le même compte GitHub s’il se réinscrit pendant le bannissement. Elle est supprimée quand le bannissement prend fin ou est levé, y compris si le compte banni a été supprimé entre-temps.
 
 **Acceptation des Conditions.** Nous conservons la version des Conditions que vous avez acceptée et la date.
@@ -56,6 +60,8 @@ Les résultats sont affichés sur la page publique de votre projet.
 ## Combien de temps nous les conservons {#retention}
 
 - Votre compte, profil, projets, abonnements et mentions J’aime : jusqu’à ce que vous les supprimiez, ou que vous supprimiez votre compte.
+- Fils, réponses et images de la communauté : jusqu’à ce que vous les supprimiez ou supprimiez votre compte (ce qui reste est décrit plus haut, dans « Communauté »). Votes : jusqu’à ce que vous les retiriez ou supprimiez votre compte.
+- Notifications de réponses : 90 jours.
 - Photo de profil et couverture : jusqu’à ce que vous les retiriez ou remplaciez, ou supprimiez votre compte.
 - Contrôles de disponibilité : 90 jours.
 - Décisions de modération vous concernant (mises en sourdine, bannissements, projets retirés) et avis : tant que votre compte existe ; ils sont supprimés avec lui. Les signalements à votre sujet restent sans lien avec votre compte, avec seulement le nom affiché à l’époque.
@@ -81,6 +87,7 @@ Nous ne vendons pas vos données et ne les partageons pas à des fins publicitai
 - **Consulter et télécharger vos données :** Réglages → « Télécharger mes données » vous donne un fichier JSON avec votre profil (avec vos liens, compétences, projets épinglés et les adresses de votre photo et de votre couverture), vos informations GitHub, vos projets, votre journal de développement, vos mentions J’aime, vos abonnements, les signalements que vous avez faits, ainsi que les décisions de modération et avis vous concernant.
 - **Les corriger :** modifiez votre profil dans les Réglages et vos projets sur leurs pages.
 - **Les supprimer :** Réglages → « Supprimer le compte ». Cela supprime aussitôt votre profil, votre photo et votre couverture et tous vos projets, mentions J’aime et abonnements, et c’est irréversible. Votre nom d’utilisateur redevient libre.
+- **Communauté :** « Télécharger mes données » contient aussi vos fils, vos réponses, les adresses de vos images, vos votes et vos notifications de réponses. Supprimer votre compte supprime vos images de la communauté, vos votes, vos notifications et vos fils sans réponse d’autres personnes ; vos autres messages restent, sans votre nom, votre photo ni votre lien. Les images de la communauté sont dans les sauvegardes quotidiennes, comme les autres fichiers envoyés (14 jours).
 - **Vous opposer ou réclamer :** écrivez à [{{ contact_email }}](mailto:{{ contact_email }}). Si vous vivez dans l’UE, au Royaume-Uni ou en Ukraine, vous pouvez aussi introduire une réclamation auprès de votre autorité de protection des données.
 
 ## Cookies {#cookies}
