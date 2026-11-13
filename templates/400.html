@@ -1,8 +1,8 @@
 {% extends "errors/standalone.html" %}
 {% load i18n %}
-{% block title %}{% translate "We could not read that request" %}{% endblock %}
+{% block title %}{% translate "Something was wrong with that request" %}{% endblock %}
 {% block content %}
-  {% translate "We could not read that request" as title %}
-  {% translate "Something in it was malformed or incomplete. Go back and try again." as text %}
+  {% translate "Something was wrong with that request" as title %}
+  {% translate "Part of it was missing or broken. Go back and try again." as text %}
   {% include "errors/_body.html" with mark="authored" %}
 {% endblock %}

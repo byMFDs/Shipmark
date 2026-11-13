@@ -480,7 +480,7 @@ class SkillTests(ProfileTestCase):
         self.assertEqual(sorted(t.slug for t in self.ana.skills.all()), ["design", "django", "python"])
         too_many = ", ".join(f"skill{n}" for n in range(11))
         self.assertContains(self.post(skills_text=too_many), "Use at most 10 skills.")
-        self.assertContains(self.post(skills_text="bad<tag>"), "Tags use letters")
+        self.assertContains(self.post(skills_text="bad<tag>"), "Tags can use letters")
         self.assertEqual(self.ana.skills.count(), 3)
         self.post(skills_text="")
         self.assertEqual(self.ana.skills.count(), 0)

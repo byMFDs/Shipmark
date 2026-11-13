@@ -16,7 +16,7 @@ def parse_tag_names(text, limit, too_many_message):
         if not name:
             continue
         if len(name) > 30 or not TAG_RE.match(name) or not slugify(name, allow_unicode=True):
-            raise ValidationError(_("Tags use letters, digits, spaces and + # . - (up to 30 characters)."))
+            raise ValidationError(_("Tags can use letters, numbers, spaces and + # . - (up to 30 characters)."))
         tags[slugify(name, allow_unicode=True)] = name
     if len(tags) > limit:
         raise ValidationError(too_many_message)

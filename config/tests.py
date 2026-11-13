@@ -248,7 +248,7 @@ class ErrorPageTests(TestCase):
         with override_settings(DEBUG=False):
             response = self.client.get("/no-such-page/")
         self.assertEqual(response.status_code, 404)
-        self.assertContains(response, "No record found", status_code=404)
+        self.assertContains(response, "Page not found", status_code=404)
         self.assertContains(response, 'class="site-header', status_code=404)
 
     def test_standalone_pages_need_no_context(self):
@@ -261,4 +261,4 @@ class ErrorPageTests(TestCase):
         request = RequestFactory().get("/")
         request.user = AnonymousUser()
         html = render_to_string("403.html", request=request)
-        self.assertIn("This record is closed", html)
+        self.assertIn("You cannot open this page", html)

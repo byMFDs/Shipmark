@@ -3,6 +3,6 @@
 {% block title %}{% translate "Something broke on our side" %}{% endblock %}
 {% block content %}
   {% translate "Something broke on our side" as title %}
-  {% translate "It is not your fault, and the error has been logged. Try again in a minute." as text %}
+  {% translate "It is not your fault. We keep a note of the error. Try again in a minute." as text %}
   {% include "errors/_body.html" with mark="steady" %}
 {% endblock %}

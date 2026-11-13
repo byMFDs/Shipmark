@@ -12,6 +12,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 
+from community import flags as community_flags
 from config.ratelimit import is_limited
 from accounts.roles import can_write
 from moderation.visibility import visible_users
@@ -132,7 +133,7 @@ def delete_account_page(request):
             delete_account(user)
             messages.success(request, _("Your account and everything in it were deleted."))
             return redirect("pages:landing")
-    return render(request, "accounts/delete_account.html", {"form": form})
+    return render(request, "accounts/delete_account.html", {"form": form, "community_enabled": community_flags.enabled()})
 
 
 def profile(request, username):

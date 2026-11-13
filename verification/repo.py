@@ -137,7 +137,7 @@ class _Api:
 
 
 def _unavailable():
-    return RepoCheckError("unavailable", _("GitHub did not answer properly. Try again in a few minutes."))
+    return RepoCheckError("unavailable", _("GitHub did not answer as expected. Try again in a few minutes."))
 
 
 def _rate_limited(response):
@@ -150,9 +150,9 @@ def _rate_limited(response):
         minutes = max(1, -(-wait // 60))
         return RepoCheckError(
             "rate_limited",
-            _("GitHub's rate limit was reached. Try again in about %(minutes)s min.") % {"minutes": minutes},
+            _("GitHub is limiting our checks right now. Try again in about %(minutes)s min.") % {"minutes": minutes},
         )
-    return RepoCheckError("rate_limited", _("GitHub's rate limit was reached. Try again later."))
+    return RepoCheckError("rate_limited", _("GitHub is limiting our checks right now. Try again later."))
 
 
 def _raise_for_status(response):

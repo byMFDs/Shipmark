@@ -37,11 +37,11 @@ def validate_username(value):
         )
     if not _ALLOWED.match(value):
         raise ValidationError(
-            _("Use only lowercase letters, digits, hyphens and underscores, starting with a letter or digit."),
+            _("Use only small letters, numbers, - and _, and start with a letter or a number."),
             code="invalid",
         )
     if value in RESERVED_USERNAMES:
-        raise ValidationError(_("This username is reserved. Please choose another."), code="reserved")
+        raise ValidationError(_("This username is not available. Choose another one."), code="reserved")
 
 
 def is_taken(username, exclude_pk=None):

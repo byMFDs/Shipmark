@@ -81,14 +81,14 @@ class ErrorPagesTests(TestCase):
     def test_404_is_the_custom_page_not_the_url_list(self):
         response = self.client.get("/no-such-page/")
         self.assertEqual(response.status_code, 404)
-        self.assertContains(response, "No record found", status_code=404)
+        self.assertContains(response, "Page not found", status_code=404)
         self.assertContains(response, 'class="site-header', status_code=404)
         self.assertNoLeaks(response)
 
     def test_403_shows_a_reference(self):
         response = self.client.get("/_test/forbidden/")
         self.assertEqual(response.status_code, 403)
-        self.assertContains(response, "This record is closed", status_code=403)
+        self.assertContains(response, "You cannot open this page", status_code=403)
         self.assertContains(response, response["X-Request-ID"], status_code=403)
         self.assertNoLeaks(response)
 
@@ -103,12 +103,12 @@ class ErrorPagesTests(TestCase):
     def test_400_for_a_bad_host_is_the_custom_page(self):
         response = self.client.get("/", HTTP_HOST="evil.test")
         self.assertEqual(response.status_code, 400)
-        self.assertContains(response, "We could not read that request", status_code=400)
+        self.assertContains(response, "Something was wrong with that request", status_code=400)
         self.assertNotContains(response, "ALLOWED_HOSTS", status_code=400)
 
     def test_error_pages_are_translated(self):
         response = self.client.get("/no-such-page/", headers={"Accept-Language": "uk"})
-        self.assertNotContains(response, "No record found", status_code=404)
+        self.assertNotContains(response, "Page not found", status_code=404)
         response = self.client.get("/_test/boom/", headers={"Accept-Language": "uk"})
         self.assertIn('lang="uk"', response.content.decode())
         self.assertNotIn("Something broke on our side", response.content.decode())
@@ -127,7 +127,7 @@ class ErrorPagesTests(TestCase):
     def test_previews_exist_only_in_debug(self):
         self.assertEqual(self.client.get("/_dev/errors/500/").status_code, 404)
         with override_settings(DEBUG=True):
-            for code, text in [("400", "We could not read"), ("403", "This record is closed"), ("404", "No record found"),
+            for code, text in [("400", "Something was wrong with that request"), ("403", "You cannot open this page"), ("404", "Page not found"),
                                ("500", "Something broke"), ("csrf", "This form has expired")]:
                 with self.subTest(code=code):
                     self.assertContains(self.client.get(f"/_dev/errors/{code}/"), text)

@@ -432,7 +432,7 @@ def _vote(request, target, thread):
     if is_limited("community_vote", user.pk, limits.VOTES_PER_HOUR, limits.HOUR):
         return fail(TOO_MANY, 429)
     if request.POST.get("value") not in ("0", "1"):
-        return fail(_("Bad request."), 400)
+        return fail(_("Something went wrong. Reload the page and try again."), 400)
     if target.author_id == user.pk:
         return fail(_("You cannot vote for your own post."), 400)
     if thread.is_removed:

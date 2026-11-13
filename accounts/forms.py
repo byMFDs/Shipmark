@@ -59,7 +59,7 @@ class SignupConfirmForm(StyledFormMixin, SignupForm):
         super().__init__(*args, **kwargs)
         # The email comes from GitHub and is private; the user is not asked for it.
         self.fields.pop("email", None)
-        self.fields["username"].help_text = _("Your profile will be at /u/username/. Lowercase letters, digits, - and _.")
+        self.fields["username"].help_text = _("Your profile will be at /u/username/. Use small letters, numbers, - and _.")
         self.fields["username"].widget.attrs.update({"autocapitalize": "none", "autocorrect": "off", "spellcheck": "false"})
 
     def clean_username(self):

@@ -2,6 +2,7 @@ from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.db.models import Count, Q
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext
 from unfold.admin import ModelAdmin, TabularInline
 from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
@@ -162,9 +163,13 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
                 messages.warning(request, _("Skipped %(name)s: staff cannot suspend themselves or a superuser.") % {"name": user})
                 continue
             done += actions.suspend_user(user, request.user)
-        messages.success(request, _("Suspended %(count)s user(s). Their projects are hidden everywhere.") % {"count": done})
+        message = ngettext("Suspended %(count)s user. Their projects are hidden everywhere.",
+                           "Suspended %(count)s users. Their projects are hidden everywhere.", done)
+        messages.success(request, message % {"count": done})
 
     @action(description=_("Unsuspend selected users"), permissions=["change"])
     def unsuspend(self, request, queryset):
         done = sum(actions.unsuspend_user(user, request.user) for user in queryset)
-        messages.success(request, _("Unsuspended %(count)s user(s).") % {"count": done})
+        message = ngettext("Unsuspended %(count)s user.",
+                           "Unsuspended %(count)s users.", done)
+        messages.success(request, message % {"count": done})

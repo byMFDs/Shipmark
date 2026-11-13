@@ -109,7 +109,7 @@
 
         <section class="panel stack">
           <h2>{% translate "Your data" %}</h2>
-          <p>{% translate "A JSON file with your profile, projects, build log, likes and follows." %}</p>
+          <p>{% translate "One file (JSON) with your profile, projects, build log, likes and follows." %}</p>
           <form method="post" action="{% url 'accounts:export' %}" data-no-busy>
             {% csrf_token %}
             <button class="btn btn--secondary" type="submit">{% translate "Download my data" %}</button>

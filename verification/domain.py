@@ -48,7 +48,7 @@ MESSAGES = {
     "dns_wrong_txt": _("TXT records were found, but none has your token. Check the value, character by character."),
     "dns_unavailable": _("DNS did not answer in time. Try again in a few minutes."),
     "blocked": _("This address points to a private network and cannot be checked."),
-    "unreachable": _("Your homepage could not be loaded (no answer within 5 seconds, or the connection failed)."),
+    "unreachable": _("We could not open your homepage (no answer within 5 seconds, or the connection failed)."),
     "http_error": _("Your homepage did not answer with 200 OK. It must be public, without a login."),
     "server_error": _("Your homepage answered with a server error. Try again when the site is up."),
     "other_host": _("Your homepage redirects to another domain. The tag must be on this domain."),

@@ -227,7 +227,7 @@ class RepoCheckViewTests(RepoCheckTestCase):
 
     def test_success_message_and_hallmark(self):
         response = self.post(contributors=[[person()]])
-        self.assertContains(response, "Repo owner earned")
+        self.assertContains(response, "You earned Repo owner")
         self.assertTrue(compute_hallmarks(Project.objects.get(pk=self.project.pk))["authored"].earned)
 
     def test_not_owner_message(self):
@@ -262,7 +262,7 @@ class RepoCheckViewTests(RepoCheckTestCase):
         with patcher:
             response = self.client.post(self.url, follow=True)
         self.assertNotEqual(seen, [])  # the new repository was checked right away
-        self.assertContains(response, "Repo owner earned")
+        self.assertContains(response, "You earned Repo owner")
 
     def test_hourly_cap_across_repositories(self):
         for i in range(REPO_CHECKS_PER_HOUR):
@@ -298,7 +298,7 @@ class RepoCheckViewTests(RepoCheckTestCase):
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="")
         self.assertContains(self.client.post(self.url, follow=True), "Add a GitHub repository")
         Project.objects.filter(pk=self.project.pk).update(repo_full_name="me/tool")
-        self.assertContains(self.post(contributors=[[person()]]), "Repo owner earned")
+        self.assertContains(self.post(contributors=[[person()]]), "You earned Repo owner")
 
     def test_user_without_github_account(self):
         SocialAccount.objects.all().delete()

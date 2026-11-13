@@ -236,7 +236,7 @@ def repo_check(request, project):
             messages.error(request, exc.message)
         else:
             if result.outcome == AUTHORED and result.link.is_verified:
-                messages.success(request, _("Repository checked. Repo owner earned."))
+                messages.success(request, _("Repository checked. You earned Repo owner."))
             elif result.outcome == AUTHORED:
                 messages.success(request, _("Repository checked. Repo owner will appear after a short manual review."))
             elif result.outcome == FORK:
@@ -289,7 +289,7 @@ def domain_verify(request, project):
             message = exc.message
         else:
             ok = True
-            message = _("Verified. Confirmed again.") if was_verified else _("Verified. Domain verified earned.")
+            message = _("Verified. Your domain is confirmed again.") if was_verified else _("Verified. You earned Domain verified.")
 
     if wants_json:
         html = render_to_string("projects/_domain_status.html", {"project": project, **_domain_context(project, row)},

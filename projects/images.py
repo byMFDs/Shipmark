@@ -33,7 +33,7 @@ def clean_image(upload, fit=None):
             raise ValidationError(_("Use a PNG, JPEG or WebP image."), code="bad_type")
         width, height = image.size
         if width < 1 or height < 1 or width * height > MAX_PIXELS:
-            raise ValidationError(_("The image has too many pixels."), code="too_large_dimensions")
+            raise ValidationError(_("The image is too big (too many pixels). Use a smaller one."), code="too_large_dimensions")
         image = ImageOps.exif_transpose(image)  # apply the camera rotation before metadata is dropped
         image = image.convert("RGBA" if "A" in image.getbands() or image.mode == "P" else "RGB")
         if fit:
@@ -45,7 +45,7 @@ def clean_image(upload, fit=None):
     except ValidationError:
         raise
     except (UnidentifiedImageError, Image.DecompressionBombError, OSError, SyntaxError, ValueError):
-        raise ValidationError(_("This file is not a valid image."), code="invalid") from None
+        raise ValidationError(_("We could not open this file as an image."), code="invalid") from None
     return ContentFile(buffer.getvalue(), name="image.webp")  # real name is random, see the upload_to functions
 
 

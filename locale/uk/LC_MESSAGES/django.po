@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 21:20+0000\n"
+"POT-Creation-Date: 2026-11-13 21:49+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -22,29 +22,29 @@ msgstr ""
 msgid "Signed in as %(name)s."
 msgstr "Ви увійшли як %(name)s."
 
-#: accounts/adapters.py:55 accounts/views.py:57 pages/test_languages.py:220
+#: accounts/adapters.py:55 accounts/views.py:58 pages/test_languages.py:220
 msgid "You are signed out."
 msgstr "Ви вийшли з акаунта."
 
-#: accounts/admin.py:39 accounts/models.py:101
+#: accounts/admin.py:40 accounts/models.py:101
 msgid "badge"
 msgstr "бейдж"
 
-#: accounts/admin.py:40
+#: accounts/admin.py:41
 msgid "Badges (only superusers can change these)"
 msgstr "Бейджі (змінювати можуть лише суперкористувачі)"
 
-#: accounts/admin.py:107 moderation/admin.py:34
+#: accounts/admin.py:108 moderation/admin.py:35
 #: templates/moderation/mod/act.html:11 templates/moderation/mod/queue.html:32
 #: templates/moderation/mod/queue.html:51
 msgid "Profile"
 msgstr "Профіль"
 
-#: accounts/admin.py:108
+#: accounts/admin.py:109
 msgid "Pictures"
 msgstr "Зображення"
 
-#: accounts/admin.py:109 config/settings/base.py:365
+#: accounts/admin.py:110 config/settings/base.py:365
 #: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
@@ -52,42 +52,50 @@ msgstr "Зображення"
 msgid "Moderation"
 msgstr "Модерація"
 
-#: accounts/admin.py:110
+#: accounts/admin.py:111
 msgid "Permissions"
 msgstr "Права доступу"
 
-#: accounts/admin.py:111
+#: accounts/admin.py:112
 msgid "Terms and dates"
 msgstr "Умови та дати"
 
-#: accounts/admin.py:128 moderation/dashboard.py:47
+#: accounts/admin.py:129 moderation/dashboard.py:47
 msgid "Published projects"
 msgstr "Опубліковані проєкти"
 
-#: accounts/admin.py:157
+#: accounts/admin.py:158
 msgid "Suspend selected users"
 msgstr "Призупинити вибраних користувачів"
 
-#: accounts/admin.py:162
+#: accounts/admin.py:163
 #, python-format
 msgid "Skipped %(name)s: staff cannot suspend themselves or a superuser."
 msgstr ""
 "Пропущено %(name)s: співробітник не може призупинити себе чи "
 "суперкористувача."
 
-#: accounts/admin.py:165
+#: accounts/admin.py:166
 #, python-format
-msgid "Suspended %(count)s user(s). Their projects are hidden everywhere."
-msgstr "Призупинено користувачів: %(count)s. Їхні проєкти приховано всюди."
+msgid "Suspended %(count)s user. Their projects are hidden everywhere."
+msgid_plural "Suspended %(count)s users. Their projects are hidden everywhere."
+msgstr[0] "Заблоковано %(count)s користувача. Його проєкти приховано всюди."
+msgstr[1] "Заблоковано %(count)s користувачів. Їхні проєкти приховано всюди."
+msgstr[2] "Заблоковано %(count)s користувачів. Їхні проєкти приховано всюди."
+msgstr[3] "Заблоковано %(count)s користувача. Їхні проєкти приховано всюди."
 
-#: accounts/admin.py:167
+#: accounts/admin.py:170
 msgid "Unsuspend selected users"
 msgstr "Зняти призупинення з вибраних користувачів"
 
-#: accounts/admin.py:170
+#: accounts/admin.py:173
 #, python-format
-msgid "Unsuspended %(count)s user(s)."
-msgstr "Знято призупинення з користувачів: %(count)s."
+msgid "Unsuspended %(count)s user."
+msgid_plural "Unsuspended %(count)s users."
+msgstr[0] "Розблоковано %(count)s користувача."
+msgstr[1] "Розблоковано %(count)s користувачів."
+msgstr[2] "Розблоковано %(count)s користувачів."
+msgstr[3] "Розблоковано %(count)s користувача."
 
 #: accounts/avatars.py:37
 msgid "No GitHub picture is available for this account."
@@ -102,11 +110,13 @@ msgstr ""
 msgid "You need to accept the Terms to create an account."
 msgstr "Щоб створити акаунт, потрібно прийняти Умови."
 
+#
 #: accounts/forms.py:62
 msgid ""
-"Your profile will be at /u/username/. Lowercase letters, digits, - and _."
+"Your profile will be at /u/username/. Use small letters, numbers, - and _."
 msgstr ""
-"Ваш профіль буде за адресою /u/імʼя/. Малі латинські літери, цифри, - та _."
+"Ваш профіль буде за адресою /u/username/. Малі латинські літери, цифри, - і "
+"_."
 
 #: accounts/forms.py:88
 msgid "Upload a picture"
@@ -226,7 +236,7 @@ msgstr "Вкажіть не більше 10 навичок."
 msgid "Pin at most 3 projects."
 msgstr "Закріпіть не більше 3 проєктів."
 
-#: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:72
+#: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:73
 #: community/views.py:35 projects/views.py:39 social/views.py:73
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Забагато змін за короткий час. Спробуйте за кілька хвилин."
@@ -350,44 +360,45 @@ msgstr "закріплені проєкти"
 msgid "Use %(min)d to %(max)d characters."
 msgstr "Використайте від %(min)d до %(max)d символів."
 
+#
 #: accounts/usernames.py:40
 msgid ""
-"Use only lowercase letters, digits, hyphens and underscores, starting with a "
-"letter or digit."
+"Use only small letters, numbers, - and _, and start with a letter or a "
+"number."
 msgstr ""
-"Лише малі латинські літери, цифри, дефіси та підкреслення; починати з літери "
-"або цифри."
+"Лише малі латинські літери, цифри, - і _; перший символ — літера або цифра."
 
+#
 #: accounts/usernames.py:44
-msgid "This username is reserved. Please choose another."
-msgstr "Це імʼя зарезервоване. Оберіть інше."
+msgid "This username is not available. Choose another one."
+msgstr "Це ім’я користувача недоступне. Виберіть інше."
 
 #: accounts/usernames.py:92
 #, python-format
 msgid "This name is reserved for official %(site)s accounts."
 msgstr "Це імʼя зарезервоване для офіційних акаунтів %(site)s."
 
-#: accounts/views.py:69 moderation/pages.py:26
+#: accounts/views.py:70 moderation/pages.py:26
 msgid "Your account is suspended."
 msgstr "Ваш акаунт призупинено."
 
-#: accounts/views.py:77
+#: accounts/views.py:78
 msgid "Settings saved."
 msgstr "Налаштування збережено."
 
-#: accounts/views.py:95
+#: accounts/views.py:96
 msgid "Thank you. You accepted the updated Terms."
 msgstr "Дякуємо. Ви прийняли оновлені Умови."
 
-#: accounts/views.py:106
+#: accounts/views.py:107
 msgid "Too many downloads in a short time. Try again later."
 msgstr "Забагато завантажень за короткий час. Спробуйте пізніше."
 
-#: accounts/views.py:129
+#: accounts/views.py:130
 msgid "Too many attempts. Try again later."
 msgstr "Забагато спроб. Спробуйте пізніше."
 
-#: accounts/views.py:133
+#: accounts/views.py:134
 msgid "Your account and everything in it were deleted."
 msgstr "Ваш акаунт і все, що в ньому було, видалено."
 
@@ -475,7 +486,7 @@ msgstr "Забагато зображень за годину. Спробуйт�
 msgid "New accounts can put one link in a post during the first 24 hours."
 msgstr "Перші 24 години нові акаунти можуть додати в пост лише одне посилання."
 
-#: community/forms.py:68 projects/admin.py:100 support/models.py:65
+#: community/forms.py:68 projects/admin.py:109 support/models.py:65
 msgid "Text"
 msgstr "Текст"
 
@@ -734,9 +745,10 @@ msgstr "Цю відповідь не можна змінити."
 msgid "Reply deleted."
 msgstr "Відповідь видалено."
 
+#
 #: community/views.py:435
-msgid "Bad request."
-msgstr "Неправильний запит."
+msgid "Something went wrong. Reload the page and try again."
+msgstr "Щось пішло не так. Оновіть сторінку і спробуйте ще раз."
 
 #: community/views.py:437
 msgid "You cannot vote for your own post."
@@ -828,7 +840,7 @@ msgstr "Повідомлення"
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:374 projects/admin.py:46
+#: config/settings/base.py:374 projects/admin.py:47
 msgid "Likes"
 msgstr "Вподобання"
 
@@ -870,82 +882,90 @@ msgstr "Новини"
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
-#: moderation/admin.py:32 templates/moderation/mod/queue.html:28
+#: moderation/admin.py:33 templates/moderation/mod/queue.html:28
 msgid "Type"
 msgstr "Тип"
 
-#: moderation/admin.py:34 templates/moderation/mod/act.html:11
+#: moderation/admin.py:35 templates/moderation/mod/act.html:11
 #: templates/moderation/mod/queue.html:31
 #: templates/moderation/mod/queue.html:51
 msgid "Project"
 msgstr "Проєкт"
 
-#: moderation/admin.py:34 templates/moderation/mod/act.html:11
+#: moderation/admin.py:35 templates/moderation/mod/act.html:11
 #: templates/moderation/mod/queue.html:33
 #: templates/moderation/mod/queue.html:51
 msgid "Build-log entry"
 msgstr "Запис build log"
 
-#: moderation/admin.py:36
+#: moderation/admin.py:37
 msgid "Target"
 msgstr "Обʼєкт"
 
-#: moderation/admin.py:45
+#: moderation/admin.py:46
 #, python-format
 msgid "%(name)s (deleted)"
 msgstr "%(name)s (видалено)"
 
-#: moderation/admin.py:48
+#: moderation/admin.py:49
 msgid "Resolve selected reports"
 msgstr "Позначити вибрані скарги розглянутими"
 
-#: moderation/admin.py:51
+#: moderation/admin.py:52
 #, python-format
-msgid "Resolved %(count)s report(s)."
-msgstr "Розглянуто скарг: %(count)s."
+msgid "Resolved %(count)s report."
+msgid_plural "Resolved %(count)s reports."
+msgstr[0] "Закрито %(count)s скаргу."
+msgstr[1] "Закрито %(count)s скарги."
+msgstr[2] "Закрито %(count)s скарг."
+msgstr[3] "Закрито %(count)s скарги."
 
-#: moderation/admin.py:87
+#: moderation/admin.py:90
 msgid "The end must be after the start."
 msgstr "Кінець має бути пізніше за початок."
 
-#: moderation/admin.py:92
+#: moderation/admin.py:95
 msgid "state"
 msgstr "стан"
 
-#: moderation/admin.py:96 moderation/admin.py:156
+#: moderation/admin.py:99 moderation/admin.py:159
 msgid "Active"
 msgstr "Діє"
 
-#: moderation/admin.py:96 moderation/admin.py:156 news/admin.py:29
+#: moderation/admin.py:99 moderation/admin.py:159 news/admin.py:29
 msgid "Scheduled"
 msgstr "Заплановано"
 
-#: moderation/admin.py:96 moderation/admin.py:156
+#: moderation/admin.py:99 moderation/admin.py:159
 msgid "Expired"
 msgstr "Завершилася"
 
-#: moderation/admin.py:97 moderation/admin.py:157
+#: moderation/admin.py:100 moderation/admin.py:160
 msgid "Revoked"
 msgstr "Скасовано"
 
-#: moderation/admin.py:154 news/admin.py:25
+#: moderation/admin.py:157 news/admin.py:25
 msgid "State"
 msgstr "Стан"
 
-#: moderation/admin.py:169
+#: moderation/admin.py:172
 msgid "Revoke selected sanctions"
 msgstr "Скасувати вибрані санкції"
 
-#: moderation/admin.py:172
+#: moderation/admin.py:175
 #, python-format
-msgid "Revoked %(count)s sanction(s)."
-msgstr "Скасовано санкцій: %(count)s."
+msgid "Revoked %(count)s sanction."
+msgid_plural "Revoked %(count)s sanctions."
+msgstr[0] "Скасовано %(count)s санкцію."
+msgstr[1] "Скасовано %(count)s санкції."
+msgstr[2] "Скасовано %(count)s санкцій."
+msgstr[3] "Скасовано %(count)s санкції."
 
 #: moderation/dashboard.py:48
 msgid "Signups, last 7 days"
 msgstr "Реєстрації за 7 днів"
 
-#: moderation/dashboard.py:49 projects/admin.py:50
+#: moderation/dashboard.py:49 projects/admin.py:51
 msgid "Open reports"
 msgstr "Відкриті скарги"
 
@@ -1525,15 +1545,15 @@ msgstr "щойно"
 msgid "%(time)s ago"
 msgstr "%(time)s тому"
 
-#: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #
+#: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 msgid "For You"
 msgstr "Для вас"
 
+#
 #: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #: templates/pages/explore.html:4 templates/pages/explore.html:5
 #: templates/pages/explore.html:16 templates/social/feed.html:20
-#
 msgid "Discover"
 msgstr "Пошук"
 
@@ -1583,61 +1603,77 @@ msgstr[1] "%(n)s проєкти"
 msgstr[2] "%(n)s проєктів"
 msgstr[3] "%(n)s проєкту"
 
-#: projects/admin.py:34
+#: projects/admin.py:35
 msgid "Removed by a moderator"
 msgstr "Вилучено модератором"
 
-#: projects/admin.py:35
+#: projects/admin.py:36
 msgid "Content"
 msgstr "Вміст"
 
-#: projects/admin.py:36
+#: projects/admin.py:37
 msgid "Proof"
 msgstr "Підтвердження"
 
-#: projects/admin.py:37
+#: projects/admin.py:38
 msgid "Dates"
 msgstr "Дати"
 
-#: projects/admin.py:54
+#: projects/admin.py:55
 msgid "Hallmarks (computed now)"
 msgstr "Позначки (обчислені зараз)"
 
-#: projects/admin.py:67
+#: projects/admin.py:68
 msgid "Hide selected projects"
 msgstr "Приховати вибрані проєкти"
 
-#: projects/admin.py:70
+#: projects/admin.py:71
 #, python-format
-msgid "Hid %(count)s project(s)."
-msgstr "Приховано проєктів: %(count)s."
+msgid "Hid %(count)s project."
+msgid_plural "Hid %(count)s projects."
+msgstr[0] "Приховано %(count)s проєкт."
+msgstr[1] "Приховано %(count)s проєкти."
+msgstr[2] "Приховано %(count)s проєктів."
+msgstr[3] "Приховано %(count)s проєкту."
 
-#: projects/admin.py:72
+#: projects/admin.py:75
 msgid "Unhide selected projects"
 msgstr "Показати вибрані проєкти"
 
-#: projects/admin.py:75
+#: projects/admin.py:78
 #, python-format
-msgid "Unhid %(count)s project(s)."
-msgstr "Знову показано проєктів: %(count)s."
+msgid "Made %(count)s project visible again."
+msgid_plural "Made %(count)s projects visible again."
+msgstr[0] "%(count)s проєкт знову видно."
+msgstr[1] "%(count)s проєкти знову видно."
+msgstr[2] "%(count)s проєктів знову видно."
+msgstr[3] "%(count)s проєкту знову видно."
 
-#: projects/admin.py:77
+#: projects/admin.py:82
 msgid "Restore selected removed projects"
 msgstr "Відновити вибрані вилучені проєкти"
 
-#: projects/admin.py:80
+#: projects/admin.py:85
 #, python-format
-msgid "Restored %(count)s project(s)."
-msgstr "Відновлено проєктів: %(count)s."
+msgid "Restored %(count)s project."
+msgid_plural "Restored %(count)s projects."
+msgstr[0] "Відновлено %(count)s проєкт."
+msgstr[1] "Відновлено %(count)s проєкти."
+msgstr[2] "Відновлено %(count)s проєктів."
+msgstr[3] "Відновлено %(count)s проєкту."
 
-#: projects/admin.py:82
+#: projects/admin.py:89
 msgid "Purge selected removed projects (deletes them for good)"
 msgstr "Остаточно видалити вибрані вилучені проєкти"
 
-#: projects/admin.py:85
+#: projects/admin.py:92
 #, python-format
-msgid "Purged %(count)s removed project(s)."
-msgstr "Остаточно видалено проєктів: %(count)s."
+msgid "Deleted %(count)s removed project for good."
+msgid_plural "Deleted %(count)s removed projects for good."
+msgstr[0] "Остаточно видалено %(count)s прибраний проєкт."
+msgstr[1] "Остаточно видалено %(count)s прибрані проєкти."
+msgstr[2] "Остаточно видалено %(count)s прибраних проєктів."
+msgstr[3] "Остаточно видалено %(count)s прибраного проєкту."
 
 #: projects/forms.py:48
 msgid "Up to 5, separated by commas. For example: devtools, webhooks."
@@ -1759,13 +1795,14 @@ msgstr "Зображення більше за 5 МБ."
 msgid "Use a PNG, JPEG or WebP image."
 msgstr "Використайте зображення PNG, JPEG або WebP."
 
+#
 #: projects/images.py:36
-msgid "The image has too many pixels."
-msgstr "У зображення забагато пікселів."
+msgid "The image is too big (too many pixels). Use a smaller one."
+msgstr "Зображення завелике (забагато пікселів). Виберіть менше."
 
 #: projects/images.py:48
-msgid "This file is not a valid image."
-msgstr "Цей файл не є коректним зображенням."
+msgid "We could not open this file as an image."
+msgstr "Не вдалося відкрити цей файл як зображення."
 
 #: projects/models.py:43
 msgid "Hidden"
@@ -2003,9 +2040,13 @@ msgstr ""
 "%(ok)s з %(total)s перевірок за останні 30 днів отримали відповідь від "
 "%(domain)s."
 
+#
 #: projects/tags.py:19
-msgid "Tags use letters, digits, spaces and + # . - (up to 30 characters)."
-msgstr "У тегах можна літери, цифри, пробіли та + # . - (до 30 символів)."
+msgid ""
+"Tags can use letters, numbers, spaces and + # . - (up to 30 characters)."
+msgstr ""
+"У тегах можна використовувати літери, цифри, пробіли і + # . - (до 30 "
+"символів)."
 
 #: projects/views.py:69
 msgid "Moderators removed this project. It cannot be changed."
@@ -2084,9 +2125,10 @@ msgstr[3] ""
 "На цю годину перевірок досить. Перевірити знову можна через %(count)d "
 "хвилини."
 
+#
 #: projects/views.py:239
-msgid "Repository checked. Repo owner earned."
-msgstr "Репозиторій перевірено. Позначку «Власник репозиторію» отримано."
+msgid "Repository checked. You earned Repo owner."
+msgstr "Репозиторій перевірено. Ви отримали позначку «Власник репозиторію»."
 
 #: projects/views.py:241
 msgid "Repository checked. Repo owner will appear after a short manual review."
@@ -2114,13 +2156,15 @@ msgstr ""
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr "Забагато перевірок. Зачекайте кілька хвилин і перевірте знову."
 
+#
 #: projects/views.py:292
-msgid "Verified. Confirmed again."
-msgstr "Підтверджено. Перевірку оновлено."
+msgid "Verified. Your domain is confirmed again."
+msgstr "Підтверджено. Домен знову підтверджено."
 
+#
 #: projects/views.py:292
-msgid "Verified. Domain verified earned."
-msgstr "Підтверджено. Отримано позначку «Домен підтверджено»."
+msgid "Verified. You earned Domain verified."
+msgstr "Підтверджено. Ви отримали позначку «Домен підтверджено»."
 
 #: projects/views.py:318
 msgid "Moved back to drafts."
@@ -2261,7 +2305,7 @@ msgstr "Позначити як відповіли"
 
 #: support/admin.py:132 templates/community/_lightbox.html:7
 #: templates/community/_picker.html:5 templates/includes/badge_popover.html:6
-#: templates/includes/site_header.html:16
+#: templates/includes/site_header.html:16 templates/includes/toast.html:1
 msgid "Close"
 msgstr "Закрити"
 
@@ -2455,17 +2499,20 @@ msgstr ""
 "Ви вже надіслали кілька повідомлень. Зачекайте годину і спробуйте ще раз."
 
 #: templates/400.html:3 templates/400.html:5
-msgid "We could not read that request"
-msgstr "Не вдалося прочитати цей запит"
+msgid "Something was wrong with that request"
+msgstr "Із цим запитом щось не так"
 
+#
 #: templates/400.html:6
-msgid "Something in it was malformed or incomplete. Go back and try again."
+msgid "Part of it was missing or broken. Go back and try again."
 msgstr ""
-"Щось у ньому пошкоджене або неповне. Поверніться назад і спробуйте ще раз."
+"Чогось у ньому бракувало або воно пошкоджене. Поверніться назад і спробуйте "
+"ще раз."
 
+#
 #: templates/403.html:3 templates/403.html:7
-msgid "This record is closed"
-msgstr "Цей запис закритий"
+msgid "You cannot open this page"
+msgstr "Ви не можете відкрити цю сторінку"
 
 #: templates/403.html:8
 msgid ""
@@ -2487,9 +2534,10 @@ msgstr ""
 "Її відкрили надто давно або в іншій вкладці до входу чи виходу. Поверніться "
 "назад, оновіть сторінку й надішліть знову."
 
+#
 #: templates/404.html:3 templates/404.html:7
-msgid "No record found"
-msgstr "Запис не знайдено"
+msgid "Page not found"
+msgstr "Сторінку не знайдено"
 
 #: templates/404.html:8
 msgid ""
@@ -2503,10 +2551,13 @@ msgstr ""
 msgid "Something broke on our side"
 msgstr "У нас щось зламалося"
 
+#
 #: templates/500.html:6
 msgid ""
-"It is not your fault, and the error has been logged. Try again in a minute."
-msgstr "Ви тут ні до чого, помилку вже записано. Спробуйте ще раз за хвилину."
+"It is not your fault. We keep a note of the error. Try again in a minute."
+msgstr ""
+"Ви тут ні до чого. Ми зберегли запис про помилку. Спробуйте ще раз за "
+"хвилину."
 
 #: templates/accounts/_github_form.html:8 templates/socialaccount/login.html:15
 msgid "Continue with GitHub"
@@ -2556,7 +2607,7 @@ msgstr ""
 "видалити акаунт."
 
 #: templates/accounts/accept_terms.html:26
-#: templates/accounts/delete_account.html:38
+#: templates/accounts/delete_account.html:41
 #: templates/accounts/settings.html:115
 msgid "Download my data"
 msgstr "Завантажити мої дані"
@@ -2586,21 +2637,24 @@ msgstr "Видалений акаунт ми не можемо відновит�
 msgid "What is deleted"
 msgstr "Що видаляється"
 
+#
 #: templates/accounts/delete_account.html:19
 msgid ""
-"Your profile: username, display name, bio, website, language, the email "
-"address and GitHub details we received at sign-in."
+"Your profile: username, display name, headline, About, links, picture, "
+"cover, language, and the email address and GitHub details we received at "
+"sign-in."
 msgstr ""
-"Ваш профіль: імʼя користувача, відображуване імʼя, біо, сайт, мова, пошта і "
-"дані GitHub, які ми отримали при вході."
+"Ваш профіль: ім’я користувача, відображуване ім’я, підзаголовок, «Про себе», "
+"посилання, фото, обкладинка, мова, а також адреса email і дані GitHub, які "
+"ми отримали під час входу."
 
 #: templates/accounts/delete_account.html:20
 msgid ""
 "All your projects, drafts included, with their screenshots, build log, "
 "hallmarks, domain and repository checks, uptime history and likes."
 msgstr ""
-"Усі ваші проєкти, зокрема чернетки, з їхніми скриншотами, журналом, "
-"відзнаками, перевірками домену й репозиторію, історією доступності та "
+"Усі ваші проєкти, зокрема чернетки, з їхніми скриншотами, журналом розробки, "
+"позначками, перевірками домену й репозиторію, історією доступності та "
 "вподобаннями."
 
 #: templates/accounts/delete_account.html:21
@@ -2608,22 +2662,41 @@ msgid "Your likes and follows."
 msgstr "Ваші вподобання та підписки."
 
 #: templates/accounts/delete_account.html:22
+msgid "Your support messages and their attachments."
+msgstr "Ваші звернення в підтримку та вкладені файли."
+
+#: templates/accounts/delete_account.html:23
+msgid ""
+"In the community: your images, your upvotes, and threads nobody else replied "
+"to."
+msgstr ""
+"У спільноті: ваші зображення, голоси і треди, на які ніхто інший не відповів."
+
+#: templates/accounts/delete_account.html:24
 msgid ""
 "Your badges stop showing hallmarks, and links to your profile and projects "
 "stop working."
 msgstr ""
-"Ваші бейджі перестануть показувати відзнаки, а посилання на профіль і "
+"Ваші бейджі перестануть показувати позначки, а посилання на профіль і "
 "проєкти перестануть працювати."
 
-#: templates/accounts/delete_account.html:27
+#: templates/accounts/delete_account.html:29
 msgid "What is kept"
 msgstr "Що лишається"
 
-#: templates/accounts/delete_account.html:29
+#: templates/accounts/delete_account.html:31
 msgid "Reports you made stay for moderation, without your name."
 msgstr "Ваші скарги лишаються для модерації, але без вашого імені."
 
-#: templates/accounts/delete_account.html:30
+#: templates/accounts/delete_account.html:32
+msgid ""
+"Your community replies, and threads other people replied to, stay without "
+"your name. They show as “[deleted]”."
+msgstr ""
+"Ваші відповіді в спільноті й треди, на які відповіли інші, залишаються без "
+"вашого імені. Вони показуються як «[видалено]»."
+
+#: templates/accounts/delete_account.html:33
 msgid ""
 "Our audit log records that an account was deleted, without your username or "
 "email."
@@ -2631,15 +2704,15 @@ msgstr ""
 "Наш журнал дій записує, що акаунт видалено, без вашого імені користувача чи "
 "пошти."
 
-#: templates/accounts/delete_account.html:31
+#: templates/accounts/delete_account.html:34
 msgid "Your username becomes free, and someone else can take it."
 msgstr "Ваше імʼя користувача звільняється, і його може взяти хтось інший."
 
-#: templates/accounts/delete_account.html:37
+#: templates/accounts/delete_account.html:40
 msgid "Want a copy first?"
 msgstr "Спершу потрібна копія?"
 
-#: templates/accounts/delete_account.html:44
+#: templates/accounts/delete_account.html:47
 #, python-format
 msgid ""
 "To confirm, type your username: <strong class=\"mono\">%(username)s</strong>"
@@ -2647,11 +2720,11 @@ msgstr ""
 "Для підтвердження введіть своє імʼя користувача: <strong "
 "class=\"mono\">%(username)s</strong>"
 
-#: templates/accounts/delete_account.html:47
+#: templates/accounts/delete_account.html:50
 msgid "Delete my account"
 msgstr "Видалити мій акаунт"
 
-#: templates/accounts/delete_account.html:48
+#: templates/accounts/delete_account.html:51
 #: templates/community/confirm_delete.html:15
 #: templates/community/reply_form.html:20
 #: templates/community/thread_form.html:29 templates/moderation/report.html:19
@@ -2891,10 +2964,13 @@ msgstr "Імʼя користувача"
 msgid "Your data"
 msgstr "Ваші дані"
 
+#
 #: templates/accounts/settings.html:112
-msgid "A JSON file with your profile, projects, build log, likes and follows."
+msgid ""
+"One file (JSON) with your profile, projects, build log, likes and follows."
 msgstr ""
-"JSON-файл із вашим профілем, проєктами, журналом, вподобаннями та підписками."
+"Один файл (JSON) з вашим профілем, проєктами, журналом розробки, "
+"вподобаннями і підписками."
 
 #: templates/accounts/settings.html:121
 msgid "Removes your profile and all your projects. This cannot be undone."
@@ -3637,10 +3713,6 @@ msgstr "Меню акаунта: %(name)s, є нові відповіді"
 msgid "Account menu for %(name)s"
 msgstr "Меню акаунта: %(name)s"
 
-#: templates/includes/toast.html:1
-msgid "Dismiss"
-msgstr "Закрити повідомлення"
-
 #: templates/includes/user_count.html:5
 msgid "Registered accounts"
 msgstr "Зареєстровані акаунти"
@@ -3997,8 +4069,8 @@ msgid ""
 "Show what you shipped with AI. %(name)s verifies your domain and repository "
 "and shows your site's uptime history."
 msgstr ""
-"Покажи, що ти запустив із ШІ. %(name)s перевіряє домен і репозиторій та "
-"показує історію доступності сайту."
+"Покажіть, що ви запустили з ШІ. %(name)s підтверджує ваш домен і перевіряє "
+"репозиторій, а також показує історію доступності сайту."
 
 #: templates/pages/landing.html:27
 msgid "Built with AI. Backed by evidence."
@@ -4182,8 +4254,8 @@ msgstr "Менше пітчів. Більше продукту."
 msgid "A few things people actually put on the internet."
 msgstr "Кілька речей, які люди справді випустили в мережу."
 
-#: templates/pages/landing.html:146
 #
+#: templates/pages/landing.html:146
 msgid "Discover projects"
 msgstr "Знайти проєкти"
 
@@ -4538,8 +4610,8 @@ msgstr "До 5 перевірок за 10 хвилин."
 
 #: templates/projects/_domain_status.html:3
 #, python-format
-msgid "Verified: %(domain)s. Domain verified earned."
-msgstr "Підтверджено: %(domain)s. Отримано позначку «Домен підтверджено»."
+msgid "%(domain)s is verified. You earned Domain verified."
+msgstr "%(domain)s підтверджено. Ви отримали позначку «Домен підтверджено»."
 
 #: templates/projects/_domain_status.html:4
 #, python-format
@@ -4997,9 +5069,9 @@ msgstr "Вподобано"
 msgid "Like"
 msgstr "Вподобати"
 
+#
 #: templates/social/feed.html:4 templates/social/feed.html:5
 #: templates/social/feed.html:11
-#
 msgid "For You Page"
 msgstr "Сторінка «Для вас»"
 
@@ -5015,8 +5087,8 @@ msgstr "Меню сторінки"
 msgid "Recommended"
 msgstr "Рекомендоване"
 
-#: templates/social/feed.html:31
 #
+#: templates/social/feed.html:31
 msgid "Sections"
 msgstr "Розділи"
 
@@ -5075,13 +5147,14 @@ msgstr "Коли щось випускаєте, напишіть коротке 
 msgid "Sign-in failed"
 msgstr "Не вдалося увійти"
 
+#
 #: templates/socialaccount/authentication_error.html:11
 msgid ""
-"GitHub did not complete the sign-in, or the request expired. Nothing was "
-"changed. Please try again."
+"GitHub did not finish the sign-in, or it took too long. Nothing was changed. "
+"Try again."
 msgstr ""
-"GitHub не завершив вхід, або запит застарів. Нічого не змінено. Спробуйте ще "
-"раз."
+"GitHub не завершив вхід або це тривало надто довго. Нічого не змінено. "
+"Спробуйте ще раз."
 
 #: templates/socialaccount/authentication_error.html:12
 msgid "Try again"
@@ -5268,38 +5341,38 @@ msgstr "Якщо ми відповімо, лист прийде на вказа�
 msgid "Write another message"
 msgstr "Написати ще одне"
 
-#: verification/admin.py:33
+#: verification/admin.py:34
 msgid "Approve (the review reasons are fine)"
 msgstr "Схвалити (причини перевірки в порядку)"
 
-#: verification/admin.py:36
+#: verification/admin.py:37
 #, python-format
 msgid "Approved %(count)s."
 msgstr "Схвалено: %(count)s."
 
-#: verification/admin.py:38
+#: verification/admin.py:39
 msgid "Revoke Repo owner"
 msgstr "Відкликати «Власник репозиторію»"
 
-#: verification/admin.py:41 verification/admin.py:104
+#: verification/admin.py:42 verification/admin.py:105
 #, python-format
 msgid "Revoked %(count)s."
 msgstr "Відкликано: %(count)s."
 
-#: verification/admin.py:43
+#: verification/admin.py:44
 msgid "Block the repository and revoke Repo owner"
 msgstr "Заблокувати репозиторій і відкликати «Власник репозиторію»"
 
-#: verification/admin.py:48 verification/admin.py:111
+#: verification/admin.py:49 verification/admin.py:112
 #, python-format
 msgid "Blocked %(count)s."
 msgstr "Заблоковано: %(count)s."
 
-#: verification/admin.py:50
+#: verification/admin.py:51
 msgid "Re-check on GitHub now"
 msgstr "Перевірити на GitHub зараз"
 
-#: verification/admin.py:60
+#: verification/admin.py:61
 #, python-format
 msgid ""
 "Confirmed %(confirmed)s, needs review %(review)s, removed %(removed)s, retry "
@@ -5308,29 +5381,37 @@ msgstr ""
 "Підтверджено %(confirmed)s, на перевірку %(review)s, знято %(removed)s, "
 "повторити пізніше %(kept)s."
 
-#: verification/admin.py:101
+#: verification/admin.py:102
 msgid "Revoke Domain verified"
 msgstr "Відкликати «Домен підтверджено»"
 
-#: verification/admin.py:106
+#: verification/admin.py:107
 msgid "Block the domain and revoke Domain verified"
 msgstr "Заблокувати домен і відкликати «Домен підтверджено»"
 
-#: verification/admin.py:113
+#: verification/admin.py:114
 msgid "Re-run verification now"
 msgstr "Перевірити ще раз зараз"
 
-#: verification/admin.py:124
+#: verification/admin.py:125
 #, python-format
 msgid "Confirmed %(confirmed)s, retry later %(kept)s, removed %(removed)s."
 msgstr ""
 "Підтверджено: %(confirmed)s, повторимо пізніше: %(kept)s, знято: %(removed)s."
 
-#: verification/admin.py:126
+#: verification/admin.py:127
 #, python-format
-msgid "%(count)s row(s) skipped: not verified, or over the limit of %(limit)s."
-msgstr ""
-"Пропущено рядків: %(count)s (не підтверджені або понад ліміт %(limit)s)."
+msgid "%(count)s row skipped: not verified, or over the limit of %(limit)s."
+msgid_plural ""
+"%(count)s rows skipped: not verified, or over the limit of %(limit)s."
+msgstr[0] ""
+"Пропущено %(count)s рядок: не підтверджено або понад ліміт %(limit)s."
+msgstr[1] ""
+"Пропущено %(count)s рядки: не підтверджено або понад ліміт %(limit)s."
+msgstr[2] ""
+"Пропущено %(count)s рядків: не підтверджено або понад ліміт %(limit)s."
+msgstr[3] ""
+"Пропущено %(count)s рядка: не підтверджено або понад ліміт %(limit)s."
 
 #: verification/domain.py:40
 msgid "Add a live URL and save the project first."
@@ -5384,13 +5465,14 @@ msgstr "DNS не відповів вчасно. Спробуйте за кіль
 msgid "This address points to a private network and cannot be checked."
 msgstr "Ця адреса веде в приватну мережу, її не можна перевірити."
 
+#
 #: verification/domain.py:51
 msgid ""
-"Your homepage could not be loaded (no answer within 5 seconds, or the "
+"We could not open your homepage (no answer within 5 seconds, or the "
 "connection failed)."
 msgstr ""
-"Не вдалося завантажити головну сторінку (немає відповіді за 5 секунд або "
-"з'єднання не вдалося)."
+"Не вдалося відкрити вашу головну сторінку (немає відповіді за 5 секунд або "
+"з’єднання не вдалося)."
 
 #: verification/domain.py:52
 msgid ""
@@ -5423,19 +5505,22 @@ msgstr "Сторінка завантажилася, але метатегу в 
 msgid "The meta tag was found, but its token does not match. Copy it again."
 msgstr "Метатег знайдено, але токен не збігається. Скопіюйте його ще раз."
 
+#
 #: verification/repo.py:140
-msgid "GitHub did not answer properly. Try again in a few minutes."
-msgstr "GitHub не відповів як слід. Спробуйте за кілька хвилин."
+msgid "GitHub did not answer as expected. Try again in a few minutes."
+msgstr "GitHub відповів не так, як очікувалося. Спробуйте за кілька хвилин."
 
 #: verification/repo.py:153
 #, python-format
-msgid "GitHub's rate limit was reached. Try again in about %(minutes)s min."
+msgid ""
+"GitHub is limiting our checks right now. Try again in about %(minutes)s min."
 msgstr ""
-"Досягнуто ліміт запитів GitHub. Спробуйте приблизно через %(minutes)s хв."
+"GitHub зараз обмежує наші перевірки. Спробуйте приблизно за %(minutes)s хв."
 
+#
 #: verification/repo.py:155
-msgid "GitHub's rate limit was reached. Try again later."
-msgstr "Досягнуто ліміт запитів GitHub. Спробуйте пізніше."
+msgid "GitHub is limiting our checks right now. Try again later."
+msgstr "GitHub зараз обмежує наші перевірки. Спробуйте пізніше."
 
 #: verification/repo.py:163
 msgid "This repository has no commits yet."

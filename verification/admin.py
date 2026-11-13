@@ -1,5 +1,6 @@
 from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext
 from unfold.decorators import action
 
 from moderation import audit
@@ -123,7 +124,8 @@ class DomainVerificationAdmin(ReadOnlyModelAdmin):
                       domain=row.domain, outcome=outcome)
         messages.success(request, _("Confirmed %(confirmed)s, retry later %(kept)s, removed %(removed)s.") % outcomes)
         if skipped:
-            messages.warning(request, _("%(count)s row(s) skipped: not verified, or over the limit of %(limit)s.")
+            messages.warning(request, ngettext("%(count)s row skipped: not verified, or over the limit of %(limit)s.",
+                                      "%(count)s rows skipped: not verified, or over the limit of %(limit)s.", skipped)
                              % {"count": skipped, "limit": RERUN_LIMIT})
 
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 21:20+0000\n"
+"POT-Creation-Date: 2026-11-13 21:49+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -19,29 +19,29 @@ msgstr ""
 msgid "Signed in as %(name)s."
 msgstr "Sesión iniciada como %(name)s."
 
-#: accounts/adapters.py:55 accounts/views.py:57 pages/test_languages.py:220
+#: accounts/adapters.py:55 accounts/views.py:58 pages/test_languages.py:220
 msgid "You are signed out."
 msgstr "Has cerrado sesión."
 
-#: accounts/admin.py:39 accounts/models.py:101
+#: accounts/admin.py:40 accounts/models.py:101
 msgid "badge"
 msgstr "insignia"
 
-#: accounts/admin.py:40
+#: accounts/admin.py:41
 msgid "Badges (only superusers can change these)"
 msgstr "Insignias (solo los superusuarios pueden cambiarlas)"
 
-#: accounts/admin.py:107 moderation/admin.py:34
+#: accounts/admin.py:108 moderation/admin.py:35
 #: templates/moderation/mod/act.html:11 templates/moderation/mod/queue.html:32
 #: templates/moderation/mod/queue.html:51
 msgid "Profile"
 msgstr "Perfil"
 
-#: accounts/admin.py:108
+#: accounts/admin.py:109
 msgid "Pictures"
 msgstr "Imágenes"
 
-#: accounts/admin.py:109 config/settings/base.py:365
+#: accounts/admin.py:110 config/settings/base.py:365
 #: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
@@ -49,43 +49,48 @@ msgstr "Imágenes"
 msgid "Moderation"
 msgstr "Moderación"
 
-#: accounts/admin.py:110
+#: accounts/admin.py:111
 msgid "Permissions"
 msgstr "Permisos"
 
-#: accounts/admin.py:111
+#: accounts/admin.py:112
 msgid "Terms and dates"
 msgstr "Términos y fechas"
 
-#: accounts/admin.py:128 moderation/dashboard.py:47
+#: accounts/admin.py:129 moderation/dashboard.py:47
 msgid "Published projects"
 msgstr "Proyectos publicados"
 
-#: accounts/admin.py:157
+#: accounts/admin.py:158
 msgid "Suspend selected users"
 msgstr "Suspender a los usuarios seleccionados"
 
-#: accounts/admin.py:162
+#: accounts/admin.py:163
 #, python-format
 msgid "Skipped %(name)s: staff cannot suspend themselves or a superuser."
 msgstr ""
 "Se omitió a %(name)s: el personal no puede suspenderse a sí mismo ni a un "
 "superusuario."
 
-#: accounts/admin.py:165
+#: accounts/admin.py:166
 #, python-format
-msgid "Suspended %(count)s user(s). Their projects are hidden everywhere."
-msgstr ""
-"Usuarios suspendidos: %(count)s. Sus proyectos están ocultos en todas partes."
+msgid "Suspended %(count)s user. Their projects are hidden everywhere."
+msgid_plural "Suspended %(count)s users. Their projects are hidden everywhere."
+msgstr[0] ""
+"%(count)s usuario suspendido. Sus proyectos están ocultos en todas partes."
+msgstr[1] ""
+"%(count)s usuarios suspendidos. Sus proyectos están ocultos en todas partes."
 
-#: accounts/admin.py:167
+#: accounts/admin.py:170
 msgid "Unsuspend selected users"
 msgstr "Quitar la suspensión a los usuarios seleccionados"
 
-#: accounts/admin.py:170
+#: accounts/admin.py:173
 #, python-format
-msgid "Unsuspended %(count)s user(s)."
-msgstr "Suspensión quitada a %(count)s usuarios."
+msgid "Unsuspended %(count)s user."
+msgid_plural "Unsuspended %(count)s users."
+msgstr[0] "%(count)s usuario reactivado."
+msgstr[1] "%(count)s usuarios reactivados."
 
 #: accounts/avatars.py:37
 msgid "No GitHub picture is available for this account."
@@ -99,10 +104,11 @@ msgstr "No se pudo descargar tu imagen de GitHub ahora. Inténtalo más tarde."
 msgid "You need to accept the Terms to create an account."
 msgstr "Debes aceptar los Términos para crear una cuenta."
 
+#
 #: accounts/forms.py:62
 msgid ""
-"Your profile will be at /u/username/. Lowercase letters, digits, - and _."
-msgstr "Tu perfil estará en /u/usuario/. Minúsculas, números, - y _."
+"Your profile will be at /u/username/. Use small letters, numbers, - and _."
+msgstr "Tu perfil estará en /u/username/. Usa minúsculas, números, - y _."
 
 #: accounts/forms.py:88
 msgid "Upload a picture"
@@ -222,7 +228,7 @@ msgstr "Usa como máximo 10 habilidades."
 msgid "Pin at most 3 projects."
 msgstr "Fija como máximo 3 proyectos."
 
-#: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:72
+#: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:73
 #: community/views.py:35 projects/views.py:39 social/views.py:73
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Demasiados cambios en poco tiempo. Inténtalo de nuevo en unos minutos."
@@ -347,44 +353,45 @@ msgstr "proyectos fijados"
 msgid "Use %(min)d to %(max)d characters."
 msgstr "Usa entre %(min)d y %(max)d caracteres."
 
+#
 #: accounts/usernames.py:40
 msgid ""
-"Use only lowercase letters, digits, hyphens and underscores, starting with a "
-"letter or digit."
+"Use only small letters, numbers, - and _, and start with a letter or a "
+"number."
 msgstr ""
-"Usa solo letras minúsculas, números, guiones y guiones bajos, y empieza por "
-"una letra o un número."
+"Usa solo minúsculas, números, - y _, y empieza por una letra o un número."
 
+#
 #: accounts/usernames.py:44
-msgid "This username is reserved. Please choose another."
-msgstr "Este nombre de usuario está reservado. Elige otro."
+msgid "This username is not available. Choose another one."
+msgstr "Este nombre de usuario no está disponible. Elige otro."
 
 #: accounts/usernames.py:92
 #, python-format
 msgid "This name is reserved for official %(site)s accounts."
 msgstr "Este nombre está reservado para las cuentas oficiales de %(site)s."
 
-#: accounts/views.py:69 moderation/pages.py:26
+#: accounts/views.py:70 moderation/pages.py:26
 msgid "Your account is suspended."
 msgstr "Tu cuenta está suspendida."
 
-#: accounts/views.py:77
+#: accounts/views.py:78
 msgid "Settings saved."
 msgstr "Ajustes guardados."
 
-#: accounts/views.py:95
+#: accounts/views.py:96
 msgid "Thank you. You accepted the updated Terms."
 msgstr "Gracias. Has aceptado los Términos actualizados."
 
-#: accounts/views.py:106
+#: accounts/views.py:107
 msgid "Too many downloads in a short time. Try again later."
 msgstr "Demasiadas descargas en poco tiempo. Inténtalo de nuevo más tarde."
 
-#: accounts/views.py:129
+#: accounts/views.py:130
 msgid "Too many attempts. Try again later."
 msgstr "Demasiados intentos. Inténtalo de nuevo más tarde."
 
-#: accounts/views.py:133
+#: accounts/views.py:134
 msgid "Your account and everything in it were deleted."
 msgstr "Tu cuenta y todo lo que contenía se han eliminado."
 
@@ -472,7 +479,7 @@ msgstr ""
 "Durante las primeras 24 horas, las cuentas nuevas solo pueden poner un "
 "enlace por publicación."
 
-#: community/forms.py:68 projects/admin.py:100 support/models.py:65
+#: community/forms.py:68 projects/admin.py:109 support/models.py:65
 msgid "Text"
 msgstr "Texto"
 
@@ -731,9 +738,10 @@ msgstr "Esta respuesta no se puede cambiar."
 msgid "Reply deleted."
 msgstr "Respuesta eliminada."
 
+#
 #: community/views.py:435
-msgid "Bad request."
-msgstr "Solicitud no válida."
+msgid "Something went wrong. Reload the page and try again."
+msgstr "Algo salió mal. Recarga la página y vuelve a intentarlo."
 
 #: community/views.py:437
 msgid "You cannot vote for your own post."
@@ -825,7 +833,7 @@ msgstr "Avisos"
 msgid "Follows"
 msgstr "Seguimientos"
 
-#: config/settings/base.py:374 projects/admin.py:46
+#: config/settings/base.py:374 projects/admin.py:47
 msgid "Likes"
 msgstr "Me gusta"
 
@@ -867,82 +875,86 @@ msgstr "Noticias"
 msgid "Audit log"
 msgstr "Registro de auditoría"
 
-#: moderation/admin.py:32 templates/moderation/mod/queue.html:28
+#: moderation/admin.py:33 templates/moderation/mod/queue.html:28
 msgid "Type"
 msgstr "Tipo"
 
-#: moderation/admin.py:34 templates/moderation/mod/act.html:11
+#: moderation/admin.py:35 templates/moderation/mod/act.html:11
 #: templates/moderation/mod/queue.html:31
 #: templates/moderation/mod/queue.html:51
 msgid "Project"
 msgstr "Proyecto"
 
-#: moderation/admin.py:34 templates/moderation/mod/act.html:11
+#: moderation/admin.py:35 templates/moderation/mod/act.html:11
 #: templates/moderation/mod/queue.html:33
 #: templates/moderation/mod/queue.html:51
 msgid "Build-log entry"
 msgstr "Entrada del registro de cambios"
 
-#: moderation/admin.py:36
+#: moderation/admin.py:37
 msgid "Target"
 msgstr "Objetivo"
 
-#: moderation/admin.py:45
+#: moderation/admin.py:46
 #, python-format
 msgid "%(name)s (deleted)"
 msgstr "%(name)s (eliminado)"
 
-#: moderation/admin.py:48
+#: moderation/admin.py:49
 msgid "Resolve selected reports"
 msgstr "Resolver las denuncias seleccionadas"
 
-#: moderation/admin.py:51
+#: moderation/admin.py:52
 #, python-format
-msgid "Resolved %(count)s report(s)."
-msgstr "Denuncias resueltas: %(count)s."
+msgid "Resolved %(count)s report."
+msgid_plural "Resolved %(count)s reports."
+msgstr[0] "%(count)s denuncia resuelta."
+msgstr[1] "%(count)s denuncias resueltas."
 
-#: moderation/admin.py:87
+#: moderation/admin.py:90
 msgid "The end must be after the start."
 msgstr "El final debe ser posterior al inicio."
 
-#: moderation/admin.py:92
+#: moderation/admin.py:95
 msgid "state"
 msgstr "estado"
 
-#: moderation/admin.py:96 moderation/admin.py:156
+#: moderation/admin.py:99 moderation/admin.py:159
 msgid "Active"
 msgstr "Activa"
 
-#: moderation/admin.py:96 moderation/admin.py:156 news/admin.py:29
+#: moderation/admin.py:99 moderation/admin.py:159 news/admin.py:29
 msgid "Scheduled"
 msgstr "Programada"
 
-#: moderation/admin.py:96 moderation/admin.py:156
+#: moderation/admin.py:99 moderation/admin.py:159
 msgid "Expired"
 msgstr "Vencida"
 
-#: moderation/admin.py:97 moderation/admin.py:157
+#: moderation/admin.py:100 moderation/admin.py:160
 msgid "Revoked"
 msgstr "Revocada"
 
-#: moderation/admin.py:154 news/admin.py:25
+#: moderation/admin.py:157 news/admin.py:25
 msgid "State"
 msgstr "Estado"
 
-#: moderation/admin.py:169
+#: moderation/admin.py:172
 msgid "Revoke selected sanctions"
 msgstr "Revocar las sanciones seleccionadas"
 
-#: moderation/admin.py:172
+#: moderation/admin.py:175
 #, python-format
-msgid "Revoked %(count)s sanction(s)."
-msgstr "Sanciones revocadas: %(count)s."
+msgid "Revoked %(count)s sanction."
+msgid_plural "Revoked %(count)s sanctions."
+msgstr[0] "%(count)s sanción revocada."
+msgstr[1] "%(count)s sanciones revocadas."
 
 #: moderation/dashboard.py:48
 msgid "Signups, last 7 days"
 msgstr "Registros de los últimos 7 días"
 
-#: moderation/dashboard.py:49 projects/admin.py:50
+#: moderation/dashboard.py:49 projects/admin.py:51
 msgid "Open reports"
 msgstr "Denuncias abiertas"
 
@@ -1521,15 +1533,15 @@ msgstr "ahora mismo"
 msgid "%(time)s ago"
 msgstr "hace %(time)s"
 
-#: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #
+#: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 msgid "For You"
 msgstr "Para ti"
 
+#
 #: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #: templates/pages/explore.html:4 templates/pages/explore.html:5
 #: templates/pages/explore.html:16 templates/social/feed.html:20
-#
 msgid "Discover"
 msgstr "Descubrir"
 
@@ -1577,61 +1589,69 @@ msgid_plural "%(n)s projects"
 msgstr[0] "%(n)s proyecto"
 msgstr[1] "%(n)s proyectos"
 
-#: projects/admin.py:34
+#: projects/admin.py:35
 msgid "Removed by a moderator"
 msgstr "Retirado por un moderador"
 
-#: projects/admin.py:35
+#: projects/admin.py:36
 msgid "Content"
 msgstr "Contenido"
 
-#: projects/admin.py:36
+#: projects/admin.py:37
 msgid "Proof"
 msgstr "Prueba"
 
-#: projects/admin.py:37
+#: projects/admin.py:38
 msgid "Dates"
 msgstr "Fechas"
 
-#: projects/admin.py:54
+#: projects/admin.py:55
 msgid "Hallmarks (computed now)"
 msgstr "Sellos (calculados ahora)"
 
-#: projects/admin.py:67
+#: projects/admin.py:68
 msgid "Hide selected projects"
 msgstr "Ocultar los proyectos seleccionados"
 
-#: projects/admin.py:70
+#: projects/admin.py:71
 #, python-format
-msgid "Hid %(count)s project(s)."
-msgstr "Proyectos ocultados: %(count)s."
+msgid "Hid %(count)s project."
+msgid_plural "Hid %(count)s projects."
+msgstr[0] "%(count)s proyecto ocultado."
+msgstr[1] "%(count)s proyectos ocultados."
 
-#: projects/admin.py:72
+#: projects/admin.py:75
 msgid "Unhide selected projects"
 msgstr "Mostrar los proyectos seleccionados"
 
-#: projects/admin.py:75
+#: projects/admin.py:78
 #, python-format
-msgid "Unhid %(count)s project(s)."
-msgstr "Proyectos mostrados de nuevo: %(count)s."
+msgid "Made %(count)s project visible again."
+msgid_plural "Made %(count)s projects visible again."
+msgstr[0] "%(count)s proyecto vuelve a estar visible."
+msgstr[1] "%(count)s proyectos vuelven a estar visibles."
 
-#: projects/admin.py:77
+#: projects/admin.py:82
 msgid "Restore selected removed projects"
 msgstr "Restaurar los proyectos retirados seleccionados"
 
-#: projects/admin.py:80
+#: projects/admin.py:85
 #, python-format
-msgid "Restored %(count)s project(s)."
-msgstr "Proyectos restaurados: %(count)s."
+msgid "Restored %(count)s project."
+msgid_plural "Restored %(count)s projects."
+msgstr[0] "%(count)s proyecto restaurado."
+msgstr[1] "%(count)s proyectos restaurados."
 
-#: projects/admin.py:82
+#: projects/admin.py:89
 msgid "Purge selected removed projects (deletes them for good)"
 msgstr "Purgar los proyectos retirados seleccionados (los borra para siempre)"
 
-#: projects/admin.py:85
+#: projects/admin.py:92
 #, python-format
-msgid "Purged %(count)s removed project(s)."
-msgstr "Proyectos purgados: %(count)s."
+msgid "Deleted %(count)s removed project for good."
+msgid_plural "Deleted %(count)s removed projects for good."
+msgstr[0] "%(count)s proyecto retirado eliminado para siempre."
+msgstr[1] "%(count)s proyectos retirados eliminados para siempre."
 
 #: projects/forms.py:48
 msgid "Up to 5, separated by commas. For example: devtools, webhooks."
@@ -1756,13 +1776,15 @@ msgstr "La imagen pesa más de 5 MB."
 msgid "Use a PNG, JPEG or WebP image."
 msgstr "Usa una imagen PNG, JPEG o WebP."
 
+#
 #: projects/images.py:36
-msgid "The image has too many pixels."
-msgstr "La imagen tiene demasiados píxeles."
+msgid "The image is too big (too many pixels). Use a smaller one."
+msgstr ""
+"La imagen es demasiado grande (demasiados píxeles). Usa una más pequeña."
 
 #: projects/images.py:48
-msgid "This file is not a valid image."
-msgstr "Este archivo no es una imagen válida."
+msgid "We could not open this file as an image."
+msgstr "No pudimos abrir este archivo como imagen."
 
 #: projects/models.py:43
 msgid "Hidden"
@@ -2004,10 +2026,13 @@ msgstr ""
 "%(ok)s de %(total)s comprobaciones de los últimos 30 días recibieron "
 "respuesta de %(domain)s."
 
+#
 #: projects/tags.py:19
-msgid "Tags use letters, digits, spaces and + # . - (up to 30 characters)."
+msgid ""
+"Tags can use letters, numbers, spaces and + # . - (up to 30 characters)."
 msgstr ""
-"Las etiquetas usan letras, números, espacios y + # . - (hasta 30 caracteres)."
+"Las etiquetas pueden tener letras, números, espacios y + # . - (hasta 30 "
+"caracteres)."
 
 #: projects/views.py:69
 msgid "Moderators removed this project. It cannot be changed."
@@ -2077,9 +2102,10 @@ msgstr[1] ""
 "Ya hay suficientes comprobaciones por esta hora. Puedes volver a comprobar "
 "en %(count)d minutos."
 
+#
 #: projects/views.py:239
-msgid "Repository checked. Repo owner earned."
-msgstr "Repositorio comprobado. Repo owner conseguido."
+msgid "Repository checked. You earned Repo owner."
+msgstr "Repositorio comprobado. Has conseguido Repo owner."
 
 #: projects/views.py:241
 msgid "Repository checked. Repo owner will appear after a short manual review."
@@ -2107,13 +2133,15 @@ msgstr ""
 msgid "Too many checks. Wait a few minutes, then verify again."
 msgstr "Demasiadas comprobaciones. Espera unos minutos y vuelve a verificar."
 
+#
 #: projects/views.py:292
-msgid "Verified. Confirmed again."
-msgstr "Verificado. Confirmado de nuevo."
+msgid "Verified. Your domain is confirmed again."
+msgstr "Verificado. Tu dominio está confirmado de nuevo."
 
+#
 #: projects/views.py:292
-msgid "Verified. Domain verified earned."
-msgstr "Verificado. Domain verified conseguido."
+msgid "Verified. You earned Domain verified."
+msgstr "Verificado. Has conseguido Domain verified."
 
 #: projects/views.py:318
 msgid "Moved back to drafts."
@@ -2252,7 +2280,7 @@ msgstr "Marcar como respondido"
 
 #: support/admin.py:132 templates/community/_lightbox.html:7
 #: templates/community/_picker.html:5 templates/includes/badge_popover.html:6
-#: templates/includes/site_header.html:16
+#: templates/includes/site_header.html:16 templates/includes/toast.html:1
 msgid "Close"
 msgstr "Cerrar"
 
@@ -2442,17 +2470,18 @@ msgid ""
 msgstr "Ya has enviado varios mensajes. Espera una hora e inténtalo de nuevo."
 
 #: templates/400.html:3 templates/400.html:5
-msgid "We could not read that request"
-msgstr "No pudimos leer esa solicitud"
+msgid "Something was wrong with that request"
+msgstr "Algo falló en esa solicitud"
 
+#
 #: templates/400.html:6
-msgid "Something in it was malformed or incomplete. Go back and try again."
-msgstr ""
-"Algo en ella estaba dañado o incompleto. Vuelve atrás e inténtalo de nuevo."
+msgid "Part of it was missing or broken. Go back and try again."
+msgstr "Faltaba algo o estaba dañado. Vuelve atrás e inténtalo de nuevo."
 
+#
 #: templates/403.html:3 templates/403.html:7
-msgid "This record is closed"
-msgstr "Este registro está cerrado"
+msgid "You cannot open this page"
+msgstr "No puedes abrir esta página"
 
 #: templates/403.html:8
 msgid ""
@@ -2474,9 +2503,10 @@ msgstr ""
 "Se abrió hace demasiado tiempo o en otra pestaña antes de iniciar o cerrar "
 "sesión. Vuelve atrás, recarga la página y envíalo de nuevo."
 
+#
 #: templates/404.html:3 templates/404.html:7
-msgid "No record found"
-msgstr "No se encontró ningún registro"
+msgid "Page not found"
+msgstr "Página no encontrada"
 
 #: templates/404.html:8
 msgid ""
@@ -2490,12 +2520,12 @@ msgstr ""
 msgid "Something broke on our side"
 msgstr "Algo se rompió por nuestra parte"
 
+#
 #: templates/500.html:6
 msgid ""
-"It is not your fault, and the error has been logged. Try again in a minute."
+"It is not your fault. We keep a note of the error. Try again in a minute."
 msgstr ""
-"No es culpa tuya y el error ya quedó registrado. Inténtalo de nuevo en un "
-"minuto."
+"No es culpa tuya. Hemos registrado el error. Inténtalo de nuevo en un minuto."
 
 #: templates/accounts/_github_form.html:8 templates/socialaccount/login.html:15
 msgid "Continue with GitHub"
@@ -2545,7 +2575,7 @@ msgstr ""
 "cuenta."
 
 #: templates/accounts/accept_terms.html:26
-#: templates/accounts/delete_account.html:38
+#: templates/accounts/delete_account.html:41
 #: templates/accounts/settings.html:115
 msgid "Download my data"
 msgstr "Descargar mis datos"
@@ -2575,13 +2605,16 @@ msgstr "No podemos restaurar una cuenta eliminada, ni siquiera si lo pides."
 msgid "What is deleted"
 msgstr "Qué se elimina"
 
+#
 #: templates/accounts/delete_account.html:19
 msgid ""
-"Your profile: username, display name, bio, website, language, the email "
-"address and GitHub details we received at sign-in."
+"Your profile: username, display name, headline, About, links, picture, "
+"cover, language, and the email address and GitHub details we received at "
+"sign-in."
 msgstr ""
-"Tu perfil: nombre de usuario, nombre visible, biografía, sitio web, idioma, "
-"la dirección de correo y los datos de GitHub que recibimos al iniciar sesión."
+"Tu perfil: nombre de usuario, nombre visible, titular, «Sobre mí», enlaces, "
+"foto, portada, idioma, y el correo y los datos de GitHub que recibimos al "
+"iniciar sesión."
 
 #: templates/accounts/delete_account.html:20
 msgid ""
@@ -2597,6 +2630,18 @@ msgid "Your likes and follows."
 msgstr "Tus me gusta y tus seguimientos."
 
 #: templates/accounts/delete_account.html:22
+msgid "Your support messages and their attachments."
+msgstr "Tus mensajes al soporte y sus archivos adjuntos."
+
+#: templates/accounts/delete_account.html:23
+msgid ""
+"In the community: your images, your upvotes, and threads nobody else replied "
+"to."
+msgstr ""
+"En la comunidad: tus imágenes, tus votos y los hilos a los que nadie más "
+"respondió."
+
+#: templates/accounts/delete_account.html:24
 msgid ""
 "Your badges stop showing hallmarks, and links to your profile and projects "
 "stop working."
@@ -2604,15 +2649,23 @@ msgstr ""
 "Tus insignias dejan de mostrar sellos, y los enlaces a tu perfil y a tus "
 "proyectos dejan de funcionar."
 
-#: templates/accounts/delete_account.html:27
+#: templates/accounts/delete_account.html:29
 msgid "What is kept"
 msgstr "Qué se conserva"
 
-#: templates/accounts/delete_account.html:29
+#: templates/accounts/delete_account.html:31
 msgid "Reports you made stay for moderation, without your name."
 msgstr "Las denuncias que hiciste se quedan para la moderación, sin tu nombre."
 
-#: templates/accounts/delete_account.html:30
+#: templates/accounts/delete_account.html:32
+msgid ""
+"Your community replies, and threads other people replied to, stay without "
+"your name. They show as “[deleted]”."
+msgstr ""
+"Tus respuestas en la comunidad y los hilos que otros respondieron se quedan "
+"sin tu nombre. Aparecen como «[eliminado]»."
+
+#: templates/accounts/delete_account.html:33
 msgid ""
 "Our audit log records that an account was deleted, without your username or "
 "email."
@@ -2620,15 +2673,15 @@ msgstr ""
 "Nuestro registro de auditoría anota que se eliminó una cuenta, sin tu nombre "
 "de usuario ni tu correo."
 
-#: templates/accounts/delete_account.html:31
+#: templates/accounts/delete_account.html:34
 msgid "Your username becomes free, and someone else can take it."
 msgstr "Tu nombre de usuario queda libre y otra persona puede tomarlo."
 
-#: templates/accounts/delete_account.html:37
+#: templates/accounts/delete_account.html:40
 msgid "Want a copy first?"
 msgstr "¿Quieres una copia antes?"
 
-#: templates/accounts/delete_account.html:44
+#: templates/accounts/delete_account.html:47
 #, python-format
 msgid ""
 "To confirm, type your username: <strong class=\"mono\">%(username)s</strong>"
@@ -2636,11 +2689,11 @@ msgstr ""
 "Para confirmar, escribe tu nombre de usuario: <strong "
 "class=\"mono\">%(username)s</strong>"
 
-#: templates/accounts/delete_account.html:47
+#: templates/accounts/delete_account.html:50
 msgid "Delete my account"
 msgstr "Eliminar mi cuenta"
 
-#: templates/accounts/delete_account.html:48
+#: templates/accounts/delete_account.html:51
 #: templates/community/confirm_delete.html:15
 #: templates/community/reply_form.html:20
 #: templates/community/thread_form.html:29 templates/moderation/report.html:19
@@ -2881,11 +2934,13 @@ msgstr "Nombre de usuario"
 msgid "Your data"
 msgstr "Tus datos"
 
+#
 #: templates/accounts/settings.html:112
-msgid "A JSON file with your profile, projects, build log, likes and follows."
+msgid ""
+"One file (JSON) with your profile, projects, build log, likes and follows."
 msgstr ""
-"Un archivo JSON con tu perfil, proyectos, registro de desarrollo, me gusta y "
-"seguimientos."
+"Un archivo (JSON) con tu perfil, proyectos, registro de desarrollo, me gusta "
+"y a quién sigues."
 
 #: templates/accounts/settings.html:121
 msgid "Removes your profile and all your projects. This cannot be undone."
@@ -3619,10 +3674,6 @@ msgstr "Menú de la cuenta de %(name)s, respuestas nuevas"
 msgid "Account menu for %(name)s"
 msgstr "Menú de la cuenta de %(name)s"
 
-#: templates/includes/toast.html:1
-msgid "Dismiss"
-msgstr "Descartar"
-
 #: templates/includes/user_count.html:5
 msgid "Registered accounts"
 msgstr "Cuentas registradas"
@@ -4163,8 +4214,8 @@ msgstr "Menos discurso. Más producto."
 msgid "A few things people actually put on the internet."
 msgstr "Algunas cosas que la gente de verdad publicó en internet."
 
-#: templates/pages/landing.html:146
 #
+#: templates/pages/landing.html:146
 msgid "Discover projects"
 msgstr "Descubrir proyectos"
 
@@ -4517,8 +4568,8 @@ msgstr "Hasta 5 comprobaciones cada 10 minutos."
 
 #: templates/projects/_domain_status.html:3
 #, python-format
-msgid "Verified: %(domain)s. Domain verified earned."
-msgstr "Verificado: %(domain)s. Domain verified conseguido."
+msgid "%(domain)s is verified. You earned Domain verified."
+msgstr "%(domain)s está verificado. Has conseguido Domain verified."
 
 #: templates/projects/_domain_status.html:4
 #, python-format
@@ -4977,9 +5028,9 @@ msgstr "Te gusta"
 msgid "Like"
 msgstr "Me gusta"
 
+#
 #: templates/social/feed.html:4 templates/social/feed.html:5
 #: templates/social/feed.html:11
-#
 msgid "For You Page"
 msgstr "Página Para ti"
 
@@ -4996,8 +5047,8 @@ msgstr "Menú de la página"
 msgid "Recommended"
 msgstr "Recomendados"
 
-#: templates/social/feed.html:31
 #
+#: templates/social/feed.html:31
 msgid "Sections"
 msgstr "Secciones"
 
@@ -5057,13 +5108,14 @@ msgstr ""
 msgid "Sign-in failed"
 msgstr "Error al iniciar sesión"
 
+#
 #: templates/socialaccount/authentication_error.html:11
 msgid ""
-"GitHub did not complete the sign-in, or the request expired. Nothing was "
-"changed. Please try again."
+"GitHub did not finish the sign-in, or it took too long. Nothing was changed. "
+"Try again."
 msgstr ""
-"GitHub no completó el inicio de sesión, o la solicitud caducó. No se cambió "
-"nada. Inténtalo de nuevo."
+"GitHub no terminó el inicio de sesión o tardó demasiado. No se cambió nada. "
+"Vuelve a intentarlo."
 
 #: templates/socialaccount/authentication_error.html:12
 msgid "Try again"
@@ -5252,38 +5304,38 @@ msgstr "Si respondemos, la respuesta irá al correo que indicaste."
 msgid "Write another message"
 msgstr "Escribir otro mensaje"
 
-#: verification/admin.py:33
+#: verification/admin.py:34
 msgid "Approve (the review reasons are fine)"
 msgstr "Aprobar (los motivos de revisión están bien)"
 
-#: verification/admin.py:36
+#: verification/admin.py:37
 #, python-format
 msgid "Approved %(count)s."
 msgstr "Aprobados: %(count)s."
 
-#: verification/admin.py:38
+#: verification/admin.py:39
 msgid "Revoke Repo owner"
 msgstr "Retirar Repo owner"
 
-#: verification/admin.py:41 verification/admin.py:104
+#: verification/admin.py:42 verification/admin.py:105
 #, python-format
 msgid "Revoked %(count)s."
 msgstr "Retirados: %(count)s."
 
-#: verification/admin.py:43
+#: verification/admin.py:44
 msgid "Block the repository and revoke Repo owner"
 msgstr "Bloquear el repositorio y retirar Repo owner"
 
-#: verification/admin.py:48 verification/admin.py:111
+#: verification/admin.py:49 verification/admin.py:112
 #, python-format
 msgid "Blocked %(count)s."
 msgstr "Bloqueados: %(count)s."
 
-#: verification/admin.py:50
+#: verification/admin.py:51
 msgid "Re-check on GitHub now"
 msgstr "Volver a comprobar en GitHub ahora"
 
-#: verification/admin.py:60
+#: verification/admin.py:61
 #, python-format
 msgid ""
 "Confirmed %(confirmed)s, needs review %(review)s, removed %(removed)s, retry "
@@ -5292,31 +5344,35 @@ msgstr ""
 "Confirmados %(confirmed)s, a revisión %(review)s, retirados %(removed)s, "
 "reintentar más tarde %(kept)s."
 
-#: verification/admin.py:101
+#: verification/admin.py:102
 msgid "Revoke Domain verified"
 msgstr "Retirar Domain verified"
 
-#: verification/admin.py:106
+#: verification/admin.py:107
 msgid "Block the domain and revoke Domain verified"
 msgstr "Bloquear el dominio y retirar Domain verified"
 
-#: verification/admin.py:113
+#: verification/admin.py:114
 msgid "Re-run verification now"
 msgstr "Volver a ejecutar la verificación"
 
-#: verification/admin.py:124
+#: verification/admin.py:125
 #, python-format
 msgid "Confirmed %(confirmed)s, retry later %(kept)s, removed %(removed)s."
 msgstr ""
 "Confirmados %(confirmed)s, reintento más tarde %(kept)s, retirados "
 "%(removed)s."
 
-#: verification/admin.py:126
+#: verification/admin.py:127
 #, python-format
-msgid "%(count)s row(s) skipped: not verified, or over the limit of %(limit)s."
-msgstr ""
-"Filas omitidas: %(count)s (sin verificar, o por encima del límite de "
-"%(limit)s)."
+msgid "%(count)s row skipped: not verified, or over the limit of %(limit)s."
+msgid_plural ""
+"%(count)s rows skipped: not verified, or over the limit of %(limit)s."
+msgstr[0] ""
+"%(count)s fila omitida: no verificada o por encima del límite de %(limit)s."
+msgstr[1] ""
+"%(count)s filas omitidas: no verificadas o por encima del límite de "
+"%(limit)s."
 
 #: verification/domain.py:40
 msgid "Add a live URL and save the project first."
@@ -5371,12 +5427,13 @@ msgstr "El DNS no respondió a tiempo. Inténtalo de nuevo en unos minutos."
 msgid "This address points to a private network and cannot be checked."
 msgstr "Esta dirección apunta a una red privada y no se puede comprobar."
 
+#
 #: verification/domain.py:51
 msgid ""
-"Your homepage could not be loaded (no answer within 5 seconds, or the "
+"We could not open your homepage (no answer within 5 seconds, or the "
 "connection failed)."
 msgstr ""
-"No se pudo cargar tu página de inicio (sin respuesta en 5 segundos, o falló "
+"No pudimos abrir tu página de inicio (sin respuesta en 5 segundos, o falló "
 "la conexión)."
 
 #: verification/domain.py:52
@@ -5412,21 +5469,25 @@ msgid "The meta tag was found, but its token does not match. Copy it again."
 msgstr ""
 "Se encontró la metaetiqueta, pero su token no coincide. Cópialo de nuevo."
 
+#
 #: verification/repo.py:140
-msgid "GitHub did not answer properly. Try again in a few minutes."
-msgstr "GitHub no respondió correctamente. Inténtalo de nuevo en unos minutos."
+msgid "GitHub did not answer as expected. Try again in a few minutes."
+msgstr ""
+"GitHub no respondió como se esperaba. Vuelve a intentarlo en unos minutos."
 
 #: verification/repo.py:153
 #, python-format
-msgid "GitHub's rate limit was reached. Try again in about %(minutes)s min."
+msgid ""
+"GitHub is limiting our checks right now. Try again in about %(minutes)s min."
 msgstr ""
-"Se alcanzó el límite de solicitudes de GitHub. Inténtalo de nuevo en unos "
+"GitHub está limitando nuestras comprobaciones. Vuelve a intentarlo en unos "
 "%(minutes)s min."
 
+#
 #: verification/repo.py:155
-msgid "GitHub's rate limit was reached. Try again later."
+msgid "GitHub is limiting our checks right now. Try again later."
 msgstr ""
-"Se alcanzó el límite de solicitudes de GitHub. Inténtalo de nuevo más tarde."
+"GitHub está limitando nuestras comprobaciones. Vuelve a intentarlo más tarde."
 
 #: verification/repo.py:163
 msgid "This repository has no commits yet."

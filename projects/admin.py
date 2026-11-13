@@ -1,6 +1,7 @@
 from django.contrib import admin, messages
 from django.db.models import Count, Q
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext
 from unfold.admin import ModelAdmin, TabularInline
 from unfold.decorators import action
 
@@ -67,22 +68,30 @@ class ProjectAdmin(AuditedModelAdmin):
     @action(description=_("Hide selected projects"), permissions=["change"])
     def hide(self, request, queryset):
         done = sum(actions.hide_project(p, request.user) for p in queryset.select_related("owner"))
-        messages.success(request, _("Hid %(count)s project(s).") % {"count": done})
+        message = ngettext("Hid %(count)s project.",
+                           "Hid %(count)s projects.", done)
+        messages.success(request, message % {"count": done})
 
     @action(description=_("Unhide selected projects"), permissions=["change"])
     def unhide(self, request, queryset):
         done = sum(actions.unhide_project(p, request.user) for p in queryset.select_related("owner"))
-        messages.success(request, _("Unhid %(count)s project(s).") % {"count": done})
+        message = ngettext("Made %(count)s project visible again.",
+                           "Made %(count)s projects visible again.", done)
+        messages.success(request, message % {"count": done})
 
     @action(description=_("Restore selected removed projects"), permissions=["superuser"])
     def restore(self, request, queryset):
         done = sum(decisions.restore_project(p, request.user) for p in queryset.select_related("owner"))
-        messages.success(request, _("Restored %(count)s project(s).") % {"count": done})
+        message = ngettext("Restored %(count)s project.",
+                           "Restored %(count)s projects.", done)
+        messages.success(request, message % {"count": done})
 
     @action(description=_("Purge selected removed projects (deletes them for good)"), permissions=["superuser"])
     def purge(self, request, queryset):
         done = sum(decisions.purge_project(p, request.user) for p in queryset.select_related("owner"))
-        messages.success(request, _("Purged %(count)s removed project(s).") % {"count": done})
+        message = ngettext("Deleted %(count)s removed project for good.",
+                           "Deleted %(count)s removed projects for good.", done)
+        messages.success(request, message % {"count": done})
 
     def has_superuser_permission(self, request):
         """Restore and purge: superusers only (moderators never reach the admin's actions)."""

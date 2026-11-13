@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext
 from unfold.admin import ModelAdmin
 from unfold.decorators import action
 
@@ -48,7 +49,9 @@ class ReportAdmin(AuditedModelAdmin):
     @action(description=_("Resolve selected reports"), permissions=["change"])
     def resolve(self, request, queryset):
         done = sum(actions.resolve_report(r, request.user) for r in queryset)
-        messages.success(request, _("Resolved %(count)s report(s).") % {"count": done})
+        message = ngettext("Resolved %(count)s report.",
+                           "Resolved %(count)s reports.", done)
+        messages.success(request, message % {"count": done})
 
 
 @admin.register(AuditLog)
@@ -169,7 +172,9 @@ class SanctionAdmin(ModelAdmin):
     @action(description=_("Revoke selected sanctions"), permissions=["change"])
     def revoke(self, request, queryset):
         done = sum(sanctions.revoke(s, request.user) for s in queryset.select_related("user"))
-        messages.success(request, _("Revoked %(count)s sanction(s).") % {"count": done})
+        message = ngettext("Revoked %(count)s sanction.",
+                           "Revoked %(count)s sanctions.", done)
+        messages.success(request, message % {"count": done})
 
 
 @admin.register(Notice)

@@ -16,9 +16,11 @@
         <section class="panel stack">
           <h2>{% translate "What is deleted" %}</h2>
           <ul class="settings__list">
-            <li>{% translate "Your profile: username, display name, bio, website, language, the email address and GitHub details we received at sign-in." %}</li>
+            <li>{% translate "Your profile: username, display name, headline, About, links, picture, cover, language, and the email address and GitHub details we received at sign-in." %}</li>
             <li>{% translate "All your projects, drafts included, with their screenshots, build log, hallmarks, domain and repository checks, uptime history and likes." %}</li>
             <li>{% translate "Your likes and follows." %}</li>
+            <li>{% translate "Your support messages and their attachments." %}</li>
+            {% if community_enabled %}<li>{% translate "In the community: your images, your upvotes, and threads nobody else replied to." %}</li>{% endif %}
             <li>{% translate "Your badges stop showing hallmarks, and links to your profile and projects stop working." %}</li>
           </ul>
         </section>
@@ -27,6 +29,7 @@
           <h2>{% translate "What is kept" %}</h2>
           <ul class="settings__list">
             <li>{% translate "Reports you made stay for moderation, without your name." %}</li>
+            {% if community_enabled %}<li>{% translate "Your community replies, and threads other people replied to, stay without your name. They show as “[deleted]”." %}</li>{% endif %}
             <li>{% translate "Our audit log records that an account was deleted, without your username or email." %}</li>
             <li>{% translate "Your username becomes free, and someone else can take it." %}</li>
           </ul>

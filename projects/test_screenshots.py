@@ -76,7 +76,7 @@ class OneFlowTests(ProjectTestCase):
         bad = SimpleUploadedFile("notes.png", b"not an image", content_type="image/png")
         response = self.client.post(self.edit_url, form_data(self.project, tagline="Changed", screenshots=[image_file(), bad]))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "notes.png: This file is not a valid image.")
+        self.assertContains(response, "notes.png: We could not open this file as an image.")
         self.assertContains(response, 'role="alert"')
         self.assertEqual(self.project.screenshots.count(), 0)
         self.project.refresh_from_db()
