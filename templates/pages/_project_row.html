@@ -4,7 +4,7 @@
   <div class="feed-item__body">
     <p class="plate-row__name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></p>
     <p class="feed-item__by muted">
-      <a href="{% url 'accounts:profile' project.owner.username %}">@{{ project.owner.username }}</a>{% user_marks project.owner %}
+      <a href="{% url 'accounts:profile' project.owner.username %}">@{{ project.owner.username }}</a>{% user_marks project.owner "s" %}
       · <time datetime="{{ project.event_at|date:'c' }}" title="{{ project.event_at|date:'DATETIME_FORMAT' }}">{{ project.event_at|ago }}</time>
     </p>
     <p class="plate-row__tagline">{{ project.tagline }}</p>

@@ -69,3 +69,12 @@ Prüfzeichen sagen nur das, was sie sagen. Repo owner betrifft das Repository, D
 ## Was wir nicht prüfen können {#limits}
 
 {{ site_name }} prüft Fakten, die sich belegen lassen: wem das verknüpfte GitHub-Repository gehört, wer die Domain kontrolliert und ob die Website antwortet. Wer den Code geschrieben hat, prüfen wir nicht und können wir nicht prüfen. Commit-Verlauf und Daten schreibt die Person, der das Repository gehört, und sie lassen sich ändern. Wenn du glaubst, dass ein Projekt kopiert ist, melde es.
+
+## Badges neben einem Namen {#badges}
+
+Badges beschreiben die Rolle einer Person auf {{ site_name }}, nicht ihre Projekte. Sie werden von den Administratoren der Seite vergeben und zeigen, seit wann.
+
+- **Offizielles Konto:** wird vom {{ site_name }}-Team betrieben, zum Beispiel das Konto, das News veröffentlicht. Es hat keine besonderen Rechte auf der Seite.
+- **Moderator:** eine Person, die beim Moderieren von {{ site_name }} hilft. Moderatoren prüfen Meldungen und können innerhalb fester Grenzen Inhalte entfernen oder Konten einschränken, immer mit einem Grund, den die Person sieht.
+
+Tippe oder klicke auf ein Badge, um zu sehen, was es bedeutet und seit wann die Person es hat. Badges kann man weder kaufen noch beantragen.

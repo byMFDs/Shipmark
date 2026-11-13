@@ -69,3 +69,12 @@ Os selos dizem só o que dizem. Repo owner trata do repositório, Domain verifie
 ## O que não podemos verificar {#limits}
 
 O {{ site_name }} verifica fatos que consegue provar: a quem pertence o repositório do GitHub vinculado, quem controla o domínio e se o site responde. Ele não verifica, nem pode verificar, quem escreveu o código. O histórico de commits e as datas são escritos pelo dono do repositório e podem ser alterados. Se você acha que um projeto foi copiado, denuncie.
+
+## Badges ao lado de um nome {#badges}
+
+Os badges descrevem o papel de uma pessoa no {{ site_name }}, não os projetos dela. Eles são dados pelos administradores do site e mostram desde quando.
+
+- **Conta oficial:** mantida pela equipe do {{ site_name }}, por exemplo a conta que publica as novidades. Não tem nenhum direito especial no site.
+- **Moderador:** uma pessoa que ajuda a moderar o {{ site_name }}. Os moderadores analisam denúncias e podem remover conteúdo ou limitar contas dentro de limites fixos, sempre com um motivo que a pessoa vê.
+
+Toque ou clique em um badge para ver o que ele significa e desde quando a pessoa o tem. Badges não podem ser comprados nem pedidos.

@@ -69,3 +69,12 @@ Les poinçons disent seulement ce qu’ils disent. Repo owner concerne le dépô
 ## Ce que nous ne pouvons pas contrôler {#limits}
 
 {{ site_name }} contrôle les faits qu’il peut prouver : à qui appartient le dépôt GitHub lié, qui contrôle le domaine et si le site répond. Il ne contrôle pas, et ne peut pas contrôler, qui a écrit le code. L’historique des commits et ses dates sont écrits par le propriétaire du dépôt et peuvent être modifiés. Si vous pensez qu’un projet est copié, signalez-le.
+
+## Badges à côté d’un nom {#badges}
+
+Les badges décrivent le rôle d’une personne sur {{ site_name }}, pas ses projets. Ils sont attribués par les administrateurs du site et indiquent depuis quand.
+
+- **Compte officiel :** tenu par l’équipe de {{ site_name }}, par exemple le compte qui publie les actualités. Il n’a aucun droit particulier sur le site.
+- **Modérateur :** une personne qui aide à modérer {{ site_name }}. Les modérateurs examinent les signalements et peuvent retirer du contenu ou limiter des comptes dans des limites fixes, toujours avec un motif que la personne voit.
+
+Touchez ou cliquez sur un badge pour voir ce qu’il signifie et depuis quand la personne l’a. Un badge ne s’achète pas et ne se demande pas.

@@ -43,6 +43,7 @@
   <script type="module" src="{% static 'js/form-errors.js' %}"></script>
   <script type="module" src="{% static 'js/motion.js' %}"></script>
   <script type="module" src="{% static 'js/busy.js' %}"></script>
+  <script type="module" src="{% static 'js/badges.js' %}"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">{% translate "Skip to content" %}</a>
@@ -55,6 +56,7 @@
   </main>
 
   {% block footer %}{% site_footer %}{% endblock %}
+  {% badge_popover %}
   {% block scripts %}{% endblock %}
 </body>
 </html>

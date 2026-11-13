@@ -69,3 +69,12 @@ Los sellos solo dicen lo que dicen. Repo owner trata del repositorio, Domain ver
 ## Qué no podemos comprobar {#limits}
 
 {{ site_name }} comprueba hechos que puede demostrar: a quién pertenece el repositorio de GitHub enlazado, quién controla el dominio y si el sitio responde. No comprueba ni puede comprobar quién escribió el código. El historial de commits y sus fechas los escribe el propietario del repositorio y se pueden cambiar. Si crees que un proyecto está copiado, denúncialo.
+
+## Insignias junto a un nombre {#badges}
+
+Las insignias describen el papel de una persona en {{ site_name }}, no sus proyectos. Las otorgan los administradores del sitio y muestran desde cuándo.
+
+- **Cuenta oficial:** la gestiona el equipo de {{ site_name }}, por ejemplo la cuenta que publica las noticias. No tiene derechos especiales en el sitio.
+- **Moderador:** una persona que ayuda a moderar {{ site_name }}. Los moderadores revisan denuncias y pueden retirar contenido o limitar cuentas dentro de límites fijos, siempre con un motivo que la persona ve.
+
+Toca o haz clic en una insignia para ver qué significa y desde cuándo la tiene la persona. Las insignias no se compran ni se solicitan.

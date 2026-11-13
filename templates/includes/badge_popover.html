@@ -1,0 +1,31 @@
+{% load i18n ui %}{% comment %}The one panel for official and moderator badges (badges.js). Each badge button names its kind and
+carries its real date; the texts live once here, in a <template> per kind. Needs: brand, how_url.{% endcomment %}
+<div class="badge-pop" role="dialog" aria-modal="false" aria-labelledby="badge-pop-title" tabindex="-1" hidden data-badge-pop>
+  <div class="badge-pop__body" data-badge-pop-body></div>
+  <button class="btn btn--quiet btn--icon badge-pop__close" type="button" aria-label="{% translate 'Close' %}" data-badge-pop-close>{% icon "close" %}</button>
+</div>
+
+<template id="badge-tpl-official">
+  <div class="badge-pop__head">
+    <span class="badge-pop__glyph badge-pop__glyph--official" aria-hidden="true">{% icon "badge-official" %}</span>
+    <h2 class="badge-pop__title" id="badge-pop-title">{% translate "Official account" %}</h2>
+  </div>
+  <p class="badge-pop__text">{% blocktranslate with site=brand.SITE_NAME %}This account is operated by the {{ site }} team.{% endblocktranslate %}</p>
+  <ul class="badge-pop__facts">
+    <li>{% inline_svg brand.LOGO_MARK "badge-pop__logo" %}<span>{% blocktranslate with site=brand.SITE_NAME %}Affiliated with {{ site }}{% endblocktranslate %}</span></li>
+    <li data-badge-since-row>{% icon "calendar" %}<span data-badge-since></span></li>
+  </ul>
+  {% if how_url %}<a class="link-arrow badge-pop__more" href="{{ how_url }}#badges">{% translate "How badges work" %}</a>{% endif %}
+</template>
+
+<template id="badge-tpl-moderator">
+  <div class="badge-pop__head">
+    <span class="badge-pop__glyph badge-pop__glyph--moderator" aria-hidden="true">{% icon "badge-moderator" %}</span>
+    <h2 class="badge-pop__title" id="badge-pop-title">{% translate "Moderator" %}</h2>
+  </div>
+  <p class="badge-pop__text">{% blocktranslate with site=brand.SITE_NAME %}This person helps moderate {{ site }}. Moderators can review reports.{% endblocktranslate %}</p>
+  <ul class="badge-pop__facts">
+    <li data-badge-since-row>{% icon "calendar" %}<span data-badge-since></span></li>
+  </ul>
+  {% if how_url %}<a class="link-arrow badge-pop__more" href="{{ how_url }}#badges">{% translate "How badges work" %}</a>{% endif %}
+</template>

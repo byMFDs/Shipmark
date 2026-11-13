@@ -69,3 +69,12 @@ Znaki mówią tylko to, co mówią. Repo owner dotyczy repozytorium, Domain veri
 ## Czego nie możemy sprawdzić {#limits}
 
 {{ site_name }} sprawdza fakty, które da się udowodnić: do kogo należy połączone repozytorium GitHub, kto kontroluje domenę i czy strona odpowiada. Nie sprawdza i nie może sprawdzić, kto napisał kod. Historię commitów i ich daty zapisuje właściciel repozytorium i można je zmienić. Jeśli uważasz, że projekt jest skopiowany, zgłoś go.
+
+## Plakietki przy nazwie {#badges}
+
+Plakietki opisują rolę osoby w {{ site_name }}, a nie jej projekty. Przyznają je administratorzy serwisu i widać na nich, kiedy zostały przyznane.
+
+- **Konto oficjalne:** prowadzi je zespół {{ site_name }}, np. konto publikujące aktualności. Nie ma w serwisie żadnych specjalnych uprawnień.
+- **Moderator:** osoba, która pomaga moderować {{ site_name }}. Moderatorzy rozpatrują zgłoszenia i mogą usuwać treści lub ograniczać konta w ustalonych granicach, zawsze z powodem, który widzi dana osoba.
+
+Kliknij plakietkę, aby zobaczyć, co oznacza i od kiedy dana osoba ją ma. Plakietki nie można kupić ani o nią poprosić.

@@ -1,9 +1,12 @@
 """Badges and roles: who grants them, what they allow, and how they show next to names."""
+import re
+from datetime import datetime
 from io import StringIO
 
 from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.providers.github.provider import GitHubProvider
 
+from django.conf import settings
 from django.contrib.admin.sites import site
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import Permission
@@ -11,9 +14,12 @@ from django.core.exceptions import ValidationError
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.core.management import CommandError, call_command
 from django.db import connection
+from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
+from django.utils import timezone
+from django.utils.formats import date_format
 
 from moderation.models import AuditLog
 from projects.tests import make_project
@@ -220,12 +226,14 @@ class BadgeDisplayTests(TestCase):
             with self.subTest(url=url):
                 response = self.client.get(url)
                 self.assertContains(response, "user-mark--official")
-                self.assertContains(response, "Official Shipmark account")
+                self.assertContains(response, 'data-badge="official"')
+                self.assertContains(response, 'aria-label="Official account"')
 
     def test_moderator_label_and_nothing_for_others(self):
         badges.grant(self.ana, UserBadge.Kind.MODERATOR)
         response = self.client.get(reverse("accounts:profile", args=["ana"]))
-        self.assertContains(response, '<span class="user-mark user-mark--mod">Moderator</span>', html=True)
+        self.assertContains(response, 'data-badge="moderator"')
+        self.assertContains(response, 'aria-label="Moderator"')
         bob = make_user("bob")
         response = self.client.get(reverse("accounts:profile", args=["bob"]))
         self.assertNotContains(response, "user-mark")
@@ -247,3 +255,79 @@ class BadgeDisplayTests(TestCase):
             badges.grant(owner, UserBadge.Kind.MODERATOR)
             make_project(owner, name=f"Thing {n}")
         self.assertEqual(explore_queries(), few)
+
+
+class BadgeComponentTests(TestCase):
+    """One component for every badge: a labelled button, a tooltip, and the shared panel with the real date."""
+
+    def setUp(self):
+        self.ana = make_user("ana", display_name="Ana")
+        self.project = make_project(self.ana, name="Quillbox")
+
+    def grant(self, kind, when):
+        badges.grant(self.ana, kind)
+        UserBadge.objects.filter(user=self.ana, kind=kind).update(granted_at=when)
+
+    def buttons(self, html):
+        return re.findall(r'<button type="button" class="user-mark user-mark--(\w+) user-mark--(\w)" data-badge="(\w+)" '
+                          r'data-since="([^"]*)" data-tip="([^"]*)" aria-label="([^"]*)" aria-haspopup="dialog" '
+                          r'aria-expanded="false">', html)
+
+    def test_each_kind_renders_with_its_label_glyph_and_the_real_date(self):
+        official = timezone.make_aware(datetime(2025, 3, 3, 12, 0))
+        moderator = timezone.make_aware(datetime(2026, 1, 20, 9, 30))
+        self.grant(UserBadge.Kind.OFFICIAL, official)
+        self.grant(UserBadge.Kind.MODERATOR, moderator)
+        html = self.client.get(reverse("accounts:profile", args=["ana"])).content.decode()
+        found = {kind: (since, tip, label) for _c, _s, kind, since, tip, label in self.buttons(html)}
+        self.assertEqual(found["official"], (f"Official since {date_format(official, 'DATE_FORMAT')}", "Official account",
+                                             "Official account"))
+        self.assertEqual(found["moderator"], (f"Moderator since {date_format(moderator, 'DATE_FORMAT')}", "Moderator",
+                                              "Moderator"))
+        self.assertIn("March 3, 2025", found["official"][0])  # the date it was granted, not today
+        self.assertIn('class="icon"', html)
+
+    def test_the_date_is_in_the_page_language(self):
+        self.grant(UserBadge.Kind.OFFICIAL, timezone.make_aware(datetime(2025, 3, 3, 12, 0)))
+        self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = "uk"
+        html = self.client.get(reverse("accounts:profile", args=["ana"])).content.decode()
+        since = self.buttons(html)[0][3]
+        self.assertIn("2025", since)
+        self.assertIn("березня", since)
+        self.assertNotIn("Official since", since)
+
+    def test_one_shared_panel_per_page_with_both_texts_and_the_how_link(self):
+        self.grant(UserBadge.Kind.OFFICIAL, timezone.now())
+        html = self.client.get(reverse("accounts:profile", args=["ana"])).content.decode()
+        self.assertEqual(html.count("data-badge-pop>"), 1)
+        self.assertIn('id="badge-tpl-official"', html)
+        self.assertIn('id="badge-tpl-moderator"', html)
+        self.assertIn("This account is operated by the Shipmark team.", html)
+        self.assertIn("Affiliated with Shipmark", html)
+        self.assertIn("This person helps moderate Shipmark. Moderators can review reports.", html)
+        self.assertIn(f'href="{reverse("pages:how_proof_works")}#badges"', html)
+        self.assertIn("js/badges.js", html)
+        self.assertIn('role="dialog"', html)
+
+    def test_size_variants(self):
+        self.grant(UserBadge.Kind.OFFICIAL, timezone.now())
+        render = Template("{% load ui %}{% user_marks person 's' %}|{% user_marks person 'xl' %}").render(
+            Context({"person": User.objects.get(pk=self.ana.pk)}))
+        small, fallback = render.split("|")
+        self.assertIn("user-mark--s", small)
+        self.assertIn("user-mark--m", fallback)  # an unknown size falls back to the default
+
+    def test_ordinary_people_get_no_badge_anywhere(self):
+        bob = make_user("bob")
+        make_project(bob, name="Plainbox")
+        for url in (reverse("accounts:profile", args=["bob"]), reverse("pages:explore"), reverse("pages:landing"),
+                    reverse("social:feed") + "?tab=latest"):
+            with self.subTest(url=url):
+                self.assertEqual(self.buttons(self.client.get(url).content.decode()), [])
+
+    def test_how_proof_works_explains_badges_in_every_language(self):
+        for code, _name in settings.LANGUAGES:
+            self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = code
+            with self.subTest(language=code):
+                self.assertContains(self.client.get(reverse("pages:how_proof_works")), 'id="badges"')
+

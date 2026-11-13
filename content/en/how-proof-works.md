@@ -69,3 +69,12 @@ Hallmarks only say what they say. Repo owner is about the repository, Domain ver
 ## What we cannot check {#limits}
 
 {{ site_name }} checks facts it can prove: who owns the linked GitHub repository, who controls the domain, and whether the site answers. It does not and cannot check who wrote the code. Commit history and dates are written by the repository owner and can be changed. If you think a project is copied, report it.
+
+## Badges next to a name {#badges}
+
+Badges describe a person's role on {{ site_name }}, not their projects. They are given by the site's administrators and say when they were given.
+
+- **Official account:** run by the {{ site_name }} team, for example the account that posts news. It has no special rights on the site.
+- **Moderator:** a person who helps moderate {{ site_name }}. Moderators review reports and can remove content or limit accounts within fixed limits, always with a reason the person sees.
+
+Tap or click a badge to see what it means and since when the person has it. Badges cannot be bought or requested.

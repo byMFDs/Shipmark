@@ -9,22 +9,28 @@ OFFICIAL = UserBadge.Kind.OFFICIAL
 MODERATOR = UserBadge.Kind.MODERATOR
 
 
-def badge_kinds(user):
-    """frozenset of badge kinds ("official", "moderator"). Empty for anonymous users."""
+def badge_dates(user):
+    """{kind: granted_at} of the user's badges (the real dates, shown as "Official since ..."). Empty for anonymous
+    users. Same single read as badge_kinds."""
     if user is None or not getattr(user, "pk", None):
-        return frozenset()
-    cached = getattr(user, "_badge_kinds", None)
+        return {}
+    cached = getattr(user, "_badge_dates", None)
     if cached is None:
         prefetched = getattr(user, "_prefetched_objects_cache", {}).get("badges")
         rows = prefetched if prefetched is not None else user.badges.all()
-        cached = frozenset(badge.kind for badge in rows)
-        user._badge_kinds = cached
+        cached = {badge.kind: badge.granted_at for badge in rows}
+        user._badge_dates = cached
     return cached
+
+
+def badge_kinds(user):
+    """frozenset of badge kinds ("official", "moderator"). Empty for anonymous users."""
+    return frozenset(badge_dates(user))
 
 
 def forget_badges(user):
     """Call after granting or revoking, so the same object reads the new state."""
-    user.__dict__.pop("_badge_kinds", None)
+    user.__dict__.pop("_badge_dates", None)
     getattr(user, "_prefetched_objects_cache", {}).pop("badges", None)
 
 

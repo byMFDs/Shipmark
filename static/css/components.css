@@ -732,34 +732,128 @@
   font-weight: 500;
 }
 
-/* ---------- Marks after a name: official account, moderator ---------- */
-/* Official: a filled ink diamond with a cut check (no colour of its own: it is not proof and not an action).
-   Moderator: a quiet mono label. Both sit on the text baseline and never wrap away from the name. */
+/* ---------- Badges after a name: official account, moderator (one component) ----------
+   A small glyph button about the name's x-height, in ink (official: filled diamond with the logo's slash cut;
+   moderator: a shield with a bar, in muted ink). Not proof (never green) and not an action (never terracotta).
+   Hover or focus: a short mono tooltip. Click or tap: the shared panel (.badge-pop, badges.js). The glyph has a
+   fixed em size, so nothing moves when it loads; the hit area grows invisibly around it. */
 
 .user-mark {
-  display: inline-flex;
-  align-items: center;
+  --mark-size: 0.85em;
+  position: relative;
+  z-index: 2; /* above a card's stretched title link */
+  display: inline-grid;
+  place-items: center;
+  width: var(--mark-size);
+  height: var(--mark-size);
+  min-width: 14px;
+  min-height: 14px;
+  margin: 0;
   margin-inline-start: 0.3em;
-  vertical-align: -0.125em;
-  white-space: nowrap;
+  padding: 0;
+  vertical-align: -0.1em;
+  background: none;
+  border: 0;
+  border-radius: 2px;
+  color: var(--text);
+  line-height: 0;
+  cursor: pointer;
+  transition: transform var(--t-fast) var(--ease-out);
 }
 
-.user-mark--official { color: var(--text); }
-.user-mark--official .icon { width: 1em; height: 1em; min-width: 14px; min-height: 14px; }
-.user-mark--official .icon-cut { stroke: var(--paper); stroke-width: 2; }
+.user-mark--s { --mark-size: 0.8em; }
+.user-mark--l { --mark-size: 0.7em; }
+.user-mark--moderator { color: var(--muted); }
+.user-mark .icon { width: 100%; height: 100%; }
+.user-mark .icon-cut { stroke: var(--paper); stroke-width: 2; }
 
-.user-mark--mod {
-  padding: 0 0.4em;
-  border: 1px solid var(--line-strong);
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: var(--fs--2);
-  font-weight: 400;
-  line-height: 1.6;
-  letter-spacing: 0.06em;
+.user-mark::before { content: ""; position: absolute; inset: -0.375rem; }
+@media (pointer: coarse) { .user-mark::before { inset: -0.75rem; } }
+
+.user-mark:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.user-mark:active { transform: scale(0.92); }
+@media (hover: hover) { .user-mark:hover { transform: scale(1.08); } }
+
+/* Tooltip: the badge's own label. Physical left + translateX keeps it centred in both directions (RTL too). */
+.user-mark::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  padding: 0.25rem 0.5rem;
+  background: var(--text);
+  color: var(--paper);
+  font: 400 var(--fs--2) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-label);
   text-transform: uppercase;
-  vertical-align: 0.1em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition: opacity var(--t-fast), transform var(--t-fast) var(--ease-out);
 }
+.user-mark:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+@media (hover: hover) { .user-mark:hover::after { opacity: 1; transform: translate(-50%, 0); } }
+.user-mark[aria-expanded="true"]::after { opacity: 0; }
+
+/* The panel: a popover next to the badge (position from badges.js), a bottom sheet under 48em. */
+.badge-pop {
+  position: fixed;
+  z-index: 60;
+  top: var(--pop-y, 1rem);
+  left: var(--pop-x, 1rem);
+  display: grid;
+  width: min(20rem, calc(100vw - 1rem));
+  padding: var(--s-5);
+  padding-inline-end: var(--s-8);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-pop);
+}
+.badge-pop[hidden] { display: none; }
+.badge-pop:focus { outline: none; }
+.badge-pop:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.badge-pop.is-sheet {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom));
+  border-width: 1px 0 0;
+}
+.badge-pop__close { position: absolute; top: var(--s-2); inset-inline-end: var(--s-2); }
+.badge-pop__body { display: grid; gap: var(--s-3); }
+.badge-pop__head { display: flex; align-items: center; gap: var(--s-2); }
+.badge-pop__glyph { display: inline-grid; width: 1.5rem; height: 1.5rem; flex: none; color: var(--text); }
+.badge-pop__glyph--moderator { color: var(--muted); }
+.badge-pop__glyph .icon { width: 100%; height: 100%; }
+.badge-pop__glyph .icon-cut { stroke: var(--surface); stroke-width: 2; }
+.badge-pop__title { margin: 0; font-size: var(--fs-1); }
+.badge-pop__text { margin: 0; }
+.badge-pop__facts {
+  display: grid;
+  gap: var(--s-2);
+  margin: 0;
+  padding: var(--s-3) 0 0;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: var(--fs--1);
+  list-style: none;
+}
+.badge-pop__facts li { display: flex; align-items: center; gap: var(--s-2); }
+.badge-pop__facts li[hidden] { display: none; }
+.badge-pop__facts .icon,
+.badge-pop__logo { width: 1rem; height: 1rem; flex: none; color: var(--text); }
+.badge-pop__more { justify-self: start; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .badge-pop.is-open { animation: badge-pop-in 160ms var(--ease-out); }
+  .badge-pop.is-open.is-sheet { animation: badge-sheet-in 220ms var(--ease-out); }
+}
+@keyframes badge-pop-in { from { opacity: 0; transform: translateY(4px) scale(0.98); } }
+@keyframes badge-sheet-in { from { transform: translateY(100%); } }
 
 /* ---------- Moderation notices (mute, decisions) and the "Moderate" menu ---------- */
 /* A notice is a framed record with a danger rule on the left for sanctions (it limits what you can do). */

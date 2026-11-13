@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 17:48+0000\n"
+"POT-Creation-Date: 2026-11-13 18:07+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -296,8 +296,8 @@ msgstr "Це імʼя користувача вже зайняте."
 msgid "Official"
 msgstr "Офіційний"
 
-#: accounts/models.py:88 moderation/models.py:78
-#: templates/includes/user_marks.html:1
+#: accounts/models.py:88 moderation/models.py:78 pages/templatetags/ui.py:88
+#: templates/includes/badge_popover.html:25
 msgid "Moderator"
 msgstr "Модератор"
 
@@ -404,8 +404,8 @@ msgstr "Відновлено: %(count)s."
 msgid "Restore selected replies (superusers)"
 msgstr "Відновити вибрані відповіді (лише superuser)"
 
-#: community/apps.py:8 config/settings/base.py:372 pages/templatetags/ui.py:348
-#: pages/templatetags/ui.py:353 templates/community/home.html:4
+#: community/apps.py:8 config/settings/base.py:372 pages/templatetags/ui.py:365
+#: pages/templatetags/ui.py:370 templates/community/home.html:4
 #: templates/community/home.html:5 templates/community/home.html:11
 #: templates/community/home.html:12 templates/community/notifications.html:10
 #: templates/community/thread.html:4 templates/community/thread.html:10
@@ -845,7 +845,7 @@ msgstr "Треди"
 msgid "Replies"
 msgstr "Відповіді"
 
-#: config/settings/base.py:381 pages/templatetags/ui.py:355 support/apps.py:8
+#: config/settings/base.py:381 pages/templatetags/ui.py:372 support/apps.py:8
 #: templates/support/form.html:4 templates/support/form.html:12
 #: templates/support/sent.html:13
 msgid "Support"
@@ -855,8 +855,8 @@ msgstr "Підтримка"
 msgid "Inbox"
 msgstr "Вхідні"
 
-#: config/settings/base.py:388 news/apps.py:8 pages/templatetags/ui.py:347
-#: pages/templatetags/ui.py:352 templates/news/list.html:4
+#: config/settings/base.py:388 news/apps.py:8 pages/templatetags/ui.py:364
+#: pages/templatetags/ui.py:369 templates/news/list.html:4
 #: templates/news/list.html:5 templates/news/list.html:14
 #: templates/social/feed.html:18 templates/social/feed.html:35
 msgid "News"
@@ -949,17 +949,17 @@ msgstr "Реєстрації за 7 днів"
 msgid "Open reports"
 msgstr "Відкриті скарги"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:199
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:216
 #: social/feed.py:29
 msgid "Repo owner"
 msgstr "Власник репозиторію"
 
-#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:200
+#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:217
 #: social/feed.py:29
 msgid "Domain verified"
 msgstr "Домен підтверджено"
 
-#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:201
+#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:218
 #: social/feed.py:29
 msgid "Steady"
 msgstr "Стабільний"
@@ -1462,83 +1462,92 @@ msgstr "Найбільше доказів"
 msgid "Any"
 msgstr "Будь-яка"
 
-#: pages/templatetags/ui.py:81
-#, python-format
-msgid "Official %(site)s account"
-msgstr "Офіційний акаунт %(site)s"
+#: pages/templatetags/ui.py:87 templates/includes/badge_popover.html:12
+msgid "Official account"
+msgstr "Офіційний акаунт"
 
-#: pages/templatetags/ui.py:95
+#: pages/templatetags/ui.py:87
+#, python-format
+msgid "Official since %(date)s"
+msgstr "Офіційний з %(date)s"
+
+#: pages/templatetags/ui.py:88
+#, python-format
+msgid "Moderator since %(date)s"
+msgstr "Модератор з %(date)s"
+
+#: pages/templatetags/ui.py:112
 msgid "Moderate this thread"
 msgstr "Модерувати тред"
 
-#: pages/templatetags/ui.py:97
+#: pages/templatetags/ui.py:114
 msgid "Moderate this reply"
 msgstr "Модерувати відповідь"
 
-#: pages/templatetags/ui.py:99
+#: pages/templatetags/ui.py:116
 msgid "Moderate this update"
 msgstr "Модерувати цей запис"
 
-#: pages/templatetags/ui.py:101
+#: pages/templatetags/ui.py:118
 msgid "Moderate this project"
 msgstr "Модерувати цей проєкт"
 
-#: pages/templatetags/ui.py:105
+#: pages/templatetags/ui.py:122
 #, python-format
 msgid "Moderate the profile @%(username)s"
 msgstr "Модерувати профіль @%(username)s"
 
-#: pages/templatetags/ui.py:120
+#: pages/templatetags/ui.py:137
 msgid "just now"
 msgstr "щойно"
 
-#: pages/templatetags/ui.py:121
+#: pages/templatetags/ui.py:138
 #, python-format
 msgid "%(time)s ago"
 msgstr "%(time)s тому"
 
-#: pages/templatetags/ui.py:347 pages/templatetags/ui.py:352
+#: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #: templates/social/feed.html:4 templates/social/feed.html:5
 #: templates/social/feed.html:11
 msgid "Feed"
 msgstr "Стрічка"
 
-#: pages/templatetags/ui.py:347 pages/templatetags/ui.py:352
+#: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #: templates/pages/explore.html:4 templates/pages/explore.html:5
 #: templates/pages/explore.html:16 templates/social/feed.html:20
 msgid "Explore"
 msgstr "Огляд"
 
-#: pages/templatetags/ui.py:352
+#: pages/templatetags/ui.py:369
 msgid "Product"
 msgstr "Продукт"
 
-#: pages/templatetags/ui.py:354
+#: pages/templatetags/ui.py:371
 msgid "Company"
 msgstr "Компанія"
 
-#: pages/templatetags/ui.py:354
+#: pages/templatetags/ui.py:371
 msgid "About"
 msgstr "Про проєкт"
 
-#: pages/templatetags/ui.py:354 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:371 templates/pages/landing.html:279
 #: templates/social/feed.html:106
 msgid "How proof works"
 msgstr "Як працюють підтвердження"
 
-#: pages/templatetags/ui.py:356
+#: pages/templatetags/ui.py:373
 msgid "Legal"
 msgstr "Правове"
 
-#: pages/templatetags/ui.py:356
+#: pages/templatetags/ui.py:373
 msgid "Privacy"
 msgstr "Приватність"
 
-#: pages/templatetags/ui.py:356
+#: pages/templatetags/ui.py:373
 msgid "Terms"
 msgstr "Умови"
 
-#: pages/templatetags/ui.py:357
+#: pages/templatetags/ui.py:374
 msgid "Cookies"
 msgstr "Файли cookie"
 
@@ -2232,7 +2241,8 @@ msgid "Mark as answered"
 msgstr "Позначити як відповіли"
 
 #: support/admin.py:132 templates/community/_lightbox.html:7
-#: templates/community/_picker.html:5 templates/includes/site_header.html:16
+#: templates/community/_picker.html:5 templates/includes/badge_popover.html:6
+#: templates/includes/site_header.html:16
 msgid "Close"
 msgstr "Закрити"
 
@@ -2271,7 +2281,8 @@ msgstr "Повідомлення"
 #: support/forms.py:78
 msgid ""
 "What happened, where, and what you expected. Never send passwords or keys."
-msgstr "Що сталося, де і чого ви очікували. Ніколи не надсилайте паролів чи ключів."
+msgstr ""
+"Що сталося, де і чого ви очікували. Ніколи не надсилайте паролів чи ключів."
 
 #: support/forms.py:79
 msgid "Write your message."
@@ -2293,7 +2304,9 @@ msgstr "Вкладення (необовʼязково)"
 msgid ""
 "Up to 3 files: PNG, JPEG or WebP images up to 5 MB, or .txt and .log files "
 "up to 200 KB."
-msgstr "До 3 файлів: зображення PNG, JPEG чи WebP до 5 МБ або файли .txt і .log до 200 КБ."
+msgstr ""
+"До 3 файлів: зображення PNG, JPEG чи WebP до 5 МБ або файли .txt і .log до "
+"200 КБ."
 
 #: support/forms.py:95
 msgid "Leave this empty"
@@ -2419,7 +2432,8 @@ msgstr "вкладення"
 #: support/views.py:31
 msgid ""
 "You have sent several messages already. Please wait an hour and try again."
-msgstr "Ви вже надіслали кілька повідомлень. Зачекайте годину і спробуйте ще раз."
+msgstr ""
+"Ви вже надіслали кілька повідомлень. Зачекайте годину і спробуйте ще раз."
 
 #: templates/400.html:3 templates/400.html:5
 msgid "We could not read that request"
@@ -2883,7 +2897,7 @@ msgstr "Останні відкриті скарги"
 msgid "No open reports."
 msgstr "Відкритих скарг немає."
 
-#: templates/base.html:48
+#: templates/base.html:49
 msgid "Skip to content"
 msgstr "Перейти до вмісту"
 
@@ -3532,6 +3546,26 @@ msgstr "Ми розглянули вашу скаргу на %(name)s і вжи�
 #: templates/includes/account_notices.html:32
 msgid "Got it"
 msgstr "Зрозуміло"
+
+#: templates/includes/badge_popover.html:14
+#, python-format
+msgid "This account is operated by the %(site)s team."
+msgstr "Цей акаунт веде команда %(site)s."
+
+#: templates/includes/badge_popover.html:16
+#, python-format
+msgid "Affiliated with %(site)s"
+msgstr "Повʼязаний з %(site)s"
+
+#: templates/includes/badge_popover.html:19
+#: templates/includes/badge_popover.html:31
+msgid "How badges work"
+msgstr "Як працюють бейджі"
+
+#: templates/includes/badge_popover.html:27
+#, python-format
+msgid "This person helps moderate %(site)s. Moderators can review reports."
+msgstr "Ця людина допомагає модерувати %(site)s. Модератори можуть розглядати скарги."
 
 #: templates/includes/form_errors.html:5
 msgid "Please fix these problems and try again."
@@ -5074,7 +5108,8 @@ msgstr "Напишіть нам"
 #: templates/support/form.html:14
 msgid ""
 "Found a bug, have an idea, or need help with your account? Tell us here."
-msgstr "Знайшли помилку, маєте ідею чи потрібна допомога з акаунтом? Напишіть тут."
+msgstr ""
+"Знайшли помилку, маєте ідею чи потрібна допомога з акаунтом? Напишіть тут."
 
 #: templates/support/form.html:17
 msgid "What happens next"
@@ -5112,7 +5147,9 @@ msgstr "Що написати"
 msgid ""
 "What you did, what happened and what you expected. The page address and a "
 "screenshot help most."
-msgstr "Що ви робили, що сталося і чого очікували. Найбільше допомагають адреса сторінки і знімок екрана."
+msgstr ""
+"Що ви робили, що сталося і чого очікували. Найбільше допомагають адреса "
+"сторінки і знімок екрана."
 
 #: templates/support/form.html:31
 msgid "What would make the site better for you, and why."
@@ -5126,13 +5163,17 @@ msgstr "Що вам сподобалося. Так ми знаємо, що за�
 msgid ""
 "Sign-in, your data, deleting your account or a moderation decision. Write "
 "from your account if you can."
-msgstr "Вхід, ваші дані, видалення акаунта чи рішення модераторів. Якщо можете, пишіть зі свого акаунта."
+msgstr ""
+"Вхід, ваші дані, видалення акаунта чи рішення модераторів. Якщо можете, "
+"пишіть зі свого акаунта."
 
 #: templates/support/form.html:34
 msgid ""
 "Anything else. A problem with a project, a person or a post? Use the Report "
 "link on it."
-msgstr "Будь-що інше. Проблема з проєктом, людиною чи дописом? Скористайтеся посиланням «Поскаржитися» на ньому."
+msgstr ""
+"Будь-що інше. Проблема з проєктом, людиною чи дописом? Скористайтеся "
+"посиланням «Поскаржитися» на ньому."
 
 #: templates/support/form.html:40
 msgid "Your message"
@@ -5155,7 +5196,9 @@ msgstr "Надіслати повідомлення"
 msgid ""
 "How we handle your message is described in the <a "
 "href=\"%(url)s#support\">Privacy policy</a>."
-msgstr "Як ми обробляємо повідомлення, описано в <a href=\"%(url)s#support\">Політиці конфіденційності</a>."
+msgstr ""
+"Як ми обробляємо повідомлення, описано в <a "
+"href=\"%(url)s#support\">Політиці конфіденційності</a>."
 
 #: templates/support/sent.html:4
 msgid "Already received"
@@ -5177,12 +5220,16 @@ msgstr "Це повідомлення вже в нас"
 msgid ""
 "The same text arrived a moment ago, so we kept one copy. No need to send it "
 "again."
-msgstr "Такий самий текст щойно надійшов, тож ми залишили одну копію. Надсилати ще раз не треба."
+msgstr ""
+"Такий самий текст щойно надійшов, тож ми залишили одну копію. Надсилати ще "
+"раз не треба."
 
 #: templates/support/sent.html:19
 msgid ""
 "Thank you. We read every message, but we cannot promise to reply to all."
-msgstr "Дякуємо. Ми читаємо кожне повідомлення, але не можемо обіцяти відповісти на всі."
+msgstr ""
+"Дякуємо. Ми читаємо кожне повідомлення, але не можемо обіцяти відповісти на "
+"всі."
 
 #: templates/support/sent.html:20
 msgid "If we answer, the reply goes to the email address you gave."

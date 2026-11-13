@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static ui %}
 {% block title %}{% translate "Report" %} · {% translate "Moderation" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/mod.css' %}">{% endblock %}
 {% block meta %}<meta name="robots" content="noindex">{% endblock %}
@@ -31,7 +31,7 @@
               <p>{{ project.tagline }}</p>
               {% if project.status == "published" %}<p><a href="{{ project.get_absolute_url }}">{% translate "Open the project page" %}</a></p>{% endif %}
             {% elif kind == "profile" and owner %}
-              <p class="plate-row__name">{{ owner.display_name|default:owner.username }} <span class="muted">@{{ owner.username }}</span></p>
+              <p class="plate-row__name">{{ owner.display_name|default:owner.username }}{% user_marks owner %} <span class="muted">@{{ owner.username }}</span></p>
               <dl class="mod-facts">
                 <div><dt>{% translate "Headline" %}</dt><dd>{{ owner.headline|default:"—" }}</dd></div>
                 <div><dt>{% translate "About" context "profile" %}</dt><dd>{{ owner.about|default:"—"|truncatechars:400 }}</dd></div>

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 17:48+0000\n"
+"POT-Creation-Date: 2026-11-13 18:07+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -293,8 +293,8 @@ msgstr "Este nombre de usuario ya está en uso."
 msgid "Official"
 msgstr "Oficial"
 
-#: accounts/models.py:88 moderation/models.py:78
-#: templates/includes/user_marks.html:1
+#: accounts/models.py:88 moderation/models.py:78 pages/templatetags/ui.py:88
+#: templates/includes/badge_popover.html:25
 msgid "Moderator"
 msgstr "Moderador"
 
@@ -401,8 +401,8 @@ msgstr "Restaurados: %(count)s."
 msgid "Restore selected replies (superusers)"
 msgstr "Restaurar las respuestas seleccionadas (solo superusuarios)"
 
-#: community/apps.py:8 config/settings/base.py:372 pages/templatetags/ui.py:348
-#: pages/templatetags/ui.py:353 templates/community/home.html:4
+#: community/apps.py:8 config/settings/base.py:372 pages/templatetags/ui.py:365
+#: pages/templatetags/ui.py:370 templates/community/home.html:4
 #: templates/community/home.html:5 templates/community/home.html:11
 #: templates/community/home.html:12 templates/community/notifications.html:10
 #: templates/community/thread.html:4 templates/community/thread.html:10
@@ -842,7 +842,7 @@ msgstr "Hilos"
 msgid "Replies"
 msgstr "Respuestas"
 
-#: config/settings/base.py:381 pages/templatetags/ui.py:355 support/apps.py:8
+#: config/settings/base.py:381 pages/templatetags/ui.py:372 support/apps.py:8
 #: templates/support/form.html:4 templates/support/form.html:12
 #: templates/support/sent.html:13
 msgid "Support"
@@ -852,8 +852,8 @@ msgstr "Soporte"
 msgid "Inbox"
 msgstr "Bandeja de entrada"
 
-#: config/settings/base.py:388 news/apps.py:8 pages/templatetags/ui.py:347
-#: pages/templatetags/ui.py:352 templates/news/list.html:4
+#: config/settings/base.py:388 news/apps.py:8 pages/templatetags/ui.py:364
+#: pages/templatetags/ui.py:369 templates/news/list.html:4
 #: templates/news/list.html:5 templates/news/list.html:14
 #: templates/social/feed.html:18 templates/social/feed.html:35
 msgid "News"
@@ -946,17 +946,17 @@ msgstr "Registros de los últimos 7 días"
 msgid "Open reports"
 msgstr "Denuncias abiertas"
 
-#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:199
+#: moderation/dashboard.py:53 pages/explore.py:28 pages/templatetags/ui.py:216
 #: social/feed.py:29
 msgid "Repo owner"
 msgstr "Repo owner"
 
-#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:200
+#: moderation/dashboard.py:54 pages/explore.py:28 pages/templatetags/ui.py:217
 #: social/feed.py:29
 msgid "Domain verified"
 msgstr "Domain verified"
 
-#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:201
+#: moderation/dashboard.py:55 pages/explore.py:28 pages/templatetags/ui.py:218
 #: social/feed.py:29
 msgid "Steady"
 msgstr "Steady"
@@ -1460,83 +1460,92 @@ msgstr "Más verificados"
 msgid "Any"
 msgstr "Cualquiera"
 
-#: pages/templatetags/ui.py:81
-#, python-format
-msgid "Official %(site)s account"
-msgstr "Cuenta oficial de %(site)s"
+#: pages/templatetags/ui.py:87 templates/includes/badge_popover.html:12
+msgid "Official account"
+msgstr "Cuenta oficial"
 
-#: pages/templatetags/ui.py:95
+#: pages/templatetags/ui.py:87
+#, python-format
+msgid "Official since %(date)s"
+msgstr "Oficial desde el %(date)s"
+
+#: pages/templatetags/ui.py:88
+#, python-format
+msgid "Moderator since %(date)s"
+msgstr "Moderador desde el %(date)s"
+
+#: pages/templatetags/ui.py:112
 msgid "Moderate this thread"
 msgstr "Moderar este hilo"
 
-#: pages/templatetags/ui.py:97
+#: pages/templatetags/ui.py:114
 msgid "Moderate this reply"
 msgstr "Moderar esta respuesta"
 
-#: pages/templatetags/ui.py:99
+#: pages/templatetags/ui.py:116
 msgid "Moderate this update"
 msgstr "Moderar esta entrada"
 
-#: pages/templatetags/ui.py:101
+#: pages/templatetags/ui.py:118
 msgid "Moderate this project"
 msgstr "Moderar este proyecto"
 
-#: pages/templatetags/ui.py:105
+#: pages/templatetags/ui.py:122
 #, python-format
 msgid "Moderate the profile @%(username)s"
 msgstr "Moderar el perfil @%(username)s"
 
-#: pages/templatetags/ui.py:120
+#: pages/templatetags/ui.py:137
 msgid "just now"
 msgstr "ahora mismo"
 
-#: pages/templatetags/ui.py:121
+#: pages/templatetags/ui.py:138
 #, python-format
 msgid "%(time)s ago"
 msgstr "hace %(time)s"
 
-#: pages/templatetags/ui.py:347 pages/templatetags/ui.py:352
+#: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #: templates/social/feed.html:4 templates/social/feed.html:5
 #: templates/social/feed.html:11
 msgid "Feed"
 msgstr "Novedades"
 
-#: pages/templatetags/ui.py:347 pages/templatetags/ui.py:352
+#: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #: templates/pages/explore.html:4 templates/pages/explore.html:5
 #: templates/pages/explore.html:16 templates/social/feed.html:20
 msgid "Explore"
 msgstr "Explorar"
 
-#: pages/templatetags/ui.py:352
+#: pages/templatetags/ui.py:369
 msgid "Product"
 msgstr "Producto"
 
-#: pages/templatetags/ui.py:354
+#: pages/templatetags/ui.py:371
 msgid "Company"
 msgstr "Empresa"
 
-#: pages/templatetags/ui.py:354
+#: pages/templatetags/ui.py:371
 msgid "About"
 msgstr "Acerca de"
 
-#: pages/templatetags/ui.py:354 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:371 templates/pages/landing.html:279
 #: templates/social/feed.html:106
 msgid "How proof works"
 msgstr "Cómo funciona la verificación"
 
-#: pages/templatetags/ui.py:356
+#: pages/templatetags/ui.py:373
 msgid "Legal"
 msgstr "Legal"
 
-#: pages/templatetags/ui.py:356
+#: pages/templatetags/ui.py:373
 msgid "Privacy"
 msgstr "Privacidad"
 
-#: pages/templatetags/ui.py:356
+#: pages/templatetags/ui.py:373
 msgid "Terms"
 msgstr "Términos"
 
-#: pages/templatetags/ui.py:357
+#: pages/templatetags/ui.py:374
 msgid "Cookies"
 msgstr "Cookies"
 
@@ -2225,7 +2234,8 @@ msgid "Mark as answered"
 msgstr "Marcar como respondido"
 
 #: support/admin.py:132 templates/community/_lightbox.html:7
-#: templates/community/_picker.html:5 templates/includes/site_header.html:16
+#: templates/community/_picker.html:5 templates/includes/badge_popover.html:6
+#: templates/includes/site_header.html:16
 msgid "Close"
 msgstr "Cerrar"
 
@@ -2286,7 +2296,9 @@ msgstr "Adjuntos (opcional)"
 msgid ""
 "Up to 3 files: PNG, JPEG or WebP images up to 5 MB, or .txt and .log files "
 "up to 200 KB."
-msgstr "Hasta 3 archivos: imágenes PNG, JPEG o WebP de hasta 5 MB, o archivos .txt y .log de hasta 200 KB."
+msgstr ""
+"Hasta 3 archivos: imágenes PNG, JPEG o WebP de hasta 5 MB, o archivos .txt "
+"y .log de hasta 200 KB."
 
 #: support/forms.py:95
 msgid "Leave this empty"
@@ -2878,7 +2890,7 @@ msgstr "Últimas denuncias abiertas"
 msgid "No open reports."
 msgstr "No hay denuncias abiertas."
 
-#: templates/base.html:48
+#: templates/base.html:49
 msgid "Skip to content"
 msgstr "Saltar al contenido"
 
@@ -3517,6 +3529,26 @@ msgstr "Revisamos tu denuncia sobre %(name)s y tomamos medidas. Gracias."
 #: templates/includes/account_notices.html:32
 msgid "Got it"
 msgstr "Entendido"
+
+#: templates/includes/badge_popover.html:14
+#, python-format
+msgid "This account is operated by the %(site)s team."
+msgstr "Esta cuenta la gestiona el equipo de %(site)s."
+
+#: templates/includes/badge_popover.html:16
+#, python-format
+msgid "Affiliated with %(site)s"
+msgstr "Vinculada a %(site)s"
+
+#: templates/includes/badge_popover.html:19
+#: templates/includes/badge_popover.html:31
+msgid "How badges work"
+msgstr "Cómo funcionan las insignias"
+
+#: templates/includes/badge_popover.html:27
+#, python-format
+msgid "This person helps moderate %(site)s. Moderators can review reports."
+msgstr "Esta persona ayuda a moderar %(site)s. Los moderadores pueden revisar denuncias."
 
 #: templates/includes/form_errors.html:5
 msgid "Please fix these problems and try again."
@@ -5061,7 +5093,9 @@ msgstr "Escríbenos"
 #: templates/support/form.html:14
 msgid ""
 "Found a bug, have an idea, or need help with your account? Tell us here."
-msgstr "¿Encontraste un error, tienes una idea o necesitas ayuda con tu cuenta? Cuéntanoslo aquí."
+msgstr ""
+"¿Encontraste un error, tienes una idea o necesitas ayuda con tu cuenta? "
+"Cuéntanoslo aquí."
 
 #: templates/support/form.html:17
 msgid "What happens next"
@@ -5099,7 +5133,9 @@ msgstr "Qué escribir"
 msgid ""
 "What you did, what happened and what you expected. The page address and a "
 "screenshot help most."
-msgstr "Qué hiciste, qué pasó y qué esperabas. La dirección de la página y una captura ayudan más que nada."
+msgstr ""
+"Qué hiciste, qué pasó y qué esperabas. La dirección de la página y una "
+"captura ayudan más que nada."
 
 #: templates/support/form.html:31
 msgid "What would make the site better for you, and why."
@@ -5113,13 +5149,17 @@ msgstr "Qué te funcionó. Así sabemos qué mantener."
 msgid ""
 "Sign-in, your data, deleting your account or a moderation decision. Write "
 "from your account if you can."
-msgstr "Inicio de sesión, tus datos, eliminar tu cuenta o una decisión de moderación. Escribe desde tu cuenta si puedes."
+msgstr ""
+"Inicio de sesión, tus datos, eliminar tu cuenta o una decisión de "
+"moderación. Escribe desde tu cuenta si puedes."
 
 #: templates/support/form.html:34
 msgid ""
 "Anything else. A problem with a project, a person or a post? Use the Report "
 "link on it."
-msgstr "Cualquier otra cosa. ¿Un problema con un proyecto, una persona o una publicación? Usa su enlace para denunciar."
+msgstr ""
+"Cualquier otra cosa. ¿Un problema con un proyecto, una persona o una "
+"publicación? Usa su enlace para denunciar."
 
 #: templates/support/form.html:40
 msgid "Your message"
@@ -5142,7 +5182,9 @@ msgstr "Enviar mensaje"
 msgid ""
 "How we handle your message is described in the <a "
 "href=\"%(url)s#support\">Privacy policy</a>."
-msgstr "Cómo tratamos tu mensaje se explica en la <a href=\"%(url)s#support\">Política de privacidad</a>."
+msgstr ""
+"Cómo tratamos tu mensaje se explica en la <a "
+"href=\"%(url)s#support\">Política de privacidad</a>."
 
 #: templates/support/sent.html:4
 msgid "Already received"
@@ -5164,12 +5206,15 @@ msgstr "Ya tenemos este mensaje"
 msgid ""
 "The same text arrived a moment ago, so we kept one copy. No need to send it "
 "again."
-msgstr "El mismo texto llegó hace un momento, así que guardamos una copia. No hace falta enviarlo otra vez."
+msgstr ""
+"El mismo texto llegó hace un momento, así que guardamos una copia. No hace "
+"falta enviarlo otra vez."
 
 #: templates/support/sent.html:19
 msgid ""
 "Thank you. We read every message, but we cannot promise to reply to all."
-msgstr "Gracias. Leemos cada mensaje, pero no podemos prometer responder a todos."
+msgstr ""
+"Gracias. Leemos cada mensaje, pero no podemos prometer responder a todos."
 
 #: templates/support/sent.html:20
 msgid "If we answer, the reply goes to the email address you gave."

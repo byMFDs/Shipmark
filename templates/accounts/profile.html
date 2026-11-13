@@ -23,7 +23,7 @@
         <div class="profile-card__avatar">{% user_avatar person 128 %}</div>
         <div class="profile-card__text">
           <div class="profile-card__titles">
-            <h1 class="profile-head__name">{{ person.display_name|default:person.username }}{% user_marks person %}</h1>
+            <h1 class="profile-head__name">{{ person.display_name|default:person.username }}{% user_marks person "l" %}</h1>
             <p class="profile-head__handle muted">@{{ person.username }}</p>
           </div>
           {% if person.headline %}<p class="profile-head__headline">{{ person.headline }}</p>{% endif %}

@@ -13,6 +13,7 @@ from django.contrib.staticfiles import finders
 from django.contrib.staticfiles.storage import ManifestFilesMixin, staticfiles_storage
 from django.templatetags.static import static
 from django.urls import NoReverseMatch, reverse
+from django.utils.formats import date_format
 from django.utils import timezone
 from django.utils.html import escape, format_html
 from django.utils.safestring import mark_safe
@@ -69,17 +70,33 @@ def icon(name, css_class="", label=""):
     return inline_svg(f"icons/{name}.svg", f"icon {css_class}".strip(), label)
 
 
-@register.inclusion_tag("includes/user_marks.html")
-def user_marks(person):
-    """Badges after a name: {% user_marks project.owner %}. On lists prefetch "owner__badges" (no N+1)."""
-    from accounts.roles import MODERATOR, OFFICIAL, badge_kinds  # here: accounts imports this app's settings
+BADGE_SIZES = ("s", "m", "l")
 
-    kinds = badge_kinds(person) if person is not None and not isinstance(person, dict) else frozenset()
-    return {
-        "official": OFFICIAL in kinds,
-        "moderator": MODERATOR in kinds,
-        "official_label": gettext("Official %(site)s account") % {"site": branding.SITE_NAME},
-    }
+
+@register.inclusion_tag("includes/user_marks.html")
+def user_marks(person, size="m"):
+    """Badges after a name: {% user_marks project.owner %} (size "s" in dense lists, "l" next to a big heading).
+    One component for official and moderator marks: a button with a tooltip that opens the shared panel
+    (includes/badge_popover.html, badges.js) with the real date the badge was granted. On lists prefetch
+    "owner__badges" (no N+1)."""
+    from accounts.roles import MODERATOR, OFFICIAL, badge_dates  # here: accounts imports this app's settings
+
+    dates = badge_dates(person) if person is not None and not isinstance(person, dict) else {}
+    marks = []
+    for kind, glyph, label, since in (
+        (OFFICIAL, "badge-official", gettext("Official account"), gettext("Official since %(date)s")),
+        (MODERATOR, "badge-moderator", gettext("Moderator"), gettext("Moderator since %(date)s")),
+    ):
+        if kind in dates:
+            day = date_format(timezone.localtime(dates[kind]), "DATE_FORMAT")
+            marks.append({"kind": kind, "glyph": glyph, "label": label, "since": since % {"date": day}})
+    return {"marks": marks, "size": size if size in BADGE_SIZES else "m"}
+
+
+@register.inclusion_tag("includes/badge_popover.html", takes_context=True)
+def badge_popover(context):
+    """The one panel the badges open, once per page (base.html)."""
+    return {"brand": context.get("brand"), "how_url": _url("pages:how_proof_works")}
 
 
 @register.inclusion_tag("moderation/_menu.html", takes_context=True)
