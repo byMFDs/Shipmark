@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 16:29+0000\n"
+"POT-Creation-Date: 2026-11-13 16:35+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -2690,6 +2690,23 @@ msgstr "Dodaj obrazy"
 msgid "About the community"
 msgstr "O społeczności"
 
+#: templates/community/_lightbox.html:2
+msgid "Image viewer"
+msgstr "Podgląd obrazów"
+
+#: templates/community/_lightbox.html:7 templates/community/_picker.html:5
+#: templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Zamknij"
+
+#: templates/community/_lightbox.html:8
+msgid "Previous image"
+msgstr "Poprzedni obraz"
+
+#: templates/community/_lightbox.html:9
+msgid "Next image"
+msgstr "Następny obraz"
+
 #: templates/community/_media.html:7
 #, python-format
 msgid "Image %(number)s of %(total)s"
@@ -2698,10 +2715,6 @@ msgstr "Obraz %(number)s z %(total)s"
 #: templates/community/_picker.html:4
 msgid "Stickers"
 msgstr "Naklejki"
-
-#: templates/community/_picker.html:5 templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Zamknij"
 
 #: templates/community/_picker.html:7 templates/community/_picker.html:8
 msgid "Search stickers"
@@ -3106,7 +3119,9 @@ msgstr ""
 #: templates/community/thread_form.html:13
 msgid ""
 "A clear title gets better answers: say what you tried and what you need."
-msgstr "Jasny tytuł daje lepsze odpowiedzi: opisz, co już sprawdzono i czego potrzebujesz."
+msgstr ""
+"Jasny tytuł daje lepsze odpowiedzi: opisz, co już sprawdzono i czego "
+"potrzebujesz."
 
 #: templates/community/thread_form.html:28
 msgid "Post thread"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 16:29+0000\n"
+"POT-Creation-Date: 2026-11-13 16:35+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -2690,6 +2690,23 @@ msgstr "Añadir imágenes"
 msgid "About the community"
 msgstr "Sobre la comunidad"
 
+#: templates/community/_lightbox.html:2
+msgid "Image viewer"
+msgstr "Visor de imágenes"
+
+#: templates/community/_lightbox.html:7 templates/community/_picker.html:5
+#: templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Cerrar"
+
+#: templates/community/_lightbox.html:8
+msgid "Previous image"
+msgstr "Imagen anterior"
+
+#: templates/community/_lightbox.html:9
+msgid "Next image"
+msgstr "Imagen siguiente"
+
 #: templates/community/_media.html:7
 #, python-format
 msgid "Image %(number)s of %(total)s"
@@ -2698,10 +2715,6 @@ msgstr "Imagen %(number)s de %(total)s"
 #: templates/community/_picker.html:4
 msgid "Stickers"
 msgstr "Stickers"
-
-#: templates/community/_picker.html:5 templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Cerrar"
 
 #: templates/community/_picker.html:7 templates/community/_picker.html:8
 msgid "Search stickers"
@@ -2799,7 +2812,9 @@ msgstr "Las respuestas tienen hasta tres niveles."
 
 #: templates/community/_rules_panel.html:17
 msgid "Every post has a Report link. Moderators always give a reason."
-msgstr "Cada publicación tiene un enlace para denunciar. Los moderadores siempre dan un motivo."
+msgstr ""
+"Cada publicación tiene un enlace para denunciar. Los moderadores siempre dan "
+"un motivo."
 
 #: templates/community/_thread_card.html:16 templates/community/thread.html:39
 #: templates/community/thread.html:52
@@ -3103,7 +3118,9 @@ msgstr ""
 #: templates/community/thread_form.html:13
 msgid ""
 "A clear title gets better answers: say what you tried and what you need."
-msgstr "Un título claro recibe mejores respuestas: cuenta qué probaste y qué necesitas."
+msgstr ""
+"Un título claro recibe mejores respuestas: cuenta qué probaste y qué "
+"necesitas."
 
 #: templates/community/thread_form.html:28
 msgid "Post thread"
@@ -3127,7 +3144,8 @@ msgstr "Imágenes: PNG, JPEG o WebP. Quitamos sus metadatos, como la ubicación.
 
 #: templates/community/thread_form.html:41
 msgid "Accounts younger than 24 hours: one link per post, no images."
-msgstr "Cuentas con menos de 24 horas: un enlace por publicación y sin imágenes."
+msgstr ""
+"Cuentas con menos de 24 horas: un enlace por publicación y sin imágenes."
 
 #: templates/errors/_body.html:6
 msgid "Error"

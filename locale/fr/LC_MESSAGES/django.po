@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 16:29+0000\n"
+"POT-Creation-Date: 2026-11-13 16:35+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
@@ -2716,6 +2716,23 @@ msgstr "Ajouter des images"
 msgid "About the community"
 msgstr "À propos de la communauté"
 
+#: templates/community/_lightbox.html:2
+msgid "Image viewer"
+msgstr "Visionneuse d'images"
+
+#: templates/community/_lightbox.html:7 templates/community/_picker.html:5
+#: templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Fermer"
+
+#: templates/community/_lightbox.html:8
+msgid "Previous image"
+msgstr "Image précédente"
+
+#: templates/community/_lightbox.html:9
+msgid "Next image"
+msgstr "Image suivante"
+
 #: templates/community/_media.html:7
 #, python-format
 msgid "Image %(number)s of %(total)s"
@@ -2724,10 +2741,6 @@ msgstr "Image %(number)s sur %(total)s"
 #: templates/community/_picker.html:4
 msgid "Stickers"
 msgstr "Autocollants"
-
-#: templates/community/_picker.html:5 templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Fermer"
 
 #: templates/community/_picker.html:7 templates/community/_picker.html:8
 msgid "Search stickers"
@@ -2805,7 +2818,9 @@ msgstr "Pas de spam, pas de harcèlement, rien d'illégal ni de sexuel."
 
 #: templates/community/_rules_panel.html:8
 msgid "Only post what you may share. Respect privacy."
-msgstr "Ne publiez que ce que vous avez le droit de partager. Respectez la vie privée."
+msgstr ""
+"Ne publiez que ce que vous avez le droit de partager. Respectez la vie "
+"privée."
 
 #: templates/community/_rules_panel.html:10
 msgid "All community rules"
@@ -2817,7 +2832,9 @@ msgstr "Comment ça marche"
 
 #: templates/community/_rules_panel.html:15
 msgid "Upvotes only. You cannot upvote your own post."
-msgstr "Seulement des votes positifs. Vous ne pouvez pas voter pour votre propre message."
+msgstr ""
+"Seulement des votes positifs. Vous ne pouvez pas voter pour votre propre "
+"message."
 
 #: templates/community/_rules_panel.html:16
 msgid "Replies go three levels deep."
@@ -2825,7 +2842,9 @@ msgstr "Les réponses vont jusqu'à trois niveaux."
 
 #: templates/community/_rules_panel.html:17
 msgid "Every post has a Report link. Moderators always give a reason."
-msgstr "Chaque message a un lien « Signaler ». Les modérateurs donnent toujours un motif."
+msgstr ""
+"Chaque message a un lien « Signaler ». Les modérateurs donnent toujours un "
+"motif."
 
 #: templates/community/_thread_card.html:16 templates/community/thread.html:39
 #: templates/community/thread.html:52
@@ -3038,7 +3057,8 @@ msgstr "Questions"
 #: templates/community/rules.html:17
 #, python-format
 msgid "Appeals and questions: <a href=\"mailto:%(email)s\">%(email)s</a>"
-msgstr "Contestations et questions : <a href=\"mailto:%(email)s\">%(email)s</a>"
+msgstr ""
+"Contestations et questions : <a href=\"mailto:%(email)s\">%(email)s</a>"
 
 #: templates/community/thread.html:14
 msgid ""
@@ -3132,7 +3152,9 @@ msgstr ""
 #: templates/community/thread_form.html:13
 msgid ""
 "A clear title gets better answers: say what you tried and what you need."
-msgstr "Un titre clair attire de meilleures réponses : dites ce que vous avez essayé et ce dont vous avez besoin."
+msgstr ""
+"Un titre clair attire de meilleures réponses : dites ce que vous avez essayé "
+"et ce dont vous avez besoin."
 
 #: templates/community/thread_form.html:28
 msgid "Post thread"
@@ -3152,7 +3174,9 @@ msgstr "Choisissez la rubrique adaptée. Tout le reste va dans Hors sujet."
 
 #: templates/community/thread_form.html:40
 msgid "Images: PNG, JPEG or WebP. We remove their metadata, such as location."
-msgstr "Images : PNG, JPEG ou WebP. Nous supprimons leurs métadonnées, comme la position."
+msgstr ""
+"Images : PNG, JPEG ou WebP. Nous supprimons leurs métadonnées, comme la "
+"position."
 
 #: templates/community/thread_form.html:41
 msgid "Accounts younger than 24 hours: one link per post, no images."

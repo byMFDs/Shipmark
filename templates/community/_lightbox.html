@@ -1,0 +1,10 @@
+{% load i18n ui %}{# One image viewer per page (lightbox.js). Native <dialog>: Esc closes, focus goes back to the tile. #}
+<dialog class="lightbox" data-lightbox aria-label="{% translate 'Image viewer' %}">
+  <figure class="lightbox__figure">
+    <img class="lightbox__img" alt="" data-lightbox-img>
+    <figcaption class="lightbox__caption"><span class="label" data-lightbox-count aria-live="polite"></span> <span data-lightbox-alt></span></figcaption>
+  </figure>
+  <button class="btn btn--secondary btn--icon lightbox__close" type="button" data-lightbox-close aria-label="{% translate 'Close' %}">{% icon "close" %}</button>
+  <button class="btn btn--secondary btn--icon lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev aria-label="{% translate 'Previous image' %}">{% icon "arrow-left" %}</button>
+  <button class="btn btn--secondary btn--icon lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="{% translate 'Next image' %}">{% icon "arrow-right" %}</button>
+</dialog>

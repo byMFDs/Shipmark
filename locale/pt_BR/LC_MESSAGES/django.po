@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 16:29+0000\n"
+"POT-Creation-Date: 2026-11-13 16:35+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Brazilian Portuguese\n"
@@ -2676,6 +2676,23 @@ msgstr "Adicionar imagens"
 msgid "About the community"
 msgstr "Sobre a comunidade"
 
+#: templates/community/_lightbox.html:2
+msgid "Image viewer"
+msgstr "Visualizador de imagens"
+
+#: templates/community/_lightbox.html:7 templates/community/_picker.html:5
+#: templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Fechar"
+
+#: templates/community/_lightbox.html:8
+msgid "Previous image"
+msgstr "Imagem anterior"
+
+#: templates/community/_lightbox.html:9
+msgid "Next image"
+msgstr "Próxima imagem"
+
 #: templates/community/_media.html:7
 #, python-format
 msgid "Image %(number)s of %(total)s"
@@ -2684,10 +2701,6 @@ msgstr "Imagem %(number)s de %(total)s"
 #: templates/community/_picker.html:4
 msgid "Stickers"
 msgstr "Figurinhas"
-
-#: templates/community/_picker.html:5 templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Fechar"
 
 #: templates/community/_picker.html:7 templates/community/_picker.html:8
 msgid "Search stickers"
@@ -2785,7 +2798,8 @@ msgstr "As respostas vão até três níveis."
 
 #: templates/community/_rules_panel.html:17
 msgid "Every post has a Report link. Moderators always give a reason."
-msgstr "Cada publicação tem um link de denúncia. Os moderadores sempre dão um motivo."
+msgstr ""
+"Cada publicação tem um link de denúncia. Os moderadores sempre dão um motivo."
 
 #: templates/community/_thread_card.html:16 templates/community/thread.html:39
 #: templates/community/thread.html:52
@@ -3090,7 +3104,9 @@ msgstr ""
 #: templates/community/thread_form.html:13
 msgid ""
 "A clear title gets better answers: say what you tried and what you need."
-msgstr "Um título claro recebe respostas melhores: diga o que você tentou e o que precisa."
+msgstr ""
+"Um título claro recebe respostas melhores: diga o que você tentou e o que "
+"precisa."
 
 #: templates/community/thread_form.html:28
 msgid "Post thread"
@@ -3110,7 +3126,8 @@ msgstr "Escolha a seção certa. O resto vai em Assuntos gerais."
 
 #: templates/community/thread_form.html:40
 msgid "Images: PNG, JPEG or WebP. We remove their metadata, such as location."
-msgstr "Imagens: PNG, JPEG ou WebP. Removemos os metadados, como a localização."
+msgstr ""
+"Imagens: PNG, JPEG ou WebP. Removemos os metadados, como a localização."
 
 #: templates/community/thread_form.html:41
 msgid "Accounts younger than 24 hours: one link per post, no images."

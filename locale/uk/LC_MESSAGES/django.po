@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 16:29+0000\n"
+"POT-Creation-Date: 2026-11-13 16:35+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -2693,6 +2693,23 @@ msgstr "Додати зображення"
 msgid "About the community"
 msgstr "Про спільноту"
 
+#: templates/community/_lightbox.html:2
+msgid "Image viewer"
+msgstr "Перегляд зображень"
+
+#: templates/community/_lightbox.html:7 templates/community/_picker.html:5
+#: templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Закрити"
+
+#: templates/community/_lightbox.html:8
+msgid "Previous image"
+msgstr "Попереднє зображення"
+
+#: templates/community/_lightbox.html:9
+msgid "Next image"
+msgstr "Наступне зображення"
+
 #: templates/community/_media.html:7
 #, python-format
 msgid "Image %(number)s of %(total)s"
@@ -2701,10 +2718,6 @@ msgstr "Зображення %(number)s з %(total)s"
 #: templates/community/_picker.html:4
 msgid "Stickers"
 msgstr "Стікери"
-
-#: templates/community/_picker.html:5 templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Закрити"
 
 #: templates/community/_picker.html:7 templates/community/_picker.html:8
 msgid "Search stickers"
@@ -2806,7 +2819,8 @@ msgstr "Відповіді мають до трьох рівнів."
 
 #: templates/community/_rules_panel.html:17
 msgid "Every post has a Report link. Moderators always give a reason."
-msgstr "Кожен пост має посилання «Поскаржитися». Модератори завжди вказують причину."
+msgstr ""
+"Кожен пост має посилання «Поскаржитися». Модератори завжди вказують причину."
 
 #: templates/community/_thread_card.html:16 templates/community/thread.html:39
 #: templates/community/thread.html:52
@@ -3114,7 +3128,9 @@ msgstr ""
 #: templates/community/thread_form.html:13
 msgid ""
 "A clear title gets better answers: say what you tried and what you need."
-msgstr "Зрозумілий заголовок дає кращі відповіді: напишіть, що ви пробували і що вам потрібно."
+msgstr ""
+"Зрозумілий заголовок дає кращі відповіді: напишіть, що ви пробували і що вам "
+"потрібно."
 
 #: templates/community/thread_form.html:28
 msgid "Post thread"
@@ -3134,7 +3150,9 @@ msgstr "Оберіть відповідний розділ. Для всього 
 
 #: templates/community/thread_form.html:40
 msgid "Images: PNG, JPEG or WebP. We remove their metadata, such as location."
-msgstr "Зображення: PNG, JPEG або WebP. Ми прибираємо їхні метадані, наприклад місцезнаходження."
+msgstr ""
+"Зображення: PNG, JPEG або WebP. Ми прибираємо їхні метадані, наприклад "
+"місцезнаходження."
 
 #: templates/community/thread_form.html:41
 msgid "Accounts younger than 24 hours: one link per post, no images."

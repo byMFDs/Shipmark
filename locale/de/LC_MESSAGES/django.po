@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 16:29+0000\n"
+"POT-Creation-Date: 2026-11-13 16:35+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -2712,6 +2712,23 @@ msgstr "Bilder hinzufügen"
 msgid "About the community"
 msgstr "Über die Community"
 
+#: templates/community/_lightbox.html:2
+msgid "Image viewer"
+msgstr "Bildbetrachter"
+
+#: templates/community/_lightbox.html:7 templates/community/_picker.html:5
+#: templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Schließen"
+
+#: templates/community/_lightbox.html:8
+msgid "Previous image"
+msgstr "Vorheriges Bild"
+
+#: templates/community/_lightbox.html:9
+msgid "Next image"
+msgstr "Nächstes Bild"
+
 #: templates/community/_media.html:7
 #, python-format
 msgid "Image %(number)s of %(total)s"
@@ -2720,10 +2737,6 @@ msgstr "Bild %(number)s von %(total)s"
 #: templates/community/_picker.html:4
 msgid "Stickers"
 msgstr "Sticker"
-
-#: templates/community/_picker.html:5 templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Schließen"
 
 #: templates/community/_picker.html:7 templates/community/_picker.html:8
 msgid "Search stickers"
@@ -2821,7 +2834,8 @@ msgstr "Antworten gehen bis zu drei Ebenen tief."
 
 #: templates/community/_rules_panel.html:17
 msgid "Every post has a Report link. Moderators always give a reason."
-msgstr "Jeder Beitrag hat einen Melden-Link. Moderatoren nennen immer einen Grund."
+msgstr ""
+"Jeder Beitrag hat einen Melden-Link. Moderatoren nennen immer einen Grund."
 
 #: templates/community/_thread_card.html:16 templates/community/thread.html:39
 #: templates/community/thread.html:52
@@ -3128,7 +3142,9 @@ msgstr ""
 #: templates/community/thread_form.html:13
 msgid ""
 "A clear title gets better answers: say what you tried and what you need."
-msgstr "Ein klarer Titel bringt bessere Antworten: Sag, was du versucht hast und was du brauchst."
+msgstr ""
+"Ein klarer Titel bringt bessere Antworten: Sag, was du versucht hast und was "
+"du brauchst."
 
 #: templates/community/thread_form.html:28
 msgid "Post thread"
@@ -3148,7 +3164,9 @@ msgstr "Wähle den passenden Bereich. Alles andere gehört in Off-Topic."
 
 #: templates/community/thread_form.html:40
 msgid "Images: PNG, JPEG or WebP. We remove their metadata, such as location."
-msgstr "Bilder: PNG, JPEG oder WebP. Wir entfernen ihre Metadaten, etwa den Aufnahmeort."
+msgstr ""
+"Bilder: PNG, JPEG oder WebP. Wir entfernen ihre Metadaten, etwa den "
+"Aufnahmeort."
 
 #: templates/community/thread_form.html:41
 msgid "Accounts younger than 24 hours: one link per post, no images."
