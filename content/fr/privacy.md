@@ -1,6 +1,6 @@
 # Politique de confidentialité
 
-> **Brouillon**, dernière mise à jour le 13 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
+> **Brouillon**, dernière mise à jour le 14 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
 >
 > Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
@@ -13,7 +13,12 @@ Questions ou demandes : [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Ce que nous conservons et pourquoi {#data}
 
-**Lorsque vous vous connectez avec GitHub.** Nous recevons de GitHub l’identifiant de votre compte, votre login, votre nom, votre bio, le lien de votre avatar et les autres champs publics de votre profil GitHub, ainsi que les adresses e-mail de votre compte GitHub. Nous demandons à GitHub uniquement `read:user` et `user:email` : nous n’obtenons jamais d’accès à vos dépôts, privés ou publics, via votre compte. Nous ne conservons pas votre jeton d’accès GitHub après la connexion. Nous avons besoin de ces données pour créer votre compte et vous reconnaître la fois suivante (exécution de notre accord avec vous). Votre identifiant GitHub est mis à jour à chaque connexion, pour que votre profil mène toujours à votre compte GitHub actuel.
+**Lorsque vous vous connectez avec GitHub.** GitHub nous transmet :
+
+- l’identifiant de votre compte, votre login, votre nom, votre bio, le lien de votre avatar et les autres champs publics de votre profil GitHub ;
+- les adresses e-mail de votre compte GitHub.
+
+Nous ne demandons à GitHub que deux autorisations : `read:user` et `user:email`. Par votre compte, nous n’avons jamais accès à vos dépôts, ni privés ni publics. Nous ne gardons pas votre jeton d’accès GitHub après la connexion. Ces données nous servent à créer votre compte et à vous reconnaître la fois suivante (exécution de notre accord avec vous). Votre login GitHub est mis à jour à chaque connexion, afin que votre profil renvoie toujours vers votre compte GitHub actuel.
 
 **Votre profil.** Nom d’utilisateur, nom affiché, phrase d’accroche, « À propos », localisation, un statut (par exemple « Ouvert aux offres »), jusqu’à 10 compétences, jusqu’à 6 liens, jusqu’à 3 projets épinglés et votre langue. Tout sauf le nom d’utilisateur est facultatif. Le nom affiché et « À propos » reprennent d’abord votre nom et votre bio GitHub ; vous pouvez les modifier ou les retirer dans les Réglages. Nous enregistrons aussi l’adresse de votre image GitHub, uniquement pour que « Utiliser mon image GitHub » puisse la copier ; elle n’est jamais affichée. Votre nom d’utilisateur, nom affiché, phrase d’accroche, « À propos », localisation, statut, compétences, liens, projets épinglés, identifiant GitHub et le mois de votre inscription sont **publics**.
 
@@ -25,7 +30,12 @@ Questions ou demandes : [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Contrôles de preuve.** Pour attribuer des poinçons, nous contrôlons nous-mêmes les faits (notre intérêt légitime à montrer des preuves fiables) :
 
-- *Repo owner :* nous interrogeons l’API publique de GitHub sur le dépôt que vous liez et enregistrons son identifiant, l’identifiant du compte propriétaire, s’il vous appartient, sa date de création et son champ Website, le premier commit de son historique (identifiant et date), votre nombre de commits, les dates de votre premier et de votre dernier commit, le nombre de semaines avec vos commits et l’état d’une vérification manuelle si elle est nécessaire. Nous le recontrôlons chaque semaine. La liste des autres contributeurs est lue pendant le contrôle et n’est pas enregistrée. Si vous utilisez le fichier de vérification pour le dépôt d’une organisation, nous enregistrons aussi s’il a été trouvé.
+- *Repo owner :* nous interrogeons l’API publique de GitHub sur le dépôt que vous liez, et nous le contrôlons de nouveau chaque semaine. La liste des autres contributeurs sur GitHub est lue pendant le contrôle et n’est pas conservée. Nous conservons :
+    - son identifiant, l’identifiant du compte de son propriétaire, s’il vous appartient, sa date de création et son champ Website ;
+    - le premier commit de son historique (identifiant et date) ;
+    - votre nombre de commits, les dates de votre premier et de votre dernier commit, et le nombre de semaines avec vos commits ;
+    - l’état d’une vérification manuelle, quand elle est nécessaire ;
+    - si le fichier de vérification a été trouvé, quand vous l’utilisez pour le dépôt d’une organisation.
 - *Domain verified :* nous consultons les enregistrements DNS du domaine de votre projet ou récupérons sa page pour y trouver votre jeton de vérification.
 - *Steady :* nous interrogeons l’adresse de votre projet toutes les quelques heures et conservons si elle a répondu et à quelle vitesse. Ces contrôles sont conservés **90 jours**.
 
@@ -33,9 +43,24 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 **Abonnements et mentions J’aime.** Nous conservons les personnes que vous suivez et les projets que vous aimez. Les autres ne voient que les totaux, pas les listes.
 
-**Signalements et modération.** Si vous signalez un projet, un profil ou une entrée du journal de développement, nous enregistrons le motif et les détails que vous écrivez. Les signalements sont vus par les modérateurs (personnes ayant le badge de modérateur) et l’équipe. Pour décider, ils voient aussi le contenu signalé et l’historique de la personne signalée sur {{ site_name }} : sa date d’inscription, ses sanctions précédentes, les autres signalements la concernant et ses projets retirés. Les pages de modération n’affichent pas les adresses e-mail. La personne signalée n’apprend jamais qui l’a signalée. Quand les modérateurs agissent, nous enregistrons la décision et son motif : un projet retiré garde son contenu et le motif (seuls vous, les modérateurs et l’équipe le voient), les champs de profil effacés (photo et couverture, phrase d’accroche et « À propos », ou liens) sont supprimés, et les mises en sourdine et bannissements sont enregistrés avec leur motif, leur début et leur fin. Vous voyez le motif dans un avis sur le site, que nous gardons jusqu’à la suppression de votre compte. Les décisions vous concernant et ces avis figurent dans « Télécharger mes données ». Pour contester une décision, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
+**Signalements et modération.**
 
-**Communauté.** Quand vous publiez dans la communauté, nous conservons vos fils (rubrique, titre, texte, dates, et si un fil a été modifié, épinglé, verrouillé ou retiré), vos réponses (texte, l’autocollant choisi, le message auquel elles répondent) et les images que vous joignez. Les images sont réencodées comme les captures d’écran : les métadonnées cachées comme la position GPS sont supprimées, les noms de fichiers sont aléatoires, et nous conservons sur notre propre serveur une copie jusqu’à 1600 px et une miniature de 640 px. Les messages, leurs images, leur nombre de votes et votre nom d’utilisateur sont **publics**. Nous conservons aussi vos votes ; personne ne voit qui a voté pour quoi, ni sur le site ni dans l’administration. Quand vous supprimez un message, son texte, son autocollant et ses images sont supprimés immédiatement (le titre d’un fil reste tant que des réponses d’autres personnes s’y trouvent, affiché comme « [supprimé] »). Quand les modérateurs retirent un message, ses images sont supprimées immédiatement et son texte est conservé avec le motif, visible seulement par vous, les modérateurs et l’équipe. Les modérateurs voient les messages signalés avec l’historique de leur auteur, comme pour les autres signalements.
+- Si vous signalez un projet, un profil ou une entrée du journal de développement, nous conservons le motif et les détails que vous écrivez.
+- Les signalements sont vus par les modérateurs (les personnes avec le badge de modérateur) et l’équipe. Pour décider, ils voient aussi le contenu signalé et l’historique de la personne signalée sur {{ site_name }} : sa date d’arrivée, ses sanctions passées, les autres signalements la concernant et ses projets retirés. Les pages de modération n’affichent pas d’adresses e-mail.
+- La personne signalée n’apprend jamais qui l’a signalée.
+- Quand les modérateurs agissent, nous conservons la décision et son motif. Un projet retiré garde son contenu et le motif (seuls vous, les modérateurs et l’équipe le voient). Les champs du profil effacés (photo et couverture, accroche et « À propos », ou liens) sont supprimés. Les mises en sourdine et les bannissements sont conservés avec leur motif, leur début et leur fin.
+- Vous voyez le motif dans un avis sur le site, que nous gardons jusqu’à la suppression de votre compte. Les décisions vous concernant et ces avis figurent dans « Télécharger mes données ».
+- Pour contester une décision, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
+
+**Communauté.** Quand vous publiez dans la communauté, nous conservons :
+
+- vos fils : rubrique, titre, texte, dates, et si un fil a été modifié, épinglé, verrouillé ou retiré ;
+- vos réponses : texte, l’autocollant choisi, et le message auquel elles répondent ;
+- les images que vous joignez. Elles sont réencodées comme les captures d’écran : les métadonnées cachées comme la position GPS sont supprimées, les noms de fichiers sont aléatoires, et nous gardons une copie jusqu’à 1600 px et une vignette de 640 px sur notre propre serveur.
+
+Les messages, leurs images, leur nombre de votes et votre nom d’utilisateur sur ceux-ci sont **publics**. Nous conservons aussi vos votes ; personne ne voit qui a voté pour quoi, ni sur le site ni dans l’administration.
+
+Quand vous supprimez un message, son texte, son autocollant et ses images sont supprimés aussitôt. Le titre d’un fil reste tant que des réponses d’autres personnes se trouvent dessous, et s’affiche comme « [supprimé] ». Quand les modérateurs retirent un message, ses images sont supprimées aussitôt et son texte est conservé avec le motif, visible seulement par vous, les modérateurs et l’équipe. Les modérateurs voient les messages signalés avec l’historique de leur auteur, comme pour les autres signalements.
 
 **Notifications de réponses.** Quand quelqu’un répond à votre fil ou à votre réponse, nous conservons une notification pour vous (quelle réponse, quand, et quand vous avez ouvert la liste), ainsi que l’heure de la plus récente non lue, pour que le menu puisse afficher une marque. Vous seul les voyez. Elles sont supprimées après **90 jours**, ou avec votre compte. Nous ne les envoyons jamais par e-mail.
 
@@ -47,7 +72,14 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 **Adresses IP et journaux.** L’application ne conserve pas votre adresse IP et ses propres journaux ne la contiennent pas. Pour chaque requête de page, les journaux notent seulement la méthode, l’adresse de la page (sans ce qui suit un `?`), le statut de la réponse, la taille et le temps de traitement, ainsi que les erreurs. Ils ne contiennent aucune information sur votre navigateur. Les adresses de page contiennent des noms d’utilisateur (`/u/<username>/`) : une ligne de journal peut donc montrer quel profil a été ouvert, mais pas par qui.
 
-**Journal des erreurs.** Quand quelque chose échoue, l’application écrit une courte entrée dans un fichier d’erreurs sur notre serveur : l’heure, un numéro de référence aléatoire (celui affiché sur la page d’erreur), la méthode de la requête, l’adresse de la page sans ce qui suit un `?` et avec les noms d’utilisateur remplacés par `[user]`, le statut de la réponse, la partie du code qui a échoué et le message technique, dont sont retirés les adresses e-mail, les adresses IP et tout ce qui ressemble à un mot de passe ou une clé. Les pages introuvables sont écrites dans un fichier séparé, chaque adresse au plus une fois par minute. Ces fichiers ne contiennent jamais votre adresse IP, les informations de votre navigateur, vos cookies, ce que vous saisissez dans les formulaires, votre adresse e-mail ni votre nom d’utilisateur. Chaque fichier est limité à 5 Mo plus 5 copies plus anciennes ; une fois la limite atteinte, la plus ancienne est supprimée.
+**Journal des erreurs.** Quand quelque chose échoue, l’application écrit une courte entrée dans un fichier d’erreurs sur notre serveur. L’entrée contient :
+
+- l’heure et un numéro de référence aléatoire (celui affiché sur la page d’erreur) ;
+- la méthode de la requête et l’adresse de la page sans ce qui suit un `?`, avec les noms d’utilisateur remplacés par `[user]` ;
+- le statut de la réponse et la partie du code qui a échoué ;
+- le message d’erreur technique, dont on a retiré les adresses e-mail, les adresses IP et tout ce qui ressemble à un mot de passe ou à une clé.
+
+Les pages introuvables sont écrites dans un fichier séparé, chaque adresse au plus une fois par minute. Ces fichiers ne contiennent jamais votre adresse IP, les informations de votre navigateur, vos cookies, ce que vous avez saisi dans un formulaire, votre adresse e-mail ni votre nom d’utilisateur. Chaque fichier est limité à 5 Mo plus 5 copies plus anciennes ; à la limite, la plus ancienne est supprimée.
 
 > **TODO avant le lancement :** le serveur web placé devant l’application tient son propre journal d’accès, qui contient par défaut des adresses IP. Ce qu’il enregistre et combien de temps il le conserve (ainsi que la durée de conservation des journaux de l’application) n’est pas encore décidé. Il faut le compléter, ou désactiver l’enregistrement des IP, avant que cette page ne devienne publique.
 

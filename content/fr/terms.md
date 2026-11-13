@@ -1,6 +1,6 @@
 # Conditions d’utilisation
 
-> **Brouillon**, dernière mise à jour le 13 novembre 2026 (version {{ terms_version }}). Ce texte n’a pas encore été relu par un juriste.
+> **Brouillon**, dernière mise à jour le 14 novembre 2026 (version {{ terms_version }}). Ce texte n’a pas encore été relu par un juriste.
 >
 > Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
@@ -19,7 +19,7 @@ Un lieu public pour présenter des logiciels que vous avez livrés, avec des poi
 ## Votre contenu {#content}
 
 - Vous conservez tous les droits sur les projets, textes, captures d’écran et images de profil que vous publiez.
-- Vous nous autorisez à les stocker, les afficher et les partager sur {{ site_name }} (pages de projet, profils, fil, recherche et badges) tant qu’ils sont publiés. Cette autorisation prend fin lorsque vous les supprimez, sauf pour les copies que d’autres ont déjà intégrées ou enregistrées.
+- Vous nous autorisez à les stocker, les afficher et les partager sur {{ site_name }} (pages de projet, profils, page Pour vous, recherche et badges) tant qu’ils sont publiés. Cette autorisation prend fin lorsque vous les supprimez, sauf pour les copies que d’autres ont déjà intégrées ou enregistrées.
 - Ne publiez que ce que vous avez le droit de publier. Ne présentez pas le travail d’autrui comme le vôtre.
 - Les outils d’IA que vous indiquez sous « Créé avec » sont votre propre déclaration. Nous les affichons comme déclarés par l’auteur et ne les contrôlons pas.
 
@@ -42,14 +42,24 @@ La communauté (rubriques, fils et réponses) a ses propres [règles de la commu
 
 - Les fils, les réponses et les images que vous y joignez sont publics. La section « Votre contenu » s’y applique : vous gardez vos droits et nous autorisez à les afficher.
 - Sont interdits : le spam et la publicité (présenter votre propre projet dans « Montrez votre projet » est permis), le harcèlement, la haine ou les menaces, le contenu sexuel, tout ce qui implique des mineurs, les logiciels malveillants, les comptes, données ou clés volés, les informations privées d’autrui et les œuvres que vous n’avez pas le droit de partager.
-- Toute personne connectée peut signaler un fil ou une réponse. Les modérateurs peuvent retirer un message (ses images sont supprimées immédiatement), verrouiller un fil pour que seuls les modérateurs puissent répondre, ou l’épingler. Chaque retrait et chaque verrouillage s’accompagne d’un motif que l’auteur voit. Un message retiré reste visible pour son auteur et pour les modérateurs, afin que la décision puisse être revue ; les administrateurs peuvent en restaurer le texte.
+- Toute personne connectée peut signaler un fil ou une réponse.
+- Les modérateurs peuvent retirer un message (ses images sont supprimées aussitôt), verrouiller un fil pour que seuls les modérateurs puissent répondre, ou l’épingler. Chaque retrait et chaque verrouillage s’accompagne d’un motif que l’auteur voit.
+- Un message retiré reste visible pour son auteur et pour les modérateurs, afin de pouvoir être réexaminé. Les administrateurs peuvent restaurer son texte.
 - Vous pouvez modifier et supprimer vos messages. Un message supprimé qui a déjà des réponses reste affiché comme « [supprimé] », pour que les réponses des autres gardent leur place.
 - Si vous supprimez votre compte, vos fils sans réponse d’autres personnes sont supprimés ; vos autres fils et vos réponses restent, sans votre nom, votre photo ni votre lien.
 - Pour contester une décision, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}) en indiquant l’adresse du message.
 
 ## Modération {#moderation}
 
-Toute personne connectée peut signaler un projet, un profil ou une entrée du journal de construction. Les modérateurs peuvent rejeter un signalement, retirer un projet, effacer des champs du profil (photo et couverture, phrase d’accroche et « À propos », liens), mettre un compte en sourdine jusqu’à 7 jours (vous pouvez toujours lire, modifier vos paramètres, télécharger ou supprimer vos données, mais pas publier) ou le bannir jusqu’à 14 jours (vous êtes déconnecté, ne pouvez pas vous connecter, et votre profil et vos projets ne sont pas publics). Chaque décision est accompagnée d’un motif que vous voyez. Les sanctions plus longues ou permanentes sont décidées uniquement par les administrateurs du site, qui peuvent aussi masquer des projets ou suspendre des comptes. Supprimer votre compte ne met pas fin à un bannissement (voir la [Politique de confidentialité](/legal/privacy/)). Si vous pensez que nous nous sommes trompés, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
+Toute personne connectée peut signaler un projet, un profil ou une entrée du journal de développement. Les modérateurs peuvent :
+
+- rejeter un signalement ;
+- retirer un projet ;
+- effacer des champs du profil (photo et couverture, accroche et « À propos », liens) ;
+- mettre un compte en sourdine jusqu’à 7 jours : vous pouvez toujours lire, modifier vos paramètres, télécharger ou supprimer vos données, mais pas publier ;
+- bannir un compte jusqu’à 14 jours : vous êtes déconnecté, vous ne pouvez pas vous reconnecter, et votre profil et vos projets ne sont pas publics.
+
+Chaque décision s’accompagne d’un motif que vous voyez. Les sanctions plus longues ou définitives sont décidées uniquement par les administrateurs du site, qui peuvent aussi masquer des projets ou suspendre des comptes. Supprimer votre compte ne met pas fin à un bannissement (voir la [Politique de confidentialité](/legal/privacy/)). Si vous pensez que nous nous sommes trompés, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Support {#support}
 

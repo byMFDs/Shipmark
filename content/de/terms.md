@@ -1,6 +1,6 @@
 # Nutzungsbedingungen
 
-> **Entwurf**, zuletzt aktualisiert am 13. November 2026 (Version {{ terms_version }}). Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
+> **Entwurf**, zuletzt aktualisiert am 14. November 2026 (Version {{ terms_version }}). Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
 >
 > Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
@@ -19,7 +19,7 @@ Ein öffentlicher Ort, um veröffentlichte Software zu zeigen, mit Prüfzeichen,
 ## Deine Inhalte {#content}
 
 - Du behältst alle Rechte an den Projekten, Texten, Screenshots und Profilbildern, die du einstellst.
-- Du erlaubst uns, sie auf {{ site_name }} zu speichern, anzuzeigen und zu teilen (Projektseiten, Profile, Feed, Suche und Badges), solange sie veröffentlicht sind. Diese Erlaubnis endet, wenn du sie löschst, außer für Kopien, die andere bereits eingebettet oder gespeichert haben.
+- Du erlaubst uns, sie auf {{ site_name }} zu speichern, anzuzeigen und zu teilen (Projektseiten, Profile, Für-dich-Seite, Suche und Badges), solange sie veröffentlicht sind. Diese Erlaubnis endet, wenn du sie löschst, außer für Kopien, die andere bereits eingebettet oder gespeichert haben.
 - Stelle nur ein, wozu du berechtigt bist. Gib die Arbeit anderer nicht als deine aus.
 - Die KI-Tools, die du unter „Gebaut mit“ nennst, sind deine eigene Angabe. Wir zeigen sie als selbst angegeben an und prüfen sie nicht.
 
@@ -42,14 +42,24 @@ Für die Community (Bereiche, Threads und Antworten) gelten eigene [Community-Re
 
 - Threads, Antworten und die angehängten Bilder sind öffentlich. Für sie gilt „Deine Inhalte“ oben: Du behältst deine Rechte und erlaubst uns, sie zu zeigen.
 - Nicht erlaubt sind: Spam und Werbung (dein eigenes Projekt in „Zeig dein Projekt“ vorzustellen ist in Ordnung), Belästigung, Hass oder Drohungen, sexuelle Inhalte, alles mit Minderjährigen, Schadsoftware, gestohlene Konten, Daten oder Schlüssel, private Informationen anderer und Werke, die du nicht teilen darfst.
-- Alle angemeldeten Personen können einen Thread oder eine Antwort melden. Moderatoren können einen Beitrag entfernen (seine Bilder werden sofort gelöscht), einen Thread schließen, sodass nur Moderatoren antworten können, oder ihn anheften. Jede Entfernung und jede Schließung hat einen Grund, den die Person sieht, die den Beitrag geschrieben hat. Ein entfernter Beitrag bleibt für sie und für Moderatoren sichtbar, damit die Entscheidung überprüft werden kann; Administratoren können seinen Text wiederherstellen.
+- Alle angemeldeten Personen können einen Thread oder eine Antwort melden.
+- Die Moderation kann einen Beitrag entfernen (seine Bilder werden sofort gelöscht), einen Thread sperren, sodass nur die Moderation antworten kann, oder ihn anheften. Jede Entfernung und Sperrung kommt mit einem Grund, den die Autorin oder der Autor sieht.
+- Ein entfernter Beitrag bleibt für die Autorin oder den Autor und die Moderation sichtbar, damit er geprüft werden kann. Die Administratoren können seinen Text wiederherstellen.
 - Du kannst deine Beiträge bearbeiten und löschen. Ein gelöschter Beitrag, auf den schon geantwortet wurde, bleibt als „[gelöscht]“ stehen, damit die Antworten anderer ihren Platz behalten.
 - Wenn du dein Konto löschst, werden deine Threads ohne Antworten anderer gelöscht; deine übrigen Threads und deine Antworten bleiben, ohne deinen Namen, dein Bild und deinen Link.
 - Um eine Entscheidung anzufechten, schreib an [{{ contact_email }}](mailto:{{ contact_email }}) und nenne die Adresse des Beitrags.
 
 ## Moderation {#moderation}
 
-Alle angemeldeten Personen können ein Projekt, ein Profil oder einen Build-Log-Eintrag melden. Moderatoren können eine Meldung ablehnen, ein Projekt entfernen, Profilfelder leeren (Profil- und Titelbild, Kurzbeschreibung und „Über mich“, Links), ein Konto bis zu 7 Tage stummschalten (du kannst weiter lesen, Einstellungen ändern, deine Daten herunterladen oder löschen, aber nichts veröffentlichen) oder es bis zu 14 Tage sperren (du wirst abgemeldet, kannst dich nicht anmelden, und Profil und Projekte sind nicht öffentlich). Jede Entscheidung hat einen Grund, den du siehst. Über längere oder dauerhafte Sanktionen entscheiden nur die Administratoren der Website; sie können auch Projekte verbergen oder Konten sperren. Das Löschen deines Kontos beendet keine Sperre (siehe [Datenschutzerklärung](/legal/privacy/)). Wenn du denkst, dass wir einen Fehler gemacht haben, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
+Alle angemeldeten Personen können ein Projekt, ein Profil oder einen Build-Log-Eintrag melden. Die Moderation kann:
+
+- eine Meldung zurückweisen;
+- ein Projekt entfernen;
+- Profilfelder leeren (Bild und Titelbild, Kurzbeschreibung und „Über mich“, Links);
+- ein Konto für bis zu 7 Tage stummschalten: Du kannst weiter lesen, deine Einstellungen ändern, deine Daten herunterladen oder löschen, aber nichts veröffentlichen;
+- ein Konto für bis zu 14 Tage sperren: Du wirst abgemeldet, kannst dich nicht anmelden, und dein Profil und deine Projekte sind nicht öffentlich.
+
+Jede Entscheidung kommt mit einem Grund, den du siehst. Über längere oder dauerhafte Sanktionen entscheiden nur die Administratoren der Website, die auch Projekte verbergen oder Konten sperren können. Das Löschen deines Kontos beendet eine Sperre nicht (siehe [Datenschutzerklärung](/legal/privacy/)). Wenn du glaubst, dass wir einen Fehler gemacht haben, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Support {#support}
 

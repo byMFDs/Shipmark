@@ -1,6 +1,6 @@
 # Datenschutzerklärung
 
-> **Entwurf**, zuletzt aktualisiert am 13. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
+> **Entwurf**, zuletzt aktualisiert am 14. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
 >
 > Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
@@ -13,7 +13,12 @@ Fragen oder Anliegen: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Was wir speichern und warum {#data}
 
-**Wenn du dich mit GitHub anmeldest.** Von GitHub erhalten wir deine Konto-ID, deinen Login, deinen Namen, deine Bio, den Link zu deinem Avatar und die übrigen öffentlichen Felder deines GitHub-Profils sowie die E-Mail-Adressen deines GitHub-Kontos. Wir fragen GitHub nur nach `read:user` und `user:email`: Über dein Konto bekommen wir nie Zugriff auf deine Repositories, weder private noch öffentliche. Dein GitHub-Zugriffstoken behalten wir nach der Anmeldung nicht. Wir brauchen das, um dein Konto anzulegen und dich beim nächsten Mal wiederzuerkennen (Erfüllung unserer Vereinbarung mit dir). Dein GitHub-Login wird bei jeder Anmeldung aktualisiert, damit dein Profil immer auf dein aktuelles GitHub-Konto verweist.
+**Wenn du dich mit GitHub anmeldest.** GitHub schickt uns:
+
+- deine Konto-ID, deinen Login, Namen, Bio, Avatar-Link und die anderen öffentlichen Felder deines GitHub-Profils;
+- die E-Mail-Adressen deines GitHub-Kontos.
+
+Wir fragen GitHub nur nach zwei Berechtigungen: `read:user` und `user:email`. Über dein Konto erhalten wir nie Zugriff auf deine Repositories, weder private noch öffentliche. Deinen GitHub-Zugangstoken speichern wir nach der Anmeldung nicht. Diese Daten brauchen wir, um dein Konto anzulegen und dich beim nächsten Mal wiederzuerkennen (Erfüllung unseres Vertrags mit dir). Dein GitHub-Login wird bei jeder Anmeldung aktualisiert, damit dein Profil immer auf dein aktuelles GitHub-Konto verweist.
 
 **Dein Profil.** Benutzername, Anzeigename, Kurzbeschreibung, „Über mich“, Ort, ein Status (zum Beispiel „Offen für Jobs“), bis zu 10 Fähigkeiten, bis zu 6 Links, bis zu 3 angeheftete Projekte und deine Sprache. Alles außer dem Benutzernamen ist freiwillig. Anzeigename und „Über mich“ werden anfangs aus deinem GitHub-Namen und deiner GitHub-Bio übernommen; du kannst sie in den Einstellungen ändern oder entfernen. Wir speichern außerdem die Adresse deines GitHub-Bildes, nur damit „Mein GitHub-Bild verwenden“ es kopieren kann; sie wird nirgends angezeigt. Benutzername, Anzeigename, Kurzbeschreibung, „Über mich“, Ort, Status, Fähigkeiten, Links, angeheftete Projekte, GitHub-Login und der Monat deiner Registrierung sind **öffentlich**.
 
@@ -25,7 +30,12 @@ Fragen oder Anliegen: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Nachweis-Prüfungen.** Um Prüfzeichen zu vergeben, prüfen wir Fakten selbst (unser berechtigtes Interesse an Nachweisen, denen man vertrauen kann):
 
-- *Repo owner:* Wir fragen die öffentliche API von GitHub nach dem Repository, das du verknüpfst, und speichern seine ID, die Konto-ID der Person, der es gehört, ob es dir gehört, sein Erstellungsdatum und sein Website-Feld, den ersten Commit seines Verlaufs (ID und Datum), deine Anzahl an Commits, das Datum deines ersten und letzten Commits, die Anzahl der Wochen mit deinen Commits und den Stand einer manuellen Prüfung, falls eine nötig ist. Wir prüfen das jede Woche erneut. Die Liste der anderen Beitragenden lesen wir während der Prüfung und speichern sie nicht. Wenn du die Bestätigungsdatei für ein Repository einer Organisation nutzt, speichern wir auch, ob sie gefunden wurde.
+- *Repo owner:* Wir fragen die öffentliche API von GitHub nach dem Repository, das du verknüpfst, und prüfen es jede Woche erneut. Die Liste der anderen Mitwirkenden auf GitHub lesen wir bei der Prüfung und speichern sie nicht. Wir speichern:
+    - seine ID, die Konto-ID des Eigentümers, ob es dir gehört, sein Erstellungsdatum und sein Website-Feld;
+    - den ersten Commit seiner Historie (ID und Datum);
+    - die Zahl deiner Commits, das Datum deines ersten und letzten Commits und die Zahl der Wochen mit deinen Commits;
+    - den Stand einer manuellen Prüfung, wenn eine nötig ist;
+    - ob die Verifizierungsdatei gefunden wurde, wenn du sie für ein Organisations-Repository nutzt.
 - *Domain verified:* Wir fragen die DNS-Einträge der Domain deines Projekts ab oder rufen seine Seite ab, um dein Verifizierungs-Token zu finden.
 - *Steady:* Wir rufen die Adresse deines Projekts alle paar Stunden ab und speichern, ob sie geantwortet hat und wie schnell. Diese Prüfungen werden **90 Tage** aufbewahrt.
 
@@ -33,9 +43,24 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 **Follows und Likes.** Wir speichern, wem du folgst und welche Projekte du geliked hast. Andere sehen nur die Zahlen, nicht die Listen.
 
-**Meldungen und Moderation.** Wenn du ein Projekt, ein Profil oder einen Build-Log-Eintrag meldest, speichern wir den Grund und die Details, die du schreibst. Meldungen sehen Moderatorinnen und Moderatoren (Personen mit dem Moderator-Abzeichen) und das Team. Für ihre Entscheidung sehen sie auch den gemeldeten Inhalt und die Vorgeschichte der gemeldeten Person auf {{ site_name }}: wann sie beigetreten ist, frühere Sanktionen, andere Meldungen über sie und entfernte Projekte. Die Moderationsseiten zeigen keine E-Mail-Adressen. Die gemeldete Person erfährt nie, wer sie gemeldet hat. Wenn die Moderation handelt, speichern wir die Entscheidung und ihren Grund: Ein entferntes Projekt behält seinen Inhalt und den Grund (nur du, die Moderation und das Team sehen ihn), geleerte Profilfelder (Profilbild und Titelbild, Kurzbeschreibung und „Über mich“ oder Links) werden gelöscht, und Stummschaltungen und Sperren werden mit Grund, Beginn und Ende gespeichert. Den Grund siehst du in einem Hinweis auf der Website, den wir behalten, bis du dein Konto löschst. Entscheidungen über dich und diese Hinweise sind in „Meine Daten herunterladen“ enthalten. Um eine Entscheidung anzufechten, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
+**Meldungen und Moderation.**
 
-**Community.** Wenn du in der Community schreibst, speichern wir deine Threads (Bereich, Titel, Text, Daten und ob ein Thread bearbeitet, angeheftet, geschlossen oder entfernt wurde), deine Antworten (Text, den gewählten Sticker, auf welchen Beitrag sie antworten) und die angehängten Bilder. Bilder werden wie Screenshots neu kodiert: Versteckte Metadaten wie der GPS-Standort werden entfernt, die Dateinamen sind zufällig, und auf unserem eigenen Server liegen eine Kopie bis 1600 px und ein Vorschaubild mit 640 px. Beiträge, ihre Bilder, ihre Stimmenzahl und dein Benutzername daran sind **öffentlich**. Wir speichern auch deine Stimmen; niemand sieht, wer wofür gestimmt hat, weder auf der Website noch im Admin-Bereich. Wenn du einen Beitrag löschst, werden sein Text, sein Sticker und seine Bilder sofort gelöscht (der Titel eines Threads bleibt, solange Antworten anderer darunter stehen, und wird als „[gelöscht]“ angezeigt). Wenn Moderatoren einen Beitrag entfernen, werden seine Bilder sofort gelöscht und der Text bleibt mit dem Grund gespeichert, sichtbar nur für dich, Moderatoren und das Team. Moderatoren sehen gemeldete Beiträge zusammen mit der Vorgeschichte der Person, die sie geschrieben hat, wie bei anderen Meldungen.
+- Wenn du ein Projekt, ein Profil oder einen Build-Log-Eintrag meldest, speichern wir den Grund und die Details, die du schreibst.
+- Meldungen sehen die Moderatorinnen und Moderatoren (Personen mit dem Moderator-Abzeichen) und das Team. Für die Entscheidung sehen sie auch den gemeldeten Inhalt und die Geschichte der gemeldeten Person auf {{ site_name }}: wann sie beigetreten ist, frühere Sanktionen, andere Meldungen über sie und entfernte Projekte. Die Moderationsseiten zeigen keine E-Mail-Adressen.
+- Die gemeldete Person erfährt nie, wer sie gemeldet hat.
+- Wenn die Moderation handelt, speichern wir die Entscheidung und ihren Grund. Ein entferntes Projekt behält seinen Inhalt und den Grund (sichtbar nur für dich, die Moderation und das Team). Geleerte Profilfelder (Bild und Titelbild, Kurzbeschreibung und „Über mich“ oder Links) werden gelöscht. Stummschaltungen und Sperren speichern wir mit Grund, Beginn und Ende.
+- Den Grund siehst du in einem Hinweis auf der Website, den wir behalten, bis du dein Konto löschst. Entscheidungen über dich und diese Hinweise sind in „Meine Daten herunterladen“ enthalten.
+- Um gegen eine Entscheidung Einspruch einzulegen, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
+
+**Community.** Wenn du in der Community schreibst, speichern wir:
+
+- deine Threads: Bereich, Titel, Text, Daten und ob ein Thread bearbeitet, angeheftet, gesperrt oder entfernt wurde;
+- deine Antworten: Text, den gewählten Sticker und auf welchen Beitrag sie antworten;
+- die angehängten Bilder. Sie werden wie Screenshots neu kodiert: Versteckte Metadaten wie der GPS-Standort werden entfernt, die Dateinamen sind zufällig, und wir speichern eine Kopie bis 1600 px und eine Vorschau mit 640 px auf unserem eigenen Server.
+
+Beiträge, ihre Bilder, die Zahl ihrer Stimmen und dein Benutzername daran sind **öffentlich**. Wir speichern auch deine Stimmen; niemand sieht, wer wofür gestimmt hat, weder auf der Website noch im Admin-Bereich.
+
+Wenn du einen Beitrag löschst, werden Text, Sticker und Bilder sofort gelöscht. Der Titel eines Threads bleibt, solange darunter Antworten anderer stehen, und wird als „[gelöscht]“ angezeigt. Wenn die Moderation einen Beitrag entfernt, werden seine Bilder sofort gelöscht, und der Text wird mit dem Grund aufbewahrt, sichtbar nur für dich, die Moderation und das Team. Die Moderation sieht gemeldete Beiträge zusammen mit der Geschichte der Autorin oder des Autors, wie bei anderen Meldungen.
 
 **Benachrichtigungen über Antworten.** Wenn jemand auf deinen Thread oder deine Antwort antwortet, speichern wir eine Benachrichtigung für dich (welche Antwort, wann und wann du die Liste geöffnet hast) sowie den Zeitpunkt der neuesten ungelesenen, damit das Menü einen Hinweis zeigen kann. Nur du siehst sie. Sie werden nach **90 Tagen** gelöscht oder mit deinem Konto. Wir verschicken sie nie per E-Mail.
 
@@ -47,7 +72,14 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 **IP-Adressen und Logs.** Die Anwendung speichert deine IP-Adresse nicht, und ihre eigenen Logs enthalten sie nicht. Zu jeder Seitenanfrage halten die Logs nur die Methode, die Seitenadresse (ohne alles nach einem `?`), den Antwortstatus, die Größe und die Antwortzeit fest, dazu Fehler. Angaben zu deinem Browser sind nicht darin. Seitenadressen enthalten Benutzernamen (`/u/<username>/`); eine Logzeile kann also zeigen, welches Profil geöffnet wurde, aber nicht von wem.
 
-**Fehlerprotokoll.** Wenn etwas schiefgeht, schreibt die Anwendung einen kurzen Eintrag in eine Fehlerdatei auf unserem Server: Zeitpunkt, eine zufällige Referenznummer (die auf der Fehlerseite angezeigt wird), die Anfragemethode, die Seitenadresse ohne alles nach einem `?` und mit Benutzernamen ersetzt durch `[user]`, den Antwortstatus, den Teil des Codes, der fehlgeschlagen ist, und die technische Fehlermeldung, aus der E-Mail-Adressen, IP-Adressen und alles, was wie ein Passwort oder Schlüssel aussieht, entfernt sind. Nicht gefundene Seiten kommen in eine eigene Datei, jede Adresse höchstens einmal pro Minute. Diese Dateien enthalten nie deine IP-Adresse, Browserdaten, Cookies, Formulareingaben, deine E-Mail-Adresse oder deinen Benutzernamen. Jede Datei ist auf 5 MB plus 5 ältere Kopien begrenzt; ist die Grenze erreicht, wird die älteste gelöscht.
+**Fehlerprotokoll.** Wenn etwas schiefgeht, schreibt die Anwendung einen kurzen Eintrag in eine Fehlerdatei auf unserem Server. Der Eintrag enthält:
+
+- die Uhrzeit und eine zufällige Referenznummer (die auf der Fehlerseite angezeigte);
+- die Anfragemethode und die Seitenadresse ohne alles nach einem `?`, mit Benutzernamen ersetzt durch `[user]`;
+- den Antwortstatus und den Teil des Codes, der fehlgeschlagen ist;
+- die technische Fehlermeldung, aus der E-Mail-Adressen, IP-Adressen und alles, was wie ein Passwort oder Schlüssel aussieht, entfernt sind.
+
+Nicht gefundene Seiten werden in eine eigene Datei geschrieben, jede Adresse höchstens einmal pro Minute. Diese Dateien enthalten nie deine IP-Adresse, Browserdaten, Cookies, was du in ein Formular eingegeben hast, deine E-Mail-Adresse oder deinen Benutzernamen. Jede Datei ist auf 5 MB plus 5 ältere Kopien begrenzt; ist die Grenze erreicht, wird die älteste gelöscht.
 
 > **TODO vor dem Start:** Der Webserver vor der Anwendung führt ein eigenes Zugriffslog, das standardmäßig IP-Adressen enthält. Was er aufzeichnet und wie lange er es aufbewahrt (und wie lange die Logs der Anwendung aufbewahrt werden), ist noch nicht entschieden. Das muss ergänzt oder die IP-Protokollierung abgeschaltet werden, bevor diese Seite öffentlich wird.
 

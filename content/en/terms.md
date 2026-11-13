@@ -1,6 +1,6 @@
 # Terms of use
 
-> **Draft**, last updated 13 November 2026 (version {{ terms_version }}). This text has not been reviewed by a lawyer yet.
+> **Draft**, last updated 14 November 2026 (version {{ terms_version }}). This text has not been reviewed by a lawyer yet.
 
 These terms are the agreement between you and {{ legal_owner_name }}, who runs {{ site_name }}. By creating an account you accept them. Questions: [{{ contact_email }}](mailto:{{ contact_email }}).
 
@@ -17,7 +17,7 @@ A public place to show software you shipped, with hallmarks that we check oursel
 ## Your content {#content}
 
 - You keep all rights to the projects, text, screenshots and profile pictures you post.
-- You give us permission to store, show and share them on {{ site_name }} (project pages, profiles, feed, search and badges) for as long as they are published. This permission ends when you delete them, except for copies that others already embedded or saved.
+- You give us permission to store, show and share them on {{ site_name }} (project pages, profiles, the For You Page, search and badges) for as long as they are published. This permission ends when you delete them, except for copies that others already embedded or saved.
 - Post only things you have the right to post. Do not post other people's work as yours.
 - The AI tools you list under "Built with" are your own statement. We show them as self-declared and do not check them.
 
@@ -40,14 +40,24 @@ The community (boards, threads and replies) has its own [community rules](/commu
 
 - Threads, replies and the images you attach are public. "Your content" above applies to them: you keep your rights and give us permission to show them.
 - Not allowed: spam and advertising (showing your own project in "Show your project" is fine), harassment, hate or threats, sexual content, anything involving minors, malware, stolen accounts, data or keys, other people's private information, and work you have no right to share.
-- Anyone signed in can report a thread or a reply. Moderators can remove a post (its images are deleted at once), lock a thread so that only moderators can reply, or pin it. Every removal and lock comes with a reason that the author sees. A removed post stays visible to its author and to moderators so that it can be reviewed; administrators can restore its text.
+- Anyone signed in can report a thread or a reply.
+- Moderators can remove a post (its images are deleted at once), lock a thread so that only moderators can reply, or pin it. Every removal and lock comes with a reason that the author sees.
+- A removed post stays visible to its author and to moderators so that it can be reviewed. Administrators can restore its text.
 - You can edit and delete your posts. A deleted post that already has replies stays as "[deleted]", so that the replies of others keep their place.
 - When you delete your account, your threads without replies from others are deleted; your other threads and your replies stay, without your name, picture or link.
 - To appeal a decision, write to [{{ contact_email }}](mailto:{{ contact_email }}) with the address of the post.
 
 ## Moderation {#moderation}
 
-Anyone signed in can report a project, a profile or a build-log update. Moderators can dismiss a report, remove a project, clear profile fields (picture and cover, headline and About, links), mute an account for up to 7 days (you can still read, change your settings, download or delete your data, but not post), or ban it for up to 14 days (you are signed out, cannot sign in, and your profile and projects are not public). Every decision comes with a reason that you see. Longer or permanent sanctions are decided only by the site's administrators, who may also hide projects or suspend accounts. Deleting your account does not end a ban (see the [Privacy policy](/legal/privacy/)). If you think we made a mistake, write to [{{ contact_email }}](mailto:{{ contact_email }}).
+Anyone signed in can report a project, a profile or a build-log update. Moderators can:
+
+- dismiss a report;
+- remove a project;
+- clear profile fields (picture and cover, headline and About, links);
+- mute an account for up to 7 days: you can still read, change your settings, download or delete your data, but not post;
+- ban an account for up to 14 days: you are signed out, cannot sign in, and your profile and projects are not public.
+
+Every decision comes with a reason that you see. Longer or permanent sanctions are decided only by the site's administrators, who may also hide projects or suspend accounts. Deleting your account does not end a ban (see the [Privacy policy](/legal/privacy/)). If you think we made a mistake, write to [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Support {#support}
 

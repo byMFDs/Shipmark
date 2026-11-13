@@ -1,6 +1,6 @@
 # Termos de uso
 
-> **Rascunho**, última atualização em 13 de novembro de 2026 (versão {{ terms_version }}). Este texto ainda não foi revisado por um advogado.
+> **Rascunho**, última atualização em 14 de novembro de 2026 (versão {{ terms_version }}). Este texto ainda não foi revisado por um advogado.
 >
 > Tradução por conveniência; a versão em inglês prevalece.
 
@@ -19,7 +19,7 @@ Um lugar público para mostrar software que você publicou, com selos que nós m
 ## Seu conteúdo {#content}
 
 - Você mantém todos os direitos sobre os projetos, textos, capturas de tela e imagens de perfil que publicar.
-- Você nos dá permissão para armazená-los, exibi-los e compartilhá-los no {{ site_name }} (páginas de projeto, perfis, feed, busca e badges) enquanto estiverem publicados. Essa permissão termina quando você os exclui, exceto para cópias que outras pessoas já incorporaram ou salvaram.
+- Você nos dá permissão para armazená-los, exibi-los e compartilhá-los no {{ site_name }} (páginas de projeto, perfis, página Para você, busca e badges) enquanto estiverem publicados. Essa permissão termina quando você os exclui, exceto para cópias que outras pessoas já incorporaram ou salvaram.
 - Publique apenas o que você tem direito de publicar. Não apresente o trabalho de outras pessoas como seu.
 - As ferramentas de IA que você lista em “Feito com” são uma declaração sua. Nós as mostramos como declaradas pelo autor e não as verificamos.
 
@@ -42,14 +42,24 @@ A comunidade (seções, tópicos e respostas) tem as próprias [regras da comuni
 
 - Tópicos, respostas e as imagens que você anexa são públicos. A seção “Seu conteúdo” vale para eles: você mantém seus direitos e nos permite exibi-los.
 - Não é permitido: spam e propaganda (mostrar seu próprio projeto em “Mostre seu projeto” pode), assédio, ódio ou ameaças, conteúdo sexual, qualquer coisa envolvendo menores, malware, contas, dados ou chaves roubados, informações privadas de outras pessoas e obras que você não tem direito de compartilhar.
-- Qualquer pessoa conectada pode denunciar um tópico ou uma resposta. Os moderadores podem remover uma publicação (as imagens dela são apagadas na hora), trancar um tópico para que só moderadores respondam ou fixá-lo. Toda remoção e todo trancamento vêm com um motivo que quem escreveu vê. Uma publicação removida continua visível para quem a escreveu e para os moderadores, para que a decisão possa ser revista; os administradores podem restaurar o texto.
+- Qualquer pessoa conectada pode denunciar um tópico ou uma resposta.
+- Os moderadores podem remover uma publicação (as imagens são apagadas na hora), trancar um tópico para que só os moderadores possam responder, ou fixá-lo. Cada remoção e trancamento vem com um motivo que o autor vê.
+- Uma publicação removida continua visível para o autor e os moderadores, para que possa ser revisada. Os administradores podem restaurar o texto dela.
 - Você pode editar e excluir suas publicações. Uma publicação excluída que já tem respostas fica como “[excluído]”, para que as respostas dos outros mantenham o lugar.
 - Quando você exclui sua conta, seus tópicos sem respostas de outras pessoas são excluídos; os demais tópicos e suas respostas ficam, sem seu nome, sua foto e seu link.
 - Para contestar uma decisão, escreva para [{{ contact_email }}](mailto:{{ contact_email }}) com o endereço da publicação.
 
 ## Moderação {#moderation}
 
-Qualquer pessoa conectada pode denunciar um projeto, um perfil ou uma entrada do registro de mudanças. Os moderadores podem descartar uma denúncia, remover um projeto, limpar campos do perfil (foto e capa, resumo curto e “Sobre”, links), silenciar uma conta por até 7 dias (você ainda pode ler, mudar suas configurações, baixar ou excluir seus dados, mas não publicar) ou bani-la por até 14 dias (você é desconectado, não consegue entrar, e seu perfil e projetos não ficam públicos). Toda decisão vem com um motivo que você vê. Sanções mais longas ou permanentes são decididas só pelos administradores do site, que também podem ocultar projetos ou suspender contas. Excluir a conta não encerra um banimento (veja a [Política de privacidade](/legal/privacy/)). Se você acha que erramos, escreva para [{{ contact_email }}](mailto:{{ contact_email }}).
+Qualquer pessoa conectada pode denunciar um projeto, um perfil ou uma entrada do diário de desenvolvimento. Os moderadores podem:
+
+- descartar uma denúncia;
+- remover um projeto;
+- limpar campos do perfil (foto e capa, título e “Sobre”, links);
+- silenciar uma conta por até 7 dias: você ainda pode ler, mudar suas configurações, baixar ou excluir seus dados, mas não publicar;
+- banir uma conta por até 14 dias: você é desconectado, não pode entrar, e seu perfil e seus projetos não ficam públicos.
+
+Cada decisão vem com um motivo que você vê. Sanções mais longas ou permanentes são decididas só pelos administradores do site, que também podem ocultar projetos ou suspender contas. Excluir sua conta não encerra um banimento (veja a [Política de privacidade](/legal/privacy/)). Se você acha que erramos, escreva para [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Suporte {#support}
 

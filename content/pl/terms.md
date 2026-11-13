@@ -1,6 +1,6 @@
 # Regulamin
 
-> **Wersja robocza**, ostatnia aktualizacja: 13 listopada 2026 (wersja {{ terms_version }}). Ten tekst nie został jeszcze sprawdzony przez prawnika.
+> **Wersja robocza**, ostatnia aktualizacja: 14 listopada 2026 (wersja {{ terms_version }}). Ten tekst nie został jeszcze sprawdzony przez prawnika.
 >
 > Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
@@ -19,7 +19,7 @@ Publiczne miejsce na pokazanie oprogramowania, które trafiło do użytkowników
 ## Twoje treści {#content}
 
 - Zachowujesz wszystkie prawa do projektów, tekstów, zrzutów ekranu i zdjęć profilowych, które publikujesz.
-- Dajesz nam zgodę na przechowywanie, wyświetlanie i udostępnianie ich w {{ site_name }} (strony projektów, profile, aktualności, wyszukiwarka i plakietki), dopóki są opublikowane. Zgoda wygasa, gdy je usuniesz, z wyjątkiem kopii, które inni już osadzili lub zapisali.
+- Dajesz nam zgodę na przechowywanie, wyświetlanie i udostępnianie ich w {{ site_name }} (strony projektów, profile, strona Dla Ciebie, wyszukiwarka i plakietki), dopóki są opublikowane. Zgoda wygasa, gdy je usuniesz, z wyjątkiem kopii, które inni już osadzili lub zapisali.
 - Publikuj tylko to, do czego masz prawo. Nie podawaj cudzej pracy za swoją.
 - Narzędzia AI wymienione w „Zbudowano z” to Twoje własne oświadczenie. Pokazujemy je jako deklarację autora i nie sprawdzamy ich.
 
@@ -42,14 +42,24 @@ Społeczność (działy, wątki i odpowiedzi) ma własne [zasady społeczności]
 
 - Wątki, odpowiedzi i dołączone do nich obrazy są publiczne. Dotyczy ich sekcja „Twoje treści” powyżej: zachowujesz swoje prawa i pozwalasz nam je pokazywać.
 - Niedozwolone są: spam i reklama (pokazanie własnego projektu w dziale „Pokaż swój projekt” jest w porządku), nękanie, nienawiść lub groźby, treści seksualne, cokolwiek z udziałem nieletnich, złośliwe oprogramowanie, skradzione konta, dane lub klucze, cudze prywatne informacje oraz utwory, którymi nie masz prawa się dzielić.
-- Każda zalogowana osoba może zgłosić wątek lub odpowiedź. Moderatorzy mogą usunąć post (jego obrazy są kasowane od razu), zamknąć wątek, tak aby odpowiadać mogli tylko moderatorzy, albo go przypiąć. Każde usunięcie i zamknięcie ma powód, który widzi autor. Usunięty post pozostaje widoczny dla autora i moderatorów, aby można było sprawdzić decyzję; administratorzy mogą przywrócić jego tekst.
+- Każda zalogowana osoba może zgłosić wątek lub odpowiedź.
+- Moderatorzy mogą usunąć wpis (jego obrazy są usuwane od razu), zamknąć wątek, tak aby odpowiadać mogli tylko moderatorzy, albo go przypiąć. Każde usunięcie i zamknięcie ma powód, który widzi autor.
+- Usunięty wpis pozostaje widoczny dla autora i moderatorów, aby można go było sprawdzić. Administratorzy mogą przywrócić jego tekst.
 - Możesz edytować i usuwać swoje posty. Usunięty post, na który ktoś już odpowiedział, zostaje jako „[usunięto]”, żeby odpowiedzi innych zachowały swoje miejsce.
 - Gdy usuniesz konto, Twoje wątki bez odpowiedzi innych osób zostaną usunięte; pozostałe wątki i Twoje odpowiedzi zostaną, bez Twojej nazwy, zdjęcia i linku.
 - Aby odwołać się od decyzji, napisz na [{{ contact_email }}](mailto:{{ contact_email }}) i podaj adres postu.
 
 ## Moderacja {#moderation}
 
-Każda zalogowana osoba może zgłosić projekt, profil lub wpis w dzienniku zmian. Moderatorzy mogą odrzucić zgłoszenie, usunąć projekt, wyczyścić pola profilu (zdjęcie i obraz w tle, krótki opis i „O mnie”, linki), wyciszyć konto na maksymalnie 7 dni (nadal możesz czytać, zmieniać ustawienia, pobrać lub usunąć swoje dane, ale nie publikować) albo zablokować je na maksymalnie 14 dni (zostajesz wylogowany, nie możesz się zalogować, a profil i projekty nie są publiczne). Każda decyzja ma powód, który widzisz. O dłuższych lub stałych sankcjach decydują tylko administratorzy serwisu, którzy mogą też ukrywać projekty lub zawieszać konta. Usunięcie konta nie kończy blokady (zob. [Politykę prywatności](/legal/privacy/)). Jeśli uważasz, że popełniliśmy błąd, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
+Każda zalogowana osoba może zgłosić projekt, profil lub wpis w dzienniku rozwoju. Moderatorzy mogą:
+
+- odrzucić zgłoszenie;
+- usunąć projekt;
+- wyczyścić pola profilu (zdjęcie i okładka, nagłówek i „O mnie”, linki);
+- wyciszyć konto na maksymalnie 7 dni: nadal możesz czytać, zmieniać ustawienia, pobrać lub usunąć swoje dane, ale nie możesz publikować;
+- zablokować konto na maksymalnie 14 dni: zostajesz wylogowany, nie możesz się zalogować, a Twój profil i projekty nie są publiczne.
+
+Każda decyzja ma powód, który widzisz. O dłuższych lub stałych sankcjach decydują tylko administratorzy strony, którzy mogą też ukrywać projekty lub zawieszać konta. Usunięcie konta nie kończy blokady (zobacz [Politykę prywatności](/legal/privacy/)). Jeśli uważasz, że popełniliśmy błąd, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Wsparcie {#support}
 

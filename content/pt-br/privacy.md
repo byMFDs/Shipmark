@@ -1,6 +1,6 @@
 # Política de privacidade
 
-> **Rascunho**, última atualização em 13 de novembro de 2026. Este texto ainda não foi revisado por um advogado.
+> **Rascunho**, última atualização em 14 de novembro de 2026. Este texto ainda não foi revisado por um advogado.
 >
 > Tradução por conveniência; a versão em inglês prevalece.
 
@@ -13,7 +13,12 @@ Dúvidas ou solicitações: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## O que guardamos e por quê {#data}
 
-**Quando você entra com o GitHub.** Recebemos do GitHub o id da sua conta, seu login, nome, bio, o link do seu avatar e os demais campos públicos do seu perfil do GitHub, além dos endereços de e-mail da sua conta do GitHub. Pedimos ao GitHub apenas `read:user` e `user:email`: nunca obtemos acesso aos seus repositórios, privados ou públicos, por meio da sua conta. Não guardamos seu token de acesso do GitHub depois do login. Precisamos disso para criar sua conta e reconhecer você na próxima vez (execução do nosso acordo com você). O seu login do GitHub é atualizado a cada entrada, então o seu perfil sempre leva à sua conta atual do GitHub.
+**Quando você entra com o GitHub.** O GitHub nos envia:
+
+- o id da sua conta, seu login, nome, bio, link do avatar e os outros campos públicos do seu perfil do GitHub;
+- os endereços de e-mail da sua conta do GitHub.
+
+Pedimos ao GitHub só duas permissões: `read:user` e `user:email`. Pela sua conta, nunca temos acesso aos seus repositórios, nem privados nem públicos. Não guardamos seu token de acesso do GitHub depois do login. Precisamos desses dados para criar sua conta e reconhecer você da próxima vez (execução do nosso acordo com você). Seu login do GitHub é atualizado a cada entrada, então seu perfil sempre leva à sua conta atual do GitHub.
 
 **Seu perfil.** Nome de usuário, nome de exibição, resumo curto, “Sobre”, localização, um status (por exemplo, “Aberto a trabalho”), até 10 habilidades, até 6 links, até 3 projetos fixados e seu idioma. Tudo, exceto o nome de usuário, é opcional. O nome de exibição e o “Sobre” começam com seu nome e sua bio do GitHub; você pode mudá-los ou removê-los em Configurações. Também guardamos o endereço da sua imagem do GitHub, só para que “Usar minha imagem do GitHub” possa copiá-la; ela nunca é exibida. Seu nome de usuário, nome de exibição, resumo curto, “Sobre”, localização, status, habilidades, links, projetos fixados, login do GitHub e o mês em que você entrou são **públicos**.
 
@@ -25,7 +30,12 @@ Dúvidas ou solicitações: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Verificações de comprovação.** Para conceder selos, verificamos os fatos nós mesmos (nosso interesse legítimo em mostrar comprovações confiáveis):
 
-- *Repo owner:* consultamos a API pública do GitHub sobre o repositório que você vincula e guardamos o id dele, o id da conta dona, se ele é seu, a data de criação e o campo Website, o primeiro commit do histórico (id e data), o seu número de commits, as datas do seu primeiro e último commit, o número de semanas com commits seus e o estado de uma revisão manual, quando for necessária. Verificamos de novo toda semana. A lista de outras pessoas que contribuem é lida durante a verificação e não é guardada. Se você usa o arquivo de verificação em um repositório de organização, também guardamos se ele foi encontrado.
+- *Repo owner:* consultamos a API pública do GitHub sobre o repositório que você vincula e o verificamos de novo toda semana. A lista de outros colaboradores do GitHub é lida durante a verificação e não é guardada. Guardamos:
+    - o id dele, o id da conta do dono, se ele é seu, a data de criação e o campo Website;
+    - o primeiro commit do histórico (id e data);
+    - o número dos seus commits, as datas do seu primeiro e último commit e o número de semanas com commits seus;
+    - o estado de uma revisão manual, quando ela é necessária;
+    - se o arquivo de verificação foi encontrado, quando você o usa em um repositório de organização.
 - *Domain verified:* consultamos os registros DNS do domínio do seu projeto ou acessamos a página dele para encontrar seu token de verificação.
 - *Steady:* acessamos o endereço do seu projeto a cada poucas horas e guardamos se ele respondeu e com que rapidez. Essas verificações ficam guardadas por **90 dias**.
 
@@ -33,9 +43,24 @@ Os resultados aparecem na página pública do seu projeto.
 
 **Quem você segue e curtidas.** Guardamos quem você segue e quais projetos você curtiu. Os outros veem apenas os totais, não as listas.
 
-**Denúncias e moderação.** Se você denunciar um projeto, um perfil ou uma entrada do diário de desenvolvimento, guardamos o motivo e os detalhes que você escrever. As denúncias são vistas pelos moderadores (pessoas com o selo de moderador) e pela equipe. Para decidir, eles também veem o conteúdo denunciado e o histórico da pessoa denunciada no {{ site_name }}: quando ela entrou, sanções anteriores, outras denúncias sobre ela e projetos removidos. As páginas de moderação não mostram endereços de e-mail. A pessoa denunciada nunca fica sabendo quem a denunciou. Quando os moderadores agem, guardamos a decisão e o motivo: um projeto removido mantém o conteúdo e o motivo (só você, os moderadores e a equipe veem), os campos de perfil limpos (foto e capa, resumo curto e “Sobre”, ou links) são apagados, e silenciamentos e banimentos são guardados com motivo, início e fim. Você vê o motivo em um aviso no site, que guardamos até você excluir sua conta. As decisões sobre você e esses avisos estão em “Baixar meus dados”. Para recorrer de uma decisão, escreva para [{{ contact_email }}](mailto:{{ contact_email }}).
+**Denúncias e moderação.**
 
-**Comunidade.** Quando você publica na comunidade, guardamos seus tópicos (seção, título, texto, datas e se o tópico foi editado, fixado, trancado ou removido), suas respostas (texto, a figurinha escolhida, a qual publicação elas respondem) e as imagens que você anexa. As imagens são recodificadas como as capturas de tela: metadados ocultos, como a localização GPS, são removidos, os nomes dos arquivos são aleatórios, e guardamos no nosso próprio servidor uma cópia de até 1600 px e uma miniatura de 640 px. As publicações, suas imagens, o número de votos e seu nome de usuário nelas são **públicos**. Também guardamos seus votos; ninguém vê quem votou em quê, nem no site nem no painel de administração. Quando você exclui uma publicação, o texto, a figurinha e as imagens dela são apagados na hora (o título de um tópico fica enquanto houver respostas de outras pessoas embaixo, mostrado como “[excluído]”). Quando os moderadores removem uma publicação, as imagens dela são apagadas na hora e o texto é mantido com o motivo, visível só para você, os moderadores e a equipe. Os moderadores veem as publicações denunciadas junto com o histórico de quem as escreveu, como nas outras denúncias.
+- Se você denunciar um projeto, um perfil ou uma entrada do diário de desenvolvimento, guardamos o motivo e os detalhes que você escrever.
+- As denúncias são vistas pelos moderadores (pessoas com o badge de moderador) e pela equipe. Para decidir, eles também veem o conteúdo denunciado e o histórico da pessoa denunciada no {{ site_name }}: quando ela entrou, sanções anteriores, outras denúncias sobre ela e projetos removidos. As páginas de moderação não mostram endereços de e-mail.
+- A pessoa denunciada nunca fica sabendo quem a denunciou.
+- Quando os moderadores agem, guardamos a decisão e o motivo. Um projeto removido mantém o conteúdo e o motivo (só você, os moderadores e a equipe veem). Os campos do perfil limpos (foto e capa, título e “Sobre”, ou links) são apagados. Silenciamentos e banimentos são guardados com motivo, início e fim.
+- Você vê o motivo em um aviso no site, que guardamos até você excluir sua conta. As decisões sobre você e esses avisos estão em “Baixar meus dados”.
+- Para recorrer de uma decisão, escreva para [{{ contact_email }}](mailto:{{ contact_email }}).
+
+**Comunidade.** Quando você publica na comunidade, guardamos:
+
+- seus tópicos: seção, título, texto, datas e se um tópico foi editado, fixado, trancado ou removido;
+- suas respostas: texto, a figurinha que você escolheu e a qual publicação elas respondem;
+- as imagens que você anexa. Elas são recodificadas como as capturas de tela: metadados ocultos, como a localização GPS, são removidos, os nomes dos arquivos são aleatórios e guardamos uma cópia de até 1600 px e uma miniatura de 640 px no nosso próprio servidor.
+
+As publicações, suas imagens, o número de votos e seu nome de usuário nelas são **públicos**. Também guardamos seus votos; ninguém vê quem votou em quê, nem no site nem na administração.
+
+Quando você exclui uma publicação, o texto, a figurinha e as imagens são apagados na hora. O título de um tópico fica enquanto houver respostas de outras pessoas embaixo dele, mostrado como “[excluído]”. Quando os moderadores removem uma publicação, as imagens são apagadas na hora e o texto é guardado com o motivo, visível só para você, os moderadores e a equipe. Os moderadores veem as publicações denunciadas junto com o histórico do autor, como nas outras denúncias.
 
 **Avisos de respostas.** Quando alguém responde ao seu tópico ou à sua resposta, guardamos um aviso para você (qual resposta, quando e quando você abriu a lista), além do horário do aviso não lido mais recente, para que o menu possa mostrar uma marca. Só você os vê. Eles são excluídos depois de **90 dias** ou junto com a sua conta. Nunca os enviamos por e-mail.
 
@@ -47,7 +72,14 @@ Os resultados aparecem na página pública do seu projeto.
 
 **Endereços IP e registros.** O aplicativo não guarda seu endereço IP, e os registros dele não o contêm. De cada requisição de página, os registros anotam apenas o método, o endereço da página (sem o que vem depois de um `?`), o status da resposta, o tamanho e o tempo gasto, além dos erros. Não há dados do seu navegador. Os endereços de página incluem nomes de usuário (`/u/<username>/`), então uma linha de registro pode mostrar qual perfil foi aberto, mas não por quem.
 
-**Registro de erros.** Quando algo falha, o aplicativo grava uma entrada curta em um arquivo de erros no nosso servidor: a hora, um número de referência aleatório (o mesmo mostrado na página de erro), o método da requisição, o endereço da página sem o que vem depois de `?` e com nomes de usuário trocados por `[user]`, o status da resposta, a parte do código que falhou e a mensagem técnica, da qual são removidos endereços de e-mail, endereços IP e tudo o que pareça senha ou chave. Páginas não encontradas vão para um arquivo separado, cada endereço no máximo uma vez por minuto. Esses arquivos nunca contêm seu endereço IP, dados do navegador, cookies, o que você digita em formulários, seu e-mail nem seu nome de usuário. Cada arquivo é limitado a 5 MB mais 5 cópias anteriores; ao atingir o limite, a mais antiga é apagada.
+**Registro de erros.** Quando algo falha, o aplicativo grava uma entrada curta em um arquivo de erros no nosso servidor. A entrada contém:
+
+- a hora e um número de referência aleatório (o que aparece na página de erro);
+- o método da requisição e o endereço da página sem o que vem depois de `?`, com os nomes de usuário trocados por `[user]`;
+- o status da resposta e a parte do código que falhou;
+- a mensagem técnica de erro, sem endereços de e-mail, endereços IP e qualquer coisa que pareça uma senha ou chave.
+
+Páginas não encontradas vão para um arquivo separado, cada endereço no máximo uma vez por minuto. Esses arquivos nunca contêm seu endereço IP, dados do navegador, cookies, o que você digitou em um formulário, seu e-mail ou seu nome de usuário. Cada arquivo é limitado a 5 MB mais 5 cópias anteriores; ao atingir o limite, a mais antiga é apagada.
 
 > **TODO antes do lançamento:** o servidor web na frente do aplicativo mantém seu próprio registro de acessos, que por padrão inclui endereços IP. O que ele registra e por quanto tempo guarda (e por quanto tempo os registros do aplicativo são guardados) ainda não foi decidido. É preciso preencher isso, ou desativar o registro de IP, antes de esta página se tornar pública.
 

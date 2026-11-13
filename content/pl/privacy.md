@@ -1,6 +1,6 @@
 # Polityka prywatności
 
-> **Wersja robocza**, ostatnia aktualizacja: 13 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
+> **Wersja robocza**, ostatnia aktualizacja: 14 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
 >
 > Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
@@ -13,7 +13,12 @@ Pytania i wnioski: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Co przechowujemy i po co {#data}
 
-**Gdy logujesz się przez GitHub.** Od GitHuba otrzymujemy identyfikator Twojego konta, login, imię i nazwisko, bio, link do awatara i pozostałe publiczne pola profilu GitHub, a także adresy e-mail przypisane do Twojego konta GitHub. Prosimy GitHub tylko o `read:user` i `user:email`: przez Twoje konto nigdy nie mamy dostępu do Twoich repozytoriów, ani prywatnych, ani publicznych. Po zalogowaniu nie przechowujemy Twojego tokenu dostępu do GitHuba. Potrzebujemy tych danych, by założyć konto i rozpoznać Cię następnym razem (wykonanie umowy z Tobą). Twój login GitHub jest odświeżany przy każdym logowaniu, więc profil zawsze prowadzi do Twojego obecnego konta GitHub.
+**Gdy logujesz się przez GitHub.** GitHub przekazuje nam:
+
+- identyfikator i login Twojego konta, imię, bio, link do awatara i pozostałe publiczne pola Twojego profilu GitHub;
+- adresy e-mail z Twojego konta GitHub.
+
+Prosimy GitHub tylko o dwa uprawnienia: `read:user` i `user:email`. Przez Twoje konto nigdy nie dostajemy dostępu do Twoich repozytoriów, ani prywatnych, ani publicznych. Nie przechowujemy Twojego tokenu dostępu GitHub po zalogowaniu. Te dane są potrzebne, aby utworzyć konto i rozpoznać Cię następnym razem (wykonanie naszej umowy z Tobą). Twój login GitHub odświeża się przy każdym logowaniu, więc profil zawsze prowadzi do Twojego aktualnego konta GitHub.
 
 **Twój profil.** Nazwa użytkownika, wyświetlana nazwa, krótki opis, „O mnie”, lokalizacja, status (np. „Szukam pracy”), do 10 umiejętności, do 6 linków, do 3 przypiętych projektów i język. Wszystko poza nazwą użytkownika jest opcjonalne. Wyświetlana nazwa i „O mnie” na początku pochodzą z Twojej nazwy i bio na GitHubie; możesz je zmienić lub usunąć w Ustawieniach. Zapisujemy też adres Twojego obrazu z GitHuba, tylko po to, aby opcja „Użyj mojego obrazu z GitHub” mogła go skopiować; nigdzie go nie pokazujemy. Twoja nazwa użytkownika, wyświetlana nazwa, krótki opis, „O mnie”, lokalizacja, status, umiejętności, linki, przypięte projekty, login GitHub i miesiąc dołączenia są **publiczne**.
 
@@ -25,7 +30,12 @@ Pytania i wnioski: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Sprawdzenia dowodów.** Aby przyznawać znaki, sprawdzamy fakty sami (nasz uzasadniony interes w pokazywaniu dowodów, którym można ufać):
 
-- *Repo owner:* pytamy publiczne API GitHuba o repozytorium, które podajesz, i zapisujemy jego identyfikator, identyfikator konta właściciela, czy należy do Ciebie, datę utworzenia i pole Website, pierwszy commit jego historii (identyfikator i datę), liczbę Twoich commitów, daty pierwszego i ostatniego, liczbę tygodni z Twoimi commitami oraz stan ręcznej weryfikacji, gdy jest potrzebna. Sprawdzamy to ponownie co tydzień. Listę innych współtwórców czytamy podczas sprawdzania i nie zapisujemy jej. Jeśli używasz pliku weryfikacyjnego w repozytorium organizacji, zapisujemy też, czy go znaleziono.
+- *Repo owner:* pytamy publiczne API GitHuba o repozytorium, które podajesz, i co tydzień sprawdzamy je ponownie. Listę innych współtwórców z GitHuba czytamy podczas sprawdzenia i nie zapisujemy jej. Zapisujemy:
+    - jego identyfikator, identyfikator konta właściciela, czy należy do Ciebie, datę utworzenia i pole Website;
+    - pierwszy commit w jego historii (identyfikator i datę);
+    - liczbę Twoich commitów, daty pierwszego i ostatniego oraz liczbę tygodni z Twoimi commitami;
+    - stan ręcznej weryfikacji, gdy jest potrzebna;
+    - czy znaleziono plik weryfikacyjny, jeśli używasz go dla repozytorium organizacji.
 - *Domain verified:* sprawdzamy rekordy DNS domeny Twojego projektu albo pobieramy jego stronę, aby znaleźć Twój token weryfikacyjny.
 - *Steady:* wysyłamy żądanie pod adres Twojego projektu co kilka godzin i zapisujemy, czy odpowiedział i jak szybko. Te sprawdzenia przechowujemy przez **90 dni**.
 
@@ -33,9 +43,24 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 **Obserwowania i polubienia.** Zapisujemy, kogo obserwujesz i które projekty lubisz. Inni widzą tylko liczby, nie listy.
 
-**Zgłoszenia i moderacja.** Jeśli zgłosisz projekt, profil lub wpis w dzienniku rozwoju, zapisujemy powód i podane przez Ciebie szczegóły. Zgłoszenia widzą moderatorzy (osoby z odznaką moderatora) i zespół. Aby podjąć decyzję, widzą też zgłoszoną treść i historię zgłoszonej osoby w {{ site_name }}: datę dołączenia, wcześniejsze sankcje, inne zgłoszenia na nią i usunięte projekty. Strony moderacji nie pokazują adresów e-mail. Zgłoszona osoba nigdy nie dowiaduje się, kto ją zgłosił. Gdy moderatorzy podejmują działanie, zapisujemy decyzję i jej powód: usunięty projekt zachowuje treść i powód (widzisz go tylko Ty, moderatorzy i zespół), wyczyszczone pola profilu (zdjęcie i obraz w tle, krótki opis i „O mnie” albo linki) są usuwane, a wyciszenia i blokady są zapisywane z powodem, początkiem i końcem. Powód widzisz w powiadomieniu na stronie, które przechowujemy, dopóki nie usuniesz konta. Decyzje dotyczące Ciebie i te powiadomienia są w „Pobierz moje dane”. Aby odwołać się od decyzji, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
+**Zgłoszenia i moderacja.**
 
-**Społeczność.** Gdy piszesz w społeczności, zapisujemy Twoje wątki (dział, tytuł, tekst, daty oraz to, czy wątek był edytowany, przypięty, zamknięty lub usunięty), Twoje odpowiedzi (tekst, wybraną naklejkę, post, na który odpowiadają) i dołączone obrazy. Obrazy są kodowane na nowo tak jak zrzuty ekranu: ukryte metadane, np. lokalizacja GPS, są usuwane, nazwy plików są losowe, a na naszym serwerze przechowujemy kopię do 1600 px i miniaturę 640 px. Posty, ich obrazy, liczba głosów i Twoja nazwa użytkownika przy nich są **publiczne**. Zapisujemy też Twoje głosy; nikt nie widzi, kto na co głosował, ani na stronie, ani w panelu administracyjnym. Gdy usuwasz post, jego tekst, naklejka i obrazy są kasowane od razu (tytuł wątku zostaje, dopóki są pod nim odpowiedzi innych, i jest widoczny jako „[usunięto]”). Gdy post usuwają moderatorzy, jego obrazy są kasowane od razu, a tekst zostaje zachowany wraz z powodem i widzą go tylko Ty, moderatorzy i personel. Moderatorzy widzą zgłoszony post razem z historią autora, tak jak przy innych zgłoszeniach.
+- Jeśli zgłosisz projekt, profil lub wpis w dzienniku rozwoju, zapisujemy powód i szczegóły, które napiszesz.
+- Zgłoszenia widzą moderatorzy (osoby z odznaką moderatora) i zespół. Aby podjąć decyzję, widzą też zgłoszoną treść i historię zgłoszonej osoby w {{ site_name }}: kiedy dołączyła, wcześniejsze sankcje, inne zgłoszenia na jej temat i usunięte projekty. Strony moderacji nie pokazują adresów e-mail.
+- Zgłoszona osoba nigdy nie dowiaduje się, kto ją zgłosił.
+- Gdy moderatorzy podejmują działanie, zapisujemy decyzję i jej powód. Usunięty projekt zachowuje treść i powód (widzisz go tylko Ty, moderatorzy i zespół). Wyczyszczone pola profilu (zdjęcie i okładka, nagłówek i „O mnie” albo linki) są usuwane. Wyciszenia i blokady zapisujemy z powodem, początkiem i końcem.
+- Powód widzisz w powiadomieniu na stronie, które przechowujemy, dopóki nie usuniesz konta. Decyzje dotyczące Ciebie i te powiadomienia są w „Pobierz moje dane”.
+- Aby odwołać się od decyzji, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
+
+**Społeczność.** Gdy piszesz w społeczności, zapisujemy:
+
+- Twoje wątki: dział, tytuł, tekst, daty oraz to, czy wątek był edytowany, przypięty, zamknięty lub usunięty;
+- Twoje odpowiedzi: tekst, wybraną naklejkę i to, na który wpis odpowiadają;
+- dołączone obrazy. Są ponownie kodowane jak zrzuty ekranu: ukryte metadane, takie jak lokalizacja GPS, są usuwane, nazwy plików są losowe, a na naszym serwerze trzymamy kopię do 1600 px i miniaturę 640 px.
+
+Wpisy, ich obrazy, liczba głosów i Twoja nazwa użytkownika przy nich są **publiczne**. Zapisujemy też Twoje głosy; nikt nie widzi, kto na co głosował, ani na stronie, ani w panelu administracyjnym.
+
+Gdy usuwasz wpis, jego tekst, naklejka i obrazy są usuwane od razu. Tytuł wątku zostaje, dopóki są pod nim odpowiedzi innych osób, i jest pokazywany jako „[usunięto]”. Gdy wpis usuwają moderatorzy, jego obrazy są usuwane od razu, a tekst zostaje zachowany z powodem i widzisz go tylko Ty, moderatorzy i zespół. Moderatorzy widzą zgłoszone wpisy razem z historią autora, tak jak przy innych zgłoszeniach.
 
 **Powiadomienia o odpowiedziach.** Gdy ktoś odpowie na Twój wątek lub Twoją odpowiedź, zapisujemy dla Ciebie powiadomienie (która odpowiedź, kiedy i kiedy otworzyłeś listę) oraz czas najnowszego nieprzeczytanego, aby menu mogło pokazać znacznik. Widzisz je tylko Ty. Są usuwane po **90 dniach** albo razem z kontem. Nigdy nie wysyłamy ich e-mailem.
 
@@ -47,7 +72,14 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 **Adresy IP i dzienniki.** Aplikacja nie zapisuje Twojego adresu IP, a jej własne dzienniki go nie zawierają. Przy każdym żądaniu strony dzienniki zapisują tylko metodę, adres strony (bez tego, co następuje po `?`), status odpowiedzi, rozmiar i czas obsługi oraz błędy. Nie ma w nich danych o Twojej przeglądarce. Adresy stron zawierają nazwy użytkowników (`/u/<username>/`), więc wiersz dziennika może pokazać, który profil otwarto, ale nie kto to zrobił.
 
-**Dziennik błędów.** Gdy coś się psuje, aplikacja zapisuje krótki wpis w pliku błędów na naszym serwerze: czas, losowy numer referencyjny (ten widoczny na stronie błędu), metodę żądania, adres strony bez części po `?` i z nazwami użytkowników zastąpionymi przez `[user]`, status odpowiedzi, część kodu, w której wystąpił błąd, oraz techniczny komunikat, z którego usunięto adresy e-mail, adresy IP i wszystko, co wygląda na hasło lub klucz. Nieznalezione strony trafiają do osobnego pliku, każdy adres najwyżej raz na minutę. Te pliki nigdy nie zawierają Twojego adresu IP, danych przeglądarki, plików cookie, tego, co wpisujesz w formularze, Twojego adresu e-mail ani nazwy użytkownika. Każdy plik ma limit 5 MB plus 5 starszych kopii; po osiągnięciu limitu najstarsza jest usuwana.
+**Dziennik błędów.** Gdy coś się psuje, aplikacja zapisuje krótki wpis w pliku błędów na naszym serwerze. Wpis zawiera:
+
+- czas i losowy numer referencyjny (ten widoczny na stronie błędu);
+- metodę żądania i adres strony bez tego, co jest po `?`, z nazwami użytkowników zastąpionymi przez `[user]`;
+- status odpowiedzi i część kodu, w której wystąpił błąd;
+- techniczny komunikat błędu, z którego usunięto adresy e-mail, adresy IP i wszystko, co wygląda na hasło lub klucz.
+
+Strony, których nie znaleziono, trafiają do osobnego pliku, każdy adres najwyżej raz na minutę. Te pliki nigdy nie zawierają Twojego adresu IP, danych przeglądarki, plików cookie, tego, co wpisano w formularzu, Twojego adresu e-mail ani nazwy użytkownika. Każdy plik jest ograniczony do 5 MB plus 5 starszych kopii; po osiągnięciu limitu najstarsza jest usuwana.
 
 > **TODO przed uruchomieniem:** serwer WWW przed aplikacją prowadzi własny dziennik dostępu, który domyślnie zawiera adresy IP. Co dokładnie zapisuje i jak długo to przechowuje (oraz jak długo przechowywane są dzienniki aplikacji), nie zostało jeszcze ustalone. Trzeba to uzupełnić albo wyłączyć zapisywanie IP, zanim ta strona stanie się publiczna.
 

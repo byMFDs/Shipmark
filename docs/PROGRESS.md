@@ -165,3 +165,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-13: Polish-3 stage 0 (branch `polish-3`). /community/new/ printed "<Block Node ...>": views passed a context variable `block`, which Django shadows inside `{% block %}` with the BlockNode; renamed to `post_block_reason` (also fixes the thread page for locked threads / muted members, who now see the real reason). Leak tests for every community page and role, main pages, error pages, plus template source checks. 1075 tests green.
   Next: "GO 1" (names and copy). Status: `docs/POLISH3_STATUS.md`.
+
+- 2026-11-14: Polish-3 stage 1 (names and copy). "Feed" → "For You" / "For You Page", inner tab "Recommended", "Explore" → "Discover"; header bar fits de/fr (menu below 80em, self-hiding tagline); all 1146 UI strings swept (plainer words, real plurals in admin, delete page matches the code); untranslated form labels fixed with a test; Privacy/Terms easier to read, same facts, 7 languages. 1076 tests green.
+  Next: "GO 7" (people search). Native + lawyer review of POLISH3_COPY.md / POLISH3_LEGAL_CHANGES.md.

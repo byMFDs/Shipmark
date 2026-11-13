@@ -1,6 +1,6 @@
 # Términos de uso
 
-> **Borrador**, última actualización el 13 de noviembre de 2026 (versión {{ terms_version }}). Este texto aún no ha sido revisado por un abogado.
+> **Borrador**, última actualización el 14 de noviembre de 2026 (versión {{ terms_version }}). Este texto aún no ha sido revisado por un abogado.
 >
 > Traducción de cortesía; prevalece la versión en inglés.
 
@@ -19,7 +19,7 @@ Un lugar público para mostrar el software que has publicado, con sellos que com
 ## Tu contenido {#content}
 
 - Conservas todos los derechos sobre los proyectos, textos, capturas de pantalla e imágenes de perfil que publiques.
-- Nos das permiso para almacenarlos, mostrarlos y compartirlos en {{ site_name }} (páginas de proyecto, perfiles, novedades, búsqueda e insignias) mientras estén publicados. Este permiso termina cuando los eliminas, salvo por las copias que otras personas ya hayan insertado o guardado.
+- Nos das permiso para almacenarlos, mostrarlos y compartirlos en {{ site_name }} (páginas de proyecto, perfiles, la página Para ti, búsqueda e insignias) mientras estén publicados. Este permiso termina cuando los eliminas, salvo por las copias que otras personas ya hayan insertado o guardado.
 - Publica solo aquello que tengas derecho a publicar. No presentes el trabajo de otros como tuyo.
 - Las herramientas de IA que indiques en «Creado con» son una declaración tuya. Las mostramos como declaradas por el autor y no las comprobamos.
 
@@ -42,14 +42,24 @@ La comunidad (secciones, hilos y respuestas) tiene sus propias [normas de la com
 
 - Los hilos, las respuestas y las imágenes que adjuntas son públicos. Se les aplica «Tu contenido»: conservas tus derechos y nos permites mostrarlos.
 - No se permite: spam ni publicidad (mostrar tu propio proyecto en «Muestra tu proyecto» está bien), acoso, odio o amenazas, contenido sexual, nada que involucre a menores, malware, cuentas, datos o claves robados, información privada de otras personas ni obras que no tengas derecho a compartir.
-- Cualquier persona con sesión iniciada puede denunciar un hilo o una respuesta. Los moderadores pueden retirar una publicación (sus imágenes se eliminan en el acto), cerrar un hilo para que solo respondan los moderadores o fijarlo. Cada retirada y cada cierre tienen un motivo que la persona autora ve. Una publicación retirada sigue visible para su autor y para los moderadores, para poder revisar la decisión; los administradores pueden restaurar su texto.
+- Cualquier persona con sesión iniciada puede denunciar un hilo o una respuesta.
+- Los moderadores pueden retirar una publicación (sus imágenes se borran al momento), cerrar un hilo para que solo los moderadores puedan responder, o fijarlo. Cada retirada y cierre lleva un motivo que ve el autor.
+- Una publicación retirada sigue visible para su autor y para los moderadores, para que se pueda revisar. Los administradores pueden restaurar su texto.
 - Puedes editar y eliminar tus publicaciones. Una publicación eliminada que ya tiene respuestas queda como «[eliminado]», para que las respuestas de los demás conserven su lugar.
 - Si eliminas tu cuenta, se eliminan tus hilos sin respuestas de otras personas; el resto de tus hilos y tus respuestas se quedan, sin tu nombre, tu foto ni tu enlace.
 - Para recurrir una decisión, escribe a [{{ contact_email }}](mailto:{{ contact_email }}) con la dirección de la publicación.
 
 ## Moderación {#moderation}
 
-Cualquier persona con sesión iniciada puede denunciar un proyecto, un perfil o una entrada del registro de cambios. Los moderadores pueden descartar una denuncia, retirar un proyecto, vaciar campos del perfil (foto y portada, descripción breve y «Acerca de», enlaces), silenciar una cuenta hasta 7 días (puedes seguir leyendo, cambiar tus ajustes, descargar o eliminar tus datos, pero no publicar) o bloquearla hasta 14 días (se cierra tu sesión, no puedes iniciarla y tu perfil y proyectos no son públicos). Cada decisión tiene un motivo que ves. Las sanciones más largas o permanentes solo las deciden los administradores del sitio, que también pueden ocultar proyectos o suspender cuentas. Eliminar tu cuenta no termina un bloqueo (consulta la [Política de privacidad](/legal/privacy/)). Si crees que nos equivocamos, escribe a [{{ contact_email }}](mailto:{{ contact_email }}).
+Cualquier persona con sesión iniciada puede denunciar un proyecto, un perfil o una entrada del registro de desarrollo. Los moderadores pueden:
+
+- descartar una denuncia;
+- retirar un proyecto;
+- vaciar campos del perfil (foto y portada, titular y «Sobre mí», enlaces);
+- silenciar una cuenta hasta 7 días: puedes seguir leyendo, cambiar tus ajustes, descargar o eliminar tus datos, pero no publicar;
+- bloquear una cuenta hasta 14 días: se cierra tu sesión, no puedes iniciarla y tu perfil y tus proyectos no son públicos.
+
+Cada decisión lleva un motivo que tú ves. Las sanciones más largas o permanentes solo las deciden los administradores del sitio, que también pueden ocultar proyectos o suspender cuentas. Eliminar tu cuenta no termina un bloqueo (consulta la [Política de privacidad](/legal/privacy/)). Si crees que nos equivocamos, escribe a [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## Soporte {#support}
 

@@ -1,6 +1,6 @@
 # Privacy policy
 
-> **Draft**, last updated 13 November 2026. This text has not been reviewed by a lawyer yet.
+> **Draft**, last updated 14 November 2026. This text has not been reviewed by a lawyer yet.
 
 This page explains what {{ site_name }} stores about you, why, for how long, and what you can do about it. It describes what the site actually does.
 
@@ -11,7 +11,12 @@ Questions or requests: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 ## What we store and why {#data}
 
-**When you sign in with GitHub.** We receive from GitHub your account id, login, name, bio, avatar link and the other public fields of your GitHub profile, plus the email addresses on your GitHub account. We ask GitHub only for `read:user` and `user:email`: we never get access to your repositories, private or public, through your account. We do not keep your GitHub access token after sign-in. We need this to create your account and to recognise you next time (performance of our agreement with you). Your GitHub login is refreshed at every sign-in, so your profile always links to your current GitHub account.
+**When you sign in with GitHub.** GitHub sends us:
+
+- your account id, login, name, bio, avatar link and the other public fields of your GitHub profile;
+- the email addresses on your GitHub account.
+
+We ask GitHub for only two permissions, `read:user` and `user:email`. Through your account we never get access to your repositories, private or public. We do not keep your GitHub access token after sign-in. We need this data to create your account and to recognise you next time (performance of our agreement with you). Your GitHub login is refreshed at every sign-in, so your profile always links to your current GitHub account.
 
 **Your profile.** Username, display name, headline, About, location, a status (for example "open to work"), up to 10 skills, up to 6 links, up to 3 pinned projects and your language. Everything except the username is optional. The display name and About start as your GitHub name and bio; you can change or remove them in Settings. We also store the address of your GitHub picture, only so that "Use my GitHub picture" can copy it; it is never shown. Your username, display name, headline, About, location, status, skills, links, pinned projects, GitHub login and the month you joined are **public**.
 
@@ -23,7 +28,12 @@ Questions or requests: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Proof checks.** To award hallmarks we check facts ourselves (our legitimate interest in showing proof that can be trusted):
 
-- *Repo owner:* we ask GitHub's public API about the repository you link and store its id, its owner's account id, whether you own it, its creation date and its Website field, the first commit of its history (id and date), your commit count, your first and last commit dates, the number of weeks with your commits, and the state of a manual review when one is needed. We check it again every week. GitHub's list of other contributors is read during the check and not stored. If you use the verification file for an organisation repository, we also store whether it was found.
+- *Repo owner:* we ask GitHub's public API about the repository you link, and check it again every week. GitHub's list of other contributors is read during the check and not stored. We store:
+    - its id, its owner's account id, whether you own it, its creation date and its Website field;
+    - the first commit of its history (id and date);
+    - your commit count, your first and last commit dates, and the number of weeks with your commits;
+    - the state of a manual review, when one is needed;
+    - whether the verification file was found, if you use it for an organisation repository.
 - *Domain verified:* we look up the DNS records of your project's domain or fetch its page to find your verification token.
 - *Steady:* we request your project's address up to every few hours and store whether it answered and how fast. These checks are kept for **90 days**.
 
@@ -31,9 +41,24 @@ The results are shown on your public project page.
 
 **Follows and likes.** We store whom you follow and which projects you like. Others see only the counts, not the lists.
 
-**Reports and moderation.** If you report a project, a profile or a build-log update, we store the reason and the details you write. Reports are seen by moderators (people with the moderator badge) and staff. To decide, they also see the reported content and the reported person's history on {{ site_name }}: when they joined, earlier sanctions, other reports about them and removed projects. The moderation pages do not show email addresses. The person you report is never told who reported them. When moderators act, we store the decision and its reason: a removed project keeps its content and the reason (only you, moderators and staff see it), cleared profile fields (picture and cover, headline and About, or links) are deleted, and mutes and bans are stored with their reason, start and end. You see the reason in a notice on the site, which we keep until you delete your account. Decisions about you and these notices are included in "Download my data". To appeal a decision, write to [{{ contact_email }}](mailto:{{ contact_email }}).
+**Reports and moderation.**
 
-**Community.** When you post in the community we store your threads (board, title, text, dates, and whether a thread was edited, pinned, locked or removed), your replies (text, the sticker you picked, which post they answer) and the images you attach. Images are re-encoded like screenshots: hidden metadata such as GPS location is removed, file names are random, and we keep a copy up to 1600 px and a 640 px thumbnail on our own server. Posts, their images, their upvote counts and your username on them are **public**. We also store your upvotes; nobody sees who upvoted what, not on the site and not in the admin. When you delete a post, its text, sticker and images are deleted at once (a thread's title stays while replies of others are under it, shown as "[deleted]"). When moderators remove a post, its images are deleted at once and its text is kept with the reason, visible only to you, moderators and staff. Moderators see reported posts together with the author's history, as for other reports.
+- If you report a project, a profile or a build-log update, we store the reason and the details you write.
+- Reports are seen by moderators (people with the moderator badge) and staff. To decide, they also see the reported content and the reported person's history on {{ site_name }}: when they joined, earlier sanctions, other reports about them and removed projects. The moderation pages do not show email addresses.
+- The person you report is never told who reported them.
+- When moderators act, we store the decision and its reason. A removed project keeps its content and the reason (only you, moderators and staff see it). Cleared profile fields (picture and cover, headline and About, or links) are deleted. Mutes and bans are stored with their reason, start and end.
+- You see the reason in a notice on the site, which we keep until you delete your account. Decisions about you and these notices are included in "Download my data".
+- To appeal a decision, write to [{{ contact_email }}](mailto:{{ contact_email }}).
+
+**Community.** When you post in the community we store:
+
+- your threads: board, title, text, dates, and whether a thread was edited, pinned, locked or removed;
+- your replies: text, the sticker you picked, and which post they answer;
+- the images you attach. They are re-encoded like screenshots: hidden metadata such as GPS location is removed, file names are random, and we keep a copy up to 1600 px and a 640 px thumbnail on our own server.
+
+Posts, their images, their upvote counts and your username on them are **public**. We also store your upvotes; nobody sees who upvoted what, not on the site and not in the admin.
+
+When you delete a post, its text, sticker and images are deleted at once. A thread's title stays while replies of others are under it, shown as "[deleted]". When moderators remove a post, its images are deleted at once, and its text is kept with the reason, visible only to you, moderators and staff. Moderators see reported posts together with the author's history, as for other reports.
 
 **Reply notifications.** When someone replies to your thread or to your reply, we store a notification for you (which reply, when, and when you opened the list), plus the time of your newest unread one so that the menu can show a mark. Only you see them. They are deleted after **90 days**, or with your account. We never send them by email.
 
@@ -45,7 +70,14 @@ The results are shown on your public project page.
 
 **IP addresses and logs.** The application does not store your IP address, and its own logs do not contain it. For each page request the logs record only the method, the page address (without anything after a `?`), the response status, size and time taken, plus errors. They hold no browser details. Page addresses include usernames (`/u/<username>/`), so a log line can show which profile was opened, but not by whom.
 
-**Error log.** When something fails, the application writes a short record to an error file on our server: the time, a random reference number (the one shown on the error page), the request method, the page address without anything after a `?` and with usernames replaced by `[user]`, the response status, which part of the code failed, and the technical error message with email addresses, IP addresses and anything that looks like a password or key removed. Pages that were not found are written to a separate file, each address at most once a minute. These files never contain your IP address, browser details, cookies, what you typed into a form, your email address or your username. Each file is limited to 5 MB plus 5 older copies; the oldest is deleted when the limit is reached.
+**Error log.** When something fails, the application writes a short record to an error file on our server. The record holds:
+
+- the time and a random reference number (the one shown on the error page);
+- the request method, and the page address without anything after a `?` and with usernames replaced by `[user]`;
+- the response status and which part of the code failed;
+- the technical error message, with email addresses, IP addresses and anything that looks like a password or key removed.
+
+Pages that were not found are written to a separate file, each address at most once a minute. These files never contain your IP address, browser details, cookies, what you typed into a form, your email address or your username. Each file is limited to 5 MB plus 5 older copies; the oldest is deleted when the limit is reached.
 
 > **TODO before launch:** the web server in front of the application keeps its own access log, which by default includes IP addresses. What it records and how long it keeps it (and how long the application logs are kept) has not been decided yet. Fill this in, or switch IP logging off, before this page goes public.
 
