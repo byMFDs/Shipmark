@@ -25,7 +25,11 @@ function render(form, pressed, count) {
   // If the user leaves without JS finishing, the form still posts to the right URL.
   form.action = pressed ? form.dataset.urlOff : form.dataset.urlOn;
   const counter = counterOf(form);
-  if (counter && count !== null && count !== undefined) counter.textContent = String(count);
+  if (counter && count !== null && count !== undefined) {
+    counter.textContent = String(count);
+    // Like counts hide a zero ("0 likes" reads as "nobody cares"); follower stats always show their number.
+    if (counter.hasAttribute("data-hide-zero")) counter.hidden = count === 0;
+  }
 }
 
 document.addEventListener("submit", async (event) => {

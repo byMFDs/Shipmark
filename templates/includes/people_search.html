@@ -12,7 +12,7 @@ in the open bar a <details> that opens a small form (works without JS; menu.js a
   </form>
 {% else %}
   <details class="site-search" data-menu>
-    <summary class="btn btn--quiet btn--icon" aria-label="{% translate 'Find people' %}" title="{% translate 'Find people' %}">{% icon "search" %}</summary>
+    <summary class="btn btn--quiet btn--icon" aria-label="{% translate 'Find people' %}" title="{% translate 'Find people' %} (/)" aria-keyshortcuts="/">{% icon "search" %}</summary>
     <form class="site-search__panel" method="get" action="{{ discover_url }}" role="search" aria-label="{% translate 'Find people' %}">
       <input type="hidden" name="tab" value="people">
       <label class="field__label" for="bar-people-q">{% translate "Find people by username" %}</label>

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 22:19+0000\n"
+"POT-Creation-Date: 2026-11-13 23:15+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -42,7 +42,7 @@ msgid "Pictures"
 msgstr "Imágenes"
 
 #: accounts/admin.py:110 config/settings/base.py:365
-#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
+#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
 #: templates/moderation/mod/report.html:3
@@ -786,7 +786,7 @@ msgid "Projects"
 msgstr "Proyectos"
 
 #: config/settings/base.py:348 templates/accounts/profile.html:68
-#: templates/accounts/profile.html:115 templates/pages/landing.html:264
+#: templates/accounts/profile.html:115 templates/pages/landing.html:278
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Registro de desarrollo"
@@ -1568,7 +1568,7 @@ msgstr "Empresa"
 msgid "About"
 msgstr "Acerca de"
 
-#: pages/templatetags/ui.py:371 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:371 templates/pages/landing.html:293
 #: templates/social/feed.html:106
 msgid "How proof works"
 msgstr "Cómo funciona la verificación"
@@ -2311,7 +2311,7 @@ msgstr "Marcar como respondido"
 
 #: support/admin.py:132 templates/community/_lightbox.html:7
 #: templates/community/_picker.html:5 templates/includes/badge_popover.html:6
-#: templates/includes/site_header.html:16 templates/includes/toast.html:1
+#: templates/includes/site_header.html:20 templates/includes/toast.html:1
 msgid "Close"
 msgstr "Cerrar"
 
@@ -2620,7 +2620,7 @@ msgstr "Eliminar cuenta"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
 #: templates/accounts/logout.html:14 templates/accounts/settings.html:107
-#: templates/includes/site_nav.html:26 templates/includes/site_nav.html:40
+#: templates/includes/site_nav.html:25 templates/includes/site_nav.html:39
 msgid "Sign out"
 msgstr "Cerrar sesión"
 
@@ -2874,7 +2874,7 @@ msgid "Built with (self-declared)"
 msgstr "Creado con (declarado por el autor)"
 
 #: templates/accounts/settings.html:4 templates/accounts/settings.html:12
-#: templates/includes/site_nav.html:25 templates/includes/site_nav.html:39
+#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -3008,12 +3008,12 @@ msgstr "Todas las secciones"
 
 #: templates/community/_boards.html:11 templates/community/notifications.html:4
 #: templates/community/notifications.html:11
-#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
+#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 msgid "Replies to you"
 msgstr "Respuestas para ti"
 
-#: templates/community/_boards.html:11 templates/includes/site_nav.html:23
-#: templates/includes/site_nav.html:37
+#: templates/community/_boards.html:11 templates/includes/site_nav.html:22
+#: templates/includes/site_nav.html:36
 msgid "new"
 msgstr "nuevo"
 
@@ -3028,9 +3028,9 @@ msgid "New thread"
 msgstr "Nuevo hilo"
 
 #: templates/community/_boards.html:17 templates/community/thread.html:89
-#: templates/includes/site_nav.html:45 templates/pages/_sign_in.html:10
-#: templates/pages/_sign_in.html:13 templates/social/feed.html:25
-#: templates/socialaccount/login.html:10
+#: templates/includes/site_header.html:15 templates/includes/site_nav.html:44
+#: templates/pages/_sign_in.html:10 templates/pages/_sign_in.html:13
+#: templates/social/feed.html:25 templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Iniciar sesión con GitHub"
 
@@ -3272,7 +3272,7 @@ msgstr "Buscar"
 msgid "Period (for Most upvoted)"
 msgstr "Periodo (para «Más votados»)"
 
-#: templates/community/home.html:36 templates/pages/landing.html:183
+#: templates/community/home.html:36 templates/pages/landing.html:197
 msgid "This week"
 msgstr "Esta semana"
 
@@ -3690,7 +3690,13 @@ msgstr "Inicio de %(name)s"
 msgid "Change"
 msgstr "Cambiar"
 
-#: templates/includes/site_header.html:15
+#: templates/includes/site_header.html:14 templates/includes/site_nav.html:16
+#: templates/projects/form.html:4 templates/projects/form.html:12
+#: templates/social/feed.html:23
+msgid "New project"
+msgstr "Nuevo proyecto"
+
+#: templates/includes/site_header.html:19
 msgid "Menu"
 msgstr "Menú"
 
@@ -3698,26 +3704,21 @@ msgstr "Menú"
 msgid "Main"
 msgstr "Principal"
 
-#: templates/includes/site_nav.html:17 templates/projects/form.html:4
-#: templates/projects/form.html:12 templates/social/feed.html:23
-msgid "New project"
-msgstr "Nuevo proyecto"
-
-#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 #: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Tu perfil"
 
-#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
+#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
 msgid "open reports"
 msgstr "denuncias abiertas"
 
-#: templates/includes/site_nav.html:31
+#: templates/includes/site_nav.html:30
 #, python-format
 msgid "Account menu for %(name)s, new replies"
 msgstr "Menú de la cuenta de %(name)s, respuestas nuevas"
 
-#: templates/includes/site_nav.html:31
+#: templates/includes/site_nav.html:30
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Menú de la cuenta de %(name)s"
@@ -3992,8 +3993,8 @@ msgstr "Al menos %(n)s caracteres. Solo se buscan nombres de usuario."
 msgid "Too many searches"
 msgstr "Demasiadas búsquedas"
 
-#: templates/pages/_people.html:22
 #
+#: templates/pages/_people.html:22
 msgid "Wait a few minutes, then search again."
 msgstr "Espera unos minutos y vuelve a buscar."
 
@@ -4003,11 +4004,12 @@ msgid "Type at least %(n)s characters of a username."
 msgstr "Escribe al menos %(n)s caracteres de un nombre de usuario."
 
 #
-#: templates/pages/_people.html:27
 #
+#: templates/pages/_people.html:27
 msgid "A username has only letters, numbers, - and _. Check what you typed."
 msgstr ""
-"Un nombre de usuario solo tiene letras, números, - y _. Revisa lo que escribiste."
+"Un nombre de usuario solo tiene letras, números, - y _. Revisa lo que "
+"escribiste."
 
 #: templates/pages/_people.html:30
 msgid "Find someone by their username"
@@ -4018,7 +4020,8 @@ msgid ""
 "Type a username or its first letters. Open the profile, or follow right from "
 "the list."
 msgstr ""
-"Escribe un nombre de usuario o sus primeras letras. Abre el perfil o sigue a la persona desde la lista."
+"Escribe un nombre de usuario o sus primeras letras. Abre el perfil o sigue a "
+"la persona desde la lista."
 
 #: templates/pages/_people.html:34
 #, python-format
@@ -4042,13 +4045,13 @@ msgstr[0] "%(n)s sello"
 msgstr[1] "%(n)s sellos"
 
 #
-#: templates/pages/_person_row.html:15
 #
+#: templates/pages/_person_row.html:15
 msgid "You"
 msgstr "Eres tú"
 
-#: templates/pages/_person_row.html:19
 #
+#: templates/pages/_person_row.html:19
 msgid "Sign in to follow"
 msgstr "Inicia sesión para seguir"
 
@@ -4070,8 +4073,8 @@ msgid "Find people by their username, open their profile and follow them."
 msgstr ""
 "Encuentra personas por su nombre de usuario, abre su perfil y síguelas."
 
-#: templates/pages/explore.html:24
 #
+#: templates/pages/explore.html:24
 msgid "What to discover"
 msgstr "Qué descubrir"
 
@@ -4092,8 +4095,8 @@ msgid "Any tag"
 msgstr "Cualquier etiqueta"
 
 #: templates/pages/explore.html:56 templates/pages/landing.html:67
-#: templates/pages/landing.html:192 templates/pages/landing.html:214
-#: templates/pages/landing.html:236 templates/social/_filters.html:11
+#: templates/pages/landing.html:206 templates/pages/landing.html:228
+#: templates/pages/landing.html:250 templates/social/_filters.html:11
 msgid "Built with"
 msgstr "Creado con"
 
@@ -4237,12 +4240,12 @@ msgstr "Espacio de trabajo v2"
 msgid "Billing fixes"
 msgstr "Arreglos de facturación"
 
-#: templates/pages/landing.html:65 templates/pages/landing.html:190
+#: templates/pages/landing.html:65 templates/pages/landing.html:204
 msgid "Calm project management for tiny teams."
 msgstr "Gestión de proyectos tranquila para equipos pequeños."
 
-#: templates/pages/landing.html:67 templates/pages/landing.html:192
-#: templates/pages/landing.html:214 templates/pages/landing.html:236
+#: templates/pages/landing.html:67 templates/pages/landing.html:206
+#: templates/pages/landing.html:228 templates/pages/landing.html:250
 msgid "self-declared"
 msgstr "declarado por el autor"
 
@@ -4350,103 +4353,115 @@ msgstr "Algunas cosas que la gente de verdad publicó en internet."
 msgid "Discover projects"
 msgstr "Descubrir proyectos"
 
-#: templates/pages/landing.html:165 templates/pages/landing.html:193
-#: templates/pages/landing.html:215 templates/pages/landing.html:237
+#: templates/pages/landing.html:165 templates/pages/landing.html:207
+#: templates/pages/landing.html:229 templates/pages/landing.html:251
 #, python-format
 msgid "by %(name)s"
 msgstr "de %(name)s"
 
-#: templates/pages/landing.html:171 templates/pages/landing.html:244
+#: templates/pages/landing.html:177
+#
+msgid "Your project here"
+msgstr "Aquí puede estar tu proyecto"
+
+#: templates/pages/landing.html:178
+msgid ""
+"Shipped something with AI? Link the repository and the domain, and it shows "
+"up on this page."
+msgstr ""
+"¿Lanzaste algo con IA? Enlaza el repositorio y el dominio, y aparecerá en esta página."
+
+#: templates/pages/landing.html:185 templates/pages/landing.html:258
 msgid "Steady is earned over time, not on launch day."
 msgstr "Steady se gana con el tiempo, no el día del lanzamiento."
 
-#: templates/pages/landing.html:179
+#: templates/pages/landing.html:193
 msgid "workspace"
 msgstr "espacio de trabajo"
 
-#: templates/pages/landing.html:180
+#: templates/pages/landing.html:194
 msgid "Make room for good work."
 msgstr "Haz sitio para el buen trabajo."
 
-#: templates/pages/landing.html:182
+#: templates/pages/landing.html:196
 msgid "Today"
 msgstr "Hoy"
 
-#: templates/pages/landing.html:182 templates/pages/landing.html:183
-#: templates/pages/landing.html:184
+#: templates/pages/landing.html:196 templates/pages/landing.html:197
+#: templates/pages/landing.html:198
 msgid "Website refresh"
 msgstr "Renovación de la web"
 
-#: templates/pages/landing.html:182 templates/pages/landing.html:183
-#: templates/pages/landing.html:184
+#: templates/pages/landing.html:196 templates/pages/landing.html:197
+#: templates/pages/landing.html:198
 msgid "Product updates"
 msgstr "Novedades del producto"
 
-#: templates/pages/landing.html:184
+#: templates/pages/landing.html:198
 msgid "Done"
 msgstr "Hecho"
 
-#: templates/pages/landing.html:201
+#: templates/pages/landing.html:215
 msgid "your reading room"
 msgstr "tu sala de lectura"
 
-#: templates/pages/landing.html:202
+#: templates/pages/landing.html:216
 msgid "One more chapter."
 msgstr "Un capítulo más."
 
-#: templates/pages/landing.html:204
+#: templates/pages/landing.html:218
 msgid "Slow mornings"
 msgstr "Mañanas lentas"
 
-#: templates/pages/landing.html:205
+#: templates/pages/landing.html:219
 msgid "Small rooms"
 msgstr "Habitaciones pequeñas"
 
-#: templates/pages/landing.html:206
+#: templates/pages/landing.html:220
 msgid "Field notes"
 msgstr "Notas de campo"
 
-#: templates/pages/landing.html:212
+#: templates/pages/landing.html:226
 msgid "Turn your reading habit into a little ritual."
 msgstr "Convierte tu hábito de lectura en un pequeño ritual."
 
-#: templates/pages/landing.html:223
+#: templates/pages/landing.html:237
 msgid "form studio"
 msgstr "estudio de formularios"
 
-#: templates/pages/landing.html:225
+#: templates/pages/landing.html:239
 msgid "Your next big thing"
 msgstr "Tu próximo gran proyecto"
 
-#: templates/pages/landing.html:226
+#: templates/pages/landing.html:240
 msgid "Get on the list."
 msgstr "Apúntate a la lista."
 
-#: templates/pages/landing.html:228
+#: templates/pages/landing.html:242
 msgid "Count me in"
 msgstr "Cuenta conmigo"
 
-#: templates/pages/landing.html:234
+#: templates/pages/landing.html:248
 msgid "A tiny form builder. No big subscription."
 msgstr "Un pequeño creador de formularios. Sin grandes suscripciones."
 
-#: templates/pages/landing.html:243
+#: templates/pages/landing.html:257
 msgid "Illustrative projects"
 msgstr "Proyectos ilustrativos"
 
-#: templates/pages/landing.html:256
+#: templates/pages/landing.html:270
 msgid "03 / The work behind the mark"
 msgstr "03 / El trabajo detrás del sello"
 
-#: templates/pages/landing.html:257
+#: templates/pages/landing.html:271
 msgid "Show your work."
 msgstr "Muestra tu trabajo."
 
-#: templates/pages/landing.html:257
+#: templates/pages/landing.html:271
 msgid "Take your proof with you."
 msgstr "Llévate tus pruebas contigo."
 
-#: templates/pages/landing.html:258
+#: templates/pages/landing.html:272
 #, python-format
 msgid ""
 "Keep a short public build log. Then put a live %(name)s badge right in your "
@@ -4455,56 +4470,56 @@ msgstr ""
 "Lleva un breve registro de desarrollo público. Y pon una insignia de "
 "%(name)s actualizada en el README de GitHub."
 
-#: templates/pages/landing.html:259
+#: templates/pages/landing.html:273
 msgid "Small updates. A visible track record."
 msgstr "Pequeñas actualizaciones. Un historial visible."
 
-#: templates/pages/landing.html:268
+#: templates/pages/landing.html:282
 msgid "Nov 08"
 msgstr "8 nov."
 
-#: templates/pages/landing.html:268
+#: templates/pages/landing.html:282
 msgid "Shipped team invites. Finally."
 msgstr "Lanzamos las invitaciones al equipo. Por fin."
 
-#: templates/pages/landing.html:269
+#: templates/pages/landing.html:283
 msgid "Nov 06"
 msgstr "6 nov."
 
-#: templates/pages/landing.html:269
+#: templates/pages/landing.html:283
 msgid "Fixed sync. Cut load time in half."
 msgstr "Arreglamos la sincronización. La carga, el doble de rápida."
 
-#: templates/pages/landing.html:272
+#: templates/pages/landing.html:286
 msgid "In your README"
 msgstr "En tu README"
 
-#: templates/pages/landing.html:275
+#: templates/pages/landing.html:289
 #, python-format
 msgid "Example %(name)s badge: Repo owner, Domain verified, Steady"
 msgstr "Insignia de ejemplo de %(name)s: Repo owner, Domain verified, Steady"
 
-#: templates/pages/landing.html:283
+#: templates/pages/landing.html:297
 msgid "Illustrative project"
 msgstr "Proyecto ilustrativo"
 
-#: templates/pages/landing.html:293
+#: templates/pages/landing.html:307
 msgid "Less talk. More receipts."
 msgstr "Menos palabras. Más pruebas."
 
-#: templates/pages/landing.html:294
+#: templates/pages/landing.html:308
 msgid "You shipped it."
 msgstr "Lo lanzaste."
 
-#: templates/pages/landing.html:294
+#: templates/pages/landing.html:308
 msgid "Now put your mark on it."
 msgstr "Ahora ponle tu sello."
 
-#: templates/pages/landing.html:295
+#: templates/pages/landing.html:309
 msgid "Your tools don't define you. What you ship does."
 msgstr "Tus herramientas no te definen. Lo que lanzas, sí."
 
-#: templates/pages/landing.html:299
+#: templates/pages/landing.html:313
 msgid "GitHub account required"
 msgstr "Se necesita una cuenta de GitHub"
 

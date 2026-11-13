@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 22:19+0000\n"
+"POT-Creation-Date: 2026-11-13 23:15+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -45,7 +45,7 @@ msgid "Pictures"
 msgstr "Зображення"
 
 #: accounts/admin.py:110 config/settings/base.py:365
-#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
+#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
 #: templates/moderation/mod/report.html:3
@@ -793,7 +793,7 @@ msgid "Projects"
 msgstr "Проєкти"
 
 #: config/settings/base.py:348 templates/accounts/profile.html:68
-#: templates/accounts/profile.html:115 templates/pages/landing.html:264
+#: templates/accounts/profile.html:115 templates/pages/landing.html:278
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
@@ -1580,7 +1580,7 @@ msgstr "Компанія"
 msgid "About"
 msgstr "Про проєкт"
 
-#: pages/templatetags/ui.py:371 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:371 templates/pages/landing.html:293
 #: templates/social/feed.html:106
 msgid "How proof works"
 msgstr "Як працюють підтвердження"
@@ -2336,7 +2336,7 @@ msgstr "Позначити як відповіли"
 
 #: support/admin.py:132 templates/community/_lightbox.html:7
 #: templates/community/_picker.html:5 templates/includes/badge_popover.html:6
-#: templates/includes/site_header.html:16 templates/includes/toast.html:1
+#: templates/includes/site_header.html:20 templates/includes/toast.html:1
 msgid "Close"
 msgstr "Закрити"
 
@@ -2652,7 +2652,7 @@ msgstr "Видалити акаунт"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
 #: templates/accounts/logout.html:14 templates/accounts/settings.html:107
-#: templates/includes/site_nav.html:26 templates/includes/site_nav.html:40
+#: templates/includes/site_nav.html:25 templates/includes/site_nav.html:39
 msgid "Sign out"
 msgstr "Вийти"
 
@@ -2904,7 +2904,7 @@ msgid "Built with (self-declared)"
 msgstr "Створено з (зазначено автором)"
 
 #: templates/accounts/settings.html:4 templates/accounts/settings.html:12
-#: templates/includes/site_nav.html:25 templates/includes/site_nav.html:39
+#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -3038,12 +3038,12 @@ msgstr "Усі розділи"
 
 #: templates/community/_boards.html:11 templates/community/notifications.html:4
 #: templates/community/notifications.html:11
-#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
+#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 msgid "Replies to you"
 msgstr "Відповіді вам"
 
-#: templates/community/_boards.html:11 templates/includes/site_nav.html:23
-#: templates/includes/site_nav.html:37
+#: templates/community/_boards.html:11 templates/includes/site_nav.html:22
+#: templates/includes/site_nav.html:36
 msgid "new"
 msgstr "нове"
 
@@ -3058,9 +3058,9 @@ msgid "New thread"
 msgstr "Новий тред"
 
 #: templates/community/_boards.html:17 templates/community/thread.html:89
-#: templates/includes/site_nav.html:45 templates/pages/_sign_in.html:10
-#: templates/pages/_sign_in.html:13 templates/social/feed.html:25
-#: templates/socialaccount/login.html:10
+#: templates/includes/site_header.html:15 templates/includes/site_nav.html:44
+#: templates/pages/_sign_in.html:10 templates/pages/_sign_in.html:13
+#: templates/social/feed.html:25 templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
 msgstr "Увійти через GitHub"
 
@@ -3313,7 +3313,7 @@ msgstr "Пошук"
 msgid "Period (for Most upvoted)"
 msgstr "Період (для «Найбільше голосів»)"
 
-#: templates/community/home.html:36 templates/pages/landing.html:183
+#: templates/community/home.html:36 templates/pages/landing.html:197
 msgid "This week"
 msgstr "Цього тижня"
 
@@ -3729,7 +3729,13 @@ msgstr "%(name)s: на головну"
 msgid "Change"
 msgstr "Змінити"
 
-#: templates/includes/site_header.html:15
+#: templates/includes/site_header.html:14 templates/includes/site_nav.html:16
+#: templates/projects/form.html:4 templates/projects/form.html:12
+#: templates/social/feed.html:23
+msgid "New project"
+msgstr "Новий проєкт"
+
+#: templates/includes/site_header.html:19
 msgid "Menu"
 msgstr "Меню"
 
@@ -3737,26 +3743,21 @@ msgstr "Меню"
 msgid "Main"
 msgstr "Головна навігація"
 
-#: templates/includes/site_nav.html:17 templates/projects/form.html:4
-#: templates/projects/form.html:12 templates/social/feed.html:23
-msgid "New project"
-msgstr "Новий проєкт"
-
-#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 #: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Ваш профіль"
 
-#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
+#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
 msgid "open reports"
 msgstr "відкритих скарг"
 
-#: templates/includes/site_nav.html:31
+#: templates/includes/site_nav.html:30
 #, python-format
 msgid "Account menu for %(name)s, new replies"
 msgstr "Меню акаунта: %(name)s, є нові відповіді"
 
-#: templates/includes/site_nav.html:31
+#: templates/includes/site_nav.html:30
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Меню акаунта: %(name)s"
@@ -4033,8 +4034,8 @@ msgstr "Щонайменше %(n)s символи. Шукаємо лише за 
 msgid "Too many searches"
 msgstr "Забагато пошуків"
 
-#: templates/pages/_people.html:22
 #
+#: templates/pages/_people.html:22
 msgid "Wait a few minutes, then search again."
 msgstr "Зачекайте кілька хвилин і шукайте знову."
 
@@ -4044,11 +4045,12 @@ msgid "Type at least %(n)s characters of a username."
 msgstr "Введіть щонайменше %(n)s символи імені користувача."
 
 #
-#: templates/pages/_people.html:27
 #
+#: templates/pages/_people.html:27
 msgid "A username has only letters, numbers, - and _. Check what you typed."
 msgstr ""
-"Ім’я користувача складається лише з латинських літер, цифр, - і _. Перевірте, що ви ввели."
+"Ім’я користувача складається лише з латинських літер, цифр, - і _. "
+"Перевірте, що ви ввели."
 
 #: templates/pages/_people.html:30
 msgid "Find someone by their username"
@@ -4059,7 +4061,8 @@ msgid ""
 "Type a username or its first letters. Open the profile, or follow right from "
 "the list."
 msgstr ""
-"Введіть ім’я користувача або його перші літери. Відкрийте профіль або підпишіться просто зі списку."
+"Введіть ім’я користувача або його перші літери. Відкрийте профіль або "
+"підпишіться просто зі списку."
 
 #: templates/pages/_people.html:34
 #, python-format
@@ -4085,13 +4088,13 @@ msgstr[2] "%(n)s позначок"
 msgstr[3] "%(n)s позначки"
 
 #
-#: templates/pages/_person_row.html:15
 #
+#: templates/pages/_person_row.html:15
 msgid "You"
 msgstr "Це ви"
 
-#: templates/pages/_person_row.html:19
 #
+#: templates/pages/_person_row.html:19
 msgid "Sign in to follow"
 msgstr "Увійдіть, щоб підписатися"
 
@@ -4111,10 +4114,11 @@ msgstr ""
 #: templates/pages/explore.html:18
 msgid "Find people by their username, open their profile and follow them."
 msgstr ""
-"Знаходьте людей за іменем користувача, відкривайте їхні профілі й підписуйтеся."
+"Знаходьте людей за іменем користувача, відкривайте їхні профілі й "
+"підписуйтеся."
 
-#: templates/pages/explore.html:24
 #
+#: templates/pages/explore.html:24
 msgid "What to discover"
 msgstr "Що шукати"
 
@@ -4135,8 +4139,8 @@ msgid "Any tag"
 msgstr "Будь-який тег"
 
 #: templates/pages/explore.html:56 templates/pages/landing.html:67
-#: templates/pages/landing.html:192 templates/pages/landing.html:214
-#: templates/pages/landing.html:236 templates/social/_filters.html:11
+#: templates/pages/landing.html:206 templates/pages/landing.html:228
+#: templates/pages/landing.html:250 templates/social/_filters.html:11
 msgid "Built with"
 msgstr "Створено з"
 
@@ -4279,12 +4283,12 @@ msgstr "Простір v2"
 msgid "Billing fixes"
 msgstr "Виправлення оплат"
 
-#: templates/pages/landing.html:65 templates/pages/landing.html:190
+#: templates/pages/landing.html:65 templates/pages/landing.html:204
 msgid "Calm project management for tiny teams."
 msgstr "Спокійне керування проєктами для маленьких команд."
 
-#: templates/pages/landing.html:67 templates/pages/landing.html:192
-#: templates/pages/landing.html:214 templates/pages/landing.html:236
+#: templates/pages/landing.html:67 templates/pages/landing.html:206
+#: templates/pages/landing.html:228 templates/pages/landing.html:250
 msgid "self-declared"
 msgstr "зазначено автором"
 
@@ -4392,103 +4396,115 @@ msgstr "Кілька речей, які люди справді випустил
 msgid "Discover projects"
 msgstr "Знайти проєкти"
 
-#: templates/pages/landing.html:165 templates/pages/landing.html:193
-#: templates/pages/landing.html:215 templates/pages/landing.html:237
+#: templates/pages/landing.html:165 templates/pages/landing.html:207
+#: templates/pages/landing.html:229 templates/pages/landing.html:251
 #, python-format
 msgid "by %(name)s"
 msgstr "від %(name)s"
 
-#: templates/pages/landing.html:171 templates/pages/landing.html:244
+#: templates/pages/landing.html:177
+#
+msgid "Your project here"
+msgstr "Тут може бути ваш проєкт"
+
+#: templates/pages/landing.html:178
+msgid ""
+"Shipped something with AI? Link the repository and the domain, and it shows "
+"up on this page."
+msgstr ""
+"Запустили щось із ШІ? Додайте репозиторій і домен, і проєкт з’явиться на цій сторінці."
+
+#: templates/pages/landing.html:185 templates/pages/landing.html:258
 msgid "Steady is earned over time, not on launch day."
 msgstr "«Стабільний» заробляють з часом, а не в день запуску."
 
-#: templates/pages/landing.html:179
+#: templates/pages/landing.html:193
 msgid "workspace"
 msgstr "простір"
 
-#: templates/pages/landing.html:180
+#: templates/pages/landing.html:194
 msgid "Make room for good work."
 msgstr "Звільніть місце для гарної роботи."
 
-#: templates/pages/landing.html:182
+#: templates/pages/landing.html:196
 msgid "Today"
 msgstr "Сьогодні"
 
-#: templates/pages/landing.html:182 templates/pages/landing.html:183
-#: templates/pages/landing.html:184
+#: templates/pages/landing.html:196 templates/pages/landing.html:197
+#: templates/pages/landing.html:198
 msgid "Website refresh"
 msgstr "Оновлення сайту"
 
-#: templates/pages/landing.html:182 templates/pages/landing.html:183
-#: templates/pages/landing.html:184
+#: templates/pages/landing.html:196 templates/pages/landing.html:197
+#: templates/pages/landing.html:198
 msgid "Product updates"
 msgstr "Новини продукту"
 
-#: templates/pages/landing.html:184
+#: templates/pages/landing.html:198
 msgid "Done"
 msgstr "Готово"
 
-#: templates/pages/landing.html:201
+#: templates/pages/landing.html:215
 msgid "your reading room"
 msgstr "ваша читальня"
 
-#: templates/pages/landing.html:202
+#: templates/pages/landing.html:216
 msgid "One more chapter."
 msgstr "Ще один розділ."
 
-#: templates/pages/landing.html:204
+#: templates/pages/landing.html:218
 msgid "Slow mornings"
 msgstr "Повільні ранки"
 
-#: templates/pages/landing.html:205
+#: templates/pages/landing.html:219
 msgid "Small rooms"
 msgstr "Малі кімнати"
 
-#: templates/pages/landing.html:206
+#: templates/pages/landing.html:220
 msgid "Field notes"
 msgstr "Польові нотатки"
 
-#: templates/pages/landing.html:212
+#: templates/pages/landing.html:226
 msgid "Turn your reading habit into a little ritual."
 msgstr "Перетворіть читання на маленький ритуал."
 
-#: templates/pages/landing.html:223
+#: templates/pages/landing.html:237
 msgid "form studio"
 msgstr "студія форм"
 
-#: templates/pages/landing.html:225
+#: templates/pages/landing.html:239
 msgid "Your next big thing"
 msgstr "Ваша наступна велика справа"
 
-#: templates/pages/landing.html:226
+#: templates/pages/landing.html:240
 msgid "Get on the list."
 msgstr "Запишіться в список."
 
-#: templates/pages/landing.html:228
+#: templates/pages/landing.html:242
 msgid "Count me in"
 msgstr "Я з вами"
 
-#: templates/pages/landing.html:234
+#: templates/pages/landing.html:248
 msgid "A tiny form builder. No big subscription."
 msgstr "Маленький конструктор форм. Без великої підписки."
 
-#: templates/pages/landing.html:243
+#: templates/pages/landing.html:257
 msgid "Illustrative projects"
 msgstr "Вигадані проєкти"
 
-#: templates/pages/landing.html:256
+#: templates/pages/landing.html:270
 msgid "03 / The work behind the mark"
 msgstr "03 / Робота за позначкою"
 
-#: templates/pages/landing.html:257
+#: templates/pages/landing.html:271
 msgid "Show your work."
 msgstr "Покажіть роботу."
 
-#: templates/pages/landing.html:257
+#: templates/pages/landing.html:271
 msgid "Take your proof with you."
 msgstr "Беріть докази з собою."
 
-#: templates/pages/landing.html:258
+#: templates/pages/landing.html:272
 #, python-format
 msgid ""
 "Keep a short public build log. Then put a live %(name)s badge right in your "
@@ -4497,56 +4513,56 @@ msgstr ""
 "Ведіть короткий публічний журнал розробки. А в README на GitHub додайте "
 "живий бейдж %(name)s."
 
-#: templates/pages/landing.html:259
+#: templates/pages/landing.html:273
 msgid "Small updates. A visible track record."
 msgstr "Невеликі оновлення. Видима історія."
 
-#: templates/pages/landing.html:268
+#: templates/pages/landing.html:282
 msgid "Nov 08"
 msgstr "08 лист."
 
-#: templates/pages/landing.html:268
+#: templates/pages/landing.html:282
 msgid "Shipped team invites. Finally."
 msgstr "Запустили запрошення в команду. Нарешті."
 
-#: templates/pages/landing.html:269
+#: templates/pages/landing.html:283
 msgid "Nov 06"
 msgstr "06 лист."
 
-#: templates/pages/landing.html:269
+#: templates/pages/landing.html:283
 msgid "Fixed sync. Cut load time in half."
 msgstr "Полагодили синхронізацію. Завантаження вдвічі швидше."
 
-#: templates/pages/landing.html:272
+#: templates/pages/landing.html:286
 msgid "In your README"
 msgstr "У вашому README"
 
-#: templates/pages/landing.html:275
+#: templates/pages/landing.html:289
 #, python-format
 msgid "Example %(name)s badge: Repo owner, Domain verified, Steady"
 msgstr "Приклад бейджа %(name)s: Repo owner, Domain verified, Steady"
 
-#: templates/pages/landing.html:283
+#: templates/pages/landing.html:297
 msgid "Illustrative project"
 msgstr "Вигаданий проєкт"
 
-#: templates/pages/landing.html:293
+#: templates/pages/landing.html:307
 msgid "Less talk. More receipts."
 msgstr "Менше слів. Більше доказів."
 
-#: templates/pages/landing.html:294
+#: templates/pages/landing.html:308
 msgid "You shipped it."
 msgstr "Ви це запустили."
 
-#: templates/pages/landing.html:294
+#: templates/pages/landing.html:308
 msgid "Now put your mark on it."
 msgstr "Тепер поставте на це свою позначку."
 
-#: templates/pages/landing.html:295
+#: templates/pages/landing.html:309
 msgid "Your tools don't define you. What you ship does."
 msgstr "Вас визначають не інструменти, а те, що ви запускаєте."
 
-#: templates/pages/landing.html:299
+#: templates/pages/landing.html:313
 msgid "GitHub account required"
 msgstr "Потрібен акаунт GitHub"
 

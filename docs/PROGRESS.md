@@ -177,3 +177,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-14: Polish-3 stage 3a (design audit, no code). 18 pages at 360/768/1024/1440, both themes, CSS scan: 11 layout problems, one spacing / icon / alignment rule set, dark theme proposal with a new `--raised` level and measured contrast, add/remove list. All in docs/POLISH3_DESIGN.md.
   Next: "GO 3b" (implement the approved parts).
+
+- 2026-11-14: Polish-3 stage 3b (design pass). Layout fixes (tabs, badges, hyphens, thread facts, /mod/ and settings on phones, footer language, main action at 768-1279px, touch target); one spacing + icon scale as tokens; dark theme with three levels (`--raised`) and visible hairlines, AA tested from tokens.css, before/after on /styleguide/; header tagline removed, zero like counts hidden, one accent per page area, landing invite card, "/" for search. 7 languages.
+  Next: "GO 4" (motion).

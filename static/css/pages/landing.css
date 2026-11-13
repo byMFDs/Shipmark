@@ -542,3 +542,9 @@
   .closing__action { grid-column: 9 / span 4; justify-items: stretch; }
   .closing__action .btn--lg { justify-content: space-between; }
 }
+
+/* The invite card (fewer than three real projects): a dashed frame on the page colour, a plus where the picture
+   would be. It is a plain link to sign-in, then to "New project". */
+.card--invite { background: transparent; border-style: dashed; border-color: var(--line-strong); }
+.card--invite .card__media { display: grid; place-items: center; background: transparent; border-bottom-style: dashed; }
+.card--invite .card__placeholder .icon { width: var(--icon-l); height: var(--icon-l); color: var(--muted); }

@@ -1,6 +1,6 @@
-{% load i18n %}{# Like button. Needs: project, count, liked. Works as a plain POST form; social.js upgrades it. #}
+{% load i18n %}{# Like button. Needs: project, count, liked. Works as a plain POST form; social.js upgrades it. A zero count is not shown. #}
 {% if user.is_authenticated and user.pk == project.owner_id %}
-  <p class="social-note muted">{% blocktranslate count n=count trimmed %}{{ n }} like{% plural %}{{ n }} likes{% endblocktranslate %}</p>
+  {% if count %}<p class="social-note muted">{% blocktranslate count n=count trimmed %}{{ n }} like{% plural %}{{ n }} likes{% endblocktranslate %}</p>{% endif %}
 {% elif user.is_authenticated %}
   <form class="social-form" method="post" data-social-form
         action="{% if liked %}{% url 'social:unlike' project.owner.username project.slug %}{% else %}{% url 'social:like' project.owner.username project.slug %}{% endif %}"
@@ -12,12 +12,12 @@
     <button class="btn btn--secondary social-btn" type="submit" aria-pressed="{% if liked %}true{% else %}false{% endif %}">
       <span data-label data-label-on="{% translate 'Liked' %}" data-label-off="{% translate 'Like' %}">{% if liked %}{% translate "Liked" %}{% else %}{% translate "Like" %}{% endif %}</span>
       <span class="visually-hidden">{{ project.name }}</span>
-      <span class="social-btn__count" data-count>{{ count }}</span>
+      <span class="social-btn__count" data-count data-hide-zero{% if not count %} hidden{% endif %}>{{ count }}</span>
     </button>
   </form>
 {% else %}
   <a class="btn btn--secondary social-btn" href="{% url 'account_login' %}?next={{ project.get_absolute_url|urlencode }}">
     {% translate "Like" %}<span class="visually-hidden"> {{ project.name }}</span>
-    <span class="social-btn__count">{{ count }}</span>
+    {% if count %}<span class="social-btn__count">{{ count }}</span>{% endif %}
   </a>
 {% endif %}

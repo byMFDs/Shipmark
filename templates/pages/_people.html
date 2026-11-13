@@ -8,7 +8,7 @@ URL and works without JS. Needs: q, query, problem, limited, results, has_next, 
   <div class="people-search__row">
     <div class="field people-search__field">
       <label class="field__label" for="people-q">{% translate "Username" %}</label>
-      <input class="input" type="search" id="people-q" name="q" value="{{ q }}" maxlength="40" placeholder="@username"
+      <input class="input" type="search" id="people-q" aria-keyshortcuts="/" name="q" value="{{ q }}" maxlength="40" placeholder="@username"
              autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" aria-describedby="people-q-hint">
     </div>
     <button class="btn btn--primary" type="submit">{% icon "search" %}{% translate "Search" %}</button>

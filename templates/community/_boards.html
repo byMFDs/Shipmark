@@ -12,7 +12,7 @@
     <li><a class="community-boards__link" href="{% url 'community:rules' %}"{% if request.resolver_match.url_name == "rules" %} aria-current="page"{% endif %}><span>{% translate "Community rules" %}</span></a></li>
   </ul>
   {% if user.is_authenticated %}
-    <a class="btn btn--primary community-boards__new" href="{% url 'community:new' %}{% if board %}?board={{ board.slug }}{% endif %}">{% icon "plus" %}{% translate "New thread" %}</a>
+    <a class="btn btn--secondary community-boards__new" href="{% url 'community:new' %}{% if board %}?board={{ board.slug }}{% endif %}">{% icon "plus" %}{% translate "New thread" %}</a>
   {% else %}
     <a class="btn btn--secondary btn--halo community-boards__new" href="{% url 'account_login' %}?next={{ request.path|urlencode }}">{% translate "Sign in with GitHub" %}</a>
   {% endif %}

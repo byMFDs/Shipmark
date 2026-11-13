@@ -391,7 +391,17 @@ class CardTests(FeedCase):
         self.client.force_login(self.owner)
         html = self.get().content.decode()
         self.assertNotIn(reverse("social:follow", args=["ann"]), html)
-        self.assertIn("social-note", html)  # the like count as text
+        self.assertNotIn("social-note", html)  # no likes yet: no "0 likes" (POLISH3 3b)
+        Like.objects.create(user=make_user("liker"), project=self.p)
+        html = self.get().content.decode()
+        self.assertIn("social-note", html)  # the like count as text once there is one
+
+    def test_a_zero_like_count_is_hidden(self):
+        html = self.get().content.decode()
+        self.assertNotIn('<span class="social-btn__count">0</span>', html)
+        self.client.force_login(make_user("viewer"))
+        html = self.get().content.decode()
+        self.assertIn("data-hide-zero hidden>0</span>", html)
 
     def test_moderate_menu_only_for_moderators(self):
         act = reverse("moderation:act_project", args=[self.p.pk])

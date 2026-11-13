@@ -1202,7 +1202,6 @@ a.chip::after {
 .site-logo .logo-mark,
 .site-logo .logo-word { fill: currentColor; }
 
-.site-header__tagline { display: none; }
 
 .site-nav__list {
   display: flex;
@@ -1331,43 +1330,27 @@ a.chip::after {
   .site-logo { height: 1.625rem; }
 }
 
-/* The open bar starts at 80em: below that the four links, the count and the actions do not fit in German or
-   French (768 and 1024px overflowed by a whole button), so narrower screens use the menu. The tagline takes the
-   space that is left and hides itself when its words do not fit: a zero-width space keeps line 1, the words (one
-   inline-block) wrap to line 2, and line 2 is cut off. No language check, no JS. */
+/* The open bar starts at 80em: below that the four links, the count, the search and the actions do not fit in
+   German or French, so narrower screens use the menu (and keep the main action beside it, .site-header__quick).
+   The tagline is not in the header any more (Polish-3 3b): it is in the landing hero and the footer. */
 @media (min-width: 80em) {
   .site-header:not(.site-header--compact) .site-header__bar {
     display: flex;
     flex: 1;
     align-items: center;
     gap: var(--s-4);
-    min-width: 0; /* else the tagline's words set the bar's minimum width and it overflows */
+    min-width: 0; /* the bar may shrink instead of pushing the actions out */
   }
 
   .site-header:not(.site-header--compact) .site-menu { display: none; }
 
   .site-header__bar .site-nav { margin-left: var(--s-6); }
   .site-header__bar .site-header__actions { margin-left: auto; }
-
-  .site-header__tagline {
-    display: block;
-    flex: 1 1 0;
-    min-width: 0;
-    height: 1.5em;
-    margin: 0;
-    overflow: hidden;
-    text-align: right;
-  }
-  .site-header__tagline::before { content: "\200B"; }
-  .site-header__tagline > span { display: inline-block; white-space: nowrap; }
-  .site-header__bar .site-header__tagline + .site-header__actions { margin-left: var(--s-2); }
-  /* The hairline after the tagline sits on its words, so it hides with them. */
-  .site-header__bar .site-header__tagline:has(+ .site-count) > span { padding-right: var(--s-4); border-right: 1px solid var(--line); }
 }
 
 /* ---------- "<n> people joined" (header stat) ----------
-   A quiet fact, not a live counter: mono number, muted words, no dot and no pulse. In the bar from 80em (after the
-   tagline, when it fits); inside the menu below that. The number counts up once over a hidden copy of the
+   A quiet fact, not a live counter: mono number, muted words, no dot and no pulse. In the bar from 80em; inside the menu
+   below that. The number counts up once over a hidden copy of the
    final text (same grid cell), so the width never changes while it runs. */
 
 .site-count {
@@ -1400,7 +1383,6 @@ a.chip::after {
 
 @media (min-width: 80em) {
   .site-header__bar .site-count { display: flex; margin-left: auto; }
-  .site-header__bar .site-header__tagline + .site-count { margin-left: 0; }
   .site-header__bar .site-count ~ .site-header__actions { margin-left: var(--s-5); }
   .site-header__bar .site-search + .site-header__actions { margin-left: 0; } /* the bar's gap is enough */
 }

@@ -167,6 +167,19 @@
               </article>
             </li>
           {% endfor %}
+          {% if recent|length < 3 %}
+            {% comment %}Few real projects yet: one dashed card that invites the next one (an empty row looks deserted).{% endcomment %}
+            <li>
+              <article class="card card--invite">
+                <div class="card__media"><span class="card__placeholder" aria-hidden="true">{% icon "plus" %}</span></div>
+                <div class="card__body">
+                  <h3 class="card__title"><a href="{% url 'account_login' %}{% if new_url %}?next={{ new_url|urlencode }}{% endif %}">{% translate "Your project here" %}</a></h3>
+                  <p class="card__tagline">{% translate "Shipped something with AI? Link the repository and the domain, and it shows up on this page." %}</p>
+                  <p class="card__foot"><span>{{ submit_label }}</span>{% icon "arrow-up-right" "arrow" %}</p>
+                </div>
+              </article>
+            </li>
+          {% endif %}
         </ul>
         <p class="label landing-foot">{% translate "Steady is earned over time, not on launch day." %}</p>
       {% else %}

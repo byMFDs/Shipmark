@@ -167,9 +167,17 @@ card, was 1.27), control edges `--line-strong` #76817A. The tone stays green-bla
 - `.record` (frame + mono header row) is the base of the proof column, build log, embed panel, filters and
   the landing specimen. `.panel` is a framed form section (`--danger` = destructive). `.page-head`: h1 + lede.
 - Lists: `.plate-row` (cover, name in Manrope, by-line, tagline, marks) · `.card` (landing) · `.chip` (tags).
-- Header: not sticky, hairline under, mobile menu is `<details>`. "<n> people joined" (`.site-count`, `pages/stats.py`): a quiet
-  fact (mono number, muted words, `title` "Registered accounts"), in the bar from 48em and next to the tagline from 64em, inside
-  the phone menu below 48em. Registered accounts, not people online: no live dot, no pulse.
+- Header: not sticky, hairline under, menu is `<details>`. The open bar (links, count, "Find people", actions) starts at
+  80em; 48-80em shows the main action (`.site-header__quick`: "New project" / "Sign in with GitHub") beside the menu button;
+  phones show the menu button only. No tagline in the header (Polish-3 3b: it is in the landing hero and the footer).
+  "<n> people joined" (`.site-count`, `pages/stats.py`): a quiet fact (mono number, muted words, `title` "Registered
+  accounts"), in the bar from 80em, inside the menu below. Registered accounts, not people online: no live dot, no pulse.
+- One accent per content area: the header's "New project" is global; inside a page only its own main action is
+  `btn--primary` (side menus of the feed and the community use `btn--secondary`).
+- Like counts hide a zero (the button says "Like"; the owner sees no "0 likes"): a zero reads as "nobody cares" to a new
+  builder. Follower stats on profiles always show their number.
+- Landing "Out in the world": with fewer than three real projects a dashed invite card ("Your project here") follows them.
+- Keyboard: "/" focuses the search on Discover, elsewhere it opens "Find people" in the header (`menu.js`).
 - Footer (`site_footer.html`): one 12-column grid. Brand block (logo, `SITE_DOMAIN`, tagline) and three link columns (Product,
   Company, Legal; mono headings) take 3 each from 64em; brand across + three columns of 4 from 48em; brand + two columns on phones.
   Bottom bar: copyright in sentence case from `LEGAL_OWNER_NAME` (left), language and theme (right, full width on phones). All three
