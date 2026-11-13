@@ -9,6 +9,7 @@
   </nav>
 {% endif %}
 {% if not in_panel and brand.TAGLINE %}<p class="label site-header__tagline">{{ brand.TAGLINE }}</p>{% endif %}
+{% if user_stat %}{% include "includes/user_count.html" %}{% endif %}
 <div class="site-header__actions">
   {% if signed_in %}
     {% if new_url %}<a class="btn btn--primary btn--halo" href="{{ new_url }}">{% icon "plus" %}{% translate "New project" %}</a>{% endif %}

@@ -410,7 +410,15 @@ def site_header(context, demo="", compact=False):
     moderator = bool(not demo and viewer is not None and viewer.can_moderate)
     # Reply notifications (community). The mark comes from the user row, so it costs no query.
     community = bool(not demo and signed_in and settings.COMMUNITY_ENABLED)
+    from .. import stats  # here: the stats module reads accounts models
+
+    if demo:
+        user_stat = {"value": 1284, "text": "1,284", "before": "", "after": " people joined", "exact": "1,284 people joined",
+                     "animate": False}
+    else:
+        user_stat = stats.header_stat()
     return {
+        "user_stat": user_stat,
         "notifications_url": reverse("community:notifications") if community else "",
         "has_new_replies": bool(community and user.community_notified_at),
         "mod_url": reverse("moderation:queue") if moderator else "",

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 18:07+0000\n"
+"POT-Creation-Date: 2026-11-13 18:13+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -41,8 +41,8 @@ msgstr "Profil"
 msgid "Pictures"
 msgstr "Bilder"
 
-#: accounts/admin.py:109 config/settings/base.py:359
-#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
+#: accounts/admin.py:109 config/settings/base.py:365
+#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
 #: templates/moderation/mod/report.html:3
@@ -412,7 +412,7 @@ msgstr "Wiederhergestellt: %(count)s."
 msgid "Restore selected replies (superusers)"
 msgstr "Ausgewählte Antworten wiederherstellen (nur Superuser)"
 
-#: community/apps.py:8 config/settings/base.py:372 pages/templatetags/ui.py:365
+#: community/apps.py:8 config/settings/base.py:378 pages/templatetags/ui.py:365
 #: pages/templatetags/ui.py:370 templates/community/home.html:4
 #: templates/community/home.html:5 templates/community/home.html:11
 #: templates/community/home.html:12 templates/community/notifications.html:10
@@ -492,7 +492,7 @@ msgstr ""
 "Markdown funktioniert. Links, Listen, Fettdruck und Code sind erlaubt, HTML "
 "nicht."
 
-#: community/forms.py:76 config/settings/base.py:377
+#: community/forms.py:76 config/settings/base.py:383
 #: templates/community/notifications.html:23
 msgid "Images"
 msgstr "Bilder"
@@ -761,123 +761,123 @@ msgstr "Melde dich an, um das zu tun."
 msgid "Proof, not promises."
 msgstr "Beweise statt Versprechen."
 
-#: config/settings/base.py:296
+#: config/settings/base.py:302
 msgid "Admin"
 msgstr "Verwaltung"
 
-#: config/settings/base.py:332 config/settings/base.py:334
+#: config/settings/base.py:338 config/settings/base.py:340
 #: moderation/dashboard.py:46
 msgid "Users"
 msgstr "Nutzer"
 
-#: config/settings/base.py:335
+#: config/settings/base.py:341
 msgid "Badges"
 msgstr "Abzeichen"
 
-#: config/settings/base.py:339 config/settings/base.py:341
+#: config/settings/base.py:345 config/settings/base.py:347
 #: templates/accounts/profile.html:53 templates/accounts/profile.html:67
 #: templates/accounts/profile.html:75 templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Projekte"
 
-#: config/settings/base.py:342 templates/accounts/profile.html:68
+#: config/settings/base.py:348 templates/accounts/profile.html:68
 #: templates/accounts/profile.html:115 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Build-Log"
 
-#: config/settings/base.py:343 projects/forms.py:47
+#: config/settings/base.py:349 projects/forms.py:47
 #: templates/projects/detail.html:167
 msgid "Tags"
 msgstr "Tags"
 
-#: config/settings/base.py:344
+#: config/settings/base.py:350
 msgid "Tools"
 msgstr "Tools"
 
-#: config/settings/base.py:348
+#: config/settings/base.py:354
 msgid "Verification"
 msgstr "Verifizierung"
 
-#: config/settings/base.py:350
+#: config/settings/base.py:356
 msgid "Review queue"
 msgstr "Prüfwarteschlange"
 
-#: config/settings/base.py:352
+#: config/settings/base.py:358
 msgid "Repositories"
 msgstr "Repositories"
 
-#: config/settings/base.py:353
+#: config/settings/base.py:359
 msgid "Domains"
 msgstr "Domains"
 
-#: config/settings/base.py:354
+#: config/settings/base.py:360
 msgid "Uptime checks"
 msgstr "Uptime-Prüfungen"
 
-#: config/settings/base.py:355
+#: config/settings/base.py:361
 msgid "Blocked repos and domains"
 msgstr "Gesperrte Repositorys und Domains"
 
-#: config/settings/base.py:361 templates/moderation/mod/queue.html:11
+#: config/settings/base.py:367 templates/moderation/mod/queue.html:11
 msgid "Reports"
 msgstr "Meldungen"
 
-#: config/settings/base.py:363 templates/moderation/mod/_history.html:7
+#: config/settings/base.py:369 templates/moderation/mod/_history.html:7
 msgid "Sanctions"
 msgstr "Sanktionen"
 
-#: config/settings/base.py:364 templates/moderation/mod/_history.html:15
+#: config/settings/base.py:370 templates/moderation/mod/_history.html:15
 msgid "Removed projects"
 msgstr "Entfernte Projekte"
 
-#: config/settings/base.py:366
+#: config/settings/base.py:372
 msgid "Notices"
 msgstr "Hinweise"
 
-#: config/settings/base.py:367
+#: config/settings/base.py:373
 msgid "Follows"
 msgstr "Follows"
 
-#: config/settings/base.py:368 projects/admin.py:46
+#: config/settings/base.py:374 projects/admin.py:46
 msgid "Likes"
 msgstr "Likes"
 
-#: config/settings/base.py:374 templates/community/_boards.html:3
+#: config/settings/base.py:380 templates/community/_boards.html:3
 #: templates/community/_layout.html:10 templates/community/_layout.html:15
 msgid "Boards"
 msgstr "Bereiche"
 
-#: config/settings/base.py:375 templates/community/home.html:52
+#: config/settings/base.py:381 templates/community/home.html:52
 msgid "Threads"
 msgstr "Threads"
 
-#: config/settings/base.py:376
+#: config/settings/base.py:382
 msgid "Replies"
 msgstr "Antworten"
 
-#: config/settings/base.py:381 pages/templatetags/ui.py:372 support/apps.py:8
+#: config/settings/base.py:387 pages/templatetags/ui.py:372 support/apps.py:8
 #: templates/support/form.html:4 templates/support/form.html:12
 #: templates/support/sent.html:13
 msgid "Support"
 msgstr "Support"
 
-#: config/settings/base.py:383 templates/pages/landing.html:49
+#: config/settings/base.py:389 templates/pages/landing.html:49
 msgid "Inbox"
 msgstr "Posteingang"
 
-#: config/settings/base.py:388 news/apps.py:8 pages/templatetags/ui.py:364
+#: config/settings/base.py:394 news/apps.py:8 pages/templatetags/ui.py:364
 #: pages/templatetags/ui.py:369 templates/news/list.html:4
 #: templates/news/list.html:5 templates/news/list.html:14
 #: templates/social/feed.html:18 templates/social/feed.html:35
 msgid "News"
 msgstr "Neuigkeiten"
 
-#: config/settings/base.py:390
+#: config/settings/base.py:396
 msgid "News posts"
 msgstr "Neuigkeiten-Beiträge"
 
-#: config/settings/base.py:394 config/settings/base.py:396
+#: config/settings/base.py:400 config/settings/base.py:402
 msgid "Audit log"
 msgstr "Audit-Log"
 
@@ -1475,6 +1475,23 @@ msgstr "Am besten belegt"
 #: templates/social/_filters.html:12
 msgid "Any"
 msgstr "Beliebig"
+
+#: pages/stats.py:43
+#, python-format
+msgid "%(n)sK"
+msgstr "%(n)s Tsd."
+
+#: pages/stats.py:46
+#, python-format
+msgid "%(n)sM"
+msgstr "%(n)s Mio."
+
+#: pages/stats.py:57
+#, python-format
+msgid "%(count)s person joined"
+msgid_plural "%(count)s people joined"
+msgstr[0] "%(count)s Person ist dabei"
+msgstr[1] "%(count)s Personen sind dabei"
 
 #: pages/templatetags/ui.py:87 templates/includes/badge_popover.html:12
 msgid "Official account"
@@ -2564,7 +2581,7 @@ msgstr "Konto löschen"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
 #: templates/accounts/logout.html:14 templates/accounts/settings.html:107
-#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
+#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
 msgid "Sign out"
 msgstr "Abmelden"
 
@@ -2797,7 +2814,7 @@ msgid "Built with (self-declared)"
 msgstr "Gebaut mit (selbst angegeben)"
 
 #: templates/accounts/settings.html:4 templates/accounts/settings.html:12
-#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
+#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -2916,7 +2933,7 @@ msgstr "Neueste offene Meldungen"
 msgid "No open reports."
 msgstr "Keine offenen Meldungen."
 
-#: templates/base.html:49
+#: templates/base.html:50
 msgid "Skip to content"
 msgstr "Zum Inhalt springen"
 
@@ -2931,12 +2948,12 @@ msgstr "Alle Bereiche"
 
 #: templates/community/_boards.html:11 templates/community/notifications.html:4
 #: templates/community/notifications.html:11
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
+#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 msgid "Replies to you"
 msgstr "Antworten an dich"
 
-#: templates/community/_boards.html:11 templates/includes/site_nav.html:20
-#: templates/includes/site_nav.html:34
+#: templates/community/_boards.html:11 templates/includes/site_nav.html:21
+#: templates/includes/site_nav.html:35
 msgid "new"
 msgstr "neu"
 
@@ -2951,7 +2968,7 @@ msgid "New thread"
 msgstr "Neuer Thread"
 
 #: templates/community/_boards.html:17 templates/community/thread.html:89
-#: templates/includes/site_nav.html:42 templates/pages/_sign_in.html:10
+#: templates/includes/site_nav.html:43 templates/pages/_sign_in.html:10
 #: templates/pages/_sign_in.html:13 templates/social/feed.html:25
 #: templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
@@ -3581,7 +3598,9 @@ msgstr "So funktionieren Badges"
 #: templates/includes/badge_popover.html:27
 #, python-format
 msgid "This person helps moderate %(site)s. Moderators can review reports."
-msgstr "Diese Person hilft beim Moderieren von %(site)s. Moderatoren können Meldungen prüfen."
+msgstr ""
+"Diese Person hilft beim Moderieren von %(site)s. Moderatoren können "
+"Meldungen prüfen."
 
 #: templates/includes/form_errors.html:5
 msgid "Please fix these problems and try again."
@@ -3608,26 +3627,26 @@ msgstr "Menü"
 msgid "Main"
 msgstr "Hauptnavigation"
 
-#: templates/includes/site_nav.html:14 templates/projects/form.html:4
+#: templates/includes/site_nav.html:15 templates/projects/form.html:4
 #: templates/projects/form.html:12 templates/social/feed.html:23
 msgid "New project"
 msgstr "Neues Projekt"
 
-#: templates/includes/site_nav.html:19 templates/includes/site_nav.html:33
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
 #: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Dein Profil"
 
-#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
+#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 msgid "open reports"
 msgstr "offene Meldungen"
 
-#: templates/includes/site_nav.html:28
+#: templates/includes/site_nav.html:29
 #, python-format
 msgid "Account menu for %(name)s, new replies"
 msgstr "Kontomenü von %(name)s, neue Antworten"
 
-#: templates/includes/site_nav.html:28
+#: templates/includes/site_nav.html:29
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Kontomenü von %(name)s"
@@ -3635,6 +3654,10 @@ msgstr "Kontomenü von %(name)s"
 #: templates/includes/toast.html:1
 msgid "Dismiss"
 msgstr "Ausblenden"
+
+#: templates/includes/user_count.html:5
+msgid "Registered accounts"
+msgstr "Registrierte Konten"
 
 #: templates/moderation/_menu.html:3 templates/moderation/mod/act.html:3
 #: templates/moderation/mod/act.html:11

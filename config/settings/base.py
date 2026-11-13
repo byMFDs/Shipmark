@@ -161,6 +161,12 @@ MODERATION_ACTIONS_PER_HOUR = 30  # per moderator
 # Off by default; dev.py turns it on. Production: leave it off until moderators are ready (docs/COMMUNITY_PLAN.md).
 COMMUNITY_ENABLED = env.bool("COMMUNITY_ENABLED", default=False)
 
+# "<n> people joined" in the header (pages/stats.py). Hidden while the number is not above PUBLIC_USER_COUNT_MIN,
+# so a young site can wait until the number means something. Off in the test run (an extra query once a minute
+# would make the exact query-count tests of other pages depend on the cache); the counter's own tests switch it on.
+PUBLIC_USER_COUNT_MIN = env.int("PUBLIC_USER_COUNT_MIN", default=0)
+PUBLIC_USER_COUNT_ENABLED = not TESTING
+
 # Secret for the ban-evasion hash of a GitHub id (moderation/bans.py). Its own key, not SECRET_KEY, so rotating
 # SECRET_KEY cannot free banned people. Production requires it (prod.py); dev.py fills in an insecure default.
 # Never rotate it while a ban is active: the hashes cannot be recomputed (the GitHub ids are not stored).

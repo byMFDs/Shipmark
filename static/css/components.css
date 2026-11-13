@@ -1334,6 +1334,48 @@ a.chip::after {
   .site-header__bar .site-header__tagline + .site-header__actions { margin-left: var(--s-6); }
 }
 
+/* ---------- "<n> people joined" (header stat) ----------
+   A quiet fact, not a live counter: mono number, muted words, no dot and no pulse. In the bar from 48em (next to
+   the tagline from 64em); inside the phone menu below that. The number counts up once over a hidden copy of the
+   final text (same grid cell), so the width never changes while it runs. */
+
+.site-count {
+  display: none;
+  align-items: baseline;
+  gap: var(--s-1);
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--fs--1);
+  white-space: nowrap;
+  cursor: default;
+}
+
+.site-count__n {
+  display: inline-grid;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.site-count__n > * { grid-area: 1 / 1; text-align: end; }
+.site-count__ghost { visibility: hidden; }
+
+.site-menu__panel .site-count {
+  display: flex;
+  margin-top: var(--s-5);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line);
+  white-space: normal;
+}
+
+@media (min-width: 48em) {
+  .site-header__bar .site-count { display: flex; margin-left: auto; }
+  .site-header__bar .site-count ~ .site-header__actions { margin-left: var(--s-5); }
+}
+
+@media (min-width: 64em) {
+  .site-header__bar .site-header__tagline + .site-count { margin-left: var(--s-4); padding-left: var(--s-4); border-left: 1px solid var(--line); }
+}
+
 /* ---------- Account menu (signed-in header) ---------- */
 
 .user-menu { position: relative; }
