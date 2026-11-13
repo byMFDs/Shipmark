@@ -47,7 +47,10 @@
 .settings-cover img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 1; object-fit: cover; }
 
 .link-rows { display: grid; gap: var(--s-3); }
-.link-rows__head, .link-row { display: grid; gap: var(--s-2); grid-template-columns: minmax(7rem, 9rem) minmax(0, 1fr); align-items: start; }
+/* Phones: the kind gets a fixed 7.5rem and the address the rest (the kind took half the row and the address was
+   cut off at 360px). From 48em there is room for a wider kind. */
+.link-rows__head, .link-row { display: grid; gap: var(--s-2); grid-template-columns: 7.5rem minmax(0, 1fr); align-items: start; }
+@media (min-width: 48em) { .link-rows__head, .link-row { grid-template-columns: 9rem minmax(0, 1fr); } }
 .link-rows__head .label { color: var(--muted); }
 .link-row .field { margin: 0; min-width: 0; }
 

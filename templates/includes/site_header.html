@@ -9,6 +9,9 @@
       <div class="site-header__bar">
         {% include "includes/site_nav.html" %}
       </div>
+      {% comment %}768-1279px: the open bar is not shown, but the main action stays in sight next to the menu.{% endcomment %}
+      {% if signed_in and new_url %}<a class="btn btn--primary btn--halo site-header__quick" href="{{ new_url }}">{% icon "plus" %}{% translate "New project" %}</a>
+      {% elif not signed_in and login_url %}<a class="btn btn--secondary btn--halo site-header__quick" href="{{ login_url }}">{% icon "github" %}{% translate "Sign in with GitHub" %}</a>{% endif %}
       {# Phone menu: <details> opens and closes without JS. menu.js adds Escape and outside click. #}
       <details class="site-menu"{% if compact %} open{% else %} data-menu{% endif %}>
         <summary class="btn btn--quiet">

@@ -12,6 +12,7 @@
 
 .mod-row {
   display: grid;
+  grid-template-columns: minmax(0, 1fr); /* phones: the date goes under the title (.plate-row's two columns squeezed it) */
   gap: var(--s-2);
 }
 

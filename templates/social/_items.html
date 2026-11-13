@@ -11,7 +11,7 @@
           <header class="feed-card__head">
             {% user_avatar entry.project.owner 32 %}
             <p class="feed-card__by">
-              <a class="feed-card__owner" href="{% url 'accounts:profile' entry.project.owner.username %}">{{ entry.project.owner.display_name|default:entry.project.owner.username }}</a>{% user_marks entry.project.owner %}
+              <span class="feed-card__who"><a class="feed-card__owner" href="{% url 'accounts:profile' entry.project.owner.username %}">{{ entry.project.owner.display_name|default:entry.project.owner.username }}</a>{% user_marks entry.project.owner %}</span>
               <span class="muted feed-card__handle">@{{ entry.project.owner.username }} · <time datetime="{{ item.at|date:'c' }}" title="{{ item.at|date:'DATETIME_FORMAT' }}">{{ item.at|ago }}</time></span>
             </p>
           </header>

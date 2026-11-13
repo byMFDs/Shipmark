@@ -176,6 +176,11 @@ h1, h2, h3, .prose {
   overflow-wrap: break-word;
 }
 
+/* From 48em headings have room: hyphens there ("listen-ing" in a wide thread title) only hurt reading. */
+@media (min-width: 48em) {
+  h1, h2, h3 { hyphens: manual; }
+}
+
 @media (min-width: 48em) {
   h1 { font-size: var(--fs-5); }
   h2 { font-size: var(--fs-4); }
