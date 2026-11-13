@@ -89,8 +89,9 @@ def _voted(user, threads=(), replies=()):
 def _list_url(board, page, **params):
     base = board.get_absolute_url() if board else reverse("community:home")
     query = {k: v for k, v in params.items() if v}
-    query["page"] = page
-    return f"{base}?{urlencode(query)}"
+    if page > 1:
+        query["page"] = page
+    return f"{base}?{urlencode(query)}" if query else base
 
 
 # ---------- Lists ----------

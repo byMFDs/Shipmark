@@ -9,7 +9,7 @@ Brief: community master brief (kept by the developer in `docs/promts/`, not in g
 | 0 | Plan | done 2026-11-12, answers received |
 | 1 | Backend: data, permissions and abuse limits, flag, moderation integration, admin, abuse-case tests, minimal UI | done 2026-11-13 |
 | 2a | Backend for the UI: reply notifications (in-app), sticker files + manifest test, permissions and abuse tests for them | done 2026-11-13 |
-| 2b | UI: C (picker), D (composer, grids, lightbox, `blob:` preview), E (pages, 3 columns, Load more) | not started |
+| 2b | UI: C (picker), D (composer, grids, lightbox, `blob:` preview), E (pages, 3 columns, Load more) | done 2026-11-13 |
 | 3 | Polish: design and motion, legal (Terms, Privacy, rules, `TERMS_VERSION` bump), docs, full tests, `check --deploy` | not started |
 
 ## Decisions proposed in the plan (change if the developer disagrees)
@@ -70,6 +70,32 @@ raise `TERMS_VERSION` when Community ships; `COMMUNITY_ENABLED` stays off in pro
   every language, one sticker per reply even if two are posted, unknown key refused by the service too.
 - Not done here (2b): picker UI, composer, image grids and lightbox, `blob:` preview, community CSS.
 - To do in stage 3: DATA_INVENTORY / Privacy for notifications and `community_notified_at`.
+
+## Stage 2b (done)
+Started from a draft that an earlier session wrote without a GO (kept in `stash@{0}`, not dropped); reviewed, adopted,
+fixed and tested. Commits: pages and layout, composer and picker, lightbox, UI tests.
+- Pages: three columns on the feed layout (boards / content / rules panel; the boards fold above the content on phones),
+  `static/css/pages/community.css` (tokens only, light and dark), thread cards with a thumbnail, nested replies with
+  collapse (button shown by JS only), sort tabs, search, Previous/Next links + "Load more" (JSON `{html, next_url}`),
+  `/community/rules/` from `content/<lang>/community-rules.md` (English only for now).
+- Votes: plain POST form; `community.js` makes it optimistic and rolls back on any error. "Reply" moves the composer
+  under the reply (`?reply_to=<id>` works without JS).
+- Composer (`composer.js`): drag and drop, paste, previews (`blob:`), remove per file, hints for type/size/count (the server
+  still checks everything). Sticker picker: popover, bottom sheet on phones, search by label (and key), recent in
+  localStorage, arrow keys, Escape. Without JS: file input and a `<select>` with the same stickers.
+- Grids `.media-grid--1..4`: `aspect-ratio` + `object-fit: cover`, `width`/`height` from the stored file, `srcset`, lazy;
+  single wide / tall / tiny images get their own classes. Lightbox (`lightbox.js`, native `<dialog>`): Escape, arrows,
+  swipe, backdrop click, focus returns to the tile; tiles are plain links without JS.
+- CSP: `blob:` is added to `img-src` only on responses of the composer pages for signed-in users
+  (`views.allow_blob_previews`); every other page keeps the site policy (tested).
+- Motion (transform and opacity only, `prefers-reduced-motion: no-preference` only): staggered entrances, vote tick,
+  sticker pop, collapse open, composer focus, sheet slide.
+- Tests: 50 new in `community/test_ui.py` (shell, boards, search escaping, Load more JSON, grids with 1-4 images and odd
+  sizes, lightbox markup, picker and sticker validation, CSP, who sees which control, translations render).
+- Fix on the way: first-page links no longer carry `page=1`.
+- Still open for stage 3: seed_community, post_welcome, rules in 6 more languages (`content/<lang>/community-rules.md`),
+  Terms/Privacy/DATA_INVENTORY, DEPLOY_NOTES, `check --deploy`, TERMS_VERSION. Not yet checked by eye at 360-1440 px in
+  both themes (needs a browser).
 
 ## Open questions
 - Reports about threads/replies stay listed in /mod/ while the flag is off (their detail page is a 404). OK?

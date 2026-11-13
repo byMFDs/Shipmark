@@ -153,3 +153,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-13: Community stage 2a. In-app reply notifications (`ReplyNotification`, `/community/notifications/`, header dot from `User.community_notified_at` at zero queries, 90-day pruning in `community_daily`, export), 32 original sticker SVGs with safety and manifest tests, sticker sheet on /styleguide/, 7 languages.
   Next: "GO 2b" (UI: picker, composer, image grids and lightbox, pages).
+
+- 2026-11-13: Community stage 2b (UI). Pages in the feed shell, community.css, composer with previews, sticker picker, image grids, lightbox, rules page, Load more; adopted and fixed an unapproved draft from `stash@{0}` (kept). 50 UI tests; translations in 6 languages.
+  Next: "GO 3" (seed_community, post_welcome, rules in 6 languages, Terms/Privacy/DATA_INVENTORY, DEPLOY_NOTES, `check --deploy`); look at the pages in a browser first.
