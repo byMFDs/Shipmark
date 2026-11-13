@@ -29,7 +29,7 @@ Les règles complètes, y compris comment chaque poinçon peut être perdu, sont
 - Un profil public qui rassemble vos projets. Vous vous connectez avec GitHub ; nous ne demandons que votre profil public et vos adresses e-mail, jamais l'accès à vos dépôts.
 - Une page par projet avec ses poinçons, ses captures, une bande de disponibilité sur 30 jours (dès qu'il a Domain verified) et un journal de développement : de courtes mises à jour et des notes de lancement, dans l'ordre.
 - Un badge pour votre README GitHub ou votre site, qui affiche les poinçons du projet à l'instant présent. Le code à coller se trouve sur la page du projet.
-- Abonnements, j'aime, un fil avec les nouveaux lancements et les personnes que vous suivez, et une page « Explorer » pour trouver des projets par tag, outil ou poinçon.
+- Abonnements, j'aime, une page Pour vous avec les nouveaux lancements et les personnes que vous suivez, et une page « Découvrir » pour trouver des projets par tag, outil ou poinçon.
 - La maîtrise de vos données : téléchargez-les toutes dans un fichier ou supprimez votre compte depuis les Réglages. Pas de publicité, pas d'analytique, pas de scripts de pistage.
 
 ## Qui est derrière {#who}
@@ -42,7 +42,7 @@ Les règles complètes, y compris comment chaque poinçon peut être perdu, sont
 
 Prévu après la première version, sans ordre fixe :
 
-- une seule page de fil avec un filtre au lieu d'onglets séparés ;
+- une seule page Pour vous avec un filtre au lieu d'onglets séparés ;
 - des avatars et plus de façons de personnaliser un profil ;
 - des succès ;
 - de meilleures vérifications des dépôts, par exemple pour les forks, et le lien entre un dépôt et son domaine ;

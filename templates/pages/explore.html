@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load i18n static ui %}
 
-{% block title %}{% if params.q %}“{{ params.q }}” · {% endif %}{% translate "Explore" %} · {{ brand.SITE_NAME }}{% endblock %}
-{% block og_title %}{% translate "Explore" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block title %}{% if params.q %}“{{ params.q }}” · {% endif %}{% translate "Discover" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{% translate "Discover" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_description %}{% translate "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark." %}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}"><link rel="stylesheet" href="{% static 'css/pages/explore.css' %}">{% endblock %}
 {% block meta %}
@@ -13,7 +13,7 @@
 {% block content %}
   <div class="container shell explore">
     <header class="page-head">
-      <h1>{% translate "Explore" %}</h1>
+      <h1>{% translate "Discover" %}</h1>
       <p class="lede">{% translate "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark." %}</p>
     </header>
 

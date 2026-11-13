@@ -29,7 +29,7 @@ Pełne zasady, w tym to, jak można stracić każdy znak, są na stronie [Jak dz
 - Publiczny profil, który zbiera Twoje projekty. Logujesz się przez GitHub; prosimy tylko o publiczny profil i adresy e-mail, nigdy o dostęp do repozytoriów.
 - Stronę każdego projektu ze znakami, zrzutami ekranu, 30-dniowym paskiem dostępności (gdy projekt ma Domain verified) i dziennikiem rozwoju: krótkimi aktualizacjami i notatkami o premierze, po kolei.
 - Plakietkę do README na GitHubie lub na stronę, która pokazuje znaki, jakie projekt ma w tej chwili. Kod do wklejenia jest na stronie projektu.
-- Obserwowanie, polubienia, aktualności z nowymi premierami i od osób, które obserwujesz, oraz stronę „Przeglądaj”, gdzie projekty można szukać po tagu, narzędziu lub znaku.
+- Obserwowanie, polubienia, stronę Dla Ciebie z nowymi premierami i osobami, które obserwujesz, oraz stronę „Odkrywaj”, gdzie projekty można szukać po tagu, narzędziu lub znaku.
 - Kontrolę nad danymi: pobierz je wszystkie jako plik albo usuń konto w Ustawieniach. Bez reklam, bez analityki, bez skryptów śledzących.
 
 ## Kto za tym stoi {#who}
@@ -42,7 +42,7 @@ Pełne zasady, w tym to, jak można stracić każdy znak, są na stronie [Jak dz
 
 Zaplanowane po pierwszej wersji, bez ustalonej kolejności:
 
-- jedna strona aktualności z filtrem zamiast osobnych kart;
+- jedna strona Dla Ciebie z filtrem zamiast osobnych kart;
 - awatary i więcej możliwości dopasowania profilu;
 - osiągnięcia;
 - lepsze sprawdzanie repozytoriów, na przykład forków, oraz powiązanie repozytorium z domeną;

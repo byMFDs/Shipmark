@@ -29,7 +29,7 @@ Die vollständigen Regeln, auch wie man jedes Zeichen verlieren kann, stehen unt
 - Ein öffentliches Profil, das deine Projekte sammelt. Du meldest dich mit GitHub an; wir fragen nur nach deinem öffentlichen Profil und deinen E-Mail-Adressen, nie nach Zugriff auf deine Repositories.
 - Eine Seite für jedes Projekt mit seinen Prüfzeichen, Screenshots, einem 30-Tage-Verfügbarkeitsstreifen (sobald es Domain verified hat) und einem Build-Log: kurze Updates und Launch-Notizen, der Reihe nach.
 - Ein Badge für dein GitHub-README oder deine Website, das die Prüfzeichen zeigt, die das Projekt gerade hat. Den Code zum Einfügen findest du auf der Projektseite.
-- Folgen, Likes, einen Feed mit neuen Launches und von Leuten, denen du folgst, und eine Seite „Entdecken“, auf der du Projekte nach Tag, Werkzeug oder Prüfzeichen findest.
+- Folgen, Likes, eine Für-dich-Seite mit neuen Launches und Leuten, denen du folgst, und eine Seite „Entdecken“, auf der du Projekte nach Tag, Werkzeug oder Prüfzeichen findest.
 - Kontrolle über deine Daten: Lade sie alle als Datei herunter oder lösche dein Konto in den Einstellungen. Keine Werbung, keine Analyse, keine Tracking-Skripte.
 
 ## Wer dahintersteht {#who}
@@ -42,7 +42,7 @@ Die vollständigen Regeln, auch wie man jedes Zeichen verlieren kann, stehen unt
 
 Geplant nach der ersten Version, ohne feste Reihenfolge:
 
-- eine Feed-Seite mit Filter statt getrennter Tabs;
+- eine Für-dich-Seite mit Filter statt getrennter Tabs;
 - Avatare und mehr Möglichkeiten, ein Profil zu gestalten;
 - Erfolge;
 - bessere Prüfung von Repositories, zum Beispiel bei Forks, und die Verknüpfung eines Repositorys mit seiner Domain;

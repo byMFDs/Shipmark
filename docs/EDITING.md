@@ -30,9 +30,14 @@ source .venv/bin/activate
 | reply | відповідь | odpowiedź | Antwort | respuesta | réponse | resposta |
 | upvote | голос | głos | Stimme (Upvote) | voto | vote | voto |
 | sticker | стікер | naklejka | Sticker | sticker | autocollant | figurinha |
+| For You (меню) | Для вас | Dla Ciebie | Für dich | Para ti | Pour vous | Para você |
+| For You Page (заголовок /feed/) | Сторінка «Для вас» | Strona Dla Ciebie | Für-dich-Seite | Página Para ti | Page Pour vous | Página Para você |
+| Recommended (вкладка на /feed/) | Рекомендоване | Polecane | Empfohlen | Recomendados | Recommandés | Recomendados |
+| Discover (/explore/) | Пошук | Odkrywaj | Entdecken | Descubrir | Découvrir | Descobrir |
 
 Звертання: uk «ви», pl безособово/«Ty», de «du», es «tú», fr «vous», pt-br «você».
 Слово «verify» (домен, DNS) і «check» (репозиторій, uptime) не змішуємо.
+Адреси не змінюються: «For You Page» живе на `/feed/`, «Discover» на `/explore/`; міняються лише підписи.
 
 ## 1. Назва сайту, контакти, гасло
 

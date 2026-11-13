@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 18:13+0000\n"
+"POT-Creation-Date: 2026-11-13 21:20+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -518,7 +518,7 @@ msgstr "Заголовок"
 msgid "Write something or add an image."
 msgstr "Напишіть щось або додайте зображення."
 
-#: community/forms.py:133 templates/community/_composer.html:21
+#: community/forms.py:133 templates/community/_composer.html:22
 msgid "Sticker"
 msgstr "Стікер"
 
@@ -833,7 +833,7 @@ msgid "Likes"
 msgstr "Вподобання"
 
 #: config/settings/base.py:380 templates/community/_boards.html:3
-#: templates/community/_layout.html:10 templates/community/_layout.html:15
+#: templates/community/_layout.html:11 templates/community/_layout.html:16
 msgid "Boards"
 msgstr "Розділи"
 
@@ -1526,16 +1526,16 @@ msgid "%(time)s ago"
 msgstr "%(time)s тому"
 
 #: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
-#: templates/social/feed.html:4 templates/social/feed.html:5
-#: templates/social/feed.html:11
-msgid "Feed"
-msgstr "Стрічка"
+#
+msgid "For You"
+msgstr "Для вас"
 
 #: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #: templates/pages/explore.html:4 templates/pages/explore.html:5
 #: templates/pages/explore.html:16 templates/social/feed.html:20
-msgid "Explore"
-msgstr "Огляд"
+#
+msgid "Discover"
+msgstr "Пошук"
 
 #: pages/templatetags/ui.py:369
 msgid "Product"
@@ -1751,11 +1751,11 @@ msgstr ""
 "У цього проєкту вже є запис про запуск. Спершу видаліть його, щоб позначити "
 "інший."
 
-#: projects/images.py:26 templates/community/_composer.html:6
+#: projects/images.py:26 templates/community/_composer.html:7
 msgid "The image is larger than 5 MB."
 msgstr "Зображення більше за 5 МБ."
 
-#: projects/images.py:33 templates/community/_composer.html:6
+#: projects/images.py:33 templates/community/_composer.html:7
 msgid "Use a PNG, JPEG or WebP image."
 msgstr "Використайте зображення PNG, JPEG або WebP."
 
@@ -2707,7 +2707,7 @@ msgstr "Долучилися: %(date)s"
 msgid "Edit profile"
 msgstr "Редагувати профіль"
 
-#: templates/accounts/profile.html:46 templates/community/_reply.html:28
+#: templates/accounts/profile.html:46 templates/community/_reply.html:29
 #: templates/community/thread.html:44 templates/moderation/mod/report.html:3
 #: templates/moderation/mod/report.html:17 templates/projects/_log_entry.html:9
 #: templates/projects/detail.html:67
@@ -2920,7 +2920,7 @@ msgstr "Відкритих скарг немає."
 msgid "Skip to content"
 msgstr "Перейти до вмісту"
 
-#: templates/community/_author.html:2 templates/community/_reply.html:7
+#: templates/community/_author.html:2 templates/community/_reply.html:8
 #: templates/community/_thread_card.html:12 templates/community/thread.html:34
 msgid "[deleted]"
 msgstr "[видалено]"
@@ -2957,7 +2957,7 @@ msgstr "Новий тред"
 msgid "Sign in with GitHub"
 msgstr "Увійти через GitHub"
 
-#: templates/community/_composer.html:5
+#: templates/community/_composer.html:6
 #, python-format
 msgid "You can add at most %(counter)s image."
 msgid_plural "You can add at most %(counter)s images."
@@ -2966,27 +2966,27 @@ msgstr[1] "Можна додати щонайбільше %(counter)s зобра
 msgstr[2] "Можна додати щонайбільше %(counter)s зображень."
 msgstr[3] "Можна додати щонайбільше %(counter)s зображення."
 
-#: templates/community/_composer.html:11
+#: templates/community/_composer.html:12
 msgid "Drop images here"
 msgstr "Перетягніть зображення сюди"
 
-#: templates/community/_composer.html:12
+#: templates/community/_composer.html:13
 msgid "Chosen images"
 msgstr "Вибрані зображення"
 
-#: templates/community/_composer.html:12
+#: templates/community/_composer.html:13
 msgid "Remove image"
 msgstr "Прибрати зображення"
 
-#: templates/community/_composer.html:16
+#: templates/community/_composer.html:17
 msgid "Remove sticker"
 msgstr "Прибрати стікер"
 
-#: templates/community/_composer.html:20
+#: templates/community/_composer.html:21
 msgid "Add images"
 msgstr "Додати зображення"
 
-#: templates/community/_layout.html:20
+#: templates/community/_layout.html:21
 msgid "About the community"
 msgstr "Про спільноту"
 
@@ -3002,7 +3002,7 @@ msgstr "Попереднє зображення"
 msgid "Next image"
 msgstr "Наступне зображення"
 
-#: templates/community/_media.html:7
+#: templates/community/_media.html:8
 #, python-format
 msgid "Image %(number)s of %(total)s"
 msgstr "Зображення %(number)s з %(total)s"
@@ -3027,35 +3027,35 @@ msgstr "Усі стікери"
 msgid "No sticker matches."
 msgstr "Жоден стікер не підходить."
 
-#: templates/community/_reply.html:7
+#: templates/community/_reply.html:8
 msgid "[removed]"
 msgstr "[вилучено модераторами]"
 
-#: templates/community/_reply.html:11
+#: templates/community/_reply.html:12
 msgctxt "thread author"
 msgid "Author"
 msgstr "Автор"
 
-#: templates/community/_reply.html:13 templates/community/thread.html:28
+#: templates/community/_reply.html:14 templates/community/thread.html:28
 msgid "edited"
 msgstr "змінено"
 
-#: templates/community/_reply.html:23
+#: templates/community/_reply.html:24
 msgctxt "verb"
 msgid "Reply"
 msgstr "Відповісти"
 
-#: templates/community/_reply.html:25 templates/community/thread.html:41
+#: templates/community/_reply.html:26 templates/community/thread.html:41
 msgid "Edit"
 msgstr "Змінити"
 
-#: templates/community/_reply.html:26
+#: templates/community/_reply.html:27
 #: templates/community/confirm_delete.html:14
 #: templates/community/thread.html:42
 msgid "Delete"
 msgstr "Видалити"
 
-#: templates/community/_reply.html:35 templates/community/_reply.html:36
+#: templates/community/_reply.html:36 templates/community/_reply.html:37
 #, python-format
 msgid "Hide %(counter)s reply"
 msgid_plural "Hide %(counter)s replies"
@@ -3064,7 +3064,7 @@ msgstr[1] "Сховати %(counter)s відповіді"
 msgstr[2] "Сховати %(counter)s відповідей"
 msgstr[3] "Сховати %(counter)s відповіді"
 
-#: templates/community/_reply.html:36
+#: templates/community/_reply.html:37
 #, python-format
 msgid "Show %(counter)s reply"
 msgid_plural "Show %(counter)s replies"
@@ -3124,19 +3124,19 @@ msgstr[1] "%(counter)s відповіді"
 msgstr[2] "%(counter)s відповідей"
 msgstr[3] "%(counter)s відповіді"
 
-#: templates/community/_vote.html:4
+#: templates/community/_vote.html:5
 msgid "Could not save your vote. Try again."
 msgstr "Не вдалося зберегти ваш голос. Спробуйте ще раз."
 
-#: templates/community/_vote.html:6
+#: templates/community/_vote.html:7
 msgid "Remove upvote"
 msgstr "Забрати голос"
 
-#: templates/community/_vote.html:6
+#: templates/community/_vote.html:7
 msgid "Upvote"
 msgstr "Підтримати"
 
-#: templates/community/_vote.html:10
+#: templates/community/_vote.html:11
 #, python-format
 msgid "%(counter)s upvote"
 msgid_plural "%(counter)s upvotes"
@@ -3145,7 +3145,7 @@ msgstr[1] "%(counter)s голоси"
 msgstr[2] "%(counter)s голосів"
 msgstr[3] "%(counter)s голосу"
 
-#: templates/community/_vote.html:10
+#: templates/community/_vote.html:11
 msgid "upvote"
 msgid_plural "upvotes"
 msgstr[0] "голос"
@@ -3450,9 +3450,10 @@ msgstr "Акаунти молодші за 24 години: одне посил�
 msgid "Error"
 msgstr "Помилка"
 
-#: templates/errors/_body.html:17 templates/support/sent.html:22
-msgid "Go to your feed"
-msgstr "До вашої стрічки"
+#: templates/errors/_body.html:17 templates/social/feed.html:53
+#: templates/support/sent.html:22
+msgid "See projects for you"
+msgstr "Дивитися проєкти для вас"
 
 #: templates/errors/_body.html:17 templates/moderation/banned.html:18
 #: templates/support/sent.html:23
@@ -4182,8 +4183,9 @@ msgid "A few things people actually put on the internet."
 msgstr "Кілька речей, які люди справді випустили в мережу."
 
 #: templates/pages/landing.html:146
-msgid "Explore projects"
-msgstr "Переглянути проєкти"
+#
+msgid "Discover projects"
+msgstr "Знайти проєкти"
 
 #: templates/pages/landing.html:165 templates/pages/landing.html:193
 #: templates/pages/landing.html:215 templates/pages/landing.html:237
@@ -4995,21 +4997,28 @@ msgstr "Вподобано"
 msgid "Like"
 msgstr "Вподобати"
 
+#: templates/social/feed.html:4 templates/social/feed.html:5
+#: templates/social/feed.html:11
+#
+msgid "For You Page"
+msgstr "Сторінка «Для вас»"
+
 #: templates/social/feed.html:7
 msgid "Projects people shipped with verified proof, and official news."
 msgstr "Проєкти, які люди запустили, з перевіреним доказом, і офіційні новини."
 
 #: templates/social/feed.html:14
-msgid "Feed navigation"
-msgstr "Навігація стрічки"
+msgid "Page menu"
+msgstr "Меню сторінки"
 
 #: templates/social/feed.html:16 templates/social/feed.html:33
-msgid "For you"
-msgstr "Для вас"
+msgid "Recommended"
+msgstr "Рекомендоване"
 
 #: templates/social/feed.html:31
-msgid "Feed sections"
-msgstr "Розділи стрічки"
+#
+msgid "Sections"
+msgstr "Розділи"
 
 #: templates/social/feed.html:52
 msgid ""
@@ -5018,10 +5027,6 @@ msgid ""
 msgstr ""
 "Тут з'являються проєкти й оновлення людей, на яких ви підписані. Підпишіться "
 "на когось із його профілю."
-
-#: templates/social/feed.html:53
-msgid "See projects for you"
-msgstr "Дивитися проєкти для вас"
 
 #: templates/social/feed.html:62
 msgid "No projects match"

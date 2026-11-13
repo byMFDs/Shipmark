@@ -29,7 +29,7 @@ Las reglas completas, incluido cómo se puede perder cada sello, están en [Cóm
 - Un perfil público que reúne tus proyectos. Inicias sesión con GitHub; solo pedimos tu perfil público y tus direcciones de correo, nunca acceso a tus repositorios.
 - Una página para cada proyecto con sus sellos, capturas, una franja de disponibilidad de 30 días (cuando tiene Domain verified) y un registro de desarrollo: actualizaciones breves y notas de lanzamiento, en orden.
 - Una insignia para el README de GitHub o tu web que muestra los sellos que tiene el proyecto en este momento. El código para pegar está en la página del proyecto.
-- Seguir, me gusta, novedades con nuevos lanzamientos y de la gente que sigues, y una página «Explorar» para encontrar proyectos por etiqueta, herramienta o sello.
+- Seguir, me gusta, una página Para ti con nuevos lanzamientos y con la gente que sigues, y una página «Descubrir» para encontrar proyectos por etiqueta, herramienta o sello.
 - Control sobre tus datos: descárgalos todos en un archivo o elimina tu cuenta desde Ajustes. Sin anuncios, sin analítica, sin scripts de seguimiento.
 
 ## Quién está detrás {#who}
@@ -42,7 +42,7 @@ Las reglas completas, incluido cómo se puede perder cada sello, están en [Cóm
 
 Previsto después de la primera versión, sin un orden fijo:
 
-- una sola página de novedades con un filtro en lugar de pestañas separadas;
+- una sola página Para ti con un filtro en lugar de pestañas separadas;
 - avatares y más formas de personalizar un perfil;
 - logros;
 - mejores comprobaciones de repositorios, por ejemplo con forks, y vincular un repositorio con su dominio;

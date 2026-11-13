@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% load i18n static ui %}
 
-{% block title %}{% translate "Feed" %} · {{ brand.SITE_NAME }}{% endblock %}
-{% block og_title %}{% translate "Feed" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block title %}{% translate "For You Page" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_title %}{% translate "For You Page" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}">{% if tab == "news" %}<link rel="stylesheet" href="{% static 'css/pages/news.css' %}">{% endif %}{% endblock %}
 {% block meta %}<meta name="description" content="{% translate 'Projects people shipped with verified proof, and official news.' %}">{% if page > 1 or has_filters or tab != "foryou" %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
 
 {% block content %}
   <div class="container shell feed">
-    <h1 class="visually-hidden">{% translate "Feed" %}</h1>
+    <h1 class="visually-hidden">{% translate "For You Page" %}</h1>
     <div class="feed-layout">
 
-      <aside class="feed-nav" aria-label="{% translate 'Feed navigation' %}">
+      <aside class="feed-nav" aria-label="{% translate 'Page menu' %}">
         <ul class="feed-nav__list">
-          <li><a class="feed-nav__link" href="{{ foryou_url }}"{% if tab == "foryou" %} aria-current="page"{% endif %}>{% translate "For you" %}</a></li>
+          <li><a class="feed-nav__link" href="{{ foryou_url }}"{% if tab == "foryou" %} aria-current="page"{% endif %}>{% translate "Recommended" %}</a></li>
           {% if user.is_authenticated %}<li><a class="feed-nav__link" href="{{ following_url }}"{% if tab == "following" %} aria-current="page"{% endif %}>{% translate "Following" %}</a></li>{% endif %}
           <li><a class="feed-nav__link" href="{{ news_url }}"{% if tab == "news" %} aria-current="page"{% endif %}>{% translate "News" %}</a></li>
           <li class="feed-nav__rule" aria-hidden="true"></li>
-          <li><a class="feed-nav__link" href="{% url 'pages:explore' %}">{% translate "Explore" %}</a></li>
+          <li><a class="feed-nav__link" href="{% url 'pages:explore' %}">{% translate "Discover" %}</a></li>
           {% if user.is_authenticated %}
             <li><a class="feed-nav__link" href="{% url 'accounts:profile' user.username %}">{% translate "Your profile" %}</a></li>
             <li><a class="btn btn--primary feed-nav__new" href="{% url 'projects:new' %}">{% icon "plus" %}{% translate "New project" %}</a></li>
@@ -28,9 +28,9 @@
       </aside>
 
       <div class="feed-main">
-        <nav class="feed-tabs" aria-label="{% translate 'Feed sections' %}">
+        <nav class="feed-tabs" aria-label="{% translate 'Sections' %}">
           <ul class="feed-tabs__list">
-            <li><a class="feed-tabs__link" href="{{ foryou_url }}"{% if tab == "foryou" %} aria-current="page"{% endif %}>{% translate "For you" %}</a></li>
+            <li><a class="feed-tabs__link" href="{{ foryou_url }}"{% if tab == "foryou" %} aria-current="page"{% endif %}>{% translate "Recommended" %}</a></li>
             {% if user.is_authenticated %}<li><a class="feed-tabs__link" href="{{ following_url }}"{% if tab == "following" %} aria-current="page"{% endif %}>{% translate "Following" %}</a></li>{% endif %}
             <li><a class="feed-tabs__link" href="{{ news_url }}"{% if tab == "news" %} aria-current="page"{% endif %}>{% translate "News" %}</a></li>
           </ul>

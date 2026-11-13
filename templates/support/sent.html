@@ -19,7 +19,7 @@
         <p class="lede">{% if again %}{% translate "The same text arrived a moment ago, so we kept one copy. No need to send it again." %}{% else %}{% translate "Thank you. We read every message, but we cannot promise to reply to all." %}{% endif %}</p>
         <p class="muted">{% translate "If we answer, the reply goes to the email address you gave." %}</p>
         <div class="support-sent__actions">
-          {% if user.is_authenticated %}<a class="btn btn--secondary" href="{% url 'social:feed' %}">{% translate "Go to your feed" %}</a>
+          {% if user.is_authenticated %}<a class="btn btn--secondary" href="{% url 'social:feed' %}">{% translate "See projects for you" %}</a>
           {% else %}<a class="btn btn--secondary" href="{% url 'pages:landing' %}">{% translate "Go to the front page" %}</a>{% endif %}
           <a class="btn btn--quiet" href="{% url 'support:form' %}">{% translate "Write another message" %}</a>
         </div>

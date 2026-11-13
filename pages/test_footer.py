@@ -26,7 +26,7 @@ class FooterTests(TestCase):
     def test_three_columns_in_order(self):
         found = columns(self.page())
         self.assertEqual(list(found), ["Product", "Company", "Legal"])
-        self.assertEqual(found["Product"][:3], ["Feed", "Explore", "News"])
+        self.assertEqual(found["Product"][:3], ["For You", "Discover", "News"])
         self.assertEqual(found["Company"][:2], ["About", "How proof works"])
         self.assertEqual(found["Legal"], ["Privacy", "Terms", "Cookies"])
 

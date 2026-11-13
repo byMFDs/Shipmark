@@ -29,7 +29,7 @@ The full rules, including how each mark can be lost, are on [How proof works](/h
 - A public profile that collects your projects. You sign in with GitHub; we ask only for your public profile and your email addresses, never for access to your repositories.
 - A page for each project with its hallmarks, screenshots, a 30-day uptime strip once it has Domain verified, and a build log: short updates and launch notes, in order.
 - A badge for your GitHub README or website that shows the hallmarks the project has right now. The project page gives you the code to paste.
-- Follows, likes, a feed of new launches and of the people you follow, and an Explore page to find projects by tag, tool or hallmark.
+- Follows, likes, a For You Page with new launches and with the people you follow, and a Discover page to find projects by tag, tool or hallmark.
 - Control over your data: download all of it as a file, or delete your account, from Settings. No ads, no analytics, no tracking scripts.
 
 ## Who is behind it {#who}
@@ -42,7 +42,7 @@ The full rules, including how each mark can be lost, are on [How proof works](/h
 
 Planned after the first version, in no fixed order:
 
-- one feed page with a filter, instead of separate tabs;
+- one For You Page with a filter, instead of separate tabs;
 - avatars and more ways to shape a profile;
 - achievements;
 - better repository checks, for example for forks, and linking a repository to its domain;

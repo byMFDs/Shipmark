@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 18:13+0000\n"
+"POT-Creation-Date: 2026-11-13 21:20+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -524,7 +524,7 @@ msgstr "Titel"
 msgid "Write something or add an image."
 msgstr "Schreib etwas oder füge ein Bild hinzu."
 
-#: community/forms.py:133 templates/community/_composer.html:21
+#: community/forms.py:133 templates/community/_composer.html:22
 msgid "Sticker"
 msgstr "Sticker"
 
@@ -844,7 +844,7 @@ msgid "Likes"
 msgstr "Likes"
 
 #: config/settings/base.py:380 templates/community/_boards.html:3
-#: templates/community/_layout.html:10 templates/community/_layout.html:15
+#: templates/community/_layout.html:11 templates/community/_layout.html:16
 msgid "Boards"
 msgstr "Bereiche"
 
@@ -1538,15 +1538,15 @@ msgid "%(time)s ago"
 msgstr "vor %(time)s"
 
 #: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
-#: templates/social/feed.html:4 templates/social/feed.html:5
-#: templates/social/feed.html:11
-msgid "Feed"
-msgstr "Feed"
+#
+msgid "For You"
+msgstr "Für dich"
 
 #: pages/templatetags/ui.py:364 pages/templatetags/ui.py:369
 #: templates/pages/explore.html:4 templates/pages/explore.html:5
 #: templates/pages/explore.html:16 templates/social/feed.html:20
-msgid "Explore"
+#
+msgid "Discover"
 msgstr "Entdecken"
 
 #: pages/templatetags/ui.py:369
@@ -1762,11 +1762,11 @@ msgstr ""
 "Dieses Projekt hat bereits einen Launch-Eintrag. Lösche ihn zuerst, um einen "
 "anderen zu markieren."
 
-#: projects/images.py:26 templates/community/_composer.html:6
+#: projects/images.py:26 templates/community/_composer.html:7
 msgid "The image is larger than 5 MB."
 msgstr "Das Bild ist größer als 5 MB."
 
-#: projects/images.py:33 templates/community/_composer.html:6
+#: projects/images.py:33 templates/community/_composer.html:7
 msgid "Use a PNG, JPEG or WebP image."
 msgstr "Verwende ein PNG-, JPEG- oder WebP-Bild."
 
@@ -2721,7 +2721,7 @@ msgstr "Beigetreten am %(date)s"
 msgid "Edit profile"
 msgstr "Profil bearbeiten"
 
-#: templates/accounts/profile.html:46 templates/community/_reply.html:28
+#: templates/accounts/profile.html:46 templates/community/_reply.html:29
 #: templates/community/thread.html:44 templates/moderation/mod/report.html:3
 #: templates/moderation/mod/report.html:17 templates/projects/_log_entry.html:9
 #: templates/projects/detail.html:67
@@ -2937,7 +2937,7 @@ msgstr "Keine offenen Meldungen."
 msgid "Skip to content"
 msgstr "Zum Inhalt springen"
 
-#: templates/community/_author.html:2 templates/community/_reply.html:7
+#: templates/community/_author.html:2 templates/community/_reply.html:8
 #: templates/community/_thread_card.html:12 templates/community/thread.html:34
 msgid "[deleted]"
 msgstr "[gelöscht]"
@@ -2974,34 +2974,34 @@ msgstr "Neuer Thread"
 msgid "Sign in with GitHub"
 msgstr "Mit GitHub anmelden"
 
-#: templates/community/_composer.html:5
+#: templates/community/_composer.html:6
 #, python-format
 msgid "You can add at most %(counter)s image."
 msgid_plural "You can add at most %(counter)s images."
 msgstr[0] "Du kannst höchstens %(counter)s Bild hinzufügen."
 msgstr[1] "Du kannst höchstens %(counter)s Bilder hinzufügen."
 
-#: templates/community/_composer.html:11
+#: templates/community/_composer.html:12
 msgid "Drop images here"
 msgstr "Bilder hier ablegen"
 
-#: templates/community/_composer.html:12
+#: templates/community/_composer.html:13
 msgid "Chosen images"
 msgstr "Ausgewählte Bilder"
 
-#: templates/community/_composer.html:12
+#: templates/community/_composer.html:13
 msgid "Remove image"
 msgstr "Bild entfernen"
 
-#: templates/community/_composer.html:16
+#: templates/community/_composer.html:17
 msgid "Remove sticker"
 msgstr "Sticker entfernen"
 
-#: templates/community/_composer.html:20
+#: templates/community/_composer.html:21
 msgid "Add images"
 msgstr "Bilder hinzufügen"
 
-#: templates/community/_layout.html:20
+#: templates/community/_layout.html:21
 msgid "About the community"
 msgstr "Über die Community"
 
@@ -3017,7 +3017,7 @@ msgstr "Vorheriges Bild"
 msgid "Next image"
 msgstr "Nächstes Bild"
 
-#: templates/community/_media.html:7
+#: templates/community/_media.html:8
 #, python-format
 msgid "Image %(number)s of %(total)s"
 msgstr "Bild %(number)s von %(total)s"
@@ -3042,42 +3042,42 @@ msgstr "Alle Sticker"
 msgid "No sticker matches."
 msgstr "Kein Sticker passt."
 
-#: templates/community/_reply.html:7
+#: templates/community/_reply.html:8
 msgid "[removed]"
 msgstr "[von Moderatoren entfernt]"
 
-#: templates/community/_reply.html:11
+#: templates/community/_reply.html:12
 msgctxt "thread author"
 msgid "Author"
 msgstr "Autor"
 
-#: templates/community/_reply.html:13 templates/community/thread.html:28
+#: templates/community/_reply.html:14 templates/community/thread.html:28
 msgid "edited"
 msgstr "bearbeitet"
 
-#: templates/community/_reply.html:23
+#: templates/community/_reply.html:24
 msgctxt "verb"
 msgid "Reply"
 msgstr "Antworten"
 
-#: templates/community/_reply.html:25 templates/community/thread.html:41
+#: templates/community/_reply.html:26 templates/community/thread.html:41
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: templates/community/_reply.html:26
+#: templates/community/_reply.html:27
 #: templates/community/confirm_delete.html:14
 #: templates/community/thread.html:42
 msgid "Delete"
 msgstr "Löschen"
 
-#: templates/community/_reply.html:35 templates/community/_reply.html:36
+#: templates/community/_reply.html:36 templates/community/_reply.html:37
 #, python-format
 msgid "Hide %(counter)s reply"
 msgid_plural "Hide %(counter)s replies"
 msgstr[0] "%(counter)s Antwort ausblenden"
 msgstr[1] "%(counter)s Antworten ausblenden"
 
-#: templates/community/_reply.html:36
+#: templates/community/_reply.html:37
 #, python-format
 msgid "Show %(counter)s reply"
 msgid_plural "Show %(counter)s replies"
@@ -3133,26 +3133,26 @@ msgid_plural "%(counter)s replies"
 msgstr[0] "%(counter)s Antwort"
 msgstr[1] "%(counter)s Antworten"
 
-#: templates/community/_vote.html:4
+#: templates/community/_vote.html:5
 msgid "Could not save your vote. Try again."
 msgstr "Deine Stimme konnte nicht gespeichert werden. Versuche es erneut."
 
-#: templates/community/_vote.html:6
+#: templates/community/_vote.html:7
 msgid "Remove upvote"
 msgstr "Stimme zurücknehmen"
 
-#: templates/community/_vote.html:6
+#: templates/community/_vote.html:7
 msgid "Upvote"
 msgstr "Hochstimmen"
 
-#: templates/community/_vote.html:10
+#: templates/community/_vote.html:11
 #, python-format
 msgid "%(counter)s upvote"
 msgid_plural "%(counter)s upvotes"
 msgstr[0] "%(counter)s Stimme"
 msgstr[1] "%(counter)s Stimmen"
 
-#: templates/community/_vote.html:10
+#: templates/community/_vote.html:11
 msgid "upvote"
 msgid_plural "upvotes"
 msgstr[0] "Stimme"
@@ -3460,9 +3460,10 @@ msgstr "Konten unter 24 Stunden: ein Link pro Beitrag, keine Bilder."
 msgid "Error"
 msgstr "Fehler"
 
-#: templates/errors/_body.html:17 templates/support/sent.html:22
-msgid "Go to your feed"
-msgstr "Zu deinem Feed"
+#: templates/errors/_body.html:17 templates/social/feed.html:53
+#: templates/support/sent.html:22
+msgid "See projects for you"
+msgstr "Projekte für dich ansehen"
 
 #: templates/errors/_body.html:17 templates/moderation/banned.html:18
 #: templates/support/sent.html:23
@@ -4199,7 +4200,8 @@ msgid "A few things people actually put on the internet."
 msgstr "Ein paar Dinge, die Menschen wirklich ins Netz gestellt haben."
 
 #: templates/pages/landing.html:146
-msgid "Explore projects"
+#
+msgid "Discover projects"
 msgstr "Projekte entdecken"
 
 #: templates/pages/landing.html:165 templates/pages/landing.html:193
@@ -5019,6 +5021,12 @@ msgstr "Geliked"
 msgid "Like"
 msgstr "Liken"
 
+#: templates/social/feed.html:4 templates/social/feed.html:5
+#: templates/social/feed.html:11
+#
+msgid "For You Page"
+msgstr "Für-dich-Seite"
+
 #: templates/social/feed.html:7
 msgid "Projects people shipped with verified proof, and official news."
 msgstr ""
@@ -5026,16 +5034,17 @@ msgstr ""
 "offizielle Neuigkeiten."
 
 #: templates/social/feed.html:14
-msgid "Feed navigation"
-msgstr "Feed-Navigation"
+msgid "Page menu"
+msgstr "Seitenmenü"
 
 #: templates/social/feed.html:16 templates/social/feed.html:33
-msgid "For you"
-msgstr "Für dich"
+msgid "Recommended"
+msgstr "Empfohlen"
 
 #: templates/social/feed.html:31
-msgid "Feed sections"
-msgstr "Feed-Bereiche"
+#
+msgid "Sections"
+msgstr "Bereiche"
 
 #: templates/social/feed.html:52
 msgid ""
@@ -5044,10 +5053,6 @@ msgid ""
 msgstr ""
 "Projekte und Updates von Personen, denen du folgst, erscheinen hier. Folge "
 "jemandem über sein Profil."
-
-#: templates/social/feed.html:53
-msgid "See projects for you"
-msgstr "Projekte für dich ansehen"
 
 #: templates/social/feed.html:62
 msgid "No projects match"

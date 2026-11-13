@@ -13,7 +13,7 @@
       <span class="error-stamp__ghost">{% hallmark mark "m" True %}</span>
     </div>
     <div class="error-page__actions">
-      <a class="btn btn--primary" href="{{ home_url|default:'/' }}">{% if home_is_feed %}{% translate "Go to your feed" %}{% else %}{% translate "Go to the front page" %}{% endif %}</a>
+      <a class="btn btn--primary" href="{{ home_url|default:'/' }}">{% if home_is_feed %}{% translate "See projects for you" %}{% else %}{% translate "Go to the front page" %}{% endif %}</a>
       {% if back_url %}<a class="btn btn--secondary" href="{{ back_url }}" data-back>{% icon "arrow-left" %}<span>{% translate "Go back" %}</span></a>
       {% else %}<button type="button" class="btn btn--secondary needs-js" data-back>{% icon "arrow-left" %}<span>{% translate "Go back" %}</span></button>{% endif %}
       {% if support_url %}<a class="btn btn--quiet" href="{{ support_url }}">{% icon "alert" %}<span>{% translate "Report a problem" %}</span></a>{% endif %}

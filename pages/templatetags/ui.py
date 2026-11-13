@@ -361,12 +361,12 @@ def maybe_url(name, *args):
 
 
 # Links appear by themselves once these URL names exist.
-NAV_LINKS = [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore")), ("news:list", (), _("News")),
+NAV_LINKS = [("social:feed", (), _("For You")), ("pages:explore", (), _("Discover")), ("news:list", (), _("News")),
              ("community:home", (), _("Community"))]  # the last one only while COMMUNITY_ENABLED is on
 # Footer columns: (heading, [(url name, args, label)]). A link appears only once its URL exists; Community only while
 # COMMUNITY_ENABLED is on (like the header).
 FOOTER_COLUMNS = [
-    (_("Product"), [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore")), ("news:list", (), _("News")),
+    (_("Product"), [("social:feed", (), _("For You")), ("pages:explore", (), _("Discover")), ("news:list", (), _("News")),
                     ("community:home", (), _("Community"))]),
     (_("Company"), [("pages:about", (), _("About")), ("pages:how_proof_works", (), _("How proof works")),
                     ("support:form", (), _("Support"))]),

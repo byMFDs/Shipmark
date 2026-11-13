@@ -29,7 +29,7 @@ As regras completas, incluindo como cada selo pode ser perdido, estão em [Como 
 - Um perfil público que reúne seus projetos. Você entra com o GitHub; pedimos só o seu perfil público e seus endereços de e-mail, nunca acesso aos seus repositórios.
 - Uma página para cada projeto com seus selos, capturas de tela, uma faixa de disponibilidade de 30 dias (quando tem Domain verified) e um diário de desenvolvimento: atualizações curtas e notas de lançamento, em ordem.
 - Um badge para o README do GitHub ou para o seu site que mostra os selos que o projeto tem agora. O código para colar está na página do projeto.
-- Seguir, curtidas, um feed com novos lançamentos e das pessoas que você segue, e uma página "Explorar" para encontrar projetos por tag, ferramenta ou selo.
+- Seguir, curtidas, uma página Para você com novos lançamentos e com as pessoas que você segue, e uma página "Descobrir" para encontrar projetos por tag, ferramenta ou selo.
 - Controle sobre seus dados: baixe tudo em um arquivo ou exclua sua conta em Configurações. Sem anúncios, sem analytics, sem scripts de rastreamento.
 
 ## Quem está por trás {#who}
@@ -42,7 +42,7 @@ O {{ site_name }} é construído e mantido por uma pessoa, Danylo Rudenko, desen
 
 Planejado depois da primeira versão, sem ordem definida:
 
-- uma única página de feed com filtro, em vez de abas separadas;
+- uma única página Para você com filtro, em vez de abas separadas;
 - avatares e mais formas de personalizar um perfil;
 - conquistas;
 - verificações melhores de repositórios, por exemplo com forks, e ligar um repositório ao seu domínio;
