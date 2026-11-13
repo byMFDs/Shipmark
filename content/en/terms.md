@@ -49,6 +49,10 @@ The community (boards, threads and replies) has its own [community rules](/commu
 
 Anyone signed in can report a project, a profile or a build-log update. Moderators can dismiss a report, remove a project, clear profile fields (picture and cover, headline and About, links), mute an account for up to 7 days (you can still read, change your settings, download or delete your data, but not post), or ban it for up to 14 days (you are signed out, cannot sign in, and your profile and projects are not public). Every decision comes with a reason that you see. Longer or permanent sanctions are decided only by the site's administrators, who may also hide projects or suspend accounts. Deleting your account does not end a ban (see the [Privacy policy](/legal/privacy/)). If you think we made a mistake, write to [{{ contact_email }}](mailto:{{ contact_email }}).
 
+## Support {#support}
+
+You can write to us through the [support form](/support/). We read every message but cannot promise to reply to every one. Do not send passwords, keys or other people's private data. Using the form for spam, threats or harassment is treated like other abuse of the site. How we handle your message is described in the [Privacy policy](/legal/privacy/#support).
+
 ## Ending {#ending}
 
 You can delete your account at any time in Settings. We may close an account that seriously or repeatedly breaks these terms. What happens to your data is explained in the [Privacy policy](/legal/privacy/).

@@ -56,4 +56,11 @@ def dashboard_callback(request, context):
         ],
         "latest_reports": list(open_reports.select_related("reporter").order_by("-created_at")[:5]),
     })
+    from support.admin import can_view_inbox, unread_count  # only people with the support permission see it
+
+    if can_view_inbox(request):
+        context["support_stat"] = {
+            "label": _("Unread support messages"), "value": unread_count(),
+            "link": reverse("admin:support_supportmessage_changelist") + "?status__exact=new",
+        }
     return context

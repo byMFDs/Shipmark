@@ -115,7 +115,7 @@ class TermsAcceptanceMiddleware:
     """
 
     OPEN_URL_NAMES = ("accounts:accept_terms", "accounts:export", "accounts:delete", "account_logout", "set_language")
-    OPEN_PREFIXES = ("/legal/", "/static/", "/media/", BADGE_PREFIX, "/accounts/")
+    OPEN_PREFIXES = ("/legal/", "/static/", "/media/", BADGE_PREFIX, "/accounts/", "/support/")
 
     def __init__(self, get_response):
         self.get_response = get_response

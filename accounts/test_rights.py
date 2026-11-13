@@ -174,13 +174,13 @@ class ExportTests(TestCase):
     def test_query_count_does_not_grow_with_projects(self):
         self.client.force_login(self.alice)
         # 13 + the ban check (active sanctions) + sanctions and notices + skills, links and pins in the export
-        # + community: images, threads, replies, upvotes, notifications
-        with self.assertNumQueries(24):
+        # + community: images, threads, replies, upvotes, notifications + support messages
+        with self.assertNumQueries(25):
             self.client.post(self.url)
         for i in range(5):
             p = make_project(self.alice, f"more-{i}")
             BuildLogEntry.objects.create(project=p, text="x")
-        with self.assertNumQueries(24):
+        with self.assertNumQueries(25):
             self.client.post(self.url)
 
     def test_rate_limited(self):
@@ -263,7 +263,7 @@ class DeleteAccountTests(TestCase):
         self.assertEqual(entry.target_id, str(alice_id))
         self.assertIsNone(entry.actor)
         self.assertEqual(entry.metadata, {
-            "projects_deleted": 2, "reports_anonymized": 1, "community_images_deleted": 0,
+            "projects_deleted": 2, "reports_anonymized": 1, "support_messages_deleted": 0, "community_images_deleted": 0,
             "community_threads_deleted": 0, "community_threads_anonymized": 0, "community_replies_anonymized": 0,
         })
         self.assertNotIn("alice", entry.target_repr)

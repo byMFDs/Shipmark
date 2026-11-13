@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "news",
     # Always installed (its tables exist either way); COMMUNITY_ENABLED below decides whether anyone can reach it.
     "community",
+    "support",
 ]
 
 MIDDLEWARE = [
@@ -252,6 +253,35 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Support attachments: a PRIVATE folder, never under MEDIA_ROOT and never served by URL (support/storage.py).
+# Staff download them through an authenticated view. To use a private S3 prefix instead, change only
+# STORAGES["support"] (docs/DEPLOY_NOTES.md).
+SUPPORT_ROOT = (Path(tempfile.mkdtemp(prefix="shipmark-test-support-")) if TESTING
+                else Path(env.str("SUPPORT_ROOT", default=str(BASE_DIR / "private" / "support"))))
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    "support": {"BACKEND": "support.storage.PrivateStorage"},
+}
+
+# Email: only the notification to the support inbox is sent (support/notify.py); nobody else gets email.
+# Development prints it in the terminal; production sets SMTP in .env (docs/DEPLOY_NOTES.md, Gmail steps).
+EMAIL_BACKEND = env.str("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = env.str("EMAIL_HOST", default="localhost")
+EMAIL_PORT = env.int("EMAIL_PORT", default=587)
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD", default="")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
+EMAIL_TIMEOUT = 10
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", default="") or EMAIL_HOST_USER or "webmaster@localhost"
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+# Where new support messages are announced. Empty: no email, messages wait in the admin inbox.
+SUPPORT_INBOX_EMAIL = env.str("SUPPORT_INBOX_EMAIL", default="")
+# The request header that holds the visitor's address as the reverse proxy sets it (for example HTTP_X_REAL_IP with
+# nginx `proxy_set_header X-Real-IP $remote_addr;`). Empty: REMOTE_ADDR. Used only for the salted, cache-only hash
+# of the support form's rate limit; never stored.
+CLIENT_IP_HEADER = env.str("CLIENT_IP_HEADER", default="")
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --- Admin look (django-unfold). Name, logo and colors come from branding.py and tokens.css. ---
@@ -345,6 +375,13 @@ UNFOLD = {
                     {"title": _("Threads"), "icon": "chat", "link": reverse_lazy("admin:community_thread_changelist")},
                     {"title": _("Replies"), "icon": "reply", "link": reverse_lazy("admin:community_reply_changelist")},
                     {"title": _("Images"), "icon": "image", "link": reverse_lazy("admin:community_communityimage_changelist")},
+                ],
+            },
+            {
+                "title": _("Support"),
+                "items": [
+                    {"title": _("Inbox"), "icon": "mail", "link": reverse_lazy("admin:support_supportmessage_changelist"),
+                     "badge": "support.admin.unread_badge", "permission": "support.admin.can_view_inbox"},
                 ],
             },
             {

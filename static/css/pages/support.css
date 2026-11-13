@@ -1,0 +1,98 @@
+/* Support: /support/ (a .sheet: intro with the promise record on the left, topics and the form on the right)
+   and /support/sent/ (a record that gets a "Received" stamp). Colours are ink and paper only: a stamp here is
+   not proof, so it is never green. */
+
+.support-promise { margin-top: var(--s-3); }
+.support-promise__list {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0 var(--s-5) var(--s-5) calc(var(--s-5) + 1.25rem);
+}
+.support-promise__list li { padding-left: var(--s-1); }
+.support-promise__list strong { display: block; color: var(--text); font-weight: 600; }
+
+.support-topics h2,
+.support-form h2 { font-size: var(--fs-2); margin: 0; }
+
+.support-topics__list { display: grid; gap: 0; margin: var(--s-3) 0 0; }
+.support-topics__list > div {
+  display: grid;
+  gap: var(--s-1);
+  padding: var(--s-3) 0;
+  border-top: 1px solid var(--line);
+}
+.support-topics__list > div:first-child { border-top: 0; padding-top: 0; }
+.support-topics__list dt { font-family: var(--font-mono); font-size: var(--fs--2); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text); }
+.support-topics__list dd { margin: 0; color: var(--muted); }
+
+@media (min-width: 48em) {
+  .support-topics__list > div { grid-template-columns: 11rem minmax(0, 1fr); gap: var(--s-4); align-items: baseline; }
+}
+
+.support-form__ref {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-2);
+  align-items: baseline;
+  margin: 0;
+  padding: var(--s-3);
+  background: var(--tint);
+  border: 1px solid var(--line);
+}
+
+.support-form__actions { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-4); align-items: center; }
+.support-form__note { margin: 0; font-size: var(--fs--1); }
+
+/* Honeypot: out of sight and out of the tab order, but not display:none (simple bots skip hidden fields). */
+.support-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ---------- Sent ---------- */
+
+.support-sent { display: grid; gap: var(--s-6); align-items: center; }
+
+@media (min-width: 48em) {
+  .support-sent { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s-7); }
+}
+
+.support-sent__record { position: relative; padding-bottom: var(--s-5); overflow: hidden; }
+.support-sent__record .record__head { display: flex; justify-content: space-between; gap: var(--s-3); }
+.support-sent__lines { display: grid; gap: var(--s-3); padding: 0 var(--s-5); }
+.support-sent__lines span { display: block; height: 0.5rem; background: var(--tint); }
+.support-sent__lines span:nth-child(2) { width: 85%; }
+.support-sent__lines span:nth-child(3) { width: 60%; }
+
+.support-sent__stamp {
+  position: absolute;
+  right: var(--s-5);
+  bottom: var(--s-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--text);
+  transform: rotate(-6deg);
+}
+.support-sent__stamp .icon { width: 1rem; height: 1rem; }
+
+.support-sent__text { display: grid; gap: var(--s-3); }
+.support-sent__text > * { margin: 0; }
+.support-sent__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .support-sent__stamp { animation: support-stamp 700ms var(--ease-out) 350ms backwards; }
+}
+
+@keyframes support-stamp {
+  0% { opacity: 0; transform: translateY(-14px) rotate(-6deg) scale(1.25); }
+  60% { opacity: 1; transform: translateY(0) rotate(-6deg) scale(0.96); }
+  100% { opacity: 1; transform: rotate(-6deg) scale(1); }
+}

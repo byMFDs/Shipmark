@@ -22,6 +22,10 @@ Set them in the real environment or in `/srv/shipmark/.env` (gitignored; real va
 | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | yes | OAuth App. Callback URL: `https://YOUR.DOMAIN/accounts/github/login/callback/` |
 | `GITHUB_API_TOKEN` | **yes** (for `reverify_repos`) | Fine-grained or classic token with **no scopes** (public data only). Lifts GitHub's limit from 60 to 5000 requests/hour. One repo check costs up to ~10 requests, so without it the weekly re-check of repositories stops at the limit after a handful of repos (nothing breaks: it continues next run) |
 | `MEDIA_ROOT` | no | Folder for uploads. Default `<project>/media` |
+| `SUPPORT_INBOX_EMAIL` | no | Where the notice about each support message goes. Empty: no email, messages wait in the admin inbox |
+| `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `EMAIL_USE_TLS`, `DEFAULT_FROM_EMAIL` | with `SUPPORT_INBOX_EMAIL` | SMTP for that notice (Gmail: see "Support inbox"). Prod uses the SMTP backend; dev prints emails in the terminal |
+| `SUPPORT_ROOT` | no | Private folder for support attachments, **outside** `MEDIA_ROOT`, never served. Default `<project>/private/support` |
+| `CLIENT_IP_HEADER` | recommended | `HTTP_X_REAL_IP` when nginx sets `proxy_set_header X-Real-IP $remote_addr;`. Without it every visitor looks like the proxy and shares one support rate limit |
 | `COMMUNITY_ENABLED` | no | `true` switches the community on (`/community/`, the header link). Default **false** in prod: every community route is 404. See "Community: switching it on" |
 | `SECURE_HSTS_SECONDS` | no | Default 3600. Raise to 31536000 after HTTPS has worked for a few days |
 | `SECURE_HSTS_INCLUDE_SUBDOMAINS`, `SECURE_HSTS_PRELOAD` | no | Default true |
@@ -222,6 +226,9 @@ DJANGO_SETTINGS_MODULE=config.settings.prod
 # Bans themselves need no cron: expiry is checked per request.
 15 4 * * *    cd /srv/shipmark && .venv/bin/python manage.py prune_bans >> /var/log/shipmark/bans.log 2>&1
 
+# Support: once a day. Deletes closed support messages older than 12 months, with their attachment files.
+30 5 * * *    cd /srv/shipmark && .venv/bin/python manage.py prune_support >> /var/log/shipmark/support.log 2>&1
+
 # Community: once a day. Recounts scores and reply counts (votes of suspended or banned accounts stop counting)
 # and deletes reply notifications older than 90 days (the privacy page promises it). Safe with the flag off.
 0 5 * * *     cd /srv/shipmark && flock -n /tmp/shipmark-community.lock .venv/bin/python manage.py community_daily >> /var/log/shipmark/community.log 2>&1
@@ -288,6 +295,9 @@ printf 'localhost:5432:shipmark:shipmark:THE_DB_PASSWORD\n' > ~/.pgpass && chmod
 
 # Media: 03:30 every day. Same 14-day rotation.
 30 3 * * *  tar -czf /var/backups/shipmark/media-$(date +\%F).tar.gz -C /srv/shipmark media && find /var/backups/shipmark -name 'media-*.tar.gz' -mtime +14 -delete
+
+# Support attachments (private folder, SUPPORT_ROOT): 03:40, same 14 days. Keep these archives as private as the database.
+40 3 * * *  tar -czf /var/backups/shipmark/support-$(date +\%F).tar.gz -C /srv/shipmark private && find /var/backups/shipmark -name 'support-*.tar.gz' -mtime +14 -delete
 ```
 
 (`&&` means old backups are only deleted after a new one was written. If `MEDIA_ROOT` is elsewhere, change the `-C` path.)
@@ -350,6 +360,57 @@ and they keep matching through `SECRET_KEY` / `SECRET_KEY_FALLBACKS` until they 
 without a fallback before then. When the command reports "No old-scheme hashes left", `SECRET_KEY` has nothing to do
 with bans any more. **Do not roll the migration back after `rehash_bans`:** converted rows only match with this code.
 
+## Support inbox (форма підтримки і пошта)
+
+Повідомлення з `/support/` завжди зберігаються в адмінці (розділ Support → Inbox). Лист на пошту — лише
+сповіщення «прийшло нове повідомлення» (простий текст, без вкладень). Якщо пошта не налаштована або не працює,
+повідомлення все одно зберігається.
+
+**Хто бачить інбокс.** Суперкористувач і персонал (`is_staff`), якому в адмінці дали дозволи
+`support | support message | Can view` (читати й завантажувати вкладення) і `Can change` (статус, нотатки).
+Іншим працівникам розділ не показується, а посилання на вкладення дає 404.
+
+**Вкладення лежать приватно.** Папка `SUPPORT_ROOT` (типово `/srv/shipmark/private/support`) — поза `MEDIA_ROOT`,
+nginx її **не** роздає (не додавай для неї `location`). Права: власник — користувач, від якого працює gunicorn,
+`chmod 700`. Резервна копія — окремим рядком cron (розділ Backups). Перенесення в S3: у `config/settings/prod.py`
+зміни лише `STORAGES["support"]` на приватний бакет або префікс (`default_acl: private`), потрібен `django-storages`
+(його немає в дозволеному списку, спершу погодь).
+
+**IP для ліміту.** У nginx: `proxy_set_header X-Real-IP $remote_addr;` і в `.env`: `CLIENT_IP_HEADER=HTTP_X_REAL_IP`.
+Адреса не зберігається: з неї рахується солений хеш, який живе в кеші до 24 годин.
+
+### Gmail як скринька підтримки (покроково)
+
+1. Заведи окремий акаунт Gmail для сайту (наприклад, `shipmark.support@gmail.com`), щоб не давати серверу пароль
+   від особистої пошти.
+2. Увімкни **двоетапну перевірку**: myaccount.google.com → «Безпека» → «Двоетапна перевірка». Без неї паролі
+   застосунків недоступні.
+3. Створи **пароль застосунку**: myaccount.google.com → пошук «Паролі застосунків» (App passwords) → назва,
+   наприклад, `shipmark server` → «Створити». Google покаже 16 літер (`abcd efgh ijkl mnop`). Скопіюй їх без
+   пробілів. Цей пароль працює лише для пошти і його можна відкликати там само, не змінюючи основний пароль.
+4. Заповни `/srv/shipmark/.env`:
+
+   ```
+   EMAIL_HOST=smtp.gmail.com
+   EMAIL_PORT=587
+   EMAIL_USE_TLS=true
+   EMAIL_HOST_USER=shipmark.support@gmail.com
+   EMAIL_HOST_PASSWORD=abcdefghijklmnop
+   DEFAULT_FROM_EMAIL=Shipmark <shipmark.support@gmail.com>
+   SUPPORT_INBOX_EMAIL=shipmark.support@gmail.com
+   ```
+
+   `SUPPORT_INBOX_EMAIL` може бути й іншою адресою (твоя особиста пошта): тоді лист прийде туди, а відправником
+   буде акаунт із кроку 1. Gmail підставляє в «Від» свій акаунт, тому `DEFAULT_FROM_EMAIL` має бути тією ж адресою.
+5. Перезапусти gunicorn і перевір: `python manage.py sendtestemail SUPPORT_INBOX_EMAIL_тут` (з
+   `DJANGO_SETTINGS_MODULE=config.settings.prod`). Потім надішли повідомлення через `/support/` з іншого браузера.
+6. Відповідати просто: у листі-сповіщенні натисни «Відповісти» (Reply-To — адреса людини) або в адмінці «Reply by
+   email». Після відповіді постав статус «Answered», коли тема вичерпана — «Closed».
+
+Якщо лист не прийшов: дивись `show_errors` (рядок `support notification failed ... SMTPAuthenticationError` означає
+неправильний пароль застосунку або вимкнену двоетапну перевірку). Gmail обмежує ~500 листів на добу, для сповіщень
+цього вистачає. Пароль застосунку лежить лише в `.env` (`chmod 600`) і в копії секретів.
+
 ## Community: switching it on
 
 The community ships switched off (`COMMUNITY_ENABLED` unset = false): no link, every `/community/` route is 404, and
@@ -397,6 +458,9 @@ Content and law
       moderator access, appeals, language cookie) without bumping `TERMS_VERSION`, because the site is not public yet.
       After launch, bump `TERMS_VERSION` whenever the Terms change.
 - [ ] pl, de, es, fr, pt-br translations reviewed by native speakers, or remove those languages from `LANGUAGES` for now.
+- [ ] Support: `SUPPORT_INBOX_EMAIL` and SMTP set, `sendtestemail` arrives, a test message with an attachment shows in
+      the admin inbox and its attachment downloads; `/support/attachment/<id>/` is 404 when signed out; `SUPPORT_ROOT`
+      is outside `MEDIA_ROOT` and not served by nginx; `CLIENT_IP_HEADER` set; `prune_support` in cron.
 - [ ] Community (only if it launches): the steps in "Community: switching it on"; rules, Terms and Privacy community
       parts reviewed; a second moderator exists.
 

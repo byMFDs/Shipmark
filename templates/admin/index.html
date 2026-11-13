@@ -42,5 +42,14 @@
         {% endif %}
       {% endcomponent %}
     </div>
+
+    {% if support_stat %}
+      <div class="flex flex-col lg:flex-row gap-6">
+        {% component "unfold/components/card.html" with href=support_stat.link class="lg:w-1/4" %}
+          {% component "unfold/components/text.html" with class="text-subtle" %}{{ support_stat.label }}{% endcomponent %}
+          {% component "unfold/components/title.html" %}{{ support_stat.value }}{% endcomponent %}
+        {% endcomponent %}
+      </div>
+    {% endif %}
   </div>
 {% endblock %}

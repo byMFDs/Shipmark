@@ -16,6 +16,7 @@
       <a class="btn btn--primary" href="{{ home_url|default:'/' }}">{% if home_is_feed %}{% translate "Go to your feed" %}{% else %}{% translate "Go to the front page" %}{% endif %}</a>
       {% if back_url %}<a class="btn btn--secondary" href="{{ back_url }}" data-back>{% icon "arrow-left" %}<span>{% translate "Go back" %}</span></a>
       {% else %}<button type="button" class="btn btn--secondary needs-js" data-back>{% icon "arrow-left" %}<span>{% translate "Go back" %}</span></button>{% endif %}
+      {% if support_url %}<a class="btn btn--quiet" href="{{ support_url }}">{% icon "alert" %}<span>{% translate "Report a problem" %}</span></a>{% endif %}
     </div>
     {% if request_id %}<p class="error-page__ref label">{% translate "Reference:" %} <span class="numeric">{{ request_id }}</span></p>{% endif %}
     {% if contact_email and code == "500" %}<p class="error-page__help muted">{% blocktranslate trimmed %}If it keeps happening, write to <a href="mailto:{{ contact_email }}">{{ contact_email }}</a> and include the reference.{% endblocktranslate %}</p>{% endif %}

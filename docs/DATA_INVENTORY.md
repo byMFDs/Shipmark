@@ -5,7 +5,7 @@ Every piece of personal data the code stores or processes. The privacy, terms an
 **When a model gets a new personal field, or data goes somewhere new, update this file, the legal
 pages and `accounts/export.py`.**
 
-Last checked against the code: 2026-11-13 (community: threads, replies, images, upvotes, reply notifications).
+Last checked against the code: 2026-11-13 (community; support messages and attachments).
 
 "Public" means anyone on the internet, signed in or not. "Staff" means people with admin access
 (`is_staff`) at `ADMIN_URL`. Every record below is in the export unless the "Export" column says no.
@@ -107,6 +107,18 @@ posts with their text. The AuditLog records remove, lock, pin, restore and `comm
 The demo accounts of `seed_community` (`demo-*`, `@example.invalid`) exist only in development (the command refuses
 to run without `DEBUG`).
 
+## 6b. Support (`support`)
+
+| Data | Source | Purpose | Retention | Who can see it | Export |
+|---|---|---|---|---|---|
+| `SupportMessage` (user or none, email, category, subject ≤120, body 10-4000, reference = request id from an error page, status new/read/answered/closed, internal note, created, updated) | The visitor (form at `/support/`); staff set status and note | Answer questions, fix bugs | Closed: deleted 12 months after sending (`prune_support`, cron). Others: until closed. With the account (also messages sent signed out from the account's email) | Staff with `support.view_supportmessage` (and superusers) in the admin. The internal note: staff only | yes (not the internal note) |
+| `SupportAttachment` (kind image/text, file, cleaned original name, size, date) in `SUPPORT_ROOT` (default `private/support/`, **outside** `MEDIA_ROOT`, no URL; `STORAGES["support"]`) | Upload: images re-encoded to WebP by `projects/images.py` (metadata removed), .txt/.log stored as UTF-8 text (≤200 KB, binary refused); random names | Screenshots and logs for a bug | With the message (files deleted by `support/signals.py`), then only in backups (14 days) | Staff with the permission, through `/support/attachment/<id>/` (download, `nosniff`, sandbox CSP) | yes (kind, name, size) |
+| Notification email (plain text: category, email, account name, subject, body, reference, number of attachments, admin link; no attachments) | `support/notify.py`, after the commit, to `SUPPORT_INBOX_EMAIL` with Reply-To = the visitor | Tell the team | In the team mailbox and at the email provider (e.g. Gmail) under their terms | The team | no |
+| Rate-limit keys `support:rl:<hour/day>:<s:session / u:user id / ip:HMAC-SHA256(SECRET_KEY, IP)[:32]>` and duplicate keys `support:dup:<SHA-256 of email + text>` | Django cache | 3 messages/hour and 10/day; same text once per 24 h | 1 hour / 24 hours | Nobody | no |
+
+No IP address or user agent is stored with a message. The salted IP hash exists only as a cache key (above). The
+client address comes from `CLIENT_IP_HEADER` (set by the reverse proxy) or `REMOTE_ADDR`.
+
 ## 7. Cookies and browser storage
 
 Only strictly necessary ones. No analytics, no ads, no third-party scripts or fonts.
@@ -126,7 +138,7 @@ Only strictly necessary ones. No analytics, no ads, no third-party scripts or fo
 |---|---|---|---|
 | Session rows (user id, auth hash, allauth state, messages) | `django_session` table | Sign-in | Expire after 2 weeks. Expired rows stay until `manage.py clearsessions` runs (not scheduled yet, see `docs/DEPLOY_NOTES.md`) |
 | Rate-limit counters: key `rl:<action>:<user id or project id>`, value = a number (plus `rl:…:until`, the end of the window, and cooldowns `cd:<action>:<key>` = an end time; the repo-check cooldown key is `<project id>:<repository name>`). Admin login: `rl:admin_login:<truncated SHA-256 of the username>` | Django cache (`config/ratelimit.py`). **Production: database cache, table `django_cache`** (`createcachetable`). Dev: process memory | Abuse protection | Each counter counts for its window: 10 minutes, 1 hour, or 24 hours (`buildlog_add`); the admin-login counter 15 minutes. **After that the row is not deleted on a schedule**: Django removes expired rows only when the key is read again or the table passes 1,000,000 rows. **No IP addresses** |
-| IP addresses | The app does not store them: not in models, not in the cache, not in the app logs or error files | n/a | n/a |
+| IP addresses | The app does not store them: not in models, not in the app logs or error files. The only trace is the support form's rate limit: a salted HMAC of the address as a cache key for at most 24 hours (section 6b) | Spam protection | 1 hour / 24 hours |
 | Application logs (JSON on stdout, `config/jsonlog.py`, `gunicorn.conf.py`) | gunicorn access line: method, path without query string, status, bytes, milliseconds. Django `django.request` for 4xx/5xx, and exceptions | Operations, debugging | **No IP address, no user agent, no query string.** Paths contain usernames and project slugs (`/u/<username>/`), so a line shows which page was opened, not by whom. **TODO: retention is set by whatever collects stdout (systemd journal, log service); not decided.** |
 | Error log files (`LOG_DIR`/`errors.jsonl`, `notfound.jsonl`; `config/errorlog.py`) | errors.jsonl: unhandled exceptions, 5xx, 403 and CSRF failures. Fields: timestamp, level, request id (random, per request), method, path **without query string, `/u/<name>` and `/badge/<name>` masked as `[user]`**, status, view name, exception class, message and traceback **scrubbed** (emails, IPs, tokens, `password=`/`secret=`/`token=`… values, long random strings removed). notfound.jsonl: timestamp, level, request id, method, masked path, status; each path at most once a minute per worker | Debugging (`manage.py show_errors`) | Rotating: 5 MB per file + 5 old copies, the oldest is deleted. **No IP address, user agent, cookies, headers, query string, POST body, email, username or token** |
 | Reverse proxy access log (nginx, Caddy, …) | Hosting, outside this code. Normally logs the client IP | Depends on the host | **TODO: not decided.** Choose what it records (consider switching IP logging off) and how long it is kept, then replace the TODO in the privacy page |
@@ -138,9 +150,10 @@ Only strictly necessary ones. No analytics, no ads, no third-party scripts or fo
 |---|---|---|
 | GitHub, Inc. | The sign-in redirect (you sign in on github.com). Our server calls `api.github.com` for your profile, emails, and public repository data | Sign-in, Repo owner hallmark (id `authored`) |
 | DNS resolvers and the project's own server | DNS queries for the project domain; HTTP requests to the project URL | Live and Steady hallmarks |
+| Email provider (SMTP, e.g. Google for Gmail) | The plain-text notice about each support message: its text, the sender's email and account name | Deliver the notice to the team mailbox (processor) |
 | Hosting provider | Everything above, as it runs the server and database | Hosting (processor). Name it in the privacy page before launch |
 
-Nothing is sold or shared for advertising. No email provider (the site sends no email).
+Nothing is sold or shared for advertising. Email provider: only for the notice about each support message to the team's mailbox (`SUPPORT_INBOX_EMAIL`, SMTP from `.env`, e.g. Gmail); the site sends no email to users.
 
 ## 10. Rights, as implemented
 

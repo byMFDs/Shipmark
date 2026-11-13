@@ -51,6 +51,10 @@ La comunidad (secciones, hilos y respuestas) tiene sus propias [normas de la com
 
 Cualquier persona con sesión iniciada puede denunciar un proyecto, un perfil o una entrada del registro de cambios. Los moderadores pueden descartar una denuncia, retirar un proyecto, vaciar campos del perfil (foto y portada, descripción breve y «Acerca de», enlaces), silenciar una cuenta hasta 7 días (puedes seguir leyendo, cambiar tus ajustes, descargar o eliminar tus datos, pero no publicar) o bloquearla hasta 14 días (se cierra tu sesión, no puedes iniciarla y tu perfil y proyectos no son públicos). Cada decisión tiene un motivo que ves. Las sanciones más largas o permanentes solo las deciden los administradores del sitio, que también pueden ocultar proyectos o suspender cuentas. Eliminar tu cuenta no termina un bloqueo (consulta la [Política de privacidad](/legal/privacy/)). Si crees que nos equivocamos, escribe a [{{ contact_email }}](mailto:{{ contact_email }}).
 
+## Soporte {#support}
+
+Puedes escribirnos con el [formulario de soporte](/support/). Leemos cada mensaje, pero no podemos prometer responder a todos. No envíes contraseñas, claves ni datos privados de otras personas. El spam, las amenazas o el acoso a través del formulario se tratan como cualquier otro abuso del sitio. Cómo tratamos tu mensaje se explica en la [Política de privacidad](/legal/privacy/#support).
+
 ## Cierre {#ending}
 
 Puedes eliminar tu cuenta en cualquier momento en Ajustes. Podemos cerrar una cuenta que incumpla estos términos de forma grave o reiterada. Qué ocurre con tus datos se explica en la [Política de privacidad](/legal/privacy/).

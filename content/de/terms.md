@@ -51,6 +51,10 @@ Für die Community (Bereiche, Threads und Antworten) gelten eigene [Community-Re
 
 Alle angemeldeten Personen können ein Projekt, ein Profil oder einen Build-Log-Eintrag melden. Moderatoren können eine Meldung ablehnen, ein Projekt entfernen, Profilfelder leeren (Profil- und Titelbild, Kurzbeschreibung und „Über mich“, Links), ein Konto bis zu 7 Tage stummschalten (du kannst weiter lesen, Einstellungen ändern, deine Daten herunterladen oder löschen, aber nichts veröffentlichen) oder es bis zu 14 Tage sperren (du wirst abgemeldet, kannst dich nicht anmelden, und Profil und Projekte sind nicht öffentlich). Jede Entscheidung hat einen Grund, den du siehst. Über längere oder dauerhafte Sanktionen entscheiden nur die Administratoren der Website; sie können auch Projekte verbergen oder Konten sperren. Das Löschen deines Kontos beendet keine Sperre (siehe [Datenschutzerklärung](/legal/privacy/)). Wenn du denkst, dass wir einen Fehler gemacht haben, schreib an [{{ contact_email }}](mailto:{{ contact_email }}).
 
+## Support {#support}
+
+Du kannst uns über das [Support-Formular](/support/) schreiben. Wir lesen jede Nachricht, können aber nicht versprechen, auf jede zu antworten. Schick keine Passwörter, Schlüssel oder privaten Daten anderer. Spam, Drohungen oder Belästigung über das Formular behandeln wir wie jeden anderen Missbrauch der Seite. Wie wir mit deiner Nachricht umgehen, steht in der [Datenschutzerklärung](/legal/privacy/#support).
+
 ## Beendigung {#ending}
 
 Du kannst dein Konto jederzeit in den Einstellungen löschen. Wir können ein Konto schließen, das schwer oder wiederholt gegen diese Bedingungen verstößt. Was mit deinen Daten passiert, steht in der [Datenschutzerklärung](/legal/privacy/).

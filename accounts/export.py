@@ -14,6 +14,7 @@ from config import branding
 from moderation.models import Notice, Report, Sanction
 from projects.models import BuildLogEntry, Project
 from social.models import Follow, Like
+from support.models import SupportMessage
 
 FORMAT_VERSION = 1
 
@@ -182,6 +183,15 @@ def build_export(user, absolute=lambda url: url):
         ],
         "following": [{"username": f.following.username, "created_at": _dt(f.created_at)} for f in follows],
         "community": _community(user, absolute),
+        # Messages to support sent from this account (staff notes about them are internal and not included).
+        "support_messages": [
+            {
+                "category": m.category, "subject": m.subject, "message": m.body, "email": m.email,
+                "reference": m.reference, "status": m.status, "created_at": _dt(m.created_at),
+                "attachments": [{"kind": a.kind, "name": a.name, "size": a.size} for a in m.attachments.all()],
+            }
+            for m in SupportMessage.objects.filter(user=user).prefetch_related("attachments").order_by("created_at", "id")
+        ],
         "reports_made": [
             {
                 "target": r.target_repr, "reason": r.reason, "details": r.details,

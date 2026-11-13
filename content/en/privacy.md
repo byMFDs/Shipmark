@@ -17,7 +17,7 @@ Questions or requests: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Profile picture and cover.** You can upload a picture and a wide cover image, or copy your GitHub picture once with "Use my GitHub picture". Every image is re-encoded (the picture to 512×512, the cover to 1500×500), which removes hidden metadata such as GPS location, gets a random file name and is stored on our own server: pages never load your picture from GitHub. Both are **public**. When you remove or replace one, or delete your account, the file is deleted; copies stay in backups for up to 14 days. Without a picture, your initials are shown.
 
-**Your email address.** Stored with your account and visible only to our staff. It is never shown on the site. The site does not send email; we would use the address only to contact you about your account or a report.
+**Your email address.** Stored with your account and visible only to our staff. It is never shown on the site. The site does not send you email (the only email it sends is a notice to our own team about a support message); we would use the address only to contact you about your account, a report or a support message.
 
 **Your projects.** Everything you enter: name, tagline, description, links, tags, the AI tools you say you used (shown as self-declared), screenshots and build log entries. Published projects are public; drafts are visible only to you and staff. Screenshots are re-encoded when you upload them, which removes hidden metadata such as camera details or GPS location.
 
@@ -55,9 +55,18 @@ The results are shown on your public project page.
 
 **Backups.** Every day we back up the database and the uploaded images (screenshots, profile pictures and covers) and keep each backup for 14 days. If you delete your account, your data stays in those backups until the last one that contains it is replaced, up to 14 days later.
 
+## Messages to support {#support}
+
+When you write to us through the [support form](/support/), we store the topic, the subject, your message, the email address you give (or your account's), the account you were signed in with, the reference number of an error page if you came from one, and up to 3 attachments. Images are re-encoded like other pictures (hidden metadata such as GPS location is removed); text files are kept as text. Attachments are stored in a private folder on our server that has no public address: only staff with access to the support inbox can download them. We use your email address only to reply.
+
+We do not store your IP address or browser details with the message. To stop spam, a salted one-way fingerprint of your IP address is kept in the server's cache for at most 24 hours, never in the database or the logs.
+
+When a message arrives, our server sends a short plain-text notice with your message and your email address to the team's mailbox, through our email provider (see "Who else receives data"). Staff can add internal notes and set a status (new, read, answered, closed). We read every message but cannot promise to reply to all. Closed messages are deleted 12 months after they were sent; the others stay until they are closed. "Download my data" includes the messages you sent while signed in, and deleting your account deletes them, also the ones sent while signed out from your account's email address.
+
 ## How long we keep it {#retention}
 
 - Your account, profile, projects, follows and likes: until you delete them or your account.
+- Support messages and their attachments: closed ones 12 months after they were sent, the others until they are closed; with your account.
 - Community threads, replies and images: until you delete them or your account (see "Community" above for what stays). Upvotes: until you take them back or delete your account.
 - Reply notifications: 90 days.
 - Profile picture and cover: until you remove or replace them, or delete your account.
@@ -75,6 +84,7 @@ The results are shown on your public project page.
 ## Who else receives data {#recipients}
 
 - **GitHub, Inc.** You sign in on github.com, and our server reads your profile and public repository data from GitHub's API. GitHub's own privacy statement applies to your use of GitHub.
+- **Our email provider** (for example Google, if the team's mailbox is a Gmail account) carries the notice about each support message, with its text and your email address, to the team's mailbox.
 - **The servers of your project.** For the Domain verified and Steady checks our server contacts your domain's DNS and your project's address. They see our server, not you.
 - **Our hosting provider**, which runs the server and the database for us.
 

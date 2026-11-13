@@ -25,6 +25,7 @@ urlpatterns = [
     path("", include("moderation.urls")),
     path("", include("news.urls")),
     path("", include("community.urls")),
+    path("", include("support.urls")),
     path("", include("pages.urls")),
     # Previews of every error page, linked from /styleguide/. 404 unless DEBUG.
     path("_dev/errors/<str:code>/", errors.preview, name="error_preview"),

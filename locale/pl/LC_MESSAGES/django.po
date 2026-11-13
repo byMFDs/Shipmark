@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 17:26+0000\n"
+"POT-Creation-Date: 2026-11-13 17:48+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -42,7 +42,7 @@ msgstr "Profil"
 msgid "Pictures"
 msgstr "Obrazy"
 
-#: accounts/admin.py:109 config/settings/base.py:329
+#: accounts/admin.py:109 config/settings/base.py:359
 #: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
@@ -324,7 +324,7 @@ msgstr "LinkedIn"
 msgid "Telegram"
 msgstr "Telegram"
 
-#: accounts/models.py:118
+#: accounts/models.py:118 support/models.py:23 templates/support/form.html:34
 msgid "Other"
 msgstr "Inne"
 
@@ -403,7 +403,7 @@ msgstr "Przywrócono: %(count)s."
 msgid "Restore selected replies (superusers)"
 msgstr "Przywróć wybrane odpowiedzi (tylko superuser)"
 
-#: community/apps.py:8 config/settings/base.py:342 pages/templatetags/ui.py:348
+#: community/apps.py:8 config/settings/base.py:372 pages/templatetags/ui.py:348
 #: pages/templatetags/ui.py:353 templates/community/home.html:4
 #: templates/community/home.html:5 templates/community/home.html:11
 #: templates/community/home.html:12 templates/community/notifications.html:10
@@ -473,7 +473,7 @@ msgid "New accounts can put one link in a post during the first 24 hours."
 msgstr ""
 "Przez pierwsze 24 godziny nowe konta mogą dodać do wpisu tylko jeden link."
 
-#: community/forms.py:68 projects/admin.py:100
+#: community/forms.py:68 projects/admin.py:100 support/models.py:65
 msgid "Text"
 msgstr "Tekst"
 
@@ -482,7 +482,7 @@ msgid "Markdown works. Links, lists, bold and code are allowed; HTML is not."
 msgstr ""
 "Działa Markdown. Linki, listy, pogrubienie i kod są dozwolone; HTML nie."
 
-#: community/forms.py:76 config/settings/base.py:347
+#: community/forms.py:76 config/settings/base.py:377
 #: templates/community/notifications.html:23
 msgid "Images"
 msgstr "Obrazy"
@@ -650,7 +650,7 @@ msgstr "Rakieta"
 msgid "Fire"
 msgstr "Ogień"
 
-#: community/stickers.py:35
+#: community/stickers.py:35 support/models.py:19 templates/support/form.html:30
 msgid "Bug"
 msgstr "Bug"
 
@@ -748,113 +748,123 @@ msgstr "Zaloguj się, aby to zrobić."
 msgid "Proof, not promises."
 msgstr "Dowody, nie obietnice."
 
-#: config/settings/base.py:266
+#: config/settings/base.py:296
 msgid "Admin"
 msgstr "Administracja"
 
-#: config/settings/base.py:302 config/settings/base.py:304
+#: config/settings/base.py:332 config/settings/base.py:334
 #: moderation/dashboard.py:46
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: config/settings/base.py:305
+#: config/settings/base.py:335
 msgid "Badges"
 msgstr "Odznaki"
 
-#: config/settings/base.py:309 config/settings/base.py:311
+#: config/settings/base.py:339 config/settings/base.py:341
 #: templates/accounts/profile.html:53 templates/accounts/profile.html:67
 #: templates/accounts/profile.html:75 templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Projekty"
 
-#: config/settings/base.py:312 templates/accounts/profile.html:68
+#: config/settings/base.py:342 templates/accounts/profile.html:68
 #: templates/accounts/profile.html:115 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Dziennik rozwoju"
 
-#: config/settings/base.py:313 projects/forms.py:47
+#: config/settings/base.py:343 projects/forms.py:47
 #: templates/projects/detail.html:167
 msgid "Tags"
 msgstr "Tagi"
 
-#: config/settings/base.py:314
+#: config/settings/base.py:344
 msgid "Tools"
 msgstr "Narzędzia"
 
-#: config/settings/base.py:318
+#: config/settings/base.py:348
 msgid "Verification"
 msgstr "Weryfikacja"
 
-#: config/settings/base.py:320
+#: config/settings/base.py:350
 msgid "Review queue"
 msgstr "Kolejka weryfikacji"
 
-#: config/settings/base.py:322
+#: config/settings/base.py:352
 msgid "Repositories"
 msgstr "Repozytoria"
 
-#: config/settings/base.py:323
+#: config/settings/base.py:353
 msgid "Domains"
 msgstr "Domeny"
 
-#: config/settings/base.py:324
+#: config/settings/base.py:354
 msgid "Uptime checks"
 msgstr "Sprawdzenia dostępności"
 
-#: config/settings/base.py:325
+#: config/settings/base.py:355
 msgid "Blocked repos and domains"
 msgstr "Zablokowane repozytoria i domeny"
 
-#: config/settings/base.py:331 templates/moderation/mod/queue.html:11
+#: config/settings/base.py:361 templates/moderation/mod/queue.html:11
 msgid "Reports"
 msgstr "Zgłoszenia"
 
-#: config/settings/base.py:333 templates/moderation/mod/_history.html:7
+#: config/settings/base.py:363 templates/moderation/mod/_history.html:7
 msgid "Sanctions"
 msgstr "Sankcje"
 
-#: config/settings/base.py:334 templates/moderation/mod/_history.html:15
+#: config/settings/base.py:364 templates/moderation/mod/_history.html:15
 msgid "Removed projects"
 msgstr "Usunięte projekty"
 
-#: config/settings/base.py:336
+#: config/settings/base.py:366
 msgid "Notices"
 msgstr "Powiadomienia"
 
-#: config/settings/base.py:337
+#: config/settings/base.py:367
 msgid "Follows"
 msgstr "Obserwowania"
 
-#: config/settings/base.py:338 projects/admin.py:46
+#: config/settings/base.py:368 projects/admin.py:46
 msgid "Likes"
 msgstr "Polubienia"
 
-#: config/settings/base.py:344 templates/community/_boards.html:3
+#: config/settings/base.py:374 templates/community/_boards.html:3
 #: templates/community/_layout.html:10 templates/community/_layout.html:15
 msgid "Boards"
 msgstr "Działy"
 
-#: config/settings/base.py:345 templates/community/home.html:52
+#: config/settings/base.py:375 templates/community/home.html:52
 msgid "Threads"
 msgstr "Wątki"
 
-#: config/settings/base.py:346
+#: config/settings/base.py:376
 msgid "Replies"
 msgstr "Odpowiedzi"
 
-#: config/settings/base.py:351 news/apps.py:8 pages/templatetags/ui.py:347
+#: config/settings/base.py:381 pages/templatetags/ui.py:355 support/apps.py:8
+#: templates/support/form.html:4 templates/support/form.html:12
+#: templates/support/sent.html:13
+msgid "Support"
+msgstr "Wsparcie"
+
+#: config/settings/base.py:383 templates/pages/landing.html:49
+msgid "Inbox"
+msgstr "Skrzynka"
+
+#: config/settings/base.py:388 news/apps.py:8 pages/templatetags/ui.py:347
 #: pages/templatetags/ui.py:352 templates/news/list.html:4
 #: templates/news/list.html:5 templates/news/list.html:14
 #: templates/social/feed.html:18 templates/social/feed.html:35
 msgid "News"
 msgstr "Aktualności"
 
-#: config/settings/base.py:353
+#: config/settings/base.py:390
 msgid "News posts"
 msgstr "Wpisy z aktualnościami"
 
-#: config/settings/base.py:357 config/settings/base.py:359
+#: config/settings/base.py:394 config/settings/base.py:396
 msgid "Audit log"
 msgstr "Dziennik audytu"
 
@@ -951,6 +961,10 @@ msgstr "Domain verified"
 #: social/feed.py:29
 msgid "Steady"
 msgstr "Steady"
+
+#: moderation/dashboard.py:63
+msgid "Unread support messages"
+msgstr "Nieprzeczytane wiadomości do wsparcia"
 
 #: moderation/decisions.py:137
 msgid "picture and cover"
@@ -1061,7 +1075,7 @@ msgstr ""
 msgid "Write the reason. The person will see it."
 msgstr "Napisz powód. Osoba go zobaczy."
 
-#: moderation/forms.py:60
+#: moderation/forms.py:60 support/forms.py:80
 msgid "Write at least a short sentence (10 characters)."
 msgstr "Napisz przynajmniej krótkie zdanie (10 znaków)."
 
@@ -1509,10 +1523,6 @@ msgstr "O serwisie"
 #: templates/social/feed.html:106
 msgid "How proof works"
 msgstr "Jak działa dowód"
-
-#: pages/templatetags/ui.py:355
-msgid "Support"
-msgstr "Wsparcie"
 
 #: pages/templatetags/ui.py:356
 msgid "Legal"
@@ -2165,6 +2175,245 @@ msgstr "Polubiono."
 msgid "Like removed."
 msgstr "Cofnięto polubienie."
 
+#: support/admin.py:48
+msgid "Handling"
+msgstr "Obsługa"
+
+#: support/admin.py:57
+msgid "Subject"
+msgstr "Temat"
+
+#: support/admin.py:61 templates/accounts/settings.html:102
+msgid "Account"
+msgstr "Konto"
+
+#: support/admin.py:64
+msgid "Not signed in"
+msgstr "Niezalogowany"
+
+#: support/admin.py:68
+msgid "Files"
+msgstr "Pliki"
+
+#: support/admin.py:72
+msgid "Attachments"
+msgstr "Załączniki"
+
+#: support/admin.py:83 templates/moderation/mod/act.html:11
+#: templates/moderation/mod/queue.html:35
+#: templates/moderation/mod/queue.html:51
+msgid "Reply"
+msgstr "Odpowiedź"
+
+#: support/admin.py:86
+msgid "Reply by email"
+msgstr "Odpowiedz e-mailem"
+
+#: support/admin.py:121
+#, python-format
+msgid "Updated %(count)d message."
+msgid_plural "Updated %(count)d messages."
+msgstr[0] "Zaktualizowano %(count)d wiadomość."
+msgstr[1] "Zaktualizowano %(count)d wiadomości."
+msgstr[2] "Zaktualizowano %(count)d wiadomości."
+
+#: support/admin.py:124
+msgid "Mark as read"
+msgstr "Oznacz jako przeczytane"
+
+#: support/admin.py:128
+msgid "Mark as answered"
+msgstr "Oznacz jako z odpowiedzią"
+
+#: support/admin.py:132 templates/community/_lightbox.html:7
+#: templates/community/_picker.html:5 templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Zamknij"
+
+#: support/forms.py:45 support/forms.py:48
+msgid "A text file can be at most 200 KB."
+msgstr "Plik tekstowy może mieć najwyżej 200 KB."
+
+#: support/forms.py:51
+msgid "This does not look like a text file."
+msgstr "To nie wygląda na plik tekstowy."
+
+#: support/forms.py:63
+msgid "Attach PNG, JPEG or WebP images, or .txt and .log files."
+msgstr "Dołącz obrazy PNG, JPEG lub WebP albo pliki .txt i .log."
+
+#: support/forms.py:68
+msgid "What is it about?"
+msgstr "Czego to dotyczy?"
+
+#: support/forms.py:68
+msgid "Choose a topic"
+msgstr "Wybierz temat"
+
+#: support/forms.py:69
+msgid "Choose a topic."
+msgstr "Wybierz temat."
+
+#: support/forms.py:72
+msgid "Subject (optional)"
+msgstr "Temat (opcjonalnie)"
+
+#: support/forms.py:76
+msgid "Message"
+msgstr "Wiadomość"
+
+#: support/forms.py:78
+msgid ""
+"What happened, where, and what you expected. Never send passwords or keys."
+msgstr "Co się stało, gdzie i czego się spodziewałeś. Nigdy nie wysyłaj haseł ani kluczy."
+
+#: support/forms.py:79
+msgid "Write your message."
+msgstr "Napisz wiadomość."
+
+#: support/forms.py:83
+msgid "Your email"
+msgstr "Twój e-mail"
+
+#: support/forms.py:85
+msgid "Used only to reply to this message."
+msgstr "Tylko do odpowiedzi na tę wiadomość."
+
+#: support/forms.py:88
+msgid "Attachments (optional)"
+msgstr "Załączniki (opcjonalnie)"
+
+#: support/forms.py:90
+msgid ""
+"Up to 3 files: PNG, JPEG or WebP images up to 5 MB, or .txt and .log files "
+"up to 200 KB."
+msgstr "Do 3 plików: obrazy PNG, JPEG lub WebP do 5 MB albo pliki .txt i .log do 200 KB."
+
+#: support/forms.py:95
+msgid "Leave this empty"
+msgstr "Zostaw puste"
+
+#: support/forms.py:103
+msgid "From your account; used only to reply. You can change it here."
+msgstr "Z Twojego konta; tylko do odpowiedzi. Możesz go tu zmienić."
+
+#: support/forms.py:106 support/forms.py:119
+msgid "Add your email, so we can reply."
+msgstr "Dodaj e-mail, żebyśmy mogli odpowiedzieć."
+
+#: support/forms.py:130
+#, python-format
+msgid "Attach at most %(count)d file."
+msgid_plural "Attach at most %(count)d files."
+msgstr[0] "Dołącz najwyżej %(count)d plik."
+msgstr[1] "Dołącz najwyżej %(count)d pliki."
+msgstr[2] "Dołącz najwyżej %(count)d plików."
+
+#: support/forms.py:148
+msgid "That was quick. Check your message and send it again."
+msgstr "To było szybkie. Sprawdź wiadomość i wyślij ją jeszcze raz."
+
+#: support/forms.py:152
+msgid "The form was open too long. Send it again."
+msgstr "Formularz był otwarty zbyt długo. Wyślij jeszcze raz."
+
+#: support/models.py:20 templates/support/form.html:31
+msgid "Idea or feedback"
+msgstr "Pomysł lub opinia"
+
+#: support/models.py:21 templates/support/form.html:32
+msgid "Praise"
+msgstr "Pochwała"
+
+#: support/models.py:22 templates/support/form.html:33
+msgid "Account or privacy"
+msgstr "Konto lub prywatność"
+
+#: support/models.py:26 templates/community/notifications.html:21
+msgid "New"
+msgstr "Nowe"
+
+#: support/models.py:27
+msgid "Read"
+msgstr "Przeczytana"
+
+#: support/models.py:28
+msgid "Answered"
+msgstr "Z odpowiedzią"
+
+#: support/models.py:29
+msgid "Closed"
+msgstr "Zamknięta"
+
+#: support/models.py:35
+msgid "email"
+msgstr "e-mail"
+
+#: support/models.py:35
+msgid "Used only to reply."
+msgstr "Tylko do odpowiedzi."
+
+#: support/models.py:36
+msgid "category"
+msgstr "kategoria"
+
+#: support/models.py:37
+msgid "subject"
+msgstr "temat"
+
+#: support/models.py:38
+msgid "message"
+msgstr "wiadomość"
+
+#: support/models.py:40
+msgid "reference"
+msgstr "numer referencyjny"
+
+#: support/models.py:41
+msgid "status"
+msgstr "status"
+
+#: support/models.py:42
+msgid "internal note"
+msgstr "notatka wewnętrzna"
+
+#: support/models.py:42
+msgid "Only staff see this."
+msgstr "Widzi to tylko personel."
+
+#: support/models.py:43
+msgid "sent"
+msgstr "wysłano"
+
+#: support/models.py:48
+msgid "support message"
+msgstr "wiadomość do wsparcia"
+
+#: support/models.py:49
+msgid "support messages"
+msgstr "wiadomości do wsparcia"
+
+#: support/models.py:64
+msgid "Image"
+msgstr "Obraz"
+
+#: support/models.py:70
+msgid "original name"
+msgstr "pierwotna nazwa"
+
+#: support/models.py:76
+msgid "attachment"
+msgstr "załącznik"
+
+#: support/models.py:77
+msgid "attachments"
+msgstr "załączniki"
+
+#: support/views.py:31
+msgid ""
+"You have sent several messages already. Please wait an hour and try again."
+msgstr "Wysłałeś już kilka wiadomości. Odczekaj godzinę i spróbuj ponownie."
+
 #: templates/400.html:3 templates/400.html:5
 msgid "We could not read that request"
 msgstr "Nie udało się odczytać tego żądania"
@@ -2567,7 +2816,7 @@ msgstr "Link %(n)s: adres"
 msgid "Publish a project first, then you can pin it here."
 msgstr "Najpierw opublikuj projekt, potem możesz go tu przypiąć."
 
-#: templates/accounts/settings.html:84 templates/includes/site_footer.html:37
+#: templates/accounts/settings.html:84 templates/includes/site_footer.html:38
 msgid "Language"
 msgstr "Język"
 
@@ -2576,7 +2825,7 @@ msgid "Save settings"
 msgstr "Zapisz ustawienia"
 
 #: templates/accounts/settings.html:92 templates/accounts/settings.html:94
-#: templates/includes/site_footer.html:51
+#: templates/includes/site_footer.html:52
 msgid "Theme"
 msgstr "Motyw"
 
@@ -2584,21 +2833,17 @@ msgstr "Motyw"
 msgid "Saved in this browser only."
 msgstr "Zapisane tylko w tej przeglądarce."
 
-#: templates/accounts/settings.html:95 templates/includes/site_footer.html:52
+#: templates/accounts/settings.html:95 templates/includes/site_footer.html:53
 msgid "System"
 msgstr "Systemowy"
 
-#: templates/accounts/settings.html:96 templates/includes/site_footer.html:53
+#: templates/accounts/settings.html:96 templates/includes/site_footer.html:54
 msgid "Light"
 msgstr "Jasny"
 
-#: templates/accounts/settings.html:97 templates/includes/site_footer.html:54
+#: templates/accounts/settings.html:97 templates/includes/site_footer.html:55
 msgid "Dark"
 msgstr "Ciemny"
-
-#: templates/accounts/settings.html:102
-msgid "Account"
-msgstr "Konto"
 
 #: templates/accounts/settings.html:104
 msgid "Username"
@@ -2710,11 +2955,6 @@ msgstr "O społeczności"
 #: templates/community/_lightbox.html:2
 msgid "Image viewer"
 msgstr "Podgląd obrazów"
-
-#: templates/community/_lightbox.html:7 templates/community/_picker.html:5
-#: templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Zamknij"
 
 #: templates/community/_lightbox.html:8
 msgid "Previous image"
@@ -2981,10 +3221,6 @@ msgstr ""
 "Gdy ktoś odpowie w Twoim wątku lub na Twoją odpowiedź, pojawi się to tutaj. "
 "Nigdy nie wysyłamy tego e-mailem."
 
-#: templates/community/notifications.html:21
-msgid "New"
-msgstr "Nowe"
-
 #: templates/community/notifications.html:22
 #, python-format
 msgid "@%(name)s replied to your thread “%(title)s”"
@@ -3168,11 +3404,12 @@ msgstr "Konta młodsze niż 24 godziny: jeden link w poście, bez obrazów."
 msgid "Error"
 msgstr "Błąd"
 
-#: templates/errors/_body.html:17
+#: templates/errors/_body.html:17 templates/support/sent.html:22
 msgid "Go to your feed"
 msgstr "Przejdź do aktualności"
 
 #: templates/errors/_body.html:17 templates/moderation/banned.html:18
+#: templates/support/sent.html:23
 msgid "Go to the front page"
 msgstr "Na stronę główną"
 
@@ -3180,11 +3417,15 @@ msgstr "Na stronę główną"
 msgid "Go back"
 msgstr "Wróć"
 
-#: templates/errors/_body.html:21
+#: templates/errors/_body.html:20
+msgid "Report a problem"
+msgstr "Zgłoś problem"
+
+#: templates/errors/_body.html:22
 msgid "Reference:"
 msgstr "Numer referencyjny:"
 
-#: templates/errors/_body.html:22
+#: templates/errors/_body.html:23
 #, python-format
 msgid ""
 "If it keeps happening, write to <a href=\"mailto:"
@@ -3289,12 +3530,12 @@ msgstr "Popraw te błędy i spróbuj ponownie."
 msgid "Not yet"
 msgstr "Jeszcze nie"
 
-#: templates/includes/site_footer.html:9 templates/includes/site_header.html:6
+#: templates/includes/site_footer.html:10 templates/includes/site_header.html:6
 #, python-format
 msgid "%(name)s home"
 msgstr "Strona główna %(name)s"
 
-#: templates/includes/site_footer.html:47
+#: templates/includes/site_footer.html:48
 msgid "Change"
 msgstr "Zmień"
 
@@ -3419,11 +3660,6 @@ msgstr "Wstecz"
 #: templates/moderation/mod/queue.html:51
 msgid "Thread"
 msgstr "Wątek"
-
-#: templates/moderation/mod/act.html:11 templates/moderation/mod/queue.html:35
-#: templates/moderation/mod/queue.html:51
-msgid "Reply"
-msgstr "Odpowiedź"
 
 #: templates/moderation/mod/act.html:13
 #, python-format
@@ -3727,10 +3963,6 @@ msgstr "Przestrzeń robocza"
 #: templates/pages/landing.html:48
 msgid "Overview"
 msgstr "Przegląd"
-
-#: templates/pages/landing.html:49
-msgid "Inbox"
-msgstr "Skrzynka"
 
 #: templates/pages/landing.html:51
 msgid "Activity"
@@ -4826,6 +5058,135 @@ msgstr "Akceptuję Regulamin"
 #: templates/socialaccount/signup.html:24
 msgid "Create account"
 msgstr "Załóż konto"
+
+#: templates/support/form.html:5
+msgid "Report a bug, suggest an idea or ask about your account."
+msgstr "Zgłoś błąd, zaproponuj pomysł lub zapytaj o swoje konto."
+
+#: templates/support/form.html:13
+msgid "Write to us"
+msgstr "Napisz do nas"
+
+#: templates/support/form.html:14
+msgid ""
+"Found a bug, have an idea, or need help with your account? Tell us here."
+msgstr "Znalazłeś błąd, masz pomysł albo potrzebujesz pomocy z kontem? Napisz tutaj."
+
+#: templates/support/form.html:17
+msgid "What happens next"
+msgstr "Co dalej"
+
+#: templates/support/form.html:19
+msgid "We read every message."
+msgstr "Czytamy każdą wiadomość."
+
+#: templates/support/form.html:19
+msgid "A person on the team reads each one, usually within a few days."
+msgstr "Każdą czyta osoba z zespołu, zwykle w ciągu kilku dni."
+
+#: templates/support/form.html:20
+msgid "We cannot promise to reply to all."
+msgstr "Nie możemy obiecać odpowiedzi na wszystkie."
+
+#: templates/support/form.html:20
+msgid "Questions about accounts and privacy come first."
+msgstr "Pytania o konta i prywatność mają pierwszeństwo."
+
+#: templates/support/form.html:21
+msgid "Your email is used only to reply."
+msgstr "Twój e-mail służy tylko do odpowiedzi."
+
+#: templates/support/form.html:21
+msgid "No newsletters, and nobody else sees it."
+msgstr "Żadnych newsletterów i nikt inny go nie widzi."
+
+#: templates/support/form.html:28
+msgid "What to write"
+msgstr "Co napisać"
+
+#: templates/support/form.html:30
+msgid ""
+"What you did, what happened and what you expected. The page address and a "
+"screenshot help most."
+msgstr "Co zrobiłeś, co się stało i czego się spodziewałeś. Najbardziej pomaga adres strony i zrzut ekranu."
+
+#: templates/support/form.html:31
+msgid "What would make the site better for you, and why."
+msgstr "Co sprawiłoby, że serwis byłby dla Ciebie lepszy, i dlaczego."
+
+#: templates/support/form.html:32
+msgid "What worked for you. It tells us what to keep."
+msgstr "Co Ci się sprawdziło. Dzięki temu wiemy, co zostawić."
+
+#: templates/support/form.html:33
+msgid ""
+"Sign-in, your data, deleting your account or a moderation decision. Write "
+"from your account if you can."
+msgstr "Logowanie, Twoje dane, usunięcie konta lub decyzja moderatorów. Jeśli możesz, pisz ze swojego konta."
+
+#: templates/support/form.html:34
+msgid ""
+"Anything else. A problem with a project, a person or a post? Use the Report "
+"link on it."
+msgstr "Cokolwiek innego. Problem z projektem, osobą lub postem? Użyj przy nim linku „Zgłoś”."
+
+#: templates/support/form.html:40
+msgid "Your message"
+msgstr "Twoja wiadomość"
+
+#: templates/support/form.html:43
+msgid "Reference"
+msgstr "Numer"
+
+#: templates/support/form.html:43
+msgid "from the error page; it helps us find what went wrong."
+msgstr "ze strony błędu; pomaga nam znaleźć, co poszło nie tak."
+
+#: templates/support/form.html:55
+msgid "Send message"
+msgstr "Wyślij wiadomość"
+
+#: templates/support/form.html:56
+#, python-format
+msgid ""
+"How we handle your message is described in the <a "
+"href=\"%(url)s#support\">Privacy policy</a>."
+msgstr "Jak postępujemy z wiadomością, opisuje <a href=\"%(url)s#support\">Polityka prywatności</a>."
+
+#: templates/support/sent.html:4
+msgid "Already received"
+msgstr "Już otrzymano"
+
+#: templates/support/sent.html:4 templates/support/sent.html:18
+msgid "Message sent"
+msgstr "Wiadomość wysłana"
+
+#: templates/support/sent.html:15
+msgid "Received"
+msgstr "Otrzymano"
+
+#: templates/support/sent.html:18
+msgid "We already have this message"
+msgstr "Mamy już tę wiadomość"
+
+#: templates/support/sent.html:19
+msgid ""
+"The same text arrived a moment ago, so we kept one copy. No need to send it "
+"again."
+msgstr "Ten sam tekst dotarł przed chwilą, więc zachowaliśmy jedną kopię. Nie trzeba wysyłać ponownie."
+
+#: templates/support/sent.html:19
+msgid ""
+"Thank you. We read every message, but we cannot promise to reply to all."
+msgstr "Dziękujemy. Czytamy każdą wiadomość, ale nie możemy obiecać odpowiedzi na wszystkie."
+
+#: templates/support/sent.html:20
+msgid "If we answer, the reply goes to the email address you gave."
+msgstr "Jeśli odpowiemy, odpowiedź trafi na podany adres e-mail."
+
+#: templates/support/sent.html:24
+msgid "Write another message"
+msgstr "Napisz kolejną wiadomość"
 
 #: verification/admin.py:33
 msgid "Approve (the review reasons are fine)"

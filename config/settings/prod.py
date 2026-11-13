@@ -57,7 +57,13 @@ MEDIA_ROOT = Path(env.str("MEDIA_ROOT", default=str(BASE_DIR / "media")))  # noq
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+    # Private: support attachments in SUPPORT_ROOT (outside MEDIA_ROOT, no URL). For S3 use a private bucket or prefix:
+    # {"BACKEND": "storages.backends.s3.S3Storage", "OPTIONS": {"location": "support", "default_acl": "private",
+    #  "querystring_auth": True, ...}} (needs django-storages, see the note above).
+    "support": {"BACKEND": "support.storage.PrivateStorage"},
 }
+# SMTP for the support notification (base.py reads EMAIL_HOST etc. from env); the console backend is dev only.
+EMAIL_BACKEND = env.str("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")  # noqa: F405
 
 # HTTPS (the app runs behind a reverse proxy that sets X-Forwarded-Proto).
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

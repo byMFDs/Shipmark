@@ -19,7 +19,7 @@ Dúvidas ou solicitações: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Foto de perfil e capa.** Você pode enviar uma foto e uma imagem de capa larga, ou copiar uma vez sua imagem do GitHub. Cada imagem é recodificada (a foto em 512×512, a capa em 1500×500), o que remove metadados ocultos como a localização GPS, recebe um nome de arquivo aleatório e é guardada no nosso próprio servidor: as páginas nunca carregam sua foto do GitHub. As duas são **públicas**. Quando você remove ou substitui uma delas, ou exclui sua conta, o arquivo é apagado; cópias ficam nos backups por até 14 dias. Sem foto, mostramos suas iniciais.
 
-**Seu endereço de e-mail.** É guardado com a sua conta e visível apenas para a nossa equipe. Nunca é exibido no site. O site não envia e-mails; usaríamos o endereço apenas para falar com você sobre a conta ou uma denúncia.
+**Seu endereço de e-mail.** É guardado com a sua conta e visível apenas para a nossa equipe. Nunca é exibido no site. O site não envia e-mails para você (o único que envia é um aviso para a nossa equipe sobre uma mensagem ao suporte); usaríamos o endereço apenas para falar com você sobre a conta, uma denúncia ou uma mensagem ao suporte.
 
 **Seus projetos.** Tudo o que você preenche: nome, slogan, descrição, links, tags, as ferramentas de IA que você diz ter usado (exibidas como declaradas pelo autor), capturas de tela e entradas do diário de desenvolvimento. Projetos publicados são públicos; rascunhos só são visíveis para você e para a nossa equipe. As capturas de tela são recodificadas no envio, o que remove metadados ocultos, como dados da câmera ou localização por GPS.
 
@@ -57,9 +57,18 @@ Os resultados aparecem na página pública do seu projeto.
 
 **Backups.** Todos os dias fazemos uma cópia do banco de dados e das imagens enviadas (capturas de tela, fotos de perfil e capas) e guardamos cada cópia por 14 dias. Se você excluir sua conta, seus dados ficam nesses backups até que o último que os contém seja substituído, no máximo 14 dias depois.
 
+## Mensagens ao suporte {#support}
+
+Quando você nos escreve pelo [formulário de suporte](/support/), guardamos o tema, o assunto, sua mensagem, o e-mail informado (ou o da sua conta), a conta com que você estava conectado, o número de referência de uma página de erro, se veio de uma, e até 3 anexos. As imagens são recodificadas como as outras (metadados ocultos, como a localização GPS, são removidos); arquivos de texto são guardados como texto. Os anexos ficam em uma pasta privada no nosso servidor, sem endereço público: só a equipe com acesso à caixa de suporte pode baixá-los. Usamos seu e-mail apenas para responder.
+
+Não guardamos seu endereço IP nem dados do navegador com a mensagem. Para barrar spam, uma impressão digital unidirecional e com sal do seu endereço IP fica no cache do servidor por no máximo 24 horas, nunca no banco de dados nem nos registros.
+
+Quando uma mensagem chega, nosso servidor envia para a caixa da equipe um aviso curto em texto simples com sua mensagem e seu e-mail, pelo nosso provedor de e-mail (veja “Quem mais recebe dados”). A equipe pode adicionar notas internas e definir um status (nova, lida, respondida, encerrada). Lemos todas as mensagens, mas não podemos prometer responder a todas. Mensagens encerradas são excluídas 12 meses depois do envio; as demais ficam até serem encerradas. “Baixar meus dados” inclui as mensagens enviadas com a sua conta, e excluir a conta as apaga, inclusive as enviadas sem login a partir do e-mail da sua conta.
+
 ## Por quanto tempo guardamos {#retention}
 
 - Sua conta, perfil, projetos, quem você segue e curtidas: até você excluí-los ou excluir a conta.
+- Mensagens ao suporte e anexos: encerradas, 12 meses após o envio; as demais, até serem encerradas; junto com a sua conta.
 - Tópicos, respostas e imagens da comunidade: até você excluí-los ou excluir sua conta (o que fica está descrito acima, em “Comunidade”). Votos: até você retirá-los ou excluir sua conta.
 - Avisos de respostas: 90 dias.
 - Foto de perfil e capa: até você removê-las ou substituí-las, ou excluir sua conta.
@@ -77,6 +86,7 @@ Os resultados aparecem na página pública do seu projeto.
 ## Quem mais recebe dados {#recipients}
 
 - **GitHub, Inc.** Você entra em github.com, e o nosso servidor lê seu perfil e dados públicos de repositórios pela API do GitHub. A declaração de privacidade do próprio GitHub vale para o seu uso do GitHub.
+- **Nosso provedor de e-mail** (por exemplo, o Google, se a caixa da equipe for uma conta do Gmail) entrega na caixa da equipe o aviso de cada mensagem ao suporte, com o texto e o seu e-mail.
 - **Os servidores do seu projeto.** Nas verificações de Domain verified e Steady, o nosso servidor acessa o DNS do seu domínio e o endereço do seu projeto. Eles veem o nosso servidor, não você.
 - **Nosso provedor de hospedagem**, que mantém o servidor e o banco de dados para nós.
 

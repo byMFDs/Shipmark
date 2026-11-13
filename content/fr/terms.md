@@ -51,6 +51,10 @@ La communauté (rubriques, fils et réponses) a ses propres [règles de la commu
 
 Toute personne connectée peut signaler un projet, un profil ou une entrée du journal de construction. Les modérateurs peuvent rejeter un signalement, retirer un projet, effacer des champs du profil (photo et couverture, phrase d’accroche et « À propos », liens), mettre un compte en sourdine jusqu’à 7 jours (vous pouvez toujours lire, modifier vos paramètres, télécharger ou supprimer vos données, mais pas publier) ou le bannir jusqu’à 14 jours (vous êtes déconnecté, ne pouvez pas vous connecter, et votre profil et vos projets ne sont pas publics). Chaque décision est accompagnée d’un motif que vous voyez. Les sanctions plus longues ou permanentes sont décidées uniquement par les administrateurs du site, qui peuvent aussi masquer des projets ou suspendre des comptes. Supprimer votre compte ne met pas fin à un bannissement (voir la [Politique de confidentialité](/legal/privacy/)). Si vous pensez que nous nous sommes trompés, écrivez à [{{ contact_email }}](mailto:{{ contact_email }}).
 
+## Support {#support}
+
+Vous pouvez nous écrire via le [formulaire de support](/support/). Nous lisons chaque message mais ne pouvons pas promettre de répondre à tous. N’envoyez ni mots de passe, ni clés, ni données privées d’autrui. Le spam, les menaces ou le harcèlement via le formulaire sont traités comme tout autre abus du site. La façon dont nous traitons votre message est décrite dans la [Politique de confidentialité](/legal/privacy/#support).
+
 ## Fin du service {#ending}
 
 Vous pouvez supprimer votre compte à tout moment dans les Réglages. Nous pouvons fermer un compte qui enfreint gravement ou à plusieurs reprises ces conditions. Ce qu’il advient de vos données est expliqué dans la [Politique de confidentialité](/legal/privacy/).

@@ -51,6 +51,10 @@ Społeczność (działy, wątki i odpowiedzi) ma własne [zasady społeczności]
 
 Każda zalogowana osoba może zgłosić projekt, profil lub wpis w dzienniku zmian. Moderatorzy mogą odrzucić zgłoszenie, usunąć projekt, wyczyścić pola profilu (zdjęcie i obraz w tle, krótki opis i „O mnie”, linki), wyciszyć konto na maksymalnie 7 dni (nadal możesz czytać, zmieniać ustawienia, pobrać lub usunąć swoje dane, ale nie publikować) albo zablokować je na maksymalnie 14 dni (zostajesz wylogowany, nie możesz się zalogować, a profil i projekty nie są publiczne). Każda decyzja ma powód, który widzisz. O dłuższych lub stałych sankcjach decydują tylko administratorzy serwisu, którzy mogą też ukrywać projekty lub zawieszać konta. Usunięcie konta nie kończy blokady (zob. [Politykę prywatności](/legal/privacy/)). Jeśli uważasz, że popełniliśmy błąd, napisz na [{{ contact_email }}](mailto:{{ contact_email }}).
 
+## Wsparcie {#support}
+
+Możesz do nas napisać przez [formularz wsparcia](/support/). Czytamy każdą wiadomość, ale nie możemy obiecać odpowiedzi na każdą. Nie wysyłaj haseł, kluczy ani cudzych prywatnych danych. Spam, groźby lub nękanie przez formularz traktujemy jak każde inne nadużycie serwisu. Jak postępujemy z Twoją wiadomością, opisuje [Polityka prywatności](/legal/privacy/#support).
+
 ## Zakończenie {#ending}
 
 Konto możesz w każdej chwili usunąć w Ustawieniach. Możemy zamknąć konto, które poważnie lub wielokrotnie łamie ten regulamin. Co dzieje się z Twoimi danymi, wyjaśnia [Polityka prywatności](/legal/privacy/).

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 17:26+0000\n"
+"POT-Creation-Date: 2026-11-13 17:48+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -44,7 +44,7 @@ msgstr "Профіль"
 msgid "Pictures"
 msgstr "Зображення"
 
-#: accounts/admin.py:109 config/settings/base.py:329
+#: accounts/admin.py:109 config/settings/base.py:359
 #: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
@@ -325,7 +325,7 @@ msgstr "LinkedIn"
 msgid "Telegram"
 msgstr "Telegram"
 
-#: accounts/models.py:118
+#: accounts/models.py:118 support/models.py:23 templates/support/form.html:34
 msgid "Other"
 msgstr "Інше"
 
@@ -404,7 +404,7 @@ msgstr "Відновлено: %(count)s."
 msgid "Restore selected replies (superusers)"
 msgstr "Відновити вибрані відповіді (лише superuser)"
 
-#: community/apps.py:8 config/settings/base.py:342 pages/templatetags/ui.py:348
+#: community/apps.py:8 config/settings/base.py:372 pages/templatetags/ui.py:348
 #: pages/templatetags/ui.py:353 templates/community/home.html:4
 #: templates/community/home.html:5 templates/community/home.html:11
 #: templates/community/home.html:12 templates/community/notifications.html:10
@@ -475,7 +475,7 @@ msgstr "Забагато зображень за годину. Спробуйт�
 msgid "New accounts can put one link in a post during the first 24 hours."
 msgstr "Перші 24 години нові акаунти можуть додати в пост лише одне посилання."
 
-#: community/forms.py:68 projects/admin.py:100
+#: community/forms.py:68 projects/admin.py:100 support/models.py:65
 msgid "Text"
 msgstr "Текст"
 
@@ -484,7 +484,7 @@ msgid "Markdown works. Links, lists, bold and code are allowed; HTML is not."
 msgstr ""
 "Працює Markdown. Можна посилання, списки, жирний текст і код; HTML не можна."
 
-#: community/forms.py:76 config/settings/base.py:347
+#: community/forms.py:76 config/settings/base.py:377
 #: templates/community/notifications.html:23
 msgid "Images"
 msgstr "Зображення"
@@ -653,7 +653,7 @@ msgstr "Ракета"
 msgid "Fire"
 msgstr "Вогонь"
 
-#: community/stickers.py:35
+#: community/stickers.py:35 support/models.py:19 templates/support/form.html:30
 msgid "Bug"
 msgstr "Баг"
 
@@ -750,113 +750,123 @@ msgstr "Увійдіть, щоб це зробити."
 msgid "Proof, not promises."
 msgstr "Докази, а не обіцянки."
 
-#: config/settings/base.py:266
+#: config/settings/base.py:296
 msgid "Admin"
 msgstr "Адмінка"
 
-#: config/settings/base.py:302 config/settings/base.py:304
+#: config/settings/base.py:332 config/settings/base.py:334
 #: moderation/dashboard.py:46
 msgid "Users"
 msgstr "Користувачі"
 
-#: config/settings/base.py:305
+#: config/settings/base.py:335
 msgid "Badges"
 msgstr "Бейджі"
 
-#: config/settings/base.py:309 config/settings/base.py:311
+#: config/settings/base.py:339 config/settings/base.py:341
 #: templates/accounts/profile.html:53 templates/accounts/profile.html:67
 #: templates/accounts/profile.html:75 templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
-#: config/settings/base.py:312 templates/accounts/profile.html:68
+#: config/settings/base.py:342 templates/accounts/profile.html:68
 #: templates/accounts/profile.html:115 templates/pages/landing.html:264
 #: templates/projects/_build_log.html:4
 msgid "Build log"
 msgstr "Журнал розробки"
 
-#: config/settings/base.py:313 projects/forms.py:47
+#: config/settings/base.py:343 projects/forms.py:47
 #: templates/projects/detail.html:167
 msgid "Tags"
 msgstr "Теги"
 
-#: config/settings/base.py:314
+#: config/settings/base.py:344
 msgid "Tools"
 msgstr "Інструменти"
 
-#: config/settings/base.py:318
+#: config/settings/base.py:348
 msgid "Verification"
 msgstr "Підтвердження"
 
-#: config/settings/base.py:320
+#: config/settings/base.py:350
 msgid "Review queue"
 msgstr "Черга перевірки"
 
-#: config/settings/base.py:322
+#: config/settings/base.py:352
 msgid "Repositories"
 msgstr "Репозиторії"
 
-#: config/settings/base.py:323
+#: config/settings/base.py:353
 msgid "Domains"
 msgstr "Домени"
 
-#: config/settings/base.py:324
+#: config/settings/base.py:354
 msgid "Uptime checks"
 msgstr "Перевірки доступності"
 
-#: config/settings/base.py:325
+#: config/settings/base.py:355
 msgid "Blocked repos and domains"
 msgstr "Заблоковані репозиторії й домени"
 
-#: config/settings/base.py:331 templates/moderation/mod/queue.html:11
+#: config/settings/base.py:361 templates/moderation/mod/queue.html:11
 msgid "Reports"
 msgstr "Скарги"
 
-#: config/settings/base.py:333 templates/moderation/mod/_history.html:7
+#: config/settings/base.py:363 templates/moderation/mod/_history.html:7
 msgid "Sanctions"
 msgstr "Санкції"
 
-#: config/settings/base.py:334 templates/moderation/mod/_history.html:15
+#: config/settings/base.py:364 templates/moderation/mod/_history.html:15
 msgid "Removed projects"
 msgstr "Вилучені проєкти"
 
-#: config/settings/base.py:336
+#: config/settings/base.py:366
 msgid "Notices"
 msgstr "Повідомлення"
 
-#: config/settings/base.py:337
+#: config/settings/base.py:367
 msgid "Follows"
 msgstr "Підписки"
 
-#: config/settings/base.py:338 projects/admin.py:46
+#: config/settings/base.py:368 projects/admin.py:46
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:344 templates/community/_boards.html:3
+#: config/settings/base.py:374 templates/community/_boards.html:3
 #: templates/community/_layout.html:10 templates/community/_layout.html:15
 msgid "Boards"
 msgstr "Розділи"
 
-#: config/settings/base.py:345 templates/community/home.html:52
+#: config/settings/base.py:375 templates/community/home.html:52
 msgid "Threads"
 msgstr "Треди"
 
-#: config/settings/base.py:346
+#: config/settings/base.py:376
 msgid "Replies"
 msgstr "Відповіді"
 
-#: config/settings/base.py:351 news/apps.py:8 pages/templatetags/ui.py:347
+#: config/settings/base.py:381 pages/templatetags/ui.py:355 support/apps.py:8
+#: templates/support/form.html:4 templates/support/form.html:12
+#: templates/support/sent.html:13
+msgid "Support"
+msgstr "Підтримка"
+
+#: config/settings/base.py:383 templates/pages/landing.html:49
+msgid "Inbox"
+msgstr "Вхідні"
+
+#: config/settings/base.py:388 news/apps.py:8 pages/templatetags/ui.py:347
 #: pages/templatetags/ui.py:352 templates/news/list.html:4
 #: templates/news/list.html:5 templates/news/list.html:14
 #: templates/social/feed.html:18 templates/social/feed.html:35
 msgid "News"
 msgstr "Новини"
 
-#: config/settings/base.py:353
+#: config/settings/base.py:390
 msgid "News posts"
 msgstr "Новини"
 
-#: config/settings/base.py:357 config/settings/base.py:359
+#: config/settings/base.py:394 config/settings/base.py:396
 msgid "Audit log"
 msgstr "Журнал аудиту"
 
@@ -953,6 +963,10 @@ msgstr "Домен підтверджено"
 #: social/feed.py:29
 msgid "Steady"
 msgstr "Стабільний"
+
+#: moderation/dashboard.py:63
+msgid "Unread support messages"
+msgstr "Непрочитані звернення"
 
 #: moderation/decisions.py:137
 msgid "picture and cover"
@@ -1063,7 +1077,7 @@ msgstr ""
 msgid "Write the reason. The person will see it."
 msgstr "Напишіть причину. Людина її побачить."
 
-#: moderation/forms.py:60
+#: moderation/forms.py:60 support/forms.py:80
 msgid "Write at least a short sentence (10 characters)."
 msgstr "Напишіть хоча б коротке речення (10 символів)."
 
@@ -1511,10 +1525,6 @@ msgstr "Про проєкт"
 #: templates/social/feed.html:106
 msgid "How proof works"
 msgstr "Як працюють підтвердження"
-
-#: pages/templatetags/ui.py:355
-msgid "Support"
-msgstr "Підтримка"
 
 #: pages/templatetags/ui.py:356
 msgid "Legal"
@@ -2170,6 +2180,247 @@ msgstr "Вподобано."
 msgid "Like removed."
 msgstr "Вподобання знято."
 
+#: support/admin.py:48
+msgid "Handling"
+msgstr "Опрацювання"
+
+#: support/admin.py:57
+msgid "Subject"
+msgstr "Тема"
+
+#: support/admin.py:61 templates/accounts/settings.html:102
+msgid "Account"
+msgstr "Акаунт"
+
+#: support/admin.py:64
+msgid "Not signed in"
+msgstr "Без входу"
+
+#: support/admin.py:68
+msgid "Files"
+msgstr "Файли"
+
+#: support/admin.py:72
+msgid "Attachments"
+msgstr "Вкладення"
+
+#: support/admin.py:83 templates/moderation/mod/act.html:11
+#: templates/moderation/mod/queue.html:35
+#: templates/moderation/mod/queue.html:51
+msgid "Reply"
+msgstr "Відповідь"
+
+#: support/admin.py:86
+msgid "Reply by email"
+msgstr "Відповісти поштою"
+
+#: support/admin.py:121
+#, python-format
+msgid "Updated %(count)d message."
+msgid_plural "Updated %(count)d messages."
+msgstr[0] "Оновлено %(count)d повідомлення."
+msgstr[1] "Оновлено %(count)d повідомлення."
+msgstr[2] "Оновлено %(count)d повідомлень."
+msgstr[3] "Оновлено %(count)d повідомлення."
+
+#: support/admin.py:124
+msgid "Mark as read"
+msgstr "Позначити прочитаним"
+
+#: support/admin.py:128
+msgid "Mark as answered"
+msgstr "Позначити як відповіли"
+
+#: support/admin.py:132 templates/community/_lightbox.html:7
+#: templates/community/_picker.html:5 templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Закрити"
+
+#: support/forms.py:45 support/forms.py:48
+msgid "A text file can be at most 200 KB."
+msgstr "Текстовий файл може мати щонайбільше 200 КБ."
+
+#: support/forms.py:51
+msgid "This does not look like a text file."
+msgstr "Це не схоже на текстовий файл."
+
+#: support/forms.py:63
+msgid "Attach PNG, JPEG or WebP images, or .txt and .log files."
+msgstr "Додавайте зображення PNG, JPEG чи WebP або файли .txt і .log."
+
+#: support/forms.py:68
+msgid "What is it about?"
+msgstr "Про що це?"
+
+#: support/forms.py:68
+msgid "Choose a topic"
+msgstr "Оберіть тему"
+
+#: support/forms.py:69
+msgid "Choose a topic."
+msgstr "Оберіть тему."
+
+#: support/forms.py:72
+msgid "Subject (optional)"
+msgstr "Тема (необовʼязково)"
+
+#: support/forms.py:76
+msgid "Message"
+msgstr "Повідомлення"
+
+#: support/forms.py:78
+msgid ""
+"What happened, where, and what you expected. Never send passwords or keys."
+msgstr "Що сталося, де і чого ви очікували. Ніколи не надсилайте паролів чи ключів."
+
+#: support/forms.py:79
+msgid "Write your message."
+msgstr "Напишіть повідомлення."
+
+#: support/forms.py:83
+msgid "Your email"
+msgstr "Ваша пошта"
+
+#: support/forms.py:85
+msgid "Used only to reply to this message."
+msgstr "Лише для відповіді на це повідомлення."
+
+#: support/forms.py:88
+msgid "Attachments (optional)"
+msgstr "Вкладення (необовʼязково)"
+
+#: support/forms.py:90
+msgid ""
+"Up to 3 files: PNG, JPEG or WebP images up to 5 MB, or .txt and .log files "
+"up to 200 KB."
+msgstr "До 3 файлів: зображення PNG, JPEG чи WebP до 5 МБ або файли .txt і .log до 200 КБ."
+
+#: support/forms.py:95
+msgid "Leave this empty"
+msgstr "Залиште порожнім"
+
+#: support/forms.py:103
+msgid "From your account; used only to reply. You can change it here."
+msgstr "З вашого акаунта; лише для відповіді. Тут її можна змінити."
+
+#: support/forms.py:106 support/forms.py:119
+msgid "Add your email, so we can reply."
+msgstr "Додайте пошту, щоб ми могли відповісти."
+
+#: support/forms.py:130
+#, python-format
+msgid "Attach at most %(count)d file."
+msgid_plural "Attach at most %(count)d files."
+msgstr[0] "Можна додати щонайбільше %(count)d файл."
+msgstr[1] "Можна додати щонайбільше %(count)d файли."
+msgstr[2] "Можна додати щонайбільше %(count)d файлів."
+msgstr[3] "Можна додати щонайбільше %(count)d файлу."
+
+#: support/forms.py:148
+msgid "That was quick. Check your message and send it again."
+msgstr "Це було швидко. Перевірте повідомлення і надішліть ще раз."
+
+#: support/forms.py:152
+msgid "The form was open too long. Send it again."
+msgstr "Форма була відкрита надто довго. Надішліть ще раз."
+
+#: support/models.py:20 templates/support/form.html:31
+msgid "Idea or feedback"
+msgstr "Ідея чи відгук"
+
+#: support/models.py:21 templates/support/form.html:32
+msgid "Praise"
+msgstr "Подяка"
+
+#: support/models.py:22 templates/support/form.html:33
+msgid "Account or privacy"
+msgstr "Акаунт чи приватність"
+
+#: support/models.py:26 templates/community/notifications.html:21
+msgid "New"
+msgstr "Нове"
+
+#: support/models.py:27
+msgid "Read"
+msgstr "Прочитане"
+
+#: support/models.py:28
+msgid "Answered"
+msgstr "З відповіддю"
+
+#: support/models.py:29
+msgid "Closed"
+msgstr "Закрите"
+
+#: support/models.py:35
+msgid "email"
+msgstr "пошта"
+
+#: support/models.py:35
+msgid "Used only to reply."
+msgstr "Лише для відповіді."
+
+#: support/models.py:36
+msgid "category"
+msgstr "тема"
+
+#: support/models.py:37
+msgid "subject"
+msgstr "заголовок"
+
+#: support/models.py:38
+msgid "message"
+msgstr "повідомлення"
+
+#: support/models.py:40
+msgid "reference"
+msgstr "номер помилки"
+
+#: support/models.py:41
+msgid "status"
+msgstr "статус"
+
+#: support/models.py:42
+msgid "internal note"
+msgstr "внутрішня нотатка"
+
+#: support/models.py:42
+msgid "Only staff see this."
+msgstr "Бачить лише персонал."
+
+#: support/models.py:43
+msgid "sent"
+msgstr "надіслано"
+
+#: support/models.py:48
+msgid "support message"
+msgstr "звернення в підтримку"
+
+#: support/models.py:49
+msgid "support messages"
+msgstr "звернення в підтримку"
+
+#: support/models.py:64
+msgid "Image"
+msgstr "Зображення"
+
+#: support/models.py:70
+msgid "original name"
+msgstr "початкова назва"
+
+#: support/models.py:76
+msgid "attachment"
+msgstr "вкладення"
+
+#: support/models.py:77
+msgid "attachments"
+msgstr "вкладення"
+
+#: support/views.py:31
+msgid ""
+"You have sent several messages already. Please wait an hour and try again."
+msgstr "Ви вже надіслали кілька повідомлень. Зачекайте годину і спробуйте ще раз."
+
 #: templates/400.html:3 templates/400.html:5
 msgid "We could not read that request"
 msgstr "Не вдалося прочитати цей запит"
@@ -2570,7 +2821,7 @@ msgstr "Посилання %(n)s: адреса"
 msgid "Publish a project first, then you can pin it here."
 msgstr "Спершу опублікуйте проєкт, тоді його можна закріпити тут."
 
-#: templates/accounts/settings.html:84 templates/includes/site_footer.html:37
+#: templates/accounts/settings.html:84 templates/includes/site_footer.html:38
 msgid "Language"
 msgstr "Мова"
 
@@ -2579,7 +2830,7 @@ msgid "Save settings"
 msgstr "Зберегти налаштування"
 
 #: templates/accounts/settings.html:92 templates/accounts/settings.html:94
-#: templates/includes/site_footer.html:51
+#: templates/includes/site_footer.html:52
 msgid "Theme"
 msgstr "Тема"
 
@@ -2587,21 +2838,17 @@ msgstr "Тема"
 msgid "Saved in this browser only."
 msgstr "Зберігається лише в цьому браузері."
 
-#: templates/accounts/settings.html:95 templates/includes/site_footer.html:52
+#: templates/accounts/settings.html:95 templates/includes/site_footer.html:53
 msgid "System"
 msgstr "Системна"
 
-#: templates/accounts/settings.html:96 templates/includes/site_footer.html:53
+#: templates/accounts/settings.html:96 templates/includes/site_footer.html:54
 msgid "Light"
 msgstr "Світла"
 
-#: templates/accounts/settings.html:97 templates/includes/site_footer.html:54
+#: templates/accounts/settings.html:97 templates/includes/site_footer.html:55
 msgid "Dark"
 msgstr "Темна"
-
-#: templates/accounts/settings.html:102
-msgid "Account"
-msgstr "Акаунт"
 
 #: templates/accounts/settings.html:104
 msgid "Username"
@@ -2713,11 +2960,6 @@ msgstr "Про спільноту"
 #: templates/community/_lightbox.html:2
 msgid "Image viewer"
 msgstr "Перегляд зображень"
-
-#: templates/community/_lightbox.html:7 templates/community/_picker.html:5
-#: templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Закрити"
 
 #: templates/community/_lightbox.html:8
 msgid "Previous image"
@@ -2991,10 +3233,6 @@ msgstr ""
 "Коли хтось відповідає у вашому треді або на вашу відповідь, це з'являється "
 "тут. Листів на пошту ми не надсилаємо."
 
-#: templates/community/notifications.html:21
-msgid "New"
-msgstr "Нове"
-
 #: templates/community/notifications.html:22
 #, python-format
 msgid "@%(name)s replied to your thread “%(title)s”"
@@ -3179,11 +3417,12 @@ msgstr "Акаунти молодші за 24 години: одне посил�
 msgid "Error"
 msgstr "Помилка"
 
-#: templates/errors/_body.html:17
+#: templates/errors/_body.html:17 templates/support/sent.html:22
 msgid "Go to your feed"
 msgstr "До вашої стрічки"
 
 #: templates/errors/_body.html:17 templates/moderation/banned.html:18
+#: templates/support/sent.html:23
 msgid "Go to the front page"
 msgstr "На головну"
 
@@ -3191,11 +3430,15 @@ msgstr "На головну"
 msgid "Go back"
 msgstr "Назад"
 
-#: templates/errors/_body.html:21
+#: templates/errors/_body.html:20
+msgid "Report a problem"
+msgstr "Повідомити про проблему"
+
+#: templates/errors/_body.html:22
 msgid "Reference:"
 msgstr "Код помилки:"
 
-#: templates/errors/_body.html:22
+#: templates/errors/_body.html:23
 #, python-format
 msgid ""
 "If it keeps happening, write to <a href=\"mailto:"
@@ -3298,12 +3541,12 @@ msgstr "Виправте ці помилки та спробуйте ще раз
 msgid "Not yet"
 msgstr "Ще ні"
 
-#: templates/includes/site_footer.html:9 templates/includes/site_header.html:6
+#: templates/includes/site_footer.html:10 templates/includes/site_header.html:6
 #, python-format
 msgid "%(name)s home"
 msgstr "%(name)s: на головну"
 
-#: templates/includes/site_footer.html:47
+#: templates/includes/site_footer.html:48
 msgid "Change"
 msgstr "Змінити"
 
@@ -3428,11 +3671,6 @@ msgstr "Назад"
 #: templates/moderation/mod/queue.html:51
 msgid "Thread"
 msgstr "Тред"
-
-#: templates/moderation/mod/act.html:11 templates/moderation/mod/queue.html:35
-#: templates/moderation/mod/queue.html:51
-msgid "Reply"
-msgstr "Відповідь"
 
 #: templates/moderation/mod/act.html:13
 #, python-format
@@ -3732,10 +3970,6 @@ msgstr "Простір"
 #: templates/pages/landing.html:48
 msgid "Overview"
 msgstr "Огляд"
-
-#: templates/pages/landing.html:49
-msgid "Inbox"
-msgstr "Вхідні"
 
 #: templates/pages/landing.html:51
 msgid "Activity"
@@ -4828,6 +5062,135 @@ msgstr "Я приймаю Умови"
 #: templates/socialaccount/signup.html:24
 msgid "Create account"
 msgstr "Створити акаунт"
+
+#: templates/support/form.html:5
+msgid "Report a bug, suggest an idea or ask about your account."
+msgstr "Повідомте про помилку, запропонуйте ідею чи запитайте про свій акаунт."
+
+#: templates/support/form.html:13
+msgid "Write to us"
+msgstr "Напишіть нам"
+
+#: templates/support/form.html:14
+msgid ""
+"Found a bug, have an idea, or need help with your account? Tell us here."
+msgstr "Знайшли помилку, маєте ідею чи потрібна допомога з акаунтом? Напишіть тут."
+
+#: templates/support/form.html:17
+msgid "What happens next"
+msgstr "Що буде далі"
+
+#: templates/support/form.html:19
+msgid "We read every message."
+msgstr "Ми читаємо кожне повідомлення."
+
+#: templates/support/form.html:19
+msgid "A person on the team reads each one, usually within a few days."
+msgstr "Кожне читає людина з команди, зазвичай протягом кількох днів."
+
+#: templates/support/form.html:20
+msgid "We cannot promise to reply to all."
+msgstr "Ми не можемо обіцяти відповісти на всі."
+
+#: templates/support/form.html:20
+msgid "Questions about accounts and privacy come first."
+msgstr "Питання про акаунти й приватність — першими."
+
+#: templates/support/form.html:21
+msgid "Your email is used only to reply."
+msgstr "Ваша пошта — лише для відповіді."
+
+#: templates/support/form.html:21
+msgid "No newsletters, and nobody else sees it."
+msgstr "Жодних розсилок, і ніхто інший її не бачить."
+
+#: templates/support/form.html:28
+msgid "What to write"
+msgstr "Що написати"
+
+#: templates/support/form.html:30
+msgid ""
+"What you did, what happened and what you expected. The page address and a "
+"screenshot help most."
+msgstr "Що ви робили, що сталося і чого очікували. Найбільше допомагають адреса сторінки і знімок екрана."
+
+#: templates/support/form.html:31
+msgid "What would make the site better for you, and why."
+msgstr "Що зробило б сайт кращим для вас і чому."
+
+#: templates/support/form.html:32
+msgid "What worked for you. It tells us what to keep."
+msgstr "Що вам сподобалося. Так ми знаємо, що залишити."
+
+#: templates/support/form.html:33
+msgid ""
+"Sign-in, your data, deleting your account or a moderation decision. Write "
+"from your account if you can."
+msgstr "Вхід, ваші дані, видалення акаунта чи рішення модераторів. Якщо можете, пишіть зі свого акаунта."
+
+#: templates/support/form.html:34
+msgid ""
+"Anything else. A problem with a project, a person or a post? Use the Report "
+"link on it."
+msgstr "Будь-що інше. Проблема з проєктом, людиною чи дописом? Скористайтеся посиланням «Поскаржитися» на ньому."
+
+#: templates/support/form.html:40
+msgid "Your message"
+msgstr "Ваше повідомлення"
+
+#: templates/support/form.html:43
+msgid "Reference"
+msgstr "Номер"
+
+#: templates/support/form.html:43
+msgid "from the error page; it helps us find what went wrong."
+msgstr "зі сторінки помилки; він допомагає знайти, що пішло не так."
+
+#: templates/support/form.html:55
+msgid "Send message"
+msgstr "Надіслати повідомлення"
+
+#: templates/support/form.html:56
+#, python-format
+msgid ""
+"How we handle your message is described in the <a "
+"href=\"%(url)s#support\">Privacy policy</a>."
+msgstr "Як ми обробляємо повідомлення, описано в <a href=\"%(url)s#support\">Політиці конфіденційності</a>."
+
+#: templates/support/sent.html:4
+msgid "Already received"
+msgstr "Вже отримано"
+
+#: templates/support/sent.html:4 templates/support/sent.html:18
+msgid "Message sent"
+msgstr "Повідомлення надіслано"
+
+#: templates/support/sent.html:15
+msgid "Received"
+msgstr "Отримано"
+
+#: templates/support/sent.html:18
+msgid "We already have this message"
+msgstr "Це повідомлення вже в нас"
+
+#: templates/support/sent.html:19
+msgid ""
+"The same text arrived a moment ago, so we kept one copy. No need to send it "
+"again."
+msgstr "Такий самий текст щойно надійшов, тож ми залишили одну копію. Надсилати ще раз не треба."
+
+#: templates/support/sent.html:19
+msgid ""
+"Thank you. We read every message, but we cannot promise to reply to all."
+msgstr "Дякуємо. Ми читаємо кожне повідомлення, але не можемо обіцяти відповісти на всі."
+
+#: templates/support/sent.html:20
+msgid "If we answer, the reply goes to the email address you gave."
+msgstr "Якщо ми відповімо, лист прийде на вказану вами адресу."
+
+#: templates/support/sent.html:24
+msgid "Write another message"
+msgstr "Написати ще одне"
 
 #: verification/admin.py:33
 msgid "Approve (the review reasons are fine)"

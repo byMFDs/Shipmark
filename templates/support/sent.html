@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% if again %}{% translate "Already received" %}{% else %}{% translate "Message sent" %}{% endif %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/support.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container shell shell--narrow">
+    <section class="support-sent" aria-labelledby="sent-title">
+      {# A received stamp is pressed once onto the record (motion: transform and opacity, reduced-motion shows it set). #}
+      <div class="support-sent__record record" aria-hidden="true">
+        <div class="record__head"><span class="label">{% translate "Support" %}</span><span class="label mono">{% now "Y-m-d" %}</span></div>
+        <div class="support-sent__lines"><span></span><span></span><span></span></div>
+        <span class="support-sent__stamp label">{% icon "check" %}{% translate "Received" %}</span>
+      </div>
+      <div class="support-sent__text">
+        <h1 id="sent-title">{% if again %}{% translate "We already have this message" %}{% else %}{% translate "Message sent" %}{% endif %}</h1>
+        <p class="lede">{% if again %}{% translate "The same text arrived a moment ago, so we kept one copy. No need to send it again." %}{% else %}{% translate "Thank you. We read every message, but we cannot promise to reply to all." %}{% endif %}</p>
+        <p class="muted">{% translate "If we answer, the reply goes to the email address you gave." %}</p>
+        <div class="support-sent__actions">
+          {% if user.is_authenticated %}<a class="btn btn--secondary" href="{% url 'social:feed' %}">{% translate "Go to your feed" %}</a>
+          {% else %}<a class="btn btn--secondary" href="{% url 'pages:landing' %}">{% translate "Go to the front page" %}</a>{% endif %}
+          <a class="btn btn--quiet" href="{% url 'support:form' %}">{% translate "Write another message" %}</a>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock %}

@@ -51,6 +51,10 @@ A comunidade (seções, tópicos e respostas) tem as próprias [regras da comuni
 
 Qualquer pessoa conectada pode denunciar um projeto, um perfil ou uma entrada do registro de mudanças. Os moderadores podem descartar uma denúncia, remover um projeto, limpar campos do perfil (foto e capa, resumo curto e “Sobre”, links), silenciar uma conta por até 7 dias (você ainda pode ler, mudar suas configurações, baixar ou excluir seus dados, mas não publicar) ou bani-la por até 14 dias (você é desconectado, não consegue entrar, e seu perfil e projetos não ficam públicos). Toda decisão vem com um motivo que você vê. Sanções mais longas ou permanentes são decididas só pelos administradores do site, que também podem ocultar projetos ou suspender contas. Excluir a conta não encerra um banimento (veja a [Política de privacidade](/legal/privacy/)). Se você acha que erramos, escreva para [{{ contact_email }}](mailto:{{ contact_email }}).
 
+## Suporte {#support}
+
+Você pode nos escrever pelo [formulário de suporte](/support/). Lemos todas as mensagens, mas não podemos prometer responder a cada uma. Não envie senhas, chaves nem dados privados de outras pessoas. Spam, ameaças ou assédio pelo formulário são tratados como qualquer outro abuso do site. Como tratamos sua mensagem está descrito na [Política de privacidade](/legal/privacy/#support).
+
 ## Encerramento {#ending}
 
 Você pode excluir sua conta a qualquer momento em Configurações. Podemos encerrar uma conta que viole estes termos de forma grave ou repetida. O que acontece com seus dados está explicado na [Política de privacidade](/legal/privacy/).

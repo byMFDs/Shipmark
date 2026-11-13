@@ -11,7 +11,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse
 from django.utils.html import escape
-from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.http import url_has_allowed_host_and_scheme, urlencode
 
 from config import branding
 
@@ -38,11 +38,22 @@ def _back_url(request):
     return ""
 
 
+def _support_url(request):
+    """/support/ with the topic "Bug" and this request's id filled in ("Report a problem"). Never fails."""
+    try:
+        url = reverse("support:form")
+    except Exception:
+        return ""
+    request_id = getattr(request, "request_id", "")
+    return f"{url}?{urlencode({'category': 'bug', 'ref': request_id} if request_id else {'category': 'bug'})}"
+
+
 def _context(request, code, reference):
     return {
         "code": code,
         "back_url": _back_url(request),
         "request_id": getattr(request, "request_id", "") if reference else "",
+        "support_url": _support_url(request),
         "contact_email": branding.CONTACT_EMAIL,
         "site_name": branding.SITE_NAME,
     }

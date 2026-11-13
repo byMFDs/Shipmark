@@ -19,7 +19,7 @@ Pytania i wnioski: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Zdjęcie profilowe i obraz w tle.** Możesz wysłać zdjęcie i szeroki obraz w tle albo raz skopiować swój obraz z GitHuba. Każdy obraz kodujemy na nowo (zdjęcie do 512×512, obraz w tle do 1500×500), co usuwa ukryte metadane, np. lokalizację GPS, nadajemy mu losową nazwę i przechowujemy na własnym serwerze: strony nigdy nie wczytują Twojego zdjęcia z GitHuba. Oba są **publiczne**. Gdy usuniesz lub zastąpisz obraz albo usuniesz konto, plik jest usuwany; kopie zostają w kopiach zapasowych do 14 dni. Bez zdjęcia pokazujemy Twoje inicjały.
 
-**Twój adres e-mail.** Jest przechowywany przy koncie i widoczny tylko dla naszego zespołu. Nigdy nie jest pokazywany w serwisie. Serwis nie wysyła e-maili; użyjemy adresu tylko po to, by skontaktować się z Tobą w sprawie konta lub zgłoszenia.
+**Twój adres e-mail.** Jest przechowywany przy koncie i widoczny tylko dla naszego zespołu. Nigdy nie jest pokazywany w serwisie. Serwis nie wysyła do Ciebie e-maili (jedyny e-mail, jaki wysyła, to powiadomienie dla naszego zespołu o wiadomości do wsparcia); użyjemy adresu tylko po to, by skontaktować się z Tobą w sprawie konta, zgłoszenia lub wiadomości do wsparcia.
 
 **Twoje projekty.** Wszystko, co wpiszesz: nazwa, opis, długi opis, linki, tagi, narzędzia AI, których według Ciebie użyto (pokazywane jako deklaracja autora), zrzuty ekranu i wpisy dziennika rozwoju. Opublikowane projekty są publiczne; szkice widzisz tylko Ty i nasz zespół. Zrzuty ekranu są kodowane ponownie przy wysyłaniu, co usuwa ukryte metadane, takie jak dane aparatu czy lokalizacja GPS.
 
@@ -57,9 +57,18 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 
 **Kopie zapasowe.** Codziennie robimy kopię bazy danych i wysłanych obrazów (zrzutów ekranu, zdjęć profilowych i obrazów w tle) i przechowujemy każdą kopię przez 14 dni. Jeśli usuniesz konto, Twoje dane zostają w tych kopiach, dopóki ostatnia, która je zawiera, nie zostanie zastąpiona, czyli do 14 dni.
 
+## Wiadomości do wsparcia {#support}
+
+Gdy piszesz do nas przez [formularz wsparcia](/support/), zapisujemy temat, tytuł, Twoją wiadomość, podany adres e-mail (lub adres konta), konto, z którego pisałeś, numer strony błędu, jeśli z niej przyszedłeś, oraz do 3 załączników. Obrazy są kodowane na nowo jak inne zdjęcia (ukryte metadane, np. lokalizacja GPS, są usuwane); pliki tekstowe są przechowywane jako tekst. Załączniki leżą w prywatnym folderze na naszym serwerze, który nie ma publicznego adresu: pobrać je może tylko personel z dostępem do skrzynki wsparcia. Twojego adresu e-mail używamy tylko do odpowiedzi.
+
+Nie zapisujemy razem z wiadomością Twojego adresu IP ani danych przeglądarki. Aby powstrzymać spam, solony jednokierunkowy odcisk Twojego adresu IP jest trzymany w pamięci podręcznej serwera najwyżej 24 godziny, nigdy w bazie danych ani w logach.
+
+Gdy wiadomość dotrze, nasz serwer wysyła na skrzynkę zespołu krótkie powiadomienie tekstowe z Twoją wiadomością i adresem e-mail, przez naszego dostawcę poczty (zob. „Kto jeszcze otrzymuje dane”). Personel może dodawać notatki wewnętrzne i ustawiać status (nowa, przeczytana, z odpowiedzią, zamknięta). Czytamy każdą wiadomość, ale nie możemy obiecać odpowiedzi na wszystkie. Zamknięte wiadomości są usuwane 12 miesięcy po wysłaniu; pozostałe zostają, dopóki nie zostaną zamknięte. „Pobierz moje dane” zawiera wiadomości wysłane z Twojego konta, a usunięcie konta je kasuje, także te wysłane bez logowania z adresu e-mail Twojego konta.
+
 ## Jak długo to przechowujemy {#retention}
 
 - Konto, profil, projekty, obserwowania i polubienia: dopóki ich nie usuniesz albo nie usuniesz konta.
+- Wiadomości do wsparcia i załączniki: zamknięte 12 miesięcy po wysłaniu, pozostałe do zamknięcia; razem z kontem.
 - Wątki, odpowiedzi i obrazy w społeczności: dopóki ich nie usuniesz albo nie usuniesz konta (co zostaje, opisuje sekcja „Społeczność” powyżej). Głosy: dopóki ich nie cofniesz albo nie usuniesz konta.
 - Powiadomienia o odpowiedziach: 90 dni.
 - Zdjęcie profilowe i obraz w tle: dopóki ich nie usuniesz lub nie zastąpisz albo nie usuniesz konta.
@@ -77,6 +86,7 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 ## Kto jeszcze otrzymuje dane {#recipients}
 
 - **GitHub, Inc.** Logujesz się na github.com, a nasz serwer odczytuje Twój profil i publiczne dane repozytoriów z API GitHuba. Do korzystania z GitHuba stosuje się jego własne oświadczenie o prywatności.
+- **Nasz dostawca poczty** (np. Google, jeśli skrzynka zespołu to Gmail) dostarcza na skrzynkę zespołu powiadomienie o każdej wiadomości do wsparcia, z jej treścią i Twoim adresem e-mail.
 - **Serwery Twojego projektu.** Przy sprawdzeniach Domain verified i Steady nasz serwer łączy się z DNS Twojej domeny i z adresem Twojego projektu. Widzą nasz serwer, nie Ciebie.
 - **Nasz dostawca hostingu**, który prowadzi dla nas serwer i bazę danych.
 

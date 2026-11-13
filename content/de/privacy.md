@@ -19,7 +19,7 @@ Fragen oder Anliegen: [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Profilbild und Titelbild.** Du kannst ein Bild und ein breites Titelbild hochladen oder dein GitHub-Bild einmal kopieren lassen. Jedes Bild wird neu kodiert (das Profilbild auf 512×512, das Titelbild auf 1500×500), was versteckte Metadaten wie den GPS-Standort entfernt, bekommt einen zufälligen Dateinamen und wird auf unserem eigenen Server gespeichert: Die Seiten laden dein Bild nie von GitHub. Beide sind **öffentlich**. Wenn du ein Bild entfernst oder ersetzt oder dein Konto löschst, wird die Datei gelöscht; Kopien bleiben bis zu 14 Tage in den Backups. Ohne Bild werden deine Initialen gezeigt.
 
-**Deine E-Mail-Adresse.** Sie wird mit deinem Konto gespeichert und ist nur für unser Team sichtbar. Sie wird nie auf der Seite angezeigt. Die Seite versendet keine E-Mails; wir würden die Adresse nur nutzen, um dich zu deinem Konto oder zu einer Meldung zu kontaktieren.
+**Deine E-Mail-Adresse.** Sie wird mit deinem Konto gespeichert und ist nur für unser Team sichtbar. Sie wird nie auf der Seite angezeigt. Die Seite schickt dir keine E-Mails (die einzige E-Mail, die sie verschickt, ist ein Hinweis an unser Team über eine Support-Nachricht); wir würden die Adresse nur nutzen, um dich zu deinem Konto, einer Meldung oder einer Support-Nachricht zu kontaktieren.
 
 **Deine Projekte.** Alles, was du eingibst: Name, Slogan, Beschreibung, Links, Tags, die KI-Tools, die du nach eigener Aussage genutzt hast (als selbst angegeben angezeigt), Screenshots und Build-Log-Einträge. Veröffentlichte Projekte sind öffentlich; Entwürfe sind nur für dich und unser Team sichtbar. Screenshots werden beim Hochladen neu kodiert, wodurch versteckte Metadaten wie Kameradetails oder GPS-Standort entfernt werden.
 
@@ -57,9 +57,18 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 
 **Backups.** Jeden Tag sichern wir die Datenbank und die hochgeladenen Bilder (Screenshots, Profilbilder und Titelbilder) und bewahren jedes Backup 14 Tage auf. Wenn du dein Konto löschst, bleiben deine Daten in diesen Backups, bis das letzte, das sie enthält, ersetzt wird, also höchstens 14 Tage.
 
+## Nachrichten an den Support {#support}
+
+Wenn du uns über das [Support-Formular](/support/) schreibst, speichern wir das Thema, den Betreff, deine Nachricht, die angegebene E-Mail-Adresse (oder die deines Kontos), das Konto, mit dem du angemeldet warst, die Referenznummer einer Fehlerseite, falls du von dort kommst, und bis zu 3 Anhänge. Bilder werden wie andere Bilder neu kodiert (versteckte Metadaten wie der GPS-Standort werden entfernt); Textdateien werden als Text gespeichert. Anhänge liegen in einem privaten Ordner auf unserem Server ohne öffentliche Adresse: Nur Teammitglieder mit Zugang zum Support-Postfach können sie herunterladen. Deine E-Mail-Adresse nutzen wir nur, um zu antworten.
+
+Wir speichern zur Nachricht weder deine IP-Adresse noch Browserdaten. Gegen Spam wird ein gesalzener Einweg-Fingerabdruck deiner IP-Adresse höchstens 24 Stunden im Cache des Servers gehalten, nie in der Datenbank oder in Logs.
+
+Wenn eine Nachricht eingeht, schickt unser Server über unseren E-Mail-Anbieter einen kurzen Texthinweis mit deiner Nachricht und deiner E-Mail-Adresse an das Postfach des Teams (siehe „Wer sonst Daten erhält“). Das Team kann interne Notizen hinzufügen und einen Status setzen (neu, gelesen, beantwortet, geschlossen). Wir lesen jede Nachricht, können aber nicht versprechen, auf alle zu antworten. Geschlossene Nachrichten werden 12 Monate nach dem Senden gelöscht; die übrigen bleiben, bis sie geschlossen werden. „Meine Daten herunterladen“ enthält die Nachrichten, die du angemeldet geschickt hast, und wenn du dein Konto löschst, werden sie gelöscht, auch die, die du abgemeldet von der E-Mail-Adresse deines Kontos geschickt hast.
+
 ## Wie lange wir es aufbewahren {#retention}
 
 - Dein Konto, Profil, deine Projekte, Follows und Likes: bis du sie oder dein Konto löschst.
+- Support-Nachrichten und ihre Anhänge: geschlossene 12 Monate nach dem Senden, die übrigen bis sie geschlossen werden; mit deinem Konto.
 - Threads, Antworten und Bilder in der Community: bis du sie oder dein Konto löschst (was bleibt, steht oben unter „Community“). Stimmen: bis du sie zurücknimmst oder dein Konto löschst.
 - Benachrichtigungen über Antworten: 90 Tage.
 - Profilbild und Titelbild: bis du sie entfernst oder ersetzt oder dein Konto löschst.
@@ -77,6 +86,7 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 ## Wer sonst Daten erhält {#recipients}
 
 - **GitHub, Inc.** Du meldest dich auf github.com an, und unser Server liest dein Profil und öffentliche Repository-Daten über die API von GitHub. Für deine Nutzung von GitHub gilt dessen eigene Datenschutzerklärung.
+- **Unser E-Mail-Anbieter** (zum Beispiel Google, wenn das Postfach des Teams ein Gmail-Konto ist) stellt den Hinweis zu jeder Support-Nachricht mit ihrem Text und deiner E-Mail-Adresse im Postfach des Teams zu.
 - **Die Server deines Projekts.** Für die Prüfungen Domain verified und Steady kontaktiert unser Server das DNS deiner Domain und die Adresse deines Projekts. Sie sehen unseren Server, nicht dich.
 - **Unser Hosting-Anbieter**, der für uns den Server und die Datenbank betreibt.
 

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+
+{% block title %}{% translate "Support" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block meta %}<meta name="description" content="{% translate 'Report a bug, suggest an idea or ask about your account.' %}">{% if form.initial.reference or form.is_bound %}<meta name="robots" content="noindex">{% endif %}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/support.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container shell">
+    <div class="sheet support">
+      <header class="sheet__intro">
+        <p class="label">{% translate "Support" %}</p>
+        <h1>{% translate "Write to us" %}</h1>
+        <p class="lede">{% translate "Found a bug, have an idea, or need help with your account? Tell us here." %}</p>
+
+        <section class="record support-promise" aria-labelledby="promise-title">
+          <div class="record__head"><h2 class="label" id="promise-title">{% translate "What happens next" %}</h2></div>
+          <ol class="support-promise__list">
+            <li><strong>{% translate "We read every message." %}</strong> {% translate "A person on the team reads each one, usually within a few days." %}</li>
+            <li><strong>{% translate "We cannot promise to reply to all." %}</strong> {% translate "Questions about accounts and privacy come first." %}</li>
+            <li><strong>{% translate "Your email is used only to reply." %}</strong> {% translate "No newsletters, and nobody else sees it." %}</li>
+          </ol>
+        </section>
+      </header>
+
+      <div class="sheet__body">
+        <section class="panel support-topics" aria-labelledby="topics-title">
+          <h2 id="topics-title">{% translate "What to write" %}</h2>
+          <dl class="support-topics__list">
+            <div><dt>{% translate "Bug" %}</dt><dd>{% translate "What you did, what happened and what you expected. The page address and a screenshot help most." %}</dd></div>
+            <div><dt>{% translate "Idea or feedback" %}</dt><dd>{% translate "What would make the site better for you, and why." %}</dd></div>
+            <div><dt>{% translate "Praise" %}</dt><dd>{% translate "What worked for you. It tells us what to keep." %}</dd></div>
+            <div><dt>{% translate "Account or privacy" %}</dt><dd>{% translate "Sign-in, your data, deleting your account or a moderation decision. Write from your account if you can." %}</dd></div>
+            <div><dt>{% translate "Other" %}</dt><dd>{% translate "Anything else. A problem with a project, a person or a post? Use the Report link on it." %}</dd></div>
+          </dl>
+        </section>
+
+        <form method="post" enctype="multipart/form-data" class="panel stack support-form" novalidate data-busy-form aria-labelledby="form-title">
+          {% csrf_token %}
+          <h2 id="form-title">{% translate "Your message" %}</h2>
+          {% include "includes/form_errors.html" %}
+          {% with reference=form.reference.value %}{% if reference %}
+            <p class="support-form__ref"><span class="label">{% translate "Reference" %}</span> <span class="mono">{{ reference }}</span> <span class="muted">{% translate "from the error page; it helps us find what went wrong." %}</span></p>
+          {% endif %}{% endwith %}
+          {% include "includes/form_field.html" with field=form.category %}
+          {% include "includes/form_field.html" with field=form.subject %}
+          {% include "includes/form_field.html" with field=form.body %}
+          {% include "includes/form_field.html" with field=form.email %}
+          {% include "includes/form_field.html" with field=form.attachments %}
+          {{ form.reference }}{{ form.started }}
+          <div class="support-hp" aria-hidden="true">
+            <label for="{{ form.website.id_for_label }}">{{ form.website.label }}</label>{{ form.website }}
+          </div>
+          <div class="support-form__actions">
+            <button class="btn btn--primary" type="submit">{% icon "arrow-right" %}<span>{% translate "Send message" %}</span></button>
+            {% url 'pages:legal' 'privacy' as privacy_url %}<p class="muted support-form__note">{% blocktranslate trimmed with url=privacy_url %}How we handle your message is described in the <a href="{{ url }}#support">Privacy policy</a>.{% endblocktranslate %}</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

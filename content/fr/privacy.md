@@ -19,7 +19,7 @@ Questions ou demandes : [{{ contact_email }}](mailto:{{ contact_email }}).
 
 **Photo de profil et couverture.** Vous pouvez envoyer une photo et une image de couverture large, ou copier une fois votre image GitHub. Chaque image est réencodée (la photo en 512×512, la couverture en 1500×500), ce qui supprime les métadonnées cachées comme la position GPS, reçoit un nom de fichier aléatoire et est stockée sur notre propre serveur : les pages ne chargent jamais votre photo depuis GitHub. Les deux sont **publiques**. Quand vous en retirez ou remplacez une, ou supprimez votre compte, le fichier est supprimé ; des copies restent dans les sauvegardes jusqu’à 14 jours. Sans photo, vos initiales sont affichées.
 
-**Votre adresse e-mail.** Elle est conservée avec votre compte et n’est visible que par notre équipe. Elle n’est jamais affichée sur le site. Le site n’envoie pas d’e-mails ; nous n’utiliserions l’adresse que pour vous contacter au sujet de votre compte ou d’un signalement.
+**Votre adresse e-mail.** Elle est conservée avec votre compte et n’est visible que par notre équipe. Elle n’est jamais affichée sur le site. Le site ne vous envoie pas d’e-mails (le seul qu’il envoie est un avis à notre équipe au sujet d’un message au support) ; nous n’utiliserions l’adresse que pour vous contacter au sujet de votre compte, d’un signalement ou d’un message au support.
 
 **Vos projets.** Tout ce que vous saisissez : nom, accroche, description, liens, étiquettes, les outils d’IA que vous dites avoir utilisés (affichés comme déclarés par l’auteur), captures d’écran et entrées du journal de développement. Les projets publiés sont publics ; les brouillons ne sont visibles que par vous et notre équipe. Les captures d’écran sont réencodées lors de l’envoi, ce qui supprime les métadonnées cachées comme les informations sur l’appareil photo ou la position GPS.
 
@@ -57,9 +57,18 @@ Les résultats sont affichés sur la page publique de votre projet.
 
 **Sauvegardes.** Chaque jour, nous sauvegardons la base de données et les images envoyées (captures, photos de profil et couvertures) et gardons chaque sauvegarde 14 jours. Si vous supprimez votre compte, vos données restent dans ces sauvegardes jusqu’au remplacement de la dernière qui les contient, soit au plus 14 jours.
 
+## Messages au support {#support}
+
+Quand vous nous écrivez via le [formulaire de support](/support/), nous conservons le sujet, l’objet, votre message, l’adresse e-mail indiquée (ou celle de votre compte), le compte avec lequel vous étiez connecté, le numéro de référence d’une page d’erreur si vous en venez, et jusqu’à 3 pièces jointes. Les images sont réencodées comme les autres (les métadonnées cachées comme la position GPS sont supprimées) ; les fichiers texte sont conservés en texte. Les pièces jointes sont stockées dans un dossier privé de notre serveur sans adresse publique : seule l’équipe ayant accès à la boîte du support peut les télécharger. Nous utilisons votre adresse e-mail uniquement pour vous répondre.
+
+Nous ne conservons ni votre adresse IP ni les informations de votre navigateur avec le message. Pour arrêter le spam, une empreinte salée à sens unique de votre adresse IP est gardée dans le cache du serveur 24 heures au plus, jamais dans la base de données ni dans les journaux.
+
+Quand un message arrive, notre serveur envoie à la boîte de l’équipe un court avis en texte brut avec votre message et votre adresse e-mail, via notre fournisseur de messagerie (voir « Qui d’autre reçoit des données »). L’équipe peut ajouter des notes internes et indiquer un statut (nouveau, lu, répondu, clos). Nous lisons chaque message mais ne pouvons pas promettre de répondre à tous. Les messages clos sont supprimés 12 mois après leur envoi ; les autres restent jusqu’à leur clôture. « Télécharger mes données » contient les messages envoyés en étant connecté, et la suppression de votre compte les supprime, ainsi que ceux envoyés sans connexion depuis l’adresse e-mail de votre compte.
+
 ## Combien de temps nous les conservons {#retention}
 
 - Votre compte, profil, projets, abonnements et mentions J’aime : jusqu’à ce que vous les supprimiez, ou que vous supprimiez votre compte.
+- Messages au support et pièces jointes : clos, 12 mois après l’envoi ; les autres, jusqu’à leur clôture ; avec votre compte.
 - Fils, réponses et images de la communauté : jusqu’à ce que vous les supprimiez ou supprimiez votre compte (ce qui reste est décrit plus haut, dans « Communauté »). Votes : jusqu’à ce que vous les retiriez ou supprimiez votre compte.
 - Notifications de réponses : 90 jours.
 - Photo de profil et couverture : jusqu’à ce que vous les retiriez ou remplaciez, ou supprimiez votre compte.
@@ -77,6 +86,7 @@ Les résultats sont affichés sur la page publique de votre projet.
 ## Qui d’autre reçoit des données {#recipients}
 
 - **GitHub, Inc.** Vous vous connectez sur github.com et notre serveur lit votre profil et les données publiques de dépôts depuis l’API de GitHub. La politique de confidentialité propre à GitHub s’applique à votre usage de GitHub.
+- **Notre fournisseur de messagerie** (par exemple Google, si la boîte de l’équipe est un compte Gmail) achemine vers la boîte de l’équipe l’avis de chaque message au support, avec son texte et votre adresse e-mail.
 - **Les serveurs de votre projet.** Pour les contrôles Domain verified et Steady, notre serveur contacte le DNS de votre domaine et l’adresse de votre projet. Ils voient notre serveur, pas vous.
 - **Notre hébergeur**, qui exploite pour nous le serveur et la base de données.
 
