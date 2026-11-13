@@ -992,11 +992,11 @@ class NotificationTests(CommunityTestCase):
         self.assertContains(page, "user-menu__dot")
         self.assertContains(page, reverse("community:notifications"))
         first = self.inbox(self.ann)
-        self.assertContains(first, "New ·")
+        self.assertContains(first, "notification--new")
         self.assertIsNone(self.fresh(self.ann).community_notified_at)
         self.assertIsNotNone(ReplyNotification.objects.get().read_at)
         self.assertNotContains(self.client.get("/explore/"), "user-menu__dot")
-        self.assertNotContains(self.inbox(self.ann), "New ·")
+        self.assertNotContains(self.inbox(self.ann), "notification--new")
 
     def test_the_mark_costs_no_query(self):
         self.client.force_login(self.ann)

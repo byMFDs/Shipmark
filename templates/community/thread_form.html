@@ -1,28 +1,45 @@
-{% extends "base.html" %}
+{% extends "community/_layout.html" %}
 {% load i18n static ui %}
 
 {% block title %}{% if thread %}{% translate "Edit thread" %}{% else %}{% translate "New thread" %}{% endif %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block meta %}<meta name="robots" content="noindex">{% endblock %}
 
-{% block content %}
-  <div class="container shell shell--narrow">
-    <header class="page-head">
-      <p class="label">{% translate "Community" %}</p>
+{% block community_main %}
+  <header class="community-head">
+    <div>
+      <p class="label"><a href="{% url 'community:home' %}">{% translate "Community" %}</a></p>
       <h1>{% if thread %}{% translate "Edit thread" %}{% else %}{% translate "New thread" %}{% endif %}</h1>
-      {% if thread and not title_editable %}<p class="lede">{% translate "The title can be changed during the first 15 minutes. After that, edits show an “edited” mark." %}</p>{% endif %}
-    </header>
-    {% if block %}<p class="notice" role="status">{{ block }}</p>{% endif %}
-    <form method="post" enctype="multipart/form-data" class="panel stack" novalidate>
-      {% csrf_token %}
-      {% include "includes/form_errors.html" %}
-      {% if form.board %}{% include "includes/form_field.html" with field=form.board %}{% endif %}
-      {% if form.title %}{% include "includes/form_field.html" with field=form.title %}{% endif %}
+      {% if thread and not title_editable %}<p class="lede">{% translate "The title can be changed during the first 15 minutes. After that, edits show an “edited” mark." %}</p>
+      {% elif not thread %}<p class="lede">{% translate "A clear title gets better answers: say what you tried and what you need." %}</p>{% endif %}
+    </div>
+  </header>
+  {% if block %}<p class="notice" role="status">{{ block }}</p>{% endif %}
+  <form method="post" enctype="multipart/form-data" class="panel composer-form" novalidate data-busy-form>
+    {% csrf_token %}
+    {% include "includes/form_errors.html" %}
+    {% if form.board %}{% include "includes/form_field.html" with field=form.board %}{% endif %}
+    {% if form.title %}{% include "includes/form_field.html" with field=form.title %}{% endif %}
+    {% if form.images %}
+      {% include "community/_composer.html" with max_images=4 prefix="t" %}
+    {% else %}
       {% include "includes/form_field.html" with field=form.body %}
-      {% if form.images %}{% include "includes/form_field.html" with field=form.images %}{% endif %}
-      <div class="owner-bar">
-        <button class="btn btn--primary" type="submit">{% if thread %}{% translate "Save changes" %}{% else %}{% translate "Post thread" %}{% endif %}</button>
-        <a class="btn btn--secondary" href="{% if thread %}{{ thread.get_absolute_url }}{% else %}{% url 'community:home' %}{% endif %}">{% translate "Cancel" %}</a>
-      </div>
-    </form>
-  </div>
+    {% endif %}
+    <div class="composer-form__actions">
+      <button class="btn btn--primary" type="submit">{% if thread %}{% translate "Save changes" %}{% else %}{% translate "Post thread" %}{% endif %}</button>
+      <a class="btn btn--secondary" href="{% if thread %}{{ thread.get_absolute_url }}{% else %}{% url 'community:home' %}{% endif %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+{% endblock %}
+
+{% block community_side %}
+  <section class="record" aria-labelledby="post-tips-title">
+    <div class="record__head"><h2 class="label" id="post-tips-title">{% translate "Before you post" %}</h2></div>
+    <ul class="feed-side__tips">
+      <li>{% translate "Search first: someone may have asked already." %}</li>
+      <li>{% translate "Pick the board that fits. Off-topic is for everything else." %}</li>
+      <li>{% translate "Images: PNG, JPEG or WebP. We remove their metadata, such as location." %}</li>
+      <li>{% translate "Accounts younger than 24 hours: one link per post, no images." %}</li>
+    </ul>
+  </section>
+  {% include "community/_rules_panel.html" %}
 {% endblock %}

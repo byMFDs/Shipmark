@@ -1,0 +1,19 @@
+{% load i18n %}{# The short rules, on the right of every community page. The full page: /community/rules/. #}
+<section class="record" aria-labelledby="rules-panel-title">
+  <div class="record__head"><h2 class="label" id="rules-panel-title">{% translate "Rules in short" %}</h2></div>
+  <ol class="community-rules-list">
+    <li>{% translate "Be kind and specific. Criticise work, not people." %}</li>
+    <li>{% translate "Stay on the board's topic." %}</li>
+    <li>{% translate "No spam, no harassment, nothing illegal or sexual." %}</li>
+    <li>{% translate "Only post what you may share. Respect privacy." %}</li>
+  </ol>
+  <p class="feed-side__more"><a class="link-arrow" href="{% url 'community:rules' %}">{% translate "All community rules" %}</a></p>
+</section>
+<section class="record" aria-labelledby="how-panel-title">
+  <div class="record__head"><h2 class="label" id="how-panel-title">{% translate "How it works" %}</h2></div>
+  <ul class="feed-side__tips">
+    <li>{% translate "Upvotes only. You cannot upvote your own post." %}</li>
+    <li>{% translate "Replies go three levels deep." %}</li>
+    <li>{% translate "Every post has a Report link. Moderators always give a reason." %}</li>
+  </ul>
+</section>

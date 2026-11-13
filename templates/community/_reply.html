@@ -1,29 +1,41 @@
-{% load i18n static ui %}{# One reply and the answers under it. Needs: node (community.tree.Node), thread, voted_replies, may_reply. #}
+{% load i18n static ui %}{# One reply and its branch. Needs: node (community.tree.Node), thread, voted_replies, may_reply; top for
+   the first level (focus target for "Load more"). #}
 {% with reply=node.reply %}
-<li id="r{{ reply.pk }}">
-  {% if node.stub == "deleted" %}
-    <p class="muted">{% translate "[deleted]" %}</p>
-  {% elif node.stub %}
-    <p class="muted">{% translate "[removed]" %}</p>
-  {% else %}
-    <p class="muted">{% include "community/_author.html" with author=reply.author %} · <a href="#r{{ reply.pk }}"><time datetime="{{ reply.created_at|date:'c' }}" title="{{ reply.created_at|date:'DATETIME_FORMAT' }}">{{ reply.created_at|ago }}</time></a>{% if reply.edited_at %} · {% translate "edited" %}{% endif %}</p>
-    {% if reply.body %}<div class="prose">{{ reply.body_html|safe }}</div>{% endif %}
-    {% if reply.sticker_key and reply.sticker_label %}<p><img src="{% static 'stickers/'|add:reply.sticker_key|add:'.svg' %}" width="96" height="96" alt="{{ reply.sticker_label }}" loading="lazy"></p>{% endif %}
-    {% include "community/_images.html" with images=reply.images.all %}
-    <div class="owner-bar">
-      {% if reply.pk in voted_replies %}{% url 'community:vote_reply' reply.pk as vote_url %}{% include "community/_vote.html" with action=vote_url voted=True score=reply.score own=False %}
-      {% elif reply.author_id == user.pk %}{% include "community/_vote.html" with action="" voted=False score=reply.score own=True %}
-      {% else %}{% url 'community:vote_reply' reply.pk as vote_url %}{% include "community/_vote.html" with action=vote_url voted=False score=reply.score own=False %}{% endif %}
-      {% if may_reply %}<a href="?reply_to={{ reply.pk }}#reply-form">{% translate "Reply" context "verb" %}</a>{% endif %}
-      {% if user.is_authenticated and reply.author_id == user.pk %}
-        {% if thread.status == "published" %}<a href="{% url 'community:reply_edit' reply.pk %}">{% translate "Edit" %}</a>{% endif %}
-        <a href="{% url 'community:reply_delete' reply.pk %}">{% translate "Delete" %}</a>
-      {% elif user.is_authenticated %}
-        <a href="{% url 'moderation:report_reply' reply.pk %}">{% translate "Report" %}</a>
-      {% endif %}
-      {% moderate_menu reply=reply %}
-    </div>
-  {% endif %}
-  {% if node.children %}<ul>{% for child in node.children %}{% include "community/_reply.html" with node=child %}{% endfor %}</ul>{% endif %}
+<li class="reply{% if node.stub %} reply--stub{% endif %}" id="r{{ reply.pk }}"{% if top %} data-feed-item tabindex="-1"{% endif %}>
+  <article class="reply__card" aria-labelledby="r{{ reply.pk }}-by">
+    {% if node.stub %}
+      <p class="reply__stub" id="r{{ reply.pk }}-by">{% if node.stub == "deleted" %}{% translate "[deleted]" %}{% else %}{% translate "[removed]" %}{% endif %}</p>
+    {% else %}
+      <header class="reply__head">
+        {% if reply.author %}{% user_avatar reply.author 24 %}{% endif %}
+        <p class="reply__by" id="r{{ reply.pk }}-by">{% include "community/_author.html" with author=reply.author %}{% if reply.author_id and reply.author_id == thread.author_id %} <span class="thread-chip">{% translate "Author" context "thread author" %}</span>{% endif %}</p>
+        <a class="reply__time muted" href="#r{{ reply.pk }}"><time datetime="{{ reply.created_at|date:'c' }}" title="{{ reply.created_at|date:'DATETIME_FORMAT' }}">{{ reply.created_at|ago }}</time></a>
+        {% if reply.edited_at %}<span class="muted reply__edited">{% translate "edited" %}</span>{% endif %}
+      </header>
+      {% if reply.body %}<div class="prose reply__text">{{ reply.body_html|safe }}</div>{% endif %}
+      {% if reply.sticker_key and reply.sticker_label %}<p class="reply__sticker"><img src="{% static 'stickers/'|add:reply.sticker_key|add:'.svg' %}" width="96" height="96" alt="{{ reply.sticker_label }}" loading="lazy"></p>{% endif %}
+      {% include "community/_media.html" with images=reply.images.all %}
+      <footer class="reply__actions">
+        {% url 'community:vote_reply' reply.pk as vote_url %}
+        {% if user.is_authenticated and reply.author_id == user.pk %}{% include "community/_vote.html" with action="" voted=False score=reply.score own=True %}
+        {% elif reply.pk in voted_replies %}{% include "community/_vote.html" with action=vote_url voted=True score=reply.score own=False %}
+        {% else %}{% include "community/_vote.html" with action=vote_url voted=False score=reply.score own=False %}{% endif %}
+        {% if may_reply %}<a class="btn btn--quiet reply__action" href="?reply_to={{ reply.pk }}#reply-form" data-reply-to="{{ reply.pk }}" data-reply-name="{% if reply.author %}@{{ reply.author.username }}{% endif %}">{% icon "reply" %}{% translate "Reply" context "verb" %}</a>{% endif %}
+        {% if user.is_authenticated and reply.author_id == user.pk %}
+          {% if thread.status == "published" %}<a class="btn btn--quiet reply__action" href="{% url 'community:reply_edit' reply.pk %}">{% translate "Edit" %}</a>{% endif %}
+          <a class="btn btn--quiet reply__action" href="{% url 'community:reply_delete' reply.pk %}">{% translate "Delete" %}</a>
+        {% elif user.is_authenticated %}
+          <a class="btn btn--quiet reply__action" href="{% url 'moderation:report_reply' reply.pk %}">{% translate "Report" %}</a>
+        {% endif %}
+        {% moderate_menu reply=reply %}
+      </footer>
+    {% endif %}
+    {% if node.children %}
+      <button class="reply__collapse" type="button" hidden data-collapse aria-expanded="true" aria-controls="r{{ reply.pk }}-children"
+              data-label-open="{% blocktranslate count counter=node.below %}Hide {{ counter }} reply{% plural %}Hide {{ counter }} replies{% endblocktranslate %}"
+              data-label-closed="{% blocktranslate count counter=node.below %}Show {{ counter }} reply{% plural %}Show {{ counter }} replies{% endblocktranslate %}">{% icon "chevron-down" %}<span data-collapse-label>{% blocktranslate count counter=node.below %}Hide {{ counter }} reply{% plural %}Hide {{ counter }} replies{% endblocktranslate %}</span></button>
+    {% endif %}
+  </article>
+  {% if node.children %}<ol class="replies replies--nested" id="r{{ reply.pk }}-children">{% for child in node.children %}{% include "community/_reply.html" with node=child top=False %}{% endfor %}</ol>{% endif %}
 </li>
 {% endwith %}

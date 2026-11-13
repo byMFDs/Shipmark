@@ -4,12 +4,19 @@ Every view starts with `community_view` (404 while COMMUNITY_ENABLED is off). Re
 needs a signed-in user who may post (community/permissions.py), is rate limited, and checks in code that the
 target is visible and, for edit and delete, that it is the user's own (someone else's is a 404).
 """
+import re
+from functools import wraps
+from urllib.parse import urlencode
+
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import redirect_to_login
 from django.db.models import Count, Q
 from django.http import Http404, HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
@@ -17,6 +24,7 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 
 from config.ratelimit import is_limited
 from moderation.pages import write_blocked_message
+from pages.content import load_page
 
 from . import limits, notifications, ranking, services, tree
 from .flags import community_view
@@ -42,12 +50,56 @@ def _choice(value, allowed, default):
     return value if value in allowed else default
 
 
+# ---------- Shared page parts ----------
+
+_IMG_SRC = re.compile(r"(img-src[^;]*)")
+
+
+def allow_blob_previews(view):
+    """Pages with a composer: the browser shows chosen images before upload as blob: URLs (local to the page,
+    nothing leaves the device). Only these responses get `blob:` in img-src; every other page keeps the site policy."""
+    @wraps(view)
+    def wrapper(request, *args, **kwargs):
+        response = view(request, *args, **kwargs)
+        policy = settings.CONTENT_SECURITY_POLICY
+        if policy and "Content-Security-Policy" not in response and request.user.is_authenticated:
+            response["Content-Security-Policy"] = _IMG_SRC.sub(lambda m: m.group(1) + " blob:", policy, count=1)
+        return response
+    return wrapper
+
+
+def _boards_with_counts():
+    """Active boards with their number of public threads (two queries), for the left column."""
+    counts = dict(Thread.objects.public().values_list("board").annotate(n=Count("pk")))
+    boards = list(Board.objects.filter(is_active=True))
+    for item in boards:
+        item.thread_count = counts.get(item.pk, 0)
+    return boards
+
+
+def _voted(user, threads=(), replies=()):
+    """(thread ids, reply ids) the user upvoted among these. One query, none for visitors."""
+    if not user.is_authenticated or not (threads or replies):
+        return set(), set()
+    rows = Vote.objects.filter(user=user).filter(
+        Q(thread__in=[t.pk for t in threads]) | Q(reply__in=list(replies))).values_list("thread_id", "reply_id")
+    return {t for t, _r in rows if t}, {r for _t, r in rows if r}
+
+
+def _list_url(board, page, **params):
+    base = board.get_absolute_url() if board else reverse("community:home")
+    query = {k: v for k, v in params.items() if v}
+    query["page"] = page
+    return f"{base}?{urlencode(query)}"
+
+
 # ---------- Lists ----------
 
 @community_view
 @require_GET
 def home(request, slug=None):
-    """/community/ and /community/b/<slug>/: threads (Hot, New, Top), search by title, the boards with counts."""
+    """/community/ and /community/b/<slug>/: threads (Hot, New, Top), search by title, the boards with counts.
+    "Load more" asks for JSON ({html, next_url}); without JS the same links open the next page."""
     board = get_object_or_404(Board, slug=slug, is_active=True) if slug else None
     sort = _choice(request.GET.get("sort"), ranking.SORTS, "hot")
     window = _choice(request.GET.get("t"), ranking.TOP_WINDOWS, "week")
@@ -59,7 +111,7 @@ def home(request, slug=None):
 
     public = Thread.objects.public()
     scoped = public.filter(board=board) if board else public
-    listed = scoped.select_related("board", "author").prefetch_related("author__badges")
+    listed = scoped.select_related("board", "author").prefetch_related("author__badges", "images")
     if query:
         pinned, threads = [], listed.filter(title__icontains=query)
     else:
@@ -67,17 +119,34 @@ def home(request, slug=None):
         threads = listed.filter(pinned=False)
     start = (page - 1) * limits.THREADS_PER_PAGE
     rows = list(ranking.ordered(threads, sort, window, now)[start:start + limits.THREADS_PER_PAGE + 1])
-
-    counts = dict(public.values_list("board").annotate(n=Count("pk")))
-    boards = list(Board.objects.filter(is_active=True))
-    for item in boards:
-        item.thread_count = counts.get(item.pk, 0)
-
+    has_next = len(rows) > limits.THREADS_PER_PAGE
+    rows = rows[:limits.THREADS_PER_PAGE]
+    voted, _replies = _voted(request.user, threads=rows + pinned)
+    params = {"q": query, "sort": sort if sort != "hot" else "", "t": window if sort == "top" else ""}
+    next_url = _list_url(board, page + 1, **params) if has_next else ""
+    item_context = {"threads": rows, "voted": voted}
+    if _wants_json(request):
+        return JsonResponse({
+            "html": render_to_string("community/_thread_items.html", item_context, request=request),
+            "next_url": next_url,
+        })
     return render(request, "community/home.html", {
-        "board": board, "boards": boards, "pinned": pinned, "threads": rows[:limits.THREADS_PER_PAGE],
-        "has_next": len(rows) > limits.THREADS_PER_PAGE, "page": page, "sort": sort, "window": window,
-        "query": query, "sorts": ranking.SORTS, "windows": list(ranking.TOP_WINDOWS),
+        **item_context, "board": board, "boards": _boards_with_counts(), "pinned": pinned, "has_next": has_next,
+        "next_url": next_url, "prev_url": _list_url(board, page - 1, **params) if page > 1 else "",
+        "page": page, "sort": sort, "window": window, "query": query,
+        "sort_urls": {key: _list_url(board, 1, q=query, sort=key if key != "hot" else "") for key in ranking.SORTS},
+        "window_urls": {key: _list_url(board, 1, q=query, sort="top", t=key) for key in ranking.TOP_WINDOWS},
     })
+
+
+@community_view
+@require_GET
+def rules(request):
+    """/community/rules/: content/<lang>/community-rules.md (falls back to English)."""
+    page = load_page("community-rules")
+    if page is None:
+        raise Http404
+    return render(request, "community/rules.html", {"page": page, "boards": _boards_with_counts()})
 
 
 # ---------- Thread page ----------
@@ -94,33 +163,36 @@ def _render_thread(request, thread, form=None, parent=None, status=200):
     sort = _choice(request.GET.get("sort"), ranking.REPLY_SORTS, "best")
     page = _page(request)
     nodes, has_next = tree.load_page(thread, sort, page)
-    voted_thread, voted_replies = False, set()
-    if user.is_authenticated:
-        ids = tree.reply_ids(nodes)
-        for thread_id, reply_id in Vote.objects.filter(user=user).filter(
-                Q(thread=thread) | Q(reply__in=ids)).values_list("thread_id", "reply_id"):
-            if thread_id:
-                voted_thread = True
-            else:
-                voted_replies.add(reply_id)
+    voted_threads, voted_replies = _voted(user, threads=[thread], replies=tree.reply_ids(nodes))
+    block = post_block(user) if user.is_authenticated else ""
+    may_reply = bool(user.is_authenticated and not block and can_reply(user, thread))
+    base = thread.get_absolute_url()
+    next_url = f"{base}?{urlencode({'sort': sort, 'page': page + 1})}" if has_next else ""
+    item_context = {"nodes": nodes, "thread": thread, "voted_replies": voted_replies, "may_reply": may_reply}
+    if _wants_json(request):  # "Load more" replies
+        return JsonResponse({
+            "html": render_to_string("community/_reply_items.html", item_context, request=request),
+            "next_url": next_url,
+        })
     if parent is None and request.method == "GET" and request.GET.get("reply_to", "").isdigit():
         parent = Reply.objects.filter(pk=request.GET["reply_to"], thread=thread).select_related("author").first()
         if parent is not None and not parent.is_alive:
             parent = None
-    block = post_block(user) if user.is_authenticated else ""
-    may_reply = user.is_authenticated and not block and can_reply(user, thread)
     return render(request, "community/thread.html", {
-        "thread": thread, "images": list(thread.images.all()), "nodes": nodes, "has_next": has_next, "page": page,
-        "sort": sort, "reply_sorts": ranking.REPLY_SORTS, "voted_thread": voted_thread,
-        "voted_replies": voted_replies, "parent": parent, "block": block, "may_reply": may_reply,
+        **item_context, "images": list(thread.images.all()), "has_next": has_next, "page": page,
+        "next_url": next_url, "prev_url": f"{base}?{urlencode({'sort': sort, 'page': page - 1})}" if page > 1 else "",
+        "sort": sort, "sort_urls": {key: f"{base}?sort={key}" for key in ranking.REPLY_SORTS},
+        "voted_thread": thread.pk in voted_threads, "parent": parent, "block": block,
         "form": form if form is not None else (ReplyForm(user=user) if may_reply else None),
         "is_author": user.is_authenticated and thread.author_id == user.pk,
         "can_edit": user.is_authenticated and thread.author_id == user.pk and _thread_editable(thread),
+        "boards": _boards_with_counts(),
     }, status=status)
 
 
 @community_view
 @require_GET
+@allow_blob_previews
 def thread_detail(request, pk, slug=""):
     thread = _thread_or_404(request, pk)
     if slug != thread.slug:
@@ -139,6 +211,7 @@ def _blocked(request, message):
 @community_view
 @login_required
 @require_http_methods(["GET", "POST"])
+@allow_blob_previews
 def thread_new(request):
     user = request.user
     block = post_block(user)
@@ -157,7 +230,8 @@ def thread_new(request):
         else:
             thread = services.create_thread(user, data["board"], data["title"], data["body"], data["images"])
             return redirect(thread)
-    return render(request, "community/thread_form.html", {"form": form, "block": block, "thread": None},
+    return render(request, "community/thread_form.html", {"form": form, "block": block, "thread": None,
+                                                         "boards": _boards_with_counts()},
                   status=400 if form.errors else 200)
 
 
@@ -247,6 +321,7 @@ def _parent_for(request, thread):
 @community_view
 @login_required
 @require_POST
+@allow_blob_previews
 def reply_create(request, pk):
     thread = _thread_or_404(request, pk)
     user = request.user

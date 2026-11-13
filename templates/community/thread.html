@@ -1,75 +1,109 @@
-{% extends "base.html" %}
+{% extends "community/_layout.html" %}
 {% load i18n static ui %}
 
 {% block title %}{{ thread.title }} · {% translate "Community" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_title %}{{ thread.title }} · {{ brand.SITE_NAME }}{% endblock %}
+{% block og_description %}{% if thread.is_deleted %}{{ brand.TAGLINE }}{% else %}{{ thread.body_html|striptags|truncatechars:160 }}{% endif %}{% endblock %}
 {% block meta %}{% if thread.is_removed or page > 1 or sort != "best" %}<meta name="robots" content="noindex">{% endif %}{% endblock %}
 
-{% block content %}
-  <div class="container shell shell--narrow">
-    <p><a href="{{ thread.board.get_absolute_url }}">{{ thread.board.display_name }}</a></p>
-    <header class="page-head">
-      <p class="label">{% translate "Thread" %}{% if thread.pinned %} · {% translate "Pinned" %}{% endif %}{% if thread.is_locked %} · {% translate "Locked" %}{% endif %}{% if thread.is_removed %} · {% translate "Removed" %}{% endif %}</p>
-      <h1>{{ thread.title }}</h1>
-      <p class="muted">{% include "community/_author.html" with author=thread.author %} · <time datetime="{{ thread.created_at|date:'c' }}" title="{{ thread.created_at|date:'DATETIME_FORMAT' }}">{{ thread.created_at|ago }}</time>{% if thread.edited_at %} · {% translate "edited" %}{% endif %}</p>
+{% block community_main %}
+  <p class="label community-crumbs"><a href="{% url 'community:home' %}">{% translate "Community" %}</a> / <a href="{{ thread.board.get_absolute_url }}">{{ thread.board.display_name }}</a></p>
+
+  {% if thread.is_removed %}
+    <div class="notice notice--sanction" role="status">
+      <p class="notice__title">{% translate "Moderators removed this thread. Only the author and moderators can see it." %}</p>
+      <p><span class="label">{% translate "Reason" %}</span> {{ thread.removed_reason }}</p>
+    </div>
+  {% elif thread.is_locked %}
+    <div class="notice" role="status">
+      <p class="notice__title">{% icon "lock" %} {% translate "This thread is locked. Only moderators can reply." %}</p>
+      {% if thread.lock_reason %}<p><span class="label">{% translate "Reason" %}</span> {{ thread.lock_reason }}</p>{% endif %}
+    </div>
+  {% endif %}
+
+  <article class="thread-post record" aria-labelledby="thread-title">
+    <header class="thread-post__head">
+      <p class="thread-post__by">
+        {% if thread.author %}{% user_avatar thread.author 32 %}{% endif %}
+        <span>{% include "community/_author.html" with author=thread.author %} · <time datetime="{{ thread.created_at|date:'c' }}" title="{{ thread.created_at|date:'DATETIME_FORMAT' }}">{{ thread.created_at|ago }}</time>{% if thread.edited_at %} · {% translate "edited" %}{% endif %}</span>
+      </p>
+      <p class="label thread-post__chips">{% if thread.pinned %}<span class="thread-chip">{% icon "pin" %}{% translate "Pinned" %}</span>{% endif %}{% if thread.is_locked %}<span class="thread-chip">{% icon "lock" %}{% translate "Locked" %}</span>{% endif %}</p>
+      <h1 class="thread-post__title" id="thread-title">{{ thread.title }}</h1>
     </header>
+    <div class="thread-post__body">
+      {% if thread.is_deleted %}<p class="muted">{% translate "[deleted]" %}</p>{% elif thread.body %}<div class="prose">{{ thread.body_html|safe }}</div>{% endif %}
+      {% include "community/_media.html" %}
+    </div>
+    <footer class="thread-post__actions">
+      {% if not thread.is_removed and not thread.is_deleted %}{% url 'community:vote_thread' thread.pk as vote_url %}{% include "community/_vote.html" with action=vote_url voted=voted_thread score=thread.score own=is_author %}{% endif %}
+      <a class="btn btn--quiet" href="#replies">{% icon "thread" %}{% blocktranslate count counter=thread.reply_count %}{{ counter }} reply{% plural %}{{ counter }} replies{% endblocktranslate %}</a>
+      {% if is_author %}
+        {% if can_edit %}<a class="btn btn--quiet" href="{% url 'community:thread_edit' thread.pk %}">{% translate "Edit" %}</a>{% endif %}
+        {% if not thread.is_deleted %}<a class="btn btn--quiet" href="{% url 'community:thread_delete' thread.pk %}">{% translate "Delete" %}</a>{% endif %}
+      {% elif user.is_authenticated and not thread.is_removed %}
+        <a class="btn btn--quiet" href="{% url 'moderation:report_thread' thread.pk %}">{% translate "Report" %}</a>
+      {% endif %}
+      {% moderate_menu thread=thread %}
+    </footer>
+  </article>
 
-    {% if thread.is_removed %}
-      <div class="notice notice--sanction" role="status">
-        <p class="notice__title">{% translate "Moderators removed this thread. Only the author and moderators can see it." %}</p>
-        <p><span class="label">{% translate "Reason" %}</span> {{ thread.removed_reason }}</p>
-      </div>
-    {% elif thread.is_locked %}
-      <div class="notice" role="status">
-        <p class="notice__title">{% translate "This thread is locked. Only moderators can reply." %}</p>
-        {% if thread.lock_reason %}<p><span class="label">{% translate "Reason" %}</span> {{ thread.lock_reason }}</p>{% endif %}
-      </div>
-    {% endif %}
-
-    <article class="stack">
-      {% if thread.is_deleted %}<p class="muted">{% translate "[deleted]" %}</p>{% else %}<div class="prose">{{ thread.body_html|safe }}</div>{% endif %}
-      {% include "community/_images.html" %}
-      <div class="owner-bar">
-        {% if not thread.is_removed and not thread.is_deleted %}{% url 'community:vote_thread' thread.pk as vote_url %}{% include "community/_vote.html" with action=vote_url voted=voted_thread score=thread.score own=is_author %}{% endif %}
-        {% if is_author %}
-          {% if can_edit %}<a href="{% url 'community:thread_edit' thread.pk %}">{% translate "Edit" %}</a>{% endif %}
-          {% if not thread.is_deleted %}<a href="{% url 'community:thread_delete' thread.pk %}">{% translate "Delete" %}</a>{% endif %}
-        {% elif user.is_authenticated and not thread.is_removed %}
-          <a href="{% url 'moderation:report_thread' thread.pk %}">{% translate "Report" %}</a>
-        {% endif %}
-        {% moderate_menu thread=thread %}
-      </div>
-    </article>
-
-    <section class="stack" aria-labelledby="replies-title">
-      <h2 id="replies-title">{% blocktranslate count counter=thread.reply_count %}{{ counter }} reply{% plural %}{{ counter }} replies{% endblocktranslate %}</h2>
-      <p class="muted">{% translate "Sort" %}: {% if sort == "best" %}<strong>{% translate "Best" %}</strong>{% else %}<a href="?sort=best">{% translate "Best" %}</a>{% endif %} · {% if sort == "new" %}<strong>{% translate "Newest" %}</strong>{% else %}<a href="?sort=new">{% translate "Newest" %}</a>{% endif %}</p>
-      {% if nodes %}<ul>{% for node in nodes %}{% include "community/_reply.html" %}{% endfor %}</ul>{% endif %}
-      {% if page > 1 or has_next %}
-        <nav class="pager" aria-label="{% translate 'Pages' %}">
-          {% if page > 1 %}<a class="btn btn--secondary" rel="prev" href="?sort={{ sort }}&amp;page={{ page|add:-1 }}">{% translate "Previous page" %}</a>{% endif %}
-          {% if has_next %}<a class="btn btn--secondary" rel="next" href="?sort={{ sort }}&amp;page={{ page|add:1 }}">{% translate "Next page" %}</a>{% endif %}
+  <section class="community-replies" id="replies" aria-labelledby="replies-title">
+    <div class="community-replies__head">
+      <h2 class="community-replies__title" id="replies-title">{% blocktranslate count counter=thread.reply_count %}{{ counter }} reply{% plural %}{{ counter }} replies{% endblocktranslate %}</h2>
+      {% if nodes %}
+        <nav class="community-window" aria-label="{% translate 'Sort replies' %}">
+          <a href="{{ sort_urls.best }}#replies"{% if sort == "best" %} aria-current="page"{% endif %}>{% translate "Best" %}</a>
+          <a href="{{ sort_urls.new }}#replies"{% if sort == "new" %} aria-current="page"{% endif %}>{% translate "Newest" %}</a>
         </nav>
       {% endif %}
-    </section>
-
-    <section id="reply-form" aria-labelledby="reply-title">
-      {% if form %}
-        <form method="post" action="{% url 'community:reply' thread.pk %}" enctype="multipart/form-data" class="panel stack" novalidate>
-          {% csrf_token %}
-          <h2 id="reply-title">{% if parent %}{% if parent.author %}{% blocktranslate with name=parent.author.username %}Reply to @{{ name }}{% endblocktranslate %}{% else %}{% translate "Reply to a reply" %}{% endif %}{% else %}{% translate "Reply to the thread" %}{% endif %}</h2>
-          {% if parent %}<input type="hidden" name="parent" value="{{ parent.pk }}"><p><a href="{{ thread.get_absolute_url }}#reply-form">{% translate "Reply to the thread instead" %}</a></p>{% endif %}
-          {% include "includes/form_errors.html" %}
-          {% include "includes/form_field.html" with field=form.body %}
-          {{ form.sticker }}
-          {% include "includes/form_field.html" with field=form.images %}
-          <div><button class="btn btn--primary" type="submit">{% translate "Send reply" %}</button></div>
-        </form>
-      {% elif not user.is_authenticated %}
-        <p><a class="btn btn--secondary" href="{% url 'account_login' %}?next={{ request.path|urlencode }}">{% translate "Sign in with GitHub" %}</a> <span class="muted">{% translate "Sign in to reply and vote." %}</span></p>
-      {% elif block %}
-        <p class="notice" role="status">{{ block }}</p>
+    </div>
+    {% if nodes %}
+      <ol class="replies" data-feed-list>{% include "community/_reply_items.html" %}</ol>
+      {% if prev_url or next_url %}
+        <nav class="pager" aria-label="{% translate 'Pages' %}" data-feed-pager>
+          {% if prev_url %}<a class="btn btn--secondary" rel="prev" href="{{ prev_url }}#replies" data-prev>{% translate "Previous page" %}</a>{% endif %}
+          {% if next_url %}<a class="btn btn--secondary" rel="next" href="{{ next_url }}#replies" data-load-more data-error="{% translate 'Could not load more. Try again.' %}">{% translate "More replies" %}</a>{% endif %}
+        </nav>
       {% endif %}
-    </section>
-  </div>
+    {% elif not thread.is_removed %}
+      <p class="community-replies__none muted">{% if may_reply %}{% translate "No replies yet. Be the first to answer." %}{% else %}{% translate "No replies yet." %}{% endif %}</p>
+    {% endif %}
+  </section>
+
+  <section class="community-reply-box" id="reply-form" aria-labelledby="reply-title">
+    {% if form %}
+      <form method="post" action="{% url 'community:reply' thread.pk %}" enctype="multipart/form-data" class="panel composer-form" novalidate data-reply-form data-busy-form>
+        {% csrf_token %}
+        <div class="composer-form__head">
+          <h2 class="composer-form__title" id="reply-title" data-reply-title data-default="{% translate 'Reply to the thread' %}" data-to="{% translate 'Reply to %(name)s' %}" data-to-reply="{% translate 'Reply to a reply' %}">{% if parent %}{% if parent.author %}{% blocktranslate with name=parent.author.username %}Reply to @{{ name }}{% endblocktranslate %}{% else %}{% translate "Reply to a reply" %}{% endif %}{% else %}{% translate "Reply to the thread" %}{% endif %}</h2>
+          <a class="btn btn--quiet" href="{{ thread.get_absolute_url }}#reply-form" data-reply-cancel{% if not parent %} hidden{% endif %}>{% translate "Reply to the thread instead" %}</a>
+        </div>
+        <input type="hidden" name="parent" value="{% if parent %}{{ parent.pk }}{% endif %}" data-reply-parent>
+        {% include "includes/form_errors.html" %}
+        {% include "community/_composer.html" with max_images=2 prefix="r" %}
+        <div class="composer-form__actions"><button class="btn btn--primary" type="submit">{% translate "Send reply" %}</button></div>
+      </form>
+    {% elif not user.is_authenticated %}
+      <div class="community-signin">
+        <p>{% translate "Sign in to reply and vote." %}</p>
+        <a class="btn btn--secondary btn--halo" href="{% url 'account_login' %}?next={{ request.path|urlencode }}">{% icon "github" %}{% translate "Sign in with GitHub" %}</a>
+      </div>
+    {% elif block %}
+      <p class="notice" role="status">{{ block }}</p>
+    {% endif %}
+  </section>
+{% endblock %}
+
+{% block side_label %}{% translate "About this thread" %}{% endblock %}
+{% block community_side %}
+  <section class="record" aria-labelledby="thread-info-title">
+    <div class="record__head"><h2 class="label" id="thread-info-title">{% translate "This thread" %}</h2></div>
+    <dl class="community-facts">
+      <div><dt>{% translate "Board" %}</dt><dd><a href="{{ thread.board.get_absolute_url }}">{{ thread.board.display_name }}</a></dd></div>
+      <div><dt>{% translate "Started" %}</dt><dd><time datetime="{{ thread.created_at|date:'c' }}">{{ thread.created_at|date:"DATE_FORMAT" }}</time></dd></div>
+      <div><dt>{% translate "Last reply" %}</dt><dd><time datetime="{{ thread.last_activity_at|date:'c' }}">{{ thread.last_activity_at|ago }}</time></dd></div>
+      <div><dt>{% translate "Upvotes" %}</dt><dd class="mono">{{ thread.score }}</dd></div>
+    </dl>
+  </section>
+  {% include "community/_rules_panel.html" %}
 {% endblock %}

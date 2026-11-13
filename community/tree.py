@@ -23,6 +23,11 @@ class Node:
         else:
             self.stub = ""
 
+    @property
+    def below(self):
+        """How many replies hang under this one (all levels): the "Hide replies (N)" button."""
+        return sum(1 + child.below for child in self.children)
+
 
 def _rows(queryset):
     return queryset.select_related("author").annotate(author_banned=banned("author"))

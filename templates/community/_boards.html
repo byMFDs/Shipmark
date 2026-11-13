@@ -1,0 +1,19 @@
+{% load i18n ui %}{# Board navigation. Needs: boards (with thread_count), board (current or None), prefix (ids differ per copy). #}
+<nav class="community-boards" aria-labelledby="{{ prefix }}-boards-title">
+  <h2 class="label community-boards__title" id="{{ prefix }}-boards-title">{% translate "Boards" %}</h2>
+  <ul class="community-boards__list">
+    <li><a class="community-boards__link" href="{% url 'community:home' %}"{% if not board and request.resolver_match.url_name == "home" %} aria-current="page"{% endif %}><span>{% translate "All boards" %}</span></a></li>
+    {% for item in boards %}
+      <li><a class="community-boards__link" href="{{ item.get_absolute_url }}"{% if board and board.pk == item.pk %} aria-current="page"{% endif %}><span>{{ item.display_name }}</span><span class="tabs__count">{{ item.thread_count }}</span></a></li>
+    {% endfor %}
+  </ul>
+  <ul class="community-boards__list community-boards__more">
+    {% if user.is_authenticated %}<li><a class="community-boards__link" href="{% url 'community:notifications' %}"{% if request.resolver_match.url_name == "notifications" %} aria-current="page"{% endif %}><span>{% translate "Replies to you" %}</span>{% if user.community_notified_at %}<span class="tabs__count">{% translate "new" %}</span>{% endif %}</a></li>{% endif %}
+    <li><a class="community-boards__link" href="{% url 'community:rules' %}"{% if request.resolver_match.url_name == "rules" %} aria-current="page"{% endif %}><span>{% translate "Community rules" %}</span></a></li>
+  </ul>
+  {% if user.is_authenticated %}
+    <a class="btn btn--primary community-boards__new" href="{% url 'community:new' %}{% if board %}?board={{ board.slug }}{% endif %}">{% icon "plus" %}{% translate "New thread" %}</a>
+  {% else %}
+    <a class="btn btn--secondary btn--halo community-boards__new" href="{% url 'account_login' %}?next={{ request.path|urlencode }}">{% translate "Sign in with GitHub" %}</a>
+  {% endif %}
+</nav>

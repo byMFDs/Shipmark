@@ -1,2 +1,0 @@
-{% load i18n %}{# Thumbnails that link to the display copy. Needs: images (list of CommunityImage). #}
-{% if images %}<p>{% for image in images %}<a href="{{ image.image.url }}"><img src="{{ image.thumb.url }}" width="{{ image.thumb_width }}" height="{{ image.thumb_height }}" loading="lazy" alt="{% if image.alt %}{{ image.alt }}{% else %}{% blocktranslate with number=forloop.counter %}Image {{ number }}{% endblocktranslate %}{% endif %}"></a> {% endfor %}</p>{% endif %}

@@ -1,0 +1,20 @@
+{% extends "community/_layout.html" %}
+{% load i18n static %}
+
+{% block title %}{% if page.title %}{{ page.title }} · {% endif %}{{ brand.SITE_NAME }}{% endblock %}
+{% block styles %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/pages/content.css' %}">{% endblock %}
+
+{% block community_main %}
+  <article class="prose doc community-doc"{% if page.language != LANGUAGE_CODE %} lang="{{ page.language }}"{% endif %}>
+    {{ page.html|safe }}
+  </article>
+{% endblock %}
+
+{% block community_side %}
+  <section class="record" aria-labelledby="rules-help-title">
+    <div class="record__head"><h2 class="label" id="rules-help-title">{% translate "Questions" %}</h2></div>
+    <ul class="feed-side__tips">
+      <li>{% blocktranslate with email=brand.CONTACT_EMAIL %}Appeals and questions: <a href="mailto:{{ email }}">{{ email }}</a>{% endblocktranslate %}</li>
+    </ul>
+  </section>
+{% endblock %}

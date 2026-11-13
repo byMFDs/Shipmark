@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:31+0000\n"
+"POT-Creation-Date: 2026-11-13 16:29+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -12,7 +12,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #: accounts/adapters.py:53 pages/test_languages.py:201
 #, python-format
@@ -224,7 +227,7 @@ msgid "Pin at most 3 projects."
 msgstr "Закріпіть не більше 3 проєктів."
 
 #: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:72
-#: community/views.py:27 projects/views.py:39 social/views.py:73
+#: community/views.py:35 projects/views.py:39 social/views.py:73
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Забагато змін за короткий час. Спробуйте за кілька хвилин."
 
@@ -405,7 +408,7 @@ msgstr "Відновити вибрані відповіді (лише superuser
 #: templates/community/home.html:4 templates/community/home.html:5
 #: templates/community/home.html:11 templates/community/home.html:12
 #: templates/community/notifications.html:10 templates/community/thread.html:4
-#: templates/community/thread_form.html:10
+#: templates/community/thread.html:10 templates/community/thread_form.html:10
 msgid "Community"
 msgstr "Спільнота"
 
@@ -481,7 +484,7 @@ msgstr ""
 "Працює Markdown. Можна посилання, списки, жирний текст і код; HTML не можна."
 
 #: community/forms.py:76 config/settings/base.py:347
-#: templates/community/notifications.html:21
+#: templates/community/notifications.html:23
 msgid "Images"
 msgstr "Зображення"
 
@@ -494,7 +497,7 @@ msgstr[1] "До %(max)d зображень, PNG, JPEG або WebP, до 5 МБ �
 msgstr[2] "До %(max)d зображень, PNG, JPEG або WebP, до 5 МБ кожне."
 msgstr[3] "До %(max)d зображення, PNG, JPEG або WebP, до 5 МБ кожне."
 
-#: community/forms.py:86
+#: community/forms.py:86 templates/community/thread.html:102
 msgid "Board"
 msgstr "Розділ"
 
@@ -514,15 +517,19 @@ msgstr "Заголовок"
 msgid "Write something or add an image."
 msgstr "Напишіть щось або додайте зображення."
 
-#: community/forms.py:132
+#: community/forms.py:133 templates/community/_composer.html:21
 msgid "Sticker"
 msgstr "Стікер"
 
 #: community/forms.py:138
+msgid "No sticker"
+msgstr "Без стікера"
+
+#: community/forms.py:143
 msgid "This sticker does not exist."
 msgstr "Такого стікера немає."
 
-#: community/forms.py:144 community/forms.py:159
+#: community/forms.py:149 community/forms.py:164
 msgid "Write something, or add an image or a sticker."
 msgstr "Напишіть щось або додайте зображення чи стікер."
 
@@ -536,13 +543,12 @@ msgstr "Неактивні розділи та їхні треди прихов�
 msgid "Published"
 msgstr "Опубліковано"
 
-#: community/models.py:66 templates/community/_row.html:4
-#: templates/community/thread.html:12
+#: community/models.py:66 templates/community/_thread_card.html:9
+#: templates/community/thread.html:30
 msgid "Locked"
 msgstr "Закрито"
 
 #: community/models.py:67 community/models.py:137 projects/models.py:44
-#: templates/community/thread.html:12
 msgid "Removed"
 msgstr "Вилучено"
 
@@ -691,51 +697,51 @@ msgstr "Лампочка"
 msgid "Handshake"
 msgstr "Рукостискання"
 
-#: community/views.py:154
+#: community/views.py:227
 msgid "You started several threads in the last hour. Try again later."
 msgstr "За останню годину ви створили кілька тредів. Спробуйте пізніше."
 
-#: community/views.py:156 community/views.py:267
+#: community/views.py:229 community/views.py:342
 msgid "You already posted this."
 msgstr "Ви вже це публікували."
 
-#: community/views.py:182
+#: community/views.py:256
 msgid "This thread is locked or removed. It cannot be changed."
 msgstr "Тред закрито або вилучено. Його не можна змінити."
 
-#: community/views.py:224
+#: community/views.py:298
 msgid "Thread deleted."
 msgstr "Тред видалено."
 
-#: community/views.py:237
+#: community/views.py:311
 msgid "The reply you are answering is gone."
 msgstr "Відповіді, на яку ви відповідаєте, вже немає."
 
-#: community/views.py:257 templates/community/thread.html:24
+#: community/views.py:332 templates/community/thread.html:19
 msgid "This thread is locked. Only moderators can reply."
 msgstr "Тред закрито. Відповідати можуть лише модератори."
 
-#: community/views.py:265
+#: community/views.py:340
 msgid "You replied many times in the last hour. Try again later."
 msgstr "За останню годину ви відповіли багато разів. Спробуйте пізніше."
 
-#: community/views.py:287
+#: community/views.py:362
 msgid "This reply cannot be changed."
 msgstr "Цю відповідь не можна змінити."
 
-#: community/views.py:316
+#: community/views.py:391
 msgid "Reply deleted."
 msgstr "Відповідь видалено."
 
-#: community/views.py:359
+#: community/views.py:434
 msgid "Bad request."
 msgstr "Неправильний запит."
 
-#: community/views.py:361
+#: community/views.py:436
 msgid "You cannot vote for your own post."
 msgstr "Не можна голосувати за власний пост."
 
-#: community/views.py:374 social/views.py:67
+#: community/views.py:449 social/views.py:67
 msgid "Sign in to do this."
 msgstr "Увійдіть, щоб це зробити."
 
@@ -825,11 +831,12 @@ msgstr "Підписки"
 msgid "Likes"
 msgstr "Вподобання"
 
-#: config/settings/base.py:344 templates/community/home.html:45
+#: config/settings/base.py:344 templates/community/_boards.html:3
+#: templates/community/_layout.html:10 templates/community/_layout.html:15
 msgid "Boards"
 msgstr "Розділи"
 
-#: config/settings/base.py:345 templates/community/home.html:66
+#: config/settings/base.py:345 templates/community/home.html:52
 msgid "Threads"
 msgstr "Треди"
 
@@ -963,8 +970,8 @@ msgstr "посилання"
 msgid "You cannot moderate."
 msgstr "Ви не можете модерувати."
 
-#: moderation/forms.py:12 templates/community/thread.html:20
-#: templates/community/thread.html:25 templates/includes/account_notices.html:8
+#: moderation/forms.py:12 templates/community/thread.html:15
+#: templates/community/thread.html:20 templates/includes/account_notices.html:8
 #: templates/includes/account_notices.html:26
 #: templates/moderation/banned.html:14 templates/moderation/mod/queue.html:37
 #: templates/projects/detail.html:31
@@ -1271,8 +1278,8 @@ msgstr ""
 #: moderation/pages.py:24
 #, python-format
 msgid ""
-"Your account is muted until %(date)s. You can read and use your settings, but"
-" not post."
+"Your account is muted until %(date)s. You can read and use your settings, "
+"but not post."
 msgstr ""
 "Ваш акаунт обмежено до %(date)s. Ви можете читати й користуватися "
 "налаштуваннями, але не публікувати."
@@ -1421,8 +1428,8 @@ msgstr "новина"
 msgid "news posts"
 msgstr "новини"
 
-#: pages/explore.py:27 social/feed.py:28 templates/community/home.html:29
-#: templates/community/thread.html:46
+#: pages/explore.py:27 social/feed.py:28 templates/community/home.html:21
+#: templates/community/thread.html:56
 msgid "Newest"
 msgstr "Найновіші"
 
@@ -1586,11 +1593,11 @@ msgstr "Додати скріншоти"
 
 #: projects/forms.py:52
 msgid ""
-"Up to 4 images in total, PNG, JPEG or WebP, 5 MB each. You can choose several"
-" at once. The first one is the cover."
+"Up to 4 images in total, PNG, JPEG or WebP, 5 MB each. You can choose "
+"several at once. The first one is the cover."
 msgstr ""
-"Разом до 4 зображень, PNG, JPEG або WebP, до 5 МБ кожне. Можна вибрати кілька"
-" одразу. Перше стає обкладинкою."
+"Разом до 4 зображень, PNG, JPEG або WebP, до 5 МБ кожне. Можна вибрати "
+"кілька одразу. Перше стає обкладинкою."
 
 #: projects/forms.py:62 templates/pages/landing.html:123
 msgid "GitHub repository"
@@ -1688,11 +1695,11 @@ msgstr ""
 "У цього проєкту вже є запис про запуск. Спершу видаліть його, щоб позначити "
 "інший."
 
-#: projects/images.py:26
+#: projects/images.py:26 templates/community/_composer.html:6
 msgid "The image is larger than 5 MB."
 msgstr "Зображення більше за 5 МБ."
 
-#: projects/images.py:33
+#: projects/images.py:33 templates/community/_composer.html:6
 msgid "Use a PNG, JPEG or WebP image."
 msgstr "Використайте зображення PNG, JPEG або WebP."
 
@@ -1729,8 +1736,8 @@ msgstr ""
 
 #: projects/proof.py:31
 msgid ""
-"The author proved control of the project's domain with a DNS record or a meta"
-" tag. It is checked again every 30 days and must be confirmed within 35."
+"The author proved control of the project's domain with a DNS record or a "
+"meta tag. It is checked again every 30 days and must be confirmed within 35."
 msgstr ""
 "Автор довів, що контролює домен проєкту, через DNS-запис або meta-тег. "
 "Повторна перевірка — кожні 30 днів, підтвердження має бути не давніше 35 "
@@ -1739,8 +1746,8 @@ msgstr ""
 #: projects/proof.py:36
 #, no-python-format
 msgid ""
-"Domain verified, and at least 95% of uptime checks succeeded over the last 30"
-" days, with at least 40 checks."
+"Domain verified, and at least 95% of uptime checks succeeded over the last "
+"30 days, with at least 40 checks."
 msgstr ""
 "Є позначка «Домен підтверджено», і щонайменше 95% перевірок доступності за "
 "останні 30 днів успішні, за щонайменше 40 перевірок."
@@ -1846,8 +1853,8 @@ msgid ""
 "%(repo)s is owned by the author's GitHub account, matched by account id. "
 "Checked %(date)s."
 msgstr ""
-"%(repo)s належить акаунту автора на GitHub, звірено за id акаунта. Перевірено"
-" %(date)s."
+"%(repo)s належить акаунту автора на GitHub, звірено за id акаунта. "
+"Перевірено %(date)s."
 
 #: projects/proof.py:176
 #, python-format
@@ -1906,8 +1913,8 @@ msgid ""
 "Control of %(domain)s proven with a DNS record on %(first)s, last confirmed "
 "%(last)s."
 msgstr ""
-"Контроль над %(domain)s доведено DNS-записом %(first)s, востаннє підтверджено"
-" %(last)s."
+"Контроль над %(domain)s доведено DNS-записом %(first)s, востаннє "
+"підтверджено %(last)s."
 
 #: projects/proof.py:204 projects/proof.py:207 projects/proof.py:210
 #: templates/pages/landing.html:75
@@ -2028,8 +2035,8 @@ msgstr "Репозиторій перевірено. Позначку «Влас
 #: projects/views.py:241
 msgid "Repository checked. Repo owner will appear after a short manual review."
 msgstr ""
-"Репозиторій перевірено. «Власник репозиторію» з'явиться після короткої ручної"
-" перевірки."
+"Репозиторій перевірено. «Власник репозиторію» з'явиться після короткої "
+"ручної перевірки."
 
 #: projects/views.py:243
 msgid ""
@@ -2172,8 +2179,8 @@ msgstr "Ця форма застаріла"
 
 #: templates/403_csrf.html:6
 msgid ""
-"It was opened too long ago, or in another tab before you signed in or out. Go"
-" back, reload the page and send it again."
+"It was opened too long ago, or in another tab before you signed in or out. "
+"Go back, reload the page and send it again."
 msgstr ""
 "Її відкрили надто давно або в іншій вкладці до входу чи виходу. Поверніться "
 "назад, оновіть сторінку й надішліть знову."
@@ -2240,8 +2247,8 @@ msgstr "Прийняти й продовжити"
 
 #: templates/accounts/accept_terms.html:23
 msgid ""
-"If you do not accept, you can sign out, or download your data and delete your"
-" account."
+"If you do not accept, you can sign out, or download your data and delete "
+"your account."
 msgstr ""
 "Якщо ви не погоджуєтеся, можете вийти з акаунта або завантажити свої дані й "
 "видалити акаунт."
@@ -2303,8 +2310,8 @@ msgid ""
 "Your badges stop showing hallmarks, and links to your profile and projects "
 "stop working."
 msgstr ""
-"Ваші бейджі перестануть показувати відзнаки, а посилання на профіль і проєкти"
-" перестануть працювати."
+"Ваші бейджі перестануть показувати відзнаки, а посилання на профіль і "
+"проєкти перестануть працювати."
 
 #: templates/accounts/delete_account.html:27
 msgid "What is kept"
@@ -2345,7 +2352,7 @@ msgstr "Видалити мій акаунт"
 #: templates/accounts/delete_account.html:48
 #: templates/community/confirm_delete.html:15
 #: templates/community/reply_form.html:20
-#: templates/community/thread_form.html:24 templates/moderation/report.html:19
+#: templates/community/thread_form.html:29 templates/moderation/report.html:19
 #: templates/projects/delete.html:16
 msgid "Cancel"
 msgstr "Скасувати"
@@ -2398,8 +2405,8 @@ msgstr "Долучилися: %(date)s"
 msgid "Edit profile"
 msgstr "Редагувати профіль"
 
-#: templates/accounts/profile.html:46 templates/community/_reply.html:22
-#: templates/community/thread.html:38 templates/moderation/mod/report.html:3
+#: templates/accounts/profile.html:46 templates/community/_reply.html:28
+#: templates/community/thread.html:44 templates/moderation/mod/report.html:3
 #: templates/moderation/mod/report.html:17 templates/projects/_log_entry.html:9
 #: templates/projects/detail.html:67
 msgid "Report"
@@ -2413,8 +2420,8 @@ msgstr "Позначки"
 msgid "Followers"
 msgstr "Підписники"
 
-#: templates/accounts/profile.html:60 templates/community/_row.html:4
-#: templates/community/home.html:60 templates/community/thread.html:12
+#: templates/accounts/profile.html:60 templates/community/_thread_card.html:8
+#: templates/community/home.html:46 templates/community/thread.html:30
 #: templates/news/_card.html:6
 msgid "Pinned"
 msgstr "Закріплене"
@@ -2501,11 +2508,11 @@ msgstr "Попередній перегляд профілю"
 
 #: templates/accounts/settings.html:24
 msgid ""
-"This is how your profile card looks. It updates as you type; nothing is saved"
-" until you press Save settings."
+"This is how your profile card looks. It updates as you type; nothing is "
+"saved until you press Save settings."
 msgstr ""
-"Так виглядає картка вашого профілю. Вона оновлюється під час введення; нічого"
-" не зберігається, доки ви не натиснете «Зберегти налаштування»."
+"Так виглядає картка вашого профілю. Вона оновлюється під час введення; "
+"нічого не зберігається, доки ви не натиснете «Зберегти налаштування»."
 
 #: templates/accounts/settings.html:33
 msgid ""
@@ -2616,49 +2623,193 @@ msgstr "Відкритих скарг немає."
 msgid "Skip to content"
 msgstr "Перейти до вмісту"
 
-#: templates/community/_author.html:2 templates/community/_reply.html:5
-#: templates/community/thread.html:30
+#: templates/community/_author.html:2 templates/community/_reply.html:7
+#: templates/community/_thread_card.html:12 templates/community/thread.html:34
 msgid "[deleted]"
 msgstr "[видалено]"
 
-#: templates/community/_images.html:2
+#: templates/community/_boards.html:5
+msgid "All boards"
+msgstr "Усі розділи"
+
+#: templates/community/_boards.html:11 templates/community/notifications.html:4
+#: templates/community/notifications.html:11
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
+msgid "Replies to you"
+msgstr "Відповіді вам"
+
+#: templates/community/_boards.html:11 templates/includes/site_nav.html:20
+#: templates/includes/site_nav.html:34
+msgid "new"
+msgstr "нове"
+
+#: templates/community/_boards.html:12
+msgid "Community rules"
+msgstr "Правила спільноти"
+
+#: templates/community/_boards.html:15 templates/community/home.html:15
+#: templates/community/home.html:66 templates/community/thread_form.html:4
+#: templates/community/thread_form.html:11
+msgid "New thread"
+msgstr "Новий тред"
+
+#: templates/community/_boards.html:17 templates/community/thread.html:89
+#: templates/includes/site_nav.html:42 templates/pages/_sign_in.html:10
+#: templates/pages/_sign_in.html:13 templates/social/feed.html:25
+#: templates/socialaccount/login.html:10
+msgid "Sign in with GitHub"
+msgstr "Увійти через GitHub"
+
+#: templates/community/_composer.html:5
 #, python-format
-msgid "Image %(number)s"
-msgstr "Зображення %(number)s"
+msgid "You can add at most %(counter)s image."
+msgid_plural "You can add at most %(counter)s images."
+msgstr[0] "Можна додати щонайбільше %(counter)s зображення."
+msgstr[1] "Можна додати щонайбільше %(counter)s зображення."
+msgstr[2] "Можна додати щонайбільше %(counter)s зображень."
+msgstr[3] "Можна додати щонайбільше %(counter)s зображення."
+
+#: templates/community/_composer.html:11
+msgid "Drop images here"
+msgstr "Перетягніть зображення сюди"
+
+#: templates/community/_composer.html:12
+msgid "Chosen images"
+msgstr "Вибрані зображення"
+
+#: templates/community/_composer.html:12
+msgid "Remove image"
+msgstr "Прибрати зображення"
+
+#: templates/community/_composer.html:16
+msgid "Remove sticker"
+msgstr "Прибрати стікер"
+
+#: templates/community/_composer.html:20
+msgid "Add images"
+msgstr "Додати зображення"
+
+#: templates/community/_layout.html:20
+msgid "About the community"
+msgstr "Про спільноту"
+
+#: templates/community/_media.html:7
+#, python-format
+msgid "Image %(number)s of %(total)s"
+msgstr "Зображення %(number)s з %(total)s"
+
+#: templates/community/_picker.html:4
+msgid "Stickers"
+msgstr "Стікери"
+
+#: templates/community/_picker.html:5 templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Закрити"
+
+#: templates/community/_picker.html:7 templates/community/_picker.html:8
+msgid "Search stickers"
+msgstr "Пошук стікерів"
+
+#: templates/community/_picker.html:9 templates/community/_picker.html:10
+msgid "Recent"
+msgstr "Нещодавні"
+
+#: templates/community/_picker.html:11 templates/community/_picker.html:12
+msgid "All stickers"
+msgstr "Усі стікери"
+
+#: templates/community/_picker.html:15
+msgid "No sticker matches."
+msgstr "Жоден стікер не підходить."
 
 #: templates/community/_reply.html:7
 msgid "[removed]"
 msgstr "[вилучено модераторами]"
 
-#: templates/community/_reply.html:9 templates/community/thread.html:14
+#: templates/community/_reply.html:11
+msgctxt "thread author"
+msgid "Author"
+msgstr "Автор"
+
+#: templates/community/_reply.html:13 templates/community/thread.html:28
 msgid "edited"
 msgstr "змінено"
 
-#: templates/community/_reply.html:17
+#: templates/community/_reply.html:23
 msgctxt "verb"
 msgid "Reply"
 msgstr "Відповісти"
 
-#: templates/community/_reply.html:19 templates/community/thread.html:35
+#: templates/community/_reply.html:25 templates/community/thread.html:41
 msgid "Edit"
 msgstr "Змінити"
 
-#: templates/community/_reply.html:20
+#: templates/community/_reply.html:26
 #: templates/community/confirm_delete.html:14
-#: templates/community/thread.html:36
+#: templates/community/thread.html:42
 msgid "Delete"
 msgstr "Видалити"
 
-#: templates/community/_row.html:6 templates/community/_vote.html:8
+#: templates/community/_reply.html:35 templates/community/_reply.html:36
 #, python-format
-msgid "%(counter)s upvote"
-msgid_plural "%(counter)s upvotes"
-msgstr[0] "%(counter)s голос"
-msgstr[1] "%(counter)s голоси"
-msgstr[2] "%(counter)s голосів"
-msgstr[3] "%(counter)s голосу"
+msgid "Hide %(counter)s reply"
+msgid_plural "Hide %(counter)s replies"
+msgstr[0] "Сховати %(counter)s відповідь"
+msgstr[1] "Сховати %(counter)s відповіді"
+msgstr[2] "Сховати %(counter)s відповідей"
+msgstr[3] "Сховати %(counter)s відповіді"
 
-#: templates/community/_row.html:6 templates/community/thread.html:45
+#: templates/community/_reply.html:36
+#, python-format
+msgid "Show %(counter)s reply"
+msgid_plural "Show %(counter)s replies"
+msgstr[0] "Показати %(counter)s відповідь"
+msgstr[1] "Показати %(counter)s відповіді"
+msgstr[2] "Показати %(counter)s відповідей"
+msgstr[3] "Показати %(counter)s відповіді"
+
+#: templates/community/_rules_panel.html:3
+msgid "Rules in short"
+msgstr "Правила коротко"
+
+#: templates/community/_rules_panel.html:5
+msgid "Be kind and specific. Criticise work, not people."
+msgstr "Будьте добрими й конкретними. Критикуйте роботу, а не людей."
+
+#: templates/community/_rules_panel.html:6
+msgid "Stay on the board's topic."
+msgstr "Тримайтеся теми розділу."
+
+#: templates/community/_rules_panel.html:7
+msgid "No spam, no harassment, nothing illegal or sexual."
+msgstr "Жодного спаму, цькування, незаконного чи сексуального контенту."
+
+#: templates/community/_rules_panel.html:8
+msgid "Only post what you may share. Respect privacy."
+msgstr "Публікуйте лише те, чим маєте право ділитися. Поважайте приватність."
+
+#: templates/community/_rules_panel.html:10
+msgid "All community rules"
+msgstr "Усі правила спільноти"
+
+#: templates/community/_rules_panel.html:13
+msgid "How it works"
+msgstr "Як це працює"
+
+#: templates/community/_rules_panel.html:15
+msgid "Upvotes only. You cannot upvote your own post."
+msgstr "Лише голоси «за». За власний пост голосувати не можна."
+
+#: templates/community/_rules_panel.html:16
+msgid "Replies go three levels deep."
+msgstr "Відповіді мають до трьох рівнів."
+
+#: templates/community/_rules_panel.html:17
+msgid "Every post has a Report link. Moderators always give a reason."
+msgstr "Кожен пост має посилання «Поскаржитися». Модератори завжди вказують причину."
+
+#: templates/community/_thread_card.html:16 templates/community/thread.html:39
+#: templates/community/thread.html:52
 #, python-format
 msgid "%(counter)s reply"
 msgid_plural "%(counter)s replies"
@@ -2667,13 +2818,34 @@ msgstr[1] "%(counter)s відповіді"
 msgstr[2] "%(counter)s відповідей"
 msgstr[3] "%(counter)s відповіді"
 
-#: templates/community/_vote.html:5
+#: templates/community/_vote.html:4
+msgid "Could not save your vote. Try again."
+msgstr "Не вдалося зберегти ваш голос. Спробуйте ще раз."
+
+#: templates/community/_vote.html:6
 msgid "Remove upvote"
 msgstr "Забрати голос"
 
-#: templates/community/_vote.html:5
+#: templates/community/_vote.html:6
 msgid "Upvote"
 msgstr "Підтримати"
+
+#: templates/community/_vote.html:10
+#, python-format
+msgid "%(counter)s upvote"
+msgid_plural "%(counter)s upvotes"
+msgstr[0] "%(counter)s голос"
+msgstr[1] "%(counter)s голоси"
+msgstr[2] "%(counter)s голосів"
+msgstr[3] "%(counter)s голосу"
+
+#: templates/community/_vote.html:10
+msgid "upvote"
+msgid_plural "upvotes"
+msgstr[0] "голос"
+msgstr[1] "голоси"
+msgstr[2] "голосів"
+msgstr[3] "голосу"
 
 #: templates/community/confirm_delete.html:4
 #: templates/community/confirm_delete.html:11
@@ -2693,45 +2865,36 @@ msgstr ""
 "Текст і зображення буде видалено назавжди. Якщо вам уже відповіли, ці "
 "відповіді лишаться, а ваш пост показуватиметься як «[видалено]»."
 
-#: templates/community/home.html:13
+#: templates/community/home.html:6 templates/community/home.html:13
 msgid "Ask for help, show what you shipped, find people to build with."
 msgstr ""
 "Просіть допомоги, показуйте, що випустили, шукайте людей для спільної роботи."
 
-#: templates/community/home.html:15 templates/community/thread_form.html:4
-#: templates/community/thread_form.html:11
-msgid "New thread"
-msgstr "Новий тред"
-
-#: templates/community/home.html:16 templates/community/thread.html:69
-#: templates/includes/site_nav.html:42 templates/pages/_sign_in.html:10
-#: templates/pages/_sign_in.html:13 templates/social/feed.html:25
-#: templates/socialaccount/login.html:10
-msgid "Sign in with GitHub"
-msgstr "Увійти через GitHub"
+#: templates/community/home.html:18
+msgid "Sort threads"
+msgstr "Сортування тредів"
 
 #: templates/community/home.html:20
-msgid "Search threads"
-msgstr "Пошук тредів"
-
-#: templates/community/home.html:22
-msgid "Search threads by title"
-msgstr "Пошук тредів за заголовком"
-
-#: templates/community/home.html:26 templates/community/thread.html:46
-#: templates/social/_filters.html:3
-msgid "Sort"
-msgstr "Сортування"
-
-#: templates/community/home.html:28
 msgid "Hot"
 msgstr "Гарячі"
 
-#: templates/community/home.html:30
+#: templates/community/home.html:22
 msgid "Most upvoted"
 msgstr "Найбільше голосів"
 
-#: templates/community/home.html:34
+#: templates/community/home.html:27
+msgid "Search threads"
+msgstr "Пошук тредів"
+
+#: templates/community/home.html:30 templates/community/home.html:31
+msgid "Search threads by title"
+msgstr "Пошук тредів за заголовком"
+
+#: templates/community/home.html:32 templates/pages/explore.html:25
+msgid "Search"
+msgstr "Пошук"
+
+#: templates/community/home.html:35
 msgid "Period (for Most upvoted)"
 msgstr "Період (для «Найбільше голосів»)"
 
@@ -2743,58 +2906,51 @@ msgstr "Цього тижня"
 msgid "This month"
 msgstr "Цього місяця"
 
-#: templates/community/home.html:41 templates/moderation/mod/queue.html:42
-#: templates/social/_filters.html:14
-msgid "Apply filters"
-msgstr "Застосувати фільтри"
-
-#: templates/community/home.html:51
+#: templates/community/home.html:41
 #, python-format
-msgid "%(counter)s thread"
-msgid_plural "%(counter)s threads"
-msgstr[0] "%(counter)s тред"
-msgstr[1] "%(counter)s треди"
-msgstr[2] "%(counter)s тредів"
-msgstr[3] "%(counter)s треду"
+msgid "Threads with “%(q)s” in the title"
+msgstr "Треди з «%(q)s» у назві"
 
-#: templates/community/home.html:70 templates/community/notifications.html:27
-#: templates/community/thread.html:49 templates/moderation/mod/queue.html:59
+#: templates/community/home.html:41 templates/community/home.html:62
+msgid "Clear search"
+msgstr "Скинути пошук"
+
+#: templates/community/home.html:56 templates/community/notifications.html:29
+#: templates/community/thread.html:63 templates/moderation/mod/queue.html:59
 #: templates/news/list.html:20 templates/pages/explore.html:82
 #: templates/social/feed.html:74
 msgid "Pages"
 msgstr "Сторінки"
 
-#: templates/community/home.html:71 templates/community/notifications.html:28
-#: templates/community/thread.html:50 templates/pages/explore.html:83
+#: templates/community/home.html:57 templates/community/notifications.html:30
+#: templates/community/thread.html:64 templates/pages/explore.html:83
 msgid "Previous page"
 msgstr "Попередня сторінка"
 
-#: templates/community/home.html:72 templates/community/notifications.html:29
-#: templates/community/thread.html:51 templates/pages/explore.html:84
-msgid "Next page"
-msgstr "Наступна сторінка"
+#: templates/community/home.html:58 templates/community/thread.html:65
+#: templates/social/feed.html:76
+msgid "Could not load more. Try again."
+msgstr "Не вдалося завантажити більше. Спробуйте ще раз."
 
-#: templates/community/home.html:76
+#: templates/community/home.html:58 templates/social/feed.html:76
+msgid "Load more"
+msgstr "Завантажити ще"
+
+#: templates/community/home.html:62
 msgid "No threads match this search"
 msgstr "Жоден тред не відповідає пошуку"
 
-#: templates/community/home.html:76
+#: templates/community/home.html:62
 msgid "Try another word from the title."
 msgstr "Спробуйте інше слово із заголовка."
 
-#: templates/community/home.html:78
+#: templates/community/home.html:66
 msgid "No threads here yet"
 msgstr "Тут ще немає тредів"
 
-#: templates/community/home.html:78
+#: templates/community/home.html:66
 msgid "Start the first one."
 msgstr "Створіть перший."
-
-#: templates/community/notifications.html:4
-#: templates/community/notifications.html:11
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
-msgid "Replies to you"
-msgstr "Відповіді вам"
 
 #: templates/community/notifications.html:12
 msgid ""
@@ -2804,91 +2960,143 @@ msgstr ""
 "Коли хтось відповідає у вашому треді або на вашу відповідь, це з'являється "
 "тут. Листів на пошту ми не надсилаємо."
 
-#: templates/community/notifications.html:19
+#: templates/community/notifications.html:21
 msgid "New"
 msgstr "Нове"
 
-#: templates/community/notifications.html:20
+#: templates/community/notifications.html:22
 #, python-format
 msgid "@%(name)s replied to your thread “%(title)s”"
 msgstr "@%(name)s відповідає у вашому треді «%(title)s»"
 
-#: templates/community/notifications.html:20
+#: templates/community/notifications.html:22
 #, python-format
 msgid "@%(name)s replied to you in “%(title)s”"
 msgstr "@%(name)s відповідає вам у «%(title)s»"
 
-#: templates/community/notifications.html:20
+#: templates/community/notifications.html:22
 #, python-format
 msgid "A deleted account replied to your thread “%(title)s”"
 msgstr "Видалений акаунт відповів у вашому треді «%(title)s»"
 
-#: templates/community/notifications.html:20
+#: templates/community/notifications.html:22
 #, python-format
 msgid "A deleted account replied to you in “%(title)s”"
 msgstr "Видалений акаунт відповів вам у «%(title)s»"
 
-#: templates/community/notifications.html:21
+#: templates/community/notifications.html:23
 #, python-format
 msgid "Sticker: %(name)s"
 msgstr "Стікер: %(name)s"
 
-#: templates/community/notifications.html:33
+#: templates/community/notifications.html:31 templates/pages/explore.html:84
+msgid "Next page"
+msgstr "Наступна сторінка"
+
+#: templates/community/notifications.html:35
 msgid "No replies yet"
 msgstr "Відповідей ще немає"
 
-#: templates/community/notifications.html:33
+#: templates/community/notifications.html:35
 msgid "Start a thread or answer someone, and replies to you will appear here."
 msgstr "Створіть тред або відповідайте іншим, і відповіді вам з'являться тут."
+
+#: templates/community/notifications.html:35
+msgid "Go to the community"
+msgstr "До спільноти"
 
 #: templates/community/reply_form.html:4 templates/community/reply_form.html:11
 msgid "Edit reply"
 msgstr "Змінити відповідь"
 
 #: templates/community/reply_form.html:19
-#: templates/community/thread_form.html:23 templates/projects/form.html:64
+#: templates/community/thread_form.html:28 templates/projects/form.html:64
 msgid "Save changes"
 msgstr "Зберегти зміни"
 
-#: templates/community/thread.html:12 templates/moderation/mod/act.html:11
-#: templates/moderation/mod/queue.html:34
-#: templates/moderation/mod/queue.html:51
-msgid "Thread"
-msgstr "Тред"
+#: templates/community/rules.html:15
+msgid "Questions"
+msgstr "Питання"
 
-#: templates/community/thread.html:19
+#: templates/community/rules.html:17
+#, python-format
+msgid "Appeals and questions: <a href=\"mailto:%(email)s\">%(email)s</a>"
+msgstr "Апеляції та питання: <a href=\"mailto:%(email)s\">%(email)s</a>"
+
+#: templates/community/thread.html:14
 msgid ""
 "Moderators removed this thread. Only the author and moderators can see it."
 msgstr "Модератори вилучили цей тред. Його бачать лише автор і модератори."
 
-#: templates/community/thread.html:46
+#: templates/community/thread.html:54
+msgid "Sort replies"
+msgstr "Сортування відповідей"
+
+#: templates/community/thread.html:55
 msgid "Best"
 msgstr "Найкращі"
 
-#: templates/community/thread.html:60
+#: templates/community/thread.html:65
+msgid "More replies"
+msgstr "Ще відповіді"
+
+#: templates/community/thread.html:69
+msgid "No replies yet. Be the first to answer."
+msgstr "Відповідей ще немає. Будьте першим."
+
+#: templates/community/thread.html:69
+msgid "No replies yet."
+msgstr "Відповідей ще немає."
+
+#: templates/community/thread.html:78
+msgid "Reply to the thread"
+msgstr "Відповісти в треді"
+
+#: templates/community/thread.html:78
+#, python-format
+msgid "Reply to %%(name)s"
+msgstr "Відповісти %%(name)s"
+
+#: templates/community/thread.html:78
+msgid "Reply to a reply"
+msgstr "Відповісти на відповідь"
+
+#: templates/community/thread.html:78
 #, python-format
 msgid "Reply to @%(name)s"
 msgstr "Відповісти @%(name)s"
 
-#: templates/community/thread.html:60
-msgid "Reply to a reply"
-msgstr "Відповісти на відповідь"
-
-#: templates/community/thread.html:60
-msgid "Reply to the thread"
-msgstr "Відповісти в треді"
-
-#: templates/community/thread.html:61
+#: templates/community/thread.html:79
 msgid "Reply to the thread instead"
 msgstr "Натомість відповісти в треді"
 
-#: templates/community/thread.html:66
+#: templates/community/thread.html:84
 msgid "Send reply"
 msgstr "Надіслати відповідь"
 
-#: templates/community/thread.html:69
+#: templates/community/thread.html:88
 msgid "Sign in to reply and vote."
 msgstr "Увійдіть, щоб відповідати й голосувати."
+
+#: templates/community/thread.html:97
+msgid "About this thread"
+msgstr "Про цей тред"
+
+#: templates/community/thread.html:100
+msgid "This thread"
+msgstr "Цей тред"
+
+#: templates/community/thread.html:103
+msgid "Started"
+msgstr "Створено"
+
+#: templates/community/thread.html:104
+msgid "Last reply"
+msgstr "Остання відповідь"
+
+#: templates/community/thread.html:105
+msgid "Upvotes"
+msgstr "Голоси"
 
 #: templates/community/thread_form.html:4
 #: templates/community/thread_form.html:11
@@ -2903,9 +3111,34 @@ msgstr ""
 "Заголовок можна змінити лише перші 15 хвилин. Пізніші зміни позначаються як "
 "«змінено»."
 
-#: templates/community/thread_form.html:23
+#: templates/community/thread_form.html:13
+msgid ""
+"A clear title gets better answers: say what you tried and what you need."
+msgstr "Зрозумілий заголовок дає кращі відповіді: напишіть, що ви пробували і що вам потрібно."
+
+#: templates/community/thread_form.html:28
 msgid "Post thread"
 msgstr "Опублікувати тред"
+
+#: templates/community/thread_form.html:36
+msgid "Before you post"
+msgstr "Перш ніж публікувати"
+
+#: templates/community/thread_form.html:38
+msgid "Search first: someone may have asked already."
+msgstr "Спершу пошукайте: можливо, хтось уже питав."
+
+#: templates/community/thread_form.html:39
+msgid "Pick the board that fits. Off-topic is for everything else."
+msgstr "Оберіть відповідний розділ. Для всього іншого є «Різне»."
+
+#: templates/community/thread_form.html:40
+msgid "Images: PNG, JPEG or WebP. We remove their metadata, such as location."
+msgstr "Зображення: PNG, JPEG або WebP. Ми прибираємо їхні метадані, наприклад місцезнаходження."
+
+#: templates/community/thread_form.html:41
+msgid "Accounts younger than 24 hours: one link per post, no images."
+msgstr "Акаунти молодші за 24 години: одне посилання на пост, без зображень."
 
 #: templates/errors/_body.html:6
 msgid "Error"
@@ -2930,13 +3163,11 @@ msgstr "Код помилки:"
 #: templates/errors/_body.html:22
 #, python-format
 msgid ""
-"If it keeps happening, write to <a "
-"href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the "
-"reference."
+"If it keeps happening, write to <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> and include the reference."
 msgstr ""
-"Якщо це повторюється, напишіть на <a "
-"href=\"mailto:%(contact_email)s\">%(contact_email)s</a> і вкажіть код "
-"помилки."
+"Якщо це повторюється, напишіть на <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> і вкажіть код помилки."
 
 #: templates/errors/standalone.html:24
 msgid "Start page"
@@ -3049,10 +3280,6 @@ msgstr "Змінити"
 msgid "Menu"
 msgstr "Меню"
 
-#: templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Закрити"
-
 #: templates/includes/site_nav.html:3
 msgid "Main"
 msgstr "Головна навігація"
@@ -3066,10 +3293,6 @@ msgstr "Новий проєкт"
 #: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Ваш профіль"
-
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
-msgid "new"
-msgstr "нове"
 
 #: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 msgid "open reports"
@@ -3170,6 +3393,11 @@ msgstr "Інші скарги"
 msgid "Back"
 msgstr "Назад"
 
+#: templates/moderation/mod/act.html:11 templates/moderation/mod/queue.html:34
+#: templates/moderation/mod/queue.html:51
+msgid "Thread"
+msgstr "Тред"
+
 #: templates/moderation/mod/act.html:11 templates/moderation/mod/queue.html:35
 #: templates/moderation/mod/queue.html:51
 msgid "Reply"
@@ -3191,8 +3419,8 @@ msgid ""
 "No report about this yet. A report in your name is created, so there is one "
 "history."
 msgstr ""
-"Скарг на це ще немає. Буде створено скаргу від вашого імені, щоб історія була"
-" одна."
+"Скарг на це ще немає. Буде створено скаргу від вашого імені, щоб історія "
+"була одна."
 
 #: templates/moderation/mod/queue.html:12
 #, python-format
@@ -3215,6 +3443,10 @@ msgstr "Усі"
 #: templates/social/feed.html:84
 msgid "Filters"
 msgstr "Фільтри"
+
+#: templates/moderation/mod/queue.html:42 templates/social/_filters.html:14
+msgid "Apply filters"
+msgstr "Застосувати фільтри"
 
 #: templates/moderation/mod/queue.html:51
 msgid "Deleted"
@@ -3301,8 +3533,8 @@ msgstr "Те, на що скаржилися, видалено."
 
 #: templates/moderation/report.html:13
 msgid ""
-"Reports go to the moderators. The person you report does not see who reported"
-" them."
+"Reports go to the moderators. The person you report does not see who "
+"reported them."
 msgstr ""
 "Скарги отримують модератори. Той, на кого ви скаржитесь, не бачить, хто це "
 "зробив."
@@ -3356,10 +3588,6 @@ msgstr ""
 #: templates/pages/explore.html:21 templates/pages/explore.html:22
 msgid "Search and filter projects"
 msgstr "Пошук і фільтри проєктів"
-
-#: templates/pages/explore.html:25
-msgid "Search"
-msgstr "Пошук"
 
 #: templates/pages/explore.html:27
 msgid "Project name or tagline"
@@ -3416,8 +3644,8 @@ msgid ""
 "repository, who controls the domain, and whether the site stays up."
 msgstr ""
 "%(name)s — публічний реєстр проєктів, створених за допомогою ШІ і справді "
-"запущених. Кожен проєкт отримує позначки за фактами, які ми перевіряємо: кому"
-" належить репозиторій, хто контролює домен і чи сайт стабільно працює."
+"запущених. Кожен проєкт отримує позначки за фактами, які ми перевіряємо: "
+"кому належить репозиторій, хто контролює домен і чи сайт стабільно працює."
 
 #: templates/pages/landing.html:16
 msgid "Submit your project"
@@ -3736,8 +3964,8 @@ msgid ""
 "Keep a short public build log. Then put a live %(name)s badge right in your "
 "GitHub README."
 msgstr ""
-"Ведіть короткий публічний журнал розробки. А в README на GitHub додайте живий"
-" бейдж %(name)s."
+"Ведіть короткий публічний журнал розробки. А в README на GitHub додайте "
+"живий бейдж %(name)s."
 
 #: templates/pages/landing.html:259
 msgid "Small updates. A visible track record."
@@ -3802,8 +4030,8 @@ msgstr "Опублікувати оновлення"
 
 #: templates/projects/_build_log.html:30
 msgid ""
-"No entries yet. Post what you shipped, fixed or learned. Visitors see the log"
-" once it has an entry."
+"No entries yet. Post what you shipped, fixed or learned. Visitors see the "
+"log once it has an entry."
 msgstr ""
 "Записів ще немає. Напишіть, що ви випустили, виправили чи дізналися. "
 "Відвідувачі побачать журнал, щойно в ньому з’явиться запис."
@@ -3839,9 +4067,9 @@ msgid ""
 "live URL. www is ignored: example.com and www.example.com are the same "
 "domain."
 msgstr ""
-"Позначку «Домен підтверджено» отримує той, хто довів, що керує доменом адреси"
-" сайту. www не враховується: example.com і www.example.com — це той самий "
-"домен."
+"Позначку «Домен підтверджено» отримує той, хто довів, що керує доменом "
+"адреси сайту. www не враховується: example.com і www.example.com — це той "
+"самий домен."
 
 #: templates/projects/_domain.html:17
 msgid "Method"
@@ -3931,8 +4159,8 @@ msgstr ""
 
 #: templates/projects/_domain.html:40
 msgid ""
-"Changes can take from a few minutes up to an hour to appear, depending on the"
-" provider."
+"Changes can take from a few minutes up to an hour to appear, depending on "
+"the provider."
 msgstr ""
 "Зміни з'являються за кілька хвилин, а інколи до години — залежно від "
 "провайдера."
@@ -4035,8 +4263,8 @@ msgid ""
 "Paste it into a README or a website. It shows the hallmarks you have now and "
 "refreshes within an hour."
 msgstr ""
-"Вставте його в README або на сайт. Він показує позначки, які у вас є зараз, і"
-" оновлюється протягом години."
+"Вставте його в README або на сайт. Він показує позначки, які у вас є зараз, "
+"і оновлюється протягом години."
 
 #: templates/projects/_embed_badge.html:8
 #: templates/projects/_embed_badge.html:13
@@ -4281,8 +4509,8 @@ msgstr "Спочатку це чернетка. Ніхто її не бачит�
 
 #: templates/projects/form.html:26
 msgid ""
-"You chose images but did not upload them yet. Press Save first, or press this"
-" button again to continue without them."
+"You chose images but did not upload them yet. Press Save first, or press "
+"this button again to continue without them."
 msgstr ""
 "Ви вибрали зображення, але ще не завантажили їх. Спершу натисніть «Зберегти» "
 "або натисніть цю кнопку ще раз, щоб продовжити без них."
@@ -4327,16 +4555,16 @@ msgid ""
 "The rules for Repo owner changed. Check the repository again; it takes a few "
 "seconds."
 msgstr ""
-"Правила для «Власник репозиторію» змінилися. Перевірте репозиторій ще раз, це"
-" займе кілька секунд."
+"Правила для «Власник репозиторію» змінилися. Перевірте репозиторій ще раз, "
+"це займе кілька секунд."
 
 #: templates/projects/form.html:85
 msgid ""
 "Not checked yet. Repo owner is earned when the public repository is owned by "
 "your personal GitHub account and is not a fork."
 msgstr ""
-"Ще не перевірено. «Власник репозиторію» отримують, коли публічний репозиторій"
-" належить вашому особистому акаунту на GitHub і не є форком."
+"Ще не перевірено. «Власник репозиторію» отримують, коли публічний "
+"репозиторій належить вашому особистому акаунту на GitHub і не є форком."
 
 #: templates/projects/form.html:88
 msgid "Organisation or team repository?"
@@ -4356,9 +4584,9 @@ msgid ""
 "add the file, so it proves write access. Keep it: it is checked again every "
 "week."
 msgstr ""
-"Потім натисніть «Перевірити репозиторій». Додати файл можуть лише ті, хто має"
-" право пушити в репозиторій, тож він доводить доступ на запис. Не видаляйте "
-"його: його перевіряють щотижня."
+"Потім натисніть «Перевірити репозиторій». Додати файл можуть лише ті, хто "
+"має право пушити в репозиторій, тож він доводить доступ на запис. Не "
+"видаляйте його: його перевіряють щотижня."
 
 #: templates/projects/form.html:95
 msgid "Check repository"
@@ -4401,6 +4629,10 @@ msgstr "Проєкт і його скріншоти буде видалено н
 #: templates/social/_card.html:24
 msgid "Latest update"
 msgstr "Останнє оновлення"
+
+#: templates/social/_filters.html:3
+msgid "Sort"
+msgstr "Сортування"
 
 #: templates/social/_filters.html:5
 msgid "Time range"
@@ -4458,8 +4690,8 @@ msgstr "Розділи стрічки"
 
 #: templates/social/feed.html:52
 msgid ""
-"Projects and updates from people you follow show up here. Follow someone from"
-" their profile."
+"Projects and updates from people you follow show up here. Follow someone "
+"from their profile."
 msgstr ""
 "Тут з'являються проєкти й оновлення людей, на яких ви підписані. Підпишіться "
 "на когось із його профілю."
@@ -4483,14 +4715,6 @@ msgstr "Запусків ще немає"
 #: templates/social/feed.html:69
 msgid "Published projects appear here."
 msgstr "Тут зʼявляються опубліковані проєкти."
-
-#: templates/social/feed.html:76
-msgid "Could not load more. Try again."
-msgstr "Не вдалося завантажити більше. Спробуйте ще раз."
-
-#: templates/social/feed.html:76
-msgid "Load more"
-msgstr "Завантажити ще"
 
 #: templates/social/feed.html:81
 msgid "Filters, news and tips"
@@ -4648,9 +4872,9 @@ msgid ""
 "cannot be verified. Use your own address on it (like yourname.github.io) or "
 "your own domain."
 msgstr ""
-"Це головна адреса хостингу, яким користується багато сайтів, тому її не можна"
-" підтвердити. Вкажіть свою адресу на ньому (наприклад, yourname.github.io) "
-"або власний домен."
+"Це головна адреса хостингу, яким користується багато сайтів, тому її не "
+"можна підтвердити. Вкажіть свою адресу на ньому (наприклад, yourname.github."
+"io) або власний домен."
 
 #: verification/domain.py:44
 msgid "This domain is already verified for another project."
@@ -4756,8 +4980,8 @@ msgid ""
 "Repository not found. Check the spelling. Private repositories cannot be "
 "checked."
 msgstr ""
-"Репозиторій не знайдено. Перевірте написання. Приватні репозиторії перевірити"
-" не можна."
+"Репозиторій не знайдено. Перевірте написання. Приватні репозиторії "
+"перевірити не можна."
 
 #: verification/repo.py:180
 msgid "This repository is too large to check automatically."

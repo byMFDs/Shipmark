@@ -1,0 +1,11 @@
+{% load i18n %}{# Images of a post: a grid for 1-4 images, each tile a link to the display copy (the lightbox opens it with JS).
+   Needs: images. Tiles keep their shape with CSS (aspect-ratio + object-fit), and width/height come from the file. #}
+{% if images %}{% with count=images|length %}
+<div class="media-grid media-grid--{{ count }}" data-gallery>
+  {% for image in images %}
+    <a class="media-grid__tile{% if count == 1 and image.width < 480 %} media-grid__tile--small{% endif %}{% if count == 1 and image.height > image.width %} media-grid__tile--tall{% endif %}" href="{{ image.image.url }}" data-full="{{ image.image.url }}" data-width="{{ image.width }}" data-height="{{ image.height }}">
+      <img src="{{ image.thumb.url }}" srcset="{{ image.thumb.url }} {{ image.thumb_width }}w, {{ image.image.url }} {{ image.width }}w" sizes="{% if count == 1 %}(min-width: 72em) 600px, 100vw{% else %}(min-width: 72em) 300px, 50vw{% endif %}" width="{{ image.thumb_width }}" height="{{ image.thumb_height }}" loading="lazy" decoding="async" alt="{% if image.alt %}{{ image.alt }}{% else %}{% blocktranslate with number=forloop.counter total=count %}Image {{ number }} of {{ total }}{% endblocktranslate %}{% endif %}">
+    </a>
+  {% endfor %}
+</div>
+{% endwith %}{% endif %}

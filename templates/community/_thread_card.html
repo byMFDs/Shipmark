@@ -1,0 +1,23 @@
+{% load i18n ui %}{# A thread in a list. Needs: thread (board, author, images prefetched), voted (set of thread ids). #}
+{% with images=thread.images.all %}
+<li class="thread-card{% if thread.pinned %} thread-card--pinned{% endif %}" data-feed-item tabindex="-1">
+  <div class="thread-card__vote">{% url 'community:vote_thread' thread.pk as vote_url %}{% if user.is_authenticated and thread.author_id == user.pk %}{% include "community/_vote.html" with action="" voted=False score=thread.score own=True %}{% elif thread.pk in voted %}{% include "community/_vote.html" with action=vote_url voted=True score=thread.score own=False %}{% else %}{% include "community/_vote.html" with action=vote_url voted=False score=thread.score own=False %}{% endif %}</div>
+  <div class="thread-card__body">
+    <p class="label thread-card__meta">
+      <a href="{{ thread.board.get_absolute_url }}">{{ thread.board.display_name }}</a>
+      {% if thread.pinned %}<span class="thread-chip">{% icon "pin" %}{% translate "Pinned" %}</span>{% endif %}
+      {% if thread.is_locked %}<span class="thread-chip">{% icon "lock" %}{% translate "Locked" %}</span>{% endif %}
+    </p>
+    <h3 class="thread-card__title"><a href="{{ thread.get_absolute_url }}">{{ thread.title }}</a></h3>
+    {% if thread.is_deleted %}<p class="thread-card__excerpt muted">{% translate "[deleted]" %}</p>{% elif thread.body %}<p class="thread-card__excerpt">{{ thread.body_html|striptags|truncatechars:180 }}</p>{% endif %}
+    <p class="thread-card__by">
+      {% if thread.author %}{% user_avatar thread.author 24 %}{% endif %}
+      <span>{% include "community/_author.html" with author=thread.author %} · <time datetime="{{ thread.created_at|date:'c' }}" title="{{ thread.created_at|date:'DATETIME_FORMAT' }}">{{ thread.created_at|ago }}</time></span>
+      <a class="thread-card__replies" href="{{ thread.get_absolute_url }}#replies">{% icon "thread" %}{% blocktranslate count counter=thread.reply_count %}{{ counter }} reply{% plural %}{{ counter }} replies{% endblocktranslate %}</a>
+    </p>
+  </div>
+  {% if images %}{% with first=images.0 %}
+    <a class="thread-card__thumb" href="{{ thread.get_absolute_url }}" tabindex="-1" aria-hidden="true"><img src="{{ first.thumb.url }}" width="{{ first.thumb_width }}" height="{{ first.thumb_height }}" loading="lazy" decoding="async" alt="">{% if images|length > 1 %}<span class="thread-card__more mono">+{{ images|length|add:-1 }}</span>{% endif %}</a>
+  {% endwith %}{% endif %}
+</li>
+{% endwith %}

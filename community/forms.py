@@ -128,9 +128,14 @@ class ReplyForm(PostFormMixin, forms.Form):
     max_images = limits.MAX_REPLY_IMAGES
 
     body = _body(4, limits.MAX_REPLY_BODY)
-    # One key from community/stickers.py or nothing. A reply may be a sticker alone.
-    sticker = forms.CharField(label=_("Sticker"), required=False, max_length=40, widget=forms.HiddenInput)
+    # One key from community/stickers.py or nothing. A reply may be a sticker alone. A plain <select> without JS;
+    # with JS the picker sets its value. The choices are only the widget's: clean_sticker checks the manifest.
+    sticker = forms.CharField(label=_("Sticker"), required=False, max_length=40, widget=forms.Select)
     images = _images(limits.MAX_REPLY_IMAGES)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["sticker"].widget.choices = [("", _("No sticker")), *stickers.STICKERS.items()]
 
     def clean_sticker(self):
         key = self.cleaned_data.get("sticker") or ""

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n static ui %}
+{# Every community page: boards on the left (from 72em), the page in the middle, a panel on the right. One column on
+   phones, where the boards fold above the content. Layout classes come from feed.css (shared, not changed here). #}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}"><link rel="stylesheet" href="{% static 'css/pages/community.css' %}">{% endblock %}
+
+{% block content %}
+  <div class="container shell feed community">
+    <div class="feed-layout">
+      <aside class="feed-nav community-nav" aria-label="{% translate 'Boards' %}">
+        {% include "community/_boards.html" with prefix="d" %}
+      </aside>
+      <div class="feed-main community-main">
+        <details class="community-boards-fold">
+          <summary class="btn btn--secondary">{% icon "chevron-down" %}{% translate "Boards" %}</summary>
+          {% include "community/_boards.html" with prefix="m" %}
+        </details>
+        {% block community_main %}{% endblock %}
+      </div>
+      <aside class="feed-side community-side" aria-label="{% block side_label %}{% translate 'About the community' %}{% endblock %}">
+        {% block community_side %}{% include "community/_rules_panel.html" %}{% endblock %}
+      </aside>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script type="module" src="{% static 'js/community.js' %}"></script>
+  <script type="module" src="{% static 'js/feed.js' %}"></script>
+  {% block community_scripts %}{% endblock %}
+{% endblock %}

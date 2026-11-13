@@ -1,36 +1,38 @@
-{% extends "base.html" %}
+{% extends "community/_layout.html" %}
 {% load i18n static ui %}
 
 {% block title %}{% translate "Replies to you" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block meta %}<meta name="robots" content="noindex">{% endblock %}
 
-{% block content %}
-  <div class="container shell shell--narrow">
-    <header class="page-head">
+{% block community_main %}
+  <header class="community-head">
+    <div>
       <p class="label"><a href="{% url 'community:home' %}">{% translate "Community" %}</a></p>
       <h1>{% translate "Replies to you" %}</h1>
       <p class="lede">{% translate "When someone answers your thread or your reply, it shows up here. We never send these by email." %}</p>
-    </header>
-    {% if items %}
-      <ul class="plate-list">
-        {% for item in items %}{% with reply=item.reply %}
-          <li class="plate-row">
-            <div>
-              <p class="label">{% if not item.read_at %}{% translate "New" %} · {% endif %}<time datetime="{{ item.created_at|date:'c' }}" title="{{ item.created_at|date:'DATETIME_FORMAT' }}">{{ item.created_at|ago }}</time></p>
-              <p class="plate-row__name"><a href="{{ reply.get_absolute_url }}">{% if reply.author %}{% if item.kind == "thread" %}{% blocktranslate with name=reply.author.username title=reply.thread.title %}@{{ name }} replied to your thread “{{ title }}”{% endblocktranslate %}{% else %}{% blocktranslate with name=reply.author.username title=reply.thread.title %}@{{ name }} replied to you in “{{ title }}”{% endblocktranslate %}{% endif %}{% else %}{% if item.kind == "thread" %}{% blocktranslate with title=reply.thread.title %}A deleted account replied to your thread “{{ title }}”{% endblocktranslate %}{% else %}{% blocktranslate with title=reply.thread.title %}A deleted account replied to you in “{{ title }}”{% endblocktranslate %}{% endif %}{% endif %}</a></p>
-              <p class="muted">{% if reply.body %}{{ reply.body|truncatechars:140 }}{% elif reply.sticker_key %}{% blocktranslate with name=reply.sticker_label %}Sticker: {{ name }}{% endblocktranslate %}{% else %}{% translate "Images" %}{% endif %}</p>
-            </div>
-          </li>
-        {% endwith %}{% endfor %}
-      </ul>
-      {% if page > 1 or has_next %}
-        <nav class="pager" aria-label="{% translate 'Pages' %}">
-          {% if page > 1 %}<a class="btn btn--secondary" rel="prev" href="?page={{ page|add:-1 }}">{% translate "Previous page" %}</a>{% endif %}
-          {% if has_next %}<a class="btn btn--secondary" rel="next" href="?page={{ page|add:1 }}">{% translate "Next page" %}</a>{% endif %}
-        </nav>
-      {% endif %}
-    {% else %}
-      <section class="empty empty--plain"><h2 class="empty__title">{% translate "No replies yet" %}</h2><p class="empty__text">{% translate "Start a thread or answer someone, and replies to you will appear here." %}</p></section>
+    </div>
+  </header>
+  {% if items %}
+    <ul class="thread-list">
+      {% for item in items %}{% with reply=item.reply %}
+        <li class="notification{% if not item.read_at %} notification--new{% endif %}">
+          {% if reply.author %}{% user_avatar reply.author 32 %}{% else %}<span class="avatar avatar--32 avatar--initials" aria-hidden="true">?</span>{% endif %}
+          <div class="notification__body">
+            <p class="label">{% if not item.read_at %}<span class="thread-chip">{% translate "New" %}</span> · {% endif %}<time datetime="{{ item.created_at|date:'c' }}" title="{{ item.created_at|date:'DATETIME_FORMAT' }}">{{ item.created_at|ago }}</time></p>
+              <p class="notification__title"><a href="{{ reply.get_absolute_url }}">{% if reply.author %}{% if item.kind == "thread" %}{% blocktranslate with name=reply.author.username title=reply.thread.title %}@{{ name }} replied to your thread “{{ title }}”{% endblocktranslate %}{% else %}{% blocktranslate with name=reply.author.username title=reply.thread.title %}@{{ name }} replied to you in “{{ title }}”{% endblocktranslate %}{% endif %}{% else %}{% if item.kind == "thread" %}{% blocktranslate with title=reply.thread.title %}A deleted account replied to your thread “{{ title }}”{% endblocktranslate %}{% else %}{% blocktranslate with title=reply.thread.title %}A deleted account replied to you in “{{ title }}”{% endblocktranslate %}{% endif %}{% endif %}</a></p>
+            <p class="muted notification__excerpt">{% if reply.body %}{{ reply.body|truncatechars:140 }}{% elif reply.sticker_key %}{% blocktranslate with name=reply.sticker_label %}Sticker: {{ name }}{% endblocktranslate %}{% else %}{% translate "Images" %}{% endif %}</p>
+          </div>
+        </li>
+      {% endwith %}{% endfor %}
+    </ul>
+    {% if page > 1 or has_next %}
+      <nav class="pager" aria-label="{% translate 'Pages' %}">
+        {% if page > 1 %}<a class="btn btn--secondary" rel="prev" href="?page={{ page|add:-1 }}">{% translate "Previous page" %}</a>{% endif %}
+        {% if has_next %}<a class="btn btn--secondary" rel="next" href="?page={{ page|add:1 }}">{% translate "Next page" %}</a>{% endif %}
+      </nav>
     {% endif %}
-  </div>
+  {% else %}
+    {% translate "No replies yet" as title %}{% translate "Start a thread or answer someone, and replies to you will appear here." as text %}{% translate "Go to the community" as label %}{% url 'community:home' as home_url %}
+    {% include "community/_empty.html" with sticker="sleepy" title=title text=text action_url=home_url action_label=label %}
+  {% endif %}
 {% endblock %}

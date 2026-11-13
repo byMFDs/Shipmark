@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:31+0000\n"
+"POT-Creation-Date: 2026-11-13 16:29+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -12,7 +12,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
 #: accounts/adapters.py:53 pages/test_languages.py:201
 #, python-format
@@ -223,7 +224,7 @@ msgid "Pin at most 3 projects."
 msgstr "Przypnij najwyżej 3 projekty."
 
 #: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:72
-#: community/views.py:27 projects/views.py:39 social/views.py:73
+#: community/views.py:35 projects/views.py:39 social/views.py:73
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Zbyt wiele zmian w krótkim czasie. Spróbuj ponownie za kilka minut."
 
@@ -406,7 +407,7 @@ msgstr "Przywróć wybrane odpowiedzi (tylko superuser)"
 #: templates/community/home.html:4 templates/community/home.html:5
 #: templates/community/home.html:11 templates/community/home.html:12
 #: templates/community/notifications.html:10 templates/community/thread.html:4
-#: templates/community/thread_form.html:10
+#: templates/community/thread.html:10 templates/community/thread_form.html:10
 msgid "Community"
 msgstr "Społeczność"
 
@@ -481,7 +482,7 @@ msgstr ""
 "Działa Markdown. Linki, listy, pogrubienie i kod są dozwolone; HTML nie."
 
 #: community/forms.py:76 config/settings/base.py:347
-#: templates/community/notifications.html:21
+#: templates/community/notifications.html:23
 msgid "Images"
 msgstr "Obrazy"
 
@@ -493,7 +494,7 @@ msgstr[0] "Do %(max)d obrazu, PNG, JPEG lub WebP, po 5 MB."
 msgstr[1] "Do %(max)d obrazów, PNG, JPEG lub WebP, po 5 MB."
 msgstr[2] "Do %(max)d obrazów, PNG, JPEG lub WebP, po 5 MB."
 
-#: community/forms.py:86
+#: community/forms.py:86 templates/community/thread.html:102
 msgid "Board"
 msgstr "Dział"
 
@@ -513,15 +514,19 @@ msgstr "Tytuł"
 msgid "Write something or add an image."
 msgstr "Napisz coś albo dodaj obraz."
 
-#: community/forms.py:132
+#: community/forms.py:133 templates/community/_composer.html:21
 msgid "Sticker"
 msgstr "Naklejka"
 
 #: community/forms.py:138
+msgid "No sticker"
+msgstr "Bez naklejki"
+
+#: community/forms.py:143
 msgid "This sticker does not exist."
 msgstr "Taka naklejka nie istnieje."
 
-#: community/forms.py:144 community/forms.py:159
+#: community/forms.py:149 community/forms.py:164
 msgid "Write something, or add an image or a sticker."
 msgstr "Napisz coś albo dodaj obraz lub naklejkę."
 
@@ -535,13 +540,12 @@ msgstr "Nieaktywne działy i ich wątki są ukryte."
 msgid "Published"
 msgstr "Opublikowany"
 
-#: community/models.py:66 templates/community/_row.html:4
-#: templates/community/thread.html:12
+#: community/models.py:66 templates/community/_thread_card.html:9
+#: templates/community/thread.html:30
 msgid "Locked"
 msgstr "Zamknięty"
 
 #: community/models.py:67 community/models.py:137 projects/models.py:44
-#: templates/community/thread.html:12
 msgid "Removed"
 msgstr "Usunięty"
 
@@ -690,52 +694,52 @@ msgstr "Żarówka"
 msgid "Handshake"
 msgstr "Uścisk dłoni"
 
-#: community/views.py:154
+#: community/views.py:227
 msgid "You started several threads in the last hour. Try again later."
 msgstr "W ostatniej godzinie założyłeś kilka wątków. Spróbuj ponownie później."
 
-#: community/views.py:156 community/views.py:267
+#: community/views.py:229 community/views.py:342
 msgid "You already posted this."
 msgstr "Już to opublikowałeś."
 
-#: community/views.py:182
+#: community/views.py:256
 msgid "This thread is locked or removed. It cannot be changed."
 msgstr "Ten wątek jest zamknięty lub usunięty. Nie można go zmienić."
 
-#: community/views.py:224
+#: community/views.py:298
 msgid "Thread deleted."
 msgstr "Wątek usunięty."
 
-#: community/views.py:237
+#: community/views.py:311
 msgid "The reply you are answering is gone."
 msgstr "Odpowiedź, na którą odpowiadasz, już nie istnieje."
 
-#: community/views.py:257 templates/community/thread.html:24
+#: community/views.py:332 templates/community/thread.html:19
 msgid "This thread is locked. Only moderators can reply."
 msgstr "Ten wątek jest zamknięty. Odpowiadać mogą tylko moderatorzy."
 
-#: community/views.py:265
+#: community/views.py:340
 msgid "You replied many times in the last hour. Try again later."
 msgstr ""
 "W ostatniej godzinie odpowiedziałeś wiele razy. Spróbuj ponownie później."
 
-#: community/views.py:287
+#: community/views.py:362
 msgid "This reply cannot be changed."
 msgstr "Tej odpowiedzi nie można zmienić."
 
-#: community/views.py:316
+#: community/views.py:391
 msgid "Reply deleted."
 msgstr "Odpowiedź usunięta."
 
-#: community/views.py:359
+#: community/views.py:434
 msgid "Bad request."
 msgstr "Nieprawidłowe żądanie."
 
-#: community/views.py:361
+#: community/views.py:436
 msgid "You cannot vote for your own post."
 msgstr "Nie możesz głosować na własny wpis."
 
-#: community/views.py:374 social/views.py:67
+#: community/views.py:449 social/views.py:67
 msgid "Sign in to do this."
 msgstr "Zaloguj się, aby to zrobić."
 
@@ -825,11 +829,12 @@ msgstr "Obserwowania"
 msgid "Likes"
 msgstr "Polubienia"
 
-#: config/settings/base.py:344 templates/community/home.html:45
+#: config/settings/base.py:344 templates/community/_boards.html:3
+#: templates/community/_layout.html:10 templates/community/_layout.html:15
 msgid "Boards"
 msgstr "Działy"
 
-#: config/settings/base.py:345 templates/community/home.html:66
+#: config/settings/base.py:345 templates/community/home.html:52
 msgid "Threads"
 msgstr "Wątki"
 
@@ -963,8 +968,8 @@ msgstr "linki"
 msgid "You cannot moderate."
 msgstr "Nie możesz moderować."
 
-#: moderation/forms.py:12 templates/community/thread.html:20
-#: templates/community/thread.html:25 templates/includes/account_notices.html:8
+#: moderation/forms.py:12 templates/community/thread.html:15
+#: templates/community/thread.html:20 templates/includes/account_notices.html:8
 #: templates/includes/account_notices.html:26
 #: templates/moderation/banned.html:14 templates/moderation/mod/queue.html:37
 #: templates/projects/detail.html:31
@@ -1271,11 +1276,11 @@ msgstr ""
 #: moderation/pages.py:24
 #, python-format
 msgid ""
-"Your account is muted until %(date)s. You can read and use your settings, but"
-" not post."
+"Your account is muted until %(date)s. You can read and use your settings, "
+"but not post."
 msgstr ""
-"Twoje konto jest wyciszone do %(date)s. Możesz czytać i korzystać z ustawień,"
-" ale nie publikować."
+"Twoje konto jest wyciszone do %(date)s. Możesz czytać i korzystać z "
+"ustawień, ale nie publikować."
 
 #: moderation/sanctions.py:27
 msgid "You cannot sanction yourself."
@@ -1421,8 +1426,8 @@ msgstr "wpis z aktualnościami"
 msgid "news posts"
 msgstr "wpisy z aktualnościami"
 
-#: pages/explore.py:27 social/feed.py:28 templates/community/home.html:29
-#: templates/community/thread.html:46
+#: pages/explore.py:27 social/feed.py:28 templates/community/home.html:21
+#: templates/community/thread.html:56
 msgid "Newest"
 msgstr "Najnowsze"
 
@@ -1585,8 +1590,8 @@ msgstr "Dodaj zrzuty ekranu"
 
 #: projects/forms.py:52
 msgid ""
-"Up to 4 images in total, PNG, JPEG or WebP, 5 MB each. You can choose several"
-" at once. The first one is the cover."
+"Up to 4 images in total, PNG, JPEG or WebP, 5 MB each. You can choose "
+"several at once. The first one is the cover."
 msgstr ""
 "Łącznie do 4 obrazów, PNG, JPEG lub WebP, do 5 MB każdy. Możesz wybrać kilka "
 "naraz. Pierwszy jest okładką."
@@ -1638,8 +1643,8 @@ msgid ""
 "A project can have at most 4 screenshots. You chose %(chosen)d; you can add "
 "%(left)d more."
 msgstr ""
-"Projekt może mieć najwyżej 4 zrzuty ekranu. Wybrano: %(chosen)d; możesz dodać"
-" jeszcze: %(left)d."
+"Projekt może mieć najwyżej 4 zrzuty ekranu. Wybrano: %(chosen)d; możesz "
+"dodać jeszcze: %(left)d."
 
 #: projects/forms.py:139
 msgid ""
@@ -1686,11 +1691,11 @@ msgid ""
 msgstr ""
 "Ten projekt ma już wpis o premierze. Najpierw go usuń, aby oznaczyć inny."
 
-#: projects/images.py:26
+#: projects/images.py:26 templates/community/_composer.html:6
 msgid "The image is larger than 5 MB."
 msgstr "Obraz jest większy niż 5 MB."
 
-#: projects/images.py:33
+#: projects/images.py:33 templates/community/_composer.html:6
 msgid "Use a PNG, JPEG or WebP image."
 msgstr "Użyj obrazu PNG, JPEG lub WebP."
 
@@ -1728,18 +1733,18 @@ msgstr ""
 
 #: projects/proof.py:31
 msgid ""
-"The author proved control of the project's domain with a DNS record or a meta"
-" tag. It is checked again every 30 days and must be confirmed within 35."
+"The author proved control of the project's domain with a DNS record or a "
+"meta tag. It is checked again every 30 days and must be confirmed within 35."
 msgstr ""
 "Autor udowodnił kontrolę nad domeną projektu rekordem DNS lub metatagiem. "
-"Sprawdzamy to ponownie co 30 dni, a potwierdzenie musi być nie starsze niż 35"
-" dni."
+"Sprawdzamy to ponownie co 30 dni, a potwierdzenie musi być nie starsze niż "
+"35 dni."
 
 #: projects/proof.py:36
 #, no-python-format
 msgid ""
-"Domain verified, and at least 95% of uptime checks succeeded over the last 30"
-" days, with at least 40 checks."
+"Domain verified, and at least 95% of uptime checks succeeded over the last "
+"30 days, with at least 40 checks."
 msgstr ""
 "Domain verified oraz co najmniej 95% udanych sprawdzeń dostępności w "
 "ostatnich 30 dniach, przy co najmniej 40 sprawdzeniach."
@@ -1837,8 +1842,8 @@ msgid ""
 "%(repo)s passed the ownership check on %(date)s and is waiting for a routine "
 "manual review."
 msgstr ""
-"%(repo)s przeszło sprawdzenie właściciela %(date)s i czeka na rutynową ręczną"
-" weryfikację."
+"%(repo)s przeszło sprawdzenie właściciela %(date)s i czeka na rutynową "
+"ręczną weryfikację."
 
 #: projects/proof.py:173
 #, python-format
@@ -2081,8 +2086,8 @@ msgstr "Zrzut ekranu usunięty."
 msgid ""
 "A project can get at most %(n)s build log entries a day. Try again tomorrow."
 msgstr ""
-"Projekt może dostać najwyżej %(n)s wpisów dziennika rozwoju dziennie. Spróbuj"
-" jutro."
+"Projekt może dostać najwyżej %(n)s wpisów dziennika rozwoju dziennie. "
+"Spróbuj jutro."
 
 #: projects/views.py:434
 msgid "Posted. Launch date set to today."
@@ -2168,8 +2173,8 @@ msgstr "Ten formularz wygasł"
 
 #: templates/403_csrf.html:6
 msgid ""
-"It was opened too long ago, or in another tab before you signed in or out. Go"
-" back, reload the page and send it again."
+"It was opened too long ago, or in another tab before you signed in or out. "
+"Go back, reload the page and send it again."
 msgstr ""
 "Został otwarty zbyt dawno albo w innej karcie przed zalogowaniem lub "
 "wylogowaniem. Wróć, odśwież stronę i wyślij go ponownie."
@@ -2236,11 +2241,11 @@ msgstr "Zaakceptuj i kontynuuj"
 
 #: templates/accounts/accept_terms.html:23
 msgid ""
-"If you do not accept, you can sign out, or download your data and delete your"
-" account."
+"If you do not accept, you can sign out, or download your data and delete "
+"your account."
 msgstr ""
-"Jeśli nie zaakceptujesz, możesz się wylogować albo pobrać swoje dane i usunąć"
-" konto."
+"Jeśli nie zaakceptujesz, możesz się wylogować albo pobrać swoje dane i "
+"usunąć konto."
 
 #: templates/accounts/accept_terms.html:26
 #: templates/accounts/delete_account.html:38
@@ -2287,8 +2292,8 @@ msgid ""
 "hallmarks, domain and repository checks, uptime history and likes."
 msgstr ""
 "Wszystkie Twoje projekty, także szkice, wraz ze zrzutami ekranu, dziennikiem "
-"rozwoju, znakami, sprawdzeniami domeny i repozytorium, historią dostępności i"
-" polubieniami."
+"rozwoju, znakami, sprawdzeniami domeny i repozytorium, historią dostępności "
+"i polubieniami."
 
 #: templates/accounts/delete_account.html:21
 msgid "Your likes and follows."
@@ -2343,7 +2348,7 @@ msgstr "Usuń moje konto"
 #: templates/accounts/delete_account.html:48
 #: templates/community/confirm_delete.html:15
 #: templates/community/reply_form.html:20
-#: templates/community/thread_form.html:24 templates/moderation/report.html:19
+#: templates/community/thread_form.html:29 templates/moderation/report.html:19
 #: templates/projects/delete.html:16
 msgid "Cancel"
 msgstr "Anuluj"
@@ -2359,8 +2364,8 @@ msgid ""
 "%(name)s uses your GitHub account to sign in. There are no passwords to "
 "remember."
 msgstr ""
-"%(name)s używa Twojego konta GitHub do logowania. Nie musisz pamiętać żadnych"
-" haseł."
+"%(name)s używa Twojego konta GitHub do logowania. Nie musisz pamiętać "
+"żadnych haseł."
 
 #: templates/accounts/login.html:13
 msgid ""
@@ -2396,8 +2401,8 @@ msgstr "Data dołączenia: %(date)s"
 msgid "Edit profile"
 msgstr "Edytuj profil"
 
-#: templates/accounts/profile.html:46 templates/community/_reply.html:22
-#: templates/community/thread.html:38 templates/moderation/mod/report.html:3
+#: templates/accounts/profile.html:46 templates/community/_reply.html:28
+#: templates/community/thread.html:44 templates/moderation/mod/report.html:3
 #: templates/moderation/mod/report.html:17 templates/projects/_log_entry.html:9
 #: templates/projects/detail.html:67
 msgid "Report"
@@ -2411,8 +2416,8 @@ msgstr "Znaki"
 msgid "Followers"
 msgstr "Obserwujący"
 
-#: templates/accounts/profile.html:60 templates/community/_row.html:4
-#: templates/community/home.html:60 templates/community/thread.html:12
+#: templates/accounts/profile.html:60 templates/community/_thread_card.html:8
+#: templates/community/home.html:46 templates/community/thread.html:30
 #: templates/news/_card.html:6
 msgid "Pinned"
 msgstr "Przypięte"
@@ -2500,19 +2505,19 @@ msgstr "Podgląd profilu"
 
 #: templates/accounts/settings.html:24
 msgid ""
-"This is how your profile card looks. It updates as you type; nothing is saved"
-" until you press Save settings."
+"This is how your profile card looks. It updates as you type; nothing is "
+"saved until you press Save settings."
 msgstr ""
-"Tak wygląda karta Twojego profilu. Aktualizuje się w trakcie pisania; nic nie"
-" jest zapisywane, dopóki nie klikniesz „Zapisz ustawienia”."
+"Tak wygląda karta Twojego profilu. Aktualizuje się w trakcie pisania; nic "
+"nie jest zapisywane, dopóki nie klikniesz „Zapisz ustawienia”."
 
 #: templates/accounts/settings.html:33
 msgid ""
 "Your account is muted, so your public profile cannot be changed right now. "
 "You can still change the language."
 msgstr ""
-"Twoje konto jest wyciszone, więc publicznego profilu nie można teraz zmienić."
-" Nadal możesz zmienić język."
+"Twoje konto jest wyciszone, więc publicznego profilu nie można teraz "
+"zmienić. Nadal możesz zmienić język."
 
 #: templates/accounts/settings.html:42
 msgid "Your current cover image"
@@ -2616,48 +2621,190 @@ msgstr "Brak otwartych zgłoszeń."
 msgid "Skip to content"
 msgstr "Przejdź do treści"
 
-#: templates/community/_author.html:2 templates/community/_reply.html:5
-#: templates/community/thread.html:30
+#: templates/community/_author.html:2 templates/community/_reply.html:7
+#: templates/community/_thread_card.html:12 templates/community/thread.html:34
 msgid "[deleted]"
 msgstr "[usunięto]"
 
-#: templates/community/_images.html:2
+#: templates/community/_boards.html:5
+msgid "All boards"
+msgstr "Wszystkie działy"
+
+#: templates/community/_boards.html:11 templates/community/notifications.html:4
+#: templates/community/notifications.html:11
+#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
+msgid "Replies to you"
+msgstr "Odpowiedzi do Ciebie"
+
+#: templates/community/_boards.html:11 templates/includes/site_nav.html:20
+#: templates/includes/site_nav.html:34
+msgid "new"
+msgstr "nowe"
+
+#: templates/community/_boards.html:12
+msgid "Community rules"
+msgstr "Zasady społeczności"
+
+#: templates/community/_boards.html:15 templates/community/home.html:15
+#: templates/community/home.html:66 templates/community/thread_form.html:4
+#: templates/community/thread_form.html:11
+msgid "New thread"
+msgstr "Nowy wątek"
+
+#: templates/community/_boards.html:17 templates/community/thread.html:89
+#: templates/includes/site_nav.html:42 templates/pages/_sign_in.html:10
+#: templates/pages/_sign_in.html:13 templates/social/feed.html:25
+#: templates/socialaccount/login.html:10
+msgid "Sign in with GitHub"
+msgstr "Zaloguj się przez GitHub"
+
+#: templates/community/_composer.html:5
 #, python-format
-msgid "Image %(number)s"
-msgstr "Obraz %(number)s"
+msgid "You can add at most %(counter)s image."
+msgid_plural "You can add at most %(counter)s images."
+msgstr[0] "Możesz dodać najwyżej %(counter)s obraz."
+msgstr[1] "Możesz dodać najwyżej %(counter)s obrazy."
+msgstr[2] "Możesz dodać najwyżej %(counter)s obrazów."
+
+#: templates/community/_composer.html:11
+msgid "Drop images here"
+msgstr "Upuść obrazy tutaj"
+
+#: templates/community/_composer.html:12
+msgid "Chosen images"
+msgstr "Wybrane obrazy"
+
+#: templates/community/_composer.html:12
+msgid "Remove image"
+msgstr "Usuń obraz"
+
+#: templates/community/_composer.html:16
+msgid "Remove sticker"
+msgstr "Usuń naklejkę"
+
+#: templates/community/_composer.html:20
+msgid "Add images"
+msgstr "Dodaj obrazy"
+
+#: templates/community/_layout.html:20
+msgid "About the community"
+msgstr "O społeczności"
+
+#: templates/community/_media.html:7
+#, python-format
+msgid "Image %(number)s of %(total)s"
+msgstr "Obraz %(number)s z %(total)s"
+
+#: templates/community/_picker.html:4
+msgid "Stickers"
+msgstr "Naklejki"
+
+#: templates/community/_picker.html:5 templates/includes/site_header.html:16
+msgid "Close"
+msgstr "Zamknij"
+
+#: templates/community/_picker.html:7 templates/community/_picker.html:8
+msgid "Search stickers"
+msgstr "Szukaj naklejek"
+
+#: templates/community/_picker.html:9 templates/community/_picker.html:10
+msgid "Recent"
+msgstr "Ostatnie"
+
+#: templates/community/_picker.html:11 templates/community/_picker.html:12
+msgid "All stickers"
+msgstr "Wszystkie naklejki"
+
+#: templates/community/_picker.html:15
+msgid "No sticker matches."
+msgstr "Żadna naklejka nie pasuje."
 
 #: templates/community/_reply.html:7
 msgid "[removed]"
 msgstr "[usunięto przez moderatorów]"
 
-#: templates/community/_reply.html:9 templates/community/thread.html:14
+#: templates/community/_reply.html:11
+msgctxt "thread author"
+msgid "Author"
+msgstr "Autor"
+
+#: templates/community/_reply.html:13 templates/community/thread.html:28
 msgid "edited"
 msgstr "edytowano"
 
-#: templates/community/_reply.html:17
+#: templates/community/_reply.html:23
 msgctxt "verb"
 msgid "Reply"
 msgstr "Odpowiedz"
 
-#: templates/community/_reply.html:19 templates/community/thread.html:35
+#: templates/community/_reply.html:25 templates/community/thread.html:41
 msgid "Edit"
 msgstr "Edytuj"
 
-#: templates/community/_reply.html:20
+#: templates/community/_reply.html:26
 #: templates/community/confirm_delete.html:14
-#: templates/community/thread.html:36
+#: templates/community/thread.html:42
 msgid "Delete"
 msgstr "Usuń"
 
-#: templates/community/_row.html:6 templates/community/_vote.html:8
+#: templates/community/_reply.html:35 templates/community/_reply.html:36
 #, python-format
-msgid "%(counter)s upvote"
-msgid_plural "%(counter)s upvotes"
-msgstr[0] "%(counter)s głos"
-msgstr[1] "%(counter)s głosy"
-msgstr[2] "%(counter)s głosów"
+msgid "Hide %(counter)s reply"
+msgid_plural "Hide %(counter)s replies"
+msgstr[0] "Ukryj %(counter)s odpowiedź"
+msgstr[1] "Ukryj %(counter)s odpowiedzi"
+msgstr[2] "Ukryj %(counter)s odpowiedzi"
 
-#: templates/community/_row.html:6 templates/community/thread.html:45
+#: templates/community/_reply.html:36
+#, python-format
+msgid "Show %(counter)s reply"
+msgid_plural "Show %(counter)s replies"
+msgstr[0] "Pokaż %(counter)s odpowiedź"
+msgstr[1] "Pokaż %(counter)s odpowiedzi"
+msgstr[2] "Pokaż %(counter)s odpowiedzi"
+
+#: templates/community/_rules_panel.html:3
+msgid "Rules in short"
+msgstr "Zasady w skrócie"
+
+#: templates/community/_rules_panel.html:5
+msgid "Be kind and specific. Criticise work, not people."
+msgstr "Bądź uprzejmy i konkretny. Krytykuj pracę, nie ludzi."
+
+#: templates/community/_rules_panel.html:6
+msgid "Stay on the board's topic."
+msgstr "Trzymaj się tematu działu."
+
+#: templates/community/_rules_panel.html:7
+msgid "No spam, no harassment, nothing illegal or sexual."
+msgstr "Bez spamu, nękania, treści nielegalnych ani seksualnych."
+
+#: templates/community/_rules_panel.html:8
+msgid "Only post what you may share. Respect privacy."
+msgstr "Publikuj tylko to, czym możesz się dzielić. Szanuj prywatność."
+
+#: templates/community/_rules_panel.html:10
+msgid "All community rules"
+msgstr "Wszystkie zasady społeczności"
+
+#: templates/community/_rules_panel.html:13
+msgid "How it works"
+msgstr "Jak to działa"
+
+#: templates/community/_rules_panel.html:15
+msgid "Upvotes only. You cannot upvote your own post."
+msgstr "Tylko głosy za. Nie możesz głosować na własny post."
+
+#: templates/community/_rules_panel.html:16
+msgid "Replies go three levels deep."
+msgstr "Odpowiedzi mają do trzech poziomów."
+
+#: templates/community/_rules_panel.html:17
+msgid "Every post has a Report link. Moderators always give a reason."
+msgstr "Każdy post ma link „Zgłoś”. Moderatorzy zawsze podają powód."
+
+#: templates/community/_thread_card.html:16 templates/community/thread.html:39
+#: templates/community/thread.html:52
 #, python-format
 msgid "%(counter)s reply"
 msgid_plural "%(counter)s replies"
@@ -2665,13 +2812,32 @@ msgstr[0] "%(counter)s odpowiedź"
 msgstr[1] "%(counter)s odpowiedzi"
 msgstr[2] "%(counter)s odpowiedzi"
 
-#: templates/community/_vote.html:5
+#: templates/community/_vote.html:4
+msgid "Could not save your vote. Try again."
+msgstr "Nie udało się zapisać głosu. Spróbuj ponownie."
+
+#: templates/community/_vote.html:6
 msgid "Remove upvote"
 msgstr "Cofnij głos"
 
-#: templates/community/_vote.html:5
+#: templates/community/_vote.html:6
 msgid "Upvote"
 msgstr "Zagłosuj"
+
+#: templates/community/_vote.html:10
+#, python-format
+msgid "%(counter)s upvote"
+msgid_plural "%(counter)s upvotes"
+msgstr[0] "%(counter)s głos"
+msgstr[1] "%(counter)s głosy"
+msgstr[2] "%(counter)s głosów"
+
+#: templates/community/_vote.html:10
+msgid "upvote"
+msgid_plural "upvotes"
+msgstr[0] "głos"
+msgstr[1] "głosy"
+msgstr[2] "głosów"
 
 #: templates/community/confirm_delete.html:4
 #: templates/community/confirm_delete.html:11
@@ -2691,44 +2857,35 @@ msgstr ""
 "Tekst i obrazy zostaną usunięte na zawsze. Jeśli ktoś już odpowiedział, te "
 "odpowiedzi zostaną, a Twój wpis będzie widoczny jako „[usunięto]”."
 
-#: templates/community/home.html:13
+#: templates/community/home.html:6 templates/community/home.html:13
 msgid "Ask for help, show what you shipped, find people to build with."
 msgstr "Proś o pomoc, pokazuj, co wypuściłeś, szukaj ludzi do wspólnej pracy."
 
-#: templates/community/home.html:15 templates/community/thread_form.html:4
-#: templates/community/thread_form.html:11
-msgid "New thread"
-msgstr "Nowy wątek"
-
-#: templates/community/home.html:16 templates/community/thread.html:69
-#: templates/includes/site_nav.html:42 templates/pages/_sign_in.html:10
-#: templates/pages/_sign_in.html:13 templates/social/feed.html:25
-#: templates/socialaccount/login.html:10
-msgid "Sign in with GitHub"
-msgstr "Zaloguj się przez GitHub"
+#: templates/community/home.html:18
+msgid "Sort threads"
+msgstr "Sortowanie wątków"
 
 #: templates/community/home.html:20
-msgid "Search threads"
-msgstr "Szukaj wątków"
-
-#: templates/community/home.html:22
-msgid "Search threads by title"
-msgstr "Szukaj wątków po tytule"
-
-#: templates/community/home.html:26 templates/community/thread.html:46
-#: templates/social/_filters.html:3
-msgid "Sort"
-msgstr "Sortowanie"
-
-#: templates/community/home.html:28
 msgid "Hot"
 msgstr "Gorące"
 
-#: templates/community/home.html:30
+#: templates/community/home.html:22
 msgid "Most upvoted"
 msgstr "Najwięcej głosów"
 
-#: templates/community/home.html:34
+#: templates/community/home.html:27
+msgid "Search threads"
+msgstr "Szukaj wątków"
+
+#: templates/community/home.html:30 templates/community/home.html:31
+msgid "Search threads by title"
+msgstr "Szukaj wątków po tytule"
+
+#: templates/community/home.html:32 templates/pages/explore.html:25
+msgid "Search"
+msgstr "Szukaj"
+
+#: templates/community/home.html:35
 msgid "Period (for Most upvoted)"
 msgstr "Okres (dla „Najwięcej głosów”)"
 
@@ -2740,57 +2897,51 @@ msgstr "W tym tygodniu"
 msgid "This month"
 msgstr "W tym miesiącu"
 
-#: templates/community/home.html:41 templates/moderation/mod/queue.html:42
-#: templates/social/_filters.html:14
-msgid "Apply filters"
-msgstr "Zastosuj filtry"
-
-#: templates/community/home.html:51
+#: templates/community/home.html:41
 #, python-format
-msgid "%(counter)s thread"
-msgid_plural "%(counter)s threads"
-msgstr[0] "%(counter)s wątek"
-msgstr[1] "%(counter)s wątki"
-msgstr[2] "%(counter)s wątków"
+msgid "Threads with “%(q)s” in the title"
+msgstr "Wątki z „%(q)s” w tytule"
 
-#: templates/community/home.html:70 templates/community/notifications.html:27
-#: templates/community/thread.html:49 templates/moderation/mod/queue.html:59
+#: templates/community/home.html:41 templates/community/home.html:62
+msgid "Clear search"
+msgstr "Wyczyść wyszukiwanie"
+
+#: templates/community/home.html:56 templates/community/notifications.html:29
+#: templates/community/thread.html:63 templates/moderation/mod/queue.html:59
 #: templates/news/list.html:20 templates/pages/explore.html:82
 #: templates/social/feed.html:74
 msgid "Pages"
 msgstr "Strony"
 
-#: templates/community/home.html:71 templates/community/notifications.html:28
-#: templates/community/thread.html:50 templates/pages/explore.html:83
+#: templates/community/home.html:57 templates/community/notifications.html:30
+#: templates/community/thread.html:64 templates/pages/explore.html:83
 msgid "Previous page"
 msgstr "Poprzednia strona"
 
-#: templates/community/home.html:72 templates/community/notifications.html:29
-#: templates/community/thread.html:51 templates/pages/explore.html:84
-msgid "Next page"
-msgstr "Następna strona"
+#: templates/community/home.html:58 templates/community/thread.html:65
+#: templates/social/feed.html:76
+msgid "Could not load more. Try again."
+msgstr "Nie udało się wczytać więcej. Spróbuj ponownie."
 
-#: templates/community/home.html:76
+#: templates/community/home.html:58 templates/social/feed.html:76
+msgid "Load more"
+msgstr "Wczytaj więcej"
+
+#: templates/community/home.html:62
 msgid "No threads match this search"
 msgstr "Żaden wątek nie pasuje do wyszukiwania"
 
-#: templates/community/home.html:76
+#: templates/community/home.html:62
 msgid "Try another word from the title."
 msgstr "Spróbuj innego słowa z tytułu."
 
-#: templates/community/home.html:78
+#: templates/community/home.html:66
 msgid "No threads here yet"
 msgstr "Nie ma tu jeszcze wątków"
 
-#: templates/community/home.html:78
+#: templates/community/home.html:66
 msgid "Start the first one."
 msgstr "Załóż pierwszy."
-
-#: templates/community/notifications.html:4
-#: templates/community/notifications.html:11
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
-msgid "Replies to you"
-msgstr "Odpowiedzi do Ciebie"
 
 #: templates/community/notifications.html:12
 msgid ""
@@ -2800,92 +2951,144 @@ msgstr ""
 "Gdy ktoś odpowie w Twoim wątku lub na Twoją odpowiedź, pojawi się to tutaj. "
 "Nigdy nie wysyłamy tego e-mailem."
 
-#: templates/community/notifications.html:19
+#: templates/community/notifications.html:21
 msgid "New"
 msgstr "Nowe"
 
-#: templates/community/notifications.html:20
+#: templates/community/notifications.html:22
 #, python-format
 msgid "@%(name)s replied to your thread “%(title)s”"
 msgstr "@%(name)s odpowiada w Twoim wątku „%(title)s”"
 
-#: templates/community/notifications.html:20
+#: templates/community/notifications.html:22
 #, python-format
 msgid "@%(name)s replied to you in “%(title)s”"
 msgstr "@%(name)s odpowiada Ci w „%(title)s”"
 
-#: templates/community/notifications.html:20
+#: templates/community/notifications.html:22
 #, python-format
 msgid "A deleted account replied to your thread “%(title)s”"
 msgstr "Usunięte konto odpowiedziało w Twoim wątku „%(title)s”"
 
-#: templates/community/notifications.html:20
+#: templates/community/notifications.html:22
 #, python-format
 msgid "A deleted account replied to you in “%(title)s”"
 msgstr "Usunięte konto odpowiedziało Ci w „%(title)s”"
 
-#: templates/community/notifications.html:21
+#: templates/community/notifications.html:23
 #, python-format
 msgid "Sticker: %(name)s"
 msgstr "Naklejka: %(name)s"
 
-#: templates/community/notifications.html:33
+#: templates/community/notifications.html:31 templates/pages/explore.html:84
+msgid "Next page"
+msgstr "Następna strona"
+
+#: templates/community/notifications.html:35
 msgid "No replies yet"
 msgstr "Nie ma jeszcze odpowiedzi"
 
-#: templates/community/notifications.html:33
+#: templates/community/notifications.html:35
 msgid "Start a thread or answer someone, and replies to you will appear here."
 msgstr ""
 "Załóż wątek albo komuś odpowiedz, a odpowiedzi do Ciebie pojawią się tutaj."
+
+#: templates/community/notifications.html:35
+msgid "Go to the community"
+msgstr "Przejdź do społeczności"
 
 #: templates/community/reply_form.html:4 templates/community/reply_form.html:11
 msgid "Edit reply"
 msgstr "Edytuj odpowiedź"
 
 #: templates/community/reply_form.html:19
-#: templates/community/thread_form.html:23 templates/projects/form.html:64
+#: templates/community/thread_form.html:28 templates/projects/form.html:64
 msgid "Save changes"
 msgstr "Zapisz zmiany"
 
-#: templates/community/thread.html:12 templates/moderation/mod/act.html:11
-#: templates/moderation/mod/queue.html:34
-#: templates/moderation/mod/queue.html:51
-msgid "Thread"
-msgstr "Wątek"
+#: templates/community/rules.html:15
+msgid "Questions"
+msgstr "Pytania"
 
-#: templates/community/thread.html:19
+#: templates/community/rules.html:17
+#, python-format
+msgid "Appeals and questions: <a href=\"mailto:%(email)s\">%(email)s</a>"
+msgstr "Odwołania i pytania: <a href=\"mailto:%(email)s\">%(email)s</a>"
+
+#: templates/community/thread.html:14
 msgid ""
 "Moderators removed this thread. Only the author and moderators can see it."
 msgstr "Moderatorzy usunęli ten wątek. Widzą go tylko autor i moderatorzy."
 
-#: templates/community/thread.html:46
+#: templates/community/thread.html:54
+msgid "Sort replies"
+msgstr "Sortowanie odpowiedzi"
+
+#: templates/community/thread.html:55
 msgid "Best"
 msgstr "Najlepsze"
 
-#: templates/community/thread.html:60
+#: templates/community/thread.html:65
+msgid "More replies"
+msgstr "Więcej odpowiedzi"
+
+#: templates/community/thread.html:69
+msgid "No replies yet. Be the first to answer."
+msgstr "Brak odpowiedzi. Bądź pierwszy."
+
+#: templates/community/thread.html:69
+msgid "No replies yet."
+msgstr "Brak odpowiedzi."
+
+#: templates/community/thread.html:78
+msgid "Reply to the thread"
+msgstr "Odpowiedz w wątku"
+
+#: templates/community/thread.html:78
+#, python-format
+msgid "Reply to %%(name)s"
+msgstr "Odpowiedz %%(name)s"
+
+#: templates/community/thread.html:78
+msgid "Reply to a reply"
+msgstr "Odpowiedz na odpowiedź"
+
+#: templates/community/thread.html:78
 #, python-format
 msgid "Reply to @%(name)s"
 msgstr "Odpowiedz @%(name)s"
 
-#: templates/community/thread.html:60
-msgid "Reply to a reply"
-msgstr "Odpowiedz na odpowiedź"
-
-#: templates/community/thread.html:60
-msgid "Reply to the thread"
-msgstr "Odpowiedz w wątku"
-
-#: templates/community/thread.html:61
+#: templates/community/thread.html:79
 msgid "Reply to the thread instead"
 msgstr "Zamiast tego odpowiedz w wątku"
 
-#: templates/community/thread.html:66
+#: templates/community/thread.html:84
 msgid "Send reply"
 msgstr "Wyślij odpowiedź"
 
-#: templates/community/thread.html:69
+#: templates/community/thread.html:88
 msgid "Sign in to reply and vote."
 msgstr "Zaloguj się, aby odpowiadać i głosować."
+
+#: templates/community/thread.html:97
+msgid "About this thread"
+msgstr "O tym wątku"
+
+#: templates/community/thread.html:100
+msgid "This thread"
+msgstr "Ten wątek"
+
+#: templates/community/thread.html:103
+msgid "Started"
+msgstr "Rozpoczęty"
+
+#: templates/community/thread.html:104
+msgid "Last reply"
+msgstr "Ostatnia odpowiedź"
+
+#: templates/community/thread.html:105
+msgid "Upvotes"
+msgstr "Głosy"
 
 #: templates/community/thread_form.html:4
 #: templates/community/thread_form.html:11
@@ -2900,9 +3103,34 @@ msgstr ""
 "Tytuł można zmienić tylko przez pierwsze 15 minut. Późniejsze zmiany są "
 "oznaczane jako „edytowano”."
 
-#: templates/community/thread_form.html:23
+#: templates/community/thread_form.html:13
+msgid ""
+"A clear title gets better answers: say what you tried and what you need."
+msgstr "Jasny tytuł daje lepsze odpowiedzi: opisz, co już sprawdzono i czego potrzebujesz."
+
+#: templates/community/thread_form.html:28
 msgid "Post thread"
 msgstr "Opublikuj wątek"
+
+#: templates/community/thread_form.html:36
+msgid "Before you post"
+msgstr "Zanim opublikujesz"
+
+#: templates/community/thread_form.html:38
+msgid "Search first: someone may have asked already."
+msgstr "Najpierw wyszukaj: ktoś mógł już zapytać."
+
+#: templates/community/thread_form.html:39
+msgid "Pick the board that fits. Off-topic is for everything else."
+msgstr "Wybierz pasujący dział. Wszystko inne trafia do działu Hyde Park."
+
+#: templates/community/thread_form.html:40
+msgid "Images: PNG, JPEG or WebP. We remove their metadata, such as location."
+msgstr "Obrazy: PNG, JPEG lub WebP. Usuwamy ich metadane, np. lokalizację."
+
+#: templates/community/thread_form.html:41
+msgid "Accounts younger than 24 hours: one link per post, no images."
+msgstr "Konta młodsze niż 24 godziny: jeden link w poście, bez obrazów."
 
 #: templates/errors/_body.html:6
 msgid "Error"
@@ -2927,13 +3155,11 @@ msgstr "Numer referencyjny:"
 #: templates/errors/_body.html:22
 #, python-format
 msgid ""
-"If it keeps happening, write to <a "
-"href=\"mailto:%(contact_email)s\">%(contact_email)s</a> and include the "
-"reference."
+"If it keeps happening, write to <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> and include the reference."
 msgstr ""
-"Jeśli to się powtarza, napisz na <a "
-"href=\"mailto:%(contact_email)s\">%(contact_email)s</a> i podaj numer "
-"referencyjny."
+"Jeśli to się powtarza, napisz na <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> i podaj numer referencyjny."
 
 #: templates/errors/standalone.html:24
 msgid "Start page"
@@ -3048,10 +3274,6 @@ msgstr "Zmień"
 msgid "Menu"
 msgstr "Menu"
 
-#: templates/includes/site_header.html:16
-msgid "Close"
-msgstr "Zamknij"
-
 #: templates/includes/site_nav.html:3
 msgid "Main"
 msgstr "Główna"
@@ -3065,10 +3287,6 @@ msgstr "Nowy projekt"
 #: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Twój profil"
-
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
-msgid "new"
-msgstr "nowe"
 
 #: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
 msgid "open reports"
@@ -3169,6 +3387,11 @@ msgstr "Inne zgłoszenia"
 msgid "Back"
 msgstr "Wstecz"
 
+#: templates/moderation/mod/act.html:11 templates/moderation/mod/queue.html:34
+#: templates/moderation/mod/queue.html:51
+msgid "Thread"
+msgstr "Wątek"
+
 #: templates/moderation/mod/act.html:11 templates/moderation/mod/queue.html:35
 #: templates/moderation/mod/queue.html:51
 msgid "Reply"
@@ -3217,6 +3440,10 @@ msgstr "Wszystkie"
 #: templates/social/feed.html:84
 msgid "Filters"
 msgstr "Filtry"
+
+#: templates/moderation/mod/queue.html:42 templates/social/_filters.html:14
+msgid "Apply filters"
+msgstr "Zastosuj filtry"
 
 #: templates/moderation/mod/queue.html:51
 msgid "Deleted"
@@ -3303,8 +3530,8 @@ msgstr "Zgłoszony element został usunięty."
 
 #: templates/moderation/report.html:13
 msgid ""
-"Reports go to the moderators. The person you report does not see who reported"
-" them."
+"Reports go to the moderators. The person you report does not see who "
+"reported them."
 msgstr ""
 "Zgłoszenia trafiają do moderatorów. Osoba, którą zgłaszasz, nie zobaczy, kto "
 "ją zgłosił."
@@ -3358,10 +3585,6 @@ msgstr ""
 #: templates/pages/explore.html:21 templates/pages/explore.html:22
 msgid "Search and filter projects"
 msgstr "Szukaj i filtruj projekty"
-
-#: templates/pages/explore.html:25
-msgid "Search"
-msgstr "Szukaj"
 
 #: templates/pages/explore.html:27
 msgid "Project name or tagline"
@@ -3419,8 +3642,8 @@ msgid ""
 msgstr ""
 "%(name)s to publiczny rejestr projektów zbudowanych z narzędziami AI i "
 "naprawdę wypuszczonych w świat. Każdy projekt zdobywa znaki na podstawie "
-"sprawdzonych faktów: do kogo należy repozytorium, kto kontroluje domenę i czy"
-" strona działa bez przerw."
+"sprawdzonych faktów: do kogo należy repozytorium, kto kontroluje domenę i "
+"czy strona działa bez przerw."
 
 #: templates/pages/landing.html:16
 msgid "Submit your project"
@@ -3804,8 +4027,8 @@ msgstr "Opublikuj aktualizację"
 
 #: templates/projects/_build_log.html:30
 msgid ""
-"No entries yet. Post what you shipped, fixed or learned. Visitors see the log"
-" once it has an entry."
+"No entries yet. Post what you shipped, fixed or learned. Visitors see the "
+"log once it has an entry."
 msgstr ""
 "Brak wpisów. Napisz, co wydano, co naprawiono i czego się nauczono. "
 "Odwiedzający zobaczą dziennik, gdy pojawi się w nim wpis."
@@ -3933,8 +4156,8 @@ msgstr ""
 
 #: templates/projects/_domain.html:40
 msgid ""
-"Changes can take from a few minutes up to an hour to appear, depending on the"
-" provider."
+"Changes can take from a few minutes up to an hour to appear, depending on "
+"the provider."
 msgstr ""
 "Zmiany mogą pojawić się po kilku minutach, a nawet po godzinie, zależnie od "
 "dostawcy."
@@ -3967,10 +4190,10 @@ msgid ""
 "tag must be in the HTML from the server: a tag added later by JavaScript is "
 "not seen."
 msgstr ""
-"Strona główna musi być publiczna (bez logowania), odpowiadać 200 OK w ciągu 5"
-" sekund i być mniejsza niż 512 KB. Przekierowania w obrębie tej samej domeny "
-"są w porządku. Tag musi być w HTML-u z serwera: tag dodany później przez "
-"JavaScript nie jest widoczny."
+"Strona główna musi być publiczna (bez logowania), odpowiadać 200 OK w ciągu "
+"5 sekund i być mniejsza niż 512 KB. Przekierowania w obrębie tej samej "
+"domeny są w porządku. Tag musi być w HTML-u z serwera: tag dodany później "
+"przez JavaScript nie jest widoczny."
 
 #: templates/projects/_domain.html:59
 msgid "Checking…"
@@ -4055,8 +4278,8 @@ msgid ""
 "for a website: paste it where the badge should appear, for example in the "
 "footer."
 msgstr ""
-"na stronę internetową: wklej tam, gdzie ma się pojawić plakietka, na przykład"
-" w stopce."
+"na stronę internetową: wklej tam, gdzie ma się pojawić plakietka, na "
+"przykład w stopce."
 
 #: templates/projects/_hallmark_info.html:5 templates/projects/detail.html:150
 msgid "What this means"
@@ -4283,8 +4506,8 @@ msgstr "Zaczyna jako szkic. Nikt go nie widzi, dopóki go nie opublikujesz."
 
 #: templates/projects/form.html:26
 msgid ""
-"You chose images but did not upload them yet. Press Save first, or press this"
-" button again to continue without them."
+"You chose images but did not upload them yet. Press Save first, or press "
+"this button again to continue without them."
 msgstr ""
 "Wybrano obrazy, ale jeszcze ich nie przesłano. Najpierw kliknij Zapisz albo "
 "kliknij ten przycisk ponownie, aby kontynuować bez nich."
@@ -4349,8 +4572,8 @@ msgid ""
 "Add a file named %(file)s to the root of the default branch, with only this "
 "text in it:"
 msgstr ""
-"Dodaj w katalogu głównym domyślnej gałęzi plik o nazwie %(file)s, zawierający"
-" tylko ten tekst:"
+"Dodaj w katalogu głównym domyślnej gałęzi plik o nazwie %(file)s, "
+"zawierający tylko ten tekst:"
 
 #: templates/projects/form.html:92
 msgid ""
@@ -4358,8 +4581,8 @@ msgid ""
 "add the file, so it proves write access. Keep it: it is checked again every "
 "week."
 msgstr ""
-"Potem kliknij „Sprawdź repozytorium”. Plik mogą dodać tylko osoby z prawem do"
-" pushowania, więc potwierdza on dostęp do zapisu. Nie usuwaj go: jest "
+"Potem kliknij „Sprawdź repozytorium”. Plik mogą dodać tylko osoby z prawem "
+"do pushowania, więc potwierdza on dostęp do zapisu. Nie usuwaj go: jest "
 "sprawdzany co tydzień."
 
 #: templates/projects/form.html:95
@@ -4404,6 +4627,10 @@ msgstr "To usuwa projekt i jego zrzuty ekranu na zawsze."
 #: templates/social/_card.html:24
 msgid "Latest update"
 msgstr "Ostatnia aktualizacja"
+
+#: templates/social/_filters.html:3
+msgid "Sort"
+msgstr "Sortowanie"
 
 #: templates/social/_filters.html:5
 msgid "Time range"
@@ -4462,11 +4689,11 @@ msgstr "Sekcje aktualności"
 
 #: templates/social/feed.html:52
 msgid ""
-"Projects and updates from people you follow show up here. Follow someone from"
-" their profile."
+"Projects and updates from people you follow show up here. Follow someone "
+"from their profile."
 msgstr ""
-"Projekty i aktualizacje osób, które obserwujesz, pojawiają się tutaj. Zacznij"
-" obserwować kogoś z jego profilu."
+"Projekty i aktualizacje osób, które obserwujesz, pojawiają się tutaj. "
+"Zacznij obserwować kogoś z jego profilu."
 
 #: templates/social/feed.html:53
 msgid "See projects for you"
@@ -4487,14 +4714,6 @@ msgstr "Brak premier"
 #: templates/social/feed.html:69
 msgid "Published projects appear here."
 msgstr "Tu pojawiają się opublikowane projekty."
-
-#: templates/social/feed.html:76
-msgid "Could not load more. Try again."
-msgstr "Nie udało się wczytać więcej. Spróbuj ponownie."
-
-#: templates/social/feed.html:76
-msgid "Load more"
-msgstr "Wczytaj więcej"
 
 #: templates/social/feed.html:81
 msgid "Filters, news and tips"
@@ -4656,8 +4875,8 @@ msgid ""
 "your own domain."
 msgstr ""
 "To główny adres hostingu współdzielonego przez wiele stron, więc nie da się "
-"go zweryfikować. Użyj własnego adresu w tym serwisie (np. yourname.github.io)"
-" albo własnej domeny."
+"go zweryfikować. Użyj własnego adresu w tym serwisie (np. yourname.github."
+"io) albo własnej domeny."
 
 #: verification/domain.py:44
 msgid "This domain is already verified for another project."
@@ -4678,16 +4897,16 @@ msgid ""
 "No TXT records were found on this name yet. DNS changes can take up to an "
 "hour."
 msgstr ""
-"Na tej nazwie nie znaleziono jeszcze rekordów TXT. Zmiany w DNS mogą trwać do"
-" godziny."
+"Na tej nazwie nie znaleziono jeszcze rekordów TXT. Zmiany w DNS mogą trwać "
+"do godziny."
 
 #: verification/domain.py:48
 msgid ""
 "TXT records were found, but none has your token. Check the value, character "
 "by character."
 msgstr ""
-"Znaleziono rekordy TXT, ale żaden nie zawiera Twojego tokenu. Sprawdź wartość"
-" znak po znaku."
+"Znaleziono rekordy TXT, ale żaden nie zawiera Twojego tokenu. Sprawdź "
+"wartość znak po znaku."
 
 #: verification/domain.py:49
 msgid "DNS did not answer in time. Try again in a few minutes."
@@ -4702,8 +4921,8 @@ msgid ""
 "Your homepage could not be loaded (no answer within 5 seconds, or the "
 "connection failed)."
 msgstr ""
-"Nie udało się wczytać Twojej strony głównej (brak odpowiedzi w ciągu 5 sekund"
-" albo błąd połączenia)."
+"Nie udało się wczytać Twojej strony głównej (brak odpowiedzi w ciągu 5 "
+"sekund albo błąd połączenia)."
 
 #: verification/domain.py:52
 msgid ""

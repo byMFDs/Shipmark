@@ -1,9 +1,11 @@
-{% load i18n %}{# Upvote button with the score. Needs: action (url), voted (bool), score, own (bool: no button on your own post). #}
-{% if user.is_authenticated and not own %}
-  <form method="post" action="{{ action }}">
+{% load i18n ui %}{# Upvote. Needs: action (url), voted, score, own (no button on your own post). A plain POST
+   without JS; community.js turns it into an optimistic toggle. #}
+{% if user.is_authenticated and not own and action %}
+  <form class="vote" method="post" action="{{ action }}" data-vote-form data-error="{% translate 'Could not save your vote. Try again.' %}">
     {% csrf_token %}<input type="hidden" name="value" value="{% if voted %}0{% else %}1{% endif %}">
-    <button class="btn btn--quiet" type="submit" aria-pressed="{% if voted %}true{% else %}false{% endif %}">{% if voted %}{% translate "Remove upvote" %}{% else %}{% translate "Upvote" %}{% endif %} · <span class="mono">{{ score }}</span></button>
+    <button class="vote__button" type="submit" aria-pressed="{% if voted %}true{% else %}false{% endif %}" aria-describedby="v-{{ action|slugify }}" data-label-on="{% translate 'Remove upvote' %}" data-label-off="{% translate 'Upvote' %}" aria-label="{% if voted %}{% translate 'Remove upvote' %}{% else %}{% translate 'Upvote' %}{% endif %}">{% icon "arrow-up" %}</button>
+    <span class="vote__count" id="v-{{ action|slugify }}" data-vote-count>{{ score }}</span>
   </form>
 {% else %}
-  <span class="muted">{% blocktranslate count counter=score %}{{ counter }} upvote{% plural %}{{ counter }} upvotes{% endblocktranslate %}</span>
+  <span class="vote vote--static" title="{% blocktranslate count counter=score %}{{ counter }} upvote{% plural %}{{ counter }} upvotes{% endblocktranslate %}">{% icon "arrow-up" %}<span class="vote__count">{{ score }}</span><span class="visually-hidden"> {% blocktranslate count counter=score %}upvote{% plural %}upvotes{% endblocktranslate %}</span></span>
 {% endif %}
