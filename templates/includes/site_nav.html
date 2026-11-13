@@ -8,7 +8,7 @@
     </ul>
   </nav>
 {% endif %}
-{% if not in_panel and brand.TAGLINE %}<p class="label site-header__tagline">{{ brand.TAGLINE }}</p>{% endif %}
+{% if not in_panel and brand.TAGLINE %}<p class="label site-header__tagline"><span>{{ brand.TAGLINE }}</span></p>{% endif %}
 {% if user_stat %}{% include "includes/user_count.html" %}{% endif %}
 <div class="site-header__actions">
   {% if signed_in %}

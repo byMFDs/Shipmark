@@ -1210,6 +1210,7 @@ a.chip::after {
   color: var(--muted);
   font-weight: 500;
   text-decoration: none;
+  white-space: nowrap; /* "For You", "Für dich": a label never breaks over two lines */
   transition: color var(--t-fast);
 }
 
@@ -1309,11 +1310,21 @@ a.chip::after {
 }
 
 @media (min-width: 48em) {
+  .site-header__inner { min-height: 4.5rem; }
+  .site-logo { height: 1.625rem; }
+}
+
+/* The open bar starts at 80em: below that the four links, the count and the actions do not fit in German or
+   French (768 and 1024px overflowed by a whole button), so narrower screens use the menu. The tagline takes the
+   space that is left and hides itself when its words do not fit: a zero-width space keeps line 1, the words (one
+   inline-block) wrap to line 2, and line 2 is cut off. No language check, no JS. */
+@media (min-width: 80em) {
   .site-header:not(.site-header--compact) .site-header__bar {
     display: flex;
     flex: 1;
     align-items: center;
     gap: var(--s-4);
+    min-width: 0; /* else the tagline's words set the bar's minimum width and it overflows */
   }
 
   .site-header:not(.site-header--compact) .site-menu { display: none; }
@@ -1321,22 +1332,25 @@ a.chip::after {
   .site-header__bar .site-nav { margin-left: var(--s-6); }
   .site-header__bar .site-header__actions { margin-left: auto; }
 
-  .site-header__inner { min-height: 4.5rem; }
-  .site-logo { height: 1.625rem; }
-}
-
-@media (min-width: 64em) {
   .site-header__tagline {
     display: block;
-    margin-left: auto;
-    white-space: nowrap;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 1.5em;
+    margin: 0;
+    overflow: hidden;
+    text-align: right;
   }
-  .site-header__bar .site-header__tagline + .site-header__actions { margin-left: var(--s-6); }
+  .site-header__tagline::before { content: "\200B"; }
+  .site-header__tagline > span { display: inline-block; white-space: nowrap; }
+  .site-header__bar .site-header__tagline + .site-header__actions { margin-left: var(--s-2); }
+  /* The hairline after the tagline sits on its words, so it hides with them. */
+  .site-header__bar .site-header__tagline:has(+ .site-count) > span { padding-right: var(--s-4); border-right: 1px solid var(--line); }
 }
 
 /* ---------- "<n> people joined" (header stat) ----------
-   A quiet fact, not a live counter: mono number, muted words, no dot and no pulse. In the bar from 48em (next to
-   the tagline from 64em); inside the phone menu below that. The number counts up once over a hidden copy of the
+   A quiet fact, not a live counter: mono number, muted words, no dot and no pulse. In the bar from 80em (after the
+   tagline, when it fits); inside the menu below that. The number counts up once over a hidden copy of the
    final text (same grid cell), so the width never changes while it runs. */
 
 .site-count {
@@ -1367,13 +1381,10 @@ a.chip::after {
   white-space: normal;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 80em) {
   .site-header__bar .site-count { display: flex; margin-left: auto; }
+  .site-header__bar .site-header__tagline + .site-count { margin-left: 0; }
   .site-header__bar .site-count ~ .site-header__actions { margin-left: var(--s-5); }
-}
-
-@media (min-width: 64em) {
-  .site-header__bar .site-header__tagline + .site-count { margin-left: var(--s-4); padding-left: var(--s-4); border-left: 1px solid var(--line); }
 }
 
 /* ---------- Account menu (signed-in header) ---------- */
