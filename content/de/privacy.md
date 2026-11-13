@@ -83,7 +83,7 @@ Nicht gefundene Seiten werden in eine eigene Datei geschrieben, jede Adresse hö
 
 > **TODO vor dem Start:** Der Webserver vor der Anwendung führt ein eigenes Zugriffslog, das standardmäßig IP-Adressen enthält. Was er aufzeichnet und wie lange er es aufbewahrt (und wie lange die Logs der Anwendung aufbewahrt werden), ist noch nicht entschieden. Das muss ergänzt oder die IP-Protokollierung abgeschaltet werden, bevor diese Seite öffentlich wird.
 
-**Schutz vor Missbrauch.** Um Missbrauch zu begrenzen, zählen wir einige Aktionen (zum Beispiel Likes pro Stunde) in der Datenbank der Seite. Jeder Zähler ist eine Zahl, die an dein Konto oder an ein Projekt gebunden ist, ohne IP-Adresse, und gilt höchstens 24 Stunden. Danach wird er nicht mehr verwendet, die Zeile kann aber in der Datenbank bleiben, bis sie bereinigt wird.
+**Schutz vor Missbrauch.** Um Missbrauch zu begrenzen, zählen wir einige Aktionen (zum Beispiel Likes pro Stunde) in der Datenbank der Seite. Jeder Zähler ist eine Zahl, die an dein Konto oder an ein Projekt gebunden ist, ohne IP-Adresse, und gilt höchstens 24 Stunden. Danach wird er nicht mehr verwendet, die Zeile kann aber in der Datenbank bleiben, bis sie bereinigt wird. Eine Ausnahme: Wenn du ohne Anmeldung nach Leuten suchst, ist der Zähler 10 Minuten lang an einen gesalzenen Einweg-Hash deiner IP-Adresse gebunden (nie an die Adresse selbst). Wonach du suchst, speichern wir nie.
 
 **Analyse und Tracking.** Gibt es nicht: keine Analyse, keine Werbung und keine Tracking-Skripte. Schriften werden von unserem eigenen Server ausgeliefert.
 

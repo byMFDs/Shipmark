@@ -30,3 +30,55 @@
 .explore__count { margin-top: var(--s-6); }
 .explore__list { margin-top: var(--s-3); }
 .explore .empty { margin-top: var(--s-5); }
+
+/* ---------- Tabs: Projects / People ---------- */
+.explore-tabs { margin-bottom: var(--s-5); }
+
+/* ---------- People ----------
+   The search record: the field and the button on one line from 30em (bottoms aligned), the hint below both. Each result is a row: avatar, then name, @username, headline and counts, then the action. On phones the
+   action moves under the text (no squeezed buttons at 360px). */
+.people-search__row {
+  display: grid;
+  gap: var(--s-3);
+  padding: 0 var(--s-5) var(--s-5);
+}
+
+.people-search__hint { margin: 0; }
+
+@media (min-width: 30em) {
+  .people-search__row { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
+  .people-search__hint { grid-column: 1 / -1; }
+}
+
+.people__state { margin-top: var(--s-5); }
+
+.person-row {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: var(--s-4);
+}
+
+.person-row__avatar { display: block; line-height: 0; }
+.person-row__body { display: grid; gap: var(--s-1); min-width: 0; }
+.person-row__body p { margin: 0; }
+.person-row .plate-row__name { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+.person-row__handle { font-size: var(--fs--1); overflow-wrap: anywhere; }
+.person-row__meta { font-size: var(--fs--1); }
+
+.person-row__action {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  margin-top: var(--s-2);
+}
+
+.person-row__you {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-h);
+}
+
+@media (min-width: 40em) {
+  .person-row { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; }
+  .person-row__action { grid-column: auto; margin-top: 0; }
+}

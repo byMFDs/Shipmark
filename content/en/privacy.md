@@ -81,7 +81,7 @@ Pages that were not found are written to a separate file, each address at most o
 
 > **TODO before launch:** the web server in front of the application keeps its own access log, which by default includes IP addresses. What it records and how long it keeps it (and how long the application logs are kept) has not been decided yet. Fill this in, or switch IP logging off, before this page goes public.
 
-**Abuse protection.** To limit abuse we count some actions (for example, likes per hour) in the site's database. Each counter is a number tied to your account or to a project, without any IP address, and applies for at most 24 hours. After that it is no longer used, but the row may stay in the database until it is cleaned up.
+**Abuse protection.** To limit abuse we count some actions (for example, likes per hour) in the site's database. Each counter is a number tied to your account or to a project, without any IP address, and applies for at most 24 hours. After that it is no longer used, but the row may stay in the database until it is cleaned up. One exception: when you search for people without being signed in, the counter is tied to a salted one-way hash of your IP address (never the address itself) for 10 minutes. What you search for is never stored.
 
 **Analytics and tracking.** There are none: no analytics, no advertising and no tracking scripts. Fonts are served from our own server.
 

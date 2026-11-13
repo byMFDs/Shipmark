@@ -728,3 +728,16 @@ Generated from git. Each pair is one passage (a paragraph or a list item) before
 > - banir uma conta por até 14 dias: você é desconectado, não pode entrar, e seu perfil e seus projetos não ficam públicos.
 >
 > Cada decisão vem com um motivo que você vê. Sanções mais longas ou permanentes são decididas só pelos administradores do site, que também podem ocultar projetos ou suspender contas. Excluir sua conta não encerra um banimento (veja a [Política de privacidade](/legal/privacy/)). Se você acha que erramos, escreva para [{{ contact_email }}](mailto:{{ contact_email }}).
+
+## Stage 7 (people search): one new fact in Privacy
+
+People search stores something new, so Privacy says it. This **adds a fact** (unlike stage 1c); it was not
+judged important enough to ask everyone to accept the Terms again (`TERMS_VERSION` unchanged). The lawyer may
+decide otherwise.
+
+| Where | Before | After |
+|---|---|---|
+| Privacy, "Abuse protection" (end of the paragraph, all 7 languages) | … After that it is no longer used, but the row may stay in the database until it is cleaned up. | … (unchanged) + One exception: when you search for people without being signed in, the counter is tied to a salted one-way hash of your IP address (never the address itself) for 10 minutes. What you search for is never stored. |
+
+`docs/DATA_INVENTORY.md` has the matching row ("People search rate limit") and the "IP addresses" row now names both
+rate limits that use a salted hash of the address.

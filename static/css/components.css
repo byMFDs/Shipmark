@@ -1385,7 +1385,45 @@ a.chip::after {
   .site-header__bar .site-count { display: flex; margin-left: auto; }
   .site-header__bar .site-header__tagline + .site-count { margin-left: 0; }
   .site-header__bar .site-count ~ .site-header__actions { margin-left: var(--s-5); }
+  .site-header__bar .site-search + .site-header__actions { margin-left: 0; } /* the bar's gap is enough */
 }
+
+/* ---------- Find people (header) ----------
+   In the open bar: a search icon (a <details>) that opens a small form under it. In the menu: a plain form at the
+   top of the panel. Both submit to Discover → People. */
+
+.site-search { position: relative; }
+.site-search > summary { list-style: none; cursor: pointer; }
+.site-search > summary::-webkit-details-marker { display: none; }
+.site-search[open] > summary { color: var(--text); }
+
+.site-search__panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--s-2));
+  z-index: 20;
+  display: grid;
+  gap: var(--s-2);
+  width: min(22rem, calc(100vw - 2 * var(--s-4)));
+  padding: var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-pop);
+}
+.site-search[open] .site-search__panel { animation: menu-in var(--t-base) var(--ease-out); }
+
+.site-search__row {
+  display: flex;
+  gap: var(--s-2);
+}
+.site-search__row .input { flex: 1; min-width: 0; }
+
+.site-search--panel {
+  display: flex;
+  gap: var(--s-2);
+  margin-bottom: var(--s-5);
+}
+.site-search--panel .input { flex: 1; min-width: 0; }
 
 /* ---------- Account menu (signed-in header) ---------- */
 

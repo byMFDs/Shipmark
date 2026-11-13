@@ -1,4 +1,5 @@
 {% load i18n ui %}
+{% if in_panel and links %}{% include "includes/people_search.html" %}{% endif %}
 {% if links %}
   <nav class="site-nav" aria-label="{% translate 'Main' %}">
     <ul class="site-nav__list">
@@ -10,6 +11,7 @@
 {% endif %}
 {% if not in_panel and brand.TAGLINE %}<p class="label site-header__tagline"><span>{{ brand.TAGLINE }}</span></p>{% endif %}
 {% if user_stat %}{% include "includes/user_count.html" %}{% endif %}
+{% if not in_panel and links %}{% include "includes/people_search.html" %}{% endif %}
 <div class="site-header__actions">
   {% if signed_in %}
     {% if new_url %}<a class="btn btn--primary btn--halo" href="{{ new_url }}">{% icon "plus" %}{% translate "New project" %}</a>{% endif %}

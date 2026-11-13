@@ -117,7 +117,7 @@ support/           SupportMessage, SupportAttachment (private storage), antispam
 templates/  static/{css,js,fonts,brand,img}/  content/<lang>/*.md  locale/  docs/
 ```
 
-URLs: `/` landing · `/feed/` · `/explore/` · `/new/` · `/settings/` ·
+URLs: `/` landing · `/feed/` (shown as "For You") · `/explore/` ("Discover": projects, `?tab=people` people search by username) · `/new/` · `/settings/` ·
 `/u/<username>/` · `/u/<username>/<project-slug>/` · `/badge/<username>.svg` ·
 `/badge/<username>/<project-slug>.svg` · `/legal/<slug>/` · `/how-proof-works/` · `/news/` · `/support/` · `/community/` (`b/<slug>/`, `t/<id>-<slug>/`, `new/`, `rules/`) ·
 `/mod/` (moderator badge or superuser) · admin at `ADMIN_URL` from env (never `/admin/` in production).

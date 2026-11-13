@@ -1,0 +1,49 @@
+{% load i18n ui %}{% comment %}
+Discover → People (pages.views.people_view, rules in accounts/people.py). A plain GET form: the search is in the
+URL and works without JS. Needs: q, query, problem, limited, results, has_next, page, min_length.
+{% endcomment %}
+<form class="record people-search" method="get" action="{% url 'pages:explore' %}" role="search" aria-label="{% translate 'Find people' %}">
+  <input type="hidden" name="tab" value="people">
+  <div class="record__head"><span class="label">{% translate "Find people" %}</span></div>
+  <div class="people-search__row">
+    <div class="field people-search__field">
+      <label class="field__label" for="people-q">{% translate "Username" %}</label>
+      <input class="input" type="search" id="people-q" name="q" value="{{ q }}" maxlength="40" placeholder="@username"
+             autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" aria-describedby="people-q-hint">
+    </div>
+    <button class="btn btn--primary" type="submit">{% icon "search" %}{% translate "Search" %}</button>
+    <p class="field__hint people-search__hint" id="people-q-hint">{% blocktranslate with n=min_length %}At least {{ n }} characters. Only usernames are searched.{% endblocktranslate %}</p>
+  </div>
+</form>
+
+{% if limited %}
+  <section class="empty empty--plain people__state" role="status">
+    <h2 class="empty__title">{% translate "Too many searches" %}</h2>
+    <p class="empty__text">{% translate "Wait a few minutes, then search again." %}</p>
+  </section>
+{% elif problem == "short" %}
+  <p class="notice people__state" role="status">{% blocktranslate with n=min_length %}Type at least {{ n }} characters of a username.{% endblocktranslate %}</p>
+{% elif problem == "chars" %}
+  <p class="notice people__state" role="status">{% translate "A username has only letters, numbers, - and _. Check what you typed." %}</p>
+{% elif not query %}
+  <section class="empty people__state">
+    <h2 class="empty__title">{% translate "Find someone by their username" %}</h2>
+    <p class="empty__text">{% translate "Type a username or its first letters. Open the profile, or follow right from the list." %}</p>
+  </section>
+{% elif results %}
+  <p class="label explore__count" role="status">{% blocktranslate with q=query %}People with “{{ q }}” in their username{% endblocktranslate %}</p>
+  <ul class="plate-list explore__list people__list">
+    {% for person in results %}{% include "pages/_person_row.html" %}{% endfor %}
+  </ul>
+  {% if page > 1 or has_next %}
+    <nav class="pager" aria-label="{% translate 'Pages' %}">
+      {% if page > 1 %}<a class="btn btn--secondary" href="{% querystring page=prev_page %}" rel="prev">{% translate "Previous page" %}</a>{% endif %}
+      {% if has_next %}<a class="btn btn--secondary" href="{% querystring page=next_page %}" rel="next">{% translate "Next page" %}</a>{% endif %}
+    </nav>
+  {% endif %}
+{% else %}
+  <section class="empty people__state" role="status">
+    <h2 class="empty__title">{% blocktranslate with q=query %}No one has “{{ q }}” in their username{% endblocktranslate %}</h2>
+    <p class="empty__text">{% translate "Check the spelling, or type only the first letters." %}</p>
+  </section>
+{% endif %}

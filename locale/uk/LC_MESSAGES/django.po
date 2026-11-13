@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 21:55+0000\n"
+"POT-Creation-Date: 2026-11-13 22:19+0000\n"
 "PO-Revision-Date: 2026-11-10 18:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -45,7 +45,7 @@ msgid "Pictures"
 msgstr "Зображення"
 
 #: accounts/admin.py:110 config/settings/base.py:365
-#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
+#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
 #: templates/moderation/mod/report.html:3
@@ -166,8 +166,8 @@ msgstr "Закріплені проєкти"
 msgid "Up to 3 of your published projects, shown first on your profile."
 msgstr "До 3 ваших опублікованих проєктів, вони показуються першими в профілі."
 
-#: accounts/forms.py:110
 #
+#: accounts/forms.py:110
 msgid "Site language"
 msgstr "Мова сайту"
 
@@ -175,8 +175,8 @@ msgstr "Мова сайту"
 msgid "Automatic (browser language)"
 msgstr "Автоматично (мова браузера)"
 
-#: accounts/forms.py:120
 #
+#: accounts/forms.py:120
 msgid "Your name"
 msgstr "Ваше ім’я"
 
@@ -787,7 +787,8 @@ msgstr "Бейджі"
 
 #: config/settings/base.py:345 config/settings/base.py:347
 #: templates/accounts/profile.html:53 templates/accounts/profile.html:67
-#: templates/accounts/profile.html:75 templates/pages/landing.html:50
+#: templates/accounts/profile.html:75 templates/pages/explore.html:26
+#: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Проєкти"
 
@@ -1600,11 +1601,12 @@ msgstr "Умови"
 msgid "Cookies"
 msgstr "Файли cookie"
 
-#: pages/test_languages.py:45 templates/pages/explore.html:69
+#: pages/test_languages.py:45 templates/pages/explore.html:84
 msgid "Show projects"
 msgstr "Показати проєкти"
 
-#: pages/test_languages.py:72 templates/pages/explore.html:75
+#: pages/test_languages.py:72 templates/pages/_person_row.html:11
+#: templates/pages/explore.html:90
 #, python-format
 msgid "%(n)s project"
 msgid_plural "%(n)s projects"
@@ -1685,8 +1687,8 @@ msgstr[1] "Остаточно видалено %(count)s прибрані про
 msgstr[2] "Остаточно видалено %(count)s прибраних проєктів."
 msgstr[3] "Остаточно видалено %(count)s прибраного проєкту."
 
-#: projects/forms.py:45
 #
+#: projects/forms.py:45
 msgid "Live URL"
 msgstr "Адреса сайту"
 
@@ -1710,13 +1712,13 @@ msgstr ""
 msgid "Name"
 msgstr "Назва"
 
-#: projects/forms.py:63
 #
+#: projects/forms.py:63
 msgid "Tagline"
 msgstr "Коротко про проєкт"
 
-#: projects/forms.py:63
 #
+#: projects/forms.py:63
 msgid "Description"
 msgstr "Опис"
 
@@ -2650,7 +2652,7 @@ msgstr "Видалити акаунт"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
 #: templates/accounts/logout.html:14 templates/accounts/settings.html:107
-#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
+#: templates/includes/site_nav.html:26 templates/includes/site_nav.html:40
 msgid "Sign out"
 msgstr "Вийти"
 
@@ -2902,7 +2904,7 @@ msgid "Built with (self-declared)"
 msgstr "Створено з (зазначено автором)"
 
 #: templates/accounts/settings.html:4 templates/accounts/settings.html:12
-#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
+#: templates/includes/site_nav.html:25 templates/includes/site_nav.html:39
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -2985,7 +2987,7 @@ msgstr "Світла"
 msgid "Dark"
 msgstr "Темна"
 
-#: templates/accounts/settings.html:104
+#: templates/accounts/settings.html:104 templates/pages/_people.html:10
 msgid "Username"
 msgstr "Імʼя користувача"
 
@@ -3036,12 +3038,12 @@ msgstr "Усі розділи"
 
 #: templates/community/_boards.html:11 templates/community/notifications.html:4
 #: templates/community/notifications.html:11
-#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
+#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
 msgid "Replies to you"
 msgstr "Відповіді вам"
 
-#: templates/community/_boards.html:11 templates/includes/site_nav.html:21
-#: templates/includes/site_nav.html:35
+#: templates/community/_boards.html:11 templates/includes/site_nav.html:23
+#: templates/includes/site_nav.html:37
 msgid "new"
 msgstr "нове"
 
@@ -3056,7 +3058,7 @@ msgid "New thread"
 msgstr "Новий тред"
 
 #: templates/community/_boards.html:17 templates/community/thread.html:89
-#: templates/includes/site_nav.html:43 templates/pages/_sign_in.html:10
+#: templates/includes/site_nav.html:45 templates/pages/_sign_in.html:10
 #: templates/pages/_sign_in.html:13 templates/social/feed.html:25
 #: templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
@@ -3301,7 +3303,9 @@ msgstr "Пошук тредів"
 msgid "Search threads by title"
 msgstr "Пошук тредів за заголовком"
 
-#: templates/community/home.html:32 templates/pages/explore.html:25
+#: templates/community/home.html:32 templates/includes/people_search.html:11
+#: templates/includes/people_search.html:22 templates/pages/_people.html:14
+#: templates/pages/explore.html:40
 msgid "Search"
 msgstr "Пошук"
 
@@ -3328,13 +3332,14 @@ msgstr "Скинути пошук"
 
 #: templates/community/home.html:56 templates/community/notifications.html:29
 #: templates/community/thread.html:63 templates/moderation/mod/queue.html:59
-#: templates/news/list.html:20 templates/pages/explore.html:82
-#: templates/social/feed.html:74
+#: templates/news/list.html:20 templates/pages/_people.html:39
+#: templates/pages/explore.html:97 templates/social/feed.html:74
 msgid "Pages"
 msgstr "Сторінки"
 
 #: templates/community/home.html:57 templates/community/notifications.html:30
-#: templates/community/thread.html:64 templates/pages/explore.html:83
+#: templates/community/thread.html:64 templates/pages/_people.html:40
+#: templates/pages/explore.html:98
 msgid "Previous page"
 msgstr "Попередня сторінка"
 
@@ -3396,7 +3401,8 @@ msgstr "Видалений акаунт відповів вам у «%(title)s»
 msgid "Sticker: %(name)s"
 msgstr "Стікер: %(name)s"
 
-#: templates/community/notifications.html:31 templates/pages/explore.html:84
+#: templates/community/notifications.html:31 templates/pages/_people.html:41
+#: templates/pages/explore.html:99
 msgid "Next page"
 msgstr "Наступна сторінка"
 
@@ -3701,6 +3707,19 @@ msgstr "Виправте ці помилки та спробуйте ще раз
 msgid "Not yet"
 msgstr "Ще ні"
 
+#: templates/includes/people_search.html:6
+#: templates/includes/people_search.html:9
+#: templates/includes/people_search.html:15
+#: templates/includes/people_search.html:16 templates/pages/_people.html:5
+#: templates/pages/_people.html:7
+msgid "Find people"
+msgstr "Знайти людей"
+
+#: templates/includes/people_search.html:8
+#: templates/includes/people_search.html:18
+msgid "Find people by username"
+msgstr "Знайти людей за іменем користувача"
+
 #: templates/includes/site_footer.html:10 templates/includes/site_header.html:6
 #, python-format
 msgid "%(name)s home"
@@ -3714,30 +3733,30 @@ msgstr "Змінити"
 msgid "Menu"
 msgstr "Меню"
 
-#: templates/includes/site_nav.html:3
+#: templates/includes/site_nav.html:4
 msgid "Main"
 msgstr "Головна навігація"
 
-#: templates/includes/site_nav.html:15 templates/projects/form.html:4
+#: templates/includes/site_nav.html:17 templates/projects/form.html:4
 #: templates/projects/form.html:12 templates/social/feed.html:23
 msgid "New project"
 msgstr "Новий проєкт"
 
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
+#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 #: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Ваш профіль"
 
-#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
+#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
 msgid "open reports"
 msgstr "відкритих скарг"
 
-#: templates/includes/site_nav.html:29
+#: templates/includes/site_nav.html:31
 #, python-format
 msgid "Account menu for %(name)s, new replies"
 msgstr "Меню акаунта: %(name)s, є нові відповіді"
 
-#: templates/includes/site_nav.html:29
+#: templates/includes/site_nav.html:31
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Меню акаунта: %(name)s"
@@ -4005,8 +4024,83 @@ msgstr "Новин ще немає"
 msgid "Announcements from the team appear here."
 msgstr "Тут зʼявляються оголошення від команди."
 
+#: templates/pages/_people.html:15
+#, python-format
+msgid "At least %(n)s characters. Only usernames are searched."
+msgstr "Щонайменше %(n)s символи. Шукаємо лише за іменем користувача."
+
+#: templates/pages/_people.html:21
+msgid "Too many searches"
+msgstr "Забагато пошуків"
+
+#: templates/pages/_people.html:22
+#
+msgid "Wait a few minutes, then search again."
+msgstr "Зачекайте кілька хвилин і шукайте знову."
+
+#: templates/pages/_people.html:25
+#, python-format
+msgid "Type at least %(n)s characters of a username."
+msgstr "Введіть щонайменше %(n)s символи імені користувача."
+
+#
+#: templates/pages/_people.html:27
+#
+msgid "A username has only letters, numbers, - and _. Check what you typed."
+msgstr ""
+"Ім’я користувача складається лише з латинських літер, цифр, - і _. Перевірте, що ви ввели."
+
+#: templates/pages/_people.html:30
+msgid "Find someone by their username"
+msgstr "Знайдіть людину за іменем користувача"
+
+#: templates/pages/_people.html:31
+msgid ""
+"Type a username or its first letters. Open the profile, or follow right from "
+"the list."
+msgstr ""
+"Введіть ім’я користувача або його перші літери. Відкрийте профіль або підпишіться просто зі списку."
+
+#: templates/pages/_people.html:34
+#, python-format
+msgid "People with “%(q)s” in their username"
+msgstr "Люди з «%(q)s» в імені користувача"
+
+#: templates/pages/_people.html:46
+#, python-format
+msgid "No one has “%(q)s” in their username"
+msgstr "Ні в кого немає «%(q)s» в імені користувача"
+
+#: templates/pages/_people.html:47
+msgid "Check the spelling, or type only the first letters."
+msgstr "Перевірте написання або введіть лише перші літери."
+
+#: templates/pages/_person_row.html:11
+#, python-format
+msgid "%(n)s hallmark"
+msgid_plural "%(n)s hallmarks"
+msgstr[0] "%(n)s позначка"
+msgstr[1] "%(n)s позначки"
+msgstr[2] "%(n)s позначок"
+msgstr[3] "%(n)s позначки"
+
+#
+#: templates/pages/_person_row.html:15
+#
+msgid "You"
+msgstr "Це ви"
+
+#: templates/pages/_person_row.html:19
+#
+msgid "Sign in to follow"
+msgstr "Увійдіть, щоб підписатися"
+
+#: templates/pages/explore.html:4 templates/pages/explore.html:27
+msgid "People"
+msgstr "Люди"
+
 #: templates/pages/explore.html:6 templates/pages/explore.html:9
-#: templates/pages/explore.html:17
+#: templates/pages/explore.html:20
 msgid ""
 "Projects people shipped with AI tools, with verified hallmarks. Search by "
 "name, or filter by tag, tool and hallmark."
@@ -4014,54 +4108,64 @@ msgstr ""
 "Проєкти, які люди випустили за допомогою ШІ, з перевіреними позначками. "
 "Шукайте за назвою або фільтруйте за тегом, інструментом і позначкою."
 
-#: templates/pages/explore.html:21 templates/pages/explore.html:22
+#: templates/pages/explore.html:18
+msgid "Find people by their username, open their profile and follow them."
+msgstr ""
+"Знаходьте людей за іменем користувача, відкривайте їхні профілі й підписуйтеся."
+
+#: templates/pages/explore.html:24
+#
+msgid "What to discover"
+msgstr "Що шукати"
+
+#: templates/pages/explore.html:36 templates/pages/explore.html:37
 msgid "Search and filter projects"
 msgstr "Пошук і фільтри проєктів"
 
-#: templates/pages/explore.html:27
+#: templates/pages/explore.html:42
 msgid "Project name or tagline"
 msgstr "Назва або опис проєкту"
 
-#: templates/pages/explore.html:31 templates/social/_filters.html:9
+#: templates/pages/explore.html:46 templates/social/_filters.html:9
 msgid "Tag"
 msgstr "Тег"
 
-#: templates/pages/explore.html:34
+#: templates/pages/explore.html:49
 msgid "Any tag"
 msgstr "Будь-який тег"
 
-#: templates/pages/explore.html:41 templates/pages/landing.html:67
+#: templates/pages/explore.html:56 templates/pages/landing.html:67
 #: templates/pages/landing.html:192 templates/pages/landing.html:214
 #: templates/pages/landing.html:236 templates/social/_filters.html:11
 msgid "Built with"
 msgstr "Створено з"
 
-#: templates/pages/explore.html:44
+#: templates/pages/explore.html:59
 msgid "Any tool"
 msgstr "Будь-який інструмент"
 
-#: templates/pages/explore.html:51 templates/social/_filters.html:7
+#: templates/pages/explore.html:66 templates/social/_filters.html:7
 msgid "Hallmark"
 msgstr "Позначка"
 
-#: templates/pages/explore.html:60
+#: templates/pages/explore.html:75
 msgid "Sort by"
 msgstr "Сортувати"
 
-#: templates/pages/explore.html:70 templates/pages/explore.html:90
+#: templates/pages/explore.html:85 templates/pages/explore.html:105
 #: templates/social/_filters.html:15 templates/social/feed.html:64
 msgid "Clear filters"
 msgstr "Скинути фільтри"
 
-#: templates/pages/explore.html:75
+#: templates/pages/explore.html:90
 msgid "most hallmarks first, then newest"
 msgstr "спершу з більшою кількістю позначок, далі найновіші"
 
-#: templates/pages/explore.html:89
+#: templates/pages/explore.html:104
 msgid "No published projects match these filters."
 msgstr "Немає опублікованих проєктів за цими фільтрами."
 
-#: templates/pages/explore.html:95
+#: templates/pages/explore.html:110
 msgid "Nothing has been published yet."
 msgstr "Ще нічого не опубліковано."
 

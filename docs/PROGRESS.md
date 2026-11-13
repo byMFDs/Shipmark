@@ -168,3 +168,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-14: Polish-3 stage 1 (names and copy). "Feed" → "For You" / "For You Page", inner tab "Recommended", "Explore" → "Discover"; header bar fits de/fr (menu below 80em, self-hiding tagline); all 1146 UI strings swept (plainer words, real plurals in admin, delete page matches the code); untranslated form labels fixed with a test; Privacy/Terms easier to read, same facts, 7 languages. 1076 tests green.
   Next: "GO 7" (people search). Native + lawyer review of POLISH3_COPY.md / POLISH3_LEGAL_CHANGES.md.
+
+- 2026-11-14: Polish-3 stage 7 (people search). Discover tabs Projects / People; username search (prefix first, ≥2 chars, 20 per page, hidden/system/demo accounts excluded, wildcards inert), rows with badges, counts and Follow / "You" / "Sign in to follow"; header search (icon from 80em, field in the menu); rate limit per account or salted IP hash (Privacy + DATA_INVENTORY updated); constant query count; 33 tests; 7 languages.
+  Next: "GO 2" (button glow). Not tested on PostgreSQL.

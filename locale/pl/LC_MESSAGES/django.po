@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 21:55+0000\n"
+"POT-Creation-Date: 2026-11-13 22:19+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -43,7 +43,7 @@ msgid "Pictures"
 msgstr "Obrazy"
 
 #: accounts/admin.py:110 config/settings/base.py:365
-#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
+#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
 #: templates/moderation/banned.html:10 templates/moderation/mod/queue.html:3
 #: templates/moderation/mod/queue.html:10
 #: templates/moderation/mod/report.html:3
@@ -161,8 +161,8 @@ msgid "Up to 3 of your published projects, shown first on your profile."
 msgstr ""
 "Do 3 Twoich opublikowanych projektów, wyświetlanych na początku profilu."
 
-#: accounts/forms.py:110
 #
+#: accounts/forms.py:110
 msgid "Site language"
 msgstr "Język strony"
 
@@ -170,8 +170,8 @@ msgstr "Język strony"
 msgid "Automatic (browser language)"
 msgstr "Automatycznie (język przeglądarki)"
 
-#: accounts/forms.py:120
 #
+#: accounts/forms.py:120
 msgid "Your name"
 msgstr "Twoje imię"
 
@@ -782,7 +782,8 @@ msgstr "Odznaki"
 
 #: config/settings/base.py:345 config/settings/base.py:347
 #: templates/accounts/profile.html:53 templates/accounts/profile.html:67
-#: templates/accounts/profile.html:75 templates/pages/landing.html:50
+#: templates/accounts/profile.html:75 templates/pages/explore.html:26
+#: templates/pages/landing.html:50
 msgid "Projects"
 msgstr "Projekty"
 
@@ -1592,11 +1593,12 @@ msgstr "Regulamin"
 msgid "Cookies"
 msgstr "Pliki cookie"
 
-#: pages/test_languages.py:45 templates/pages/explore.html:69
+#: pages/test_languages.py:45 templates/pages/explore.html:84
 msgid "Show projects"
 msgstr "Pokaż projekty"
 
-#: pages/test_languages.py:72 templates/pages/explore.html:75
+#: pages/test_languages.py:72 templates/pages/_person_row.html:11
+#: templates/pages/explore.html:90
 #, python-format
 msgid "%(n)s project"
 msgid_plural "%(n)s projects"
@@ -1672,8 +1674,8 @@ msgstr[0] "Trwale usunięto %(count)s usunięty projekt."
 msgstr[1] "Trwale usunięto %(count)s usunięte projekty."
 msgstr[2] "Trwale usunięto %(count)s usuniętych projektów."
 
-#: projects/forms.py:45
 #
+#: projects/forms.py:45
 msgid "Live URL"
 msgstr "Adres strony"
 
@@ -1697,13 +1699,13 @@ msgstr ""
 msgid "Name"
 msgstr "Nazwa"
 
-#: projects/forms.py:63
 #
+#: projects/forms.py:63
 msgid "Tagline"
 msgstr "Hasło"
 
-#: projects/forms.py:63
 #
+#: projects/forms.py:63
 msgid "Description"
 msgstr "Opis"
 
@@ -2629,7 +2631,7 @@ msgstr "Usuń konto"
 
 #: templates/accounts/accept_terms.html:28 templates/accounts/logout.html:4
 #: templates/accounts/logout.html:14 templates/accounts/settings.html:107
-#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
+#: templates/includes/site_nav.html:26 templates/includes/site_nav.html:40
 msgid "Sign out"
 msgstr "Wyloguj się"
 
@@ -2885,7 +2887,7 @@ msgid "Built with (self-declared)"
 msgstr "Zbudowano z (deklaracja autora)"
 
 #: templates/accounts/settings.html:4 templates/accounts/settings.html:12
-#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
+#: templates/includes/site_nav.html:25 templates/includes/site_nav.html:39
 msgid "Settings"
 msgstr "Ustawienia"
 
@@ -2968,7 +2970,7 @@ msgstr "Jasny"
 msgid "Dark"
 msgstr "Ciemny"
 
-#: templates/accounts/settings.html:104
+#: templates/accounts/settings.html:104 templates/pages/_people.html:10
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
@@ -3019,12 +3021,12 @@ msgstr "Wszystkie działy"
 
 #: templates/community/_boards.html:11 templates/community/notifications.html:4
 #: templates/community/notifications.html:11
-#: templates/includes/site_nav.html:21 templates/includes/site_nav.html:35
+#: templates/includes/site_nav.html:23 templates/includes/site_nav.html:37
 msgid "Replies to you"
 msgstr "Odpowiedzi do Ciebie"
 
-#: templates/community/_boards.html:11 templates/includes/site_nav.html:21
-#: templates/includes/site_nav.html:35
+#: templates/community/_boards.html:11 templates/includes/site_nav.html:23
+#: templates/includes/site_nav.html:37
 msgid "new"
 msgstr "nowe"
 
@@ -3039,7 +3041,7 @@ msgid "New thread"
 msgstr "Nowy wątek"
 
 #: templates/community/_boards.html:17 templates/community/thread.html:89
-#: templates/includes/site_nav.html:43 templates/pages/_sign_in.html:10
+#: templates/includes/site_nav.html:45 templates/pages/_sign_in.html:10
 #: templates/pages/_sign_in.html:13 templates/social/feed.html:25
 #: templates/socialaccount/login.html:10
 msgid "Sign in with GitHub"
@@ -3276,7 +3278,9 @@ msgstr "Szukaj wątków"
 msgid "Search threads by title"
 msgstr "Szukaj wątków po tytule"
 
-#: templates/community/home.html:32 templates/pages/explore.html:25
+#: templates/community/home.html:32 templates/includes/people_search.html:11
+#: templates/includes/people_search.html:22 templates/pages/_people.html:14
+#: templates/pages/explore.html:40
 msgid "Search"
 msgstr "Szukaj"
 
@@ -3303,13 +3307,14 @@ msgstr "Wyczyść wyszukiwanie"
 
 #: templates/community/home.html:56 templates/community/notifications.html:29
 #: templates/community/thread.html:63 templates/moderation/mod/queue.html:59
-#: templates/news/list.html:20 templates/pages/explore.html:82
-#: templates/social/feed.html:74
+#: templates/news/list.html:20 templates/pages/_people.html:39
+#: templates/pages/explore.html:97 templates/social/feed.html:74
 msgid "Pages"
 msgstr "Strony"
 
 #: templates/community/home.html:57 templates/community/notifications.html:30
-#: templates/community/thread.html:64 templates/pages/explore.html:83
+#: templates/community/thread.html:64 templates/pages/_people.html:40
+#: templates/pages/explore.html:98
 msgid "Previous page"
 msgstr "Poprzednia strona"
 
@@ -3371,7 +3376,8 @@ msgstr "Usunięte konto odpowiedziało Ci w „%(title)s”"
 msgid "Sticker: %(name)s"
 msgstr "Naklejka: %(name)s"
 
-#: templates/community/notifications.html:31 templates/pages/explore.html:84
+#: templates/community/notifications.html:31 templates/pages/_people.html:41
+#: templates/pages/explore.html:99
 msgid "Next page"
 msgstr "Następna strona"
 
@@ -3677,6 +3683,19 @@ msgstr "Popraw te błędy i spróbuj ponownie."
 msgid "Not yet"
 msgstr "Jeszcze nie"
 
+#: templates/includes/people_search.html:6
+#: templates/includes/people_search.html:9
+#: templates/includes/people_search.html:15
+#: templates/includes/people_search.html:16 templates/pages/_people.html:5
+#: templates/pages/_people.html:7
+msgid "Find people"
+msgstr "Znajdź ludzi"
+
+#: templates/includes/people_search.html:8
+#: templates/includes/people_search.html:18
+msgid "Find people by username"
+msgstr "Znajdź ludzi po nazwie użytkownika"
+
 #: templates/includes/site_footer.html:10 templates/includes/site_header.html:6
 #, python-format
 msgid "%(name)s home"
@@ -3690,30 +3709,30 @@ msgstr "Zmień"
 msgid "Menu"
 msgstr "Menu"
 
-#: templates/includes/site_nav.html:3
+#: templates/includes/site_nav.html:4
 msgid "Main"
 msgstr "Główna"
 
-#: templates/includes/site_nav.html:15 templates/projects/form.html:4
+#: templates/includes/site_nav.html:17 templates/projects/form.html:4
 #: templates/projects/form.html:12 templates/social/feed.html:23
 msgid "New project"
 msgstr "Nowy projekt"
 
-#: templates/includes/site_nav.html:20 templates/includes/site_nav.html:34
+#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
 #: templates/social/feed.html:22
 msgid "Your profile"
 msgstr "Twój profil"
 
-#: templates/includes/site_nav.html:22 templates/includes/site_nav.html:36
+#: templates/includes/site_nav.html:24 templates/includes/site_nav.html:38
 msgid "open reports"
 msgstr "otwarte zgłoszenia"
 
-#: templates/includes/site_nav.html:29
+#: templates/includes/site_nav.html:31
 #, python-format
 msgid "Account menu for %(name)s, new replies"
 msgstr "Menu konta %(name)s, nowe odpowiedzi"
 
-#: templates/includes/site_nav.html:29
+#: templates/includes/site_nav.html:31
 #, python-format
 msgid "Account menu for %(name)s"
 msgstr "Menu konta: %(name)s"
@@ -3984,8 +4003,81 @@ msgstr "Brak aktualności"
 msgid "Announcements from the team appear here."
 msgstr "Tu pojawiają się ogłoszenia od zespołu."
 
+#: templates/pages/_people.html:15
+#, python-format
+msgid "At least %(n)s characters. Only usernames are searched."
+msgstr "Co najmniej %(n)s znaki. Szukamy tylko po nazwach użytkowników."
+
+#: templates/pages/_people.html:21
+msgid "Too many searches"
+msgstr "Za dużo wyszukiwań"
+
+#: templates/pages/_people.html:22
+#
+msgid "Wait a few minutes, then search again."
+msgstr "Poczekaj kilka minut i wyszukaj ponownie."
+
+#: templates/pages/_people.html:25
+#, python-format
+msgid "Type at least %(n)s characters of a username."
+msgstr "Wpisz co najmniej %(n)s znaki nazwy użytkownika."
+
+#
+#: templates/pages/_people.html:27
+#
+msgid "A username has only letters, numbers, - and _. Check what you typed."
+msgstr "Nazwa użytkownika ma tylko litery, cyfry, - i _. Sprawdź, co wpisano."
+
+#: templates/pages/_people.html:30
+msgid "Find someone by their username"
+msgstr "Znajdź kogoś po nazwie użytkownika"
+
+#: templates/pages/_people.html:31
+msgid ""
+"Type a username or its first letters. Open the profile, or follow right from "
+"the list."
+msgstr ""
+"Wpisz nazwę użytkownika albo jej pierwsze litery. Otwórz profil albo obserwuj prosto z listy."
+
+#: templates/pages/_people.html:34
+#, python-format
+msgid "People with “%(q)s” in their username"
+msgstr "Osoby z „%(q)s” w nazwie użytkownika"
+
+#: templates/pages/_people.html:46
+#, python-format
+msgid "No one has “%(q)s” in their username"
+msgstr "Nikt nie ma „%(q)s” w nazwie użytkownika"
+
+#: templates/pages/_people.html:47
+msgid "Check the spelling, or type only the first letters."
+msgstr "Sprawdź pisownię albo wpisz tylko pierwsze litery."
+
+#: templates/pages/_person_row.html:11
+#, python-format
+msgid "%(n)s hallmark"
+msgid_plural "%(n)s hallmarks"
+msgstr[0] "%(n)s znak"
+msgstr[1] "%(n)s znaki"
+msgstr[2] "%(n)s znaków"
+
+#
+#: templates/pages/_person_row.html:15
+#
+msgid "You"
+msgstr "To Ty"
+
+#: templates/pages/_person_row.html:19
+#
+msgid "Sign in to follow"
+msgstr "Zaloguj się, aby obserwować"
+
+#: templates/pages/explore.html:4 templates/pages/explore.html:27
+msgid "People"
+msgstr "Ludzie"
+
 #: templates/pages/explore.html:6 templates/pages/explore.html:9
-#: templates/pages/explore.html:17
+#: templates/pages/explore.html:20
 msgid ""
 "Projects people shipped with AI tools, with verified hallmarks. Search by "
 "name, or filter by tag, tool and hallmark."
@@ -3993,54 +4085,64 @@ msgstr ""
 "Projekty zrobione z narzędziami AI, ze zweryfikowanymi znakami. Szukaj po "
 "nazwie albo filtruj po tagu, narzędziu i znaku."
 
-#: templates/pages/explore.html:21 templates/pages/explore.html:22
+#: templates/pages/explore.html:18
+msgid "Find people by their username, open their profile and follow them."
+msgstr ""
+"Znajduj ludzi po nazwie użytkownika, otwieraj ich profile i obserwuj ich."
+
+#: templates/pages/explore.html:24
+#
+msgid "What to discover"
+msgstr "Co odkrywać"
+
+#: templates/pages/explore.html:36 templates/pages/explore.html:37
 msgid "Search and filter projects"
 msgstr "Szukaj i filtruj projekty"
 
-#: templates/pages/explore.html:27
+#: templates/pages/explore.html:42
 msgid "Project name or tagline"
 msgstr "Nazwa lub opis projektu"
 
-#: templates/pages/explore.html:31 templates/social/_filters.html:9
+#: templates/pages/explore.html:46 templates/social/_filters.html:9
 msgid "Tag"
 msgstr "Tag"
 
-#: templates/pages/explore.html:34
+#: templates/pages/explore.html:49
 msgid "Any tag"
 msgstr "Dowolny tag"
 
-#: templates/pages/explore.html:41 templates/pages/landing.html:67
+#: templates/pages/explore.html:56 templates/pages/landing.html:67
 #: templates/pages/landing.html:192 templates/pages/landing.html:214
 #: templates/pages/landing.html:236 templates/social/_filters.html:11
 msgid "Built with"
 msgstr "Zbudowano z"
 
-#: templates/pages/explore.html:44
+#: templates/pages/explore.html:59
 msgid "Any tool"
 msgstr "Dowolne narzędzie"
 
-#: templates/pages/explore.html:51 templates/social/_filters.html:7
+#: templates/pages/explore.html:66 templates/social/_filters.html:7
 msgid "Hallmark"
 msgstr "Znak"
 
-#: templates/pages/explore.html:60
+#: templates/pages/explore.html:75
 msgid "Sort by"
 msgstr "Sortuj według"
 
-#: templates/pages/explore.html:70 templates/pages/explore.html:90
+#: templates/pages/explore.html:85 templates/pages/explore.html:105
 #: templates/social/_filters.html:15 templates/social/feed.html:64
 msgid "Clear filters"
 msgstr "Wyczyść filtry"
 
-#: templates/pages/explore.html:75
+#: templates/pages/explore.html:90
 msgid "most hallmarks first, then newest"
 msgstr "najpierw najwięcej znaków, potem najnowsze"
 
-#: templates/pages/explore.html:89
+#: templates/pages/explore.html:104
 msgid "No published projects match these filters."
 msgstr "Żaden opublikowany projekt nie pasuje do tych filtrów."
 
-#: templates/pages/explore.html:95
+#: templates/pages/explore.html:110
 msgid "Nothing has been published yet."
 msgstr "Nic jeszcze nie zostało opublikowane."
 

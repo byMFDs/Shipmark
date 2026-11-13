@@ -6,7 +6,7 @@ Branch `polish-3` (from `polish-2`). Brief: one stage per "GO <n>". Order: 0, 1,
 |---|---|---|
 | 0. Community template leak | done 2026-11-13 | Fix community template leak |
 | 1. Names and copy | done 2026-11-14 | Header: fit long languages · Names: For You, Discover · Copy: plain words in every language · Forms: translate field labels · Legal: easier to read |
-| 7. People search | waiting for "GO 7" | |
+| 7. People search | done 2026-11-14 | People search |
 | 2. Button glow | | |
 | 3a/3b. Design pass | | |
 | 4. Motion | | |
@@ -37,3 +37,13 @@ Branch `polish-3` (from `polish-2`). Brief: one stage per "GO <n>". Order: 0, 1,
 - 1c: Privacy (5 passages) and Terms (3) as lists and shorter sentences, same facts, all 7 languages; Cookies and
   Community rules unchanged. TERMS_VERSION not bumped. Every change in POLISH3_LEGAL_CHANGES.md.
 - Not done: native-speaker review of all non-English text; lawyer review of the legal drafts.
+
+## Stage 7 notes
+
+- Discover has tabs Projects / People (`/explore/?tab=people`); the project search is unchanged. Header: a search
+  icon from 80em, a search field at the top of the menu below that.
+- Rules and numbers in `accounts/people.py`: username only, prefix first, min 2 chars, 20 per page, characters a
+  username cannot have match nobody, hidden accounts excluded, rate limit 60 / 10 min per account and 30 / 10 min per
+  salted IP hash for anonymous visitors. Constant queries (tested). Privacy + DATA_INVENTORY say what is stored.
+- Not tested on PostgreSQL (no local server running); lookups are Django's istartswith/icontains, which escape
+  % and _ on both engines.

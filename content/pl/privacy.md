@@ -83,7 +83,7 @@ Strony, których nie znaleziono, trafiają do osobnego pliku, każdy adres najwy
 
 > **TODO przed uruchomieniem:** serwer WWW przed aplikacją prowadzi własny dziennik dostępu, który domyślnie zawiera adresy IP. Co dokładnie zapisuje i jak długo to przechowuje (oraz jak długo przechowywane są dzienniki aplikacji), nie zostało jeszcze ustalone. Trzeba to uzupełnić albo wyłączyć zapisywanie IP, zanim ta strona stanie się publiczna.
 
-**Ochrona przed nadużyciami.** Aby ograniczać nadużycia, liczymy niektóre działania (na przykład polubienia na godzinę) w bazie danych serwisu. Każdy licznik to liczba przypisana do Twojego konta lub projektu, bez adresu IP, obowiązująca najwyżej 24 godziny. Potem nie jest już używany, ale wiersz może zostać w bazie, dopóki nie zostanie wyczyszczony.
+**Ochrona przed nadużyciami.** Aby ograniczać nadużycia, liczymy niektóre działania (na przykład polubienia na godzinę) w bazie danych serwisu. Każdy licznik to liczba przypisana do Twojego konta lub projektu, bez adresu IP, obowiązująca najwyżej 24 godziny. Potem nie jest już używany, ale wiersz może zostać w bazie, dopóki nie zostanie wyczyszczony. Jeden wyjątek: gdy szukasz ludzi bez logowania, licznik jest na 10 minut przypisany do solonego, jednokierunkowego skrótu Twojego adresu IP (nigdy do samego adresu). Tego, czego szukasz, nigdy nie zapisujemy.
 
 **Analityka i śledzenie.** Nie ma ich: ani analityki, ani reklam, ani skryptów śledzących. Czcionki są serwowane z naszego własnego serwera.
 

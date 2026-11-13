@@ -83,7 +83,7 @@ Les pages introuvables sont écrites dans un fichier séparé, chaque adresse au
 
 > **TODO avant le lancement :** le serveur web placé devant l’application tient son propre journal d’accès, qui contient par défaut des adresses IP. Ce qu’il enregistre et combien de temps il le conserve (ainsi que la durée de conservation des journaux de l’application) n’est pas encore décidé. Il faut le compléter, ou désactiver l’enregistrement des IP, avant que cette page ne devienne publique.
 
-**Protection contre les abus.** Pour limiter les abus, nous comptons certaines actions (par exemple les mentions J’aime par heure) dans la base de données du site. Chaque compteur est un nombre lié à votre compte ou à un projet, sans adresse IP, valable 24 heures au plus. Ensuite il n’est plus utilisé, mais la ligne peut rester dans la base jusqu’à son nettoyage.
+**Protection contre les abus.** Pour limiter les abus, nous comptons certaines actions (par exemple les mentions J’aime par heure) dans la base de données du site. Chaque compteur est un nombre lié à votre compte ou à un projet, sans adresse IP, valable 24 heures au plus. Ensuite il n’est plus utilisé, mais la ligne peut rester dans la base jusqu’à son nettoyage. Une exception : quand vous cherchez des personnes sans être connecté, le compteur est lié pendant 10 minutes à une empreinte salée à sens unique de votre adresse IP (jamais à l’adresse elle-même). Ce que vous recherchez n’est jamais conservé.
 
 **Analyse et suivi.** Il n’y en a pas : ni analyse, ni publicité, ni script de suivi. Les polices sont servies depuis notre propre serveur.
 

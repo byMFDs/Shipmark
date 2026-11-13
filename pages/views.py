@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import Http404
 from django.shortcuts import redirect, render
 
+from accounts import people
 from projects.models import Tool
 from projects.proof import RULES
 from social.queries import project_rows, published_projects
@@ -24,12 +25,16 @@ def landing(request):
 
 
 def explore_view(request):
+    """Discover: two tabs on one page. Projects (default, unchanged) and People (?tab=people)."""
+    if request.GET.get("tab") == "people":
+        return people_view(request)
     params = ExploreForm(request.GET).values()
     result = explore(params, request.user)
     if params["page"] > 1 and not result["projects"]:
         raise Http404  # past the last page
     return render(request, "pages/explore.html", {
         **result,
+        "tab": "projects",
         "params": params,
         "prev_page": params["page"] - 1 if params["page"] > 2 else None,  # page 1 has no "page" parameter
         "next_page": params["page"] + 1,
@@ -39,6 +44,33 @@ def explore_view(request):
         "hallmarks": HALLMARK_CHOICES,
         "sorts": SORTS,
     })
+
+
+MAX_PEOPLE_PAGE = 50
+
+
+def people_view(request):
+    """Discover → People: username search (accounts/people.py has the rules)."""
+    raw = request.GET.get("q", "")
+    query = people.clean_query(raw)
+    try:
+        page = min(max(int(request.GET.get("page", 1)), 1), MAX_PEOPLE_PAGE)
+    except ValueError:
+        page = 1
+    context = {"tab": "people", "q": raw.strip()[:100], "query": query, "page": page, "results": [],
+               "has_next": False, "problem": people.query_problem(query) if query else "", "limited": False,
+               "min_length": people.MIN_LENGTH}
+    status = 200
+    if query and not context["problem"]:
+        if people.search_limited(request):
+            context["limited"], status = True, 429
+        else:
+            results, has_next = people.search(query, page)
+            if page > 1 and not results:
+                raise Http404  # past the last page
+            context.update(results=people.attach_counts(results, request.user), has_next=has_next,
+                           prev_page=page - 1 if page > 2 else None, next_page=page + 1)
+    return render(request, "pages/explore.html", context, status=status)
 
 
 # Shown on the styleguide. Values must match static/css/tokens.css.

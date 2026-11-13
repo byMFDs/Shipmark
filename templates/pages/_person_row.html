@@ -1,0 +1,22 @@
+{% load i18n ui %}{% comment %}
+One person in the People results. Public fields only (never email or GitHub id). Needs: person with
+project_count, hallmark_count, followed (accounts.people.attach_counts).
+{% endcomment %}{% url 'accounts:profile' person.username as profile_url %}
+<li class="plate-row person-row">
+  <a class="person-row__avatar" href="{{ profile_url }}" tabindex="-1" aria-hidden="true">{% user_avatar person 48 %}</a>
+  <div class="person-row__body">
+    <p class="plate-row__name"><a href="{{ profile_url }}">{{ person.display_name|default:person.username }}</a>{% user_marks person "s" %}</p>
+    <p class="person-row__handle muted mono">@{{ person.username }}</p>
+    {% if person.headline %}<p class="plate-row__tagline">{{ person.headline }}</p>{% endif %}
+    <p class="person-row__meta muted">{% blocktranslate count n=person.project_count trimmed %}{{ n }} project{% plural %}{{ n }} projects{% endblocktranslate %} · {% blocktranslate count n=person.hallmark_count trimmed %}{{ n }} hallmark{% plural %}{{ n }} hallmarks{% endblocktranslate %}</p>
+  </div>
+  <div class="person-row__action">
+    {% if user.is_authenticated and user.pk == person.pk %}
+      <span class="label person-row__you">{% translate "You" %}</span>
+    {% elif user.is_authenticated %}
+      {% include "social/_follow.html" with following=person.followed %}
+    {% else %}
+      <a class="btn btn--secondary" href="{% url 'account_login' %}?next={{ request.get_full_path|urlencode }}">{% translate "Sign in to follow" %}<span class="visually-hidden"> @{{ person.username }}</span></a>
+    {% endif %}
+  </div>
+</li>

@@ -1,21 +1,36 @@
 {% extends "base.html" %}
 {% load i18n static ui %}
 
-{% block title %}{% if params.q %}“{{ params.q }}” · {% endif %}{% translate "Discover" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block title %}{% if tab == "people" %}{% if q %}“{{ q }}” · {% endif %}{% translate "People" %} · {% elif params.q %}“{{ params.q }}” · {% endif %}{% translate "Discover" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_title %}{% translate "Discover" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_description %}{% translate "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark." %}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}"><link rel="stylesheet" href="{% static 'css/pages/explore.css' %}">{% endblock %}
 {% block meta %}
   <meta name="description" content="{% translate 'Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark.' %}">
-  {% if params.q or params.page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}
+  {% if tab == "people" or params.q or params.page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}
 {% endblock %}
 
 {% block content %}
   <div class="container shell explore">
     <header class="page-head">
       <h1>{% translate "Discover" %}</h1>
-      <p class="lede">{% translate "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark." %}</p>
+      {% if tab == "people" %}
+        <p class="lede">{% translate "Find people by their username, open their profile and follow them." %}</p>
+      {% else %}
+        <p class="lede">{% translate "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark." %}</p>
+      {% endif %}
     </header>
+
+    <nav class="tabs explore-tabs" aria-label="{% translate 'What to discover' %}">
+      <ul class="tabs__list">
+        <li><a class="tabs__link" href="{% url 'pages:explore' %}"{% if tab != "people" %} aria-current="page"{% endif %}>{% translate "Projects" %}</a></li>
+        <li><a class="tabs__link" href="{% url 'pages:explore' %}?tab=people"{% if tab == "people" %} aria-current="page"{% endif %}>{% translate "People" %}</a></li>
+      </ul>
+    </nav>
+
+    {% if tab == "people" %}
+      {% include "pages/_people.html" %}
+    {% else %}
 
     {# A plain GET form: every filter ends up in the URL, so a view can be shared and works without JS. #}
     <form class="record explore-filters" method="get" action="{% url 'pages:explore' %}" role="search" aria-label="{% translate 'Search and filter projects' %}">
@@ -94,6 +109,7 @@
         <div class="empty__marks">{% hallmark "authored" "s" False %}{% hallmark "live" "s" False %}{% hallmark "steady" "s" False %}</div>
         <p class="empty__text">{% translate "Nothing has been published yet." %}</p>
       </div>
+    {% endif %}
     {% endif %}
   </div>
 {% endblock %}

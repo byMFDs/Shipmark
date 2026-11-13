@@ -83,7 +83,7 @@ Las páginas no encontradas se escriben en un archivo aparte, cada dirección co
 
 > **TODO antes del lanzamiento:** el servidor web que está delante de la aplicación lleva su propio registro de accesos, que por defecto incluye direcciones IP. Aún no se ha decidido qué anota ni cuánto tiempo lo conserva (ni cuánto se conservan los registros de la aplicación). Hay que completarlo, o desactivar el registro de IP, antes de que esta página sea pública.
 
-**Protección contra abusos.** Para limitar los abusos contamos algunas acciones (por ejemplo, me gusta por hora) en la base de datos del sitio. Cada contador es un número asociado a tu cuenta o a un proyecto, sin dirección IP, y se aplica durante 24 horas como máximo. Después deja de usarse, pero la fila puede permanecer en la base de datos hasta que se limpie.
+**Protección contra abusos.** Para limitar los abusos contamos algunas acciones (por ejemplo, me gusta por hora) en la base de datos del sitio. Cada contador es un número asociado a tu cuenta o a un proyecto, sin dirección IP, y se aplica durante 24 horas como máximo. Después deja de usarse, pero la fila puede permanecer en la base de datos hasta que se limpie. Una excepción: cuando buscas personas sin iniciar sesión, el contador se asocia durante 10 minutos a un hash unidireccional con sal de tu dirección IP (nunca a la dirección misma). Lo que buscas nunca se guarda.
 
 **Analítica y seguimiento.** No hay: ni analítica, ni publicidad, ni scripts de seguimiento. Las fuentes se sirven desde nuestro propio servidor.
 

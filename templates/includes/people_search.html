@@ -1,0 +1,27 @@
+{% load i18n ui %}{% comment %}
+"Find people" in the header: submits to Discover → People (?tab=people). In the menu (in_panel) a plain form;
+in the open bar a <details> that opens a small form (works without JS; menu.js adds Escape and outside click).
+{% endcomment %}{% url 'pages:explore' as discover_url %}{% if discover_url %}
+{% if in_panel %}
+  <form class="site-search site-search--panel" method="get" action="{{ discover_url }}" role="search" aria-label="{% translate 'Find people' %}">
+    <input type="hidden" name="tab" value="people">
+    <label class="visually-hidden" for="menu-people-q">{% translate "Find people by username" %}</label>
+    <input class="input" type="search" id="menu-people-q" name="q" maxlength="40" placeholder="{% translate 'Find people' %}"
+           autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search">
+    <button class="btn btn--secondary btn--icon" type="submit">{% icon "search" "" _("Search") %}</button>
+  </form>
+{% else %}
+  <details class="site-search" data-menu>
+    <summary class="btn btn--quiet btn--icon" aria-label="{% translate 'Find people' %}" title="{% translate 'Find people' %}">{% icon "search" %}</summary>
+    <form class="site-search__panel" method="get" action="{{ discover_url }}" role="search" aria-label="{% translate 'Find people' %}">
+      <input type="hidden" name="tab" value="people">
+      <label class="field__label" for="bar-people-q">{% translate "Find people by username" %}</label>
+      <div class="site-search__row">
+        <input class="input" type="search" id="bar-people-q" name="q" maxlength="40" placeholder="@username"
+               autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search">
+        <button class="btn btn--primary" type="submit">{% translate "Search" %}</button>
+      </div>
+    </form>
+  </details>
+{% endif %}
+{% endif %}

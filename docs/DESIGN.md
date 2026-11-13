@@ -167,6 +167,12 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
   real `UserBadge.granted_at`, "How badges work" (`/how-proof-works/#badges`). A popover under the badge from 48em, a bottom sheet
   below. Escape, the close button and an outside click close it; focus returns to the badge. Lists prefetch `owner__badges`.
 
+### Find people (stage 7)
+Header from 80em: a search icon (`.site-search`, a `<details>`) opens a small form; below 80em the menu panel starts
+with a plain search field. Both go to Discover → People (`/explore/?tab=people`). Result rows (`.person-row`): avatar 48,
+name + badges, mono `@username`, headline, counts, then the action (Follow / "You" / "Sign in to follow"); on phones the
+action sits under the text.
+
 ## Motion (`motion.css`, `motion.js`)
 - Animations use transform and opacity only. Exception, on purpose: hover/focus colour and border-colour fades
   (120-200 ms, paint only, no layout). Nothing animates width, height, margin, top/left or font size.

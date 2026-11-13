@@ -83,7 +83,7 @@ Páginas não encontradas vão para um arquivo separado, cada endereço no máxi
 
 > **TODO antes do lançamento:** o servidor web na frente do aplicativo mantém seu próprio registro de acessos, que por padrão inclui endereços IP. O que ele registra e por quanto tempo guarda (e por quanto tempo os registros do aplicativo são guardados) ainda não foi decidido. É preciso preencher isso, ou desativar o registro de IP, antes de esta página se tornar pública.
 
-**Proteção contra abusos.** Para limitar abusos, contamos algumas ações (por exemplo, curtidas por hora) no banco de dados do site. Cada contador é um número ligado à sua conta ou a um projeto, sem endereço IP, e vale por no máximo 24 horas. Depois disso deixa de ser usado, mas a linha pode ficar no banco até ser limpa.
+**Proteção contra abusos.** Para limitar abusos, contamos algumas ações (por exemplo, curtidas por hora) no banco de dados do site. Cada contador é um número ligado à sua conta ou a um projeto, sem endereço IP, e vale por no máximo 24 horas. Depois disso deixa de ser usado, mas a linha pode ficar no banco até ser limpa. Uma exceção: quando você busca pessoas sem estar conectado, o contador fica ligado por 10 minutos a um hash unidirecional com sal do seu endereço IP (nunca ao próprio endereço). O que você busca nunca é guardado.
 
 **Análise de uso e rastreamento.** Não há: nem análise de uso, nem publicidade, nem scripts de rastreamento. As fontes são servidas pelo nosso próprio servidor.
 
