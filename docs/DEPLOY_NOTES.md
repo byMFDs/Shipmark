@@ -26,6 +26,7 @@ Set them in the real environment or in `/srv/shipmark/.env` (gitignored; real va
 | `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `EMAIL_USE_TLS`, `DEFAULT_FROM_EMAIL` | with `SUPPORT_INBOX_EMAIL` | SMTP for that notice (Gmail: see "Support inbox"). Prod uses the SMTP backend; dev prints emails in the terminal |
 | `SUPPORT_ROOT` | no | Private folder for support attachments, **outside** `MEDIA_ROOT`, never served. Default `<project>/private/support` |
 | `CLIENT_IP_HEADER` | recommended | `HTTP_X_REAL_IP` when nginx sets `proxy_set_header X-Real-IP $remote_addr;`. Without it every visitor looks like the proxy and shares one support rate limit |
+| `PUBLIC_USER_COUNT_MIN` | no | Hide "<n> people joined" in the header until there are more accounts than this. Default 0 |
 | `COMMUNITY_ENABLED` | no | `true` switches the community on (`/community/`, the header link). Default **false** in prod: every community route is 404. See "Community: switching it on" |
 | `SECURE_HSTS_SECONDS` | no | Default 3600. Raise to 31536000 after HTTPS has worked for a few days |
 | `SECURE_HSTS_INCLUDE_SUBDOMAINS`, `SECURE_HSTS_PRELOAD` | no | Default true |

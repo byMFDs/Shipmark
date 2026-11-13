@@ -129,12 +129,22 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 - `.record` (frame + mono header row) is the base of the proof column, build log, embed panel, filters and
   the landing specimen. `.panel` is a framed form section (`--danger` = destructive). `.page-head`: h1 + lede.
 - Lists: `.plate-row` (cover, name in Manrope, by-line, tagline, marks) · `.card` (landing) · `.chip` (tags).
-- Header: not sticky, hairline under, mobile menu is `<details>`. Footer: links, language form (POST), theme.
+- Header: not sticky, hairline under, mobile menu is `<details>`. "<n> people joined" (`.site-count`, `pages/stats.py`): a quiet
+  fact (mono number, muted words, `title` "Registered accounts"), in the bar from 48em and next to the tagline from 64em, inside
+  the phone menu below 48em. Registered accounts, not people online: no live dot, no pulse.
+- Footer (`site_footer.html`): one 12-column grid. Brand block (logo, `SITE_DOMAIN`, tagline) and three link columns (Product,
+  Company, Legal; mono headings) take 3 each from 64em; brand across + three columns of 4 from 48em; brand + two columns on phones.
+  Bottom bar: copyright in sentence case from `LEGAL_OWNER_NAME` (left), language and theme (right, full width on phones). All three
+  controls share `--footer-control-h` (44px, 52px on touch), `--radius-btn` and a `--line-strong` edge. The language select sends the
+  form on change (`language.js`); without JS its "Change" button stays, joined to the select.
 - Toast: surface + border, `role=status`, bottom. Empty state: dashed frame, three unstruck marks, one action.
 - Error pages (`404.html`, `403.html` inside the site; `500.html`, `400.html`, `403_csrf.html` standalone, no DB or
   context processors; views in `config/errors.py`): big mono status code, headline, one sentence, one mark that fails to
   stamp, primary action (front page, or feed when signed in) + "Go back", "Reference: <request id>" on 500/403/CSRF.
-  Previews at `/_dev/errors/<code>/` (DEBUG only).
+  Previews at `/_dev/errors/<code>/` (DEBUG only). A quiet "Report a problem" opens `/support/?category=bug&ref=<request id>`.
+- Support (`support/form.html`, `support/sent.html`, `pages/support.css`): a `.sheet` (intro + "What happens next" record on
+  the left; "What to write" panel and the form on the right). The sent page is a small record that gets a "Received" stamp in
+  ink (never green: it is not proof).
 - Tabs: plain links with `aria-current`; active = text color + 2px bar.
 - Profile (`accounts/profile.html`, `profile.css`): one framed card (`.profile-card`): optional 3:1 cover, 128px round avatar
   (overlaps the cover), name + marks, mono handle, headline, a flat `.status-chip` (neutral outline, never proof green or the
@@ -149,9 +159,13 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
   equal sides: navigation and panel are both 16rem and sit on the outer edges). `.feed-card`: frame + hairline, no shadow; cover 16:10 from the thumbnail, head (avatar, name + marks, handle,
   time, follow), name in Manrope, tagline, marks, the latest update with a 2px rule (3 lines max), actions. `.empty--plain` is an
   empty state without the dashed frame. News cards (`.news-card`) share the same frame.
-- Marks after a name (`{% user_marks person %}`, `.user-mark`): official = filled ink diamond with a cut check,
-  `title` + hidden text "Official Shipmark account" (no colour: it is neither proof nor an action); moderator = quiet
-  mono "MODERATOR" label with a `--line-strong` outline. Lists prefetch `owner__badges`.
+- Badges after a name (`{% user_marks person [size] %}`, `.user-mark`, one component for every kind): a glyph button about the
+  name's x-height (`s` 0.8em in dense lists, `m` 0.85em, `l` 0.7em next to a big heading; min 14px; the hit area grows invisibly).
+  Official = filled ink diamond with the logo's slash cut; moderator = muted ink shield with a bar. No colour of their own (not
+  proof, not an action). Hover/focus: a mono tooltip with the label. Click/tap: one shared panel per page (`badge_popover.html`,
+  `badges.js`): title, one sentence, "Affiliated with <SITE_NAME>" with the logo mark (official), "<Kind> since <date>" from the
+  real `UserBadge.granted_at`, "How badges work" (`/how-proof-works/#badges`). A popover under the badge from 48em, a bottom sheet
+  below. Escape, the close button and an outside click close it; focus returns to the badge. Lists prefetch `owner__badges`.
 
 ## Motion (`motion.css`, `motion.js`)
 - Animations use transform and opacity only. Exception, on purpose: hover/focus colour and border-colour fades
@@ -173,6 +187,10 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
   .995. Profile stats count up once when in view (`[data-count]`, motion.js; skipped with reduced motion; the HTML has the real
   number).
 - Error pages: one mark comes down, does not take and lifts away (once, 1.3 s); the dashed "Not yet" mark stays.
+- Chrome: the footer's blocks rise in one after another when it comes into view (`data-reveal`), a hairline grows under a
+  hovered footer link, the theme fill slides to the chosen option; the badge panel opens with a 160 ms fade-and-rise (sheet:
+  slides up); the header count counts up once on load (800 ms, over a hidden copy of the final text, so no layout shift);
+  the support "Received" stamp is pressed once. All transform/opacity, all off with reduced motion.
 - Project page: marks strike in order on load (300 / 650 / 1000 ms), one tick highlight over the 30 uptime
   cells (1 loop). Everywhere: hover, press and focus answers, like/follow pop, menu and toast fades, page
   cross-fade.
@@ -198,7 +216,8 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 - Focus: 2px `--focus` outline, offset 2px, on every control. No positive `tabindex`.
 - Menus are native `<details>` (work without JS; `menu.js` adds Escape and outside click). Tabs are plain links
   with `aria-current`. The theme switch is a group of buttons with `aria-pressed`. The language switch is a
-  labelled `<select>` in a POST form. Toasts live in an `aria-live="polite"` region; errors use `role="alert"`.
+  labelled `<select>` in a POST form; with JS it sends on change, without JS a "Change" button sends it. Badges are buttons
+  (`aria-haspopup="dialog"`, `aria-expanded`, label = kind); the header count has a hidden sentence with the exact number. Toasts live in an `aria-live="polite"` region; errors use `role="alert"`.
 - Form fields have visible labels, `aria-invalid` and `aria-describedby` for errors; a failed form shows an
   error summary that takes focus.
 - Checked 2026-11-11 in Firefox at 360/390/768/1024/1440 px, light and dark, `uk` (and `de` at 360 for long

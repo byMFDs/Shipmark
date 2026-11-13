@@ -159,3 +159,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-13: Community stage 3. `post_welcome` and `seed_community` (DEBUG only) with tests; rules page in 7 languages; Terms/Privacy community sections (drafts), `TERMS_VERSION` 2026-11-13; DATA_INVENTORY 6a; DEPLOY_NOTES (switch-on steps, cron), EDITING, CLAUDE.md. Full suite green, `check --deploy` clean.
   Next: look at the pages in a browser (both themes, 360-1440 px); native-speaker and lawyer review of the new texts; decide about `stash@{0}`; then review and merge `community-1`.
+
+- 2026-11-13: Polish round (branch `polish-2`, from `community-1`). Footer on one 12-column grid with shared control sizes; support form + private attachments + admin inbox + SMTP notice (Gmail steps in DEPLOY_NOTES); official/moderator badges as one popover component with the real date; "<n> people joined" in the header (honest count, cached 60 s, PUBLIC_USER_COUNT_MIN). Legal drafts, DATA_INVENTORY, DESIGN, EDITING, CLAUDE.md updated. Full suite green, `check --deploy` clean.
+  Next: look at footer, support pages, badge panel and header count in a browser (both themes, 360-1440 px, de/fr); set up the Gmail inbox; fix the multi-line `{# #}` comments in five community templates (they print as text).

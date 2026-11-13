@@ -40,7 +40,8 @@ GitHub shows code, LinkedIn shows claims; Shipmark shows verified outcomes.
 GitHub sign-in · profiles · projects (create/edit/publish) · repo authorship check ·
 domain verification (DNS TXT or meta tag) · uptime checks · hallmarks · build log ·
 follow + like · feed · explore/search · SVG badges · reports + moderation ·
-beautiful admin · legal pages · account deletion + data export · i18n (en, uk, later more).
+beautiful admin · legal pages · account deletion + data export · i18n (en, uk, later more) ·
+support form + admin inbox (`support/`) · public "people joined" count in the header.
 
 ### Community (`community/`, branch `community-1`, behind `COMMUNITY_ENABLED`)
 A small forum inside Shipmark: boards, threads, replies (depth max 3), upvotes only (no downvotes,
@@ -53,7 +54,7 @@ progress: `docs/COMMUNITY_STATUS.md`. Terms/Privacy cover it (`TERMS_VERSION` 20
 
 ### MVP: out of scope (do not build)
 Payments, subscriptions, messaging/DMs, comments on projects (discussion lives in Community), company/investor accounts,
-notifications by email, revenue/analytics integrations, native apps, AI features,
+notifications by email (the only email is the support notice to the team inbox), revenue/analytics integrations, native apps, AI features,
 Celery/Redis, Docker (unless asked), any social login except GitHub.
 
 ---
@@ -112,12 +113,13 @@ pages/             landing, explore, legal and content pages, styleguide (DEBUG 
 moderation/        Report, Sanction, Notice, BannedIdentity, AuditLog, /mod/, decisions, admin actions
 news/              NewsPost (written in the admin only, published as the system account "shipmark")
 community/         Board, Thread, Reply, CommunityImage, Vote, ReplyNotification, stickers.py, ranking.py, services.py
+support/           SupportMessage, SupportAttachment (private storage), antispam.py, notify.py (SMTP notice), admin inbox
 templates/  static/{css,js,fonts,brand,img}/  content/<lang>/*.md  locale/  docs/
 ```
 
 URLs: `/` landing · `/feed/` · `/explore/` · `/new/` · `/settings/` ·
 `/u/<username>/` · `/u/<username>/<project-slug>/` · `/badge/<username>.svg` ·
-`/badge/<username>/<project-slug>.svg` · `/legal/<slug>/` · `/how-proof-works/` · `/news/` · `/community/` (`b/<slug>/`, `t/<id>-<slug>/`, `new/`, `rules/`) ·
+`/badge/<username>/<project-slug>.svg` · `/legal/<slug>/` · `/how-proof-works/` · `/news/` · `/support/` · `/community/` (`b/<slug>/`, `t/<id>-<slug>/`, `new/`, `rules/`) ·
 `/mod/` (moderator badge or superuser) · admin at `ADMIN_URL` from env (never `/admin/` in production).
 
 Reserved usernames: admin, api, static, media, badge, legal, settings, new, feed,
@@ -171,6 +173,8 @@ Always use `select_related`/`prefetch_related` on lists. No N+1 queries.
 - Rate-limit writes, likes, follows, reports, verification attempts (cache-based).
 - Secrets only from env. `.env` is gitignored. `.env.example` documents every variable.
 - Never show a user's email publicly. No third-party trackers. Self-hosted fonts only.
+- Support attachments live in `STORAGES["support"]` (outside MEDIA_ROOT, no URL); only the staff view serves them.
+  No IP or user agent is stored anywhere; the support rate limit uses a salted IP hash in the cache only.
 - Suspended users cannot write; their projects are hidden.
 
 ---
@@ -224,6 +228,7 @@ eyebrows; that is part of the style now. Do not put mono caps on long sentences.
 
 Objects: **records** (`.record`: frame + mono header row) hold a project's proof, build log, embed badge and
 filters; **panels** (`.panel`) are form sections; list rows (`.plate-row`) and landing cards are quieter.
+Badges after a name (official, moderator) are one component: glyph button, tooltip, shared popover with the real date.
 Hallmarks are flat chips (check + mono label, "Repo owner" / "Domain verified" / "Steady"), pale green when earned,
 dashed outline + "Not yet" when not. Depth = surface color + hairlines; no bevels or gradients, one shadow only on floating menus and toasts.
 One gradient on purpose: the "halo" (`.btn--halo`), a rotating light ring on GitHub sign-in buttons, "New project" and
@@ -312,6 +317,7 @@ python manage.py makemessages -l uk --ignore=.venv && python manage.py compileme
 python manage.py check_uptime         # cron in production
 python manage.py reverify_domains     # cron in production
 python manage.py community_daily      # cron in production (scores, 90-day notification cleanup)
+python manage.py prune_support        # cron in production (closed support messages older than 12 months)
 python manage.py post_welcome         # once: pinned welcome thread from the system account
 python manage.py seed_community       # DEBUG only: demo community content (--clear removes it)
 ```
