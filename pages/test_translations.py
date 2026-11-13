@@ -218,3 +218,33 @@ class RenderedPagesTests(TestCase):
                     self.assertIn(f'<html lang="{code}"', html)
                     leftovers = sorted({msgid for text in texts(html) for msgid, rx in patterns if rx.match(text)})
                     self.assertEqual(leftovers, [], f"English UI text on {url} in {code}")
+
+    def test_form_labels_are_translated(self):
+        """A form field without an explicit label gets Django's English name for it ("Live url"), which is not in any
+        catalog, so the check above cannot see it. Ukrainian is the canary: a Latin-only label that reads the same as
+        in English was never translated (except names we keep on purpose: GitHub, Markdown, ...)."""
+        kept = {msgid for msgid, strings in po_entries(LOCALE_DIR / "uk" / "LC_MESSAGES" / "django.po").items()
+                if strings[0] == msgid}
+        from projects.models import Tool
+        kept |= set(Tool.objects.values_list("name", flat=True))  # data (built-with choices), not UI text
+        kept |= set(Project.objects.values_list("name", flat=True))  # pinned-project choices
+
+        def labels(html):
+            found = set()
+            for body in re.findall(r"<label\b[^>]*>(.*?)</label>", html, re.S):
+                text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", body)).strip()
+                if text:
+                    found.add(text)
+            return found
+
+        for user, url in self.pages() + [(None, "/support/"), (self.ann, "/support/")]:
+            with self.subTest(url=url, user=user and user.username):
+                if user:
+                    self.client.force_login(user)
+                else:
+                    self.client.logout()
+                english = labels(self.client.get(url, headers={"Accept-Language": "en"}).content.decode())
+                ukrainian = labels(self.client.get(url, headers={"Accept-Language": "uk"}).content.decode())
+                same = sorted(text for text in english & ukrainian
+                              if re.search(r"[A-Za-z]{3}", text) and text not in kept)
+                self.assertEqual(same, [], f"labels not translated on {url}")

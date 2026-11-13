@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 21:49+0000\n"
+"POT-Creation-Date: 2026-11-13 21:55+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Brazilian Portuguese\n"
@@ -158,33 +158,43 @@ msgstr "Projetos fixados"
 msgid "Up to 3 of your published projects, shown first on your profile."
 msgstr "Até 3 dos seus projetos publicados, mostrados primeiro no seu perfil."
 
-#: accounts/forms.py:111
+#: accounts/forms.py:110
+#
+msgid "Site language"
+msgstr "Idioma do site"
+
+#: accounts/forms.py:112
 msgid "Automatic (browser language)"
 msgstr "Automático (idioma do navegador)"
 
-#: accounts/forms.py:119 templates/moderation/mod/report.html:36
+#: accounts/forms.py:120
+#
+msgid "Your name"
+msgstr "Seu nome"
+
+#: accounts/forms.py:120 templates/moderation/mod/report.html:36
 msgid "Headline"
 msgstr "Resumo curto"
 
-#: accounts/forms.py:119
+#: accounts/forms.py:120
 msgid "Location"
 msgstr "Localização"
 
-#: accounts/forms.py:119
+#: accounts/forms.py:120
 msgid "Status"
 msgstr "Status"
 
-#: accounts/forms.py:120 templates/accounts/profile.html:69
+#: accounts/forms.py:121 templates/accounts/profile.html:69
 #: templates/accounts/profile.html:139 templates/moderation/mod/report.html:37
 msgctxt "profile"
 msgid "About"
 msgstr "Sobre"
 
-#: accounts/forms.py:123
+#: accounts/forms.py:124
 msgid "Shown instead of your username. Optional."
 msgstr "Mostrado no lugar do seu nome de usuário. Opcional."
 
-#: accounts/forms.py:124
+#: accounts/forms.py:125
 msgid ""
 "One line under your name, up to 80 characters. For example: Building small "
 "tools with AI."
@@ -192,15 +202,15 @@ msgstr ""
 "Uma linha sob o seu nome, até 80 caracteres. Por exemplo: Crio pequenas "
 "ferramentas com IA."
 
-#: accounts/forms.py:125
+#: accounts/forms.py:126
 msgid "City or country. Optional."
 msgstr "Cidade ou país. Opcional."
 
-#: accounts/forms.py:126
+#: accounts/forms.py:127
 msgid "A small label on your profile. Optional."
 msgstr "Uma pequena etiqueta no seu perfil. Opcional."
 
-#: accounts/forms.py:127
+#: accounts/forms.py:128
 msgid ""
 "Markdown works: links, lists, bold and code. Up to 1000 characters. HTML and "
 "images are not allowed."
@@ -208,40 +218,40 @@ msgstr ""
 "Markdown funciona: links, listas, negrito e código. Até 1000 caracteres. "
 "HTML e imagens não são permitidos."
 
-#: accounts/forms.py:138
+#: accounts/forms.py:139
 msgid "No status"
 msgstr "Sem status"
 
-#: accounts/forms.py:156 templates/accounts/settings.html:61
+#: accounts/forms.py:157 templates/accounts/settings.html:61
 msgid "Kind"
 msgstr "Tipo"
 
-#: accounts/forms.py:160 templates/accounts/settings.html:61
+#: accounts/forms.py:161 templates/accounts/settings.html:61
 msgid "Address"
 msgstr "Endereço"
 
-#: accounts/forms.py:194
+#: accounts/forms.py:195
 msgid "Use at most 10 skills."
 msgstr "Use no máximo 10 habilidades."
 
-#: accounts/forms.py:199
+#: accounts/forms.py:200
 msgid "Pin at most 3 projects."
 msgstr "Fixe no máximo 3 projetos."
 
-#: accounts/forms.py:208 accounts/forms.py:228 accounts/views.py:73
+#: accounts/forms.py:209 accounts/forms.py:229 accounts/views.py:73
 #: community/views.py:35 projects/views.py:39 social/views.py:73
 msgid "Too many changes in a short time. Try again in a few minutes."
 msgstr "Muitas alterações em pouco tempo. Tente novamente em alguns minutos."
 
-#: accounts/forms.py:286
+#: accounts/forms.py:287
 msgid "Accept the updated Terms to keep using your account."
 msgstr "Aceite os Termos atualizados para continuar usando sua conta."
 
-#: accounts/forms.py:298
+#: accounts/forms.py:299
 msgid "Type your username to confirm"
 msgstr "Digite seu nome de usuário para confirmar"
 
-#: accounts/forms.py:309
+#: accounts/forms.py:310
 msgid "This is not your username. Type it exactly as shown."
 msgstr "Esse não é o seu nome de usuário. Digite exatamente como aparece."
 
@@ -1648,6 +1658,11 @@ msgid_plural "Deleted %(count)s removed projects for good."
 msgstr[0] "%(count)s projeto removido excluído de vez."
 msgstr[1] "%(count)s projetos removidos excluídos de vez."
 
+#: projects/forms.py:45
+#
+msgid "Live URL"
+msgstr "Endereço do site"
+
 #: projects/forms.py:48
 msgid "Up to 5, separated by commas. For example: devtools, webhooks."
 msgstr "Até 5, separadas por vírgulas. Por exemplo: devtools, webhooks."
@@ -1664,15 +1679,29 @@ msgstr ""
 "Até 4 imagens no total, PNG, JPEG ou WebP, 5 MB cada. Você pode escolher "
 "várias de uma vez. A primeira é a capa."
 
-#: projects/forms.py:62 templates/pages/landing.html:123
+#: projects/forms.py:63
+msgid "Name"
+msgstr "Nome"
+
+#: projects/forms.py:63
+#
+msgid "Tagline"
+msgstr "Frase curta"
+
+#: projects/forms.py:63
+#
+msgid "Description"
+msgstr "Descrição"
+
+#: projects/forms.py:64 templates/pages/landing.html:123
 msgid "GitHub repository"
 msgstr "Repositório do GitHub"
 
-#: projects/forms.py:64
+#: projects/forms.py:67
 msgid "One line, up to 120 characters."
 msgstr "Uma linha, até 120 caracteres."
 
-#: projects/forms.py:65
+#: projects/forms.py:68
 msgid ""
 "Markdown works. Links, lists, bold and code are allowed; HTML and images are "
 "not."
@@ -1680,32 +1709,32 @@ msgstr ""
 "Markdown funciona. Links, listas, negrito e código são permitidos; HTML e "
 "imagens não."
 
-#: projects/forms.py:66
+#: projects/forms.py:69
 msgid "The address where people can use it."
 msgstr "O endereço onde as pessoas podem usar."
 
-#: projects/forms.py:67
+#: projects/forms.py:70
 msgid "Like owner/name, or paste the GitHub link. It is checked later."
 msgstr ""
 "No formato dono/nome, ou cole o link do GitHub. Ele é verificado depois."
 
-#: projects/forms.py:68
+#: projects/forms.py:71
 msgid "Self-declared: we do not check this."
 msgstr "Declarado pelo autor: não verificamos isto."
 
-#: projects/forms.py:95
+#: projects/forms.py:98
 msgid "Enter a public web address, like https://example.com."
 msgstr "Informe um endereço web público, como https://example.com."
 
-#: projects/forms.py:106 verification/repo.py:280
+#: projects/forms.py:109 verification/repo.py:280
 msgid "Use the form owner/name, for example octocat/hello-world."
 msgstr "Use o formato dono/nome, por exemplo octocat/hello-world."
 
-#: projects/forms.py:116 projects/views.py:353
+#: projects/forms.py:119 projects/views.py:353
 msgid "A project can have at most 4 screenshots. Remove one first."
 msgstr "Um projeto pode ter no máximo 4 capturas de tela. Remova uma primeiro."
 
-#: projects/forms.py:119
+#: projects/forms.py:122
 #, python-format
 msgid ""
 "A project can have at most 4 screenshots. You chose %(chosen)d; you can add "
@@ -1714,7 +1743,7 @@ msgstr ""
 "Um projeto pode ter no máximo 4 capturas de tela. Você escolheu %(chosen)d; "
 "pode adicionar mais %(left)d."
 
-#: projects/forms.py:139
+#: projects/forms.py:142
 msgid ""
 "Your images were not saved because of the problems above. Choose them again, "
 "then save."
@@ -1722,30 +1751,30 @@ msgstr ""
 "Suas imagens não foram salvas por causa dos problemas acima. Escolha-as de "
 "novo e salve."
 
-#: projects/forms.py:144
+#: projects/forms.py:147
 msgid "Use at most 5 tags."
 msgstr "Use no máximo 5 tags."
 
-#: projects/forms.py:180
+#: projects/forms.py:183
 msgid "What changed?"
 msgstr "O que mudou?"
 
-#: projects/forms.py:181
+#: projects/forms.py:184
 msgid ""
 "Up to 500 characters. **Bold**, *italic*, [links](https://…) and `code` work."
 msgstr ""
 "Até 500 caracteres. **Negrito**, *itálico*, [links](https://…) e `código` "
 "funcionam."
 
-#: projects/forms.py:183
+#: projects/forms.py:186
 msgid "Write a few words about the update first."
 msgstr "Escreva primeiro algumas palavras sobre a atualização."
 
-#: projects/forms.py:186
+#: projects/forms.py:189
 msgid "This is the launch"
 msgstr "Este é o lançamento"
 
-#: projects/forms.py:187
+#: projects/forms.py:190
 msgid ""
 "Marks this entry as Launched and sets the project's launch date to today. "
 "Only one per project."
@@ -1753,7 +1782,7 @@ msgstr ""
 "Marca esta entrada como Lançamento e define a data de lançamento do projeto "
 "como hoje. Apenas uma por projeto."
 
-#: projects/forms.py:197 projects/forms.py:210
+#: projects/forms.py:200 projects/forms.py:213
 msgid ""
 "This project already has a launch entry. Delete it first to mark another one."
 msgstr ""

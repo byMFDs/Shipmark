@@ -107,6 +107,7 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
         help_text=_("Up to 3 of your published projects, shown first on your profile."),
     )
     preferred_language = forms.ChoiceField(
+        label=_("Site language"),
         required=False,
         choices=[("", _("Automatic (browser language)"))] + list(settings.LANGUAGES),
     )
@@ -116,7 +117,7 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
         fields = ["display_name", "headline", "location", "status", "about", "preferred_language"]
         widgets = {"about": forms.Textarea(attrs={"rows": 6, "maxlength": 1000})}
         labels = {
-            "headline": _("Headline"), "location": _("Location"), "status": _("Status"),
+            "display_name": _("Your name"), "headline": _("Headline"), "location": _("Location"), "status": _("Status"),
             "about": pgettext_lazy("profile", "About"),
         }
         help_texts = {

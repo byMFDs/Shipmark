@@ -42,7 +42,7 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
     pressing another button. They are validated and re-encoded here; the view stores them.
     """
 
-    live_url = forms.URLField(required=False, max_length=200, assume_scheme="https")
+    live_url = forms.URLField(required=False, max_length=200, assume_scheme="https", label=_("Live URL"))
     tags_text = forms.CharField(
         required=False, max_length=200, label=_("Tags"),
         help_text=_("Up to 5, separated by commas. For example: devtools, webhooks."),
@@ -59,7 +59,10 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
             "description": forms.Textarea(attrs={"rows": 10, "maxlength": 5000}),
             "built_with": forms.CheckboxSelectMultiple,
         }
-        labels = {"repo_full_name": _("GitHub repository")}
+        labels = {
+            "name": _("Name"), "tagline": _("Tagline"), "description": _("Description"),
+            "repo_full_name": _("GitHub repository"),
+        }
         help_texts = {
             "tagline": _("One line, up to 120 characters."),
             "description": _("Markdown works. Links, lists, bold and code are allowed; HTML and images are not."),
