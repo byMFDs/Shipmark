@@ -183,7 +183,7 @@ def _render_thread(request, thread, form=None, parent=None, status=200):
         **item_context, "images": list(thread.images.all()), "has_next": has_next, "page": page,
         "next_url": next_url, "prev_url": f"{base}?{urlencode({'sort': sort, 'page': page - 1})}" if page > 1 else "",
         "sort": sort, "sort_urls": {key: f"{base}?sort={key}" for key in ranking.REPLY_SORTS},
-        "voted_thread": thread.pk in voted_threads, "parent": parent, "block": block,
+        "voted_thread": thread.pk in voted_threads, "parent": parent, "post_block_reason": block,
         "form": form if form is not None else (ReplyForm(user=user) if may_reply else None),
         "is_author": user.is_authenticated and thread.author_id == user.pk,
         "can_edit": user.is_authenticated and thread.author_id == user.pk and _thread_editable(thread),
@@ -231,7 +231,7 @@ def thread_new(request):
         else:
             thread = services.create_thread(user, data["board"], data["title"], data["body"], data["images"])
             return redirect(thread)
-    return render(request, "community/thread_form.html", {"form": form, "block": block, "thread": None,
+    return render(request, "community/thread_form.html", {"form": form, "post_block_reason": block, "thread": None,
                                                          "boards": _boards_with_counts()},
                   status=400 if form.errors else 200)
 
@@ -271,7 +271,7 @@ def thread_edit(request, pk):
             services.edit_thread(thread, form.cleaned_data["body"], form.cleaned_data.get("title"))
             return redirect(thread)
     return render(request, "community/thread_form.html", {
-        "form": form, "block": block, "thread": thread, "title_editable": title_editable,
+        "form": form, "post_block_reason": block, "thread": thread, "title_editable": title_editable,
     }, status=400 if form.errors else 200)
 
 
@@ -373,7 +373,7 @@ def reply_edit(request, pk):
         else:
             services.edit_reply(reply, form.cleaned_data["body"])
             return redirect(reply.get_absolute_url())
-    return render(request, "community/reply_form.html", {"form": form, "reply": reply, "block": block},
+    return render(request, "community/reply_form.html", {"form": form, "reply": reply, "post_block_reason": block},
                   status=400 if form.errors else 200)
 
 

@@ -162,3 +162,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-13: Polish round (branch `polish-2`, from `community-1`). Footer on one 12-column grid with shared control sizes; support form + private attachments + admin inbox + SMTP notice (Gmail steps in DEPLOY_NOTES); official/moderator badges as one popover component with the real date; "<n> people joined" in the header (honest count, cached 60 s, PUBLIC_USER_COUNT_MIN). Legal drafts, DATA_INVENTORY, DESIGN, EDITING, CLAUDE.md updated. Full suite green, `check --deploy` clean.
   Next: look at footer, support pages, badge panel and header count in a browser (both themes, 360-1440 px, de/fr); set up the Gmail inbox; fix the multi-line `{# #}` comments in five community templates (they print as text).
+
+- 2026-11-13: Polish-3 stage 0 (branch `polish-3`). /community/new/ printed "<Block Node ...>": views passed a context variable `block`, which Django shadows inside `{% block %}` with the BlockNode; renamed to `post_block_reason` (also fixes the thread page for locked threads / muted members, who now see the real reason). Leak tests for every community page and role, main pages, error pages, plus template source checks. 1075 tests green.
+  Next: "GO 1" (names and copy). Status: `docs/POLISH3_STATUS.md`.

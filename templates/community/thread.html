@@ -88,8 +88,8 @@
         <p>{% translate "Sign in to reply and vote." %}</p>
         <a class="btn btn--secondary btn--halo" href="{% url 'account_login' %}?next={{ request.path|urlencode }}">{% icon "github" %}{% translate "Sign in with GitHub" %}</a>
       </div>
-    {% elif block %}
-      <p class="notice" role="status">{{ block }}</p>
+    {% elif post_block_reason %}
+      <p class="notice" role="status">{{ post_block_reason }}</p>
     {% endif %}
   </section>
 {% endblock %}

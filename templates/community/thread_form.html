@@ -13,7 +13,7 @@
       {% elif not thread %}<p class="lede">{% translate "A clear title gets better answers: say what you tried and what you need." %}</p>{% endif %}
     </div>
   </header>
-  {% if block %}<p class="notice" role="status">{{ block }}</p>{% endif %}
+  {% if post_block_reason %}<p class="notice" role="status">{{ post_block_reason }}</p>{% endif %}
   <form method="post" enctype="multipart/form-data" class="panel composer-form" novalidate data-busy-form>
     {% csrf_token %}
     {% include "includes/form_errors.html" %}
