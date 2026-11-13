@@ -1340,22 +1340,30 @@ a.chip::after {
   border-top: 1px solid var(--line);
 }
 
-/* ---------- Site footer ---------- */
+/* ---------- Site footer ----------
+   One 12-column grid. Phones: brand across, link columns two by two, the bottom bar stacked with full-width controls.
+   48em: brand across, three columns of 4. 64em: brand and the three columns take 3 each; the bar splits 6 / 6.
+   Every control (language select, its button, theme switch) shares --footer-control-h, --radius-btn and a
+   --line-strong edge; on touch screens they all grow to the large control height together. */
 
 .site-footer {
+  --footer-control-h: var(--control-h);
+  --footer-gap: var(--s-5);
+  margin-top: var(--section);
   padding-bottom: calc(var(--s-6) + env(safe-area-inset-bottom));
   color: var(--muted);
 }
 
-.site-footer {
-  margin-top: var(--section);
+@media (pointer: coarse) {
+  .site-footer { --footer-control-h: var(--control-h-lg); }
 }
 
 .site-footer__inner {
   position: relative;
   display: grid;
-  gap: var(--s-6);
-  padding-top: var(--s-6);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-6) var(--footer-gap);
+  padding-top: var(--s-7);
 }
 
 /* Hairline over the footer, content width only (like the header). */
@@ -1374,102 +1382,134 @@ a.chip::after {
 .site-footer--flush .site-footer__inner::before { content: none; }
 
 .site-footer__brand {
+  grid-column: 1 / -1;
   display: grid;
   gap: var(--s-2);
+  align-content: start;
   justify-items: start;
 }
 
-.site-footer__brand a { display: inline-flex; align-items: center; min-height: var(--control-h); color: var(--text); }
-
-.site-footer__meta {
-  display: grid;
-  gap: var(--s-1);
-  font-size: var(--fs--1);
-}
+.site-footer__home { display: inline-flex; align-items: center; min-height: var(--control-h); color: var(--text); }
 .site-footer__brand .site-logo { height: 1.5rem; }
+.site-footer__domain { margin: 0; font-size: var(--fs--2); letter-spacing: var(--track-label); }
+.site-footer__tagline { margin: 0; max-width: 28ch; color: var(--text); }
+
+.site-footer__social { display: flex; flex-wrap: wrap; gap: 0 var(--s-4); margin: 0; padding: 0; list-style: none; }
+.site-footer__social a { display: inline-flex; align-items: center; min-height: var(--control-h); color: var(--muted); }
+
+.site-footer__col { min-width: 0; }
+.site-footer__heading { margin: 0 0 var(--s-1); color: var(--text); }
 
 .site-footer__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 var(--s-5);
-  list-style: none;
+  display: grid;
+  justify-items: start;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
+/* A hairline grows under the hovered or focused link (transform only). Long words (de, fr) wrap inside the column. */
 .site-footer__links a {
+  position: relative;
   display: inline-flex;
   align-items: center;
   min-height: var(--control-h);
-  min-width: var(--control-h);
   color: var(--muted);
   text-decoration: none;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
   transition: color var(--t-fast);
 }
 
+.site-footer__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.625rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-base) var(--ease-out);
+}
+
+[dir="rtl"] .site-footer__links a::after { transform-origin: right; }
+
+.site-footer__links a:focus-visible { color: var(--text); }
+.site-footer__links a:focus-visible::after { transform: scaleX(1); }
+
 @media (hover: hover) {
-  .site-footer__links a:hover { color: var(--text); text-decoration: underline; }
+  .site-footer__links a:hover { color: var(--text); }
+  .site-footer__links a:hover::after { transform: scaleX(1); }
 }
 
-.site-footer__controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: var(--s-4) var(--s-5);
+/* Bottom bar: copyright (sentence case, from LEGAL_OWNER_NAME) and the controls. */
+.site-footer__bar {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--s-4) var(--footer-gap);
+  align-items: center;
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
 }
 
-@media (min-width: 64em) {
-  .site-footer__inner {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) auto;
-    align-items: center;
-    gap: var(--s-6);
-  }
-  .site-footer__controls { justify-content: flex-end; }
+.site-footer__copy { margin: 0; font-size: var(--fs--1); }
+
+.site-footer__controls { display: grid; gap: var(--s-3); }
+
+/* Language: one control. Without JS the select and "Change" are joined (plain POST); with JS the select sends the
+   form on change (language.js) and the button is hidden, so the select gets all four corners. */
+.lang-form { display: flex; min-width: 0; }
+
+.lang-form__select { flex: 1; min-width: 0; }
+
+.lang-form__select .select {
+  min-height: var(--footer-control-h);
+  padding-left: 2.5rem;
+  border-radius: var(--radius-btn) 0 0 var(--radius-btn);
 }
 
-/* Language: select and button joined into one control. Works without JS (plain POST). */
-.lang-form {
-  display: flex;
-  align-items: flex-end;
+.lang-form__select > .icon:first-child { left: 0.875rem; right: auto; }
+
+.lang-form__submit {
+  min-height: var(--footer-control-h);
+  margin-left: -1px;
+  border-radius: 0 var(--radius-btn) var(--radius-btn) 0;
 }
 
-.lang-form .field { min-width: 10rem; }
-.lang-form .btn { margin-left: -1px; }
+.js .lang-form__submit { display: none; }
+.js .lang-form__select .select { border-radius: var(--radius-btn); }
 
-.site-footer .field__label {
-  font-family: var(--font-mono);
-  font-size: var(--fs--2);
-  font-weight: 400;
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
-}
-
-/* Theme switch: a framed track; the chosen option is filled with the text color. */
+/* Theme switch: a framed track of three equal options. The chosen one is filled with the text colour; where :has()
+   works the fill is one block that slides to the chosen option. */
 .theme-switch {
-  display: inline-flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-height: var(--footer-control-h);
   padding: 3px;
   background: var(--surface);
   border: 1px solid var(--line-strong);
+  border-radius: var(--radius-btn);
 }
 
 .theme-switch__option {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--s-2);
-  min-height: calc(var(--control-h) - 8px);
-  min-width: 5.5rem;
+  min-height: calc(var(--footer-control-h) - 8px);
   padding: 0 var(--s-3);
   background: transparent;
   border: 0;
+  border-radius: calc(var(--radius-btn) - 3px);
   color: var(--muted);
   font-size: var(--fs--1);
+  white-space: nowrap;
   cursor: pointer;
   transition: background-color var(--t-base), color var(--t-base);
 }
-
-.theme-switch__option .icon { width: 1rem; height: 1rem; }
 
 .theme-switch__option[aria-pressed="true"] {
   background: var(--text);
@@ -1480,8 +1520,37 @@ a.chip::after {
   .theme-switch__option:not([aria-pressed="true"]):hover { color: var(--text); }
 }
 
-@media (pointer: coarse) {
-  .theme-switch__option { min-height: var(--control-h); min-width: 0; }
+@supports selector(:has(*)) {
+  .theme-switch::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc((100% - 6px) / 3);
+    background: var(--text);
+    border-radius: calc(var(--radius-btn) - 3px);
+    transition: transform var(--t-base) var(--ease-out);
+  }
+  .theme-switch:has([data-theme-choice="light"][aria-pressed="true"])::before { transform: translateX(100%); }
+  .theme-switch:has([data-theme-choice="dark"][aria-pressed="true"])::before { transform: translateX(200%); }
+  .theme-switch__option[aria-pressed="true"] { background: transparent; }
+}
+
+@media (min-width: 48em) {
+  .site-footer__inner { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .site-footer__col { grid-column: span 4; }
+  .site-footer__bar { grid-template-columns: minmax(0, 1fr) auto; }
+  .site-footer__controls { display: flex; flex-wrap: wrap; justify-content: flex-end; }
+  .lang-form { width: 13rem; }
+}
+
+@media (min-width: 64em) {
+  .site-footer__brand { grid-column: 1 / span 3; }
+  .site-footer__col { grid-column: span 3; }
+  .site-footer__bar { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .site-footer__copy { grid-column: 1 / span 6; }
+  .site-footer__controls { grid-column: 7 / span 6; }
 }
 
 /* ---------- Toast ---------- */

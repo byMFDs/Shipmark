@@ -346,12 +346,15 @@ def maybe_url(name, *args):
 # Links appear by themselves once these URL names exist.
 NAV_LINKS = [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore")), ("news:list", (), _("News")),
              ("community:home", (), _("Community"))]  # the last one only while COMMUNITY_ENABLED is on
-FOOTER_LINKS = [
-    ("pages:about", (), _("About")),
-    ("pages:how_proof_works", (), _("How proof works")),
-    ("pages:legal", ("privacy",), _("Privacy")),
-    ("pages:legal", ("terms",), _("Terms")),
-    ("pages:legal", ("cookies",), _("Cookies")),
+# Footer columns: (heading, [(url name, args, label)]). A link appears only once its URL exists; Community only while
+# COMMUNITY_ENABLED is on (like the header).
+FOOTER_COLUMNS = [
+    (_("Product"), [("social:feed", (), _("Feed")), ("pages:explore", (), _("Explore")), ("news:list", (), _("News")),
+                    ("community:home", (), _("Community"))]),
+    (_("Company"), [("pages:about", (), _("About")), ("pages:how_proof_works", (), _("How proof works")),
+                    ("support:form", (), _("Support"))]),
+    (_("Legal"), [("pages:legal", ("privacy",), _("Privacy")), ("pages:legal", ("terms",), _("Terms")),
+                  ("pages:legal", ("cookies",), _("Cookies"))]),
 ]
 
 DEMO_USER = {"name": "Olena Marchenko", "username": "olena"}
@@ -415,16 +418,22 @@ def site_header(context, demo="", compact=False):
 def site_footer(context, demo=False, flush=False):
     """Footer. `flush`: starts right under a dark band, without margin or hairline (landing)."""
     request = context.get("request")
-    links = []
-    for name, args, label in FOOTER_LINKS:
-        url = "#" if demo else _url(name, *args)
-        if url:
-            links.append({"url": url, "label": label})
+    columns = []
+    for heading, items in FOOTER_COLUMNS:
+        links = []
+        for name, args, label in items:
+            if name.startswith("community:") and not settings.COMMUNITY_ENABLED:
+                continue
+            url = "#" if demo else _url(name, *args)
+            if url:
+                links.append({"url": url, "label": label})
+        if links:
+            columns.append({"heading": heading, "links": links})
     brand = context.get("brand")
     return {
         "brand": brand,
         "home_url": "#" if demo else reverse("pages:landing"),
-        "links": links,
+        "columns": columns,
         "social_links": getattr(brand, "SOCIAL_LINKS", {}),
         "set_language_url": "#" if demo else _url("set_language"),
         "languages": settings.LANGUAGES,

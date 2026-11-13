@@ -1,46 +1,54 @@
-{% load i18n ui %}
+{% load i18n ui %}{% comment %}One 12-column grid (components.css "Site footer"): brand block and three link columns of 3 each from
+64em, brand across the top and three columns of 4 from 48em, brand + two columns on phones. Bottom bar: copyright left,
+language and theme right. Every control shares --footer-control-h, --radius-btn corners and a --line-strong edge.{% endcomment %}
 <footer class="site-footer{% if flush %} site-footer--flush{% endif %}">
-  <div class="container site-footer__inner">
+  <div class="container site-footer__inner" data-reveal>
     <div class="site-footer__brand">
-      <a href="{{ home_url }}">
+      <a class="site-footer__home" href="{{ home_url }}">
         {% inline_svg brand.LOGO "site-logo" %}
         <span class="visually-hidden">{% blocktranslate with name=brand.SITE_NAME %}{{ name }} home{% endblocktranslate %}</span>
       </a>
-      <p class="site-footer__meta"><span class="mono">{{ brand.SITE_DOMAIN }}</span><span class="label">&copy; {{ year }} {{ brand.LEGAL_OWNER_NAME }}</span></p>
-    </div>
-
-    {% if links or social_links %}
-      <nav aria-label="{% translate 'Footer' %}">
-        <ul class="site-footer__links">
-          {% for link in links %}<li><a href="{{ link.url }}">{{ link.label }}</a></li>{% endfor %}
+      <p class="site-footer__domain mono">{{ brand.SITE_DOMAIN }}</p>
+      <p class="site-footer__tagline">{{ brand.TAGLINE }}</p>
+      {% if social_links %}
+        <ul class="site-footer__social">
           {% for label, url in social_links.items %}<li><a href="{{ url }}" rel="me noopener">{{ label }}</a></li>{% endfor %}
         </ul>
-      </nav>
-    {% endif %}
+      {% endif %}
+    </div>
 
-    <div class="site-footer__controls">
-      {% if set_language_url %}
-        <form class="lang-form" action="{{ set_language_url }}" method="post">
-          {% csrf_token %}
-          <input type="hidden" name="next" value="{{ next_url }}">
-          <label class="field">
-            <span class="field__label">{% translate "Language" %}</span>
-            <span class="select-wrap">
-              <select class="select" name="language">
+    {% for column in columns %}
+      <nav class="site-footer__col" aria-labelledby="footer-col-{{ forloop.counter }}">
+        <h2 class="site-footer__heading label" id="footer-col-{{ forloop.counter }}">{{ column.heading }}</h2>
+        <ul class="site-footer__links">
+          {% for link in column.links %}<li><a href="{{ link.url }}">{{ link.label }}</a></li>{% endfor %}
+        </ul>
+      </nav>
+    {% endfor %}
+
+    <div class="site-footer__bar">
+      <p class="site-footer__copy">&copy; {{ year }} {{ brand.LEGAL_OWNER_NAME }}</p>
+
+      <div class="site-footer__controls">
+        {% if set_language_url %}
+          <form class="lang-form" action="{{ set_language_url }}" method="post" data-lang-form>
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next_url }}">
+            <label class="visually-hidden" for="footer-language">{% translate "Language" %}</label>
+            <span class="select-wrap lang-form__select">
+              {% icon "globe" %}
+              <select class="select" id="footer-language" name="language" data-autosubmit>
                 {% for code, name in languages %}
                   <option value="{{ code }}" lang="{{ code }}"{% if code == current_language %} selected{% endif %}>{{ name }}</option>
                 {% endfor %}
               </select>
               {% icon "chevron-down" %}
             </span>
-          </label>
-          <button class="btn btn--secondary" type="submit">{% translate "Change" %}</button>
-        </form>
-      {% endif %}
+            <button class="btn btn--secondary lang-form__submit" type="submit">{% translate "Change" %}</button>
+          </form>
+        {% endif %}
 
-      <div class="field needs-js">
-        <span class="field__label" aria-hidden="true">{% translate "Theme" %}</span>
-        <div class="theme-switch" role="group" aria-label="{% translate 'Theme' %}">
+        <div class="theme-switch needs-js" role="group" aria-label="{% translate 'Theme' %}">
           <button type="button" class="theme-switch__option" data-theme-choice="system" aria-pressed="true">{% translate "System" %}</button>
           <button type="button" class="theme-switch__option" data-theme-choice="light" aria-pressed="false">{% translate "Light" %}</button>
           <button type="button" class="theme-switch__option" data-theme-choice="dark" aria-pressed="false">{% translate "Dark" %}</button>

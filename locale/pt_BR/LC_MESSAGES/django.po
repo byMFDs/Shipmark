@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 16:35+0000\n"
+"POT-Creation-Date: 2026-11-13 17:26+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Brazilian Portuguese\n"
@@ -401,10 +401,11 @@ msgid "Restore selected replies (superusers)"
 msgstr "Restaurar as respostas selecionadas (somente superusuários)"
 
 #: community/apps.py:8 config/settings/base.py:342 pages/templatetags/ui.py:348
-#: templates/community/home.html:4 templates/community/home.html:5
-#: templates/community/home.html:11 templates/community/home.html:12
-#: templates/community/notifications.html:10 templates/community/thread.html:4
-#: templates/community/thread.html:10 templates/community/thread_form.html:10
+#: pages/templatetags/ui.py:353 templates/community/home.html:4
+#: templates/community/home.html:5 templates/community/home.html:11
+#: templates/community/home.html:12 templates/community/notifications.html:10
+#: templates/community/thread.html:4 templates/community/thread.html:10
+#: templates/community/thread_form.html:10
 msgid "Community"
 msgstr "Comunidade"
 
@@ -689,52 +690,52 @@ msgstr "Lâmpada"
 msgid "Handshake"
 msgstr "Aperto de mãos"
 
-#: community/views.py:227
+#: community/views.py:228
 msgid "You started several threads in the last hour. Try again later."
 msgstr "Você abriu vários tópicos na última hora. Tente novamente mais tarde."
 
-#: community/views.py:229 community/views.py:342
+#: community/views.py:230 community/views.py:343
 msgid "You already posted this."
 msgstr "Você já publicou isso."
 
-#: community/views.py:256
+#: community/views.py:257
 msgid "This thread is locked or removed. It cannot be changed."
 msgstr "Este tópico está trancado ou removido. Não pode ser alterado."
 
-#: community/views.py:298
+#: community/views.py:299
 msgid "Thread deleted."
 msgstr "Tópico excluído."
 
-#: community/views.py:311
+#: community/views.py:312
 msgid "The reply you are answering is gone."
 msgstr "A resposta que você está respondendo não existe mais."
 
-#: community/views.py:332 templates/community/thread.html:19
+#: community/views.py:333 templates/community/thread.html:19
 msgid "This thread is locked. Only moderators can reply."
 msgstr "Este tópico está trancado. Só moderadores podem responder."
 
-#: community/views.py:340
+#: community/views.py:341
 msgid "You replied many times in the last hour. Try again later."
 msgstr ""
 "Você respondeu muitas vezes na última hora. Tente novamente mais tarde."
 
-#: community/views.py:362
+#: community/views.py:363
 msgid "This reply cannot be changed."
 msgstr "Esta resposta não pode ser alterada."
 
-#: community/views.py:391
+#: community/views.py:392
 msgid "Reply deleted."
 msgstr "Resposta excluída."
 
-#: community/views.py:434
+#: community/views.py:435
 msgid "Bad request."
 msgstr "Requisição inválida."
 
-#: community/views.py:436
+#: community/views.py:437
 msgid "You cannot vote for your own post."
 msgstr "Você não pode votar na sua própria publicação."
 
-#: community/views.py:449 social/views.py:67
+#: community/views.py:450 social/views.py:67
 msgid "Sign in to do this."
 msgstr "Entre na sua conta para fazer isso."
 
@@ -838,9 +839,9 @@ msgid "Replies"
 msgstr "Respostas"
 
 #: config/settings/base.py:351 news/apps.py:8 pages/templatetags/ui.py:347
-#: templates/news/list.html:4 templates/news/list.html:5
-#: templates/news/list.html:14 templates/social/feed.html:18
-#: templates/social/feed.html:35
+#: pages/templatetags/ui.py:352 templates/news/list.html:4
+#: templates/news/list.html:5 templates/news/list.html:14
+#: templates/social/feed.html:18 templates/social/feed.html:35
 msgid "News"
 msgstr "Novidades"
 
@@ -1474,35 +1475,52 @@ msgstr "agora mesmo"
 msgid "%(time)s ago"
 msgstr "há %(time)s"
 
-#: pages/templatetags/ui.py:347 templates/social/feed.html:4
-#: templates/social/feed.html:5 templates/social/feed.html:11
+#: pages/templatetags/ui.py:347 pages/templatetags/ui.py:352
+#: templates/social/feed.html:4 templates/social/feed.html:5
+#: templates/social/feed.html:11
 msgid "Feed"
 msgstr "Feed"
 
-#: pages/templatetags/ui.py:347 templates/pages/explore.html:4
-#: templates/pages/explore.html:5 templates/pages/explore.html:16
-#: templates/social/feed.html:20
+#: pages/templatetags/ui.py:347 pages/templatetags/ui.py:352
+#: templates/pages/explore.html:4 templates/pages/explore.html:5
+#: templates/pages/explore.html:16 templates/social/feed.html:20
 msgid "Explore"
 msgstr "Explorar"
 
-#: pages/templatetags/ui.py:350
+#: pages/templatetags/ui.py:352
+msgid "Product"
+msgstr "Produto"
+
+#: pages/templatetags/ui.py:354
+msgid "Company"
+msgstr "Empresa"
+
+#: pages/templatetags/ui.py:354
 msgid "About"
 msgstr "Sobre"
 
-#: pages/templatetags/ui.py:351 templates/pages/landing.html:279
+#: pages/templatetags/ui.py:354 templates/pages/landing.html:279
 #: templates/social/feed.html:106
 msgid "How proof works"
 msgstr "Como funciona a comprovação"
 
-#: pages/templatetags/ui.py:352
+#: pages/templatetags/ui.py:355
+msgid "Support"
+msgstr "Suporte"
+
+#: pages/templatetags/ui.py:356
+msgid "Legal"
+msgstr "Legal"
+
+#: pages/templatetags/ui.py:356
 msgid "Privacy"
 msgstr "Privacidade"
 
-#: pages/templatetags/ui.py:353
+#: pages/templatetags/ui.py:356
 msgid "Terms"
 msgstr "Termos"
 
-#: pages/templatetags/ui.py:354
+#: pages/templatetags/ui.py:357
 msgid "Cookies"
 msgstr "Cookies"
 
@@ -2535,7 +2553,7 @@ msgstr "Link %(n)s: endereço"
 msgid "Publish a project first, then you can pin it here."
 msgstr "Publique um projeto primeiro, depois você poderá fixá-lo aqui."
 
-#: templates/accounts/settings.html:84 templates/includes/site_footer.html:27
+#: templates/accounts/settings.html:84 templates/includes/site_footer.html:37
 msgid "Language"
 msgstr "Idioma"
 
@@ -2544,8 +2562,7 @@ msgid "Save settings"
 msgstr "Salvar configurações"
 
 #: templates/accounts/settings.html:92 templates/accounts/settings.html:94
-#: templates/includes/site_footer.html:42
-#: templates/includes/site_footer.html:43
+#: templates/includes/site_footer.html:51
 msgid "Theme"
 msgstr "Tema"
 
@@ -2553,15 +2570,15 @@ msgstr "Tema"
 msgid "Saved in this browser only."
 msgstr "Salvo apenas neste navegador."
 
-#: templates/accounts/settings.html:95 templates/includes/site_footer.html:44
+#: templates/accounts/settings.html:95 templates/includes/site_footer.html:52
 msgid "System"
 msgstr "Sistema"
 
-#: templates/accounts/settings.html:96 templates/includes/site_footer.html:45
+#: templates/accounts/settings.html:96 templates/includes/site_footer.html:53
 msgid "Light"
 msgstr "Claro"
 
-#: templates/accounts/settings.html:97 templates/includes/site_footer.html:46
+#: templates/accounts/settings.html:97 templates/includes/site_footer.html:54
 msgid "Dark"
 msgstr "Escuro"
 
@@ -2604,7 +2621,7 @@ msgstr "Últimas denúncias abertas"
 msgid "No open reports."
 msgstr "Nenhuma denúncia aberta."
 
-#: templates/base.html:47
+#: templates/base.html:48
 msgid "Skip to content"
 msgstr "Ir para o conteúdo"
 
@@ -3257,16 +3274,12 @@ msgstr "Corrija estes problemas e tente de novo."
 msgid "Not yet"
 msgstr "Ainda não"
 
-#: templates/includes/site_footer.html:7 templates/includes/site_header.html:6
+#: templates/includes/site_footer.html:9 templates/includes/site_header.html:6
 #, python-format
 msgid "%(name)s home"
 msgstr "Página inicial de %(name)s"
 
-#: templates/includes/site_footer.html:13
-msgid "Footer"
-msgstr "Rodapé"
-
-#: templates/includes/site_footer.html:37
+#: templates/includes/site_footer.html:47
 msgid "Change"
 msgstr "Alterar"
 
