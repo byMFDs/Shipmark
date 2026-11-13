@@ -1,6 +1,6 @@
-{% load i18n static ui %}{# The text, image and sticker part of a post form. Needs: form (with body, images; sticker on replies),
+{% load i18n static ui %}{% comment %} The text, image and sticker part of a post form. Needs: form (with body, images; sticker on replies),
    max_images, prefix. Works as a plain form without JS (file input and <select>); composer.js adds drag and drop,
-   previews (blob: URLs, allowed in the CSP only on these pages), removing a chosen file and the sticker picker. #}
+   previews (blob: URLs, allowed in the CSP only on these pages), removing a chosen file and the sticker picker. {% endcomment %}
 <div class="composer" data-composer data-max="{{ max_images }}"
      data-too-many="{% blocktranslate count counter=max_images %}You can add at most {{ counter }} image.{% plural %}You can add at most {{ counter }} images.{% endblocktranslate %}"
      data-bad-type="{% translate 'Use a PNG, JPEG or WebP image.' %}" data-too-big="{% translate 'The image is larger than 5 MB.' %}">

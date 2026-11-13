@@ -1,5 +1,5 @@
-{% load i18n %}{# Images of a post: a grid for 1-4 images, each tile a link to the display copy (the lightbox opens it with JS).
-   Needs: images. Tiles keep their shape with CSS (aspect-ratio + object-fit), and width/height come from the file. #}
+{% load i18n %}{% comment %} Images of a post: a grid for 1-4 images, each tile a link to the display copy (the lightbox opens it with JS).
+   Needs: images. Tiles keep their shape with CSS (aspect-ratio + object-fit), and width/height come from the file. {% endcomment %}
 {% if images %}{% with count=images|length %}
 <div class="media-grid media-grid--{{ count }}" data-gallery>
   {% for image in images %}

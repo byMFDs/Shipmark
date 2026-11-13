@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n static ui %}
-{# Every community page: boards on the left (from 72em), the page in the middle, a panel on the right. One column on
-   phones, where the boards fold above the content. Layout classes come from feed.css (shared, not changed here). #}
+{% comment %} Every community page: boards on the left (from 72em), the page in the middle, a panel on the right. One column on
+   phones, where the boards fold above the content. Layout classes come from feed.css (shared, not changed here). {% endcomment %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}"><link rel="stylesheet" href="{% static 'css/pages/community.css' %}">{% endblock %}
 
 {% block content %}

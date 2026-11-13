@@ -1,5 +1,5 @@
-{% load i18n ui %}{# Upvote. Needs: action (url), voted, score, own (no button on your own post). A plain POST
-   without JS; community.js turns it into an optimistic toggle. #}
+{% load i18n ui %}{% comment %} Upvote. Needs: action (url), voted, score, own (no button on your own post). A plain POST
+   without JS; community.js turns it into an optimistic toggle. {% endcomment %}
 {% if user.is_authenticated and not own and action %}
   <form class="vote" method="post" action="{{ action }}" data-vote-form data-error="{% translate 'Could not save your vote. Try again.' %}">
     {% csrf_token %}<input type="hidden" name="value" value="{% if voted %}0{% else %}1{% endif %}">
