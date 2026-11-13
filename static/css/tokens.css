@@ -48,6 +48,15 @@
   --pad: 1rem;
   --control-h: 2.75rem;
   --control-h-lg: 3.25rem;
+  --btn-pad: 1.25rem;     /* side padding of a button; .btn--lg 1.375rem */
+  --btn-pad-lg: 1.375rem;
+  --chip-pad: 0.625rem;   /* side padding of chips (hallmarks, tags); small chips use --s-2 */
+
+  /* Icons: three sizes (POLISH3 stage 3b). s = meta lines and small controls, m = buttons and menus (the default),
+     l = empty states. Inside a mono chip an icon follows the chip's text: 1.1em. Stroke 1.5px everywhere. */
+  --icon-s: 1rem;
+  --icon-m: 1.25rem;
+  --icon-l: 1.5rem;
 
   /* Motion. Durations are short; loops are slow. See motion.css. */
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);

@@ -182,7 +182,7 @@
   color: var(--muted);
 }
 
-.hallmark-info__toggle .icon { width: 1rem; height: 1rem; transition: transform var(--t-base) var(--ease-out); }
+.hallmark-info__toggle .icon { width: var(--icon-s); height: var(--icon-s); transition: transform var(--t-base) var(--ease-out); }
 .hallmark-info[open] .hallmark-info__toggle .icon { transform: rotate(180deg); }
 
 @media (hover: hover) {
@@ -365,7 +365,7 @@
 .log-form [hidden] { display: none; } /* .field sets display: grid, which would win over [hidden] */
 
 .log {
-  margin: 0 0 0 4px;
+  margin: 0 0 0 var(--s-1);
   padding: 0;
   list-style: none;
   border-left: 1px solid var(--line-strong);

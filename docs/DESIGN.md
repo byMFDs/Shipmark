@@ -80,6 +80,16 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
 - Space (4px base): s-1 .25rem ... s-9 6rem. Radius 0 (`--radius`), buttons 10px (`--radius-btn`, changed 2026-11-12 in the
   features round). Focus: 2px `--focus` outline, offset 2px (3px on buttons; the outline follows the rounded corners).
 - Frames: 1px `--line` hairline; control edges use `--line-strong` (3:1). Press: buttons scale .98.
+- **One spacing scale** (Polish-3 3b): margins, paddings and gaps use `--s-1`...`--s-9` only. Rhythm: between page
+  sections `--s-7`, between panels `--s-5`, inside a panel `--s-4`, label to field `--s-2`. Named exceptions as tokens:
+  `--btn-pad` 1.25rem / `--btn-pad-lg`, `--chip-pad` .625rem, the 9px field padding that centres text in a 44px control,
+  hairline geometry in px (uptime cells, 1px overlaps), and em spacing inside running text.
+- **One icon scale:** `--icon-s` 16px (meta lines, small controls, chevrons), `--icon-m` 20px (buttons, menus; the
+  default `.icon`), `--icon-l` 24px (empty states). Inside a mono chip an icon follows the chip text (1.1em). The text
+  arrow after a link label (`.arrow`) is 14px on purpose: it belongs to the words, not to the control.
+- **Alignment rules:** text left-aligned; icon + label = `inline-flex`, centred, gap `--s-2`; numbers `tabular-nums`;
+  in a row with 1-2 lines of text the avatar and the action are centred, with 3+ lines they sit at the top; a card's
+  actions sit at its bottom; a name and its badges never break apart; tab labels never break inside a word.
 
 ## Layout
 - Content max 1200px; side padding max(1rem, safe-area inset) -> 1.5rem at 48em -> 2rem at 64em (`.container`).

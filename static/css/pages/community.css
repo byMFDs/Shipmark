@@ -179,7 +179,7 @@
 
 .thread-card__by a { color: var(--text); }
 .thread-card__replies { display: inline-flex; align-items: center; gap: var(--s-1); color: var(--muted) !important; text-decoration: none; }
-.thread-card__replies .icon { width: 1rem; height: 1rem; }
+.thread-card__replies .icon { width: var(--icon-s); height: var(--icon-s); }
 
 /* A small cover when the thread has images: same shape whatever the picture (cover crop), sized by the grid. */
 .thread-card__thumb {
@@ -225,7 +225,7 @@
   white-space: nowrap;
 }
 
-.thread-chip .icon { width: 0.85rem; height: 0.85rem; }
+.thread-chip .icon { width: 1.1em; height: 1.1em; } /* follows the chip's text */
 
 /* ---------- Upvote ---------- */
 
@@ -247,7 +247,7 @@
   transition: color var(--t-fast) var(--ease-out), background-color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out);
 }
 
-.vote__button .icon { width: 1.15rem; height: 1.15rem; }
+.vote__button .icon { width: var(--icon-m); height: var(--icon-m); }
 .vote__button[aria-pressed="true"] { color: var(--paper); background: var(--text); border-color: var(--text); }
 .vote__button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .vote__button:disabled { cursor: progress; }
@@ -256,7 +256,7 @@
 .vote__count { min-width: 2ch; font-family: var(--font-mono); font-size: var(--fs--1); font-variant-numeric: tabular-nums; text-align: center; }
 
 .vote--static { flex-direction: column; color: var(--muted); }
-.vote--static > .icon { width: 1.15rem; height: 1.15rem; margin-block: 0.7rem 0; }
+.vote--static > .icon { width: var(--icon-m); height: var(--icon-m); margin-block: var(--s-3) 0; }
 .thread-post__actions .vote--static,
 .reply__actions .vote--static { flex-direction: row; align-items: center; min-height: var(--control-h); }
 .thread-post__actions .vote--static > .icon,
@@ -294,7 +294,7 @@
 }
 
 .thread-post__actions { padding: var(--s-3) var(--s-5); border-top: 1px solid var(--line); }
-.thread-post__actions > .btn .icon, .reply__action .icon { width: 1rem; height: 1rem; }
+.thread-post__actions > .btn .icon, .reply__action .icon { width: var(--icon-s); height: var(--icon-s); }
 
 @media (min-width: 48em) {
   .thread-post__title { font-size: var(--fs-4); }
@@ -368,7 +368,7 @@
   cursor: pointer;
 }
 
-.reply__collapse .icon { width: 1rem; height: 1rem; transition: transform var(--t-base) var(--ease-out); }
+.reply__collapse .icon { width: var(--icon-s); height: var(--icon-s); transition: transform var(--t-base) var(--ease-out); }
 .reply__collapse[aria-expanded="false"] .icon { transform: rotate(-90deg); }
 .reply__collapse:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 @media (hover: hover) { .reply__collapse:hover { color: var(--text); } }
@@ -475,7 +475,7 @@
   border-top: 1px solid var(--line);
 }
 
-.composer__tool .icon { width: 1.1rem; height: 1.1rem; }
+.composer__tool .icon { width: var(--icon-m); height: var(--icon-m); }
 .composer__hint { font-size: var(--fs--1); }
 
 /* With JS the file input is a button (its label); without JS it stays the browser's own control. */
