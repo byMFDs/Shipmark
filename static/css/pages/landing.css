@@ -470,7 +470,7 @@
   align-items: center;
   padding: var(--s-2) var(--s-3);
   background: var(--band-bg);
-  color: #EFEDE4;
+  color: #ECEAE1; /* the dark theme's text on the always-dark band */
 }
 
 .badge-preview__logo { height: 1rem; width: auto; }

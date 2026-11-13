@@ -177,6 +177,7 @@
 
 .sg-chip[data-token="paper"] { background: var(--paper); }
 .sg-chip[data-token="surface"] { background: var(--surface); }
+.sg-chip[data-token="raised"] { background: var(--raised); }
 .sg-chip[data-token="text"] { background: var(--text); }
 .sg-chip[data-token="muted"] { background: var(--muted); }
 .sg-chip[data-token="line"] { background: var(--line); }
@@ -230,3 +231,36 @@
 }
 .sg-stickers li { display: grid; justify-items: center; gap: var(--s-1); }
 .sg-stickers span { font-family: var(--font-mono); font-size: var(--fs--1); color: var(--muted); }
+
+/* ---------- Dark theme before / after (Polish-3 3b) ----------
+   .sg-dark-before re-creates the old dark values on this page only, for the comparison. */
+.sg-dark-before {
+  --paper: #141A17;
+  --surface: #1B231F;
+  --raised: #1B231F;
+  --text: #EFEDE4;
+  --muted: #A2AAA1;
+  --line: #2B3530;
+  --line-strong: #6D7771;
+  --accent: #F5803F;
+  --on-accent: #141A17;
+  --accent-text: #EC8E68;
+  --proof-bg: #22362A;
+  --proof: #A9D1B4;
+  --danger: #F08A80;
+  background: var(--paper);
+  color: var(--text);
+}
+.sg-dark__body { display: grid; gap: var(--s-3); padding: 0 var(--s-5) var(--s-5); }
+.sg-dark__body p { margin: 0; }
+.sg-dark__panel { margin-top: var(--s-4); }
+.sg-dark__menu {
+  margin: var(--s-4) 0 0;
+  padding: var(--s-2) 0;
+  list-style: none;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-pop);
+}
+.sg-dark__menu li { padding: var(--s-2) var(--s-4); }
+.sg-dark__danger { color: var(--danger); }

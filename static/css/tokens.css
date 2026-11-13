@@ -79,6 +79,7 @@
   color-scheme: light;
   --paper: #F4F3EE;
   --surface: #FFFEFA;
+  --raised: #FFFEFA;   /* fields, menus, popovers, toasts; in the light theme hairlines give the depth */
   --text: #20251F;
   --muted: #5C635B;
   --line: #D9D8D0;
@@ -104,24 +105,25 @@
 [data-theme="dark"],
 .band {
   color-scheme: dark;
-  --paper: #141A17;
-  --surface: #1B231F;
-  --text: #EFEDE4;
-  --muted: #A2AAA1;
-  --line: #2B3530;
-  --line-strong: #6D7771;
-  --accent: #F5803F;
+  --paper: #121815;
+  --surface: #1C2521;
+  --raised: #242E29;
+  --text: #ECEAE1;
+  --muted: #A7AFA6;
+  --line: #35413B;
+  --line-strong: #76817A;
+  --accent: #EE7A3B;
   --accent-hover: #FA9A63;
-  --on-accent: #141A17;
-  --accent-text: #EC8E68;
-  --proof-bg: #22362A;
-  --proof: #A9D1B4;
-  --danger: #F08A80;
+  --on-accent: #121815;
+  --accent-text: #EE936E;
+  --proof-bg: #233A2C;
+  --proof: #ADD5B8;
+  --danger: #F2918A;
   --danger-hover: #FB9E94;
-  --on-danger: #141A17;
+  --on-danger: #121815;
   --tint: rgb(255 255 255 / 0.06);
   --danger-tint: rgb(240 138 128 / 0.1);
-  --focus: #EFEDE4;
+  --focus: #ECEAE1;
   --shadow-pop: 0 1px 0 rgb(0 0 0 / 0.3), 0 10px 28px -12px rgb(0 0 0 / 0.7);
 }
 
@@ -129,24 +131,25 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --paper: #141A17;
-    --surface: #1B231F;
-    --text: #EFEDE4;
-    --muted: #A2AAA1;
-    --line: #2B3530;
-    --line-strong: #6D7771;
-    --accent: #F5803F;
+    --paper: #121815;
+    --surface: #1C2521;
+    --raised: #242E29;
+    --text: #ECEAE1;
+    --muted: #A7AFA6;
+    --line: #35413B;
+    --line-strong: #76817A;
+    --accent: #EE7A3B;
     --accent-hover: #FA9A63;
-    --on-accent: #141A17;
-    --accent-text: #EC8E68;
-    --proof-bg: #22362A;
-    --proof: #A9D1B4;
-    --danger: #F08A80;
+    --on-accent: #121815;
+    --accent-text: #EE936E;
+    --proof-bg: #233A2C;
+    --proof: #ADD5B8;
+    --danger: #F2918A;
     --danger-hover: #FB9E94;
-    --on-danger: #141A17;
+    --on-danger: #121815;
     --tint: rgb(255 255 255 / 0.06);
     --danger-tint: rgb(240 138 128 / 0.1);
-    --focus: #EFEDE4;
+    --focus: #ECEAE1;
     --shadow-pop: 0 1px 0 rgb(0 0 0 / 0.3), 0 10px 28px -12px rgb(0 0 0 / 0.7);
   }
 }

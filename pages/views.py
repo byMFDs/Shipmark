@@ -75,18 +75,19 @@ def people_view(request):
 
 # Shown on the styleguide. Values must match static/css/tokens.css.
 STYLEGUIDE_TOKENS = [
-    ("paper", "#F4F3EE", "#141A17", "Page background"),
-    ("surface", "#FFFEFA", "#1B231F", "Records, cards, fields"),
-    ("text", "#20251F", "#EFEDE4", "Text, focus ring"),
-    ("muted", "#5C635B", "#A2AAA1", "Secondary text"),
-    ("line", "#D9D8D0", "#2B3530", "Hairlines, frames"),
-    ("line-strong", "#868A80", "#6D7771", "Borders of controls (3:1)"),
-    ("accent", "#BD4B27", "#F5803F", "The one primary action (dark: dark text on it)"),
-    ("accent-text", "#AE411D", "#EC8E68", "Eyebrows, numbers"),
-    ("proof-bg", "#E3EBDA", "#22362A", "Earned marks, proof notes"),
-    ("proof", "#2B5A3F", "#A9D1B4", "Text on proof"),
+    ("paper", "#F4F3EE", "#121815", "Page background"),
+    ("surface", "#FFFEFA", "#1C2521", "Records, cards, panels"),
+    ("raised", "#FFFEFA", "#242E29", "Fields, menus, popovers, toasts"),
+    ("text", "#20251F", "#ECEAE1", "Text, focus ring"),
+    ("muted", "#5C635B", "#A7AFA6", "Secondary text"),
+    ("line", "#D9D8D0", "#35413B", "Hairlines, frames"),
+    ("line-strong", "#868A80", "#76817A", "Borders of controls (3:1)"),
+    ("accent", "#BD4B27", "#EE7A3B", "The one primary action (dark: dark text on it)"),
+    ("accent-text", "#AE411D", "#EE936E", "Eyebrows, numbers"),
+    ("proof-bg", "#E3EBDA", "#233A2C", "Earned marks, proof notes"),
+    ("proof", "#2B5A3F", "#ADD5B8", "Text on proof"),
     ("band-bg", "#212721", "#0D1310", "Dark statement strips"),
-    ("danger", "#A8322D", "#F08A80", "Errors, destructive actions"),
+    ("danger", "#A8322D", "#F2918A", "Errors, destructive actions"),
 ]
 
 

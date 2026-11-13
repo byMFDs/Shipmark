@@ -214,11 +214,11 @@ Concept: **a public record of shipped work.** Each project is a framed record; p
 Warm paper, 1px hairline frames, square corners, one action color. Restrained and precise, not playful.
 Full rules and measured contrast: `docs/DESIGN.md`; values: `static/css/tokens.css` (light / dark).
 
-Palette (light / dark): Paper `#F4F3EE` / `#141A17` (page) · Surface `#FFFEFA` / `#1B231F` (records, inputs) ·
-Text `#20251F` / `#EFEDE4` · Muted `#5C635B` / `#A2AAA1` · Line `#D9D8D0` / `#2B3530` (dividers) ·
-Line-strong `#868A80` / `#6D7771` (control borders, 3:1) · **Accent (terracotta) `#BD4B27` / `#F5803F`:
-the primary action only** · Proof green `#2B5A3F` on `#E3EBDA` / `#A9D1B4` on `#22362A`: earned marks and
-proof only · Danger `#A8322D` / `#F08A80`: errors and destructive actions only. Dark `.band` strips on the
+Palette (light / dark): Paper `#F4F3EE` / `#121815` (page) · Surface `#FFFEFA` / `#1C2521` (records, panels) · Raised `#FFFEFA` / `#242E29` (fields, menus, toasts) ·
+Text `#20251F` / `#ECEAE1` · Muted `#5C635B` / `#A7AFA6` · Line `#D9D8D0` / `#35413B` (dividers) ·
+Line-strong `#868A80` / `#76817A` (control borders, 3:1) · **Accent (terracotta) `#BD4B27` / `#EE7A3B`:
+the primary action only** · Proof green `#2B5A3F` on `#E3EBDA` / `#ADD5B8` on `#233A2C`: earned marks and
+proof only · Danger `#A8322D` / `#F2918A`: errors and destructive actions only. Dark `.band` strips on the
 landing always use the dark tokens.
 
 Type (self-hosted, OFL, Latin + Latin-ext + Cyrillic): **Manrope** (headlines, 500), **Inter** (body, UI),

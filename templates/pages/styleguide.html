@@ -115,6 +115,18 @@
     </div>
   </section>
 
+  <section class="sg-section" id="dark-compare" aria-labelledby="dark-compare-title">
+    <h2 id="dark-compare-title">Dark theme: before / after</h2>
+    <p class="muted prose sg-note">Polish-3 stage 3b. Left: the old dark values (kept only here, for comparison). Right: the
+      current tokens. Cards and panels now stand off the page (surface on paper 1.14:1, was 1.10), hairlines are visible
+      (1.48:1 on surface, was 1.27), and fields, menus and toasts sit one level higher (<code>--raised</code>). Every
+      text pair stays >= 4.5:1 and every control edge >= 3:1 (table in docs/DESIGN.md).</p>
+    <div class="sg-pair">
+      <div class="sg-panel sg-dark-before" data-theme="dark">{% include "pages/styleguide/_dark_sample.html" with v="before" title="Before (polish-2)" %}</div>
+      <div class="sg-panel" data-theme="dark">{% include "pages/styleguide/_dark_sample.html" with v="after" title="After" %}</div>
+    </div>
+  </section>
+
   <section class="sg-section" id="components" aria-labelledby="components-title">
     <h2 id="components-title">Components</h2>
     <div class="sg-pair">
@@ -158,7 +170,8 @@
 
   <section class="sg-section" id="chrome" aria-labelledby="chrome-title">
     <h2 id="chrome-title">Header and footer</h2>
-    <p class="muted prose sg-note">The bar layout starts at 768px, the tagline at 1024px; narrower screens get the menu button.
+    <p class="muted prose sg-note">The open bar starts at 1280px (80em) and the tagline hides itself when it does not fit;
+      768-1279px shows the main action next to the menu button, phones the menu button only.
       Links appear by themselves once their pages exist (see <code>NAV_LINKS</code> in <code>pages/templatetags/ui.py</code>).</p>
     {% for theme in themes %}
       <div class="sg-panel sg-panel--wide" data-theme="{{ theme }}">

@@ -18,51 +18,63 @@ Dark theme is used by the toggle, by the OS setting, and always inside `.band`. 
 `tokens.css` must stay in sync (three places: light, `[data-theme="dark"]` + `.band`, and the `prefers-color-scheme` block).
 There are no legacy token aliases any more; use the names in the table below.
 
-### Measured contrast (WCAG 2.x; AA = 4.5:1 text, 3:1 large text and UI). Checked 2026-11-11 (phase 4b).
+### Measured contrast (WCAG 2.x; AA = 4.5:1 text, 3:1 large text and UI). Token pairs rechecked 2026-11-14 (Polish-3 3b, new dark theme); `pages/test_tokens.py` recomputes them from `tokens.css` on every test run.
 Recheck after any token change; every pair below must stay at or above its minimum. Two checks: the token pairs below
 (computed from `tokens.css`), and every text node on 13 signed-in/public pages x 360/390/768/1440 px x light/dark in
 Firefox (computed color over the real background chain): 0 failures. Disabled controls are exempt (WCAG 1.4.3).
 
 | Pair (text / background) | Light | Dark | Min | Where |
 |---|---|---|---|---|
-| `--text` / `--paper` | 14.04 | 15.05 | 4.5 | body text |
-| `--text` / `--surface` | 15.46 | 13.70 | 4.5 | cards, inputs |
-| `--text` / `--tint` over paper | 12.81 | 12.80 | 4.5 | quiet button hover |
-| `--muted` / `--paper` | 5.57 | 7.40 | 4.5 | secondary text |
-| `--muted` / `--surface` | 6.14 | 6.73 | 4.5 | secondary text on cards, placeholders |
-| `--muted` / `--tint` over paper | 5.08 | 6.31 | 4.5 | disabled-field text, quiet hover |
-| `--muted` / `--proof-bg` | 5.06 | 5.40 | 4.5 | muted text on a proof note |
-| `--accent-text` / `--paper` | 5.29 | 7.26 | 4.5 | accent words, labels |
-| `--accent-text` / `--surface` | 5.82 | 6.61 | 4.5 | accent words on cards |
-| `--on-accent` / `--accent` | 4.96 | **6.76** | 4.5 | primary button |
-| `--on-accent` / `--accent-hover` | 6.50 | **8.29** | 4.5 | primary button, hover |
-| `--proof` / `--proof-bg` | 6.51 | 7.65 | 4.5 | hallmark chip, proof note |
-| `--proof` / `--paper`, `--surface` | 7.17 / 7.89 | 10.48 / 9.54 | 4.5 | proof-colored text outside a chip |
-| `--danger` / `--paper` | 5.98 | 7.27 | 4.5 | error text |
-| `--danger` / `--surface` | 6.59 | 6.62 | 4.5 | error text on cards |
-| `--danger` / `--danger-tint` over paper | 5.32 | 6.24 | 4.5 | danger button hover |
-| `--on-danger` / `--danger` | 6.59 | 7.27 | 4.5 | solid danger button |
-| `--on-danger` / `--danger-hover` | 8.49 | 8.76 | 4.5 | solid danger button, hover |
-| `--paper` / `--text` | 14.04 | 15.05 | 4.5 | inverted: chosen theme option, skip link |
-| `--line-strong` / `--paper` | 3.17 | 3.80 | 3 | UI: input and control borders |
-| `--line-strong` / `--surface` | 3.49 | 3.46 | 3 | UI: borders on cards |
-| `--accent` / `--paper` | 4.50 | 6.76 | 3 | UI: primary button edge |
-| `--accent` / `--surface` | 4.96 | 6.15 | 3 | UI: primary button edge on cards |
-| `--focus` / `--paper` | 14.04 | 15.05 | 3 | UI: focus ring |
-| `--focus` / `--surface` | 15.46 | 13.70 | 3 | UI: focus ring on cards and inputs |
-| `--proof` / `--surface` | 7.89 | 9.54 | 3 | UI: tick strip cells |
-| `--line` / `--paper` | 1.29 | 1.39 | none | dividers only (decorative, never a control edge) |
+| `--text` / `--paper` | 14.04 | 14.93 | 4.5 | body text |
+| `--text` / `--surface` | 15.46 | 13.04 | 4.5 | cards, panels |
+| `--text` / `--raised` | 15.46 | 11.63 | 4.5 | fields, menus, toasts |
+| `--text` / `--tint` over paper | 12.81 | 12.78 | 4.5 | quiet button hover |
+| `--muted` / `--paper` | 5.57 | 7.99 | 4.5 | secondary text |
+| `--muted` / `--surface` | 6.14 | 6.98 | 4.5 | secondary text on cards |
+| `--muted` / `--raised` | 6.14 | 6.23 | 4.5 | placeholders, menu notes |
+| `--muted` / `--tint` over paper | 5.08 | 6.84 | 4.5 | disabled-field text, quiet hover |
+| `--muted` / `--proof-bg` | 5.06 | 5.44 | 4.5 | muted text on a proof note |
+| `--accent-text` / `--paper` | 5.29 | 7.74 | 4.5 | accent words, labels |
+| `--accent-text` / `--surface` | 5.82 | 6.76 | 4.5 | accent words on cards |
+| `--on-accent` / `--accent` | 4.96 | 6.41 | 4.5 | primary button |
+| `--on-accent` / `--accent-hover` | 6.50 | 8.45 | 4.5 | primary button, hover |
+| `--proof` / `--proof-bg` | 6.51 | 7.58 | 4.5 | hallmark chip, proof note |
+| `--danger` / `--paper` | 5.98 | 7.88 | 4.5 | error text |
+| `--danger` / `--surface` | 6.59 | 6.88 | 4.5 | error text on cards |
+| `--danger` / `--raised` | 6.59 | 6.14 | 4.5 | danger item in a menu |
+| `--danger` / `--danger-tint` over paper | 5.32 | 6.80 | 4.5 | danger button hover |
+| `--on-danger` / `--danger` | 6.59 | 7.88 | 4.5 | solid danger button |
+| `--on-danger` / `--danger-hover` | 8.49 | 8.93 | 4.5 | solid danger button, hover |
+| `--paper` / `--text` | 14.04 | 14.93 | 4.5 | inverted: chosen theme option, skip link |
+| `--line-strong` / `--paper` | 3.17 | 4.45 | 3 | UI: input and control borders |
+| `--line-strong` / `--surface` | 3.49 | 3.89 | 3 | UI: borders on cards |
+| `--line-strong` / `--raised` | 3.49 | 3.47 | 3 | UI: field borders, checkbox edges |
+| `--accent` / `--paper` | 4.50 | 6.41 | 3 | UI: primary button edge |
+| `--accent` / `--surface` | 4.96 | 5.60 | 3 | UI: primary button edge on cards |
+| `--focus` / `--paper` | 14.04 | 14.93 | 3 | UI: focus ring |
+| `--focus` / `--raised` | 15.46 | 11.63 | 3 | UI: focus ring on fields |
+| `--proof` / `--surface` | 7.89 | 9.72 | 3 | UI: tick strip cells |
+| `--surface` / `--paper` | 1.10 | 1.14 | none | depth: cards off the page |
+| `--raised` / `--surface` | 1.00 | 1.12 | none | depth: fields and menus off a card |
+| `--line` / `--paper` | 1.29 | 1.69 | none | dividers (decorative, never a control edge) |
+| `--line` / `--surface` | 1.42 | 1.48 | none | dividers on cards |
 
 Decorative exception: the landing specimen's tick strip is `aria-hidden` and illustrative; its cells are 55% proof green
-(2.67:1 light / 3.88:1 dark on the record surface). The real uptime strip on project pages uses full `--proof` (7.89 / 9.54).
+(2.67:1 light on the record surface). The real uptime strip on project pages uses full `--proof` (7.89 / 9.72).
 
 `.band` (dark strip; dark tokens on `--band-bg` #212721 in the light page / #0D1310 in the dark page):
-text 13.00 / 16.02 · muted 6.39 / 7.87 · accent-text 6.27 / 7.73 · accent edge 5.84 / 7.19 ·
-line-strong 3.29 / 4.05 · focus 13.00 / 16.02. The primary button inside a band is the dark one.
+text 12.65 / 15.59 · muted 6.77 / 8.34 · accent-text 6.56 / 8.08 · accent edge 5.43 / 6.69 ·
+line-strong 3.77 / 4.64 · focus 12.65 / 15.59. The primary button inside a band is the dark one.
 
-**Dark primary button.** Was `#E5835C`, a pale orange that looked weak; it is now `#F5803F`
-(more saturated) with dark text `#141A17` (6.76:1), hover `#FA9A63` (8.29:1). White text on any light
-orange fails (≈2.6:1), so in dark the label is always dark. In light it stays white on `#BD4B27`.
+**Dark primary button.** `#EE7A3B` (Polish-3: a little deeper than `#F5803F`, so large fills glare less) with dark
+text `#121815` (6.41:1), hover `#FA9A63` (8.45:1). White text on any light orange fails (about 2.6:1), so in dark the
+label is always dark. In light it stays white on `#BD4B27`.
+
+**Dark theme, Polish-3 3b.** Three levels without shadows: page `--paper` #121815 → cards and panels `--surface`
+#1C2521 (1.14:1 on the page, was 1.10) → fields, menus, popovers and toasts `--raised` #242E29 (1.12:1 on a card;
+in the light theme `--raised` = `--surface`, hairlines give the depth there). Hairlines `--line` #35413B (1.48:1 on a
+card, was 1.27), control edges `--line-strong` #76817A. The tone stays green-black; text #ECEAE1 is a touch softer
+(less glare). Before/after is on /styleguide/ ("Dark theme: before / after").
 
 ## Type
 - Manrope (variable 200-800; headlines, weight 500, tracking -0.03em) · Inter (variable; body and UI) ·
@@ -143,8 +155,8 @@ orange fails (≈2.6:1), so in dark the label is always dark. In light it stays 
   |---|---|---|---|
   | light, secondary (`#868A80` ring, `#20251F` light, `#BD4B27` spark) | 3.17:1 | 3.49:1 | 4.43:1 |
   | light, primary (`#BD4B27` ring, `#20251F` light, `#A13D1C` spark) | 4.50:1 | 4.96:1 | 3.12:1 |
-  | dark, secondary (`#6D7771` ring, `#EFEDE4` light, `#F5803F` spark) | 3.80:1 | 3.46:1 | 3.95:1 |
-  | dark, primary (`#F5803F` ring, `#EFEDE4` light, `#FA9A63` spark) | 6.76:1 | 6.15:1 | 2.23:1 (plus a hue change) |
+  | dark, secondary (`#76817A` ring, `#ECEAE1` light, `#EE7A3B` spark) | 4.45:1 | 3.89:1 | 3.36:1 |
+  | dark, primary (`#EE7A3B` ring, `#ECEAE1` light, `#FA9A63` spark) | 6.41:1 | 5.60:1 | 2.33:1 (plus a hue change) |
 
 - Button shapes (checked in stage 2): every `.btn` is 44px (`.btn--lg` 52px, `.btn--icon` a 44px square), radius
   `--radius-btn`, icons 20px with an 8px gap, centred on the label. The file input's "Browse" button now has the same radius.

@@ -1,0 +1,23 @@
+{% load ui %}{% comment %}One sample for the dark before/after comparison: page, record, panel, field, raised menu, buttons, marks.
+`v` keeps ids unique.{% endcomment %}
+<p class="sg-panel__theme">{{ title }}</p>
+<div class="record">
+  <div class="record__head"><span class="label">Checked, not self-reported</span></div>
+  <div class="sg-dark__body">
+    <p>Text on a record. <span class="muted">Muted text.</span> <span class="eyebrow">Accent text</span></p>
+    <div class="sg-row">{% hallmark "authored" "s" True %}{% hallmark "live" "s" True %}{% hallmark "steady" "s" False %}</div>
+  </div>
+</div>
+<div class="panel stack sg-dark__panel">
+  <div class="field">
+    <label class="field__label" for="dark-{{ v }}-name">Name</label>
+    <input class="input" id="dark-{{ v }}-name" value="Lantern-Below">
+  </div>
+  <div class="sg-row">
+    <button class="btn btn--primary" type="button">Publish project</button>
+    <button class="btn btn--secondary" type="button">Verify domain</button>
+  </div>
+</div>
+<ul class="sg-dark__menu" aria-label="Sample menu">
+  <li>Your profile</li><li>Settings</li><li class="sg-dark__danger">Delete account</li>
+</ul>
