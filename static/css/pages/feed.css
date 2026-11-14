@@ -150,11 +150,6 @@
 .feed-item:focus-visible { outline-offset: 2px; }
 .feed-item__body { min-width: 0; display: grid; gap: var(--s-1); }
 .feed-item__by { margin: 0; font-size: var(--fs--1); overflow-wrap: anywhere; }
-.feed-item__text { overflow-wrap: anywhere; }
-.feed-item__text > :first-child { margin-top: 0; }
-.feed-item__text > :last-child { margin-bottom: 0; }
-.feed-item__text > * + * { margin-top: 0.5em; }
-.feed-item__text code { padding: 0.1em 0.3em; background: var(--tint); }
 
 .feed-item__foot {
   display: flex;
@@ -164,9 +159,6 @@
   gap: var(--s-3);
   margin-top: var(--s-3);
 }
-
-/* An update from the build log: a round avatar and the entry, no cover. */
-.feed-item--entry .feed-item__by { font-size: var(--fs-0); }
 
 @media (min-width: 48em) {
   .feed-item { gap: var(--s-3) var(--s-5); }

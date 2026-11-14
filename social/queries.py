@@ -68,14 +68,6 @@ def project_cards(queryset, user):
     return queryset.annotate(owner_followed=Value(False, output_field=BooleanField()))
 
 
-def latest_launches(user, page):
-    """Everyone's recently launched projects. Returns (items, has_next)."""
-    start = (page - 1) * PAGE_SIZE
-    rows = list(project_rows(published_projects(), user).order_by("-event_at", "-pk")[start:start + PAGE_SIZE + 1])
-    items = [FeedItem("project", p, p.event_at) for p in rows[:PAGE_SIZE]]
-    return items, len(rows) > PAGE_SIZE
-
-
 def following_feed(user, page):
     """Projects and build log updates of the people `user` follows. Returns (items, has_next).
 
