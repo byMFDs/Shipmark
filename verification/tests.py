@@ -84,6 +84,7 @@ def person(user_id=ME, commits=3, login="me"):
 
 
 class RepoCheckTestCase(TestCase):
+    """Спільні дані для тестів репозиторіїв."""
     def setUp(self):
         cache.clear()
         self.user = make_user("me")
@@ -97,6 +98,7 @@ class RepoCheckTestCase(TestCase):
 
 
 class AuthorshipRuleTests(RepoCheckTestCase):
+    """Правило «Repo owner»."""
     def test_owner_is_authored(self):
         result = self.check(contributors=[[person()]])
         self.assertEqual(result.outcome, AUTHORED)
@@ -150,6 +152,7 @@ class AuthorshipRuleTests(RepoCheckTestCase):
 
 
 class ErrorTests(RepoCheckTestCase):
+    """Помилки GitHub."""
     def assertCode(self, code, **mock_args):
         with self.assertRaises(RepoCheckError) as ctx:
             self.check(**mock_args)
@@ -215,6 +218,7 @@ class ErrorTests(RepoCheckTestCase):
 
 
 class RepoCheckViewTests(RepoCheckTestCase):
+    """Кнопка перевірки репозиторію."""
     def setUp(self):
         super().setUp()
         self.url = reverse("projects:repo_check", args=["me", self.project.slug])
@@ -320,6 +324,7 @@ class RepoCheckViewTests(RepoCheckTestCase):
 
 
 class StaleLinkTests(RepoCheckTestCase):
+    """Застарілі посилання."""
     def test_changing_the_repo_name_removes_the_hallmark(self):
         self.check(contributors=[[person()]])
         project = Project.objects.get(pk=self.project.pk)
@@ -343,7 +348,9 @@ class StaleLinkTests(RepoCheckTestCase):
 
 
 class RepoIdentityTests(RepoCheckTestCase):
-    """Repositories are compared by GitHub ids (repo id, owner id), never by names."""
+    """Порівняння за id, не за назвою.
+
+    Repositories are compared by GitHub ids (repo id, owner id), never by names."""
 
     def test_owner_id_is_stored(self):
         self.check(contributors=[[person(commits=3)]])
@@ -398,6 +405,7 @@ class RepoIdentityTests(RepoCheckTestCase):
 
 
 class BackfillRepoFactsTests(RepoCheckTestCase):
+    """Команда backfill_repo_facts."""
     def run_command(self, *args, **mock_args):
         out = StringIO()
         patcher, seen = mock_github(**mock_args)
@@ -477,7 +485,9 @@ class BackfillRepoFactsTests(RepoCheckTestCase):
 
 
 class ReviewRuleTests(RepoCheckTestCase):
-    """Facts that send a link to a manual review instead of earning Repo owner at once."""
+    """Причини ручного розгляду.
+
+    Facts that send a link to a manual review instead of earning Repo owner at once."""
 
     def test_no_commits_by_the_owner(self):
         result = self.check(contributors=[[person(user_id=5, commits=40)]])
@@ -531,6 +541,7 @@ class ReviewRuleTests(RepoCheckTestCase):
 
 
 class ActivityFactTests(RepoCheckTestCase):
+    """Факти активності."""
     def weeks(self, stats):
         return self.check(contributors=[[person()]], stats=stats).facts.active_weeks
 
@@ -559,7 +570,9 @@ class ActivityFactTests(RepoCheckTestCase):
 
 
 class TokenFileTests(RepoCheckTestCase):
-    """Organisation and team repositories: the project's .shipmark-verify file proves write access."""
+    """Файл перевірки для репозиторіїв організацій.
+
+    Organisation and team repositories: the project's .shipmark-verify file proves write access."""
 
     def setUp(self):
         super().setUp()
@@ -627,6 +640,7 @@ class TokenFileTests(RepoCheckTestCase):
 
 
 class TokenFileRecheckTests(RepoCheckTestCase):
+    """Повторна перевірка файлу перевірки."""
     def setUp(self):
         super().setUp()
         self.project.repo_full_name = "acme/app"

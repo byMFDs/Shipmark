@@ -25,6 +25,7 @@ LIMITED = {"/repositories/77": lambda r: httpx.Response(
 
 
 class ReverifyRepoTests(RepoCheckTestCase):
+    """Повторна перевірка репозиторіїв."""
     def setUp(self):
         super().setUp()
         self.check(contributors=[[person()]])
@@ -131,6 +132,7 @@ class ReverifyRepoTests(RepoCheckTestCase):
 
 
 class ReviewQueueTests(RepoCheckTestCase):
+    """Черга розгляду."""
     def setUp(self):
         super().setUp()
         self.staff = make_user("staff", is_staff=True, is_superuser=True)
@@ -188,6 +190,7 @@ class ReviewQueueTests(RepoCheckTestCase):
 
 
 class DomainBlockTests(TestCase):
+    """Блокування доменів."""
     def setUp(self):
         self.owner = make_user("ann")
         self.staff = make_user("staff", is_staff=True, is_superuser=True)

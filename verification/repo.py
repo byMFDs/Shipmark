@@ -1,4 +1,6 @@
-"""Repository check: the Repo owner hallmark (id `authored`, CLAUDE.md section 2).
+"""Перевірка репозиторію для марки «Repo owner».
+
+Repository check: the Repo owner hallmark (id `authored`, CLAUDE.md section 2).
 
 Repo owner is earned by a public, non-fork repository that is either owned by the user's personal
 GitHub account, or (for organisation and team repositories) has the project's verification file
@@ -58,7 +60,9 @@ NO_OWNER_COMMITS = "no_owner_commits"  # GitHub shows no commits by the owner
 
 
 class RepoCheckError(Exception):
-    """The check could not finish. `message` is user-facing (already translated)."""
+    """Перевірка не завершилась; повідомлення для людини.
+
+    The check could not finish. `message` is user-facing (already translated)."""
 
     def __init__(self, code, message, moved_to=None):
         super().__init__(message)
@@ -69,6 +73,7 @@ class RepoCheckError(Exception):
 
 @dataclass
 class RepoFacts:
+    """Факти про репозиторій з GitHub."""
     full_name: str
     repo_id: int
     owner_id: int
@@ -88,6 +93,7 @@ class RepoFacts:
 
 @dataclass
 class CheckResult:
+    """Результат перевірки репозиторію."""
     outcome: str
     facts: RepoFacts
     link: object = None  # the stored RepoLink when the outcome is AUTHORED
@@ -96,6 +102,7 @@ class CheckResult:
 # ---------- GitHub API ----------
 
 class _Api:
+    """Клієнт GitHub API через safe_fetch."""
     def __init__(self):
         headers = {
             "Accept": "application/vnd.github+json",
@@ -115,7 +122,9 @@ class _Api:
         self.client.close()
 
     def get(self, path, params=None):
-        """GET and return the response, or raise RepoCheckError. `path` is built from validated parts."""
+        """GET до GitHub API з обробкою помилок.
+
+        GET and return the response, or raise RepoCheckError. `path` is built from validated parts."""
         if time.monotonic() - self.started > DEADLINE:
             raise _unavailable()
         try:
@@ -127,6 +136,7 @@ class _Api:
         return response
 
     def json(self, path, params=None):
+        """GET і JSON-відповідь."""
         response = self.get(path, params)
         if response.status_code == 204 or not response.content:
             return None, response
@@ -141,6 +151,7 @@ def _unavailable():
 
 
 def _rate_limited(response):
+    """Чи GitHub обмежив частоту і скільки чекати."""
     wait = None
     if response.headers.get("retry-after", "").isdigit():
         wait = int(response.headers["retry-after"])
@@ -156,6 +167,7 @@ def _rate_limited(response):
 
 
 def _raise_for_status(response):
+    """Перетворює статус GitHub на зрозумілу помилку."""
     status = response.status_code
     if status in (200, 202, 204):  # 202: statistics still being computed; 204: empty repository
         return
@@ -184,6 +196,7 @@ def _raise_for_status(response):
 
 
 def _parse_time(value):
+    """Дата з рядка GitHub."""
     try:
         return datetime.fromisoformat(value.replace("Z", "+00:00"))
     except (AttributeError, ValueError):
@@ -191,6 +204,7 @@ def _parse_time(value):
 
 
 def _commit_time(commits):
+    """Дата коміту зі списку."""
     try:
         return _parse_time(commits[0]["commit"]["author"]["date"])
     except (IndexError, KeyError, TypeError):
@@ -198,6 +212,7 @@ def _commit_time(commits):
 
 
 def _commit_sha(commits):
+    """SHA коміту зі списку."""
     try:
         sha = str(commits[0]["sha"])
     except (IndexError, KeyError, TypeError):
@@ -206,7 +221,9 @@ def _commit_sha(commits):
 
 
 def _last_page(response):
-    """Page number of the last page from the Link header (per_page=1 makes it the commit count)."""
+    """Номер останньої сторінки з заголовка Link.
+
+    Page number of the last page from the Link header (per_page=1 makes it the commit count)."""
     link = response.links.get("last")
     if not link:
         return 1
@@ -226,7 +243,9 @@ def _base(full_name):
 
 
 def _repo_json(api, full_name):
-    """GET /repos/{full_name}, following one rename/transfer redirect by repo id. Checked shape."""
+    """Дані репозиторію з урахуванням перейменування.
+
+    GET /repos/{full_name}, following one rename/transfer redirect by repo id. Checked shape."""
     try:
         repo, _response = api.json(_base(full_name))
     except RepoCheckError as exc:
@@ -237,6 +256,7 @@ def _repo_json(api, full_name):
 
 
 def _checked(repo):
+    """Перевіряє форму відповіді GitHub."""
     if (not isinstance(repo, dict) or not isinstance(repo.get("owner"), dict) or not isinstance(repo.get("id"), int)
             or not isinstance(repo["owner"].get("id"), int) or not _valid_name(str(repo.get("full_name") or ""))):
         raise _unavailable()
@@ -244,18 +264,24 @@ def _checked(repo):
 
 
 def _homepage(value):
-    """The repository's Website field, kept only when it is a plain http(s) address."""
+    """Поле Website репозиторію, якщо це http(s).
+
+    The repository's Website field, kept only when it is a plain http(s) address."""
     value = str(value or "").strip()
     return value if len(value) <= 200 and value.lower().startswith(("http://", "https://")) else ""
 
 
 def repo_by_id(api, repo_id):
-    """GET /repositories/{id}: the repository with this id, whatever its name is now. 404 = deleted or private."""
+    """Репозиторій за id, хоч би як він зараз називався.
+
+    GET /repositories/{id}: the repository with this id, whatever its name is now. 404 = deleted or private."""
     return _checked(api.json(f"/repositories/{int(repo_id)}")[0])
 
 
 def identity_change(link, repo_id, owner_id, full_name):
-    """How the repository GitHub shows now differs from the stored link, by ids first.
+    """Чим репозиторій на GitHub відрізняється від збереженого.
+
+    How the repository GitHub shows now differs from the stored link, by ids first.
 
     "recreated": another repository id (the old one was deleted, or the name now points elsewhere);
     "transferred": same repository, another owner account; "renamed": same ids, another name; None: same.
@@ -272,7 +298,9 @@ def identity_change(link, repo_id, owner_id, full_name):
 
 
 def fetch_facts(full_name, github_user_id, project=None):
-    """Ask GitHub about the repository. Raises RepoCheckError; never returns partial garbage.
+    """Збирає факти про репозиторій з GitHub.
+
+    Ask GitHub about the repository. Raises RepoCheckError; never returns partial garbage.
 
     `project` is the project asking: its own existing link does not count as "taken".
     """
@@ -319,7 +347,9 @@ def fetch_facts(full_name, github_user_id, project=None):
 
 
 def repo_token_for(project):
-    """The project's verification-file token, made on first use. Random and unique, never reused."""
+    """Токен файлу перевірки проєкту.
+
+    The project's verification-file token, made on first use. Random and unique, never reused."""
     if project.repo_token:
         return project.repo_token
     from projects.models import Project  # here: projects imports this module
@@ -339,7 +369,9 @@ def repo_token_for(project):
 
 
 def _has_token_file(api, base, token):
-    """True when the default branch has TOKEN_FILE with exactly this project's token (spaces around ignored)."""
+    """Чи є в репозиторії файл з токеном проєкту.
+
+    True when the default branch has TOKEN_FILE with exactly this project's token (spaces around ignored)."""
     if not token:
         return False
     try:
@@ -359,7 +391,9 @@ def _has_token_file(api, base, token):
 
 
 def _newest_and_oldest(api, path, params):
-    """(newest date, oldest date, oldest sha) of a commit list, in at most two requests. Empty repo: Nones."""
+    """Найновіший і найстаріший коміт.
+
+    (newest date, oldest date, oldest sha) of a commit list, in at most two requests. Empty repo: Nones."""
     try:
         newest, response = api.json(path, {**params, "per_page": 1})
     except RepoCheckError as exc:
@@ -372,7 +406,9 @@ def _newest_and_oldest(api, path, params):
 
 
 def _active_weeks(api, base, github_user_id):
-    """Weeks with at least one commit by the user that changed lines, from GitHub's statistics.
+    """Тижні, коли людина робила коміти.
+
+    Weeks with at least one commit by the user that changed lines, from GitHub's statistics.
 
     Only the user's own entry is read, so bots never count. Weeks with commits but no changed lines
     (empty commits) do not count. None when GitHub is still computing (202) or did not answer:
@@ -400,7 +436,9 @@ def _active_weeks(api, base, github_user_id):
 
 
 def _find_contributor(api, base, github_user_id, facts):
-    """Fill facts.commit_count from the contributors endpoint. Returns the user's login or None."""
+    """Кількість комітів людини серед контриб'юторів.
+
+    Fill facts.commit_count from the contributors endpoint. Returns the user's login or None."""
     for page in range(1, CONTRIBUTORS_PAGES + 1):
         try:
             people, _response = api.json(f"{base}/contributors", {"per_page": 100, "page": page})
@@ -423,6 +461,7 @@ def _find_contributor(api, base, github_user_id, facts):
 # ---------- Storing the result ----------
 
 def _taken(facts, project):
+    """Чи репозиторій уже прив'язаний до іншого проєкту."""
     qs = RepoLink.objects.filter(Q(github_repo_id=facts.repo_id) | Q(repo_full_name__iexact=facts.full_name))
     if project is not None:
         qs = qs.exclude(project=project)
@@ -430,7 +469,9 @@ def _taken(facts, project):
 
 
 def review_reasons(facts, project):
-    """Facts that send a link to a manual review instead of earning Repo owner at once."""
+    """Факти, через які посилання йде на ручний розгляд.
+
+    Facts that send a link to a manual review instead of earning Repo owner at once."""
     reasons = []
     if facts.commit_count == 0:
         reasons.append(NO_OWNER_COMMITS)
@@ -444,7 +485,9 @@ def review_reasons(facts, project):
 
 
 def next_review_state(link, reasons):
-    """Review state after a check. Staff approval survives re-checks unless a new reason appears."""
+    """Стан розгляду після перевірки.
+
+    Review state after a check. Staff approval survives re-checks unless a new reason appears."""
     Review = RepoLink.Review
     if link is not None and link.review_state == Review.APPROVED and set(reasons) <= set(link.review_reasons):
         return Review.APPROVED
@@ -452,7 +495,9 @@ def next_review_state(link, reasons):
 
 
 def remove_link(project, reason, actor=None, **metadata):
-    """Delete the project's RepoLink (Repo owner is gone) and log it. Returns True if there was one."""
+    """Видаляє посилання (марка зникає) і пише в журнал.
+
+    Delete the project's RepoLink (Repo owner is gone) and log it. Returns True if there was one."""
     link = RepoLink.objects.filter(project=project).first()
     if link is None:
         return False
@@ -464,7 +509,9 @@ def remove_link(project, reason, actor=None, **metadata):
 
 
 def mark_recheck(link, reason, actor=None, **metadata):
-    """Withhold the mark until the next full check, without deleting the link. Logged."""
+    """Притримує марку до наступної перевірки.
+
+    Withhold the mark until the next full check, without deleting the link. Logged."""
     if link.review_state == RepoLink.Review.NEEDS_RECHECK:
         return False
     with transaction.atomic():
@@ -476,7 +523,9 @@ def mark_recheck(link, reason, actor=None, **metadata):
 
 
 def follow_rename(project, link, facts, actor):
-    """Same ids, new name on GitHub: keep the project pointing at its repository's current name."""
+    """Слідує за перейменуванням репозиторію на GitHub.
+
+    Same ids, new name on GitHub: keep the project pointing at its repository's current name."""
     if project.repo_full_name.lower() == facts.full_name.lower():
         return
     audit.log("repo.renamed", project, actor=actor, old=project.repo_full_name, new=facts.full_name,
@@ -486,7 +535,9 @@ def follow_rename(project, link, facts, actor):
 
 
 def run_check(project, github_user_id, actor=None):
-    """Check `project.repo_full_name` for its owner and store the result. Returns CheckResult.
+    """Перевіряє репозиторій проєкту й зберігає результат.
+
+    Check `project.repo_full_name` for its owner and store the result. Returns CheckResult.
 
     A definite "no" (gone, private, not authored) removes the project's old RepoLink, so the
     hallmark disappears. A temporary problem (rate limit, GitHub down) leaves everything as it was.
@@ -518,7 +569,9 @@ def run_check(project, github_user_id, actor=None):
 
 
 def store_link(project, facts, old, actor=None):
-    """Save the facts of a repository that passed, with its review state, and log state changes."""
+    """Зберігає факти репозиторію, що пройшов перевірку.
+
+    Save the facts of a repository that passed, with its review state, and log state changes."""
     facts.review_reasons = review_reasons(facts, project)
     state = next_review_state(old, facts.review_reasons)
     now = timezone.now()
@@ -563,7 +616,9 @@ REVERIFY_REMOVE = ("not_found", "private", "blocked")  # definite answers from G
 
 
 def reverify_link(link, actor=None):
-    """Check a stored link again: by repo id first, then the facts. Returns the outcome:
+    """Повторна перевірка збереженого посилання.
+
+    Check a stored link again: by repo id first, then the facts. Returns the outcome:
 
     "confirmed" (still passes), "review" (passes, waits for a review), "removed" (definite: gone,
     private, another repository or owner, blocked) or "kept" (GitHub did not answer properly:
@@ -608,7 +663,9 @@ def reverify_link(link, actor=None):
 
 
 def due_links(now=None):
-    """Links to re-check: not checked for TRUST_REVERIFY_REPOS_DAYS, waiting for a re-check, or with
+    """Посилання, які час перевірити знову.
+
+    Links to re-check: not checked for TRUST_REVERIFY_REPOS_DAYS, waiting for a re-check, or with
     GitHub statistics still pending for more than TRUST_STATS_RETRY_HOURS. Suspended users are skipped."""
     now = now or timezone.now()
     week = now - timedelta(days=settings.TRUST_REVERIFY_REPOS_DAYS)

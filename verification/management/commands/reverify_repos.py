@@ -1,4 +1,6 @@
-"""Check linked repositories again. Run daily by cron; each link is re-checked weekly (docs/DEPLOY_NOTES.md).
+"""Команда reverify_repos: повторна перевірка репозиторіїв (cron щодня).
+
+Check linked repositories again. Run daily by cron; each link is re-checked weekly (docs/DEPLOY_NOTES.md).
 
     python manage.py reverify_repos              # links due (7 days, needs re-check, pending statistics)
     python manage.py reverify_repos --all        # every link, e.g. after changing the rules
@@ -21,6 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
+    """Команда reverify_repos."""
     help = "Re-check linked GitHub repositories by id; remove or review marks on definite changes."
 
     def add_arguments(self, parser):

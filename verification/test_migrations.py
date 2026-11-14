@@ -10,6 +10,7 @@ AFTER = [("verification", "0007_contributor_links_need_recheck")]
 
 
 class ContributorLinksMigrationTests(TransactionTestCase):
+    """Міграція посилань контриб'юторів."""
     def migrate(self, targets):
         executor = MigrationExecutor(connection)
         executor.loader.build_graph()

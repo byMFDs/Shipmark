@@ -1,4 +1,6 @@
-"""Domain verification: the Live hallmark (CLAUDE.md section 2).
+"""Перевірка домену для марки «Domain verified» (DNS TXT або meta-тег).
+
+Domain verification: the Live hallmark (CLAUDE.md section 2).
 
 The owner proves control of the live URL's domain in one of two ways:
 - DNS: a TXT record "shipmark-verify=<token>" on the exact host (for www.example.com
@@ -61,6 +63,7 @@ TEMPORARY = {"dns_unavailable", "unreachable", "server_error"}
 
 
 class DomainCheckError(Exception):
+    """Перевірка домену не вдалася; code каже чому."""
     def __init__(self, code):
         super().__init__(code)
         self.code = code
@@ -81,7 +84,9 @@ def error_message(code):
 # ---------- Hosts ----------
 
 def host_from_url(url):
-    """Exact host of a live URL (lowercase, punycode, no port, no trailing dot), or None if unusable."""
+    """Точний хост адреси сайту або None.
+
+    Exact host of a live URL (lowercase, punycode, no port, no trailing dot), or None if unusable."""
     if not url:
         return None
     try:
@@ -103,12 +108,16 @@ def host_from_url(url):
 
 
 def is_shared_host(host):
-    """The bare address of a hosting service where every user gets a subdomain (settings list)."""
+    """Чи це спільний хостинг, де кожен має піддомен.
+
+    The bare address of a hosting service where every user gets a subdomain (settings list)."""
     return domain_key(host) in settings.TRUST_SHARED_HOST_APEXES
 
 
 def domain_key(host):
-    """What two hosts are compared by: "www.example.com" and "example.com" are the same domain."""
+    """Ключ порівняння доменів (www не враховується).
+
+    What two hosts are compared by: "www.example.com" and "example.com" are the same domain."""
     host = (host or "").lower()
     return host[4:] if host.startswith("www.") else host
 
@@ -133,7 +142,9 @@ def new_token():
 
 
 def verification_for(project, create=False):
-    """The row for the project's current domain, or None. Keeps `domain` in sync (www on or off)."""
+    """Рядок перевірки для поточного домену проєкту.
+
+    The row for the project's current domain, or None. Keeps `domain` in sync (www on or off)."""
     host = host_from_url(project.live_url)
     if host is None:
         return None
@@ -152,7 +163,9 @@ def verification_for(project, create=False):
 
 
 def forget_other_domains(project, actor=None):
-    """After the live URL changes: delete rows for other domains, so they stop blocking them."""
+    """Після зміни адреси видаляє рядки інших доменів.
+
+    After the live URL changes: delete rows for other domains, so they stop blocking them."""
     key = domain_key(host_from_url(project.live_url) or "")
     for row in DomainVerification.objects.filter(project=project).exclude(domain_key=key):
         if row.status == DomainVerification.Status.VERIFIED:
@@ -169,6 +182,7 @@ def taken_by_other(row):
 # ---------- Checks ----------
 
 def _txt_values(name):
+    """TXT-записи імені через DNS."""
     resolver = dns.resolver.Resolver()
     try:
         answer = resolver.resolve(name, "TXT", lifetime=DNS_TIMEOUT, search=False)
@@ -183,6 +197,7 @@ def _txt_values(name):
 
 
 def check_dns(host, token):
+    """Шукає токен у TXT-записі домену."""
     names = [host] + ([host[4:]] if host.startswith("www.") else [])
     expected = record_value(token)
     found_any, last_error = False, None
@@ -201,11 +216,13 @@ def check_dns(host, token):
 
 
 class _MetaFinder(HTMLParser):
+    """Шукає наш meta-тег у HTML."""
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.values = []
 
     def handle_starttag(self, tag, attrs):
+        """Запам'ятовує вміст потрібного meta-тегу."""
         if tag == "meta":
             attrs = {k.lower(): (v or "") for k, v in attrs}
             if attrs.get("name", "").strip().lower() == TOKEN_NAME:
@@ -215,6 +232,7 @@ class _MetaFinder(HTMLParser):
 
 
 def check_meta(url, host, token):
+    """Шукає токен у meta-тегу головної сторінки через safe_fetch."""
     try:
         result = safe_fetch(url)
     except BlockedURL as exc:
@@ -239,6 +257,7 @@ def check_meta(url, host, token):
 
 
 def run_method(row, method):
+    """Запускає перевірку обраним способом."""
     if method == DomainVerification.Method.META:
         check_meta(homepage_url(row.project, row.domain), row.domain, row.token)
     else:
@@ -248,7 +267,9 @@ def run_method(row, method):
 # ---------- Verify, re-verify ----------
 
 def verify(row, method, actor=None):
-    """Manual "Verify now". Returns True on success, raises DomainCheckError otherwise."""
+    """Ручне «Перевірити зараз».
+
+    Manual "Verify now". Returns True on success, raises DomainCheckError otherwise."""
     if method not in DomainVerification.Method.values:
         method = DomainVerification.Method.DNS
     now = timezone.now()
@@ -291,7 +312,9 @@ def _save_error(row, code, now):
 
 
 def reverify(row, now=None):
-    """Re-check a verified row with its own method. Returns "confirmed", "kept" or "removed".
+    """Повторна перевірка підтвердженого домену.
+
+    Re-check a verified row with its own method. Returns "confirmed", "kept" or "removed".
 
     A definite failure removes Live at once. A temporary one (DNS timeout, site down) is retried
     on the next run; after 35 days without a confirmation Live is gone anyway, and the row is failed.
@@ -322,7 +345,9 @@ def reverify(row, now=None):
 
 
 def current_row(project):
-    """The project's row for the domain of its current live URL, or None. Reads the prefetch cache."""
+    """Рядок для домену поточної адреси сайту.
+
+    The project's row for the domain of its current live URL, or None. Reads the prefetch cache."""
     if not project.pk:
         return None
     host = host_from_url(project.live_url)
@@ -333,7 +358,9 @@ def current_row(project):
 
 
 def row_is_live(row, now=None):
-    """A verified row confirmed in the last 35 days."""
+    """Підтверджений рядок, оновлений за останні 35 днів.
+
+    A verified row confirmed in the last 35 days."""
     cutoff = (now or timezone.now()) - LIVE_MAX_AGE
     return bool(
         row is not None and row.status == DomainVerification.Status.VERIFIED
@@ -342,7 +369,9 @@ def row_is_live(row, now=None):
 
 
 def is_live(project, now=None):
-    """Live hallmark: a verified row for the current domain, confirmed in the last 35 days.
+    """Марка Live для проєкту.
+
+    Live hallmark: a verified row for the current domain, confirmed in the last 35 days.
 
     Reads `project.domain_verifications.all()`, so list views can prefetch it.
     """

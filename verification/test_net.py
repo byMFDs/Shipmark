@@ -16,7 +16,9 @@ PRIVATE = ["127.0.0.1", "10.1.2.3", "172.16.0.9", "192.168.1.1", "169.254.169.25
 
 
 class FakeNet:
-    """Patches DNS (host -> addresses) and HTTP (handler by Host header). Records requests."""
+    """Підробні DNS і HTTP для тестів safe_fetch.
+
+    Patches DNS (host -> addresses) and HTTP (handler by Host header). Records requests."""
 
     def __init__(self, dns=None, handler=None):
         self.dns = {"example.com": [PUBLIC_IP], **(dns or {})}
@@ -49,6 +51,7 @@ class FakeNet:
 
 
 class BlockedAddressTests(SimpleTestCase):
+    """Заблоковані адреси."""
     def test_private_addresses_are_blocked_as_literals(self):
         for ip in PRIVATE:
             url = f"http://[{ip}]/" if ":" in ip else f"http://{ip}/"
@@ -81,6 +84,7 @@ class BlockedAddressTests(SimpleTestCase):
 
 
 class UrlRuleTests(SimpleTestCase):
+    """Правила адрес."""
     def test_only_ports_80_and_443(self):
         for url in ("http://example.com:8080/", "https://example.com:22/", "http://example.com:6379/"):
             with self.subTest(url=url), FakeNet() as fake:
@@ -107,6 +111,7 @@ class UrlRuleTests(SimpleTestCase):
 
 
 class FetchTests(SimpleTestCase):
+    """Запити safe_fetch."""
     def test_normal_public_url(self):
         with FakeNet() as fake:
             result = safe_fetch("https://example.com/page?x=1")

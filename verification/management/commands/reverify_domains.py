@@ -1,4 +1,6 @@
-"""Re-check verified domains not confirmed in the last 30 days. Run daily by cron.
+"""Команда reverify_domains: повторна перевірка доменів (cron щодня).
+
+Re-check verified domains not confirmed in the last 30 days. Run daily by cron.
 
     python manage.py reverify_domains
 
@@ -13,6 +15,7 @@ from verification.models import DomainVerification
 
 
 class Command(BaseCommand):
+    """Команда reverify_domains."""
     help = "Re-check verified domains older than 30 days; remove Live when the proof is gone."
 
     def handle(self, *args, **options):

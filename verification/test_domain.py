@@ -59,6 +59,7 @@ def fake_fetch(result=None, error=None):
 
 
 class HostTests(TestCase):
+    """Розбір хоста з адреси."""
     def test_host_from_url(self):
         self.assertEqual(host_from_url("https://WWW.Example.com:8443/path?q=1"), "www.example.com")
         self.assertEqual(host_from_url("https://example.com./"), "example.com")
@@ -73,6 +74,7 @@ class HostTests(TestCase):
 
 
 class DomainTestCase(TestCase):
+    """Спільні дані для тестів доменів."""
     def setUp(self):
         cache.clear()
         self.owner = make_user("ann")
@@ -88,6 +90,7 @@ class DomainTestCase(TestCase):
 
 
 class RowTests(DomainTestCase):
+    """Рядки перевірки домену."""
     def test_row_keeps_exact_host_and_comparison_key(self):
         self.assertEqual((self.row.domain, self.row.domain_key), ("www.example.com", "example.com"))
         self.assertEqual(len(self.row.token), 32)
@@ -117,6 +120,7 @@ class RowTests(DomainTestCase):
 
 
 class DnsMethodTests(DomainTestCase):
+    """Спосіб DNS TXT."""
     def test_txt_record_on_the_exact_host(self):
         with fake_dns({"www.example.com": [f"shipmark-verify={self.row.token}"]}):
             self.assertTrue(verify(self.row, "dns", actor=self.owner))
@@ -165,6 +169,7 @@ class DnsMethodTests(DomainTestCase):
 
 
 class MetaMethodTests(DomainTestCase):
+    """Спосіб meta-тегу."""
     def test_meta_tag_on_the_homepage(self):
         html = f'<html><head><META name="Shipmark-Verify" content="{self.row.token}"/></head></html>'
         patcher, fetch = fake_fetch(page(html, url="https://www.example.com/"))
@@ -208,6 +213,7 @@ class MetaMethodTests(DomainTestCase):
 
 
 class UniquenessTests(DomainTestCase):
+    """Один домен — один проєкт."""
     def setUp(self):
         super().setUp()
         self.other = make_project(make_user("bob"), name="Copy", live_url="https://example.com/")
@@ -242,6 +248,7 @@ class UniquenessTests(DomainTestCase):
 
 
 class LiveRuleTests(DomainTestCase):
+    """Правило марки Live."""
     def test_live_needs_confirmation_within_35_days(self):
         self.verified(days_ago=34)
         self.assertTrue(compute_hallmarks(self.project)["live"].earned)
@@ -265,6 +272,7 @@ class LiveRuleTests(DomainTestCase):
 
 
 class ReverifyTests(DomainTestCase):
+    """Повторна перевірка доменів."""
     def run_command(self):
         out = StringIO()
         call_command("reverify_domains", stdout=out)
@@ -319,6 +327,7 @@ class ReverifyTests(DomainTestCase):
 
 
 class ViewTests(DomainTestCase):
+    """«Перевірити зараз»."""
     def setUp(self):
         super().setUp()
         self.client.force_login(self.owner)
@@ -378,6 +387,7 @@ class ViewTests(DomainTestCase):
 
 
 class SharedHostTests(DomainTestCase):
+    """Спільні хостинги."""
     def test_bare_shared_hosts_are_refused_with_a_clear_code(self):
         for host in ("github.io", "www.vercel.app", "netlify.app", "pages.dev", "herokuapp.com"):
             project = make_project(self.owner, name=host, live_url=f"https://{host}/")
@@ -407,6 +417,7 @@ class SharedHostTests(DomainTestCase):
 
 
 class TokenUniquenessTests(DomainTestCase):
+    """Токени не повторюються."""
     def test_tokens_are_random_per_project_and_domain_and_never_reused(self):
         tokens = {self.row.token}
         for i in range(15):

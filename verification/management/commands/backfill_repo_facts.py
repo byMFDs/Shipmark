@@ -1,4 +1,6 @@
-"""Fill new facts of existing repo links from GitHub. Run once after deploying; later runs skip done links.
+"""Команда backfill_repo_facts: дозаповнює нові факти наявних посилань з GitHub.
+
+Fill new facts of existing repo links from GitHub. Run once after deploying; later runs skip done links.
 
     python manage.py backfill_repo_facts            # links with missing facts
     python manage.py backfill_repo_facts --dry-run  # only say what would change
@@ -21,6 +23,7 @@ DEFINITE = ("not_found", "private", "moved", "invalid", "taken")
 
 
 class Command(BaseCommand):
+    """Команда backfill_repo_facts."""
     help = "Fill missing facts of existing repo links from GitHub. Never removes a hallmark."
 
     def add_arguments(self, parser):
@@ -43,6 +46,7 @@ class Command(BaseCommand):
         )
 
     def _one(self, link, dry):
+        """Дозаповнює одне посилання."""
         name = link.repo_full_name
         try:
             facts = fetch_facts(name, github_id(link.project.owner), link.project)

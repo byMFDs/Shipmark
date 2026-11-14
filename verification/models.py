@@ -1,3 +1,4 @@
+"""Моделі перевірок: репозиторії, домени, аптайм, блокування."""
 from django.conf import settings
 from django.db import models
 from django.db.models.functions import Lower
@@ -5,7 +6,9 @@ from django.utils import timezone
 
 
 class RepoLink(models.Model):
-    """A GitHub repository that passed the Repo owner check for a project.
+    """Репозиторій GitHub, що пройшов перевірку «Repo owner».
+
+    A GitHub repository that passed the Repo owner check for a project.
 
     Rows exist only for repositories that passed: not a fork, and owned by the user or holding the
     project's verification file. A failed check is
@@ -55,12 +58,16 @@ class RepoLink(models.Model):
 
     @property
     def is_verified(self):
-        """Earns Repo owner: the repository passed and is not waiting for a review or re-check."""
+        """Чи посилання зараз дає марку.
+
+        Earns Repo owner: the repository passed and is not waiting for a review or re-check."""
         return (self.is_owner or self.token_file_found) and self.review_state in (self.Review.CLEAR, self.Review.APPROVED)
 
 
 class DomainVerification(models.Model):
-    """Proof that the project owner controls the domain of the project's live URL (the Live hallmark).
+    """Доказ, що власник контролює домен проєкту.
+
+    Proof that the project owner controls the domain of the project's live URL (the Live hallmark).
 
     One row per project + domain, with its own random token. A new domain gets a new row and token,
     so tokens are never reused. Only verified rows block the domain for other projects.
@@ -101,7 +108,9 @@ class DomainVerification(models.Model):
 
 
 class UptimeCheck(models.Model):
-    """One request to a Live project's URL (the Steady hallmark). Kept for 90 days.
+    """Один запит до сайту Live-проєкту (зберігається 90 днів).
+
+    One request to a Live project's URL (the Steady hallmark). Kept for 90 days.
 
     Written only by `check_uptime`, at most once per project per 3 hours (verification/uptime.py).
     """
@@ -124,7 +133,9 @@ class UptimeCheck(models.Model):
 
 
 class Block(models.Model):
-    """A repository or domain staff decided must not earn a mark again (review queue in the admin).
+    """Репозиторій або домен, який більше не може отримати марку.
+
+    A repository or domain staff decided must not earn a mark again (review queue in the admin).
 
     Repositories are blocked by GitHub repo id (a rename does not escape it), domains by domain_key.
     """
@@ -157,7 +168,9 @@ class Block(models.Model):
 
 
 class RepoReview(RepoLink):
-    """The admin review queue: repo links waiting for a review or a re-check (same rows as RepoLink)."""
+    """Черга розгляду в адмінці (ті самі рядки, що RepoLink).
+
+    The admin review queue: repo links waiting for a review or a re-check (same rows as RepoLink)."""
 
     class Meta:
         proxy = True

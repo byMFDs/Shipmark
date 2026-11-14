@@ -37,6 +37,7 @@ def fresh(project):
 
 
 class RepoAttackTests(RepoCheckTestCase):
+    """Спроби обдурити перевірку репозиторію."""
     def marks(self):
         return compute_hallmarks(fresh(self.project))
 
@@ -168,6 +169,7 @@ class RepoAttackTests(RepoCheckTestCase):
 
 
 class DomainAttackTests(TestCase):
+    """Спроби обдурити перевірку домену."""
     def setUp(self):
         self.owner = make_user("ann")
 

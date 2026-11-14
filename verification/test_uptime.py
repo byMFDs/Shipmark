@@ -39,6 +39,7 @@ def fake_fetch(*replies):
 
 
 class UptimeTestCase(TestCase):
+    """Спільні дані для тестів аптайму."""
     def setUp(self):
         self.owner = make_user("ann")
         self.project = self.live_project("https://example.com/")
@@ -67,6 +68,7 @@ class UptimeTestCase(TestCase):
 
 
 class ProbeTests(TestCase):
+    """Запит до сайту."""
     def test_ok_is_status_below_400(self):
         for status, ok in ((200, True), (301, True), (399, True), (400, False), (503, False)):
             mock, _fetch = fake_fetch(status)
@@ -103,6 +105,7 @@ class ProbeTests(TestCase):
 
 
 class ThrottleTests(UptimeTestCase):
+    """Не частіше раз на 3 години."""
     def test_second_check_within_3_hours_is_skipped(self):
         UptimeCheck.objects.create(project=self.project, checked_at=self.now - timedelta(hours=2, minutes=59), ok=True)
         mock, fetch = fake_fetch(200)
@@ -129,6 +132,7 @@ class ThrottleTests(UptimeTestCase):
 
 
 class CommandTests(UptimeTestCase):
+    """Команда check_uptime."""
     def run_command(self, *replies, **options):
         mock, fetch = fake_fetch(*replies)
         out = StringIO()
@@ -169,6 +173,7 @@ class CommandTests(UptimeTestCase):
 
 
 class PruneTests(UptimeTestCase):
+    """Видалення старих перевірок."""
     def test_checks_older_than_90_days_are_deleted(self):
         for days in (91, 90.1, 89, 1):
             UptimeCheck.objects.create(project=self.project, checked_at=self.now - timedelta(days=days), ok=True)
@@ -184,6 +189,7 @@ class PruneTests(UptimeTestCase):
 
 
 class PercentTests(UptimeTestCase):
+    """Відсоток успішних перевірок."""
     def test_math(self):
         self.assertIsNone(percent(0, 0))
         self.assertEqual(percent(40, 40), 100.0)
@@ -220,6 +226,7 @@ class PercentTests(UptimeTestCase):
 
 
 class SteadyTests(UptimeTestCase):
+    """Марка «Steady»."""
     def test_rule_boundaries(self):
         self.assertTrue(steady_rule(38, 40))  # exactly 95%
         self.assertFalse(steady_rule(37, 40))  # 92.5%
@@ -261,6 +268,7 @@ class SteadyTests(UptimeTestCase):
 
 
 class ProjectPageTests(UptimeTestCase):
+    """Блок аптайму на сторінці проєкту."""
     def url(self, project=None):
         project = project or self.project
         return reverse("projects:detail", args=[project.owner.username, project.slug])
@@ -285,7 +293,9 @@ class ProjectPageTests(UptimeTestCase):
 
 
 class FinalHostTests(UptimeTestCase):
-    """A check counts only when the answer comes from the verified domain, after all redirects."""
+    """Перевірка рахується лише з підтвердженого домену.
+
+    A check counts only when the answer comes from the verified domain, after all redirects."""
 
     def fetch_to(self, final_url, status=200):
         def fetch(url, method="GET", **kwargs):

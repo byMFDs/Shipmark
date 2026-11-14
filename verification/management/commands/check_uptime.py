@@ -1,4 +1,6 @@
-"""Check that Live projects answer. Run by cron every 15 minutes (docs/DEPLOY_NOTES.md).
+"""Команда check_uptime: перевіряє, чи відповідають Live-проєкти (cron кожні 15 хвилин).
+
+Check that Live projects answer. Run by cron every 15 minutes (docs/DEPLOY_NOTES.md).
 
     python manage.py check_uptime
 
@@ -20,6 +22,7 @@ BATCH_SIZE = 50
 
 
 class Command(BaseCommand):
+    """Команда check_uptime."""
     help = "Check live URLs of projects with a verified domain (max once per 3 hours each); prune old checks."
 
     def add_arguments(self, parser):
@@ -42,6 +45,7 @@ class Command(BaseCommand):
         )
 
     def _check(self, project, verbosity):
+        """Перевіряє один проєкт."""
         now = timezone.now()
         if not is_live(project, now=now):  # verified domain is not the one in live_url any more
             return "skipped"

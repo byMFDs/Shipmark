@@ -1,4 +1,6 @@
-"""The only way to request a user-supplied URL from the server (CLAUDE.md section 6).
+"""Єдиний спосіб запитувати адресу користувача з сервера (захист від SSRF).
+
+The only way to request a user-supplied URL from the server (CLAUDE.md section 6).
 
     result = safe_fetch("https://example.com/")      # FetchResult, or raises FetchError
     result.status_code, result.text, result.url
@@ -46,7 +48,9 @@ NAT64 = ipaddress.ip_network("64:ff9b::/96")
 
 
 class FetchError(Exception):
-    """The fetch did not happen or did not finish. `code` says why; the message is for logs only."""
+    """Запит не відбувся або не завершився.
+
+    The fetch did not happen or did not finish. `code` says why; the message is for logs only."""
 
     def __init__(self, code, detail=""):
         super().__init__(f"{code}: {detail}" if detail else code)
@@ -54,11 +58,14 @@ class FetchError(Exception):
 
 
 class BlockedURL(FetchError):
-    """The URL (or a redirect) points somewhere we never connect to."""
+    """Адреса або перенаправлення веде туди, куди ми не підключаємось.
+
+    The URL (or a redirect) points somewhere we never connect to."""
 
 
 @dataclass
 class FetchResult:
+    """Результат запиту: статус, заголовки, тіло, кінцева адреса."""
     url: str  # final URL after redirects
     status_code: int
     headers: httpx.Headers
@@ -67,6 +74,7 @@ class FetchResult:
 
     @property
     def text(self):
+        """Тіло як текст у кодуванні відповіді."""
         charset = "utf-8"
         for part in self.headers.get("content-type", "").split(";")[1:]:
             key, _sep, value = part.strip().partition("=")
@@ -85,7 +93,9 @@ def _clock():
 # ---------- Address checks ----------
 
 def is_blocked_ip(ip):
-    """True for every address that is not plainly public. Unwraps IPv6 forms that carry an IPv4 address."""
+    """Чи адреса не публічна (приватна, loopback, зарезервована тощо).
+
+    True for every address that is not plainly public. Unwraps IPv6 forms that carry an IPv4 address."""
     if isinstance(ip, str):
         ip = ipaddress.ip_address(ip)
     if ip.version == 6:
@@ -101,7 +111,9 @@ def is_blocked_ip(ip):
 
 
 def resolve_host(host, timeout):
-    """All A and AAAA addresses of `host`. Raises FetchError("dns") when there are none."""
+    """Усі A і AAAA адреси хоста.
+
+    All A and AAAA addresses of `host`. Raises FetchError("dns") when there are none."""
     resolver = dns.resolver.Resolver()
     addresses = []
     for rdtype in ("A", "AAAA"):
@@ -118,7 +130,9 @@ def resolve_host(host, timeout):
 
 
 def _check_url(url):
-    """Validates scheme, port, credentials and host. Returns (httpx.URL, ascii host, port)."""
+    """Перевіряє схему, порт, облікові дані й хост.
+
+    Validates scheme, port, credentials and host. Returns (httpx.URL, ascii host, port)."""
     try:
         parsed = httpx.URL(url)
         host = parsed.raw_host.decode("ascii").lower().rstrip(".")  # IDN already in punycode
@@ -138,6 +152,7 @@ def _check_url(url):
 
 
 def _pick_address(host, deadline):
+    """Обирає дозволену адресу для підключення."""
     try:
         literal = ipaddress.ip_address(host.strip("[]"))
     except ValueError:
@@ -163,6 +178,7 @@ def _client(timeout):
 
 
 def _read_body(response, deadline, max_bytes):
+    """Читає тіло з лімітом розміру й часу."""
     encoding = response.headers.get("content-encoding", "").strip().lower()
     if encoding in ("", "identity"):
         decoder = None
@@ -192,7 +208,9 @@ def _read_body(response, deadline, max_bytes):
 
 
 def safe_fetch(url, *, method="GET", max_bytes=MAX_BODY, timeout=TIMEOUT, read_body=True):
-    """Fetch `url` with every SSRF rule applied. Returns FetchResult or raises FetchError.
+    """Запит з усіма правилами захисту від SSRF.
+
+    Fetch `url` with every SSRF rule applied. Returns FetchResult or raises FetchError.
 
     Any HTTP status is a result (404 is an answer, not an error). Only GET and HEAD.
     read_body=False: only the status is wanted (uptime), so the body is never downloaded.

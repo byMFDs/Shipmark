@@ -1,3 +1,4 @@
+"""Адмінка перевірок: репозиторії, черга розгляду, блокування, домени, аптайм."""
 from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
@@ -17,7 +18,9 @@ RERUN_LIMIT = 20  # each one is a network request; bigger batches belong to the 
 
 
 class ModerateMixin:
-    """Approve / revoke / block need the change permission (superusers have it), not only view."""
+    """Схвалення, відкликання й блокування вимагають права на зміну.
+
+    Approve / revoke / block need the change permission (superusers have it), not only view."""
 
     def has_moderate_permission(self, request):
         return request.user.has_perm("verification.change_repolink")
@@ -25,6 +28,7 @@ class ModerateMixin:
 
 @admin.register(RepoLink)
 class RepoLinkAdmin(ModerateMixin, ReadOnlyModelAdmin):
+    """Перевірені репозиторії в адмінці."""
     list_display = ("repo_full_name", "project", "is_owner", "review_state", "user_commit_count", "checked_at")
     list_filter = ("review_state", "is_owner", "checked_at")
     search_fields = ("repo_full_name", "project__name", "project__owner__username")
@@ -43,6 +47,7 @@ class RepoLinkAdmin(ModerateMixin, ReadOnlyModelAdmin):
 
     @action(description=_("Block the repository and revoke Repo owner"), permissions=["moderate"])
     def block(self, request, queryset):
+        """Дія адмінки: заблокувати репозиторії й зняти марку."""
         links = list(queryset.select_related("project"))
         for link in links:
             review.block_repo(link, request.user)
@@ -50,6 +55,7 @@ class RepoLinkAdmin(ModerateMixin, ReadOnlyModelAdmin):
 
     @action(description=_("Re-check on GitHub now"), permissions=["view"])
     def rerun(self, request, queryset):
+        """Дія адмінки: перевірити репозиторії ще раз."""
         outcomes = {"confirmed": 0, "review": 0, "removed": 0, "kept": 0}
         for link in list(queryset.select_related("project", "project__owner")[:RERUN_LIMIT]):
             try:
@@ -64,7 +70,9 @@ class RepoLinkAdmin(ModerateMixin, ReadOnlyModelAdmin):
 
 @admin.register(RepoReview)
 class RepoReviewAdmin(RepoLinkAdmin):
-    """The review queue: only links waiting for staff (needs review) or for a re-check."""
+    """Черга розгляду: посилання, що чекають персонал або повторної перевірки.
+
+    The review queue: only links waiting for staff (needs review) or for a re-check."""
 
     list_display = ("repo_full_name", "project", "review_state", "review_reasons", "repo_created_at",
                     "root_commit_at", "user_commit_count", "active_weeks", "checked_at")
@@ -76,7 +84,9 @@ class RepoReviewAdmin(RepoLinkAdmin):
 
 @admin.register(Block)
 class BlockAdmin(AuditedModelAdmin):
-    """Blocks are made by the actions above. Deleting one (logged) unblocks it."""
+    """Блокування репозиторіїв і доменів; видалення розблоковує.
+
+    Blocks are made by the actions above. Deleting one (logged) unblocks it."""
 
     list_display = ("kind", "label", "value", "created_by", "created_at")
     list_filter = ("kind",)
@@ -89,6 +99,7 @@ class BlockAdmin(AuditedModelAdmin):
 
 @admin.register(DomainVerification)
 class DomainVerificationAdmin(ReadOnlyModelAdmin):
+    """Перевірки доменів в адмінці."""
     list_display = ("domain", "project", "method", "status", "verified_at", "last_confirmed_at", "last_error")
     list_filter = ("status", "method", "last_confirmed_at")
     search_fields = ("domain", "project__name", "project__owner__username")
@@ -106,6 +117,7 @@ class DomainVerificationAdmin(ReadOnlyModelAdmin):
 
     @action(description=_("Block the domain and revoke Domain verified"), permissions=["moderate"])
     def block_domain(self, request, queryset):
+        """Дія адмінки: заблокувати домени й зняти Live."""
         rows = list(queryset.select_related("project"))
         for row in rows:
             review.block_domain(row, request.user)
@@ -113,6 +125,7 @@ class DomainVerificationAdmin(ReadOnlyModelAdmin):
 
     @action(description=_("Re-run verification now"), permissions=["view"])
     def rerun(self, request, queryset):
+        """Дія адмінки: перевірити домени ще раз."""
         rows = list(queryset.filter(status=DomainVerification.Status.VERIFIED)
                     .select_related("project", "project__owner")[:RERUN_LIMIT])
         skipped = queryset.count() - len(rows)
@@ -131,6 +144,7 @@ class DomainVerificationAdmin(ReadOnlyModelAdmin):
 
 @admin.register(UptimeCheck)
 class UptimeCheckAdmin(ReadOnlyModelAdmin):
+    """Перевірки аптайму в адмінці."""
     list_display = ("project", "checked_at", "ok", "status_code", "response_ms", "error")
     list_filter = ("ok", "checked_at")
     search_fields = ("project__name", "project__owner__username")

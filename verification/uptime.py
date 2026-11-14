@@ -1,4 +1,6 @@
-"""Uptime checks and the Steady hallmark (CLAUDE.md section 2).
+"""Перевірки аптайму й марка «Steady».
+
+Uptime checks and the Steady hallmark (CLAUDE.md section 2).
 
     probe(url)                 -> Probe, one HEAD (or GET) through safe_fetch
     check_project(project)     -> stored UptimeCheck, or None when checked less than 3 h ago
@@ -33,6 +35,7 @@ NO_GET_RETRY = ("timeout",)  # a site that timed out on HEAD will time out on GE
 
 @dataclass
 class Probe:
+    """Результат одного запиту до сайту."""
     ok: bool
     status_code: int | None
     response_ms: int | None
@@ -43,6 +46,7 @@ OTHER_HOST = "other_host"  # Probe.error: the site answered, but only after redi
 
 
 def _request(url, method):
+    """Один запит HEAD чи GET з часом відповіді."""
     start = time.monotonic()
     try:
         result = safe_fetch(url, method=method, read_body=False)
@@ -52,7 +56,9 @@ def _request(url, method):
 
 
 def probe(url, expected_key=None):
-    """HEAD first; GET when HEAD gets status >= 400 or fails (many servers refuse HEAD but serve GET).
+    """HEAD, а якщо не вийшло — GET.
+
+    HEAD first; GET when HEAD gets status >= 400 or fails (many servers refuse HEAD but serve GET).
 
     expected_key: the verified domain (domain_key). A site that ends up on another domain after its
     redirects is down for Steady: the answer is not from the domain that was proven.
@@ -75,7 +81,9 @@ def recently_checked(project, now):
 
 
 def check_project(project, now=None):
-    """Check `project.live_url` once and store the result. None when checked less than 3 hours ago.
+    """Перевіряє сайт проєкту й зберігає результат.
+
+    Check `project.live_url` once and store the result. None when checked less than 3 hours ago.
 
     The caller decides the project is Live. The 3-hour guard is repeated here, so two overlapping
     cron runs cannot store two checks.
@@ -91,7 +99,9 @@ def check_project(project, now=None):
 
 
 def due_projects(now):
-    """Projects with a verified domain confirmed in the last 35 days and no check in the last 3 hours.
+    """Проєкти, які час перевірити.
+
+    Projects with a verified domain confirmed in the last 35 days and no check in the last 3 hours.
 
     The exact "current domain" match is done by is_live() in the command, per project.
     Suspended users' projects are hidden, so they are not checked.
@@ -109,7 +119,9 @@ def due_projects(now):
 
 
 def prune(now=None):
-    """Delete checks older than 90 days. Returns how many were deleted."""
+    """Видаляє перевірки, старші 90 днів.
+
+    Delete checks older than 90 days. Returns how many were deleted."""
     cutoff = (now or timezone.now()) - KEEP_FOR
     deleted, _per_model = UptimeCheck.objects.filter(checked_at__lt=cutoff).delete()
     return deleted
@@ -118,7 +130,9 @@ def prune(now=None):
 # ---------- Numbers ----------
 
 def percent(ok, total):
-    """Share of successful checks, rounded down to one decimal: 39 of 40 -> 97.5, 2 of 3 -> 66.6.
+    """Відсоток успішних перевірок з округленням униз.
+
+    Share of successful checks, rounded down to one decimal: 39 of 40 -> 97.5, 2 of 3 -> 66.6.
 
     Rounded down, so 100 means every check succeeded. None when there are no checks.
     """
@@ -128,12 +142,16 @@ def percent(ok, total):
 
 
 def steady_rule(ok, total):
-    """≥40 checks and ≥95% successful. Integer math: no float edge cases at exactly 95%."""
+    """Щонайменше 40 перевірок і 95% успішних.
+
+    ≥40 checks and ≥95% successful. Integer math: no float edge cases at exactly 95%."""
     return total >= STEADY_MIN_CHECKS and ok * 100 >= STEADY_MIN_PERCENT * total
 
 
 def with_uptime(queryset, now=None):
-    """Annotate `uptime_total` and `uptime_ok` (last 30 days). Subqueries, so other joins cannot inflate them."""
+    """Додає кількість перевірок за 30 днів.
+
+    Annotate `uptime_total` and `uptime_ok` (last 30 days). Subqueries, so other joins cannot inflate them."""
     since = (now or timezone.now()) - WINDOW
     checks = UptimeCheck.objects.filter(project=OuterRef("pk"), checked_at__gte=since).order_by().values("project")
     return queryset.annotate(
@@ -143,7 +161,9 @@ def with_uptime(queryset, now=None):
 
 
 def window_counts(project, now=None):
-    """(ok, total) over the last 30 days. Uses the with_uptime() annotation when the project has it."""
+    """Успішні й усі перевірки за 30 днів.
+
+    (ok, total) over the last 30 days. Uses the with_uptime() annotation when the project has it."""
     if hasattr(project, "uptime_total"):
         return project.uptime_ok, project.uptime_total
     if not project.pk:
@@ -154,7 +174,9 @@ def window_counts(project, now=None):
 
 
 def is_steady(project, now=None):
-    """The uptime half of Steady. proof.py adds "and Live"."""
+    """Аптайм-частина марки Steady.
+
+    The uptime half of Steady. proof.py adds "and Live"."""
     return steady_rule(*window_counts(project, now))
 
 
@@ -162,12 +184,14 @@ def is_steady(project, now=None):
 
 @dataclass
 class Day:
+    """Один день у смужці аптайму."""
     date: object
     total: int = 0
     ok: int = 0
 
     @property
     def state(self):
+        """Стан дня: немає даних, усе добре, були збої."""
         if not self.total:
             return "none"
         if self.ok == self.total:
@@ -177,6 +201,7 @@ class Day:
 
 @dataclass
 class Summary:
+    """Усе для блоку аптайму на сторінці проєкту."""
     ok: int
     total: int
     last_checked_at: object
@@ -188,7 +213,9 @@ class Summary:
 
 
 def uptime_summary(project, now=None):
-    """Everything the uptime block on the project page shows. One or two queries."""
+    """Дані блоку аптайму.
+
+    Everything the uptime block on the project page shows. One or two queries."""
     now = now or timezone.now()
     rows = list(UptimeCheck.objects.filter(project=project, checked_at__gte=now - WINDOW)
                 .order_by("checked_at").values_list("checked_at", "ok"))

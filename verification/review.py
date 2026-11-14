@@ -1,4 +1,6 @@
-"""Staff decisions on proof: the review queue in the admin. Every decision writes AuditLog.
+"""Рішення персоналу щодо доказів: черга розгляду в адмінці.
+
+Staff decisions on proof: the review queue in the admin. Every decision writes AuditLog.
 
 The owner never sees an accusation: while a link waits, the project shows "waiting for a routine
 manual review"; after a revoke or block the mark is simply not there, like any failed check.
@@ -17,12 +19,16 @@ def review_queue():
 
 
 def review_queue_badge(request):
-    """Sidebar badge in the admin (config/settings/base.py UNFOLD)."""
+    """Лічильник черги розгляду в бічній панелі адмінки.
+
+    Sidebar badge in the admin (config/settings/base.py UNFOLD)."""
     return review_queue().count() or None
 
 
 def approve(link, actor):
-    """Staff looked at the review reasons and agrees the mark is fine. Only for "needs review"."""
+    """Схвалює посилання, що чекає розгляду.
+
+    Staff looked at the review reasons and agrees the mark is fine. Only for "needs review"."""
     if link.review_state != RepoLink.Review.NEEDS_REVIEW:
         return False
     now = timezone.now()
@@ -36,11 +42,14 @@ def approve(link, actor):
 
 
 def revoke_repo(link, actor):
-    """Remove Repo owner now. A later check by the owner starts from the review again."""
+    """Знімає марку «Repo owner» зараз.
+
+    Remove Repo owner now. A later check by the owner starts from the review again."""
     return remove_link(link.project, "revoked_by_staff", actor=actor)
 
 
 def _block(kind, value, label, actor, reason=""):
+    """Створює блокування й пише в журнал."""
     try:
         with transaction.atomic():
             block, created = Block.objects.get_or_create(
@@ -51,7 +60,9 @@ def _block(kind, value, label, actor, reason=""):
 
 
 def block_repo(link, actor, reason=""):
-    """Block this repository (by repo id) for every project, and remove the mark."""
+    """Блокує репозиторій для всіх проєктів.
+
+    Block this repository (by repo id) for every project, and remove the mark."""
     block, created = _block(Block.Kind.REPO, link.github_repo_id, link.repo_full_name, actor, reason)
     if created:
         audit.log("moderation.repo.blocked", block, actor=actor, repo=link.repo_full_name, repo_id=link.github_repo_id)
@@ -60,7 +71,9 @@ def block_repo(link, actor, reason=""):
 
 
 def revoke_live(row, actor, reason="revoked_by_staff"):
-    """Remove Live now (the row becomes failed, like a failed re-verification)."""
+    """Знімає марку Live зараз.
+
+    Remove Live now (the row becomes failed, like a failed re-verification)."""
     if row.status != DomainVerification.Status.VERIFIED:
         return False
     with transaction.atomic():
@@ -72,7 +85,9 @@ def revoke_live(row, actor, reason="revoked_by_staff"):
 
 
 def block_domain(row, actor, reason=""):
-    """Block this domain (www ignored) for every project, and remove Live."""
+    """Блокує домен для всіх проєктів.
+
+    Block this domain (www ignored) for every project, and remove Live."""
     block, created = _block(Block.Kind.DOMAIN, row.domain_key, row.domain, actor, reason)
     if created:
         audit.log("moderation.domain.blocked", block, actor=actor, domain=row.domain_key)
