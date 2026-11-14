@@ -118,6 +118,11 @@ class AdminLoginThrottleTests(TestCase):
 PROD_SECRET = "tést-only-" + "abcdefghijklmnopqrstuvwxyz0123456789" * 2  # module level: other test classes borrow _manage
 
 
+# A complete SMTP setup with placeholder values (nothing is sent by `check`).
+SMTP_ENV = {"EMAIL_HOST": "smtp.example.com", "EMAIL_HOST_USER": "sender@example.com", "EMAIL_HOST_PASSWORD": "placeholder",
+            "DEFAULT_FROM_EMAIL": "sender@example.com", "SUPPORT_INBOX_EMAIL": "inbox@example.com"}
+
+
 class ProductionSettingsTests(SimpleTestCase):
     def _manage(self, *args, **extra):
         env = {k: v for k, v in os.environ.items() if k not in ("ADMIN_URL", "DEBUG")}
@@ -130,9 +135,14 @@ class ProductionSettingsTests(SimpleTestCase):
                               capture_output=True, text=True)
 
     def test_check_deploy_has_no_warnings(self):
-        result = self._manage("check", "--deploy")
+        result = self._manage("check", "--deploy", **SMTP_ENV)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("no issues", result.stdout + result.stderr)
+
+    def test_production_without_smtp_warns_on_every_check(self):
+        result = self._manage("check", **{key: "" for key in SMTP_ENV})
+        self.assertEqual(result.returncode, 0, result.stderr)  # a warning, not an error: the site still starts
+        self.assertIn("support.W001", result.stdout + result.stderr)
 
     def test_production_refuses_to_start_without_a_proper_ban_hash_key(self):
         cases = {"missing": None, "empty": "", "too short": "short-key", "same as SECRET_KEY": PROD_SECRET}
