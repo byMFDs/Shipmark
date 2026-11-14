@@ -1,3 +1,4 @@
+"""Маршрути стрічки, підписок і вподобань."""
 from django.urls import path
 
 from . import views

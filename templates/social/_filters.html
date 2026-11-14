@@ -1,4 +1,4 @@
-{% load i18n ui %}{# Feed filters: a plain GET form, so it works without JS. Needs: prefix (unique ids), params, tags, tools, ranges, sorts, marks. #}
+{# Фільтри стрічки (звичайна GET-форма). #}{% load i18n ui %}{# Feed filters: a plain GET form, so it works without JS. Needs: prefix (unique ids), params, tags, tools, ranges, sorts, marks. #}
 <form class="feed-filters" method="get" action="{% url 'social:feed' %}">
   <label class="field" for="f-{{ prefix }}-sort"><span class="field__label">{% translate "Sort" %}</span>
     <span class="select-wrap"><select class="select" id="f-{{ prefix }}-sort" name="sort">{% for value, label in sorts %}<option value="{{ value }}"{% if params.sort == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>{% icon "chevron-down" %}</span></label>

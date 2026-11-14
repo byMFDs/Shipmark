@@ -1,3 +1,4 @@
+"""Стрічка й кнопки «стежити» та «подобається»."""
 from functools import wraps
 
 from django.contrib import messages
@@ -35,7 +36,9 @@ def _wants_json(request):
 
 
 def _safe_next(request, default):
-    """Where a plain POST goes back to. Only addresses on this site are accepted."""
+    """Куди повернутись після звичайного POST (лише адреси цього сайту).
+
+    Where a plain POST goes back to. Only addresses on this site are accepted."""
     target = request.POST.get("next", "")
     if target and url_has_allowed_host_and_scheme(target, allowed_hosts={request.get_host()}, require_https=request.is_secure()):
         return target
@@ -43,6 +46,7 @@ def _safe_next(request, default):
 
 
 def _fail(request, message, status, back):
+    """Відмова: JSON для fetch або повідомлення й перенаправлення."""
     if _wants_json(request):
         return JsonResponse({"ok": False, "message": message}, status=status)
     messages.error(request, message)
@@ -50,6 +54,7 @@ def _fail(request, message, status, back):
 
 
 def _done(request, data, message, back):
+    """Успіх: JSON для fetch або повідомлення й перенаправлення."""
     if _wants_json(request):
         return JsonResponse({"ok": True, **data})
     messages.success(request, message)
@@ -57,7 +62,9 @@ def _done(request, data, message, back):
 
 
 def social_action(name, limit, window):
-    """POST only; signed in; not suspended; rate limited. Checked before the target is even looked up."""
+    """Декоратор: лише POST, вхід, право писати, ліміт частоти.
+
+    POST only; signed in; not suspended; rate limited. Checked before the target is even looked up."""
     def decorator(view):
         @wraps(view)
         @require_POST
@@ -84,6 +91,7 @@ def _person(username):
 
 
 def _follow_change(request, username, follow):
+    """Підписатися або відписатися."""
     person = _person(username)
     back = _safe_next(request, reverse("accounts:profile", args=[person.username]))
     if person.pk == request.user.pk:
@@ -110,13 +118,16 @@ def unfollow(request, username):
 # ---------- Like ----------
 
 def _likeable(username, slug):
-    """Published and not suspended: anything else is a 404, drafts of other people included."""
+    """Проєкт, який можна вподобати, або 404.
+
+    Published and not suspended: anything else is a 404, drafts of other people included."""
     return get_object_or_404(
         queries.published_projects().select_related("owner"), owner__username__iexact=username, slug=slug,
     )
 
 
 def _like_change(request, username, slug, like):
+    """Вподобати або зняти вподобання."""
     project = _likeable(username, slug)
     back = _safe_next(request, project.get_absolute_url())
     # Decision: no likes on your own project. A like is a signal from someone else, and
@@ -147,7 +158,9 @@ def unlike(request, username, slug):
 
 @require_GET
 def feed(request):
-    """/feed/: tabs For you (default), Following, News; filters in the URL (social/feed.py); "Load more" as JSON."""
+    """Сторінка стрічки з вкладками, фільтрами й «Показати ще».
+
+    /feed/: tabs For you (default), Following, News; filters in the URL (social/feed.py); "Load more" as JSON."""
     user = request.user
     params = feeds.FeedForm(request.GET).values(user)
     tab, page = params["tab"], params["page"]

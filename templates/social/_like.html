@@ -1,4 +1,4 @@
-{% load i18n %}{# Like button. Needs: project, count, liked. Works as a plain POST form; social.js upgrades it. A zero count is not shown. #}
+{# Кнопка «Подобається»; без JS звичайний POST. #}{% load i18n %}{# Like button. Needs: project, count, liked. Works as a plain POST form; social.js upgrades it. A zero count is not shown. #}
 {% if user.is_authenticated and user.pk == project.owner_id %}
   {% if count %}<p class="social-note muted">{% blocktranslate count n=count trimmed %}{{ n }} like{% plural %}{{ n }} likes{% endblocktranslate %}</p>{% endif %}
 {% elif user.is_authenticated %}

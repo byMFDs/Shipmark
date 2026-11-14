@@ -39,7 +39,9 @@ def age(project, **delta):
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class FeedCase(ProofTestCase):
-    """ProofTestCase gives `self.owner` (ann) and a project with a repo and a live URL, plus the proof helpers."""
+    """Спільні дані для тестів сторінки стрічки.
+
+    ProofTestCase gives `self.owner` (ann) and a project with a repo and a live URL, plus the proof helpers."""
 
     def get(self, **params):
         return self.client.get(reverse("social:feed"), params)
@@ -59,6 +61,7 @@ class FeedCase(ProofTestCase):
 # ---------- URL parameters ----------
 
 class ParameterTests(FeedCase):
+    """Параметри адреси стрічки."""
     def test_default_tab_is_for_you_for_everyone(self):
         self.assertEqual(self.get().context["tab"], "foryou")
         self.client.force_login(self.owner)
@@ -96,6 +99,7 @@ class ParameterTests(FeedCase):
 # ---------- Filters ----------
 
 class FilterTests(FeedCase):
+    """Фільтри стрічки."""
     def setUp(self):
         super().setUp()
         self.ai, _created = Tag.objects.get_or_create(slug="ai", defaults={"name": "ai"})
@@ -188,6 +192,7 @@ class FilterTests(FeedCase):
 # ---------- Ranking ----------
 
 class RankingTests(FeedCase):
+    """Рейтинг «Рекомендоване»."""
     def score_of(self, *projects):
         now = timezone.now()
         rows = ranking.with_score(project_cards(Project.objects.filter(pk__in=[p.pk for p in projects]), AnonymousUser()), now)
@@ -250,7 +255,9 @@ class RankingTests(FeedCase):
 
 
 class MarkParityTests(FeedCase):
-    """The SQL marks used for ranking against compute_hallmarks (the definition). SQL may only err upwards."""
+    """SQL-марки збігаються з compute_hallmarks.
+
+    The SQL marks used for ranking against compute_hallmarks (the definition). SQL may only err upwards."""
 
     def setUp(self):
         super().setUp()
@@ -319,6 +326,7 @@ class MarkParityTests(FeedCase):
 # ---------- Cards ----------
 
 class CardTests(FeedCase):
+    """Картки стрічки."""
     def setUp(self):
         super().setUp()
         self.me = make_user("me")
@@ -416,6 +424,7 @@ class CardTests(FeedCase):
 # ---------- What must never show ----------
 
 class ExclusionTests(FeedCase):
+    """Що не потрапляє у стрічку."""
     def setUp(self):
         super().setUp()
         self.project.delete()
@@ -490,6 +499,7 @@ class ExclusionTests(FeedCase):
 # ---------- Load more ----------
 
 class LoadMoreTests(FeedCase):
+    """«Показати ще»."""
     def test_json_has_html_and_the_next_link(self):
         self.project.delete()
         for n in range(PAGE_SIZE + 2):
@@ -514,6 +524,7 @@ class LoadMoreTests(FeedCase):
 # ---------- News tab ----------
 
 class NewsTabTests(FeedCase):
+    """Вкладка «Новини»."""
     def setUp(self):
         super().setUp()
         now = timezone.now()
@@ -558,6 +569,7 @@ class NewsTabTests(FeedCase):
 # ---------- Page structure ----------
 
 class StructureTests(FeedCase):
+    """Розмітка сторінки стрічки."""
     def test_three_columns_a_nav_and_sticky_tabs(self):
         self.client.force_login(self.owner)
         html = self.get().content.decode()
@@ -589,7 +601,9 @@ class StructureTests(FeedCase):
 # ---------- No N+1 ----------
 
 class QueryCountTests(FeedCase):
-    """The number of queries does not depend on the number of cards."""
+    """Кількість запитів не залежить від кількості карток.
+
+    The number of queries does not depend on the number of cards."""
 
     def populate(self, count, start=0):
         for n in range(start, start + count):

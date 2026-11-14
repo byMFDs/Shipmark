@@ -25,6 +25,7 @@ def like_url(project, name="like"):
 
 
 class SocialTestCase(TestCase):
+    """Спільні дані для тестів social."""
     def setUp(self):
         cache.clear()  # rate limits live in the cache
         self.me = make_user("me")
@@ -33,6 +34,7 @@ class SocialTestCase(TestCase):
 
 
 class ConstraintTests(SocialTestCase):
+    """Унікальність підписок і вподобань."""
     def test_follow_pair_is_unique(self):
         Follow.objects.create(follower=self.me, following=self.ana)
         with self.assertRaises(IntegrityError), transaction.atomic():
@@ -54,6 +56,7 @@ class ConstraintTests(SocialTestCase):
 
 
 class FollowTests(SocialTestCase):
+    """Підписки."""
     def test_follow_and_unfollow_json(self):
         self.client.force_login(self.me)
         data = self.client.post(follow_url(self.ana), **JSON).json()
@@ -140,6 +143,7 @@ class FollowTests(SocialTestCase):
 
 
 class LikeTests(SocialTestCase):
+    """Вподобання."""
     def test_like_and_unlike_json(self):
         self.client.force_login(self.me)
         self.assertEqual(self.client.post(like_url(self.project), **JSON).json(), {"ok": True, "pressed": True, "count": 1})
@@ -215,6 +219,7 @@ class LikeTests(SocialTestCase):
 
 
 class FeedTests(SocialTestCase):
+    """Стрічка."""
     def feed(self, tab=None, page=None, **extra):
         params = {k: v for k, v in (("tab", tab), ("page", page)) if v is not None}
         return self.client.get(reverse("social:feed"), params, **extra)
@@ -352,7 +357,9 @@ FOLLOWING_QUERIES = 12
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)  # make_shot stores real files
 class FeedQueryCountTests(SocialTestCase):
-    """The feed must be a fixed number of queries, however many projects are on the page."""
+    """Стрічка за фіксовану кількість запитів.
+
+    The feed must be a fixed number of queries, however many projects are on the page."""
 
     def populate(self, n):
         for i in range(n):

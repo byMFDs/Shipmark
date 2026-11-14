@@ -1,3 +1,4 @@
+/* Стилі стрічки: вкладки, картки, фільтри, сторінки. */
 /* Feed: left navigation, the feed, a right panel. One column on phones (sticky tabs, folded filters), two from
    48em (feed + panel), three from 72em (navigation + feed + panel, symmetrical sides around a 640px feed).
    Rows (.feed-item) below are shared with Explore and the landing page. */

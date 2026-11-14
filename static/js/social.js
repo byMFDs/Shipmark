@@ -1,3 +1,4 @@
+// Кнопки «Подобається» і «Стежити» без перезавантаження.
 // Follow and like buttons. The forms work as plain POSTs without this file.
 // With it: the button changes at once (optimistic), the request runs in the background,
 // and on any error the button goes back to how it was and a toast says why.

@@ -1,4 +1,6 @@
-"""The /feed/ page: which tab, which filters, which items. Ranking lives in social/ranking.py.
+"""Сторінка /feed/: вкладки, фільтри й елементи стрічки.
+
+The /feed/ page: which tab, which filters, which items. Ranking lives in social/ranking.py.
 
 Everything comes from GET parameters, so every view of the feed is a link that works without JavaScript:
   tab    foryou (default) | following | news      ("latest" is the old name: For you, newest first)
@@ -31,7 +33,9 @@ TAG_OPTIONS = 40
 
 
 class FeedForm(forms.Form):
-    """Validates the query string. A bad value is ignored (as if absent), never an error page."""
+    """Перевіряє параметри стрічки; погане значення ігнорується.
+
+    Validates the query string. A bad value is ignored (as if absent), never an error page."""
 
     tab = forms.CharField(required=False, max_length=10)
     tag = forms.CharField(required=False, max_length=40)
@@ -42,6 +46,7 @@ class FeedForm(forms.Form):
     page = forms.IntegerField(required=False, min_value=1)
 
     def values(self, user):
+        """Очищені параметри стрічки зі значеннями за замовчуванням."""
         self.is_valid()
         data = self.cleaned_data
         tab = data.get("tab") or "foryou"
@@ -61,7 +66,9 @@ def has_filters(params):
 
 
 def feed_url(params, **changes):
-    """/feed/?... with only the non-default parameters (so the plain feed is just /feed/)."""
+    """Адреса стрічки лише з нетиповими параметрами.
+
+    /feed/?... with only the non-default parameters (so the plain feed is just /feed/)."""
     merged = {**params, **changes}
     query = {}
     if merged["tab"] != "foryou":
@@ -81,7 +88,9 @@ def _since(params, now):
 
 
 def for_you(user, params, now=None):
-    """(items, has_next) for the "For you" tab."""
+    """Елементи вкладки «Рекомендоване».
+
+    (items, has_next) for the "For you" tab."""
     now = now or timezone.now()
     base = published_projects()
     if params["tag"]:
@@ -131,7 +140,9 @@ def latest_news(limit=3):
 
 
 def tag_options(selected=""):
-    """Most used tags among visible projects (not suspended, not banned), plus the selected one."""
+    """Найуживаніші теги видимих проєктів плюс вибраний.
+
+    Most used tags among visible projects (not suspended, not banned), plus the selected one."""
     tags = list(
         Tag.objects.filter(projects__in=published_projects().values("pk"))
         .annotate(n=Count("projects")).order_by("-n", "name")[:TAG_OPTIONS]

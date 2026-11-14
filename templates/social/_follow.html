@@ -1,4 +1,4 @@
-{% load i18n %}{# Follow button. Needs: person, following. count_target: id of the element that shows the follower count. #}
+{# Кнопка «Стежити»; без JS звичайний POST. #}{% load i18n %}{# Follow button. Needs: person, following. count_target: id of the element that shows the follower count. #}
 {% if user.is_authenticated and user.pk == person.pk %}
 {% elif user.is_authenticated %}
   <form class="social-form" method="post" data-social-form data-follow-style

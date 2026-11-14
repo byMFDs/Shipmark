@@ -1,4 +1,6 @@
-"""The "For you" ranking: one score per project, computed in SQL (SQLite and PostgreSQL, no new dependency).
+"""Рейтинг «Рекомендоване»: один бал на проєкт, обчислений у SQL.
+
+The "For you" ranking: one score per project, computed in SQL (SQLite and PostgreSQL, no new dependency).
 
     score = (2 * likes + followers / 5 + 3 * marks + 1) * decay
 
@@ -42,7 +44,9 @@ def _int(condition):
 
 
 def has_repo_mark():
-    """SQL twin of proof._authored: a checked link for the project's current repository name."""
+    """SQL-аналог марки «Repo owner».
+
+    SQL twin of proof._authored: a checked link for the project's current repository name."""
     link = (
         RepoLink.objects.annotate(_name=Lower("repo_full_name"))
         .filter(project=OuterRef("pk"), _name=Lower(OuterRef("repo_full_name")),
@@ -53,7 +57,9 @@ def has_repo_mark():
 
 
 def has_live_mark(now):
-    """SQL twin of proof._live, without the host comparison (see the docstring)."""
+    """SQL-аналог марки «Domain verified».
+
+    SQL twin of proof._live, without the host comparison (see the docstring)."""
     verified = DomainVerification.objects.filter(
         project=OuterRef("pk"), status=DomainVerification.Status.VERIFIED, last_confirmed_at__gte=now - LIVE_MAX_AGE,
     )
@@ -61,7 +67,9 @@ def has_live_mark(now):
 
 
 def with_marks(queryset, now):
-    """Annotate `marks` (0-3). Needs the with_uptime() annotations (uptime_total, uptime_ok) on the queryset."""
+    """Додає кількість марок (0-3).
+
+    Annotate `marks` (0-3). Needs the with_uptime() annotations (uptime_total, uptime_ok) on the queryset."""
     queryset = queryset.annotate(_ok100=F("uptime_ok") * 100, _need=F("uptime_total") * STEADY_MIN_PERCENT)
     steady = has_live_mark(now) & Q(uptime_total__gte=STEADY_MIN_CHECKS) & Q(_ok100__gte=F("_need"))
     return queryset.annotate(
@@ -70,7 +78,9 @@ def with_marks(queryset, now):
 
 
 def with_score(queryset, now):
-    """Annotate `score`. Needs `event_at`, `like_count` and the with_uptime() annotations (project_rows gives all)."""
+    """Додає бал рейтингу.
+
+    Annotate `score`. Needs `event_at`, `like_count` and the with_uptime() annotations (project_rows gives all)."""
     followers = Follow.objects.filter(following=OuterRef("owner"), follower__is_suspended=False).order_by().values("following")
     queryset = with_marks(queryset, now).annotate(
         owner_followers=Coalesce(Subquery(followers.annotate(n=Count("pk")).values("n")), 0),
@@ -90,7 +100,9 @@ def with_score(queryset, now):
 
 
 def with_latest_update(queryset):
-    """Annotate the newest build-log update (not the launch entry): `update_text`, `update_at`, `update_id`."""
+    """Додає останнє оновлення журналу збірки.
+
+    Annotate the newest build-log update (not the launch entry): `update_text`, `update_at`, `update_id`."""
     newest = BuildLogEntry.objects.filter(project=OuterRef("pk")).exclude(kind=BuildLogEntry.Kind.LAUNCH).order_by("-created_at", "-pk")
     return queryset.annotate(
         update_text=Subquery(newest.values("text")[:1]),

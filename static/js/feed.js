@@ -1,3 +1,4 @@
+// «Показати ще» у стрічці: дописує наступну сторінку з JSON.
 // "Load more" on /feed/. Without JS the same link opens the next page.
 // Asks the feed view for JSON ({html, next_url}) and appends the rows.
 import { showToast } from "./toast.js";

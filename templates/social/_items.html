@@ -1,4 +1,4 @@
-{% load i18n ui %}{# Feed items. Rendered in the page and returned as JSON "html" by "Load more". #}
+{# Елементи стрічки (сторінка й «Показати ще»). #}{% load i18n ui %}{# Feed items. Rendered in the page and returned as JSON "html" by "Load more". #}
 {% for item in items %}
   {% if item.kind == "project" %}
     {% with project=item.obj %}{% include "social/_card.html" %}{% endwith %}
