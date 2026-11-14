@@ -100,6 +100,12 @@ class TabMarkTests(TestCase):
             self.assertEqual(row.count('class="tab-mark"'), 1)
             self.assertRegex(row, rf'aria-current="page">{current}<span class="tab-mark"')
 
+    def test_only_the_first_tab_is_flush_left(self):
+        """Each tab link is the only child of its <li>: `.tabs__link:first-child` matched every tab."""
+        css = without_comments((CSS / "components.css").read_text())
+        self.assertNotIn(".tabs__link:first-child", css)
+        self.assertIn(".tabs__list > li:first-child .tabs__link { padding-left: 0; }", css)
+
     def test_header_nav_marks_the_current_page(self):
         html = self.client.get(reverse("pages:explore")).content.decode()
         self.assertRegex(html, r'class="site-nav__link"[^>]*aria-current="page">[^<]+<span class="tab-mark" aria-hidden="true">')

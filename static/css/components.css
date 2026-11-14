@@ -1945,7 +1945,9 @@ html:not(.js) .toasts:not(:empty) {
   transition: color var(--t-fast);
 }
 
-.tabs__link:first-child { padding-left: 0; }
+/* Only the first tab sits flush with the content edge. (Each link is the first child of its own <li>, so the old
+   `.tabs__link:first-child` took the left padding off every tab and pushed each underline to the right.) */
+.tabs__list > li:first-child .tabs__link { padding-left: 0; }
 .tabs__link:focus-visible { outline-offset: -2px; }
 
 .tabs__link[aria-current="page"] { color: var(--text); }
