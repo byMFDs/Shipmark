@@ -1,4 +1,6 @@
-"""Public news pages. Read-only: posts are written in the admin (news/admin.py), never through the site.
+"""Публічні сторінки новин (лише читання).
+
+Public news pages. Read-only: posts are written in the admin (news/admin.py), never through the site.
 
 Everyone sees published posts, anonymous visitors included. A draft, or a post scheduled for later, is a 404 for
 everybody (staff preview it in the admin). The byline is always the system account "shipmark" with its official badge.
@@ -17,12 +19,15 @@ MAX_PAGE = 100
 
 
 def news_author():
-    """The system account, with its badges loaded (one query for the badge)."""
+    """Системний акаунт з бейджами, автор новин.
+
+    The system account, with its badges loaded (one query for the badge)."""
     return get_user_model().objects.prefetch_related("badges").get(username=SYSTEM_USERNAME)
 
 
 @require_GET
 def post_list(request):
+    """Список новин зі сторінками."""
     try:
         page = int(request.GET.get("page", 1))
     except ValueError:

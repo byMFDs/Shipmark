@@ -1,4 +1,4 @@
-{% load i18n ui %}{# One news post as a card (news list, feed News tab). Needs: post, author. #}
+{# Картка новини (список новин, вкладка «Новини» у стрічці). #}{% load i18n ui %}{# One news post as a card (news list, feed News tab). Needs: post, author. #}
 <article class="news-card{% if post.pinned %} is-pinned{% endif %}">
   <p class="news-card__meta">
     {% include "news/_byline.html" %}

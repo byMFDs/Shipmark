@@ -1,4 +1,6 @@
-"""Official news. Written only in the admin (superusers, or staff given the news permissions); there are
+"""Офіційні новини; пишуться лише в адмінці.
+
+Official news. Written only in the admin (superusers, or staff given the news permissions); there are
 no public write endpoints. On the site the author is always the system account "shipmark" with the
 official badge; `created_by` (the staff member) is only shown in the admin."""
 from django.conf import settings
@@ -12,12 +14,16 @@ from projects.rendering import MAX_LENGTH, render_user_markdown
 
 
 class NewsPostQuerySet(models.QuerySet):
+    """Запити до новин."""
     def published(self, now=None):
-        """Visible on the site: has a publish time that has come (a future time = scheduled)."""
+        """Новини, час публікації яких настав.
+
+        Visible on the site: has a publish time that has come (a future time = scheduled)."""
         return self.filter(published_at__isnull=False, published_at__lte=now or timezone.now())
 
 
 class NewsPost(models.Model):
+    """Новина: заголовок, текст markdown, час публікації, закріплення."""
     title = models.CharField(_("title"), max_length=140)
     slug = models.SlugField(_("slug"), max_length=80, unique=True,
                             help_text=_("Part of the address: /news/<slug>/. Do not change it after publishing."))
@@ -49,7 +55,9 @@ class NewsPost(models.Model):
 
     @property
     def excerpt(self):
-        """Plain text for cards and page descriptions: the first ~200 characters of the body, without markup."""
+        """Короткий текст без розмітки для карток і описів.
+
+        Plain text for cards and page descriptions: the first ~200 characters of the body, without markup."""
         text = " ".join(strip_tags(self.body_html).split())
         return text if len(text) <= 200 else text[:199].rsplit(" ", 1)[0] + "…"
 

@@ -22,6 +22,7 @@ def post_data(**extra):
 
 
 class NewsModelTests(TestCase):
+    """Модель новин і запланована публікація."""
     def test_published_drafts_and_scheduled(self):
         now = timezone.now()
         live = NewsPost.objects.create(title="A", slug="a", body="x", published_at=now - timedelta(minutes=1))
@@ -43,6 +44,7 @@ class NewsModelTests(TestCase):
 
 
 class NewsAdminTests(TestCase):
+    """Новини в адмінці."""
     def setUp(self):
         self.boss = User.objects.create_superuser("boss", "b@example.com", "pw")
         self.add_url = reverse("admin:news_newspost_add")
@@ -88,6 +90,7 @@ class NewsAdminTests(TestCase):
 # ---------- Public pages (stage 4) ----------
 
 class PublicNewsTests(TestCase):
+    """Публічні сторінки новин."""
     def setUp(self):
         now = timezone.now()
         self.pinned = NewsPost.objects.create(title="Read me first", slug="first", body="Pinned **news**", pinned=True,

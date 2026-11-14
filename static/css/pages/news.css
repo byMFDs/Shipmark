@@ -1,3 +1,4 @@
+/* Стилі сторінок новин. */
 /* News: the public list and a post. One centred column (.shell--narrow), like reading text. */
 
 .news__list { display: grid; gap: var(--s-5); }

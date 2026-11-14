@@ -1,3 +1,4 @@
+"""Адмінка новин: пишуть суперкористувачі й персонал з правами на новини."""
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
@@ -10,7 +11,9 @@ from .models import NewsPost
 
 @admin.register(NewsPost)
 class NewsPostAdmin(AuditedModelAdmin):
-    """Django's own model permissions decide who may write: superusers, and staff given news.add/change/
+    """Новини в адмінці з журналом публікацій.
+
+    Django's own model permissions decide who may write: superusers, and staff given news.add/change/
     delete_newspost (for example through a "News editors" group). Every save and delete is in AuditLog."""
 
     list_display = ("title", "state", "pinned", "published_at", "created_by", "updated_at")
@@ -35,6 +38,7 @@ class NewsPostAdmin(AuditedModelAdmin):
         return format_html('<div class="prose">{}</div>', obj.body_html)  # body_html is sanitized by nh3
 
     def save_model(self, request, obj, form, change):
+        """Зберігає автора новини й пише публікацію чи зміну в AuditLog."""
         was_published = bool(change and NewsPost.objects.filter(pk=obj.pk, published_at__isnull=False).exists())
         if not change:
             obj.created_by = request.user
