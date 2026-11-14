@@ -96,10 +96,6 @@ def find(uid, now=None):
     return max(rows, key=lambda r: (r.expires_at is None, r.expires_at), default=None)
 
 
-def legacy_count(now=None):
-    return _active(now or timezone.now()).filter(hash_scheme=Scheme.SECRET_KEY).count()
-
-
 def rehash(now=None):
     """Переводить старі хеші на BAN_HASH_KEY.
 

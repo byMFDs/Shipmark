@@ -118,7 +118,3 @@ def revoke(sanction, actor, via="admin"):
     forget_sanctions(sanction.user)
     audit.log(f"moderation.{sanction.kind}.revoked", sanction.user, actor=actor, via=via, sanction=sanction.pk)
     return True
-
-
-def active_for(user, now=None):
-    return list(Sanction.objects.active(now).filter(user=user).order_by("-starts_at"))
