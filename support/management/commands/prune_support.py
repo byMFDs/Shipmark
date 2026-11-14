@@ -1,4 +1,6 @@
-"""Delete closed support messages older than 12 months, with their attachment files (cron, daily or weekly).
+"""Видаляє закриті звернення, старші 12 місяців, з вкладеннями (cron).
+
+Delete closed support messages older than 12 months, with their attachment files (cron, daily or weekly).
 
     python manage.py prune_support
 
@@ -15,6 +17,7 @@ KEEP_CLOSED = timedelta(days=365)
 
 
 def prune(now=None):
+    """Видаляє старі закриті звернення; повертає кількість."""
     cutoff = (now or timezone.now()) - KEEP_CLOSED
     old = SupportMessage.objects.filter(status=SupportMessage.Status.CLOSED, created_at__lt=cutoff)
     count = old.count()
@@ -24,6 +27,7 @@ def prune(now=None):
 
 
 class Command(BaseCommand):
+    """Команда prune_support."""
     help = "Delete closed support messages older than 12 months, with their attachments."
 
     def handle(self, *args, **options):

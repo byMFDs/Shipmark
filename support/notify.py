@@ -1,4 +1,6 @@
-"""The plain-text email to the support inbox about a new message. Best effort: it runs after the commit, so the
+"""Лист-сповіщення в скриньку підтримки про нове звернення.
+
+The plain-text email to the support inbox about a new message. Best effort: it runs after the commit, so the
 message is saved even when sending fails (the failure is logged without the message text).
 
 No attachments and no HTML: the email says that a message arrived and links to the admin, where staff read it.
@@ -21,6 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 def build_email(message):
+    """Складає простий текстовий лист англійською."""
     with translation.override("en"):
         category = str(message.get_category_display())
         subject = f"[{branding.SITE_NAME} support] {category} #{message.pk}"
@@ -45,7 +48,9 @@ def build_email(message):
 
 
 def notify_inbox(message_id):
-    """Returns True when the email was handed to the mail server. Never raises."""
+    """Надсилає сповіщення; ніколи не кидає виняток.
+
+    Returns True when the email was handed to the mail server. Never raises."""
     if not settings.SUPPORT_INBOX_EMAIL:
         # Logged, so "no email arrived" has an answer in the log (it used to return without a trace).
         logger.warning("support notification skipped for message %s: SUPPORT_INBOX_EMAIL is empty", message_id)

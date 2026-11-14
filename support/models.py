@@ -1,4 +1,6 @@
-"""Messages sent through /support/. No IP address and no browser details are stored (docs/DATA_INVENTORY.md)."""
+"""Звернення з /support/ без IP і даних браузера.
+
+Messages sent through /support/. No IP address and no browser details are stored (docs/DATA_INVENTORY.md)."""
 import uuid
 
 from django.conf import settings
@@ -15,6 +17,7 @@ MAX_ATTACHMENTS = 3
 
 
 class SupportMessage(models.Model):
+    """Звернення в підтримку."""
     class Category(models.TextChoices):
         BUG = "bug", _("Bug")
         IDEA = "idea", _("Idea or feedback")
@@ -53,13 +56,16 @@ class SupportMessage(models.Model):
 
 
 def attachment_path(instance, filename):
-    """Random name; the extension comes from what the file became (webp or txt), never from the upload."""
+    """Випадкова назва файлу вкладення.
+
+    Random name; the extension comes from what the file became (webp or txt), never from the upload."""
     now = timezone.now()
     extension = "txt" if instance.kind == SupportAttachment.Kind.TEXT else "webp"
     return f"{now:%Y}/{now:%m}/{uuid.uuid4().hex}.{extension}"
 
 
 class SupportAttachment(models.Model):
+    """Вкладення до звернення (у приватному сховищі)."""
     class Kind(models.TextChoices):
         IMAGE = "image", _("Image")
         TEXT = "text", _("Text")

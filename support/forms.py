@@ -1,4 +1,6 @@
-"""The support form. Attachments: up to 3, PNG/JPEG/WebP images (re-encoded by projects/images.py, metadata
+"""Форма підтримки з вкладеннями (картинки або текстові логи).
+
+The support form. Attachments: up to 3, PNG/JPEG/WebP images (re-encoded by projects/images.py, metadata
 removed) or .txt/.log text files (at most 200 KB, stored as UTF-8 text). Nothing else is accepted."""
 import os
 import re
@@ -22,10 +24,12 @@ REFERENCE_RE = re.compile(r"^[A-Za-z0-9-]{1,32}$")
 
 
 class MultipleFileInput(forms.ClearableFileInput):
+    """Поле вибору кількох файлів."""
     allow_multiple_selected = True
 
 
 class MultipleFileField(forms.FileField):
+    """Поле форми для кількох файлів."""
     widget = MultipleFileInput
 
     def clean(self, data, initial=None):
@@ -34,13 +38,17 @@ class MultipleFileField(forms.FileField):
 
 
 def clean_name(name):
-    """The file name as staff will see it: no folders, only safe characters, at most 100."""
+    """Безпечна назва файлу для персоналу.
+
+    The file name as staff will see it: no folders, only safe characters, at most 100."""
     base = os.path.basename(name or "").strip()
     return re.sub(r"[^\w .()-]", "_", base)[:100]
 
 
 def clean_text_file(upload):
-    """A .txt/.log file -> UTF-8 ContentFile. Refuses binary content."""
+    """Перевіряє .txt/.log і перекодовує в UTF-8.
+
+    A .txt/.log file -> UTF-8 ContentFile. Refuses binary content."""
     if upload.size > MAX_TEXT_BYTES:
         raise ValidationError(_("A text file can be at most 200 KB."), code="text_too_big")
     raw = upload.read(MAX_TEXT_BYTES + 1)
@@ -54,7 +62,9 @@ def clean_text_file(upload):
 
 
 def clean_attachment(upload):
-    """(kind, ContentFile) for one upload, or ValidationError. The extension picks the check; the check decides."""
+    """Перевіряє одне вкладення за його типом.
+
+    (kind, ContentFile) for one upload, or ValidationError. The extension picks the check; the check decides."""
     extension = os.path.splitext(upload.name or "")[1].lower()
     if extension in TEXT_EXTENSIONS:
         return SupportAttachment.Kind.TEXT, clean_text_file(upload)
@@ -64,6 +74,7 @@ def clean_attachment(upload):
 
 
 class SupportForm(StyledFormMixin, forms.Form):
+    """Форма звернення: тема, текст, адреса, вкладення."""
     category = forms.ChoiceField(
         label=_("What is it about?"), choices=[("", _("Choose a topic")), *SupportMessage.Category.choices],
         error_messages={"required": _("Choose a topic.")},
@@ -112,6 +123,7 @@ class SupportForm(StyledFormMixin, forms.Form):
         return bool(self.data.get("website"))
 
     def clean_email(self):
+        """Адреса з форми або з акаунта."""
         email = (self.cleaned_data.get("email") or "").strip()
         if not email and self.user is not None and self.user.is_authenticated:
             email = self.user.email or ""
@@ -124,6 +136,7 @@ class SupportForm(StyledFormMixin, forms.Form):
         return value if REFERENCE_RE.match(value) else ""
 
     def clean_attachments(self):
+        """Не більше трьох вкладень."""
         files = self.cleaned_data.get("attachments") or []
         if len(files) > MAX_ATTACHMENTS:
             raise ValidationError(ngettext(
@@ -142,6 +155,7 @@ class SupportForm(StyledFormMixin, forms.Form):
         return cleaned
 
     def clean(self):
+        """Перевіряє, чи форму заповнили як людина."""
         data = super().clean()
         problem = antispam.token_problem(self.data.get("started"))
         if problem == "fast":

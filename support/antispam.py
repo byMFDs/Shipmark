@@ -1,4 +1,6 @@
-"""Spam protection for /support/ without outside services.
+"""Захист форми підтримки від спаму без сторонніх сервісів.
+
+Spam protection for /support/ without outside services.
 
 - Honeypot: a field people never see. A filled one is a bot; it gets the "sent" page and nothing is stored.
 - Fill-time token: the form carries a signed timestamp; a POST less than 3 seconds after the page was made, or
@@ -30,7 +32,9 @@ def issue_token(now=None):
 
 
 def token_problem(token, now=None):
-    """'' when the form was filled in a human way, else 'fast' or 'expired' (a broken token counts as expired)."""
+    """Чи форму заповнили як людина: '', 'fast' або 'expired'.
+
+    '' when the form was filled in a human way, else 'fast' or 'expired' (a broken token counts as expired)."""
     try:
         started = signing.loads(token or "", salt=TOKEN_SALT, max_age=TOKEN_MAX_AGE)["t"]
     except (signing.BadSignature, KeyError, TypeError):
@@ -42,18 +46,24 @@ def token_problem(token, now=None):
 # ---------- Rate limits ----------
 
 def client_ip(request):
-    """The visitor's address as the trusted proxy reports it (settings.CLIENT_IP_HEADER), else REMOTE_ADDR."""
+    """Адреса відвідувача від довіреного проксі або REMOTE_ADDR.
+
+    The visitor's address as the trusted proxy reports it (settings.CLIENT_IP_HEADER), else REMOTE_ADDR."""
     header = getattr(settings, "CLIENT_IP_HEADER", "") or "REMOTE_ADDR"
     return (request.META.get(header) or request.META.get("REMOTE_ADDR") or "").split(",")[0].strip()
 
 
 def ip_key(ip):
-    """A salted one-way hash of the address. Used only as a cache key; the address itself is never kept."""
+    """Солений хеш адреси (лише ключ кешу).
+
+    A salted one-way hash of the address. Used only as a cache key; the address itself is never kept."""
     return hmac.new(settings.SECRET_KEY.encode(), f"support-ip:{ip}".encode(), hashlib.sha256).hexdigest()[:32]
 
 
 def client_keys(request):
-    """Who is sending: the session, the account (when signed in) and the hashed address."""
+    """Хто надсилає: сесія, акаунт, хеш адреси.
+
+    Who is sending: the session, the account (when signed in) and the hashed address."""
     if not request.session.session_key:
         request.session.save()  # a session cookie only after a POST to this form (strictly necessary)
     keys = [f"s:{request.session.session_key}", f"ip:{ip_key(client_ip(request))}"]
@@ -67,12 +77,16 @@ def _count_key(window, key):
 
 
 def is_limited(keys):
-    """True when any key already sent the most messages allowed in an hour or a day. Counts nothing."""
+    """Чи якийсь ключ уже надіслав максимум за годину чи добу.
+
+    True when any key already sent the most messages allowed in an hour or a day. Counts nothing."""
     return any((cache.get(_count_key(window, key)) or 0) >= limit for key in keys for window, limit, _s in LIMITS)
 
 
 def count(keys):
-    """Counts one accepted message for every key."""
+    """Рахує одне прийняте звернення для кожного ключа.
+
+    Counts one accepted message for every key."""
     for key in keys:
         for window, _limit, seconds in LIMITS:
             cache_key = _count_key(window, key)
@@ -90,6 +104,8 @@ def _normalized(text):
 
 
 def claim_first(email, body):
-    """True for the first copy of this text from this address within 24 hours (cache.add is atomic)."""
+    """Чи це перша копія тексту з цієї адреси за добу.
+
+    True for the first copy of this text from this address within 24 hours (cache.add is atomic)."""
     digest = hashlib.sha256(f"{email.strip().lower()}\n{_normalized(body)}".encode()).hexdigest()
     return cache.add(f"support:dup:{digest}", 1, timeout=DUPLICATE_WINDOW)

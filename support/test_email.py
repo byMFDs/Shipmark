@@ -40,6 +40,7 @@ def mock_smtp():
 
 @override_settings(**GMAIL)
 class SmtpNoticeTests(TestCase):
+    """Сповіщення через підробний SMTP."""
     def setUp(self):
         cache.clear()
         self.patcher, self.server = mock_smtp()
@@ -87,6 +88,7 @@ class SmtpNoticeTests(TestCase):
 
 @override_settings(**GMAIL)
 class SendTestEmailTests(TestCase):
+    """Команда send_test_email."""
     def setUp(self):
         self.patcher, self.server = mock_smtp()
         self.addCleanup(self.patcher.stop)
@@ -127,6 +129,7 @@ class SendTestEmailTests(TestCase):
 
 
 class EmailWarningTests(TestCase):
+    """Попередження про неналаштовану пошту."""
     @override_settings(**GMAIL)
     def test_complete_gmail_setup_has_no_problems(self):
         self.assertEqual(email_problems(), [])

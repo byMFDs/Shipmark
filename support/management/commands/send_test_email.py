@@ -1,4 +1,6 @@
-"""`python manage.py send_test_email [--to ADDRESS] [--smtp]`: send one test email the way the support notice is sent,
+"""Команда send_test_email: тестовий лист і пояснення, що не так з поштою.
+
+`python manage.py send_test_email [--to ADDRESS] [--smtp]`: send one test email the way the support notice is sent,
 print the settings in use (the password only as set / not set) and say in plain words what is wrong when it fails.
 
 --smtp uses the SMTP backend even when the settings say console (dev): to try the real Gmail setup from a laptop.
@@ -35,6 +37,7 @@ HINTS = (
 
 
 class Command(BaseCommand):
+    """Надсилає тестовий лист і пояснює помилки."""
     help = "Send a test email like the support notice and explain what is wrong when it fails."
 
     def add_arguments(self, parser):

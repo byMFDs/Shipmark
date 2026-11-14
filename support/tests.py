@@ -41,6 +41,7 @@ def text_file(name="error.log", content=b"Traceback (most recent call last):\n  
 
 
 class SupportTestCase(TestCase):
+    """Спільні дані для тестів підтримки."""
     def setUp(self):
         cache.clear()
 
@@ -57,6 +58,7 @@ class SupportTestCase(TestCase):
 
 
 class FormPageTests(SupportTestCase):
+    """Сторінка форми."""
     def test_page_explains_topics_and_is_honest_about_replies(self):
         page = self.client.get(FORM)
         self.assertEqual(page.status_code, 200)
@@ -89,6 +91,7 @@ class FormPageTests(SupportTestCase):
 
 
 class SendingTests(SupportTestCase):
+    """Надсилання звернення."""
     def test_a_message_is_saved_without_ip_or_browser_details(self):
         response = self.send()
         self.assertRedirects(response, reverse("support:sent"))
@@ -127,6 +130,7 @@ class SendingTests(SupportTestCase):
 
 
 class AntiSpamTests(SupportTestCase):
+    """Захист від спаму."""
     def test_honeypot_pretends_success_and_stores_nothing(self):
         with override_settings(SUPPORT_INBOX_EMAIL="inbox@example.com"):
             response = self.send(website="http://spam.example")
@@ -197,6 +201,7 @@ class AntiSpamTests(SupportTestCase):
 
 
 class AttachmentTests(SupportTestCase):
+    """Вкладення."""
     def test_images_are_re_encoded_and_text_kept_as_text_in_private_storage(self):
         response = self.send(attachments=[png(), text_file(), text_file("notes.txt", "Привіт, світ".encode())])
         self.assertEqual(response.status_code, 302)
@@ -261,6 +266,7 @@ class AttachmentTests(SupportTestCase):
 
 @override_settings(SUPPORT_INBOX_EMAIL="inbox@example.com", DEFAULT_FROM_EMAIL="site@example.com")
 class NotificationTests(SupportTestCase):
+    """Лист-сповіщення."""
     def test_plain_text_email_after_the_commit(self):
         self.send(subject="Hello\r\nBcc: victim@example.com", attachments=[png()])
         self.assertEqual(len(mail.outbox), 1)
@@ -299,6 +305,7 @@ class NotificationTests(SupportTestCase):
 
 
 class ErrorPageTests(SupportTestCase):
+    """Посилання з id запиту на сторінках помилок."""
     def test_404_and_500_link_to_support_with_the_request_id(self):
         response = self.client.get("/no-such-page/")
         self.assertContains(response, "Report a problem", status_code=404)
@@ -310,6 +317,7 @@ class ErrorPageTests(SupportTestCase):
 
 
 class AdminInboxTests(SupportTestCase):
+    """Скринька в адмінці."""
     def setUp(self):
         super().setUp()
         self.boss = type(make_user("x")).objects.create_superuser("boss", "boss@example.com", "pw")
@@ -348,6 +356,7 @@ class AdminInboxTests(SupportTestCase):
 
 
 class RetentionAndRightsTests(SupportTestCase):
+    """Зберігання, експорт і видалення звернень."""
     def test_prune_deletes_old_closed_messages_with_files(self):
         self.send(attachments=[text_file()])
         old = SupportMessage.objects.get()

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{# Підтвердження «Отримано» після звернення. #}{% extends "base.html" %}
 {% load i18n static ui %}
 
 {% block title %}{% if again %}{% translate "Already received" %}{% else %}{% translate "Message sent" %}{% endif %} · {{ brand.SITE_NAME }}{% endblock %}

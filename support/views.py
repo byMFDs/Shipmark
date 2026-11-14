@@ -1,4 +1,6 @@
-"""/support/ (the form), /support/sent/ (the confirmation) and the staff-only attachment download."""
+"""Форма підтримки, підтвердження й завантаження вкладень для персоналу.
+
+/support/ (the form), /support/sent/ (the confirmation) and the staff-only attachment download."""
 from django.db import transaction
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -19,6 +21,7 @@ def _sent(state=""):
 
 @require_http_methods(["GET", "POST"])
 def support_form(request):
+    """Форма звернення з антиспамом і сповіщенням після коміту."""
     user = request.user
     if request.method == "POST":
         form = SupportForm(request.POST, request.FILES, user=user)
@@ -51,6 +54,7 @@ def support_form(request):
 
 
 def _save(form, user):
+    """Зберігає звернення й вкладення в одній транзакції."""
     data = form.cleaned_data
     with transaction.atomic():
         message = SupportMessage.objects.create(
@@ -71,7 +75,9 @@ def sent(request):
 
 @require_GET
 def attachment(request, pk):
-    """Staff with the permission only; everyone else gets a 404 (not even "it exists"). Always a download."""
+    """Завантаження вкладення (лише персонал з правом).
+
+    Staff with the permission only; everyone else gets a 404 (not even "it exists"). Always a download."""
     user = request.user
     if not (user.is_authenticated and user.is_active and user.is_staff and user.has_perm("support.view_supportmessage")):
         raise Http404

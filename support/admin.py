@@ -1,4 +1,6 @@
-"""Support inbox in the admin. Visible only to superusers and staff who were given the support permissions
+"""Скринька підтримки в адмінці (лише для персоналу з правами).
+
+Support inbox in the admin. Visible only to superusers and staff who were given the support permissions
 (support.view_supportmessage to read, support.change_supportmessage to set status and notes). Every status change
 and note is in the AuditLog; what the person wrote cannot be edited."""
 from urllib.parse import quote
@@ -35,6 +37,7 @@ def unread_count():
 
 @admin.register(SupportMessage)
 class SupportMessageAdmin(ModelAdmin):
+    """Звернення в підтримку в адмінці: статуси, нотатки, вкладення."""
     list_display = ("created_at", "category", "status", "short_subject", "email", "who", "files")
     list_filter = ("status", "category", "created_at")
     search_fields = ("email", "subject", "body", "reference", "user__username")
@@ -53,6 +56,7 @@ class SupportMessageAdmin(ModelAdmin):
         return super().get_queryset(request).annotate(file_count=Count("attachments"))
 
     def changelist_view(self, request, extra_context=None):
+        """Список звернень з банером, якщо пошта не налаштована."""
         # A visible note when new messages cannot reach the support mailbox (support/mailcheck.py). The reasons are
         # setting names, so they stay in English.
         problems = email_problems()
@@ -71,6 +75,7 @@ class SupportMessageAdmin(ModelAdmin):
 
     @admin.display(description=_("Account"))
     def who(self, obj):
+        """Хто написав: посилання на акаунт або «не увійшов»."""
         if not obj.user_id:
             return _("Not signed in")
         return format_html('<a href="{}">@{}</a>', reverse("admin:accounts_user_change", args=[obj.user_id]),
@@ -82,6 +87,7 @@ class SupportMessageAdmin(ModelAdmin):
 
     @admin.display(description=_("Attachments"))
     def attachment_links(self, obj):
+        """Посилання на завантаження вкладень."""
         items = list(obj.attachments.all())
         if not items:
             return "-"
@@ -97,7 +103,9 @@ class SupportMessageAdmin(ModelAdmin):
         return format_html('<a href="mailto:{}?subject={}">{}</a>', obj.email, quote(subject), _("Reply by email"))
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
-        """Opening a new message marks it read (logged like any status change)."""
+        """Відкриття нового звернення позначає його прочитаним.
+
+        Opening a new message marks it read (logged like any status change)."""
         message = self.get_object(request, object_id)
         if (message is not None and message.status == SupportMessage.Status.NEW and request.method == "GET"
                 and self.has_change_permission(request, message)):
@@ -105,6 +113,7 @@ class SupportMessageAdmin(ModelAdmin):
         return super().change_view(request, object_id, form_url, extra_context)
 
     def save_model(self, request, obj, form, change):
+        """Зберігає статус і нотатку з записом в AuditLog."""
         changed = [name for name in ("status", "internal_note") if name in form.changed_data]
         super().save_model(request, obj, form, change)
         if changed:
@@ -120,6 +129,7 @@ class SupportMessageAdmin(ModelAdmin):
         super().delete_queryset(request, queryset)
 
     def _set_status(self, request, message, status):
+        """Змінює статус звернення з записом в AuditLog."""
         if message.status == status:
             return False
         message.status = status

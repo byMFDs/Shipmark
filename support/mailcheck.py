@@ -1,4 +1,6 @@
-"""Is the support notice able to reach a mailbox? Plain checks of the email settings, shared by the system check
+"""Чи може лист підтримки дійти до скриньки: перевірки налаштувань пошти.
+
+Is the support notice able to reach a mailbox? Plain checks of the email settings, shared by the system check
 (support/checks.py), the admin inbox banner and `manage.py send_test_email`. Never reads out the password.
 """
 from django.conf import settings
@@ -14,7 +16,9 @@ LOCAL_BACKENDS = {
 
 
 def email_problems(backend=None):
-    """Plain-English reasons why the support notice would not arrive. Empty list: the settings look complete."""
+    """Причини, чому лист не дійде; порожній список — усе гаразд.
+
+    Plain-English reasons why the support notice would not arrive. Empty list: the settings look complete."""
     backend = backend or settings.EMAIL_BACKEND
     problems = []
     if not settings.SUPPORT_INBOX_EMAIL:
@@ -36,7 +40,9 @@ def email_problems(backend=None):
 
 
 def describe(backend=None):
-    """The settings in use, safe to print: the password only as set / not set."""
+    """Налаштування пошти для друку, пароль лише як «задано».
+
+    The settings in use, safe to print: the password only as set / not set."""
     backend = backend or settings.EMAIL_BACKEND
     lines = [f"EMAIL_BACKEND        {backend}"]
     if backend == SMTP_BACKEND:

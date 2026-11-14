@@ -1,4 +1,6 @@
-"""Private storage for support attachments: never under MEDIA_ROOT, never served by URL.
+"""Приватне сховище вкладень: поза MEDIA_ROOT, без URL.
+
+Private storage for support attachments: never under MEDIA_ROOT, never served by URL.
 
 STORAGES["support"] (config/settings) selects the backend. On one server it is this class, a folder outside the
 public media folder (settings.SUPPORT_ROOT, read on every use so tests and settings can change it). To move it to
@@ -12,6 +14,7 @@ from django.core.files.storage import FileSystemStorage, storages
 
 
 class PrivateStorage(FileSystemStorage):
+    """Файлове сховище без публічної адреси."""
     @property
     def base_location(self):
         return self._value_or_setting(self._location, settings.SUPPORT_ROOT)
@@ -25,5 +28,7 @@ class PrivateStorage(FileSystemStorage):
 
 
 def private_storage():
-    """The storage of the FileField. A function, so the migration does not freeze a backend into it."""
+    """Сховище для поля вкладення.
+
+    The storage of the FileField. A function, so the migration does not freeze a backend into it."""
     return storages["support"]

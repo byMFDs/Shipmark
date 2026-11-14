@@ -1,4 +1,6 @@
-"""System check: in production (DEBUG off), warn when the support notice cannot reach a mailbox.
+"""Системна перевірка: у production попереджає, якщо лист підтримки не дійде.
+
+System check: in production (DEBUG off), warn when the support notice cannot reach a mailbox.
 
 Shows on `manage.py check`, `migrate` and every other management command, so a missing SMTP setup is visible at deploy.
 Dev (DEBUG on) prints emails in the terminal on purpose and the test runner keeps them in memory: no warning; `send_test_email` explains it there.
@@ -11,6 +13,7 @@ from .mailcheck import email_problems
 
 @register(Tags.compatibility)
 def support_email_check(app_configs, **kwargs):
+    """Попередження support.W00N для кожної проблеми з поштою."""
     if settings.DEBUG or settings.EMAIL_BACKEND == "django.core.mail.backends.locmem.EmailBackend":
         return []  # dev prints on purpose; locmem is the test runner's backend
     return [
