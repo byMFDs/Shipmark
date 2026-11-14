@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shipmark\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 23:15+0000\n"
+"POT-Creation-Date: 2026-11-14 07:53+0000\n"
 "PO-Revision-Date: 2026-11-10 21:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
@@ -2276,56 +2276,62 @@ msgstr "Aimé."
 msgid "Like removed."
 msgstr "J’aime retiré."
 
-#: support/admin.py:48
+#: support/admin.py:49
 msgid "Handling"
 msgstr "Traitement"
 
-#: support/admin.py:57
+#: support/admin.py:61
+msgid ""
+"New messages do not reach the support mailbox. Run “python manage.py "
+"send_test_email” on the server for details."
+msgstr "Les nouveaux messages n’arrivent pas dans la boîte du support. Pour les détails, lancez « python manage.py send_test_email » sur le serveur."
+
+#: support/admin.py:68
 msgid "Subject"
 msgstr "Objet"
 
-#: support/admin.py:61 templates/accounts/settings.html:102
+#: support/admin.py:72 templates/accounts/settings.html:102
 msgid "Account"
 msgstr "Compte"
 
-#: support/admin.py:64
+#: support/admin.py:75
 msgid "Not signed in"
 msgstr "Non connecté"
 
-#: support/admin.py:68
+#: support/admin.py:79
 msgid "Files"
 msgstr "Fichiers"
 
-#: support/admin.py:72
+#: support/admin.py:83
 msgid "Attachments"
 msgstr "Pièces jointes"
 
-#: support/admin.py:83 templates/moderation/mod/act.html:11
+#: support/admin.py:94 templates/moderation/mod/act.html:11
 #: templates/moderation/mod/queue.html:35
 #: templates/moderation/mod/queue.html:51
 msgid "Reply"
 msgstr "Réponse"
 
-#: support/admin.py:86
+#: support/admin.py:97
 msgid "Reply by email"
 msgstr "Répondre par e-mail"
 
-#: support/admin.py:121
+#: support/admin.py:132
 #, python-format
 msgid "Updated %(count)d message."
 msgid_plural "Updated %(count)d messages."
 msgstr[0] "%(count)d message mis à jour."
 msgstr[1] "%(count)d messages mis à jour."
 
-#: support/admin.py:124
+#: support/admin.py:135
 msgid "Mark as read"
 msgstr "Marquer comme lu"
 
-#: support/admin.py:128
+#: support/admin.py:139
 msgid "Mark as answered"
 msgstr "Marquer comme répondu"
 
-#: support/admin.py:132 templates/community/_lightbox.html:7
+#: support/admin.py:143 templates/community/_lightbox.html:7
 #: templates/community/_picker.html:5 templates/includes/badge_popover.html:6
 #: templates/includes/site_header.html:20 templates/includes/toast.html:1
 msgid "Close"
@@ -4003,7 +4009,7 @@ msgstr "Envoyer le signalement"
 msgid "Read the post"
 msgstr "Lire l’article"
 
-#: templates/news/detail.html:19 templates/social/feed.html:96
+#: templates/news/detail.html:20 templates/social/feed.html:96
 msgid "All news"
 msgstr "Toutes les actualités"
 
@@ -4409,8 +4415,8 @@ msgstr "Découvrir les projets"
 msgid "by %(name)s"
 msgstr "par %(name)s"
 
-#: templates/pages/landing.html:177
 #
+#: templates/pages/landing.html:177
 msgid "Your project here"
 msgstr "Votre projet ici"
 
@@ -4419,7 +4425,8 @@ msgid ""
 "Shipped something with AI? Link the repository and the domain, and it shows "
 "up on this page."
 msgstr ""
-"Vous avez lancé quelque chose avec l’IA ? Liez le dépôt et le domaine, et il apparaîtra sur cette page."
+"Vous avez lancé quelque chose avec l’IA ? Liez le dépôt et le domaine, et il "
+"apparaîtra sur cette page."
 
 #: templates/pages/landing.html:185 templates/pages/landing.html:258
 msgid "Steady is earned over time, not on launch day."

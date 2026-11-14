@@ -47,10 +47,13 @@ def build_email(message):
 def notify_inbox(message_id):
     """Returns True when the email was handed to the mail server. Never raises."""
     if not settings.SUPPORT_INBOX_EMAIL:
+        # Logged, so "no email arrived" has an answer in the log (it used to return without a trace).
+        logger.warning("support notification skipped for message %s: SUPPORT_INBOX_EMAIL is empty", message_id)
         return False
     try:
         message = SupportMessage.objects.select_related("user").get(pk=message_id)
         build_email(message).send(fail_silently=False)
+        logger.info("support notification for message %s handed to %s", message_id, settings.EMAIL_BACKEND.rsplit(".", 2)[-2])
         return True
     except Exception as error:  # noqa: BLE001 - a mail problem must never lose the message or break the page
         logger.error("support notification failed for message %s: %s", message_id, type(error).__name__)

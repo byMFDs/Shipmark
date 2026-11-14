@@ -15,6 +15,7 @@ from unfold.decorators import action
 from config import branding
 from moderation import audit
 
+from .mailcheck import email_problems
 from .models import SupportMessage
 
 
@@ -50,6 +51,16 @@ class SupportMessageAdmin(ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(file_count=Count("attachments"))
+
+    def changelist_view(self, request, extra_context=None):
+        # A visible note when new messages cannot reach the support mailbox (support/mailcheck.py). The reasons are
+        # setting names, so they stay in English.
+        problems = email_problems()
+        if problems and request.method == "GET":
+            messages.warning(request, format_html(
+                "{} {}", _("New messages do not reach the support mailbox. Run “python manage.py send_test_email” on the "
+                           "server for details."), " ".join(problems)))
+        return super().changelist_view(request, extra_context)
 
     def has_add_permission(self, request):
         return False

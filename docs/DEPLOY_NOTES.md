@@ -380,37 +380,78 @@ nginx її **не** роздає (не додавай для неї `location`).
 **IP для ліміту.** У nginx: `proxy_set_header X-Real-IP $remote_addr;` і в `.env`: `CLIENT_IP_HEADER=HTTP_X_REAL_IP`.
 Адреса не зберігається: з неї рахується солений хеш, який живе в кеші до 24 годин.
 
+### Чому лист не приходить (діагностика, 2026-11-14)
+
+Сповіщення надсилає `support/notify.py::notify_inbox` одразу після збереження повідомлення. Воно **мовчки нічого не
+робило**, бо в `.env` не було жодної з цих змінних:
+
+- `SUPPORT_INBOX_EMAIL` порожня → лист навіть не формується (тепер у лог пишеться
+  `support notification skipped ... SUPPORT_INBOX_EMAIL is empty`).
+- `EMAIL_BACKEND` у dev типово `console` (`config/settings/base.py`): лист друкується в терміналі `runserver`, у
+  скриньку не йде. У prod типово `smtp` (`config/settings/prod.py`).
+- `EMAIL_HOST` типово `localhost`, `EMAIL_HOST_USER`/`EMAIL_HOST_PASSWORD` порожні → SMTP не має куди і з чим
+  підключатися. `DEFAULT_FROM_EMAIL` типово `webmaster@localhost` — Gmail такого відправника не прийме.
+
+Змінні читає `django-environ` з реального оточення або з `.env` у корені проєкту (реальні змінні мають перевагу).
+Помилка відправки пишеться в лог рівня ERROR без тексту повідомлення: `python manage.py show_errors` або
+`logs/errors.jsonl`, рядок `support notification failed for message N: <тип помилки>`. Успіх у prod — рядок INFO
+`support notification for message N handed to smtp` у stdout gunicorn.
+
+Де видно, що пошта не налаштована:
+- `python manage.py send_test_email` — друкує налаштування (пароль лише як «set, hidden»), перелічує проблеми,
+  надсилає тестовий лист і пояснює помилку простими словами. Код виходу 1, якщо лист не пішов.
+- У prod (`DEBUG` вимкнено) кожна команда `manage.py` (`check`, `migrate`) показує попередження `support.W00N`.
+- В адмінці на сторінці Support → Inbox жовтий банер «New messages do not reach the support mailbox» з причинами.
+
 ### Gmail як скринька підтримки (покроково)
 
-1. Заведи окремий акаунт Gmail для сайту (наприклад, `shipmark.support@gmail.com`), щоб не давати серверу пароль
-   від особистої пошти.
-2. Увімкни **двоетапну перевірку**: myaccount.google.com → «Безпека» → «Двоетапна перевірка». Без неї паролі
-   застосунків недоступні.
-3. Створи **пароль застосунку**: myaccount.google.com → пошук «Паролі застосунків» (App passwords) → назва,
-   наприклад, `shipmark server` → «Створити». Google покаже 16 літер (`abcd efgh ijkl mnop`). Скопіюй їх без
-   пробілів. Цей пароль працює лише для пошти і його можна відкликати там само, не змінюючи основний пароль.
-4. Заповни `/srv/shipmark/.env`:
+Нічого з цього не треба нікому пересилати: пароль застосунку живе лише у файлі `.env` на сервері (і на твоєму
+ноутбуці, якщо перевіряєш звідти).
+
+1. Акаунт Gmail, **з якого** сайт надсилає листи. Можна саму скриньку підтримки (`shipmark.me@gmail.com`), можна
+   окремий акаунт. Особисту пошту не використовуй.
+2. Увімкни **двоетапну перевірку** в цьому акаунті: myaccount.google.com → «Безпека» → «Двоетапна перевірка».
+   Без неї пункт «Паролі застосунків» не з'явиться.
+3. Створи **пароль застосунку**: myaccount.google.com → у пошуку «Паролі застосунків» (App passwords) → назва,
+   наприклад `shipmark server` → «Створити». Google покаже 16 літер у чотирьох групах. Скопіюй їх **без пробілів**.
+   Звичайний пароль від акаунта тут не працює (буде `SMTPAuthenticationError`).
+4. Додай у `.env` (на сервері: `/srv/shipmark/.env`, `chmod 600`). Значення в `<...>` заміни своїми, лапки не треба:
 
    ```
    EMAIL_HOST=smtp.gmail.com
    EMAIL_PORT=587
    EMAIL_USE_TLS=true
-   EMAIL_HOST_USER=shipmark.support@gmail.com
-   EMAIL_HOST_PASSWORD=abcdefghijklmnop
-   DEFAULT_FROM_EMAIL=Shipmark <shipmark.support@gmail.com>
-   SUPPORT_INBOX_EMAIL=shipmark.support@gmail.com
+   EMAIL_HOST_USER=<акаунт-відправник>@gmail.com
+   EMAIL_HOST_PASSWORD=<16-літер-пароль-застосунку-без-пробілів>
+   DEFAULT_FROM_EMAIL=Shipmark <<акаунт-відправник>@gmail.com>
+   SUPPORT_INBOX_EMAIL=shipmark.me@gmail.com
    ```
 
-   `SUPPORT_INBOX_EMAIL` може бути й іншою адресою (твоя особиста пошта): тоді лист прийде туди, а відправником
-   буде акаунт із кроку 1. Gmail підставляє в «Від» свій акаунт, тому `DEFAULT_FROM_EMAIL` має бути тією ж адресою.
-5. Перезапусти gunicorn і перевір: `python manage.py sendtestemail SUPPORT_INBOX_EMAIL_тут` (з
-   `DJANGO_SETTINGS_MODULE=config.settings.prod`). Потім надішли повідомлення через `/support/` з іншого браузера.
-6. Відповідати просто: у листі-сповіщенні натисни «Відповісти» (Reply-To — адреса людини) або в адмінці «Reply by
+   `DEFAULT_FROM_EMAIL` — та сама адреса, що `EMAIL_HOST_USER` (Gmail все одно підставляє свій акаунт у «Від»).
+   `SUPPORT_INBOX_EMAIL` — куди приходять сповіщення; може збігатися з відправником. `EMAIL_BACKEND` у prod не
+   задавай (типово SMTP).
+5. Перевір із сервера:
+
+   ```
+   DJANGO_SETTINGS_MODULE=config.settings.prod python manage.py send_test_email
+   ```
+
+   Має бути `Sent to shipmark.me@gmail.com`. Лист може прийти за хвилину, перший — інколи в «Спам» (познач «Не спам»).
+   З ноутбука (dev друкує листи в термінал): заповни ті самі рядки в локальному `.env` і запусти
+   `python manage.py send_test_email --smtp` — тоді лист піде через Gmail.
+6. Перезапусти gunicorn (так, як він у тебе запущений, наприклад `sudo systemctl restart <назва-сервісу>`), щоб воркери прочитали новий `.env`, і надішли
+   повідомлення через `/support/` з іншого браузера.
+7. Відповідати просто: у листі-сповіщенні натисни «Відповісти» (Reply-To — адреса людини) або в адмінці «Reply by
    email». Після відповіді постав статус «Answered», коли тема вичерпана — «Closed».
 
-Якщо лист не прийшов: дивись `show_errors` (рядок `support notification failed ... SMTPAuthenticationError` означає
-неправильний пароль застосунку або вимкнену двоетапну перевірку). Gmail обмежує ~500 листів на добу, для сповіщень
-цього вистачає. Пароль застосунку лежить лише в `.env` (`chmod 600`) і в копії секретів.
+Що означає помилка `send_test_email`:
+- `SMTPAuthenticationError` — неправильний пароль застосунку, пробіли в ньому, або вимкнена двоетапна перевірка.
+- `gaierror` / `ConnectionRefusedError` — неправильний `EMAIL_HOST` або `EMAIL_PORT`.
+- `TimeoutError` — хостинг блокує вихідний порт 587 (деякі блокують SMTP; тоді спитай підтримку хостингу).
+- `SMTPSenderRefused` — `DEFAULT_FROM_EMAIL` не збігається з акаунтом.
+
+Gmail обмежує ~500 листів на добу; для сповіщень цього вистачає. Відкликати пароль застосунку можна там само, де
+створював, основний пароль не змінюється.
 
 ## Community: switching it on
 
@@ -459,7 +500,7 @@ Content and law
       moderator access, appeals, language cookie) without bumping `TERMS_VERSION`, because the site is not public yet.
       After launch, bump `TERMS_VERSION` whenever the Terms change.
 - [ ] pl, de, es, fr, pt-br translations reviewed by native speakers, or remove those languages from `LANGUAGES` for now.
-- [ ] Support: `SUPPORT_INBOX_EMAIL` and SMTP set, `sendtestemail` arrives, a test message with an attachment shows in
+- [ ] Support: `SUPPORT_INBOX_EMAIL` and SMTP set, `send_test_email` arrives (no `support.W00N` warning in `manage.py check`), a test message with an attachment shows in
       the admin inbox and its attachment downloads; `/support/attachment/<id>/` is 404 when signed out; `SUPPORT_ROOT`
       is outside `MEDIA_ROOT` and not served by nginx; `CLIENT_IP_HEADER` set; `prune_support` in cron.
 - [ ] Community (only if it launches): the steps in "Community: switching it on"; rules, Terms and Privacy community
