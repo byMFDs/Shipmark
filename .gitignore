@@ -30,3 +30,6 @@ logs/
 docs/promts/
 docs/prompts/
 docs/galochka/
+
+# Downloaded packages (install from requirements/, never commit them)
+*.whl
