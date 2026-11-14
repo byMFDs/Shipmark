@@ -10,6 +10,10 @@ This file is loaded every session. Keep it accurate; keep it short.
 - Developer: Danylo, 18. Knows basic Django, HTML, CSS, Git; learning JavaScript.
   He reviews logic and security himself, so explain non-obvious decisions in 1-2 sentences.
 - **Reply in Ukrainian, briefly.** Code, comments, commit messages, identifiers: English.
+- **Exception: one Ukrainian line first.** Every new module, class, non-trivial function (more than 3 lines),
+  template, JS and CSS file starts with one short Ukrainian line saying what it is for (docstring first line,
+  `{# … #}` glued to line 1 of a template, a `// …` / `/* … */` line on top). Details after it stay English.
+  Tests: one Ukrainian line per class. A comment-only change is proven with `python scripts/check_comment_only.py [BASE]`.
 - **Do not paste whole files back.** Summarize: which files changed and why.
 - One task = one prompt. Do only what the prompt asks. If you notice something else
   that should be done, list it under "Пропозиції" at the end. Do not do it.
@@ -114,7 +118,7 @@ moderation/        Report, Sanction, Notice, BannedIdentity, AuditLog, /mod/, de
 news/              NewsPost (written in the admin only, published as the system account "shipmark")
 community/         Board, Thread, Reply, CommunityImage, Vote, ReplyNotification, stickers.py, ranking.py, services.py
 support/           SupportMessage, SupportAttachment (private storage), antispam.py, notify.py (SMTP notice), admin inbox
-templates/  static/{css,js,fonts,brand,img}/  content/<lang>/*.md  locale/  docs/
+templates/  static/{css,js,fonts,brand,img}/  content/<lang>/*.md  locale/  docs/  scripts/ (dev checks)
 ```
 
 URLs: `/` landing · `/feed/` (shown as "For You") · `/explore/` ("Discover": projects, `?tab=people` people search by username) · `/new/` · `/settings/` ·
@@ -319,6 +323,7 @@ python manage.py reverify_domains     # cron in production
 python manage.py community_daily      # cron in production (scores, 90-day notification cleanup)
 python manage.py prune_support        # cron in production (closed support messages older than 12 months)
 python manage.py send_test_email      # support email check (--smtp in dev uses the EMAIL_* values)
+python scripts/check_comment_only.py [BASE]   # proves a change touched comments only
 python manage.py post_welcome         # once: pinned welcome thread from the system account
 python manage.py seed_community       # DEBUG only: demo community content (--clear removes it)
 ```
