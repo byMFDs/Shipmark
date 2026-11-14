@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.template import Context, Template
 from django.test import SimpleTestCase, TestCase, override_settings
+from django.utils import translation
 
 from config import branding
 
@@ -127,6 +128,13 @@ class LanguageDetectionTests(TestCase):
 
     def get(self, **extra):
         return self.client.get("/explore/", **extra).content.decode()
+
+    def test_a_request_does_not_leave_its_language_active(self):
+        """A Ukrainian page, then English outside the request (the thread's language is put back)."""
+        with translation.override("en"):
+            self.assertIn(self.UK_TEXT, self.get(HTTP_ACCEPT_LANGUAGE="uk"))
+            self.assertEqual(translation.get_language(), "en")
+            self.assertEqual(translation.gettext("Show projects"), "Show projects")
 
     def test_accept_language_uk_gives_ukrainian(self):
         html = self.get(headers={"Accept-Language": "uk"})

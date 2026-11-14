@@ -73,7 +73,23 @@ class UserLocaleMiddleware(LocaleMiddleware):
 
     Django's LocaleMiddleware already does the last three, in that order.
     We only put the signed-in user's saved preference in front.
+
+    After the response the thread gets back the language it had before the request. Django's LocaleMiddleware leaves
+    the request's language active, so code that ran later in the same thread (in tests: the next test, reading English
+    outside a request) saw "uk" or "pt-br" depending on which test ran before it.
     """
+
+    async_capable = False  # __call__ below restores the language after a sync request; the site runs on WSGI
+
+    def __call__(self, request):
+        previous = translation.get_language()
+        try:
+            return super().__call__(request)
+        finally:
+            if previous:
+                translation.activate(previous)
+            else:
+                translation.deactivate_all()
 
     def process_request(self, request):
         """Вмикає мову запиту; бейджі завжди англійською."""
