@@ -8,6 +8,7 @@ from config.context_processors import brand
 
 
 class SettingsTests(SimpleTestCase):
+    """Базові налаштування."""
     def test_settings_load(self):
         self.assertEqual(settings.AUTH_USER_MODEL, "accounts.User")
         self.assertEqual(settings.ROOT_URLCONF, "config.urls")
@@ -25,6 +26,7 @@ class SettingsTests(SimpleTestCase):
 
 
 class UserModelTests(TestCase):
+    """Власна модель користувача."""
     def test_custom_user_has_profile_fields(self):
         user = get_user_model().objects.create_user("danylo", password="x" * 12)
         self.assertFalse(user.is_suspended)
@@ -58,6 +60,7 @@ from projects.models import Project
 
 
 class SecurityHeadersTests(TestCase):
+    """Заголовки безпеки."""
     def test_pages_send_csp_without_unsafe_inline(self):
         for url in ("/", "/explore/", "/login/", "/legal/privacy/"):
             with self.subTest(url=url):
@@ -99,6 +102,7 @@ class SecurityHeadersTests(TestCase):
 
 
 class AdminLoginThrottleTests(TestCase):
+    """Ліміт входу в адмінку."""
     def setUp(self):
         cache.clear()
 
@@ -124,6 +128,7 @@ SMTP_ENV = {"EMAIL_HOST": "smtp.example.com", "EMAIL_HOST_USER": "sender@example
 
 
 class ProductionSettingsTests(SimpleTestCase):
+    """Prod-налаштування й check --deploy."""
     def _manage(self, *args, **extra):
         env = {k: v for k, v in os.environ.items() if k not in ("ADMIN_URL", "DEBUG")}
         env.update({"DJANGO_SETTINGS_MODULE": "config.settings.prod", "SECRET_KEY": PROD_SECRET,
@@ -163,6 +168,7 @@ class ProductionSettingsTests(SimpleTestCase):
 
 
 class JsonLoggingTests(SimpleTestCase):
+    """JSON-журнал у stdout."""
     def test_record_is_one_json_line_and_path_text_cannot_forge_fields(self):
         import json
         import logging
@@ -210,6 +216,7 @@ class JsonLoggingTests(SimpleTestCase):
 # ---------- Local development: one origin, no stale static files (redesign phase 1 fixes) ----------
 
 class LocalhostRedirectTests(TestCase):
+    """Перенаправлення 127.0.0.1 на localhost."""
     def test_middleware_is_on_in_dev_settings(self):
         self.assertEqual(settings.MIDDLEWARE[0], "config.middleware.LocalhostRedirectMiddleware")
 
@@ -252,7 +259,9 @@ class LocalhostRedirectTests(TestCase):
 
 
 class ErrorPageTests(TestCase):
-    """The styled error pages render: 404 and 403 inside the site, 500, 400 and CSRF failure without any request context."""
+    """Сторінки помилок рендеряться без контексту запиту.
+
+    The styled error pages render: 404 and 403 inside the site, 500, 400 and CSRF failure without any request context."""
 
     def test_404_is_the_styled_page(self):
         with override_settings(DEBUG=False):

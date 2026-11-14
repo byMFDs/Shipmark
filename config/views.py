@@ -1,3 +1,4 @@
+"""Дрібні службові view: favicon і перемикання мови."""
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.templatetags.static import static
@@ -6,7 +7,9 @@ from django.views.i18n import set_language as django_set_language
 
 
 def favicon(request):
-    """/favicon.ico: browsers and feed readers ask for it without reading the page. Temporary redirect to the
+    """/favicon.ico: тимчасове перенаправлення на SVG-іконку.
+
+    /favicon.ico: browsers and feed readers ask for it without reading the page. Temporary redirect to the
     hashed static file, so a new logo is picked up (a permanent redirect would be cached forever)."""
     from config import branding
 
@@ -17,7 +20,9 @@ def favicon(request):
 
 @require_POST
 def set_language(request):
-    """Django's set_language (sets the cookie, redirects back safely) + remember it on the account.
+    """Перемикає мову й запам'ятовує її в акаунті.
+
+    Django's set_language (sets the cookie, redirects back safely) + remember it on the account.
 
     Without the account part a signed-in user's saved preference would override the cookie,
     and the switcher would appear to do nothing.

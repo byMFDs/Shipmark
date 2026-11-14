@@ -1,4 +1,6 @@
-"""One-line JSON log records on stdout (production). Standard library only.
+"""Журнал у stdout: один JSON на рядок (production).
+
+One-line JSON log records on stdout (production). Standard library only.
 
 Used by config/settings/prod.py (Django) and gunicorn.conf.py (gunicorn's own logs), so every
 line the server writes has the same shape and can be read with `jq` or shipped to a log service.
@@ -9,7 +11,9 @@ from datetime import datetime, timezone
 
 
 class JsonFormatter(logging.Formatter):
+    """Форматує запис журналу як один рядок JSON."""
     def format(self, record):
+        """Збирає поля запису в JSON."""
         data = {
             "time": datetime.fromtimestamp(record.created, tz=timezone.utc).isoformat(timespec="milliseconds"),
             "level": record.levelname,
@@ -28,7 +32,9 @@ class JsonFormatter(logging.Formatter):
 
 
 def logging_config(level="INFO", log_dir=None, stdout=True):
-    """dictConfig: JSON lines on stdout, plus the error files in `log_dir` (config/errorlog.py) when given.
+    """dictConfig: JSON у stdout і, за потреби, файли помилок.
+
+    dictConfig: JSON lines on stdout, plus the error files in `log_dir` (config/errorlog.py) when given.
 
     Privacy: no IP addresses and no user agents are logged. gunicorn.conf.py calls this without `log_dir`
     (gunicorn's master process has no Django settings); Django adds the files in each worker.

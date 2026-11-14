@@ -1,3 +1,4 @@
+"""Налаштування production: обов'язкові секрети, HTTPS, SMTP, журнали."""
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured

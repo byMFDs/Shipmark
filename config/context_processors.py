@@ -1,3 +1,4 @@
+"""Змінні для всіх шаблонів: бренд, навігація хедера, кількість людей."""
 from types import SimpleNamespace
 
 from config import branding

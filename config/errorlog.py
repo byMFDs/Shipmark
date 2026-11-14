@@ -1,4 +1,6 @@
-"""Error log files: one JSON object per line, for `manage.py show_errors`.
+"""Файли журналу помилок: по одному JSON на рядок, без приватних даних.
+
+Error log files: one JSON object per line, for `manage.py show_errors`.
 
 - errors.jsonl: unhandled exceptions, 5xx responses, 403 (including CSRF failures) and other ERROR records.
 - notfound.jsonl: 404s, the same path at most once per minute (per process), so bots cannot flood it.
@@ -60,6 +62,7 @@ def mask_path(path):
 
 
 def scrub(text, limit=MAX_MESSAGE):
+    """Прибирає з тексту паролі, токени, адреси й обрізає довжину."""
     text = str(text or "")
     for pattern, replacement in _RULES:
         text = pattern.sub(replacement, text)
@@ -70,6 +73,7 @@ def scrub(text, limit=MAX_MESSAGE):
 # ---------- Records ----------
 
 def _exception_name(exc_type):
+    """Повна назва класу винятку."""
     if exc_type is None:
         return ""
     module = getattr(exc_type, "__module__", "")
@@ -78,6 +82,7 @@ def _exception_name(exc_type):
 
 
 def _fields(record, with_traceback=True):
+    """Спільні поля рядка журналу: запит, статус, view, виняток."""
     request = getattr(record, "request", None) or current_request.get()
     match = getattr(request, "resolver_match", None) if request is not None else None
     exc_info = record.exc_info if record.exc_info and record.exc_info[0] else None
@@ -99,13 +104,16 @@ def _fields(record, with_traceback=True):
 
 
 class ErrorJsonFormatter(logging.Formatter):
+    """Рядок errors.jsonl з traceback-ом."""
     def format(self, record):
         # json.dumps escapes newlines and quotes: text a visitor controls cannot forge a second line.
         return json.dumps(_fields(record), ensure_ascii=False, default=str)
 
 
 class NotFoundJsonFormatter(logging.Formatter):
+    """Рядок notfound.jsonl без тексту й traceback-а."""
     def format(self, record):
+        """Короткий JSON для 404."""
         data = _fields(record, with_traceback=False)
         for key in ("exception", "message", "view"):
             data.pop(key)
@@ -115,9 +123,12 @@ class NotFoundJsonFormatter(logging.Formatter):
 # ---------- Filters ----------
 
 class ErrorsFilter(logging.Filter):
-    """Unhandled exceptions, 5xx, 403 (CSRF failures are 403 too), and ERROR records outside a response."""
+    """Пропускає винятки, 5xx, 403 і ERROR поза запитом.
+
+    Unhandled exceptions, 5xx, 403 (CSRF failures are 403 too), and ERROR records outside a response."""
 
     def filter(self, record):
+        """Чи потрапляє запис у errors.jsonl."""
         status = getattr(record, "status_code", None)
         if status is not None:
             return status >= 500 or status == 403
@@ -125,12 +136,15 @@ class ErrorsFilter(logging.Filter):
 
 
 class NotFoundFilter(logging.Filter):
-    """404s only, each path at most once per NOTFOUND_WINDOW seconds in this process."""
+    """Лише 404, кожен шлях не частіше раз на хвилину.
+
+    404s only, each path at most once per NOTFOUND_WINDOW seconds in this process."""
 
     _seen = {}
     _lock = threading.Lock()
 
     def filter(self, record):
+        """Чи потрапляє запис у notfound.jsonl."""
         if getattr(record, "status_code", None) != 404:
             return False
         request = getattr(record, "request", None)
@@ -154,7 +168,9 @@ class NotFoundFilter(logging.Filter):
 # ---------- Handler ----------
 
 class JsonLinesFileHandler(RotatingFileHandler):
-    """RotatingFileHandler that creates its folder. The file is opened on the first line written."""
+    """Файловий обробник з ротацією, який сам створює папку.
+
+    RotatingFileHandler that creates its folder. The file is opened on the first line written."""
 
     def __init__(self, filename, **kwargs):
         Path(filename).parent.mkdir(parents=True, exist_ok=True)
@@ -166,7 +182,9 @@ class JsonLinesFileHandler(RotatingFileHandler):
 
 
 def file_handlers(log_dir):
-    """dictConfig pieces for the two files. Returned as (formatters, filters, handlers)."""
+    """Частини dictConfig для двох файлів журналу.
+
+    dictConfig pieces for the two files. Returned as (formatters, filters, handlers)."""
     log_dir = Path(log_dir)
     formatters = {
         "error_json": {"()": "config.errorlog.ErrorJsonFormatter"},

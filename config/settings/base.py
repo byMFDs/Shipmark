@@ -1,4 +1,6 @@
-"""Settings shared by all environments. Values come from .env vars (see .env.example)."""
+"""Спільні налаштування всіх середовищ; значення з .env.
+
+Settings shared by all environments. Values come from .env vars (see .env.example)."""
 import sys
 import tempfile
 from datetime import timedelta

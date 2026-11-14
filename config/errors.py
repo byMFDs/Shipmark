@@ -1,4 +1,6 @@
-"""Error pages: 400, 403, 404, 500 and the CSRF failure (wired in config/urls.py and CSRF_FAILURE_VIEW).
+"""Сторінки помилок 400, 403, 404, 500 і збою CSRF.
+
+Error pages: 400, 403, 404, 500 and the CSRF failure (wired in config/urls.py and CSRF_FAILURE_VIEW).
 
 404 and 403 render inside the site (header, menu). 500, 400 and the CSRF failure are standalone: they use
 no database, no session and no context processor, so they still work when those are what broke.
@@ -25,7 +27,9 @@ _FALLBACK = (
 
 
 def _back_url(request):
-    """The previous page, if it was on this site. Never fails: the 400 page can be shown for a bad Host."""
+    """Попередня сторінка, якщо вона з цього сайту.
+
+    The previous page, if it was on this site. Never fails: the 400 page can be shown for a bad Host."""
     referer = request.META.get("HTTP_REFERER", "")
     if not referer:
         return ""
@@ -39,7 +43,9 @@ def _back_url(request):
 
 
 def _support_url(request):
-    """/support/ with the topic "Bug" and this request's id filled in ("Report a problem"). Never fails."""
+    """Посилання «Повідомити про проблему» з id запиту.
+
+    /support/ with the topic "Bug" and this request's id filled in ("Report a problem"). Never fails."""
     try:
         url = reverse("support:form")
     except Exception:
@@ -49,6 +55,7 @@ def _support_url(request):
 
 
 def _context(request, code, reference):
+    """Спільний контекст сторінок помилок."""
     return {
         "code": code,
         "back_url": _back_url(request),
@@ -60,6 +67,7 @@ def _context(request, code, reference):
 
 
 def _site_page(request, template, status, reference=False):
+    """Сторінка помилки всередині сайту (404, 403)."""
     context = _context(request, str(status), reference)
     user = getattr(request, "user", None)
     if user is not None and user.is_authenticated:
@@ -70,6 +78,7 @@ def _site_page(request, template, status, reference=False):
 
 
 def _standalone_page(request, template, status, code=None, reference=True):
+    """Сторінка помилки без бази й контекстних процесорів (500, 400, CSRF)."""
     context = _context(request, code or str(status), reference)
     try:
         html = loader.get_template(template).render(context)  # no request: no context processors, no DB
@@ -110,7 +119,9 @@ PREVIEWS = {
 
 
 def preview(request, code):
-    """/_dev/errors/<code>/: every error page, as the real views render it. Development only (404 without DEBUG)."""
+    """Перегляд усіх сторінок помилок у розробці (/_dev/errors/<code>/).
+
+    /_dev/errors/<code>/: every error page, as the real views render it. Development only (404 without DEBUG)."""
     if not settings.DEBUG or code not in PREVIEWS:
         raise Http404
     response = PREVIEWS[code](request)

@@ -1,3 +1,4 @@
+"""Наші middleware: id запиту, localhost, мова, умови, заголовки безпеки, захист входу в адмінку."""
 import hashlib
 import re
 import secrets
@@ -18,7 +19,9 @@ BADGE_PREFIX = "/badge/"
 
 
 class RequestIdMiddleware:
-    """A short random id per request: `request.request_id`, the X-Request-ID response header, the
+    """Короткий випадковий id кожного запиту (заголовок X-Request-ID, журнал, сторінки помилок).
+
+    A short random id per request: `request.request_id`, the X-Request-ID response header, the
     "Reference" on the 500/403/CSRF pages and the `request_id` of every error log line (config/errorlog.py).
 
     Always made here, never taken from the client: a visitor cannot plant an id in our logs.
@@ -39,7 +42,9 @@ class RequestIdMiddleware:
 
 
 class LocalhostRedirectMiddleware:
-    """Development only (listed in settings/dev.py): http://127.0.0.1:8000/x?y -> http://localhost:8000/x?y.
+    """У розробці перенаправляє 127.0.0.1 на localhost.
+
+    Development only (listed in settings/dev.py): http://127.0.0.1:8000/x?y -> http://localhost:8000/x?y.
 
     A browser keeps its cache, localStorage (theme) and cookies (session, language) per origin, so the two
     addresses can show different things; and the GitHub OAuth app knows only the localhost callback.
@@ -61,7 +66,9 @@ class LocalhostRedirectMiddleware:
 
 
 class UserLocaleMiddleware(LocaleMiddleware):
-    """Language order (CLAUDE.md section 8): saved user preference, then language cookie,
+    """Мова: збережена в акаунті, потім cookie, потім браузер, потім англійська.
+
+    Language order (CLAUDE.md section 8): saved user preference, then language cookie,
     then the browser's Accept-Language, then English.
 
     Django's LocaleMiddleware already does the last three, in that order.
@@ -69,6 +76,7 @@ class UserLocaleMiddleware(LocaleMiddleware):
     """
 
     def process_request(self, request):
+        """Вмикає мову запиту; бейджі завжди англійською."""
         if request.path_info.startswith(BADGE_PREFIX):
             # Badges are English and identical for everyone. Not reading the user or the language
             # cookie keeps `Vary: Cookie` and `Vary: Accept-Language` off the response, so caches can share it.
@@ -85,6 +93,7 @@ class UserLocaleMiddleware(LocaleMiddleware):
         super().process_request(request)
 
     def process_response(self, request, response):
+        """Тримає cookie мови рівним збереженій мові акаунта."""
         if request.path_info.startswith(BADGE_PREFIX):
             return response
         response = super().process_response(request, response)
@@ -97,7 +106,9 @@ class UserLocaleMiddleware(LocaleMiddleware):
 
 
 def set_language_cookie(response, code):
-    """The same cookie Django's set_language view writes."""
+    """Пише cookie мови так само, як Django.
+
+    The same cookie Django's set_language view writes."""
     response.set_cookie(
         settings.LANGUAGE_COOKIE_NAME, code,
         max_age=settings.LANGUAGE_COOKIE_AGE, path=settings.LANGUAGE_COOKIE_PATH, domain=settings.LANGUAGE_COOKIE_DOMAIN,
@@ -107,7 +118,9 @@ def set_language_cookie(response, code):
 
 
 class TermsAcceptanceMiddleware:
-    """Signed-in users who accepted an older Terms version are sent to the "accept the new Terms" page.
+    """Відправляє людей зі старою згодою на сторінку нових умов.
+
+    Signed-in users who accepted an older Terms version are sent to the "accept the new Terms" page.
 
     Bump settings.TERMS_VERSION to ask everyone again. Users with no accepted version at all were not
     created by the signup step (e.g. `createsuperuser` staff) and are not asked.
@@ -138,6 +151,7 @@ class TermsAcceptanceMiddleware:
         return self.get_response(request)
 
     def _is_open(self, path):
+        """Адреси, відкриті без нової згоди."""
         if self._open_paths is None:  # reversed on first use: URLconf is not loaded when middleware is built
             self._open_paths = {reverse(name) for name in self.OPEN_URL_NAMES}
         return (
@@ -148,7 +162,9 @@ class TermsAcceptanceMiddleware:
 
 
 class SecurityHeadersMiddleware:
-    """Adds Content-Security-Policy and Permissions-Policy to every page.
+    """Додає Content-Security-Policy і Permissions-Policy.
+
+    Adds Content-Security-Policy and Permissions-Policy to every page.
 
     The policy comes from settings.CONTENT_SECURITY_POLICY. The admin is skipped: django-unfold
     needs inline scripts and styles. A header a view already set (the SVG badges) is left alone.
@@ -167,7 +183,9 @@ class SecurityHeadersMiddleware:
 
 
 class AdminLoginThrottleMiddleware:
-    """Slows down password guessing on the admin login: 10 attempts per username per 15 minutes.
+    """Обмежує спроби входу в адмінку: 10 на ім'я за 15 хвилин.
+
+    Slows down password guessing on the admin login: 10 attempts per username per 15 minutes.
 
     Counted per username (not per IP): behind the reverse proxy every request has the proxy's address.
     The cost is that someone can lock a known staff username out for 15 minutes; they still need the secret ADMIN_URL.

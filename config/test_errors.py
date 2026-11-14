@@ -59,7 +59,9 @@ def clear_logs():
 
 
 class OwnLogDir:
-    """Each class writes and reads its own log folder. `manage.py test --parallel` forks workers that share
+    """Кожен клас пише й читає власну папку журналу.
+
+    Each class writes and reads its own log folder. `manage.py test --parallel` forks workers that share
     settings.LOG_DIR, so a 403 from a test in another worker landed in this class's errors.jsonl, or this class's
     clear_logs() wiped another worker's lines (the run then crashed with "cannot pickle 'traceback' object")."""
 
@@ -87,6 +89,7 @@ class OwnLogDir:
 
 @override_settings(DEBUG=False, ROOT_URLCONF="config.test_errors")
 class ErrorPagesTests(OwnLogDir, TestCase):
+    """Сторінки помилок у production-режимі."""
     def setUp(self):
         clear_logs()
         self.client = Client(raise_request_exception=False)
@@ -166,6 +169,7 @@ class ErrorPagesTests(OwnLogDir, TestCase):
 
 @override_settings(DEBUG=False, ROOT_URLCONF="config.test_errors")
 class ErrorLogTests(OwnLogDir, TestCase):
+    """Файли журналу помилок і що в них потрапляє."""
     def setUp(self):
         clear_logs()
         self.client = Client(raise_request_exception=False)
@@ -229,6 +233,7 @@ class ErrorLogTests(OwnLogDir, TestCase):
 
 
 class ScrubTests(SimpleTestCase):
+    """Прибирання приватних даних з журналу."""
     def test_scrub(self):
         cases = {
             "SECRET_KEY = 'abc123def'": "SECRET_KEY = '[redacted]'",
@@ -246,6 +251,7 @@ class ScrubTests(SimpleTestCase):
 
 
 class ShowErrorsCommandTests(OwnLogDir, SimpleTestCase):
+    """Команда show_errors."""
     def setUp(self):
         clear_logs()
 
@@ -284,6 +290,7 @@ class ShowErrorsCommandTests(OwnLogDir, SimpleTestCase):
 
 
 class ProductionErrorSettingsTests(SimpleTestCase):
+    """Налаштування журналу в production."""
     def test_production_forces_debug_off_and_uses_the_custom_views(self):
         from config.tests import ProductionSettingsTests
 

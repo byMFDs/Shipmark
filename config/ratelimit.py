@@ -1,4 +1,6 @@
-"""Tiny cache-based rate limit (CLAUDE.md section 6).
+"""Простий ліміт частоти на кеші.
+
+Tiny cache-based rate limit (CLAUDE.md section 6).
 
     if is_limited("settings", request.user.pk, limit=30, window=600): ...
 
@@ -12,7 +14,9 @@ from django.core.cache import cache
 
 
 def is_limited(name, key, limit, window):
-    """Counts this call and returns True once it goes over `limit` within `window` seconds."""
+    """Рахує виклик; True, коли ліміт за вікно перевищено.
+
+    Counts this call and returns True once it goes over `limit` within `window` seconds."""
     cache_key = f"rl:{name}:{key}"
     cache.add(cache_key, 0, timeout=window)  # only sets the expiry for a new window
     try:
@@ -30,7 +34,9 @@ def _seconds_left(until):
 
 
 def claim_cooldown(name, key, seconds):
-    """Start a cooldown and return 0, or return the seconds left of the one already running.
+    """Починає паузу або повертає, скільки секунд лишилось.
+
+    Start a cooldown and return 0, or return the seconds left of the one already running.
 
     cache.add is atomic, so two requests at the same moment cannot both start (and both run) the action.
     """
@@ -42,7 +48,9 @@ def claim_cooldown(name, key, seconds):
 
 
 def cooldown_left(name, key):
-    """Seconds left of a running cooldown, or 0. Reads only, starts nothing."""
+    """Скільки секунд лишилось у паузі (лише читає).
+
+    Seconds left of a running cooldown, or 0. Reads only, starts nothing."""
     until = cache.get(f"cd:{name}:{key}")
     return _seconds_left(until) if until else 0
 
@@ -52,7 +60,9 @@ def release_cooldown(name, key):
 
 
 def limited_for(name, key, limit, window):
-    """Like is_limited (and counts the same way), but returns 0 when allowed, else the seconds until the window ends."""
+    """Як is_limited, але повертає секунди до кінця вікна.
+
+    Like is_limited (and counts the same way), but returns 0 when allowed, else the seconds until the window ends."""
     until_key = f"rl:{name}:{key}:until"
     cache.add(until_key, time.time() + window, timeout=window)
     if not is_limited(name, key, limit, window):

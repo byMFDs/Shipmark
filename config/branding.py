@@ -1,4 +1,6 @@
-"""Single source of branding. Edit this file to rebrand the site.
+"""Єдине джерело бренду: назва, слоган, контакти, файли логотипа.
+
+Single source of branding. Edit this file to rebrand the site.
 
 Exposed to every template as `brand` (see config/context_processors.py).
 Logo paths are relative to the static folder: replace the files to change the logo.
