@@ -1,4 +1,6 @@
-"""Hallmarks are computed from facts, never stored (CLAUDE.md section 2).
+"""Марки обчислюються з фактів, ніколи не зберігаються.
+
+Hallmarks are computed from facts, never stored (CLAUDE.md section 2).
 
 compute_hallmarks(project) is pure: it reads the project and its related rows and returns
 a HallmarkSet. Pages use `project.hallmarks`, which caches the result on the instance, and
@@ -41,6 +43,7 @@ RULES = {
 
 @dataclass(frozen=True)
 class Hallmark:
+    """Одна марка: тип, чи зароблена, факт."""
     kind: str
     earned: bool
     reason: str  # one line, already translated: why it is earned, or what is missing
@@ -52,7 +55,9 @@ class Hallmark:
 
 
 class HallmarkSet(tuple):
-    """Hallmarks in display order. `hallmarks["live"]` (and `hallmarks.live` in templates) picks one."""
+    """Марки в порядку показу з доступом за типом.
+
+    Hallmarks in display order. `hallmarks["live"]` (and `hallmarks.live` in templates) picks one."""
 
     def __getitem__(self, key):
         if isinstance(key, str):
@@ -73,6 +78,7 @@ def _percent_text(ok, total):
 
 
 def _authored(project):
+    """Марка «Repo owner» з перевіреного посилання на репозиторій."""
     if not project.repo_full_name:
         return Hallmark("authored", False, _("No repository linked."))
     link = getattr(project, "repo_link", None) if project.pk else None  # reverse 1:1, None when missing
@@ -93,6 +99,7 @@ def _authored(project):
 
 
 def _live(project, now):
+    """Марка «Domain verified» з підтвердженого домену."""
     if not project.live_url:
         return Hallmark("live", False, _("No live URL."))
     if domains.host_from_url(project.live_url) is None:
@@ -110,6 +117,7 @@ def _live(project, now):
 
 
 def _steady(project, live, now):
+    """Марка «Steady»: Live плюс аптайм."""
     if not live.earned:
         return Hallmark("steady", False, _("Needs Domain verified first."))
     ok, total = uptime.window_counts(project, now)
@@ -128,7 +136,9 @@ def _steady(project, live, now):
 
 
 def repo_domain_link(project, now=None):
-    """How the linked repository points at the verified domain, as a fact (it is not a hallmark rule).
+    """Як репозиторій вказує на підтверджений домен (факт, не марка).
+
+    How the linked repository points at the verified domain, as a fact (it is not a hallmark rule).
 
     "homepage": the repository's Website field on GitHub is on the verified domain (only the
     repository's admins can set it); "token_file": the repository holds this project's verification
@@ -147,6 +157,7 @@ def repo_domain_link(project, now=None):
 
 @dataclass(frozen=True)
 class CheckedFact:
+    """Один перевірений факт з датою."""
     label: str  # short mono label: Repository, History, Domain, Uptime
     text: str  # one sentence, already translated, dates included
 
@@ -156,7 +167,9 @@ def _date(value):
 
 
 def checked_facts(project, now=None):
-    """The "What was checked" panel: facts we checked ourselves, with dates. Never a verdict on who wrote
+    """Панель «Що перевірено»: факти з датами.
+
+    The "What was checked" panel: facts we checked ourselves, with dates. Never a verdict on who wrote
     the code, and never the reason of a review (the owner only sees that a review is pending)."""
     facts = []
     link = getattr(project, "repo_link", None) if project.pk else None
@@ -219,6 +232,8 @@ def checked_facts(project, now=None):
 
 
 def compute_hallmarks(project, now=None):
-    """Return a HallmarkSet (Authored, Live, Steady) for a project. Steady always requires Live."""
+    """Обчислює всі марки проєкту.
+
+    Return a HallmarkSet (Authored, Live, Steady) for a project. Steady always requires Live."""
     live = _live(project, now)
     return HallmarkSet((_authored(project), live, _steady(project, live, now)))

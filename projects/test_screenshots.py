@@ -27,6 +27,7 @@ def form_data(project=None, **extra):
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class OneFlowTests(ProjectTestCase):
+    """Скриншоти зберігаються разом з формою."""
     def setUp(self):
         super().setUp()
         self.project = make_project(self.owner, status=Project.Status.DRAFT)
@@ -130,7 +131,9 @@ class OneFlowTests(ProjectTestCase):
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class CoverTests(ProjectTestCase):
-    """After an upload through the editor the cover appears everywhere the project is shown."""
+    """Обкладинка з'являється всюди після завантаження.
+
+    After an upload through the editor the cover appears everywhere the project is shown."""
 
     def setUp(self):
         super().setUp()

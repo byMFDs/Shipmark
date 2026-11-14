@@ -18,6 +18,7 @@ def parse(response):
 
 
 class BadgeResponseTests(TestCase):
+    """Відповіді бейджів: кеш, CSP, нейтральний бейдж."""
     def setUp(self):
         self.ana = make_user("ana")
         self.project = make_project(self.ana, name="Tallyhook", repo_full_name="ana/tallyhook")
@@ -90,6 +91,7 @@ class BadgeResponseTests(TestCase):
 
 
 class BadgeSvgTests(TestCase):
+    """Вміст SVG-бейджів."""
     def test_hostile_names_stay_valid_xml(self):
         for name in ('<script>alert(1)</script>', 'a & b "quoted" \'x\'', "ctrl\x00\x08char", "rtl‮evil", "]]> <![CDATA["):
             root = ET.fromstring(badges.project_badge(name, {"live"}))
@@ -114,6 +116,7 @@ class BadgeSvgTests(TestCase):
 
 
 class EmbedPanelTests(TestCase):
+    """Панель вставки бейджа."""
     def setUp(self):
         self.ana = make_user("ana")
         self.project = make_project(self.ana, name="Tally [one]")

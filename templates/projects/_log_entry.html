@@ -1,4 +1,4 @@
-{% load i18n ui %}{# One build log entry. Also returned as JSON "html" by the add view. Needs: entry, project, is_owner. #}
+{# Один запис журналу збірки. #}{% load i18n ui %}{# One build log entry. Also returned as JSON "html" by the add view. Needs: entry, project, is_owner. #}
 <li class="log-entry{% if entry.is_launch %} log-entry--launch{% endif %}" id="log-{{ entry.pk }}" data-log-entry>
   <p class="log-entry__meta">
     {% if entry.is_launch %}<strong class="log-entry__kind">{% translate "Launched" %}</strong>{% endif %}

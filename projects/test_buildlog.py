@@ -23,6 +23,7 @@ def delete_url(entry):
 
 
 class BuildLogTestCase(TestCase):
+    """Спільні дані для тестів журналу збірки."""
     def setUp(self):
         cache.clear()  # rate limits live in the cache
         self.owner = make_user("owner")
@@ -34,6 +35,7 @@ class BuildLogTestCase(TestCase):
 
 
 class PermissionTests(BuildLogTestCase):
+    """Хто може писати в журнал."""
     def test_owner_adds_entry_with_plain_post(self):
         self.client.force_login(self.owner)
         response = self.client.post(add_url(self.project), {"text": "First update"})
@@ -99,6 +101,7 @@ class PermissionTests(BuildLogTestCase):
 
 
 class LaunchTests(BuildLogTestCase):
+    """Запис «запуск»."""
     def test_launch_entry_sets_launched_at(self):
         old = timezone.now() - timedelta(days=30)
         Project.objects.filter(pk=self.project.pk).update(launched_at=old)
@@ -144,6 +147,7 @@ class LaunchTests(BuildLogTestCase):
 
 
 class LimitTests(BuildLogTestCase):
+    """Ліміти журналу."""
     def post(self, text="Update", **extra):
         return self.client.post(add_url(self.project), {"text": text}, **extra)
 
@@ -194,6 +198,7 @@ class LimitTests(BuildLogTestCase):
 
 
 class SanitizingTests(BuildLogTestCase):
+    """Очищення тексту запису."""
     def test_allowed_inline_markdown(self):
         html = render_log_markdown("**bold** *italic* `code` [site](https://example.com)")
         self.assertIn("<strong>bold</strong>", html)
@@ -231,6 +236,7 @@ class SanitizingTests(BuildLogTestCase):
 
 
 class TimelineTests(BuildLogTestCase):
+    """Порядок записів."""
     def test_newest_first_and_hidden_for_visitors_when_empty(self):
         response = self.client.get(self.project.get_absolute_url())
         self.assertNotContains(response, 'id="build-log"')

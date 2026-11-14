@@ -1,4 +1,6 @@
-"""Embeddable SVG badges (README / site badges).
+"""SVG-бейджі для README і сайтів.
+
+Embeddable SVG badges (README / site badges).
 
 Pure functions that return an SVG string. Nothing here touches the request, the session or
 the database: the views load the data and pass it in.
@@ -60,6 +62,7 @@ _WIDE = set("mwMW@%")
 
 
 def _char_em(ch):
+    """Ширина символу в em для оцінки довжини тексту."""
     if ch in _NARROW:
         return 0.32
     if ch in _WIDE:
@@ -78,7 +81,9 @@ def text_width(text, size=FONT_SIZE, bold=False):
 
 
 def fit_text(text, max_width, bold=False):
-    """Cut `text` with an ellipsis when it would be wider than `max_width`."""
+    """Обрізає текст з трикрапкою, якщо він задовгий.
+
+    Cut `text` with an ellipsis when it would be wider than `max_width`."""
     if text_width(text, bold=bold) <= max_width:
         return text
     room = max_width - text_width("…", bold=bold)
@@ -94,7 +99,9 @@ def fit_text(text, max_width, bold=False):
 
 @lru_cache(maxsize=1)
 def _site_mark():
-    """(viewBox size, path data) read from the logo-mark file, so replacing the file rebrands the badge."""
+    """Знак сайту з файлу logo-mark для бейджа.
+
+    (viewBox size, path data) read from the logo-mark file, so replacing the file rebrands the badge."""
     try:
         with open(finders.find(branding.LOGO_MARK), encoding="utf-8") as fh:
             source = fh.read()
@@ -110,7 +117,9 @@ def _site_mark():
 # ---------- Layout ----------
 
 class _Badge:
-    """Collects SVG pieces left to right. Call `finish()` for the document."""
+    """Збирає частини SVG зліва направо.
+
+    Collects SVG pieces left to right. Call `finish()` for the document."""
 
     def __init__(self, title):
         self.title = title
@@ -122,6 +131,7 @@ class _Badge:
         self.halves.append((self.x, width, fill))
 
     def text(self, x, text, fill, bold=False):
+        """Додає текстовий блок."""
         width = text_width(text, bold=bold)
         self.parts.append(
             f'<text x="{_n(x)}" y="18" fill="{fill}" font-weight="{600 if bold else 500}" '
@@ -130,7 +140,9 @@ class _Badge:
         return width
 
     def site_half(self):
-        """Dark left half: site mark and the site name."""
+        """Темна ліва половина: знак і назва сайту.
+
+        Dark left half: site mark and the site name."""
         size, path = _site_mark()
         name = clean_text(branding.SITE_NAME)
         scale = MARK_SIZE / size
@@ -143,6 +155,7 @@ class _Badge:
         self.x = text_x + width + PAD
 
     def finish(self):
+        """Готовий SVG-документ."""
         total = _n(self.x)
         backgrounds = "".join(
             f'<rect x="{_n(x)}" width="{_n(w)}" height="{HEIGHT}" fill="{fill}"/>' for x, w, fill in self.halves
@@ -164,7 +177,9 @@ def _plural(count, one, many):
 
 
 def project_badge(name, earned_kinds):
-    """Badge for one project: site mark, project name, one stamp per earned hallmark."""
+    """Бейдж проєкту: назва й зароблені марки.
+
+    Badge for one project: site mark, project name, one stamp per earned hallmark."""
     name = clean_text(name) or "Project"
     earned = [kind for kind in HALLMARK_ORDER if kind in earned_kinds]
     site = clean_text(branding.SITE_NAME)
@@ -192,7 +207,9 @@ def project_badge(name, earned_kinds):
 
 
 def profile_badge(username, hallmark_count):
-    """Badge for a profile: site mark, @username, number of hallmarks over published projects."""
+    """Бейдж профілю: @ім'я й кількість марок.
+
+    Badge for a profile: site mark, @username, number of hallmarks over published projects."""
     username = clean_text(username)
     site = clean_text(branding.SITE_NAME)
     count_text = _plural(hallmark_count, "hallmark", "hallmarks")
@@ -208,7 +225,9 @@ def profile_badge(username, hallmark_count):
 
 
 def not_found_badge():
-    """Neutral badge for unknown, draft, hidden and suspended alike: it says nothing about which."""
+    """Нейтральний бейдж, який не каже, чому проєкту не видно.
+
+    Neutral badge for unknown, draft, hidden and suspended alike: it says nothing about which."""
     badge = _Badge(f"{clean_text(branding.SITE_NAME)}: not found")
     badge.site_half()
     x = badge.x + PAD
@@ -220,7 +239,9 @@ def not_found_badge():
 # ---------- Embed snippets ----------
 
 def embed_snippets(person, project=None):
-    """Markdown and HTML snippets plus the badge URL, for the "Embed badge" panel.
+    """Markdown і HTML для вставки бейджа.
+
+    Markdown and HTML snippets plus the badge URL, for the "Embed badge" panel.
 
     Absolute URLs come from settings.SITE_URL (config/site.py), never from the request's host, so a snippet copied
     on localhost or a preview server still points to the real site. `badge_path` is for the preview on our own page.

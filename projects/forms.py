@@ -1,3 +1,4 @@
+"""Форми проєкту й журналу збірки."""
 import re
 from urllib.parse import urlsplit
 
@@ -20,11 +21,14 @@ REPO_RE = re.compile(r"^[A-Za-z0-9_.-]{1,39}/[A-Za-z0-9_.-]{1,100}$")
 
 
 class MultipleImageInput(forms.FileInput):
+    """Поле вибору кількох картинок."""
     allow_multiple_selected = True
 
 
 class ScreenshotsField(forms.FileField):
-    """Several files from one <input type=file multiple>. Returns a list (empty when nothing was chosen)."""
+    """Кілька файлів з одного input; повертає список.
+
+    Several files from one <input type=file multiple>. Returns a list (empty when nothing was chosen)."""
 
     def __init__(self, **kwargs):
         kwargs.setdefault("widget", MultipleImageInput(attrs={"accept": "image/png,image/jpeg,image/webp"}))
@@ -36,7 +40,9 @@ class ScreenshotsField(forms.FileField):
 
 
 class ProjectForm(StyledFormMixin, forms.ModelForm):
-    """Create/edit. Status, slug and owner are not here: they are set by views, never by the user.
+    """Створення й редагування проєкту (статус і власника задають view).
+
+    Create/edit. Status, slug and owner are not here: they are set by views, never by the user.
 
     Screenshots chosen in this form are uploaded with the same Save, so a chosen file cannot be lost by
     pressing another button. They are validated and re-encoded here; the view stores them.
@@ -89,6 +95,7 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
         return " ".join(self.cleaned_data["tagline"].split())
 
     def clean_live_url(self):
+        """Лише http(s)-адреса сайту."""
         url = self.cleaned_data["live_url"]
         if not url:
             return url
@@ -99,6 +106,7 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
         return url
 
     def clean_repo_full_name(self):
+        """Нормалізує «власник/репозиторій» і перевіряє формат."""
         value = self.cleaned_data["repo_full_name"].strip()
         for prefix in ("https://github.com/", "http://github.com/", "https://www.github.com/", "github.com/"):
             if value.lower().startswith(prefix):
@@ -110,7 +118,9 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
         return value
 
     def clean_screenshots(self):
-        """A list of re-encoded images (ContentFile). The view checks the count again under a lock."""
+        """Перекодовані картинки; кількість ще раз перевіряє view.
+
+        A list of re-encoded images (ContentFile). The view checks the count again under a lock."""
         files = self.cleaned_data["screenshots"]
         if not files:
             return []
@@ -135,6 +145,7 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
         return images
 
     def _post_clean(self):
+        """Перевіряє теги й інструменти після основної валідації."""
         super()._post_clean()
         # A browser cannot keep a chosen file after a failed submit, so say what happened and what to do.
         if self._errors and self.cleaned_data.get("screenshots") and "screenshots" not in self._errors:
@@ -147,6 +158,7 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
         return parse_tag_names(self.cleaned_data["tags_text"], MAX_TAGS, _("Use at most 5 tags."))
 
     def save(self, owner=None):
+        """Зберігає проєкт з власником, slug, тегами й інструментами."""
         project = super().save(commit=False)
         if owner is not None:
             project.owner = owner
@@ -179,6 +191,7 @@ class ProjectForm(StyledFormMixin, forms.ModelForm):
 
 
 class BuildLogForm(StyledFormMixin, forms.Form):
+    """Форма запису журналу збірки."""
     text = forms.CharField(
         max_length=MAX_LOG_LENGTH, strip=True, label=_("What changed?"),
         help_text=_("Up to 500 characters. **Bold**, *italic*, [links](https://…) and `code` work."),
@@ -195,13 +208,16 @@ class BuildLogForm(StyledFormMixin, forms.Form):
         self.project = project
 
     def clean_is_launch(self):
+        """Позначка «запуск» можлива лише один раз."""
         is_launch = self.cleaned_data["is_launch"]
         if is_launch and self.project.log_entries.filter(kind=BuildLogEntry.Kind.LAUNCH).exists():
             raise ValidationError(_("This project already has a launch entry. Delete it first to mark another one."))
         return is_launch
 
     def save(self):
-        """Creates the entry. A launch entry also sets Project.launched_at, in the same transaction."""
+        """Створює запис; запуск також ставить дату запуску.
+
+        Creates the entry. A launch entry also sets Project.launched_at, in the same transaction."""
         kind = BuildLogEntry.Kind.LAUNCH if self.cleaned_data["is_launch"] else BuildLogEntry.Kind.UPDATE
         try:
             with transaction.atomic():

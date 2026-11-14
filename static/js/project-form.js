@@ -1,3 +1,4 @@
+// Редактор проєкту: прев'ю markdown і стан вибраних скриншотів.
 import { showToast } from "./toast.js";
 
 // Markdown preview in the project editor. Without JS the button is hidden and the form still works.

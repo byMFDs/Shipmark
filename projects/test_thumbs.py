@@ -25,6 +25,7 @@ def noisy(size=(1200, 800)):
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class ThumbnailTests(ProjectTestCase):
+    """Мініатюри скриншотів."""
     def setUp(self):
         super().setUp()
         self.project = make_project(self.owner)
@@ -98,6 +99,7 @@ class ThumbnailTests(ProjectTestCase):
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class MakeThumbsCommandTests(ProjectTestCase):
+    """Команда make_thumbs."""
     def setUp(self):
         super().setUp()
         self.project = make_project(self.owner)

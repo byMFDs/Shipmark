@@ -1,4 +1,4 @@
-{% load i18n ui %}{# Status of the domain verification. Also returned as JSON "html" by the verify view. #}
+{# Статус перевірки домену (також JSON після «Перевірити зараз»). #}{% load i18n ui %}{# Status of the domain verification. Also returned as JSON "html" by the verify view. #}
 {% if domain_row.status == "verified" and domain_live %}
   <p class="domain-status is-ok">{% icon "check" %}<span>{% blocktranslate with domain=domain_row.domain %}{{ domain }} is verified. You earned Domain verified.{% endblocktranslate %}
     <span class="muted">{% blocktranslate with date=domain_row.last_confirmed_at|date:"DATE_FORMAT" %}Last confirmed {{ date }}. Checked again every 30 days.{% endblocktranslate %}</span></span></p>

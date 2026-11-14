@@ -1,1 +1,1 @@
-{% load i18n %}{# Launch date in the project header. Also returned as JSON "launched_html" after a launch entry. #}{% if project.launched_at %}· {% blocktranslate with date=project.launched_at|date:"j M Y" %}Launched {{ date }}{% endblocktranslate %}{% endif %}
+{# Дата запуску в шапці проєкту. #}{% load i18n %}{# Launch date in the project header. Also returned as JSON "launched_html" after a launch entry. #}{% if project.launched_at %}· {% blocktranslate with date=project.launched_at|date:"j M Y" %}Launched {{ date }}{% endblocktranslate %}{% endif %}

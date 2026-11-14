@@ -1,4 +1,4 @@
-{% load i18n ui %}{# Build log on the project page. Visitors see it only when there are entries. #}
+{# Журнал збірки на сторінці проєкту з формою для власника. #}{% load i18n ui %}{# Build log on the project page. Visitors see it only when there are entries. #}
 {% if is_owner or log_entries %}
   <section class="record build-log" id="build-log" aria-labelledby="build-log-title" data-build-log>
     <div class="record__head"><h2 id="build-log-title" class="build-log__title label" tabindex="-1">{% translate "Build log" %}</h2></div>

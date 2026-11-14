@@ -1,3 +1,4 @@
+// Кнопки «Копіювати» для коду вставки.
 // Copy buttons: <button data-copy="element-id" data-copied="Copied">. Hidden without JS (needs-js).
 // The code text stays selectable, so copying by hand always works too.
 import { showToast } from "./toast.js";

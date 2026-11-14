@@ -1,4 +1,6 @@
-"""User markdown (project descriptions, build log entries) to safe HTML.
+"""Markdown користувача в безпечний HTML.
+
+User markdown (project descriptions, build log entries) to safe HTML.
 
 Two layers: raw HTML in the source is turned off in the markdown parser, and the result
 goes through an nh3 allowlist anyway. If one layer has a hole, the other still holds.
@@ -26,6 +28,7 @@ def _demote(match):
 
 
 def _parser():
+    """Парсер markdown для описів."""
     md = markdown.Markdown(extensions=["fenced_code"])
     md.preprocessors.deregister("html_block")  # <div> ... </div> blocks stay text
     md.inlinePatterns.deregister("html")  # inline <b>, <script>, ... stay text
@@ -33,7 +36,9 @@ def _parser():
 
 
 def render_user_markdown(text, max_length=MAX_LENGTH):
-    """Markdown to sanitized HTML. Images are not allowed (screenshots have their own upload).
+    """Опис проєкту в очищений HTML (без картинок).
+
+    Markdown to sanitized HTML. Images are not allowed (screenshots have their own upload).
     `max_length` is for callers with their own limit (community threads)."""
     text = (text or "")[:max_length]
     html = _HEADING.sub(_demote, _parser().convert(text))
@@ -57,6 +62,7 @@ _LOG_INLINE_OFF = ("html", "image_link", "image_reference", "short_image_ref", "
 
 
 def _log_parser():
+    """Парсер markdown для журналу збірки."""
     md = markdown.Markdown(extensions=["nl2br"])  # one Enter = a line break in short updates
     md.preprocessors.deregister("html_block")
     for name in _LOG_BLOCKS_OFF:
@@ -67,7 +73,9 @@ def _log_parser():
 
 
 def render_log_markdown(text):
-    """Bold, italic, links and inline code (build log). Everything else stays text. Same nh3 layer."""
+    """Запис журналу: жирний, курсив, посилання, код.
+
+    Bold, italic, links and inline code (build log). Everything else stays text. Same nh3 layer."""
     text = (text or "")[:LOG_MAX_LENGTH]
     return nh3.clean(
         _log_parser().convert(text),

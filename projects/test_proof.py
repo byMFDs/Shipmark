@@ -20,6 +20,7 @@ V = DomainVerification
 
 
 class ProofTestCase(TestCase):
+    """Спільні дані й помічники для тестів марок."""
     def setUp(self):
         self.now = timezone.now()
         self.owner = make_user("ann")
@@ -54,6 +55,7 @@ class ProofTestCase(TestCase):
 
 
 class ShapeTests(ProofTestCase):
+    """Форма результату compute_hallmarks."""
     def test_three_marks_in_order_with_lookup_by_kind(self):
         marks = self.marks()
         self.assertIsInstance(marks, HallmarkSet)
@@ -75,6 +77,7 @@ class ShapeTests(ProofTestCase):
 
 
 class AuthoredTests(ProofTestCase):
+    """Марка «Repo owner»."""
     def test_no_repository(self):
         self.project.repo_full_name = ""
         self.project.save()
@@ -121,6 +124,7 @@ class AuthoredTests(ProofTestCase):
 
 
 class LiveTests(ProofTestCase):
+    """Марка «Domain verified»."""
     def test_verified_and_recently_confirmed(self):
         row = self.verify(confirmed_days_ago=34)
         mark = self.marks()["live"]
@@ -177,6 +181,7 @@ class LiveTests(ProofTestCase):
 
 
 class SteadyTests(ProofTestCase):
+    """Марка «Steady»."""
     def test_live_with_40_checks_at_95_percent(self):
         self.verify()
         self.checks(ok=38, failed=2)
@@ -227,6 +232,7 @@ class SteadyTests(ProofTestCase):
 
 
 class ListTests(ProofTestCase):
+    """Марки в списках."""
     def test_profile_counts_without_extra_queries_per_project(self):
         self.link(is_owner=True)
         self.verify()
@@ -246,6 +252,7 @@ class ListTests(ProofTestCase):
 
 
 class PageTests(ProofTestCase):
+    """Марки на сторінці проєкту."""
     def test_project_page_explains_each_mark(self):
         self.link(is_owner=True)
         response = self.client.get(self.project.get_absolute_url())
@@ -267,6 +274,7 @@ class PageTests(ProofTestCase):
 
 
 class UnverifiedRepoLinkTests(ProofTestCase):
+    """Неперевірене посилання на репозиторій не дає марки."""
     def test_repo_without_the_mark_is_labelled(self):
         response = self.client.get(self.project.get_absolute_url())
         self.assertContains(response, "https://github.com/ann/tally")
@@ -278,6 +286,7 @@ class UnverifiedRepoLinkTests(ProofTestCase):
 
 
 class RepoDomainLinkTests(ProofTestCase):
+    """Факт зв'язку репозиторію з доменом."""
     def test_homepage_on_the_verified_domain(self):
         from .proof import repo_domain_link
 
@@ -300,6 +309,7 @@ class RepoDomainLinkTests(ProofTestCase):
 
 
 class WhatWasCheckedTests(ProofTestCase):
+    """Панель «Що перевірено»."""
     def texts(self):
         from .proof import checked_facts
 

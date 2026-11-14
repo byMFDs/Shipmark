@@ -1,3 +1,4 @@
+"""Маршрути проєктів і бейджів."""
 from django.urls import path
 
 from . import badge_views, views

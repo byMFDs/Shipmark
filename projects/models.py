@@ -1,3 +1,4 @@
+"""Моделі проєктів: теги, інструменти, проєкт, скриншоти, журнал збірки."""
 import uuid
 from functools import cached_property
 
@@ -13,6 +14,7 @@ MAX_SCREENSHOTS = 4
 
 
 class Tag(models.Model):
+    """Тег проєкту чи навичка профілю."""
     name = models.CharField(max_length=30)
     slug = models.SlugField(max_length=40, unique=True, allow_unicode=True)
 
@@ -24,7 +26,9 @@ class Tag(models.Model):
 
 
 class Tool(models.Model):
-    """An AI tool a project was built with. A fixed list (seeded by a migration), edited in the admin."""
+    """AI-інструмент, з яким зроблено проєкт (вказує власник).
+
+    An AI tool a project was built with. A fixed list (seeded by a migration), edited in the admin."""
 
     name = models.CharField(max_length=40, unique=True)
     slug = models.SlugField(max_length=40, unique=True)
@@ -37,6 +41,7 @@ class Tool(models.Model):
 
 
 class Project(models.Model):
+    """Проєкт людини: опис, адреси, статус, теги, інструменти."""
     class Status(models.TextChoices):
         DRAFT = "draft", _("Draft")
         PUBLISHED = "published", _("Published")
@@ -87,7 +92,9 @@ class Project(models.Model):
 
     @property
     def safe_live_url(self):
-        """Only http(s) links are rendered as links, whatever is stored."""
+        """Адреса сайту лише якщо вона http(s).
+
+        Only http(s) links are rendered as links, whatever is stored."""
         return self.live_url if self.live_url.lower().startswith(("http://", "https://")) else ""
 
     @property
@@ -96,19 +103,25 @@ class Project(models.Model):
 
     @cached_property
     def hallmarks(self):
-        """compute_hallmarks() once per instance, so once per request. Delete the attribute to recompute."""
+        """Марки проєкту, обчислені один раз на запит.
+
+        compute_hallmarks() once per instance, so once per request. Delete the attribute to recompute."""
         from .proof import compute_hallmarks  # here: proof imports verification, which refers back to projects
         return compute_hallmarks(self)
 
     @property
     def cover(self):
-        """First screenshot. Uses the prefetch cache when the list view prefetched `screenshots`."""
+        """Перший скриншот як обкладинка.
+
+        First screenshot. Uses the prefetch cache when the list view prefetched `screenshots`."""
         shots = list(self.screenshots.all())
         return shots[0] if shots else None
 
 
 def unique_slug(owner, name):
-    """A slug from the name, with -2, -3 ... added when this owner already has it."""
+    """Унікальний для власника slug з назви.
+
+    A slug from the name, with -2, -3 ... added when this owner already has it."""
     base = slugify(name)[:50].strip("-") or "project"
     taken = set(Project.objects.filter(owner=owner, slug__startswith=base).values_list("slug", flat=True))
     slug, n = base, 2
@@ -119,7 +132,9 @@ def unique_slug(owner, name):
 
 
 def screenshot_path(instance, filename):
-    """Random file name: the original name (which the user controls) is never used."""
+    """Випадкова назва файлу скриншота.
+
+    Random file name: the original name (which the user controls) is never used."""
     return f"screenshots/{uuid.uuid4().hex}.webp"
 
 
@@ -128,6 +143,7 @@ def thumb_path(instance, filename):
 
 
 class Screenshot(models.Model):
+    """Скриншот проєкту (до чотирьох)."""
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="screenshots")
     image = models.ImageField(upload_to=screenshot_path, width_field="width", height_field="height")
     width = models.PositiveIntegerField(default=0)
@@ -151,7 +167,9 @@ class Screenshot(models.Model):
             self.make_thumb()
 
     def make_thumb(self):
-        """(Re)build the small copy through the storage API. Returns True when it was made."""
+        """Створює або оновлює мініатюру.
+
+        (Re)build the small copy through the storage API. Returns True when it was made."""
         from .images import make_thumbnail  # here: images imports nothing from models, but keep models light
 
         try:
@@ -165,7 +183,9 @@ class Screenshot(models.Model):
 
     @property
     def list_image(self):
-        """The file lists and cards show: the small copy, or the full image while there is none."""
+        """Картинка для списків: мініатюра або повний файл.
+
+        The file lists and cards show: the small copy, or the full image while there is none."""
         return self.thumb if self.thumb else self.image
 
     @property
@@ -182,7 +202,9 @@ LOG_ENTRIES_PER_DAY = 10
 
 
 class BuildLogEntry(models.Model):
-    """A short public update on a project. One entry per project can be the "Launched" milestone."""
+    """Короткий публічний запис про проєкт; один може бути «запуском».
+
+    A short public update on a project. One entry per project can be the "Launched" milestone."""
 
     class Kind(models.TextChoices):
         UPDATE = "update", _("Update")

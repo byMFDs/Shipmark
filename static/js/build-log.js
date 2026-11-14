@@ -1,3 +1,4 @@
+// Журнал збірки: додавання й видалення записів без перезавантаження.
 // Build log on the project page (owner only).
 // - "Post update" sends the form with fetch() and puts the new entry at the top of the list.
 // - "Delete entry" removes the entry in place.

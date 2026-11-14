@@ -1,4 +1,6 @@
-"""Parsing "devtools, webhooks" into tags. Shared by projects (tags) and profiles (skills)."""
+"""Розбір «devtools, webhooks» на теги.
+
+Parsing "devtools, webhooks" into tags. Shared by projects (tags) and profiles (skills)."""
 import re
 
 from django.core.exceptions import ValidationError
@@ -9,7 +11,9 @@ TAG_RE = re.compile(r"^[\w+#.-]+(?: [\w+#.-]+)*$")
 
 
 def parse_tag_names(text, limit, too_many_message):
-    """Returns {slug: name}; raises ValidationError for a bad tag or more than `limit` tags."""
+    """Теги з тексту; помилка для поганого тегу чи забагато тегів.
+
+    Returns {slug: name}; raises ValidationError for a bad tag or more than `limit` tags."""
     tags = {}
     for raw in text.split(","):
         name = " ".join(raw.lower().split())

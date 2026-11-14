@@ -1,3 +1,4 @@
+// Перевірка домену: інструкції обраного способу й «Перевірити зараз» без перезавантаження.
 // Domain verification on the project editor.
 // - Shows only the instructions of the chosen method (without JS both are visible).
 // - "Verify now" sends the form with fetch() and updates the status in place.

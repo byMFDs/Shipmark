@@ -1,4 +1,6 @@
-"""Screenshot uploads (CLAUDE.md section 6): images only, checked with Pillow, re-encoded.
+"""Єдиний конвеєр картинок: лише зображення, перевірка Pillow, перекодування.
+
+Screenshot uploads (CLAUDE.md section 6): images only, checked with Pillow, re-encoded.
 
 Re-encoding to a fresh WebP file drops EXIF/GPS and any data hidden in the original file.
 The user's file name and bytes are never stored.
@@ -17,7 +19,9 @@ ALLOWED_FORMATS = {"JPEG", "PNG", "WEBP"}
 
 
 def clean_image(upload, fit=None):
-    """Validate an uploaded file and return a ContentFile with WebP bytes. Raises ValidationError.
+    """Перевіряє файл і повертає WebP.
+
+    Validate an uploaded file and return a ContentFile with WebP bytes. Raises ValidationError.
 
     `fit=(width, height)` scales and centre-crops to exactly that size (avatars, covers); without it the image
     is only scaled down to MAX_SIDE (screenshots). Metadata is dropped either way.
@@ -69,7 +73,9 @@ THUMB_BOX = (640, 640)  # longest sides; lists show it at 80-640 CSS pixels, so 
 
 
 def make_thumbnail(fileobj):
-    """A small WebP copy of an already cleaned image (clean_image output), for lists and cards. Returns ContentFile.
+    """Маленька WebP-копія для списків і карток.
+
+    A small WebP copy of an already cleaned image (clean_image output), for lists and cards. Returns ContentFile.
 
     The full image stays for the project page; feeds, profiles and Explore load this one (a few KB, not hundreds)."""
     image = Image.open(fileobj)

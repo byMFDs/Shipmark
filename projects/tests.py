@@ -58,6 +58,7 @@ def urls_for(project):
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class ProjectTestCase(TestCase):
+    """Спільні дані для тестів проєктів."""
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()
@@ -70,7 +71,9 @@ class ProjectTestCase(TestCase):
 
 
 class OwnershipTests(ProjectTestCase):
-    """IDOR: every owner-only URL gives 404 to other users, and drafts are invisible to them."""
+    """Чужі сторінки власника дають 404, чернетки невидимі.
+
+    IDOR: every owner-only URL gives 404 to other users, and drafts are invisible to them."""
 
     def setUp(self):
         super().setUp()
@@ -162,6 +165,7 @@ class OwnershipTests(ProjectTestCase):
 
 
 class PublicPageTests(ProjectTestCase):
+    """Публічна сторінка проєкту."""
     def test_published_page_is_public_and_labels_declared_tools(self):
         project = make_project(self.owner, description="Hello **world**")
         project.built_with.add(Tool.objects.get(name="Claude Code"))
@@ -191,6 +195,7 @@ class PublicPageTests(ProjectTestCase):
 
 
 class MarkdownSanitizingTests(ProjectTestCase):
+    """Очищення markdown."""
     def test_script_and_event_handlers_are_neutralized(self):
         html = render_user_markdown('hi <script>alert(1)</script> <img src=x onerror=alert(1)> <b onclick="x()">b</b>')
         self.assertNotIn("<script", html)
@@ -239,6 +244,7 @@ class MarkdownSanitizingTests(ProjectTestCase):
 
 
 class ScreenshotTests(ProjectTestCase):
+    """Скриншоти."""
     def setUp(self):
         super().setUp()
         self.project = make_project(self.owner, status=Project.Status.DRAFT)
@@ -333,6 +339,7 @@ class ScreenshotTests(ProjectTestCase):
 
 
 class FormAndLifecycleTests(ProjectTestCase):
+    """Форма й життєвий цикл проєкту."""
     def valid(self, **extra):
         data = {"name": "Tallyhook", "tagline": "Replay webhooks", "description": "", "live_url": "", "repo_full_name": "", "tags_text": ""}
         data.update(extra)
@@ -453,6 +460,7 @@ class FormAndLifecycleTests(ProjectTestCase):
 
 
 class ProfileListTests(ProjectTestCase):
+    """Проєкти в профілі."""
     def test_profile_lists_only_published_and_drafts_only_for_owner(self):
         make_project(self.owner, "Public one")
         make_project(self.owner, "Private draft", Project.Status.DRAFT)

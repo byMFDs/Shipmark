@@ -1,3 +1,4 @@
+"""Сторінки й дії проєкту: створення, редагування, публікація, перевірки, скриншоти, журнал."""
 import math
 from datetime import timedelta
 from functools import wraps
@@ -40,12 +41,16 @@ TOO_MANY = _("Too many changes in a short time. Try again in a few minutes.")
 
 
 def _locked(request):
-    """Suspended and muted users can read but not write (accounts.roles.can_write)."""
+    """Відповідь для тих, хто не може писати.
+
+    Suspended and muted users can read but not write (accounts.roles.can_write)."""
     return HttpResponseForbidden(write_blocked_message(request.user))
 
 
 def owner_project(view=None, *, cleanup=False):
-    """Loads the project from the URL and makes sure it is the signed-in user's.
+    """Декоратор: проєкт з адреси, лише власний (інакше 404).
+
+    Loads the project from the URL and makes sure it is the signed-in user's.
 
     Anyone else gets a 404, the same as for a project that does not exist, so URLs
     cannot be used to find out which drafts exist. Used on every owner-only view.
@@ -78,12 +83,16 @@ def _edit_url(project, anchor=""):
 
 
 def _uploads_limited(request, images):
-    """One rate-limit hit per image (20 per hour per user), so several files count like several uploads."""
+    """Ліміт завантажень: кожна картинка рахується окремо.
+
+    One rate-limit hit per image (20 per hour per user), so several files count like several uploads."""
     return any([is_limited("screenshot_add", request.user.pk, limit=20, window=3600) for _image in images])
 
 
 def store_screenshots(project, images):
-    """Saves already validated images after the existing ones. Returns how many were stored.
+    """Додає перевірені картинки після наявних.
+
+    Saves already validated images after the existing ones. Returns how many were stored.
 
     The project row is locked, so two parallel saves cannot both pass the limit (PostgreSQL; SQLite
     serializes writes anyway). Extra images over the limit are dropped, never stored.
@@ -100,7 +109,9 @@ def store_screenshots(project, images):
 
 
 def _publish(project):
-    """Only drafts can be published. A hidden project is a moderation decision; the owner cannot undo it."""
+    """Публікує чернетку (прихований проєкт власник не повертає).
+
+    Only drafts can be published. A hidden project is a moderation decision; the owner cannot undo it."""
     if project.status != Project.Status.DRAFT:
         return False
     project.status = Project.Status.PUBLISHED
@@ -112,6 +123,7 @@ def _publish(project):
 @login_required
 @require_http_methods(["GET", "POST"])
 def new(request):
+    """Створення проєкту."""
     form = ProjectForm(request.POST or None, request.FILES or None)
     if request.method == "POST":
         if not can_write(request.user):
@@ -131,7 +143,9 @@ def new(request):
 @owner_project
 @require_http_methods(["GET", "POST"])
 def edit(request, project):
-    """Saves the fields and the chosen screenshots together. "Publish project" in the same form saves, then publishes."""
+    """Редагування проєкту зі скриншотами й публікацією.
+
+    Saves the fields and the chosen screenshots together. "Publish project" in the same form saves, then publishes."""
     screenshots = list(project.screenshots.all())
     form = ProjectForm(request.POST or None, request.FILES or None, instance=project,
                        existing_screenshots=len(screenshots))
@@ -170,7 +184,9 @@ def edit(request, project):
 @login_required
 @require_POST
 def preview(request):
-    """Markdown preview for the editor (JS). Same renderer as the project page."""
+    """Прев'ю markdown для редактора.
+
+    Markdown preview for the editor (JS). Same renderer as the project page."""
     if not can_write(request.user):
         return _locked(request)
     if is_limited("project_preview", request.user.pk, limit=120, window=600):
@@ -193,6 +209,7 @@ def _repo_key(project):
 
 
 def _repo_wait_text(project, seconds):
+    """Текст «перевірте знову через N хвилин»."""
     minutes = math.ceil(seconds / 60)
     return ngettext(
         "%(repo)s was checked a moment ago. You can check it again in %(count)d minute.",
@@ -201,7 +218,9 @@ def _repo_wait_text(project, seconds):
 
 
 def _current_repo_link(project):
-    """The check result for the repository saved now. A result for an older name is stale: show nothing."""
+    """Результат перевірки для поточної назви репозиторію.
+
+    The check result for the repository saved now. A result for an older name is stale: show nothing."""
     link = getattr(project, "repo_link", None)
     if link is None or not project.repo_full_name or link.repo_full_name.lower() != project.repo_full_name.lower():
         return None
@@ -211,6 +230,7 @@ def _current_repo_link(project):
 @owner_project
 @require_POST
 def repo_check(request, project):
+    """Перевірка репозиторію для марки «Repo owner»."""
     back = redirect("projects:edit", username=project.owner.username, slug=project.slug)
     github_id = github_user_id(request.user)
     if not project.repo_full_name:
@@ -250,7 +270,9 @@ def repo_check(request, project):
 # ---------- Domain verification ----------
 
 def _domain_context(project, row):
-    """Everything the domain section and its status block need. `row` is None without a usable domain."""
+    """Дані для блоку перевірки домену.
+
+    Everything the domain section and its status block need. `row` is None without a usable domain."""
     live = domains.is_live(project)
     return {
         "domain_row": row,
@@ -268,7 +290,9 @@ def _domain_context(project, row):
 @owner_project
 @require_POST
 def domain_verify(request, project):
-    """ "Verify now". Plain POST redirects back; fetch() with Accept: application/json gets JSON."""
+    """«Перевірити зараз» для домену (POST або JSON).
+
+     "Verify now". Plain POST redirects back; fetch() with Accept: application/json gets JSON."""
     wants_json = "application/json" in request.headers.get("Accept", "")
     row = domains.verification_for(project, create=True)
     ok, status = False, 200
@@ -312,6 +336,7 @@ def publish(request, project):
 @owner_project(cleanup=True)
 @require_POST
 def unpublish(request, project):
+    """Знімає проєкт з публікації в чернетку."""
     if project.status == Project.Status.PUBLISHED:
         project.status = Project.Status.DRAFT
         project.save(update_fields=["status", "updated_at"])
@@ -322,7 +347,9 @@ def unpublish(request, project):
 @owner_project(cleanup=True)
 @require_http_methods(["GET", "POST"])
 def delete(request, project):
-    """GET asks for confirmation, POST deletes."""
+    """Видалення проєкту з підтвердженням.
+
+    GET asks for confirmation, POST deletes."""
     if request.method == "POST":
         project.delete()  # screenshots go with it; signals remove the files
         messages.success(request, _("Project deleted."))
@@ -335,7 +362,9 @@ def delete(request, project):
 @owner_project
 @require_POST
 def screenshot_add(request, project):
-    """Upload without the rest of the form (one file, field "image"). The editor uses the main form."""
+    """Завантаження одного скриншота окремо від форми.
+
+    Upload without the rest of the form (one file, field "image"). The editor uses the main form."""
     edit_url = redirect(_edit_url(project, "#screenshots"))
     upload = request.FILES.get("image")
     if not upload:
@@ -357,6 +386,7 @@ def screenshot_add(request, project):
 
 
 def _renumber(project):
+    """Перенумеровує порядок скриншотів."""
     shots = list(project.screenshots.all())
     for index, shot in enumerate(shots):
         shot.order = index
@@ -367,6 +397,7 @@ def _renumber(project):
 @owner_project
 @require_POST
 def screenshot_delete(request, project, pk):
+    """Видаляє скриншот."""
     shot = get_object_or_404(project.screenshots, pk=pk)  # only this project's screenshots
     shot.delete()
     _renumber(project)
@@ -377,6 +408,7 @@ def screenshot_delete(request, project, pk):
 @owner_project
 @require_POST
 def screenshot_move(request, project, pk):
+    """Переміщує скриншот вгору чи вниз."""
     shot = get_object_or_404(project.screenshots, pk=pk)
     direction = request.POST.get("direction")
     if direction not in ("up", "down"):
@@ -403,7 +435,9 @@ def _has_launch(project):
 
 
 def _log_limit_reached(project):
-    """10 entries a day per project. The DB count survives cache restarts; the cache counter
+    """Ліміт записів журналу на день.
+
+    10 entries a day per project. The DB count survives cache restarts; the cache counter
     also counts entries that were deleted again, so add + delete cannot get around the limit."""
     recent = project.log_entries.filter(created_at__gte=timezone.now() - timedelta(days=1)).count()
     return recent >= LOG_ENTRIES_PER_DAY or is_limited(
@@ -413,7 +447,9 @@ def _log_limit_reached(project):
 @owner_project
 @require_POST
 def log_add(request, project):
-    """Plain POST redirects back to the project page; fetch() with Accept: application/json gets JSON."""
+    """Додає запис журналу (POST або JSON).
+
+    Plain POST redirects back to the project page; fetch() with Accept: application/json gets JSON."""
     form = BuildLogForm(request.POST, project=project)
     status, entry = 400, None
     if form.is_valid():
@@ -448,7 +484,9 @@ def log_add(request, project):
 @owner_project
 @require_POST
 def log_delete(request, project, pk):
-    """Deleting the launch entry keeps launched_at: the project did launch on that date."""
+    """Видаляє запис журналу.
+
+    Deleting the launch entry keeps launched_at: the project did launch on that date."""
     entry = get_object_or_404(project.log_entries, pk=pk)  # only this project's entries
     if is_limited("buildlog_delete", request.user.pk, limit=60, window=3600):
         if _wants_json(request):
@@ -471,6 +509,7 @@ def _detail_queryset():
 
 
 def detail(request, username, slug):
+    """Сторінка проєкту."""
     project = get_object_or_404(_detail_queryset(), owner__username__iexact=username, slug=slug)
     is_owner = request.user.is_authenticated and request.user.pk == project.owner_id
     # Drafts, hidden and removed projects, and everything of a suspended or banned user: 404 for everyone
@@ -484,6 +523,7 @@ def detail(request, username, slug):
 
 
 def _render_detail(request, project, log_form=None, status=200):
+    """Збирає сторінку проєкту: скриншоти, марки, аптайм, журнал."""
     is_owner = request.user.is_authenticated and request.user.pk == project.owner_id
     screenshots = list(project.screenshots.all())
     hallmarks = project.hallmarks
