@@ -6,6 +6,8 @@ the real URLs plus a few views that fail on purpose.
 import io
 import json
 import logging
+import tempfile
+from pathlib import Path
 
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
@@ -14,7 +16,7 @@ from django.test import Client, SimpleTestCase, TestCase, override_settings
 from django.urls import path
 
 from config import urls as real_urls
-from config.errorlog import ERRORS_FILE, NOTFOUND_FILE, NotFoundFilter, scrub
+from config.errorlog import ERRORS_FILE, NOTFOUND_FILE, JsonLinesFileHandler, NotFoundFilter, scrub
 
 SECRET = "sk_live_7f3a9c2e5b1d4f8a6c0e9b2d7a5f3c1e"
 
@@ -56,8 +58,35 @@ def clear_logs():
     NotFoundFilter.reset()
 
 
+class OwnLogDir:
+    """Each class writes and reads its own log folder. `manage.py test --parallel` forks workers that share
+    settings.LOG_DIR, so a 403 from a test in another worker landed in this class's errors.jsonl, or this class's
+    clear_logs() wiped another worker's lines (the run then crashed with "cannot pickle 'traceback' object")."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        folder = Path(tempfile.mkdtemp(prefix="shipmark-test-logs-"))
+        cls._log_settings = override_settings(LOG_DIR=folder)
+        cls._log_settings.enable()
+        cls._moved = []
+        for handler in logging.getLogger().handlers:
+            if isinstance(handler, JsonLinesFileHandler):
+                handler.close()  # reopened at the next line (append mode)
+                cls._moved.append((handler, handler.baseFilename))
+                handler.baseFilename = str(folder / Path(handler.baseFilename).name)
+
+    @classmethod
+    def tearDownClass(cls):
+        for handler, original in cls._moved:
+            handler.close()
+            handler.baseFilename = original
+        cls._log_settings.disable()
+        super().tearDownClass()
+
+
 @override_settings(DEBUG=False, ROOT_URLCONF="config.test_errors")
-class ErrorPagesTests(TestCase):
+class ErrorPagesTests(OwnLogDir, TestCase):
     def setUp(self):
         clear_logs()
         self.client = Client(raise_request_exception=False)
@@ -136,7 +165,7 @@ class ErrorPagesTests(TestCase):
 
 
 @override_settings(DEBUG=False, ROOT_URLCONF="config.test_errors")
-class ErrorLogTests(TestCase):
+class ErrorLogTests(OwnLogDir, TestCase):
     def setUp(self):
         clear_logs()
         self.client = Client(raise_request_exception=False)
@@ -216,7 +245,7 @@ class ScrubTests(SimpleTestCase):
                 self.assertEqual(scrub(raw), want)
 
 
-class ShowErrorsCommandTests(SimpleTestCase):
+class ShowErrorsCommandTests(OwnLogDir, SimpleTestCase):
     def setUp(self):
         clear_logs()
 
