@@ -18,7 +18,7 @@ from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.formats import date_format
 
 from moderation.models import AuditLog
@@ -203,8 +203,11 @@ class NameRuleTests(TestCase):
         ana = make_user("ana", display_name="Ana")
         form = SettingsForm({"display_name": "shipmark official", "bio": "", "website": "", "preferred_language": ""},
                             instance=ana)
-        self.assertFalse(form.is_valid())
-        self.assertIn("reserved for official", form.errors["display_name"][0])
+        # English on purpose: a request in an earlier test of the same process may have left "uk" active
+        # (the order differs in `manage.py test --parallel`).
+        with translation.override("en"):
+            self.assertFalse(form.is_valid())
+            self.assertIn("reserved for official", form.errors["display_name"][0])
 
     def test_github_name_is_not_carried_over(self):
         request = RequestFactory().post("/signup/")

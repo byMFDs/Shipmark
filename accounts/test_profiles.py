@@ -1,5 +1,6 @@
 """Profiles: pictures, fields, links, skills, pinned projects, tabs, and the abuse cases around them."""
 import io
+import tempfile
 from datetime import timedelta
 from pathlib import Path
 from unittest import mock
@@ -204,8 +205,13 @@ class ImageLimitTests(ProfileTestCase):
                         self.assertEqual(out.size, size)
 
     def test_huge_images_are_refused_in_settings_for_avatar_and_cover(self):
+        # Its own media folder: TEMP_MEDIA is shared by the workers of `manage.py test --parallel`, which write
+        # avatars there while this test counts files.
+        media = tempfile.mkdtemp(prefix="shipmark-test-media-")
+        self.enterContext(override_settings(MEDIA_ROOT=media))
+
         def stored():
-            return sorted(str(f) for f in Path(TEMP_MEDIA).rglob("*") if f.is_file() and f.parent.name in ("avatars", "covers"))
+            return sorted(str(f) for f in Path(media).rglob("*") if f.is_file())
 
         before = stored()
         for field in ("avatar_file", "cover_file"):
