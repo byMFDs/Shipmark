@@ -186,3 +186,7 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-14: Polish-3 stage 5. Support email cause found (no EMAIL_* / SUPPORT_INBOX_EMAIL in .env, silent skip, console backend in dev); `send_test_email`, prod system check, admin inbox banner, logged skip, Gmail steps in DEPLOY_NOTES, mock-SMTP tests. Bug sweep: route matrix for 7 roles, link/alt/label/leak crawl, translations, dead code; parallel test runs fixed. 1140 tests green (--parallel 4).
   Next: put the Gmail app password in .env and run `python manage.py send_test_email --smtp`; then "GO 6" (code comments).
+
+- 2026-11-14: Polish-3 stage 6 (code comments). A short Ukrainian line on every module, class, non-trivial function, template, JS and CSS file; tests one line per class; one commit per app. `scripts/check_comment_only.py` proves the change is comments only (326 files vs bf784af). 1140 tests green.
+  Next: polish-3 is complete; review the branch, then the final manual checklist (real phone, keyboard, reduced motion) before merging.
+

@@ -11,7 +11,7 @@ Branch `polish-3` (from `polish-2`). Brief: one stage per "GO <n>". Order: 0, 1,
 | 3a/3b. Design pass | done 2026-11-14 | Design audit (3a) · Layout fixes from the design audit · One spacing and icon scale · Dark theme: three levels, visible hairlines · Design: add and remove |
 | 4. Motion | done 2026-11-14 | Motion: tab marks, theme fade, reading progress |
 | 5. Support email + bug sweep | done 2026-11-14 | Support email: diagnose, test command, warnings · Deploy check test: complete SMTP values · Tests: own log folder per error-log test class · Remove dead feed code · Route matrix test: every route, seven roles · Tests: green under --parallel |
-| 6. Code comments (only on "GO 6") | | |
+| 6. Code comments (only on "GO 6") | done 2026-11-14 | Comment-only check script (+2 fixes) · Comments (uk): accounts, community, config, moderation, news, social, support, pages, projects, verification · shared templates, CSS, JS and root files · management command handlers |
 
 ## Stage 0 notes
 
@@ -120,3 +120,16 @@ only inside `prefers-reduced-motion: no-preference`, infinite animations only on
     request activates its own), but an in-process test that reads English after a `uk` request depends on order.
   - `.page-head__actions` is used by no template (documented part of the page head; kept).
   - Without `tblib` (not an allowed dependency) a failing test in a parallel run still shows only "cannot pickle".
+
+## Stage 6 notes
+
+- One short Ukrainian line on every module, class (not `Meta` or the inner `TextChoices`) and non-trivial function (more than
+  3 lines or already documented), every template (`{# ... #}` glued to line 1, so the output does not change), JS file
+  (`// ...` line) and CSS file (`/* ... */` line); tests: one line per class. Existing English docstrings stay under the new
+  line. Skipped: migrations, `__init__.py`, generated files (.po/.mo), vendored fonts and icons, trivial overrides
+  (`add_arguments`, one-line helpers).
+- `scripts/check_comment_only.py [BASE]`: Python AST without docstrings, templates without `{# #}`, JS without `//` lines,
+  CSS without `/* */` and blank lines must equal BASE. Whole stage against `bf784af`: 326 files, only comments changed.
+- 1140 tests green (`--parallel 4`), `check` clean.
+- Lines were written from each function's docstring and body; a few are short summaries of long functions. Not
+  reviewed by a second person.
