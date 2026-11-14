@@ -182,6 +182,7 @@ class Command(BaseCommand):
         parser.add_argument("--clear", action="store_true", help="Only remove the demo content.")
 
     def handle(self, *args, **options):
+        """Прибирає старий демо-вміст і створює новий (лише з DEBUG)."""
         if not settings.DEBUG:
             raise CommandError("seed_community runs only with DEBUG on (development).")
         with transaction.atomic():

@@ -16,6 +16,7 @@ class Command(BaseCommand):
     help = "Rehash active ban hashes with BAN_HASH_KEY."
 
     def handle(self, *args, **options):
+        """Переводить хеші й повідомляє, скільки лишилось."""
         converted, left_over = bans.rehash()
         self.stdout.write(f"Rehashed {converted} ban hash(es) with BAN_HASH_KEY.")
         if left_over:

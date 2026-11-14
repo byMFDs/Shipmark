@@ -81,6 +81,7 @@ class Command(BaseCommand):
         parser.add_argument("--force", action="store_true", help="Post a new welcome thread and unpin the old one.")
 
     def handle(self, *args, board=None, force=False, **options):
+        """Публікує вітальну тему на вказаній або типовій дошці."""
         target = None
         if board:
             target = Board.objects.filter(slug=board, is_active=True).first()

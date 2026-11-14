@@ -19,6 +19,7 @@ class Command(BaseCommand):
     help = "Redraw favicon.ico and apple-touch-icon.png from the logo mark."
 
     def handle(self, *args, **options):
+        """Записує favicon.ico і apple-touch-icon."""
         static_dir = settings.STATICFILES_DIRS[0]
         for name, data in ((branding.FAVICON_ICO, favicon_ico()), (branding.APPLE_TOUCH_ICON, apple_touch_icon())):
             (static_dir / name).write_bytes(data)

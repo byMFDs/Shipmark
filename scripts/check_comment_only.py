@@ -43,6 +43,7 @@ def git(*args):
 
 
 def main(base="HEAD"):
+    """Порівнює кожен змінений файл з BASE; 1, якщо змінилося щось, крім коментарів."""
     changed = [line.split("\t") for line in git("diff", "--name-status", base).splitlines()]
     problems, checked = [], 0
     for status, *paths in changed:

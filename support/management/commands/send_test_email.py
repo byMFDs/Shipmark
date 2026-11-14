@@ -45,6 +45,7 @@ class Command(BaseCommand):
         parser.add_argument("--smtp", action="store_true", help="Use SMTP even when EMAIL_BACKEND is the console (dev).")
 
     def handle(self, *args, to="", smtp=False, **options):
+        """Друкує налаштування й проблеми, надсилає лист, пояснює помилку."""
         backend = SMTP_BACKEND if smtp else settings.EMAIL_BACKEND
         self.stdout.write("Email settings in use:")
         for line in describe(backend):

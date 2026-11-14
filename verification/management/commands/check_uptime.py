@@ -29,6 +29,7 @@ class Command(BaseCommand):
         parser.add_argument("--batch-size", type=int, default=BATCH_SIZE)
 
     def handle(self, *args, **options):
+        """Перевіряє проєкти, яким час, партіями й прибирає старі перевірки."""
         size = max(1, options["batch_size"])
         # Ids first: the list does not shift while checks are being written.
         ids = list(due_projects(timezone.now()).values_list("pk", flat=True))

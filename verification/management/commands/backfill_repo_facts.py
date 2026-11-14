@@ -30,6 +30,7 @@ class Command(BaseCommand):
         parser.add_argument("--dry-run", action="store_true")
 
     def handle(self, *args, **options):
+        """Проходить посилання без нових фактів (з --dry-run лише показує)."""
         dry = options["dry_run"]
         counts = {"filled": 0, "review": 0, "recheck": 0, "unavailable": 0}
         links = (RepoLink.objects.filter(Q(github_owner_id__isnull=True) | Q(repo_created_at__isnull=True))

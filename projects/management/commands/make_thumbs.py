@@ -14,6 +14,7 @@ class Command(BaseCommand):
     help = "Create thumbnails for screenshots that do not have one."
 
     def handle(self, *args, **options):
+        """Створює відсутні мініатюри й рахує успіхи та збої."""
         made = failed = 0
         for shot in Screenshot.objects.filter(thumb="").iterator():
             if shot.make_thumb():

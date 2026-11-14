@@ -23,6 +23,7 @@ class Command(BaseCommand):
         parser.add_argument("--revoke", action="store_true", help="Remove the badge instead.")
 
     def handle(self, username, kind, note, revoke, **options):
+        """Знаходить людину й видає або знімає бейдж."""
         try:
             user = get_user_model().objects.get(username=username.strip().lower())
         except get_user_model().DoesNotExist:

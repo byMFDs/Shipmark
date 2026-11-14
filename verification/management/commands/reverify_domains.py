@@ -19,6 +19,7 @@ class Command(BaseCommand):
     help = "Re-check verified domains older than 30 days; remove Live when the proof is gone."
 
     def handle(self, *args, **options):
+        """Перевіряє домени, не підтверджені 30 днів, і рахує результати."""
         now = timezone.now()
         due = (DomainVerification.objects
                .filter(status=DomainVerification.Status.VERIFIED, last_confirmed_at__lt=now - REVERIFY_AFTER)

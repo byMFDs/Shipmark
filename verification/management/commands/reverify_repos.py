@@ -31,6 +31,7 @@ class Command(BaseCommand):
         parser.add_argument("--project", type=int, help="Only this project id.")
 
     def handle(self, *args, **options):
+        """Перевіряє посилання, яким час, і рахує результати."""
         links = RepoLink.objects.select_related("project", "project__owner").order_by("checked_at")
         if options["project"]:
             links = links.filter(project_id=options["project"])
