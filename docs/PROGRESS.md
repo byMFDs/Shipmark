@@ -190,3 +190,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 - 2026-11-14: Polish-3 stage 6 (code comments). A short Ukrainian line on every module, class, non-trivial function, template, JS and CSS file; tests one line per class; one commit per app. `scripts/check_comment_only.py` proves the change is comments only (326 files vs bf784af). 1140 tests green.
   Next: polish-3 is complete; review the branch, then the final manual checklist (real phone, keyboard, reduced motion) before merging.
 
+- 2026-11-14: Polish-3 follow-ups. polib wheel untracked, CLAUDE.md comment rule, unused moderation helpers removed, tabs fix (every tab had lost its left padding; own test), a request no longer leaves its language active in the thread (flaky parallel tests; own test). 1142 tests green twice.
+  Next: review the branch; real-browser check of tabs and motion; Gmail app password + `send_test_email --smtp`; then merge.
+

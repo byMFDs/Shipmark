@@ -115,7 +115,7 @@ only inside `prefers-reduced-motion: no-preference`, infinite animations only on
 - Real bugs fixed (each its own commit): parallel test runs crashed (shared log folder, shared media folder, a leaked
   language between tests; hidden by the missing tblib); deploy-check test after the new email warning.
 - Suspicious, not fixed:
-  - `moderation/sanctions.py::active_for` and `moderation/bans.py::legacy_count` have no caller (moderation code: left).
+  - ~~`moderation/sanctions.py::active_for` and `moderation/bans.py::legacy_count` have no caller~~: removed after stage 6.
   - Django's LocaleMiddleware leaves the last request's language active in the thread; harmless in production (every
     request activates its own), but an in-process test that reads English after a `uk` request depends on order.
   - `.page-head__actions` is used by no template (documented part of the page head; kept).
@@ -133,3 +133,18 @@ only inside `prefers-reduced-motion: no-preference`, infinite animations only on
 - 1140 tests green (`--parallel 4`), `check` clean.
 - Lines were written from each function's docstring and body; a few are short summaries of long functions. Not
   reviewed by a second person.
+
+## After stage 6 (approved follow-ups)
+
+- `polib-1.2.0-py2.py3-none-any.whl` untracked (committed by mistake in the first commit; local file kept, `*.whl` ignored).
+- CLAUDE.md: the "one Ukrainian line first" comment rule, `scripts/`, the comment-only check command.
+- Removed the two unused moderation helpers (no behaviour change).
+- Real bug, own commit + test: `.tabs__link:first-child` matched every tab (each link is the only child of its `<li>`), so
+  every tab on Discover, profile and /mod/ had no left padding and its underline sat shifted right. Now only the first tab
+  is flush left.
+- Real bug, own commit + test: a request left its language active in the thread (Django's LocaleMiddleware does not
+  reset it), so tests reading English after a `uk` / `pt-br` request failed by order in parallel runs (seen 3 times).
+  `UserLocaleMiddleware` now puts the thread's previous language back after every response; production is unaffected
+  (every request sets its own language). Two full `--parallel 4` runs green after it (1142 tests).
+- Still open (needs the developer): Gmail app password in `.env` + `send_test_email --smtp`; a look at the motion and the
+  tabs in a real browser; `tblib` (not an allowed dependency) would make a failing test in a parallel run readable.
