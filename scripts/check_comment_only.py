@@ -20,7 +20,7 @@ def strip_docstrings(tree):
             body = node.body
             if body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant) \
                     and isinstance(body[0].value.value, str):
-                node.body = body[1:] or [ast.Pass()]
+                node.body = body[1:] or ([] if isinstance(node, ast.Module) else [ast.Pass()])
     return ast.dump(tree, annotate_fields=True, include_attributes=False)
 
 
