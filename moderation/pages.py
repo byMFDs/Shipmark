@@ -1,4 +1,6 @@
-"""The ban page, shared by the middleware (active session) and the GitHub sign-in (existing or new account)."""
+"""Сторінка бану й тексти «чому не можна писати».
+
+The ban page, shared by the middleware (active session) and the GitHub sign-in (existing or new account)."""
 from django.shortcuts import render
 
 from config import branding
@@ -11,7 +13,9 @@ def ban_response(request, reason, expires_at):
 
 
 def write_blocked_message(user):
-    """Why `user` cannot post right now (403 bodies, toasts)."""
+    """Чому людина зараз не може писати.
+
+    Why `user` cannot post right now (403 bodies, toasts)."""
     from django.utils import formats, timezone
     from django.utils.translation import gettext as _
 

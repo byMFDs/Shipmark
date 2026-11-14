@@ -1,8 +1,11 @@
-"""Write AuditLog entries: audit.log("hallmark.live.removed", project, reason="token_missing")."""
+"""Записи в AuditLog.
+
+Write AuditLog entries: audit.log("hallmark.live.removed", project, reason="token_missing")."""
 from .models import AuditLog
 
 
 def log(action, target, actor=None, **metadata):
+    """Створює запис AuditLog про дію над об'єктом."""
     return AuditLog.objects.create(
         actor=actor if getattr(actor, "pk", None) else None,
         action=action,

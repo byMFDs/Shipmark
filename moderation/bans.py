@@ -1,4 +1,6 @@
-"""Ban evasion: a keyed hash of the GitHub user id, kept only while the ban lasts (see BannedIdentity).
+"""Захист від обходу бану: хеш GitHub id, поки триває бан.
+
+Ban evasion: a keyed hash of the GitHub user id, kept only while the ban lasts (see BannedIdentity).
 
 hash = HMAC-SHA256(key = settings.BAN_HASH_KEY, message = "<LABEL>:github:<id>"). The raw id is never stored.
 LABEL is only a domain-separation prefix (this hash cannot be confused with any other HMAC); the secret is the key.
@@ -29,7 +31,9 @@ def _hash(uid):
 
 
 def _legacy_hashes(uid):
-    """The pre-BAN_HASH_KEY scheme (django salted_hmac keyed from SECRET_KEY and its fallbacks). Lookup only."""
+    """Хеші за старою схемою (від SECRET_KEY), лише для пошуку.
+
+    The pre-BAN_HASH_KEY scheme (django salted_hmac keyed from SECRET_KEY and its fallbacks). Lookup only."""
     secrets = [settings.SECRET_KEY, *getattr(settings, "SECRET_KEY_FALLBACKS", [])]
     return [salted_hmac(LABEL, f"github:{uid}", secret=secret, algorithm="sha256").hexdigest() for secret in secrets]
 
@@ -41,13 +45,17 @@ def github_uid(user):
 
 
 def prune(now=None):
-    """Deletes rows of bans that have ended. Returns how many."""
+    """Видаляє хеші завершених банів.
+
+    Deletes rows of bans that have ended. Returns how many."""
     deleted, _rows = BannedIdentity.objects.filter(expires_at__lte=now or timezone.now()).delete()
     return deleted
 
 
 def remember(sanction):
-    """Called when a ban is issued. No GitHub account (admin-made users): nothing to remember."""
+    """Запам'ятовує хеш GitHub id при бані.
+
+    Called when a ban is issued. No GitHub account (admin-made users): nothing to remember."""
     uid = github_uid(sanction.user)
     if not uid:
         return None
@@ -58,7 +66,9 @@ def remember(sanction):
 
 
 def sync(sanction):
-    """After the end date or the reason of a ban changed, or it was revoked."""
+    """Оновлює хеш після зміни чи зняття бану.
+
+    After the end date or the reason of a ban changed, or it was revoked."""
     if sanction.revoked_at is not None:
         BannedIdentity.objects.filter(sanction=sanction).delete()
     else:
@@ -70,7 +80,9 @@ def _active(now):
 
 
 def find(uid, now=None):
-    """The active ban for this GitHub id, or None. Prunes ended bans first.
+    """Чинний бан для цього GitHub id або None.
+
+    The active ban for this GitHub id, or None. Prunes ended bans first.
 
     The BAN_HASH_KEY hash is tried first; the old SECRET_KEY scheme only when old rows still exist."""
     if not uid:
@@ -89,7 +101,9 @@ def legacy_count(now=None):
 
 
 def rehash(now=None):
-    """Converts active old-scheme rows to BAN_HASH_KEY. Returns (converted, left_over).
+    """Переводить старі хеші на BAN_HASH_KEY.
+
+    Converts active old-scheme rows to BAN_HASH_KEY. Returns (converted, left_over).
 
     Only possible while the banned account still exists (its GitHub id comes from the linked GitHub account); the
     old hash must match first, so a row is never changed on a guess. Left over = account deleted, nothing to do."""

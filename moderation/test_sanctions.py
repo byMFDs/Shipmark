@@ -24,6 +24,7 @@ def admin_datetime(prefix, value):
 
 
 class SanctionStateTests(TestCase):
+    """Стани санкцій."""
     def setUp(self):
         self.ana = make_user("ana")
         self.now = timezone.now()
@@ -76,6 +77,7 @@ class SanctionStateTests(TestCase):
 
 
 class SanctionAdminTests(TestCase):
+    """Санкції в адмінці."""
     def setUp(self):
         self.boss = User.objects.create_superuser("boss", "b@example.com", "pw")
         self.ana = make_user("ana")

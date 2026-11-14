@@ -37,6 +37,7 @@ REASON = "Spam links in every update, against the rules."
 
 
 class ModTestCase(TestCase):
+    """Спільні дані для тестів /mod/."""
     def setUp(self):
         cache.clear()
         self.boss = User.objects.create_superuser("boss", "boss@example.com", "pw")
@@ -66,6 +67,7 @@ class ModTestCase(TestCase):
 # ---------- Access ----------
 
 class AccessTests(ModTestCase):
+    """Хто бачить /mod/."""
     def test_only_moderators_and_superusers_see_mod(self):
         urls = [reverse("moderation:queue"), reverse("moderation:report_detail", args=[self.report.pk]),
                 reverse("moderation:act_project", args=[self.project.pk]), reverse("moderation:act_user", args=["ana"])]
@@ -120,6 +122,7 @@ class AccessTests(ModTestCase):
 # ---------- Decisions ----------
 
 class DecisionTests(ModTestCase):
+    """Рішення модератора."""
     def test_every_decision_needs_a_written_reason(self):
         for data in ({"action": "dismiss", "reason": ""}, {"action": "dismiss", "reason": "no"}):
             response = self.act(data)
@@ -226,6 +229,7 @@ class DecisionTests(ModTestCase):
 # ---------- Guardrails ----------
 
 class GuardrailTests(ModTestCase):
+    """Захищені акаунти й межі прав."""
     def test_moderator_cannot_touch_protected_accounts(self):
         other_mod = make_user("otto")
         badges.grant(other_mod, "moderator")
@@ -328,6 +332,7 @@ class GuardrailTests(ModTestCase):
 # ---------- Mute ----------
 
 class MuteTests(ModTestCase):
+    """Приглушення."""
     def setUp(self):
         super().setUp()
         self.mute = sanctions.issue(self.ana, "mute", REASON, self.mira, length=timedelta(days=2))
@@ -407,6 +412,7 @@ def github_login(user, uid):
 
 
 class BanTests(ModTestCase):
+    """Бани."""
     def setUp(self):
         super().setUp()
         SocialAccount.objects.create(user=self.ana, provider="github", uid="4242", extra_data={"login": "ana"})
@@ -509,7 +515,9 @@ def legacy_hash(uid, secret=None):
 
 
 class BanHashKeyTests(ModTestCase):
-    """The ban hash uses its own key (BAN_HASH_KEY), not SECRET_KEY."""
+    """Хеш бану використовує BAN_HASH_KEY.
+
+    The ban hash uses its own key (BAN_HASH_KEY), not SECRET_KEY."""
 
     def setUp(self):
         super().setUp()
@@ -615,6 +623,7 @@ class BanHashKeyTests(ModTestCase):
 # ---------- The reporter stays anonymous ----------
 
 class ReporterPrivacyTests(ModTestCase):
+    """Автор скарги лишається прихованим."""
     def test_reporter_is_never_shown_to_the_reported_person(self):
         decisions.remove_project(self.project, self.mira, REASON, report=self.report)
         sanctions.issue(self.ana, "mute", REASON, self.mira, length=timedelta(days=1), report=self.report)
@@ -635,6 +644,7 @@ class ReporterPrivacyTests(ModTestCase):
 # ---------- Moderate while browsing, reports on log entries ----------
 
 class BrowseTests(ModTestCase):
+    """«Модерувати» під час перегляду."""
     def test_menu_only_for_moderators_and_never_on_own_things(self):
         act = reverse("moderation:act_project", args=[self.project.pk])
         self.client.force_login(self.mira)
@@ -680,6 +690,7 @@ class BrowseTests(ModTestCase):
 
 
 class NoticeTests(ModTestCase):
+    """Повідомлення про рішення."""
     def test_notice_is_dismissed_only_by_its_owner(self):
         decisions.dismiss(self.report, self.mira, "Nothing against the rules.")
         notice = Notice.objects.get(user=self.bob)

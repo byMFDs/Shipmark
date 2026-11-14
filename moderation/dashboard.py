@@ -1,4 +1,6 @@
-"""Numbers for the admin dashboard and the sidebar badge."""
+"""Числа для головної сторінки адмінки й бічної панелі.
+
+Numbers for the admin dashboard and the sidebar badge."""
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
@@ -20,12 +22,16 @@ def open_reports_badge(request):
 
 
 def public_projects():
-    """Published projects of users who are not suspended: what visitors can see."""
+    """Опубліковані проєкти не призупинених людей.
+
+    Published projects of users who are not suspended: what visitors can see."""
     return visible_owner(Project.objects.filter(status=Project.Status.PUBLISHED))
 
 
 def hallmark_counts():
-    """How many public projects hold each hallmark right now. One pass, no per-project queries."""
+    """Скільки публічних проєктів має кожну марку.
+
+    How many public projects hold each hallmark right now. One pass, no per-project queries."""
     projects = list(with_uptime(
         public_projects().select_related("repo_link").prefetch_related("domain_verifications")
     ))
@@ -37,6 +43,7 @@ def hallmark_counts():
 
 
 def dashboard_callback(request, context):
+    """Дані головної сторінки адмінки: люди, проєкти, марки, скарги."""
     people = get_user_model().objects.exclude(username=SYSTEM_USERNAME)  # the system account is not a person
     week_ago = timezone.now() - timedelta(days=7)
     marks = hallmark_counts()

@@ -1,3 +1,4 @@
+"""Маршрути скарг і /mod/."""
 from django.urls import path
 
 from . import mod_views, views

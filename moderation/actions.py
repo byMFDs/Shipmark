@@ -1,4 +1,6 @@
-"""Moderation decisions, in one place. The admin actions, the admin forms and the tests all use these.
+"""Дії модерації для адмінки: приховати проєкт, призупинити людину, закрити скаргу.
+
+Moderation decisions, in one place. The admin actions, the admin forms and the tests all use these.
 
 Each function changes the state and writes an AuditLog entry (CLAUDE.md section 11). They return True
 when something changed, so a repeated click does not log twice.
@@ -12,6 +14,7 @@ from .models import Report
 
 
 def hide_project(project, actor):
+    """Приховує проєкт і пише в AuditLog."""
     if project.status == Project.Status.HIDDEN:
         return False
     previous = project.status
@@ -22,7 +25,9 @@ def hide_project(project, actor):
 
 
 def unhide_project(project, actor):
-    """Back to published when the project was ever launched, otherwise back to a draft."""
+    """Повертає проєкт у публікацію або в чернетку.
+
+    Back to published when the project was ever launched, otherwise back to a draft."""
     if project.status != Project.Status.HIDDEN:
         return False
     project.status = Project.Status.PUBLISHED if project.launched_at else Project.Status.DRAFT
@@ -32,6 +37,7 @@ def unhide_project(project, actor):
 
 
 def suspend_user(user, actor):
+    """Призупиняє людину й пише в AuditLog."""
     if user.is_suspended:
         return False
     user.is_suspended = True
@@ -41,6 +47,7 @@ def suspend_user(user, actor):
 
 
 def unsuspend_user(user, actor):
+    """Знімає призупинення й пише в AuditLog."""
     if not user.is_suspended:
         return False
     user.is_suspended = False
@@ -50,6 +57,7 @@ def unsuspend_user(user, actor):
 
 
 def resolve_report(report, actor):
+    """Закриває скаргу як вирішену."""
     if not report.is_open:
         return False
     report.status = Report.Status.RESOLVED

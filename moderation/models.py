@@ -1,3 +1,4 @@
+"""Моделі модерації: AuditLog, скарги, санкції, хеші банів, повідомлення."""
 from itertools import combinations
 
 from django.conf import settings
@@ -10,7 +11,9 @@ MAX_DETAILS = 1000
 
 
 class AuditLog(models.Model):
-    """Append-only record of important changes: hallmarks, moderation, account deletion.
+    """Журнал важливих змін, лише дописування.
+
+    Append-only record of important changes: hallmarks, moderation, account deletion.
 
     `target_type` + `target_id` instead of a foreign key, so entries survive when the target is deleted.
     `target_repr` keeps a readable name for the same reason.
@@ -41,7 +44,9 @@ REPORT_TARGETS = ("project", "target_user", "log_entry", "thread", "reply")
 
 
 def _at_most_one_target():
-    """No two target fields are set at once: of every pair, at least one is empty."""
+    """Умова: у скарги не більше однієї цілі.
+
+    No two target fields are set at once: of every pair, at least one is empty."""
     condition = Q()
     for first, second in combinations(REPORT_TARGETS, 2):
         condition &= Q(**{f"{first}__isnull": True}) | Q(**{f"{second}__isnull": True})
@@ -49,7 +54,9 @@ def _at_most_one_target():
 
 
 class Report(models.Model):
-    """A report about a project, a profile, a build-log entry, a community thread or a reply. Handled in /mod/
+    """Скарга на проєкт, профіль, запис журналу, тему чи відповідь.
+
+    A report about a project, a profile, a build-log entry, a community thread or a reply. Handled in /mod/
     and the admin.
 
     The target is one of `project`, `target_user`, `log_entry`, `thread`, `reply` (never two). They are SET_NULL, so the report
@@ -141,7 +148,9 @@ class Report(models.Model):
 
     @property
     def kind(self):
-        """"project", "profile", "entry", "thread" or "reply" ("" when the target is gone)."""
+        """Тип цілі скарги.
+
+        "project", "profile", "entry", "thread" or "reply" ("" when the target is gone)."""
         if self.project_id:
             return "project"
         if self.target_user_id:
@@ -160,8 +169,11 @@ class Report(models.Model):
 
 
 class SanctionQuerySet(models.QuerySet):
+    """Запити до санкцій."""
     def active(self, now=None):
-        """In force right now: started, not expired, not revoked. Evaluated per request; no cron needed."""
+        """Санкції, чинні зараз.
+
+        In force right now: started, not expired, not revoked. Evaluated per request; no cron needed."""
         now = now or timezone.now()
         return self.filter(revoked_at__isnull=True, starts_at__lte=now).filter(
             Q(expires_at__isnull=True) | Q(expires_at__gt=now),
@@ -169,7 +181,9 @@ class SanctionQuerySet(models.QuerySet):
 
 
 class Sanction(models.Model):
-    """A mute or a ban. The reason is shown to the user, with the end date and the appeals contact.
+    """Приглушення або бан з причиною й датою кінця.
+
+    A mute or a ban. The reason is shown to the user, with the end date and the appeals contact.
 
     Mute: can read and use own settings, export and delete; cannot create, edit, publish, log, like,
     follow, report or upload. Ban: cannot sign in; projects hidden from public lists while it lasts.
@@ -223,7 +237,9 @@ class Sanction(models.Model):
                 and (self.expires_at is None or self.expires_at > now))
 
     def state(self, now=None):
-        """"active", "scheduled", "expired" or "revoked" (for lists)."""
+        """Стан санкції для списків.
+
+        "active", "scheduled", "expired" or "revoked" (for lists)."""
         now = now or timezone.now()
         if self.revoked_at is not None:
             return "revoked"
@@ -235,7 +251,9 @@ class Sanction(models.Model):
 
 
 class BannedIdentity(models.Model):
-    """Stops a banned person from deleting the account and signing up again with the same GitHub account.
+    """Хеш GitHub id забаненої людини.
+
+    Stops a banned person from deleting the account and signing up again with the same GitHub account.
 
     Only a keyed hash of the GitHub user id is kept (HMAC-SHA256 with settings.BAN_HASH_KEY, see moderation/bans.py),
     never the id itself, and only until the ban ends: rows past `expires_at` are deleted when bans are checked and by
@@ -266,7 +284,9 @@ class BannedIdentity(models.Model):
 
 
 class Notice(models.Model):
-    """An in-app message about a moderation decision, shown at the top of every page until dismissed.
+    """Повідомлення людині про рішення модератора.
+
+    An in-app message about a moderation decision, shown at the top of every page until dismissed.
 
     Mutes and bans are not notices: they are shown from the Sanction itself (banner, ban page). The reporter
     is never named in a notice.

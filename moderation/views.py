@@ -1,4 +1,6 @@
-"""Report a project, a profile, a build-log entry, a community thread or a reply. Signed-in users who can write; moderators handle them in /mod/."""
+"""Скарги на проєкт, профіль, запис журналу, тему чи відповідь.
+
+Report a project, a profile, a build-log entry, a community thread or a reply. Signed-in users who can write; moderators handle them in /mod/."""
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -29,7 +31,9 @@ REPORT_LIMIT = (5, 3600)
 
 
 def _handle(request, *, target_kwargs, target_owner, target_repr, title, back_url):
-    """Shared by the report views. The target was already checked: it is public and not the reporter's own."""
+    """Спільна обробка форми скарги.
+
+    Shared by the report views. The target was already checked: it is public and not the reporter's own."""
     user = request.user
     form = ReportForm(request.POST or None)
     if request.method == "POST":
@@ -56,6 +60,7 @@ def _handle(request, *, target_kwargs, target_owner, target_repr, title, back_ur
 
 
 def _public_project(username, slug):
+    """Опублікований проєкт видимої людини або 404."""
     # Published, and the owner is not suspended or banned, like every public page: anything else is a 404.
     return get_object_or_404(
         visible_owner(Project.objects.filter(status=Project.Status.PUBLISHED)).select_related("owner"),
@@ -66,6 +71,7 @@ def _public_project(username, slug):
 @login_required
 @require_http_methods(["GET", "POST"])
 def report_project(request, username, slug):
+    """Скарга на проєкт."""
     project = _public_project(username, slug)
     if project.owner_id == request.user.pk:
         messages.error(request, _("You cannot report your own project."))
@@ -79,7 +85,9 @@ def report_project(request, username, slug):
 @login_required
 @require_http_methods(["GET", "POST"])
 def report_user(request, username):
-    """A profile: picture, cover, headline, About, links."""
+    """Скарга на профіль.
+
+    A profile: picture, cover, headline, About, links."""
     person = get_object_or_404(visible_users(User.objects.all()), username__iexact=username)
     back = reverse("accounts:profile", args=[person.username])
     if person.pk == request.user.pk:
@@ -94,6 +102,7 @@ def report_user(request, username):
 @login_required
 @require_http_methods(["GET", "POST"])
 def report_log_entry(request, username, slug, pk):
+    """Скарга на запис журналу збірки."""
     project = _public_project(username, slug)
     entry = get_object_or_404(BuildLogEntry, pk=pk, project=project)
     back = f"{project.get_absolute_url()}#log-{entry.pk}"
@@ -113,6 +122,7 @@ def report_log_entry(request, username, slug, pk):
 @login_required
 @require_http_methods(["GET", "POST"])
 def report_thread(request, pk):
+    """Скарга на тему спільноти."""
     thread = get_object_or_404(Thread.objects.public().select_related("author"), pk=pk)
     back = thread.get_absolute_url()
     if thread.author_id == request.user.pk:
@@ -128,6 +138,7 @@ def report_thread(request, pk):
 @login_required
 @require_http_methods(["GET", "POST"])
 def report_reply(request, pk):
+    """Скарга на відповідь спільноти."""
     reply = get_object_or_404(
         Reply.objects.filter(status=Reply.Status.PUBLISHED, deleted_at__isnull=True, thread__in=Thread.objects.public())
         .select_related("author", "thread"), pk=pk)

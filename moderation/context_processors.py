@@ -1,4 +1,6 @@
-"""`viewer` in every template (not "account": allauth uses that name): the signed-in user's mute, unread notices and moderator state.
+"""Змінна viewer у шаблонах: приглушення, непрочитані повідомлення, відкриті скарги.
+
+`viewer` in every template (not "account": allauth uses that name): the signed-in user's mute, unread notices and moderator state.
 
 Everything is lazy: a page that does not show it runs no query. Mutes come from the same per-request cache
 as the ban check (accounts.roles.active_sanctions).
@@ -11,6 +13,7 @@ from .models import OPEN_STATES, Notice, Report
 
 
 class AccountState:
+    """Стан акаунта переглядача, обчислений ліниво."""
     def __init__(self, user):
         self.user = user
         self.signed_in = bool(user and user.is_authenticated)
@@ -35,7 +38,9 @@ class AccountState:
 
     @cached_property
     def open_reports(self):
-        """Only computed for moderators (the account menu shows it)."""
+        """Кількість відкритих скарг (лише для модераторів).
+
+        Only computed for moderators (the account menu shows it)."""
         if not self.can_moderate:
             return 0
         return Report.objects.filter(status__in=OPEN_STATES).count()

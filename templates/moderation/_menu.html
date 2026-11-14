@@ -1,4 +1,4 @@
-{% load i18n ui %}{# "Moderate" while browsing. Only for moderators, never on their own things. Needs: links = [(url, label)]. #}
+{# Меню «Модерувати» під час перегляду (лише модераторам, не на своєму). #}{% load i18n ui %}{# "Moderate" while browsing. Only for moderators, never on their own things. Needs: links = [(url, label)]. #}
 {% if links %}<details class="mod-menu" data-menu>
   <summary class="btn btn--quiet mod-menu__button">{% translate "Moderate" %}{% icon "chevron-down" %}</summary>
   <ul class="mod-menu__panel">

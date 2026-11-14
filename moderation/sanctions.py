@@ -1,4 +1,6 @@
-"""Issuing and revoking sanctions: the rules and the AuditLog entries are the same in /mod/ and the admin.
+"""Видача й зняття санкцій з однаковими правилами в /mod/ і адмінці.
+
+Issuing and revoking sanctions: the rules and the AuditLog entries are the same in /mod/ and the admin.
 
 Who may act on whom (check_target) and for how long (check_length) is decided here, never in a template.
 """
@@ -16,7 +18,9 @@ from .models import Sanction
 
 
 def check_target(target, actor):
-    """Raises PermissionDenied when `actor` may not act on `target` (sanction, remove, clear).
+    """Чи може модератор діяти щодо цієї людини.
+
+    Raises PermissionDenied when `actor` may not act on `target` (sanction, remove, clear).
 
     Nobody acts on themselves or the system account. A moderator who is not a superuser never acts on a
     superuser, an official account or another moderator.
@@ -36,7 +40,9 @@ def check_target(target, actor):
 
 
 def check_length(kind, length, actor):
-    """`length` is a timedelta, or None for permanent. Raises ValidationError outside the limits."""
+    """Чи тривалість санкції в межах дозволеного.
+
+    `length` is a timedelta, or None for permanent. Raises ValidationError outside the limits."""
     if length is None:
         if not getattr(actor, "is_superuser", False):
             raise ValidationError(_("Only a superuser can issue a permanent sanction."), code="permanent")
@@ -56,7 +62,9 @@ def check_length(kind, length, actor):
 
 
 def issue(user, kind, reason, actor, length=None, report=None, via="mod"):
-    """Checks the rules, creates the sanction, remembers a ban's GitHub hash, logs. Returns the Sanction."""
+    """Видає санкцію, запам'ятовує хеш бану, пише в журнал.
+
+    Checks the rules, creates the sanction, remembers a ban's GitHub hash, logs. Returns the Sanction."""
     check_target(user, actor)
     check_length(kind, length, actor)
     now = timezone.now()
@@ -70,7 +78,9 @@ def issue(user, kind, reason, actor, length=None, report=None, via="mod"):
 
 
 def on_issued(sanction, actor, via="admin"):
-    """Also used by the admin, which saves the row itself."""
+    """Що робиться після видачі санкції (також з адмінки).
+
+    Also used by the admin, which saves the row itself."""
     if sanction.kind == Sanction.Kind.BAN:
         bans.remember(sanction)
     forget_sanctions(sanction.user)
@@ -78,6 +88,7 @@ def on_issued(sanction, actor, via="admin"):
 
 
 def log_issued(sanction, actor, via="admin"):
+    """Пише видачу санкції в AuditLog."""
     audit.log(f"moderation.{sanction.kind}.issued", sanction.user, actor=actor, via=via,
               sanction=sanction.pk, reason=sanction.reason,
               starts_at=sanction.starts_at.isoformat(),
@@ -86,6 +97,7 @@ def log_issued(sanction, actor, via="admin"):
 
 
 def log_changed(sanction, actor, fields, via="admin"):
+    """Пише зміну санкції в AuditLog."""
     bans.sync(sanction)
     forget_sanctions(sanction.user)
     audit.log(f"moderation.{sanction.kind}.changed", sanction.user, actor=actor, via=via,
@@ -94,7 +106,9 @@ def log_changed(sanction, actor, fields, via="admin"):
 
 
 def revoke(sanction, actor, via="admin"):
-    """Superusers only (the admin checks). Returns True when it changed. Revoked sanctions stay as history."""
+    """Знімає санкцію (лише суперкористувач).
+
+    Superusers only (the admin checks). Returns True when it changed. Revoked sanctions stay as history."""
     if sanction.revoked_at is not None:
         return False
     sanction.revoked_at = timezone.now()

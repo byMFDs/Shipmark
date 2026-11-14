@@ -1,4 +1,6 @@
-"""/mod/: the moderation queue, report details and "Moderate" while browsing.
+"""/mod/: черга скарг, деталі скарги й «Модерувати» під час перегляду.
+
+/mod/: the moderation queue, report details and "Moderate" while browsing.
 
 Moderator badge or superuser only (accounts.roles.can_moderate); everyone else gets a 404, so the pages do not
 reveal that they exist. The decisions themselves live in moderation.decisions.
@@ -36,6 +38,7 @@ PAGE_SIZE = 50
 
 
 def moderator_required(view):
+    """Декоратор: 404 для не-модераторів."""
     @wraps(view)
     @login_required
     def wrapper(request, *args, **kwargs):
@@ -63,6 +66,7 @@ KIND_FILTERS = {"project": Q(project__isnull=False), "profile": Q(target_user__i
 @moderator_required
 @require_http_methods(["GET"])
 def queue(request):
+    """Черга скарг з фільтрами."""
     status = request.GET.get("status") if request.GET.get("status") in STATUS_FILTERS else "open"
     kind = request.GET.get("kind") if request.GET.get("kind") in KIND_FILTERS else ""
     reason = request.GET.get("reason") if request.GET.get("reason") in Report.Reason.values else ""
@@ -95,6 +99,7 @@ def queue(request):
 # ---------- Report detail ----------
 
 def _owner_history(owner, exclude_report=None):
+    """Історія людини: санкції, інші скарги, прибрані проєкти."""
     if owner is None:
         return None
     reports = Report.objects.filter(target_owner=owner).select_related("handled_by").order_by("-created_at")
@@ -110,7 +115,9 @@ def _owner_history(owner, exclude_report=None):
 
 
 def _protection(owner, actor):
-    """The message to show when `actor` may not act on `owner`, or ""."""
+    """Чому модератор не може діяти щодо цієї людини, або "".
+
+    The message to show when `actor` may not act on `owner`, or ""."""
     if owner is None:
         return ""
     try:
@@ -121,7 +128,9 @@ def _protection(owner, actor):
 
 
 def _actions_for(kind, has_report, post=None):
-    """Every decision that makes sense for this kind of target in its current state (`post`: thread or reply)."""
+    """Рішення, доречні для цього типу цілі.
+
+    Every decision that makes sense for this kind of target in its current state (`post`: thread or reply)."""
     actions = ["dismiss"] if has_report else []
     if kind == "thread" and post is not None and not post.is_removed:
         actions += [decisions.REMOVE_THREAD,
@@ -134,7 +143,9 @@ def _actions_for(kind, has_report, post=None):
 
 
 def _limit(actions, owner, protected):
-    """Drops what may not be done here. A protected owner (or the moderator's own thread): only dismiss and
+    """Прибирає рішення, які тут недозволені.
+
+    Drops what may not be done here. A protected owner (or the moderator's own thread): only dismiss and
     pin. No owner (deleted account, or the target is gone): only dismiss and decisions about the post itself."""
     if protected:
         return [a for a in actions if a in decisions.ALLOWED_ON_PROTECTED]
@@ -144,7 +155,9 @@ def _limit(actions, owner, protected):
 
 
 def _perform(request, form, *, report, owner, project=None, post=None):
-    """Runs the chosen decision. Returns None when done, or an HttpResponse for a refusal."""
+    """Виконує обране рішення.
+
+    Runs the chosen decision. Returns None when done, or an HttpResponse for a refusal."""
     actor = request.user
     data = form.cleaned_data
     action, reason = data["action"], data["reason"].strip()
@@ -173,7 +186,9 @@ def _perform(request, form, *, report, owner, project=None, post=None):
 
 
 def _target_of(report):
-    """(kind, owner, project, entry, post) for a report; None parts when the target is gone.
+    """Ціль скарги: тип, власник, об'єкт.
+
+    (kind, owner, project, entry, post) for a report; None parts when the target is gone.
     `post` is the community thread or reply."""
     entry = report.log_entry
     project = report.project or (entry.project if entry else None)
@@ -185,6 +200,7 @@ def _target_of(report):
 @moderator_required
 @require_http_methods(["GET", "POST"])
 def report_detail(request, pk):
+    """Сторінка скарги з рішенням."""
     report = get_object_or_404(
         Report.objects.select_related("reporter", "project__owner", "target_user", "log_entry__project__owner",
                                       "target_owner", "handled_by", "thread__author", "thread__board",
@@ -219,7 +235,9 @@ def report_detail(request, pk):
 # ---------- Moderate while browsing ----------
 
 def _linked_report(actor, owner, target_repr, category, **target):
-    """The newest open report about this target, or a new one in the moderator's name (one history)."""
+    """Відкрита скарга на ціль або нова від імені модератора.
+
+    The newest open report about this target, or a new one in the moderator's name (one history)."""
     report = Report.objects.filter(status__in=OPEN_STATES, **target).order_by("-created_at").first()
     if report is None:
         report = Report.objects.create(
@@ -231,6 +249,7 @@ def _linked_report(actor, owner, target_repr, category, **target):
 
 
 def _act(request, *, kind, owner, target_repr, back, project=None, post=None, target):
+    """Спільна сторінка «Модерувати» для будь-якої цілі."""
     protected = _protection(owner, request.user)
     actions = _limit(_actions_for(kind, False, post), owner, protected)
     if not actions:
@@ -276,6 +295,7 @@ def act_user(request, username):
 @moderator_required
 @require_http_methods(["GET", "POST"])
 def act_log_entry(request, pk):
+    """«Модерувати» запис журналу збірки."""
     entry = get_object_or_404(BuildLogEntry.objects.select_related("project__owner"), pk=pk,
                               project__in=_public_project_qs())
     project = entry.project
@@ -306,6 +326,7 @@ def act_reply(request, pk):
 @login_required
 @require_POST
 def dismiss_notice(request, pk):
+    """Ховає своє повідомлення про рішення."""
     notice = get_object_or_404(Notice, pk=pk, user=request.user)  # someone else's: 404
     if notice.dismissed_at is None:
         notice.dismissed_at = timezone.now()

@@ -1,3 +1,4 @@
+"""Форми модерації: скарга і рішення модератора."""
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -8,6 +9,7 @@ from .models import MAX_DETAILS, Report
 
 
 class ReportForm(StyledFormMixin, forms.Form):
+    """Форма скарги."""
     reason = forms.ChoiceField(
         label=_("Reason"),
         choices=[("", _("Choose a reason")), *Report.Reason.choices],
@@ -22,6 +24,7 @@ class ReportForm(StyledFormMixin, forms.Form):
     )
 
     def clean(self):
+        """Причина «інше» вимагає пояснення."""
         data = super().clean()
         # "Something else" is useless without words.
         if data.get("reason") == Report.Reason.OTHER and not (data.get("details") or "").strip():
@@ -45,7 +48,9 @@ ACTION_LABELS = {
 
 
 class ActionForm(StyledFormMixin, forms.Form):
-    """One form for every moderator decision. The reason is required: the affected person sees it.
+    """Одна форма для кожного рішення модератора; причина обов'язкова.
+
+    One form for every moderator decision. The reason is required: the affected person sees it.
 
     Limits (settings.MODERATION_MAX_*) and the superuser-only permanent option are checked here and again in
     moderation.sanctions, so a forged POST cannot get around them.
@@ -89,6 +94,7 @@ class ActionForm(StyledFormMixin, forms.Form):
             del self.fields["permanent"]  # a moderator never sees it, and a posted value is ignored
 
     def clean(self):
+        """Перевіряє тривалість приглушення чи бану."""
         from datetime import timedelta
 
         from .sanctions import check_length

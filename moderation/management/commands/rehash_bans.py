@@ -1,4 +1,6 @@
-"""python manage.py rehash_bans: move ban hashes made with the old SECRET_KEY scheme to BAN_HASH_KEY.
+"""Команда rehash_bans: переводить хеші банів на BAN_HASH_KEY.
+
+python manage.py rehash_bans: move ban hashes made with the old SECRET_KEY scheme to BAN_HASH_KEY.
 
 Run once after deploying BAN_HASH_KEY (safe to repeat). Only bans whose account still exists can be converted: the
 GitHub id is not stored anywhere else. The rest keep matching through the old scheme until they expire; the old scheme
@@ -10,6 +12,7 @@ from moderation import bans
 
 
 class Command(BaseCommand):
+    """Команда rehash_bans."""
     help = "Rehash active ban hashes with BAN_HASH_KEY."
 
     def handle(self, *args, **options):

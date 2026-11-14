@@ -1,3 +1,4 @@
+"""Адмінка модерації: скарги, санкції, повідомлення, журнал, хеші банів."""
 from django import forms
 from django.contrib import admin, messages
 from django.core.exceptions import PermissionDenied, ValidationError
@@ -16,6 +17,7 @@ from .models import AuditLog, BannedIdentity, Notice, Report, Sanction
 
 @admin.register(Report)
 class ReportAdmin(AuditedModelAdmin):
+    """Скарги в адмінці."""
     list_display = ("target_repr", "kind", "reason", "status", "reporter", "created_at", "handled_by")
     list_filter = ("status", "reason", "created_at")
     search_fields = ("target_repr", "details", "reporter__username")
@@ -36,6 +38,7 @@ class ReportAdmin(AuditedModelAdmin):
 
     @admin.display(description=_("Target"))
     def target_link(self, obj):
+        """Посилання на предмет скарги в адмінці."""
         if obj.project_id:
             url = reverse("admin:projects_project_change", args=[obj.project_id])
         elif obj.log_entry_id:
@@ -48,6 +51,7 @@ class ReportAdmin(AuditedModelAdmin):
 
     @action(description=_("Resolve selected reports"), permissions=["change"])
     def resolve(self, request, queryset):
+        """Дія адмінки: закрити вибрані скарги."""
         done = sum(actions.resolve_report(r, request.user) for r in queryset)
         message = ngettext("Resolved %(count)s report.",
                            "Resolved %(count)s reports.", done)
@@ -56,7 +60,9 @@ class ReportAdmin(AuditedModelAdmin):
 
 @admin.register(AuditLog)
 class AuditLogAdmin(ReadOnlyModelAdmin):
-    """Append-only: nobody edits or deletes history, not even in the admin."""
+    """Журнал змін лише для читання.
+
+    Append-only: nobody edits or deletes history, not even in the admin."""
 
     list_display = ("created_at", "action", "target_repr", "actor")
     list_filter = ("action", "created_at")
@@ -69,7 +75,9 @@ class AuditLogAdmin(ReadOnlyModelAdmin):
 
 
 class SanctionForm(forms.ModelForm):
-    """Admin form. `actor` is set by SanctionAdmin.get_form; the target rules live in moderation.sanctions."""
+    """Форма санкції в адмінці з перевіркою правил.
+
+    Admin form. `actor` is set by SanctionAdmin.get_form; the target rules live in moderation.sanctions."""
 
     actor = None
 
@@ -78,6 +86,7 @@ class SanctionForm(forms.ModelForm):
         fields = ("user", "kind", "reason", "starts_at", "expires_at", "report")
 
     def clean(self):
+        """Перевіряє, чи можна накласти санкцію на цю людину."""
         data = super().clean()
         user = data.get("user") or getattr(self.instance, "user", None)
         if user is not None and not self.instance.pk:
@@ -92,6 +101,7 @@ class SanctionForm(forms.ModelForm):
 
 
 class SanctionStateFilter(admin.SimpleListFilter):
+    """Фільтр санкцій за станом."""
     title = _("state")
     parameter_name = "state"
 
@@ -100,6 +110,7 @@ class SanctionStateFilter(admin.SimpleListFilter):
                 ("revoked", _("Revoked"))]
 
     def queryset(self, request, queryset):
+        """Санкції в обраному стані."""
         now = timezone.now()
         value = self.value()
         if value == "active":
@@ -115,7 +126,9 @@ class SanctionStateFilter(admin.SimpleListFilter):
 
 @admin.register(Sanction)
 class SanctionAdmin(ModelAdmin):
-    """Superusers issue, change and revoke here (any length, also permanent). Other staff only look.
+    """Санкції в адмінці: видає й знімає суперкористувач.
+
+    Superusers issue, change and revoke here (any length, also permanent). Other staff only look.
     Sanctions are never deleted, only revoked, so the history stays."""
 
     form = SanctionForm
@@ -160,6 +173,7 @@ class SanctionAdmin(ModelAdmin):
                 "revoked": _("Revoked")}[obj.state()]
 
     def save_model(self, request, obj, form, change):
+        """Зберігає санкцію, хеш бану й запис в AuditLog."""
         if not change:
             obj.issued_by = request.user
         super().save_model(request, obj, form, change)
@@ -171,6 +185,7 @@ class SanctionAdmin(ModelAdmin):
 
     @action(description=_("Revoke selected sanctions"), permissions=["change"])
     def revoke(self, request, queryset):
+        """Дія адмінки: зняти вибрані санкції."""
         done = sum(sanctions.revoke(s, request.user) for s in queryset.select_related("user"))
         message = ngettext("Revoked %(count)s sanction.",
                            "Revoked %(count)s sanctions.", done)
@@ -179,7 +194,9 @@ class SanctionAdmin(ModelAdmin):
 
 @admin.register(Notice)
 class NoticeAdmin(ReadOnlyModelAdmin):
-    """What affected people were told. Written by moderation.decisions only."""
+    """Повідомлення людям про рішення (лише читання).
+
+    What affected people were told. Written by moderation.decisions only."""
 
     list_display = ("created_at", "user", "kind", "target_repr", "dismissed_at")
     list_filter = ("kind", "created_at")
@@ -192,7 +209,9 @@ class NoticeAdmin(ReadOnlyModelAdmin):
 
 @admin.register(BannedIdentity)
 class BannedIdentityAdmin(ReadOnlyModelAdmin):
-    """Salted hashes of banned GitHub ids (never the id). Deleted when the ban ends or is revoked."""
+    """Солені хеші забанених GitHub id (лише читання).
+
+    Salted hashes of banned GitHub ids (never the id). Deleted when the ban ends or is revoked."""
 
     list_display = ("created_at", "__str__", "hash_scheme", "expires_at", "sanction")
     list_filter = ("hash_scheme",)

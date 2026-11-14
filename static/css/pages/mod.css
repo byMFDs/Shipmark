@@ -1,3 +1,4 @@
+/* Стилі /mod/, сторінок скарг і бану. */
 /* /mod/: queue, report detail, moderate while browsing. One column on phones; main + history from 64em. */
 
 .mod { display: grid; gap: var(--s-5); }

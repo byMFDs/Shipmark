@@ -21,6 +21,7 @@ from .views import REPORT_LIMIT
 
 
 class ModerationTestCase(TestCase):
+    """Спільні дані для тестів модерації."""
     def setUp(self):
         cache.clear()
         self.boss = User.objects.create_superuser("boss", "boss@example.com", "pw")
@@ -32,6 +33,7 @@ class ModerationTestCase(TestCase):
 # ---------- Access ----------
 
 class AdminAccessTests(ModerationTestCase):
+    """Доступ до адмінки."""
     def test_anonymous_is_sent_to_the_admin_login(self):
         for url in (reverse("admin:index"), reverse("admin:accounts_user_changelist"),
                     reverse("admin:moderation_report_changelist")):
@@ -113,6 +115,7 @@ class AdminAccessTests(ModerationTestCase):
 
 
 class AdminUrlTests(TestCase):
+    """Адреса адмінки з ADMIN_URL."""
     def test_admin_lives_at_the_configured_address(self):
         self.assertEqual(reverse("admin:index"), "/" + settings.ADMIN_URL)
 
@@ -142,6 +145,7 @@ class AdminUrlTests(TestCase):
 # ---------- Suspend hides content ----------
 
 class SuspendTests(ModerationTestCase):
+    """Призупинення."""
     def setUp(self):
         super().setUp()
         self.public_urls = [
@@ -214,6 +218,7 @@ class SuspendTests(ModerationTestCase):
 # ---------- Actions are logged ----------
 
 class AuditTests(ModerationTestCase):
+    """Записи в AuditLog."""
     def logged(self, action):
         return AuditLog.objects.filter(action=action, actor=self.boss)
 
@@ -317,6 +322,7 @@ class AuditTests(ModerationTestCase):
 # ---------- Reporting ----------
 
 class ReportTests(ModerationTestCase):
+    """Скарги."""
     def project_url(self, project=None):
         project = project or self.project
         return reverse("moderation:report_project", args=[project.owner.username, project.slug])

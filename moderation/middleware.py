@@ -1,4 +1,6 @@
-"""A ban ends the session at the next request and shows the ban page (reason, end date, contact).
+"""Бан завершує сесію на наступному запиті й показує сторінку бану.
+
+A ban ends the session at the next request and shows the ban page (reason, end date, contact).
 
 Expiry is evaluated here, per request; there is no cron. The query result is cached on the user object, so
 templates and views asking about mutes later in the same request add no query.
@@ -12,6 +14,7 @@ from .pages import ban_response
 
 
 class BanMiddleware:
+    """Розлогінює забанену людину й показує причину бану."""
     def __init__(self, get_response):
         self.get_response = get_response
 

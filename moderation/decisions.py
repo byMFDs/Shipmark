@@ -1,4 +1,6 @@
-"""Moderator decisions from /mod/: dismiss, remove a project, clear profile fields, mute, ban, and for community
+"""Рішення модератора з /mod/: відхилити, прибрати, очистити, приглушити, забанити.
+
+Moderator decisions from /mod/: dismiss, remove a project, clear profile fields, mute, ban, and for community
 threads and replies: remove, lock, pin.
 
 Every decision needs a reason that the affected person sees (notice, banner or ban page), checks who may act
@@ -31,6 +33,7 @@ def notify(user, kind, target_repr, reason=""):
 
 
 def _close(report, actor, status, note):
+    """Закриває скаргу з потрібним статусом."""
     report.status = status
     report.resolution_note = note
     report.handled_by = actor
@@ -41,7 +44,9 @@ def _close(report, actor, status, note):
 
 
 def _close_open_reports(report, actor, note, **target):
-    """The linked report, and every other open report about the same thing, are resolved together."""
+    """Закриває скаргу й інші відкриті скарги на те саме.
+
+    The linked report, and every other open report about the same thing, are resolved together."""
     if report is not None and report.is_open:
         _close(report, actor, Report.Status.RESOLVED, note)
         notify(report.reporter, Notice.Kind.REPORT_ACTIONED, report.target_repr)
@@ -52,6 +57,7 @@ def _close_open_reports(report, actor, note, **target):
 
 
 def dismiss(report, actor, reason):
+    """Відхиляє скаргу й повідомляє автора скарги."""
     if not report.is_open:
         return False
     with transaction.atomic():
@@ -61,6 +67,7 @@ def dismiss(report, actor, reason):
 
 
 def remove_project(project, actor, reason, report=None):
+    """Прибирає проєкт і повідомляє власника."""
     sanctions.check_target(project.owner, actor)
     if project.status == Project.Status.REMOVED:
         return False
@@ -79,7 +86,9 @@ def remove_project(project, actor, reason, report=None):
 
 
 def restore_project(project, actor):
-    """Superuser only: back to published when it was ever launched, otherwise to a draft."""
+    """Повертає прибраний проєкт (лише суперкористувач).
+
+    Superuser only: back to published when it was ever launched, otherwise to a draft."""
     if not actor.is_superuser:
         raise PermissionDenied
     if project.status != Project.Status.REMOVED:
@@ -92,7 +101,9 @@ def restore_project(project, actor):
 
 
 def purge_project(project, actor):
-    """Superuser only, removed projects only: deletes the project and its files for good."""
+    """Остаточно видаляє прибраний проєкт (лише суперкористувач).
+
+    Superuser only, removed projects only: deletes the project and its files for good."""
     if not actor.is_superuser:
         raise PermissionDenied
     if project.status != Project.Status.REMOVED:
@@ -104,7 +115,9 @@ def purge_project(project, actor):
 
 
 def clear_profile(person, fields, actor, reason, report=None):
-    """`fields`: some of "avatar" (picture and cover), "bio" (headline and About) and "links" (all links).
+    """Очищає вибрані поля профілю й повідомляє людину.
+
+    `fields`: some of "avatar" (picture and cover), "bio" (headline and About) and "links" (all links).
     Returns the list of fields that were not empty. Picture files are deleted from disk."""
     from accounts import avatars
 
@@ -138,7 +151,9 @@ def _field_label(field):
 
 
 def sanction(person, kind, actor, reason, length, report=None):
-    """Mute or ban. `length` is a timedelta or None (permanent, superusers only)."""
+    """Приглушення чи бан з повідомленням людині.
+
+    Mute or ban. `length` is a timedelta or None (permanent, superusers only)."""
     with transaction.atomic():
         issued = sanctions.issue(person, kind, reason, actor, length=length, report=report, via="mod")
         _close_open_reports(report, actor, reason)
@@ -159,7 +174,9 @@ ALLOWED_ON_PROTECTED = (DISMISS, PIN_THREAD, UNPIN_THREAD)
 
 
 def _check_author(author, actor):
-    """Remove and lock follow the protected-accounts rule. A deleted account (None) protects nobody."""
+    """Правило захищених акаунтів для дописів спільноти.
+
+    Remove and lock follow the protected-accounts rule. A deleted account (None) protects nobody."""
     if author is None:
         if not can_moderate(actor):
             raise PermissionDenied(_("You cannot moderate."))
@@ -168,13 +185,17 @@ def _check_author(author, actor):
 
 
 def reply_repr(reply):
-    """A short readable name for reports, notices and the audit log."""
+    """Коротка назва відповіді для скарг і журналу.
+
+    A short readable name for reports, notices and the audit log."""
     text = " ".join(reply.body.split())[:80] or reply.sticker_label or "…"
     return f"{reply.thread.title} · {text}"[:200]
 
 
 def remove_thread(thread, actor, reason, report=None):
-    """Hidden from everyone but the author and moderators. The text stays for an appeal or a restore; the
+    """Прибирає тему від усіх, крім автора й модераторів.
+
+    Hidden from everyone but the author and moderators. The text stays for an appeal or a restore; the
     image files are deleted now (a removed picture must not stay reachable by its address)."""
     _check_author(thread.author, actor)
     if thread.status == Thread.Status.REMOVED:
@@ -195,6 +216,7 @@ def remove_thread(thread, actor, reason, report=None):
 
 
 def remove_reply(reply, actor, reason, report=None):
+    """Прибирає відповідь і повідомляє автора."""
     _check_author(reply.author, actor)
     if reply.status == Reply.Status.REMOVED:
         return False
@@ -217,7 +239,9 @@ def remove_reply(reply, actor, reason, report=None):
 
 
 def lock_thread(thread, actor, reason, report=None):
-    """Readable, but only moderators can reply."""
+    """Закриває тему: відповідати можуть лише модератори.
+
+    Readable, but only moderators can reply."""
     _check_author(thread.author, actor)
     if thread.status != Thread.Status.PUBLISHED:
         return False
@@ -232,6 +256,7 @@ def lock_thread(thread, actor, reason, report=None):
 
 
 def unlock_thread(thread, actor, reason, report=None):
+    """Відкриває тему знову."""
     _check_author(thread.author, actor)
     if thread.status != Thread.Status.LOCKED:
         return False
@@ -245,6 +270,7 @@ def unlock_thread(thread, actor, reason, report=None):
 
 
 def _set_pinned(thread, actor, reason, report, pinned):
+    """Закріплює або відкріплює тему."""
     if not can_moderate(actor):
         raise PermissionDenied(_("You cannot moderate."))
     if thread.pinned == pinned or thread.status == Thread.Status.REMOVED:
@@ -269,7 +295,9 @@ def unpin_thread(thread, actor, reason, report=None):
 
 
 def restore_thread(thread, actor):
-    """Superuser only. The text comes back; the images were deleted at removal and do not."""
+    """Повертає прибрану тему (лише суперкористувач).
+
+    Superuser only. The text comes back; the images were deleted at removal and do not."""
     if not actor.is_superuser:
         raise PermissionDenied
     if thread.status != Thread.Status.REMOVED:
@@ -282,6 +310,7 @@ def restore_thread(thread, actor):
 
 
 def restore_reply(reply, actor):
+    """Повертає прибрану відповідь (лише суперкористувач)."""
     if not actor.is_superuser:
         raise PermissionDenied
     if reply.status != Reply.Status.REMOVED:

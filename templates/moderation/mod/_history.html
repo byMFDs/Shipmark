@@ -1,4 +1,4 @@
-{% load i18n %}{# The reported person's history: join date, sanctions, other reports, removed projects. Moderators only. #}
+{# Історія людини, на яку скаржаться (лише модераторам). #}{% load i18n %}{# The reported person's history: join date, sanctions, other reports, removed projects. Moderators only. #}
 {% if history %}
 <section class="record" aria-labelledby="history-title">
   <div class="record__head"><h2 class="label" id="history-title">{% blocktranslate with name=history.person.username %}History of @{{ name }}{% endblocktranslate %}</h2></div>
