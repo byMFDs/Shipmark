@@ -1,7 +1,7 @@
 """Перевіряє, що зміни після BASE — лише коментарі: код, шаблони, JS і CSS без коментарів лишились ідентичні.
 
 Python: AST кожного файлу без docstring-ів має збігатися з BASE. Шаблони: без {# ... #}. JS: без рядків-коментарів //.
-CSS: без /* ... */. Використання: `python scripts/check_comment_only.py [BASE]` (типово HEAD, порівнює робоче дерево).
+CSS: без /* ... */ і порожніх рядків. Використання: `python scripts/check_comment_only.py [BASE]` (типово HEAD, порівнює робоче дерево).
 Код виходу 1, якщо змінилося щось, крім коментарів.
 """
 import ast
@@ -33,7 +33,8 @@ def normalise(path, text):
     if path.endswith(".js"):
         return "\n".join(line for line in text.splitlines() if not line.lstrip().startswith("//"))
     if path.endswith(".css"):
-        return re.sub(r"/\*.*?\*/", "", text, flags=re.S)
+        stripped = re.sub(r"/\*.*?\*/", "", text, flags=re.S)
+        return "\n".join(line for line in stripped.splitlines() if line.strip())  # blank lines mean nothing in CSS
     return None
 
 
