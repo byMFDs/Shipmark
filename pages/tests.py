@@ -21,6 +21,7 @@ EXTERNAL_CSS = re.compile(r"url\(\s*[\"']?(?:https?:)?//|@import", re.IGNORECASE
 
 
 class LandingTests(TestCase):
+    """Лендинг."""
     def test_landing_returns_200_and_shows_site_name(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
@@ -39,6 +40,7 @@ class LandingTests(TestCase):
 
 
 class StyleguideTests(TestCase):
+    """Styleguide лише в розробці."""
     def test_hidden_when_debug_is_off(self):
         self.assertEqual(self.client.get("/styleguide/").status_code, 404)
 
@@ -48,7 +50,9 @@ class StyleguideTests(TestCase):
 
 
 class NoExternalResourcesTests(TestCase):
-    """No third-party requests: fonts, styles, scripts and images are all self-hosted."""
+    """Жодних сторонніх ресурсів.
+
+    No third-party requests: fonts, styles, scripts and images are all self-hosted."""
 
     @override_settings(DEBUG=True)
     def test_pages_load_nothing_from_other_sites(self):
@@ -69,6 +73,7 @@ class NoExternalResourcesTests(TestCase):
 
 
 class HallmarkTagTests(SimpleTestCase):
+    """Тег марки."""
     def render(self, snippet):
         return Template("{% load ui %}" + snippet).render(Context())
 
@@ -97,6 +102,7 @@ class HallmarkTagTests(SimpleTestCase):
 
 
 class InlineSvgTests(SimpleTestCase):
+    """Вставка SVG."""
     def test_strips_comments_and_marks_decorative(self):
         html = Template('{% load ui %}{% icon "github" %}').render(Context())
         self.assertTrue(html.startswith("<svg"))
@@ -111,7 +117,9 @@ class InlineSvgTests(SimpleTestCase):
 
 
 class LanguageDetectionTests(TestCase):
-    """CLAUDE.md section 8: saved preference, then cookie, then Accept-Language, then English."""
+    """Порядок вибору мови.
+
+    CLAUDE.md section 8: saved preference, then cookie, then Accept-Language, then English."""
 
     # /explore/: the same page for everyone (signed-in visitors of / are redirected to the feed).
     UK_TEXT = "Показати проєкти"
@@ -175,6 +183,7 @@ class LanguageDetectionTests(TestCase):
 
 
 class ContentPageTests(TestCase):
+    """Контентні сторінки."""
     def test_about_in_each_language(self):
         self.assertContains(self.client.get("/about/"), "<h1>About Shipmark</h1>")
         uk = self.client.get("/about/", headers={"Accept-Language": "uk"})

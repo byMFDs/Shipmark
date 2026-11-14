@@ -1,4 +1,6 @@
-"""Explore: search, filters and sorting. Everything comes from GET parameters, so a URL is a shareable view.
+"""Discover → Projects: пошук, фільтри, сортування з параметрів адреси.
+
+Explore: search, filters and sorting. Everything comes from GET parameters, so a URL is a shareable view.
 
 Hallmarks are never stored (CLAUDE.md section 2), so the hallmark filter and the "Most proven"
 sort use compute_hallmarks() itself instead of a second copy of the rules in SQL:
@@ -29,7 +31,9 @@ HALLMARK_CHOICES = [("", _("Any")), ("authored", _("Repo owner")), ("live", _("D
 
 
 class ExploreForm(forms.Form):
-    """Validates the query string. An invalid value is ignored (as if it were not given), never an error page."""
+    """Перевіряє параметри Discover; погане значення ігнорується.
+
+    Validates the query string. An invalid value is ignored (as if it were not given), never an error page."""
 
     q = forms.CharField(required=False, max_length=100, strip=True)
     tag = forms.CharField(required=False, max_length=40)
@@ -39,6 +43,7 @@ class ExploreForm(forms.Form):
     page = forms.IntegerField(required=False, min_value=1, max_value=MAX_PAGE)
 
     def values(self):
+        """Очищені параметри Discover."""
         self.is_valid()
         data = self.cleaned_data
         return {
@@ -52,7 +57,9 @@ class ExploreForm(forms.Form):
 
 
 def tag_options(selected=""):
-    """Most used tags among visible projects, plus the selected one if it is not among them."""
+    """Найуживаніші теги видимих проєктів плюс вибраний.
+
+    Most used tags among visible projects, plus the selected one if it is not among them."""
     visible = Q(projects__status="published", projects__owner__is_suspended=False)
     tags = list(Tag.objects.filter(visible).annotate(n=Count("projects")).order_by("-n", "name")[:TAG_OPTIONS])
     if selected and selected not in {t.slug for t in tags}:
@@ -61,7 +68,9 @@ def tag_options(selected=""):
 
 
 def _may_have(queryset, kind, now):
-    """A cheap superset of the projects that can hold `kind`. The exact check is compute_hallmarks()."""
+    """Дешевий попередній відбір проєктів, які можуть мати марку.
+
+    A cheap superset of the projects that can hold `kind`. The exact check is compute_hallmarks()."""
     if kind == "authored":
         return queryset.exclude(repo_full_name="").filter(repo_link__isnull=False)
     verified = DomainVerification.objects.filter(
@@ -76,7 +85,9 @@ def _event_time(project):
 
 
 def explore(params, user, now=None):
-    """Return a dict for the template: projects (one page), total, has_next, and the cleaned params."""
+    """Сторінка результатів Discover для шаблону.
+
+    Return a dict for the template: projects (one page), total, has_next, and the cleaned params."""
     now = now or timezone.now()
     queryset = published_projects()
     if params["q"]:

@@ -1,4 +1,6 @@
-"""UI template tags: inline SVG, icons, avatars, hallmarks, site header and footer.
+"""Теги шаблонів інтерфейсу: SVG, іконки, аватарки, марки, хедер і футер.
+
+UI template tags: inline SVG, icons, avatars, hallmarks, site header and footer.
 
 Load with {% load ui %}.
 """
@@ -36,6 +38,7 @@ _ROOT_ATTRS = re.compile(r'\s(?:role|aria-label|aria-hidden|class)="[^"]*"')
 
 
 def _read_svg(path):
+    """Читає статичний SVG без зайвого."""
     full_path = finders.find(path)
     if not full_path:
         raise ValueError(f"Static SVG not found: {path}")
@@ -48,7 +51,9 @@ _read_svg_cached = lru_cache(maxsize=128)(_read_svg)
 
 @register.simple_tag
 def inline_svg(path, css_class="", label=""):
-    """Paste a static SVG file into the page so CSS can color it (e.g. the logo in the header).
+    """Вставляє SVG у сторінку, щоб CSS міг його фарбувати.
+
+    Paste a static SVG file into the page so CSS can color it (e.g. the logo in the header).
 
     Paths come from templates and branding.py only, never from users.
     """
@@ -66,7 +71,9 @@ def inline_svg(path, css_class="", label=""):
 
 @register.simple_tag
 def icon(name, css_class="", label=""):
-    """An icon from static/icons/<name>.svg. Decorative unless a label is given."""
+    """Іконка з static/icons; декоративна, якщо немає підпису.
+
+    An icon from static/icons/<name>.svg. Decorative unless a label is given."""
     return inline_svg(f"icons/{name}.svg", f"icon {css_class}".strip(), label)
 
 
@@ -75,7 +82,9 @@ BADGE_SIZES = ("s", "m", "l")
 
 @register.inclusion_tag("includes/user_marks.html")
 def user_marks(person, size="m"):
-    """Badges after a name: {% user_marks project.owner %} (size "s" in dense lists, "l" next to a big heading).
+    """Бейджі після імені людини.
+
+    Badges after a name: {% user_marks project.owner %} (size "s" in dense lists, "l" next to a big heading).
     One component for official and moderator marks: a button with a tooltip that opens the shared panel
     (includes/badge_popover.html, badges.js) with the real date the badge was granted. On lists prefetch
     "owner__badges" (no N+1)."""
@@ -95,13 +104,17 @@ def user_marks(person, size="m"):
 
 @register.inclusion_tag("includes/badge_popover.html", takes_context=True)
 def badge_popover(context):
-    """The one panel the badges open, once per page (base.html)."""
+    """Спільна панель бейджів, одна на сторінку.
+
+    The one panel the badges open, once per page (base.html)."""
     return {"brand": context.get("brand"), "how_url": _url("pages:how_proof_works")}
 
 
 @register.inclusion_tag("moderation/_menu.html", takes_context=True)
 def moderate_menu(context, project=None, person=None, entry=None, thread=None, reply=None):
-    """The "Moderate" menu on project pages, profiles, feed cards, log entries, community threads and replies.
+    """Меню «Модерувати» на сторінках і картках.
+
+    The "Moderate" menu on project pages, profiles, feed cards, log entries, community threads and replies.
     Moderators only, never on their own things (except pinning their own thread). The /mod/ views check
     everything again."""
     viewer, user = context.get("viewer"), context.get("user")
@@ -129,7 +142,9 @@ def moderate_menu(context, project=None, person=None, entry=None, thread=None, r
 
 @register.filter
 def ago(value):
-    """ "3 days ago", "just now": one unit only, localized. For <time> elements with the exact date nearby."""
+    """«3 дні тому»: відносний час однією одиницею.
+
+     "3 days ago", "just now": one unit only, localized. For <time> elements with the exact date nearby."""
     if not value:
         return ""
     now = timezone.now()
@@ -148,7 +163,9 @@ def initials(name):
 
 @register.simple_tag
 def avatar(name, size=32, src=""):
-    """A round avatar. Without `src` it shows initials.
+    """Кругла аватарка або ініціали.
+
+    A round avatar. Without `src` it shows initials.
 
     `src` must be a local URL: remote images would send visitors' IPs to another site.
     """
@@ -166,7 +183,9 @@ def avatar(name, size=32, src=""):
 
 @register.simple_tag
 def user_avatar(user, size=32, name=""):
-    """A person's avatar: their stored picture (a file on our disk), else initials of their name.
+    """Аватарка людини або її ініціали.
+
+    A person's avatar: their stored picture (a file on our disk), else initials of their name.
     `name` is only for pages that have no User object (the styleguide)."""
     label = name or (user.display_name or user.username if user is not None and not isinstance(user, dict) else "")
     picture = getattr(user, "avatar", None)
@@ -180,7 +199,9 @@ def user_avatar(user, size=32, name=""):
 
 @register.filter
 def log_html(text):
-    """Build-log text as sanitized inline HTML (bold, italic, links, code): the same renderer as the project page."""
+    """Текст журналу збірки як безпечний HTML.
+
+    Build-log text as sanitized inline HTML (bold, italic, links, code): the same renderer as the project page."""
     from projects.rendering import render_log_markdown
 
     return mark_safe(render_log_markdown(text))  # nh3-cleaned inside render_log_markdown
@@ -188,7 +209,9 @@ def log_html(text):
 
 @register.filter
 def link_icon(kind):
-    """Icon name for a profile link kind."""
+    """Іконка для типу посилання профілю.
+
+    Icon name for a profile link kind."""
     from accounts.links import ICONS
 
     return ICONS.get(kind, "link")
@@ -235,7 +258,9 @@ def _toward(x, y, tx, ty, dist):
 
 
 def _cartouche(w, h, cut, soft, inset=0.0):
-    """Rectangle with cut corners; every joint softened by a short curve."""
+    """Контур марки з підрізаними кутами.
+
+    Rectangle with cut corners; every joint softened by a short curve."""
     a, b = inset, inset
     w, h = w - 2 * inset, h - 2 * inset
     pts = [(cut, 0), (w - cut, 0), (w, cut), (w, h - cut), (w - cut, h), (cut, h), (0, h - cut), (0, cut)]
@@ -257,7 +282,9 @@ def _rect(x0, y0, x1, y1):
 
 
 def _glyph(kind, cx, cy, g, sw):
-    """Glyph as filled outlines, so it can be cut out of the ink with fill-rule evenodd."""
+    """Знак марки як заливка для вирізання.
+
+    Glyph as filled outlines, so it can be cut out of the ink with fill-rule evenodd."""
     u, hs = g / 12, sw / 2
     if kind == "authored":  # commit node: a ring on a line
         r = 2.5 * u
@@ -275,6 +302,7 @@ def _glyph(kind, cx, cy, g, sw):
 
 @lru_cache(maxsize=16)
 def hallmark_geometry(kind, size):
+    """Геометрія марки заданого розміру."""
     h = HALLMARK_HEIGHTS[size]
     w = h * 5 / 4
     cut = h / 5
@@ -295,7 +323,9 @@ def hallmark_geometry(kind, size):
 
 @register.inclusion_tag("includes/hallmark.html")
 def hallmark(kind, size="m", earned=True, fact=""):
-    """{% hallmark "authored" size="l" earned=True fact="Owner of org/repo" %}"""
+    """Марка (зароблена чи «ще ні») з фактом.
+
+    {% hallmark "authored" size="l" earned=True fact="Owner of org/repo" %}"""
     if kind not in HALLMARK_LABELS or size not in HALLMARK_HEIGHTS:
         raise ValueError(f"Unknown hallmark {kind!r} or size {size!r}")
     return {
@@ -309,14 +339,18 @@ def hallmark(kind, size="m", earned=True, fact=""):
 
 @register.simple_tag
 def hallmark_label(kind):
-    """{% hallmark_label "live" %}: the display name of a hallmark, without the chip."""
+    """Назва марки без самої марки.
+
+    {% hallmark_label "live" %}: the display name of a hallmark, without the chip."""
     return HALLMARK_LABELS[kind]
 
 
 # ---------- Site header and footer ----------
 
 def _url(name, *args):
-    """URL for a named route, or "" if the page does not exist yet."""
+    """Адреса маршруту або "", якщо його немає.
+
+    URL for a named route, or "" if the page does not exist yet."""
     try:
         return reverse(name, args=args)
     except NoReverseMatch:
@@ -325,20 +359,26 @@ def _url(name, *args):
 
 @register.simple_tag
 def absolute_url(url):
-    """{% absolute_url cover.image.url %}: full URL on SITE_URL for Open Graph. Already absolute URLs (a CDN) stay."""
+    """Повна адреса на SITE_URL для Open Graph.
+
+    {% absolute_url cover.image.url %}: full URL on SITE_URL for Open Graph. Already absolute URLs (a CDN) stay."""
     return site_absolute_url(url)
 
 
 @register.simple_tag(takes_context=True)
 def canonical_url(context):
-    """{% canonical_url %}: this page on SITE_URL, without the query string (og:url, rel=canonical)."""
+    """Канонічна адреса поточної сторінки.
+
+    {% canonical_url %}: this page on SITE_URL, without the query string (og:url, rel=canonical)."""
     request = context.get("request")
     return site_absolute_url(request.path if request else "/")
 
 
 @register.simple_tag
 def static_v(path):
-    """{% static_v brand.FAVICON %}: a static URL that changes when the file changes.
+    """Статична адреса, що змінюється разом з файлом.
+
+    {% static_v brand.FAVICON %}: a static URL that changes when the file changes.
 
     In production the name is already hashed (favicon.3f2a1c.svg). Without the manifest storage (development,
     tests) "?v=<content hash>" is added, so browsers that keep icons in their own cache fetch the new file.
@@ -356,7 +396,9 @@ def static_v(path):
 
 @register.simple_tag
 def maybe_url(name, *args):
-    """{% maybe_url "pages:legal" "terms" as terms_url %}: the URL, or "" if the page does not exist yet."""
+    """Адреса маршруту або "".
+
+    {% maybe_url "pages:legal" "terms" as terms_url %}: the URL, or "" if the page does not exist yet."""
     return _url(name, *args)
 
 
@@ -379,7 +421,9 @@ DEMO_USER = {"name": "Olena Marchenko", "username": "olena"}
 
 @register.inclusion_tag("includes/site_header.html", takes_context=True)
 def site_header(context, demo="", compact=False):
-    """Header. `demo` ("signed-in" or "signed-out") fills every slot with sample links for the styleguide."""
+    """Хедер сайту (також демо для styleguide).
+
+    Header. `demo` ("signed-in" or "signed-out") fills every slot with sample links for the styleguide."""
     request = context.get("request")
     path = request.path if request else ""
     links = []
@@ -441,7 +485,9 @@ def site_header(context, demo="", compact=False):
 
 @register.inclusion_tag("includes/site_footer.html", takes_context=True)
 def site_footer(context, demo=False, flush=False):
-    """Footer. `flush`: starts right under a dark band, without margin or hairline (landing)."""
+    """Футер сайту.
+
+    Footer. `flush`: starts right under a dark band, without margin or hairline (landing)."""
     request = context.get("request")
     columns = []
     for heading, items in FOOTER_COLUMNS:

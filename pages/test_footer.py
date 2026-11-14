@@ -20,6 +20,7 @@ def columns(html):
 
 
 class FooterTests(TestCase):
+    """Футер."""
     def page(self, url="/explore/"):
         return self.client.get(url).content.decode()
 

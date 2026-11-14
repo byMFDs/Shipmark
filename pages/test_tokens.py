@@ -30,6 +30,7 @@ THEMES = {"light": LIGHT, "dark": DARK}
 
 
 class TokenTests(SimpleTestCase):
+    """Контраст кольорових токенів (WCAG AA)."""
     def test_the_two_dark_blocks_are_the_same(self):
         self.assertEqual(DARK, tokens(os_dark()))
 

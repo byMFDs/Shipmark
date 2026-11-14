@@ -17,6 +17,7 @@ def read(path, mode="r"):
 
 
 class BrandFilesTests(SimpleTestCase):
+    """Файли бренду на місці й узгоджені."""
     def test_every_svg_uses_logo_c(self):
         self.assertEqual(mark_path(), LOGO_C)
         for path in (branding.LOGO, branding.LOGO_MARK, branding.LOGO_DARK, branding.LOGO_MARK_DARK, branding.FAVICON):
@@ -34,6 +35,7 @@ class BrandFilesTests(SimpleTestCase):
 
 
 class IconLinksTests(TestCase):
+    """Посилання на іконки в head."""
     def test_pages_link_icons_with_a_content_version(self):
         html = self.client.get("/").content.decode()
         for path in (branding.FAVICON, branding.FAVICON_ICO, branding.APPLE_TOUCH_ICON):

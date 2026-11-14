@@ -1,4 +1,4 @@
-{% load i18n ui %}{% comment %}One-click GitHub sign-in (a CSRF-protected POST). Falls back to the sign-in page when OAuth is not set up.
+{# Кнопка входу через GitHub в один клік. #}{% load i18n ui %}{% comment %}One-click GitHub sign-in (a CSRF-protected POST). Falls back to the sign-in page when OAuth is not set up.
 Optional: label (button text, then the GitHub icon becomes an arrow), next (local URL to open after sign-in), size="lg",
 idle=True (the slow idle shimmer: the landing hero only, it is one of the three loops on screen).{% endcomment %}
 {% if github_configured %}

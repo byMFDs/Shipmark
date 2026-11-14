@@ -1,4 +1,4 @@
-{% load i18n static ui %}{% get_current_language as LANGUAGE_CODE %}<!DOCTYPE html>
+{# Сторінка помилки без бази й контексту запиту. #}{% load i18n static ui %}{% get_current_language as LANGUAGE_CODE %}<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
   {% comment %}Used when no request context exists (500, 400, CSRF failure): it needs no database, session or context

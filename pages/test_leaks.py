@@ -24,6 +24,7 @@ def leak_in(html):
 
 
 class LeakAssertions:
+    """Перевірки, що сторінка не показує внутрішнощів шаблону."""
     def assertNoLeak(self, response, label=""):
         html = response.content.decode()
         marker = leak_in(html)
@@ -45,6 +46,7 @@ class LeakAssertions:
 
 
 class TemplateSourceTests(TestCase):
+    """Перевірки джерел шаблонів."""
     def test_no_template_reads_a_variable_named_block(self):
         """Inside {% block %} Django sets `block` to the BlockNode (for block.super), so a view's own `block`
         variable is shadowed and the node is printed. Only `block.super` may be used."""
@@ -63,6 +65,7 @@ class TemplateSourceTests(TestCase):
 
 
 class MainPageLeakTests(LeakAssertions, TestCase):
+    """Основні сторінки й сторінки помилок без витоків."""
     def setUp(self):
         cache.clear()
         self.owner = make_user("ann", display_name="Ann")

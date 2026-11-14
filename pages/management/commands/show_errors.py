@@ -1,4 +1,6 @@
-"""Read the error log files written by config/errorlog.py.
+"""Команда show_errors: читає файли журналу помилок.
+
+Read the error log files written by config/errorlog.py.
 
     python manage.py show_errors                 # the last 20 errors, grouped by exception
     python manage.py show_errors --last 50       # more
@@ -19,7 +21,9 @@ from config.errorlog import BACKUP_COUNT, ERRORS_FILE, NOTFOUND_FILE
 
 
 def read_lines(name):
-    """All records of a log file, oldest first (rotated copies first). Broken lines are skipped."""
+    """Усі записи файлу журналу, старі спершу.
+
+    All records of a log file, oldest first (rotated copies first). Broken lines are skipped."""
     base = settings.LOG_DIR / name
     paths = [base.with_name(f"{name}.{i}") for i in range(BACKUP_COUNT, 0, -1)] + [base]
     records = []
@@ -38,6 +42,7 @@ def read_lines(name):
 
 
 def group_key(record):
+    """Ключ групи для запису журналу."""
     if record.get("exception"):
         return record["exception"]
     status = record.get("status")
@@ -45,6 +50,7 @@ def group_key(record):
 
 
 class Command(BaseCommand):
+    """Команда show_errors: останні помилки, підсумок або 404."""
     help = "Show recent errors from the JSON error log, grouped by exception."
 
     def add_arguments(self, parser):
@@ -54,6 +60,7 @@ class Command(BaseCommand):
         parser.add_argument("--notfound", action="store_true", help="Show 404s (notfound.jsonl) by path.")
 
     def handle(self, *args, **options):
+        """Обирає режим показу."""
         last = max(1, options["last"])
         if options["notfound"]:
             return self.show_notfound(last)
@@ -66,6 +73,7 @@ class Command(BaseCommand):
         self.show_recent(records[-last:], options["full"])
 
     def show_recent(self, records, with_traceback):
+        """Останні помилки, згруповані за типом."""
         groups = OrderedDict()
         for record in reversed(records):  # newest group first
             groups.setdefault(group_key(record), []).append(record)
@@ -86,6 +94,7 @@ class Command(BaseCommand):
             self.stdout.write("")
 
     def show_summary(self, records):
+        """Підсумок помилок за типами."""
         groups = OrderedDict()
         for record in records:
             groups.setdefault(group_key(record), []).append(record)
@@ -98,6 +107,7 @@ class Command(BaseCommand):
             self.stdout.write("       " + ", ".join(f"{path} ×{n}" for path, n in paths))
 
     def show_notfound(self, last):
+        """Останні 404."""
         records = read_lines(NOTFOUND_FILE)
         if not records:
             self.stdout.write(f"No 404s logged in {settings.LOG_DIR / NOTFOUND_FILE}.")

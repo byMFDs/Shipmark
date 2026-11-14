@@ -1,4 +1,6 @@
-"""The public "<n> people joined" number in the site header."""
+"""Публічне число «<n> людей приєдналося» в хедері.
+
+The public "<n> people joined" number in the site header."""
 import math
 
 from django.conf import settings
@@ -15,7 +17,9 @@ EXACT_UP_TO = 99_999
 
 
 def count_people():
-    """How many people have joined: the rule, in one place.
+    """Скільки людей приєдналося (правило в одному місці).
+
+    How many people have joined: the rule, in one place.
 
     Counted: every account row that exists (a deleted account is gone from the table) and is active
     (`is_active`; Django's flag for an account that may sign in). Not counted: system accounts that are not
@@ -26,7 +30,9 @@ def count_people():
 
 
 def public_user_count():
-    """count_people(), cached for 60 seconds so the header costs at most one query a minute."""
+    """Те саме число з кешем на 60 секунд.
+
+    count_people(), cached for 60 seconds so the header costs at most one query a minute."""
     value = cache.get(CACHE_KEY)
     if value is None:
         value = count_people()
@@ -35,7 +41,9 @@ def public_user_count():
 
 
 def format_count(value):
-    """Exact with the language's digit grouping up to 99,999 ("12,480", "12 480"); compact above, rounded down so
+    """Число для показу з групуванням цифр або скорочене.
+
+    Exact with the language's digit grouping up to 99,999 ("12,480", "12 480"); compact above, rounded down so
     the number is never larger than the truth ("128K", "1.2M")."""
     if value <= EXACT_UP_TO:
         return number_format(value, force_grouping=True)
@@ -47,7 +55,9 @@ def format_count(value):
 
 
 def header_stat():
-    """{value, text} for the header, or None when the stat is switched off or not above PUBLIC_USER_COUNT_MIN."""
+    """Дані для хедера або None, якщо показ вимкнено.
+
+    {value, text} for the header, or None when the stat is switched off or not above PUBLIC_USER_COUNT_MIN."""
     if not settings.PUBLIC_USER_COUNT_ENABLED:
         return None
     value = public_user_count()

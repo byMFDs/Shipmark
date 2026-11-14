@@ -1,4 +1,6 @@
-"""Long pages written as markdown: content/<lang>/<slug>.md, falling back to content/en/.
+"""Довгі сторінки з markdown: content/<lang>/<slug>.md з запасним англійським.
+
+Long pages written as markdown: content/<lang>/<slug>.md, falling back to content/en/.
 
 Editing the .md file changes the page; no code or restart needed.
 Placeholders like {{ contact_email }} are filled from config/branding.py (see PLACEHOLDERS).
@@ -25,6 +27,7 @@ H1_RE = re.compile(r"^#\s+(.+?)\s*#*\s*$", re.MULTILINE)
 
 
 def _placeholders():
+    """Значення підстановок для markdown-сторінок."""
     return {
         "{{ site_name }}": branding.SITE_NAME,
         "{{ contact_email }}": branding.CONTACT_EMAIL,
@@ -34,14 +37,18 @@ def _placeholders():
 
 
 def fill_placeholders(text):
-    """Plain text replacement (not the template engine), so a .md file can never run template code."""
+    """Підставляє значення простою заміною тексту.
+
+    Plain text replacement (not the template engine), so a .md file can never run template code."""
     for key, value in _placeholders().items():
         text = text.replace(key, str(value))
     return text
 
 
 def render_markdown(text):
-    """Markdown to safe HTML. Raw HTML in the source is stripped by the allowlist."""
+    """Markdown у безпечний HTML.
+
+    Markdown to safe HTML. Raw HTML in the source is stripped by the allowlist."""
     html = markdown.markdown(text, extensions=["tables", "fenced_code", "attr_list"])
     return nh3.clean(
         html,
@@ -53,7 +60,9 @@ def render_markdown(text):
 
 
 def load_page(slug, language=None):
-    """Return {"title", "html", "language"} for a page, or None if no file exists.
+    """Заголовок і HTML сторінки або None.
+
+    Return {"title", "html", "language"} for a page, or None if no file exists.
 
     `language` is the language of the file actually used (en when we fell back).
     """

@@ -20,7 +20,9 @@ EXPLORE = reverse("pages:explore")
 
 
 class Facts:
-    """Helpers that create the facts behind each hallmark."""
+    """Помічники, що створюють факти для кожної марки.
+
+    Helpers that create the facts behind each hallmark."""
 
     def make_authored(self, project, **extra):
         values = {"repo_full_name": project.repo_full_name, "github_repo_id": project.pk,
@@ -44,6 +46,7 @@ class Facts:
 
 
 class LandingTests(Facts, TestCase):
+    """Лендинг."""
     def setUp(self):
         self.ann = make_user("ann")
 
@@ -104,6 +107,7 @@ class LandingTests(Facts, TestCase):
 
 
 class ExploreFilterTests(Facts, TestCase):
+    """Фільтри Discover."""
     def setUp(self):
         self.ann = make_user("ann")
         self.webhooks = make_project(self.ann, name="Tallyhook")
@@ -150,7 +154,9 @@ class ExploreFilterTests(Facts, TestCase):
 
 
 class ExploreHallmarkTests(Facts, TestCase):
-    """The filter and the sort must agree with compute_hallmarks, including the edge cases."""
+    """Фільтр і сортування за марками збігаються з compute_hallmarks.
+
+    The filter and the sort must agree with compute_hallmarks, including the edge cases."""
 
     def setUp(self):
         ann = make_user("ann")
@@ -207,6 +213,7 @@ class ExploreHallmarkTests(Facts, TestCase):
 
 
 class ExploreSortAndPagesTests(Facts, TestCase):
+    """Сортування й сторінки Discover."""
     def setUp(self):
         self.ann = make_user("ann")
 
@@ -246,6 +253,7 @@ class ExploreSortAndPagesTests(Facts, TestCase):
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class OpenGraphTests(TestCase):
+    """Open Graph."""
     def setUp(self):
         self.ann = make_user("ann", about="I build small tools.")
         self.project = make_project(self.ann)

@@ -1,4 +1,6 @@
-"""Redraw the raster icons from static/brand/logo-mark.svg (logo C).
+"""Команда make_icons: перемальовує растрові іконки з logo-mark.svg.
+
+Redraw the raster icons from static/brand/logo-mark.svg (logo C).
 
     python manage.py make_icons
 
@@ -13,6 +15,7 @@ from pages.brand_icons import apple_touch_icon, favicon_ico
 
 
 class Command(BaseCommand):
+    """Команда make_icons."""
     help = "Redraw favicon.ico and apple-touch-icon.png from the logo mark."
 
     def handle(self, *args, **options):

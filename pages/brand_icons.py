@@ -1,4 +1,6 @@
-"""Raster icons drawn from the logo mark (static/brand/logo-mark.svg), so every icon is the same logo C.
+"""Растрові іконки, намальовані з SVG-знака логотипа.
+
+Raster icons drawn from the logo mark (static/brand/logo-mark.svg), so every icon is the same logo C.
 
     python manage.py make_icons     # after changing logo-mark.svg: rewrites favicon.ico and apple-touch-icon.png
 
@@ -22,14 +24,18 @@ SCALE = 16
 
 
 def mark_path():
-    """The `d` of the first <path> in logo-mark.svg."""
+    """Атрибут d першого контуру logo-mark.svg.
+
+    The `d` of the first <path> in logo-mark.svg."""
     with open(finders.find(branding.LOGO_MARK), encoding="utf-8") as fh:
         match = re.search(r'<path[^>]*\sd="([^"]+)"', fh.read())
     return match.group(1)
 
 
 def polygons(d):
-    """M/H/V/L/Z absolute commands -> list of point lists (viewBox units)."""
+    """Перетворює команди контуру на списки точок.
+
+    M/H/V/L/Z absolute commands -> list of point lists (viewBox units)."""
     shapes, points, x, y = [], [], 0.0, 0.0
     for cmd, args in re.findall(r"([MHVLZ])([^MHVLZ]*)", d.replace(",", " ")):
         nums = [float(n) for n in args.split()]
@@ -61,7 +67,9 @@ def polygons(d):
 
 
 def draw_mark(size, ink, hole, background=None, mark_size=None, units=32):
-    """The mark at `size` px. The first shape is the square, the others are cut out (filled with `hole`)."""
+    """Малює знак заданого розміру.
+
+    The mark at `size` px. The first shape is the square, the others are cut out (filled with `hole`)."""
     mark_size = mark_size or size
     big, offset = size * SCALE, (size - mark_size) * SCALE / 2
     factor = mark_size * SCALE / units
@@ -73,7 +81,9 @@ def draw_mark(size, ink, hole, background=None, mark_size=None, units=32):
 
 
 def favicon_ico():
-    """Opaque: a dark square with the slash and stop in paper color, readable on light and dark tab bars."""
+    """Іконка favicon.ico.
+
+    Opaque: a dark square with the slash and stop in paper color, readable on light and dark tab bars."""
     images = [draw_mark(size, INK, PAPER) for size in ICO_SIZES]  # each size drawn on its own: sharp at 16 px
     out = io.BytesIO()
     images[-1].save(out, format="ICO", sizes=[(s, s) for s in ICO_SIZES], append_images=images[:-1])
@@ -81,7 +91,9 @@ def favicon_ico():
 
 
 def apple_touch_icon():
-    """A paper-colored mark on a dark plate (iOS rounds the corners itself)."""
+    """Іконка apple-touch-icon.
+
+    A paper-colored mark on a dark plate (iOS rounds the corners itself)."""
     image = draw_mark(TOUCH_SIZE, PAPER, INK, background=INK, mark_size=TOUCH_MARK).convert("RGB")
     out = io.BytesIO()
     image.save(out, format="PNG", optimize=True)

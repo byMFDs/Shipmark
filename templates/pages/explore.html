@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{# Discover: вкладки Projects і People, фільтри, список. #}{% extends "base.html" %}
 {% load i18n static ui %}
 
 {% block title %}{% if tab == "people" %}{% if q %}“{{ q }}” · {% endif %}{% translate "People" %} · {% elif params.q %}“{{ params.q }}” · {% endif %}{% translate "Discover" %} · {{ brand.SITE_NAME }}{% endblock %}

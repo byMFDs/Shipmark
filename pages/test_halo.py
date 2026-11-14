@@ -37,6 +37,7 @@ def mix(a, b, t):
 
 
 class HaloTests(SimpleTestCase):
+    """Кільце halo видно в обох темах (≥ 3:1)."""
     def setUp(self):
         text = (CSS / "tokens.css").read_text()
         self.themes = {

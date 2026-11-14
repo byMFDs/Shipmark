@@ -14,6 +14,7 @@ from . import stats
 
 
 class CountingTests(TestCase):
+    """Лічба людей."""
     def setUp(self):
         cache.clear()
 
@@ -38,6 +39,7 @@ class CountingTests(TestCase):
 
 
 class FormatTests(TestCase):
+    """Формат числа."""
     def test_exact_with_grouping_up_to_99999(self):
         with translation.override("en"):
             self.assertEqual(stats.format_count(7), "7")
@@ -63,6 +65,7 @@ class FormatTests(TestCase):
 
 @override_settings(PUBLIC_USER_COUNT_ENABLED=True)
 class HeaderTests(TestCase):
+    """Число в хедері."""
     def setUp(self):
         cache.clear()
 

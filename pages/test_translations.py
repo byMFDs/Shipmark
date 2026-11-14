@@ -50,6 +50,7 @@ def catalog_dirs():
 
 
 class CatalogTests(SimpleTestCase):
+    """Повнота каталогів перекладів."""
     def test_no_empty_or_fuzzy_translations(self):
         for locale_dir in catalog_dirs():
             text = (locale_dir / "LC_MESSAGES" / "django.po").read_text(encoding="utf-8")
@@ -111,7 +112,9 @@ class CatalogTests(SimpleTestCase):
 # ---------- Rendered pages ----------
 
 class _Text(HTMLParser):
-    """Visible text nodes and text attributes, without scripts, styles, code and inline SVG."""
+    """Видимий текст сторінки для перевірки перекладу.
+
+    Visible text nodes and text attributes, without scripts, styles, code and inline SVG."""
 
     SKIP = {"script", "style", "code", "pre", "svg", "textarea", "template"}
     ATTRS = {"aria-label", "title", "alt", "placeholder", "data-copied", "data-error", "data-busy-label",
@@ -168,7 +171,9 @@ def english_ui_strings(code):
 
 @override_settings(DEBUG=True)  # for the /_dev/errors/ previews
 class RenderedPagesTests(TestCase):
-    """The main pages, signed out and signed in, in every language: no English UI text left."""
+    """На сторінках кожною мовою не лишилось англійського тексту.
+
+    The main pages, signed out and signed in, in every language: no English UI text left."""
 
     @classmethod
     def setUpTestData(cls):

@@ -23,13 +23,16 @@ ALL_SLUGS = ("about", "how-proof-works", "privacy", "terms", "cookies")
 
 
 class LanguageListTests(SimpleTestCase):
+    """Список мов."""
     def test_expected_languages_and_never_russian(self):
         self.assertEqual(CODES, ["en", "uk", "pl", "de", "es", "fr", "pt-br"])
         self.assertNotIn("ru", CODES)
 
 
 class AcceptLanguageTests(TestCase):
-    """The browser's Accept-Language picks the language when there is no saved choice."""
+    """Мова з Accept-Language браузера.
+
+    The browser's Accept-Language picks the language when there is no saved choice."""
 
     def get(self, header, path="/explore/"):
         return self.client.get(path, headers={"Accept-Language": header}).content.decode()
@@ -63,6 +66,7 @@ class AcceptLanguageTests(TestCase):
 
 
 class CatalogTests(SimpleTestCase):
+    """Каталоги перекладів."""
     def test_every_catalog_translates_plural_forms(self):
         """Each language answers ngettext() for 0..30 with a non-empty text that is not the English one."""
         for code in OTHER_CODES:
@@ -87,7 +91,9 @@ class CatalogTests(SimpleTestCase):
 
 
 class ContentPagesTests(SimpleTestCase):
-    """content/<lang>/<slug>.md: every language has every page, with the same structure as English."""
+    """Кожна мова має кожну markdown-сторінку.
+
+    content/<lang>/<slug>.md: every language has every page, with the same structure as English."""
 
     @staticmethod
     def read(lang, slug):
@@ -144,6 +150,7 @@ class ContentPagesTests(SimpleTestCase):
 
 
 class NewLanguagePagesTests(TestCase):
+    """Сторінки нових мов."""
     def test_how_proof_works_is_translated_and_keeps_section_ids(self):
         for code in OTHER_CODES:
             with self.subTest(code=code):
@@ -162,6 +169,7 @@ class NewLanguagePagesTests(TestCase):
 
 
 class AboutPageTests(TestCase):
+    """Сторінка «Про нас»."""
     def test_about_is_real_content_in_every_language(self):
         from config import branding
 
@@ -179,7 +187,9 @@ class AboutPageTests(TestCase):
 
 
 class SignInLanguageTests(TestCase):
-    """The "signed in" / "signed out" toasts are in the same language as the page that shows them."""
+    """Повідомлення про вхід і вихід мовою сторінки.
+
+    The "signed in" / "signed out" toasts are in the same language as the page that shows them."""
 
     def setUp(self):
         self.user = make_user("olena")

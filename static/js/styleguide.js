@@ -1,3 +1,4 @@
+// Styleguide: повтор удару марок і приклади тостів.
 // Styleguide helpers (development only): replay the hallmark strike, show sample toasts.
 import { showToast } from "./toast.js";
 

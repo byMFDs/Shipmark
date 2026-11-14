@@ -1,3 +1,4 @@
+"""Загальні сторінки: лендинг, Discover, styleguide, контент і юридичні сторінки."""
 from django.conf import settings
 from django.http import Http404
 from django.shortcuts import redirect, render
@@ -14,7 +15,9 @@ RECENT_ON_LANDING = 6
 
 
 def landing(request):
-    """Signed-out visitors only: people with an account go straight to their feed."""
+    """Лендинг для гостей; з акаунтом — одразу в стрічку.
+
+    Signed-out visitors only: people with an account go straight to their feed."""
     if request.user.is_authenticated:
         return redirect("social:feed")
     recent = list(project_rows(published_projects(), request.user).order_by("-event_at", "-pk")[:RECENT_ON_LANDING])
@@ -25,7 +28,9 @@ def landing(request):
 
 
 def explore_view(request):
-    """Discover: two tabs on one page. Projects (default, unchanged) and People (?tab=people)."""
+    """Discover з вкладками Projects і People.
+
+    Discover: two tabs on one page. Projects (default, unchanged) and People (?tab=people)."""
     if request.GET.get("tab") == "people":
         return people_view(request)
     params = ExploreForm(request.GET).values()
@@ -50,7 +55,9 @@ MAX_PEOPLE_PAGE = 50
 
 
 def people_view(request):
-    """Discover → People: username search (accounts/people.py has the rules)."""
+    """Discover → People: пошук за іменем користувача.
+
+    Discover → People: username search (accounts/people.py has the rules)."""
     raw = request.GET.get("q", "")
     query = people.clean_query(raw)
     try:
@@ -92,7 +99,9 @@ STYLEGUIDE_TOKENS = [
 
 
 def styleguide(request):
-    """Every component in both themes. Development only: 404 when DEBUG is off."""
+    """Усі компоненти в обох темах (лише з DEBUG).
+
+    Every component in both themes. Development only: 404 when DEBUG is off."""
     if not settings.DEBUG:
         raise Http404
     from community.stickers import STICKERS
@@ -103,6 +112,7 @@ def styleguide(request):
 
 
 def content_page(request, slug):
+    """Markdown-сторінка за slug або 404."""
     page = load_page(slug)
     if page is None:
         raise Http404
@@ -113,7 +123,9 @@ LEGAL_PAGES = ("privacy", "terms", "cookies")
 
 
 def legal_page(request, slug):
-    """/legal/privacy/, /legal/terms/, /legal/cookies/. Only these: other content pages have their own URLs."""
+    """Юридичні сторінки: privacy, terms, cookies.
+
+    /legal/privacy/, /legal/terms/, /legal/cookies/. Only these: other content pages have their own URLs."""
     if slug not in LEGAL_PAGES:
         raise Http404
     return content_page(request, slug)

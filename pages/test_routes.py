@@ -35,6 +35,7 @@ def expect(anon, user, owner=None, muted=None, banned=403, mod=None, admin=None)
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA, COMMUNITY_ENABLED=True)
 class RouteMatrixTests(TestCase):
+    """Кожен маршрут під сімома ролями дає очікуваний статус."""
     @classmethod
     def setUpTestData(cls):
         old = timezone.now() - timedelta(days=60)

@@ -42,6 +42,7 @@ def rules(text):
 
 
 class MotionRuleTests(TestCase):
+    """Правила анімацій у CSS."""
     def test_keyframes_move_only_transform_and_opacity(self):
         for path in css_files():
             for name, body in keyframes(without_comments(path.read_text())):
@@ -85,7 +86,9 @@ class MotionRuleTests(TestCase):
 
 
 class TabMarkTests(TestCase):
-    """The current tab carries one .tab-mark (the element a view transition slides); the others carry none."""
+    """Позначка поточної вкладки.
+
+    The current tab carries one .tab-mark (the element a view transition slides); the others carry none."""
 
     def tab_row(self, html, nav_class):
         start = html.index(f'<nav class="tabs {nav_class}"')

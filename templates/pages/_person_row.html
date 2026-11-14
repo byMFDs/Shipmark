@@ -1,4 +1,4 @@
-{% load i18n ui %}{% comment %}
+{# Рядок людини в результатах пошуку. #}{% load i18n ui %}{% comment %}
 One person in the People results. Public fields only (never email or GitHub id). Needs: person with
 project_count, hallmark_count, followed (accounts.people.attach_counts).
 {% endcomment %}{% url 'accounts:profile' person.username as profile_url %}
