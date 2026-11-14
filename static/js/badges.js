@@ -1,3 +1,4 @@
+// Бейджі official і moderator: підказка й спільна панель з датою.
 // Official and moderator badges (one component: templates/includes/user_marks.html + badge_popover.html).
 // Hover or focus shows a short tooltip (CSS). A click or tap opens one shared panel filled from the badge's
 // <template>: a popover next to the badge, a bottom sheet on small screens. Escape, the close button and a click

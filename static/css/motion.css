@@ -1,3 +1,4 @@
+/* Анімації: переходи між сторінками, цикли з паузою, появи, відповіді на дії. */
 /* Motion. Rules (docs/DESIGN.md): transform and opacity only; loops run only while their block
    is on screen (.is-inview, set by motion.js) and stop when the tab is hidden (html.is-paused);
    at most three loops in view at once; reduced motion shows the final, static state

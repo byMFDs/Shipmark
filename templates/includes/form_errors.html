@@ -1,4 +1,4 @@
-{% load i18n ui %}
+{# Підсумок помилок форми з role="alert". #}{% load i18n ui %}
 {# Summary of everything that went wrong. role="alert" + form-errors.js (focus on load) make screen readers read it first. #}
 {% if form.errors %}
   <div class="form-errors" role="alert" tabindex="-1" data-error-summary>

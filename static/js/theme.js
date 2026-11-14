@@ -1,3 +1,4 @@
+// Перемикач теми: система, світла, темна; синхронізація між вкладками.
 // Theme switch: System / Light / Dark.
 // The saved choice is applied before the first paint by a short inline script in base.html.
 // This module handles the buttons and keeps every open tab in sync.

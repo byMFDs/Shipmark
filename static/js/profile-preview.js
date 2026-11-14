@@ -1,3 +1,4 @@
+// Живе прев'ю картки профілю на сторінці налаштувань.
 // Live preview on the settings page: the profile card follows the fields as you type.
 // Nothing is saved here and nothing is sent: it only copies text. Without JS the card shows the saved values.
 // A chosen picture is read in the browser (FileReader -> data: URL), so it never leaves the device until Save.

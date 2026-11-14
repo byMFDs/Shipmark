@@ -1,4 +1,4 @@
-{% load i18n %}{# Moderation notices for the signed-in user: an active mute, and decisions about their work. #}
+{# Повідомлення модерації для людини: приглушення й рішення щодо її дописів. #}{% load i18n %}{# Moderation notices for the signed-in user: an active mute, and decisions about their work. #}
 {% if viewer.signed_in %}{% with mute=viewer.mute notices=viewer.notices %}{% if mute or notices %}
   <div class="container account-notices">
     {% if mute %}

@@ -1,4 +1,6 @@
-"""gunicorn settings. Start with:  gunicorn config.wsgi -c gunicorn.conf.py
+"""Налаштування gunicorn для production; усе можна змінити змінними оточення.
+
+gunicorn settings. Start with:  gunicorn config.wsgi -c gunicorn.conf.py
 Run it from the project root, with DJANGO_SETTINGS_MODULE=config.settings.prod and the .env variables set
 (wsgi.py already defaults to prod). Every value can be overridden from the environment.
 """

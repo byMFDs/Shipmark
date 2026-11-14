@@ -1,3 +1,3 @@
-{# Django messages as toasts. The container always exists so toast.js can add new ones. #}
+{# Повідомлення Django як тости. #}{# Django messages as toasts. The container always exists so toast.js can add new ones. #}
 <div class="toasts" data-toasts aria-live="polite">{% for message in messages %}{% include "includes/toast.html" with text=message kind=message.level_tag %}{% endfor %}</div>
 <template data-toast-template>{% include "includes/toast.html" with text="" kind="info" %}</template>

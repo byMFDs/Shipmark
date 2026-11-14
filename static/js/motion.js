@@ -1,3 +1,4 @@
+// Анімації: пауза циклів поза екраном і у фоні, поява при прокрутці, лічба чисел.
 // Ambient motion helpers (styles in css/motion.css).
 // - [data-loop]: loops inside run only while the block is on screen (.is-inview).
 // - [data-reveal]: children fade in once when the block scrolls into view (.is-revealed).

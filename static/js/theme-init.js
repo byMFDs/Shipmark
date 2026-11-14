@@ -1,3 +1,4 @@
+// Застосовує збережену тему до першого малювання й позначає, що JS працює.
 // Runs before the first paint: applies the saved theme (no flash) and marks that JS works.
 // A separate file (not inline) so the Content-Security-Policy can forbid inline scripts.
 (function () {

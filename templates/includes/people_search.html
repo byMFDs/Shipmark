@@ -1,4 +1,4 @@
-{% load i18n ui %}{% comment %}
+{# «Знайти людей» у хедері: поле в меню або іконка з формою. #}{% load i18n ui %}{% comment %}
 "Find people" in the header: submits to Discover → People (?tab=people). In the menu (in_panel) a plain form;
 in the open bar a <details> that opens a small form (works without JS; menu.js adds Escape and outside click).
 {% endcomment %}{% url 'pages:explore' as discover_url %}{% if discover_url %}

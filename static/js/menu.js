@@ -1,3 +1,4 @@
+// Меню на details: Escape і дотик поза меню закривають; «/» відкриває пошук.
 // The phone menu is a <details> element, so it already opens and closes without JS.
 // This adds two expected behaviors: Escape closes it, and so does a tap outside.
 

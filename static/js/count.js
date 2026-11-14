@@ -1,3 +1,4 @@
+// Лічильник «<n> людей приєдналося» рахує вгору один раз.
 // "<n> people joined" in the header: the number counts up from 0 once, on load (about 800 ms), and ends on the
 // exact text the server wrote. Reduced motion, a compact number ("128K") or no JS: the final number at once.
 // The sentence for screen readers is a separate hidden text with the full number, so nothing is read twice.

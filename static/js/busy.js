@@ -1,3 +1,4 @@
+// Стан завантаження кнопки: кільце й захист від повторного надсилання.
 // Loading state for buttons (styles: .btn[data-busy-ring] in components.css). When a form really submits (no
 // script stopped it), the button that sent it shows a ring and ignores further clicks, so nothing is sent twice.
 // Scripts that send a form themselves (likes, domain check) set aria-busy on their own and keep their text.

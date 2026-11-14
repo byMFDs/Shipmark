@@ -1,3 +1,4 @@
+// Тости: показ, автоприховування й закриття.
 // Toasts: short results of an action ("Published"). Django messages render as toasts too.
 // Info toasts hide after 6 seconds (paused while hovered or focused). Errors stay until closed.
 // Other modules can call showToast("Liked") after a fetch() request.
