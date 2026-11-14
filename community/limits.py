@@ -1,4 +1,6 @@
-"""Every number of the community rules, in one place (docs/COMMUNITY_PLAN.md section 5)."""
+"""Усі числа правил спільноти в одному місці.
+
+Every number of the community rules, in one place (docs/COMMUNITY_PLAN.md section 5)."""
 from datetime import timedelta
 
 MAX_TITLE = 120

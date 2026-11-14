@@ -50,6 +50,7 @@ def stored(image):
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class CommunityTestCase(TestCase):
+    """Спільні дані для тестів спільноти."""
     def setUp(self):
         cache.clear()
         self.board = Board.objects.get(slug="help")
@@ -90,6 +91,7 @@ class CommunityTestCase(TestCase):
 # ---------- The flag ----------
 
 class FlagTests(CommunityTestCase):
+    """Перемикач COMMUNITY_ENABLED."""
     def urls(self):
         reply = services.create_reply(self.bob, self.thread, body="Check the TTL.")
         return [
@@ -138,6 +140,7 @@ class FlagTests(CommunityTestCase):
 # ---------- Reading ----------
 
 class ReadTests(CommunityTestCase):
+    """Читання тем і дошок."""
     def test_anonymous_reads_everything_public(self):
         services.create_reply(self.bob, self.thread, body="Wait an hour, DNS is slow.")
         for url in (reverse("community:home"), reverse("community:board", args=["help"]), self.thread.get_absolute_url()):
@@ -270,6 +273,7 @@ def _clean(**kwargs):
 # ---------- Posting ----------
 
 class PostingTests(CommunityTestCase):
+    """Створення тем і правила для нових акаунтів."""
     def test_anonymous_cannot_write(self):
         for url, data in [
             (reverse("community:new"), {"board": self.board.pk, "title": "Hello there", "body": "x"}),
@@ -433,6 +437,7 @@ class PostingTests(CommunityTestCase):
 
 
 class ReplyTests(CommunityTestCase):
+    """Відповіді та їхня вкладеність."""
     def test_reply_updates_the_counters(self):
         before = self.thread.last_activity_at
         self.assertEqual(self.reply(self.bob, body="Check the TTL.").status_code, 302)
@@ -499,6 +504,7 @@ class ReplyTests(CommunityTestCase):
 
 
 class OwnershipTests(CommunityTestCase):
+    """Редагувати й видаляти можна лише своє."""
     def setUp(self):
         super().setUp()
         self.answer = services.create_reply(self.ann, self.thread, body="My own answer.")
@@ -594,6 +600,7 @@ class OwnershipTests(CommunityTestCase):
 
 
 class VoteTests(CommunityTestCase):
+    """Голоси."""
     def test_vote_and_take_it_back(self):
         response = self.vote(self.bob, self.thread, json=True)
         self.assertEqual(response.json(), {"ok": True, "voted": True, "score": 1})
@@ -635,6 +642,7 @@ class VoteTests(CommunityTestCase):
 # ---------- Moderation ----------
 
 class ModerationTests(CommunityTestCase):
+    """Модерація тем і відповідей."""
     def test_only_moderators_reach_the_moderate_pages(self):
         reply = services.create_reply(self.ann, self.thread, body="An answer.")
         clerk = old_user("clerk", is_staff=True)  # staff without the badge is not a moderator
@@ -835,6 +843,7 @@ class ModerationTests(CommunityTestCase):
 # ---------- Hidden authors, deletion, export, counters ----------
 
 class HiddenAuthorTests(CommunityTestCase):
+    """Дописи прихованих авторів."""
     def test_banned_and_suspended_authors_are_hidden(self):
         cat = old_user("cat")
         own = make_thread(cat, title="A thread by a person who gets banned")
@@ -876,6 +885,7 @@ class HiddenAuthorTests(CommunityTestCase):
 
 
 class AccountTests(CommunityTestCase):
+    """Видалення й експорт акаунта зі спільнотою."""
     def test_account_deletion(self):
         lonely = services.create_thread(self.ann, self.board, "A thread only Ann wrote in", "Text.", [_clean()])
         services.create_reply(self.ann, lonely, body="Talking to myself.")
@@ -943,6 +953,7 @@ class AccountTests(CommunityTestCase):
 # ---------- Stage 2a: reply notifications ----------
 
 class NotificationTests(CommunityTestCase):
+    """Сповіщення про відповіді."""
     def inbox(self, user):
         return self.login(user).get(reverse("community:notifications"))
 
@@ -1103,6 +1114,7 @@ def sticker_files():
 
 
 class StickerFileTests(TestCase):
+    """Файли стікерів безпечні й описані в маніфесті."""
     def test_manifest_and_files_match(self):
         files = sticker_files()
         self.assertEqual(sorted(files), sorted(STICKERS))
@@ -1142,6 +1154,7 @@ class StickerFileTests(TestCase):
 
 
 class StickerPostingTests(CommunityTestCase):
+    """Відповіді зі стікерами."""
     def test_one_sticker_per_reply_even_when_two_are_sent(self):
         self.login(self.bob).post(reverse("community:reply", args=[self.thread.pk]), {"sticker": ["rocket", "fire"]})
         self.assertEqual(list(Reply.objects.values_list("sticker_key", flat=True)), ["fire"])

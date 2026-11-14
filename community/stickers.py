@@ -1,4 +1,6 @@
-"""The sticker manifest: key -> translated label. The database stores only the key (Reply.sticker_key).
+"""Набір стікерів: ключ і перекладена назва.
+
+The sticker manifest: key -> translated label. The database stores only the key (Reply.sticker_key).
 
 The artwork is our own vector set in static/stickers/<key>.svg (added with the picker); nothing is ever accepted
 from users. The label is the alt text.
@@ -53,5 +55,7 @@ def is_sticker(key):
 
 
 def label(key):
-    """The translated name, or "" for an unknown key (an old row whose sticker was retired)."""
+    """Перекладена назва стікера або "".
+
+    The translated name, or "" for an unknown key (an old row whose sticker was retired)."""
     return str(STICKERS.get(key, ""))

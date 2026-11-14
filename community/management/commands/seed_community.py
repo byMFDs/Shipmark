@@ -1,4 +1,6 @@
-"""Demo content for the community, for looking at the pages in development. DEBUG only.
+"""Демо-вміст спільноти для розробки (лише з DEBUG).
+
+Demo content for the community, for looking at the pages in development. DEBUG only.
 
     python manage.py seed_community           # remove the previous demo content, then create it again
     python manage.py seed_community --clear   # only remove it
@@ -96,7 +98,9 @@ THREADS = [
 
 
 def picture(width, height, seed):
-    """A simple abstract picture: paper background, hairline frame, a few flat blocks in the brand colours."""
+    """Проста абстрактна картинка для демо-дописів.
+
+    A simple abstract picture: paper background, hairline frame, a few flat blocks in the brand colours."""
     rng = random.Random(seed)
     image = Image.new("RGB", (width, height), "#F4F3EE")
     draw = ImageDraw.Draw(image)
@@ -113,7 +117,9 @@ def picture(width, height, seed):
 
 
 def clear():
-    """Removes the demo people and everything they wrote. Returns how many people were removed."""
+    """Видаляє демо-людей і все, що вони написали.
+
+    Removes the demo people and everything they wrote. Returns how many people were removed."""
     people = get_user_model().objects.filter(username__startswith=PREFIX, email__endswith=DOMAIN)
     Thread.objects.filter(author__in=people).delete()  # replies, votes and images go with them (files too)
     Reply.objects.filter(author__in=people).delete()
@@ -123,7 +129,9 @@ def clear():
 
 
 def seed():
-    """Creates the demo content. Returns (threads, replies)."""
+    """Створює демо-вміст; повертає кількість тем і відповідей.
+
+    Creates the demo content. Returns (threads, replies)."""
     User = get_user_model()
     now = timezone.now()
     people = []
@@ -167,6 +175,7 @@ def seed():
 
 
 class Command(BaseCommand):
+    """Команда seed_community."""
     help = "Create demo community content (DEBUG only). Removes the previous demo content first."
 
     def add_arguments(self, parser):

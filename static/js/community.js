@@ -1,3 +1,4 @@
+// Спільнота: голоси без перезавантаження, згортання гілок, відповідь на конкретну відповідь.
 // Community pages: upvotes, collapsing a branch of replies, and "Reply" that moves the composer under a reply.
 // Every part works without this file: votes are plain POST forms, branches stay open, "Reply" links to
 // ?reply_to=<id>#reply-form. One listener per event on the document, so rows added by "Load more" work too.

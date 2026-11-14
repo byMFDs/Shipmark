@@ -1,4 +1,4 @@
-{% extends "community/_layout.html" %}
+{# Нова тема або редагування своєї теми. #}{% extends "community/_layout.html" %}
 {% load i18n static ui %}
 
 {% block title %}{% if thread %}{% translate "Edit thread" %}{% else %}{% translate "New thread" %}{% endif %} · {{ brand.SITE_NAME }}{% endblock %}

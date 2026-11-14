@@ -1,4 +1,6 @@
-"""Community pages and write endpoints.
+"""Сторінки спільноти й обробники запису.
+
+Community pages and write endpoints.
 
 Every view starts with `community_view` (404 while COMMUNITY_ENABLED is off). Reading is public. Every write
 needs a signed-in user who may post (community/permissions.py), is rate limited, and checks in code that the
@@ -40,6 +42,7 @@ def _wants_json(request):
 
 
 def _page(request):
+    """Номер сторінки з GET (щонайменше 1)."""
     try:
         return max(int(request.GET.get("page", 1)), 1)
     except ValueError:
@@ -56,7 +59,9 @@ _IMG_SRC = re.compile(r"(img-src[^;]*)")
 
 
 def allow_blob_previews(view):
-    """Pages with a composer: the browser shows chosen images before upload as blob: URLs (local to the page,
+    """Дозволяє в CSP прев'ю картинок blob: на сторінках з формою допису.
+
+    Pages with a composer: the browser shows chosen images before upload as blob: URLs (local to the page,
     nothing leaves the device). Only these responses get `blob:` in img-src; every other page keeps the site policy."""
     @wraps(view)
     def wrapper(request, *args, **kwargs):
@@ -69,7 +74,9 @@ def allow_blob_previews(view):
 
 
 def _boards_with_counts():
-    """Active boards with their number of public threads (two queries), for the left column."""
+    """Активні дошки з кількістю публічних тем.
+
+    Active boards with their number of public threads (two queries), for the left column."""
     counts = dict(Thread.objects.public().values_list("board").annotate(n=Count("pk")))
     boards = list(Board.objects.filter(is_active=True))
     for item in boards:
@@ -78,7 +85,9 @@ def _boards_with_counts():
 
 
 def _voted(user, threads=(), replies=()):
-    """(thread ids, reply ids) the user upvoted among these. One query, none for visitors."""
+    """Id тем і відповідей, за які людина проголосувала.
+
+    (thread ids, reply ids) the user upvoted among these. One query, none for visitors."""
     if not user.is_authenticated or not (threads or replies):
         return set(), set()
     rows = Vote.objects.filter(user=user).filter(
@@ -87,6 +96,7 @@ def _voted(user, threads=(), replies=()):
 
 
 def _list_url(board, page, **params):
+    """Адреса списку тем з фільтрами й сторінкою."""
     base = board.get_absolute_url() if board else reverse("community:home")
     query = {k: v for k, v in params.items() if v}
     if page > 1:
@@ -99,7 +109,9 @@ def _list_url(board, page, **params):
 @community_view
 @require_GET
 def home(request, slug=None):
-    """/community/ and /community/b/<slug>/: threads (Hot, New, Top), search by title, the boards with counts.
+    """Головна спільноти й дошки: теми, пошук, дошки.
+
+    /community/ and /community/b/<slug>/: threads (Hot, New, Top), search by title, the boards with counts.
     "Load more" asks for JSON ({html, next_url}); without JS the same links open the next page."""
     board = get_object_or_404(Board, slug=slug, is_active=True) if slug else None
     sort = _choice(request.GET.get("sort"), ranking.SORTS, "hot")
@@ -143,7 +155,9 @@ def home(request, slug=None):
 @community_view
 @require_GET
 def rules(request):
-    """/community/rules/: content/<lang>/community-rules.md (falls back to English)."""
+    """Сторінка правил спільноти.
+
+    /community/rules/: content/<lang>/community-rules.md (falls back to English)."""
     page = load_page("community-rules")
     if page is None:
         raise Http404
@@ -153,6 +167,7 @@ def rules(request):
 # ---------- Thread page ----------
 
 def _thread_or_404(request, pk):
+    """Тема, яку людина може бачити, або 404."""
     thread = get_object_or_404(Thread.objects.select_related("board", "author"), pk=pk)
     if not can_see_thread(request.user, thread):
         raise Http404
@@ -160,6 +175,7 @@ def _thread_or_404(request, pk):
 
 
 def _render_thread(request, thread, form=None, parent=None, status=200):
+    """Сторінка теми з деревом відповідей і формою."""
     user = request.user
     sort = _choice(request.GET.get("sort"), ranking.REPLY_SORTS, "best")
     page = _page(request)
@@ -195,6 +211,7 @@ def _render_thread(request, thread, form=None, parent=None, status=200):
 @require_GET
 @allow_blob_previews
 def thread_detail(request, pk, slug=""):
+    """Сторінка теми; неправильний slug перенаправляє на правильний."""
     thread = _thread_or_404(request, pk)
     if slug != thread.slug:
         return redirect(thread.get_absolute_url(), permanent=True)
@@ -214,6 +231,7 @@ def _blocked(request, message):
 @require_http_methods(["GET", "POST"])
 @allow_blob_previews
 def thread_new(request):
+    """Створення теми."""
     user = request.user
     block = post_block(user)
     if request.method == "POST" and block:
@@ -241,7 +259,9 @@ def _thread_editable(thread):
 
 
 def _own_thread_or_404(request, pk):
-    """The signed-in user's own thread. Anyone else's is a 404, like a thread that does not exist."""
+    """Власна тема людини або 404.
+
+    The signed-in user's own thread. Anyone else's is a 404, like a thread that does not exist."""
     thread = get_object_or_404(Thread.objects.select_related("board", "author"), pk=pk)
     if thread.author_id != request.user.pk or not can_see_thread(request.user, thread):
         raise Http404
@@ -252,6 +272,7 @@ def _own_thread_or_404(request, pk):
 @login_required
 @require_http_methods(["GET", "POST"])
 def thread_edit(request, pk):
+    """Редагування своєї теми."""
     thread = _own_thread_or_404(request, pk)
     if not _thread_editable(thread):
         return HttpResponseForbidden(_("This thread is locked or removed. It cannot be changed."))
@@ -276,7 +297,9 @@ def thread_edit(request, pk):
 
 
 def _may_clean_up(request):
-    """Deleting your own post stays open to muted people (like unpublishing a project); not to suspended ones."""
+    """Чи може людина видаляти своє (приглушеним можна, призупиненим ні).
+
+    Deleting your own post stays open to muted people (like unpublishing a project); not to suspended ones."""
     if request.user.is_suspended:
         return HttpResponseForbidden(write_blocked_message(request.user))
     if is_limited("community_delete", request.user.pk, limits.DELETES_PER_HOUR, limits.HOUR):
@@ -288,6 +311,7 @@ def _may_clean_up(request):
 @login_required
 @require_http_methods(["GET", "POST"])
 def thread_delete(request, pk):
+    """Видалення своєї теми з підтвердженням."""
     thread = _own_thread_or_404(request, pk)
     if thread.is_deleted:
         raise Http404
@@ -305,7 +329,9 @@ def thread_delete(request, pk):
 # ---------- Write: replies ----------
 
 def _parent_for(request, thread):
-    """The reply being answered, from POST. (reply or None, error message or "")."""
+    """Відповідь, на яку відповідають, з POST.
+
+    The reply being answered, from POST. (reply or None, error message or "")."""
     raw = request.POST.get("parent", "")
     if not raw:
         return None, ""
@@ -324,6 +350,7 @@ def _parent_for(request, thread):
 @require_POST
 @allow_blob_previews
 def reply_create(request, pk):
+    """Створення відповіді."""
     thread = _thread_or_404(request, pk)
     user = request.user
     block = post_block(user)
@@ -348,6 +375,7 @@ def reply_create(request, pk):
 
 
 def _own_reply_or_404(request, pk):
+    """Власна відповідь людини або 404."""
     reply = get_object_or_404(Reply.objects.select_related("thread__board", "thread__author", "author"), pk=pk)
     if reply.author_id != request.user.pk or not can_see_thread(request.user, reply.thread):
         raise Http404
@@ -358,6 +386,7 @@ def _own_reply_or_404(request, pk):
 @login_required
 @require_http_methods(["GET", "POST"])
 def reply_edit(request, pk):
+    """Редагування своєї відповіді."""
     reply = _own_reply_or_404(request, pk)
     if not reply.is_alive or reply.thread.status != Thread.Status.PUBLISHED:
         return HttpResponseForbidden(_("This reply cannot be changed."))
@@ -381,6 +410,7 @@ def reply_edit(request, pk):
 @login_required
 @require_http_methods(["GET", "POST"])
 def reply_delete(request, pk):
+    """Видалення своєї відповіді з підтвердженням."""
     reply = _own_reply_or_404(request, pk)
     if reply.is_deleted:
         raise Http404
@@ -401,7 +431,9 @@ def reply_delete(request, pk):
 @login_required
 @require_GET
 def notifications_view(request):
-    """The signed-in person's own notifications only (there is no per-item URL to guess). Opening the page
+    """Сповіщення людини; відкриття сторінки позначає їх прочитаними.
+
+    The signed-in person's own notifications only (there is no per-item URL to guess). Opening the page
     marks everything read and clears the header mark; the ones that were new are highlighted this once."""
     page = _page(request)
     start = (page - 1) * limits.NOTIFICATIONS_PER_PAGE
@@ -416,7 +448,9 @@ def notifications_view(request):
 # ---------- Votes ----------
 
 def _vote(request, target, thread):
-    """Upvote or take it back: POST value=1 / value=0. JSON for fetch, a redirect for a plain form."""
+    """Ставить або знімає голос: JSON для fetch, перенаправлення для форми.
+
+    Upvote or take it back: POST value=1 / value=0. JSON for fetch, a redirect for a plain form."""
     user = request.user
     back = target.get_absolute_url()
 
@@ -444,6 +478,7 @@ def _vote(request, target, thread):
 
 
 def _signed_in_or_401(request):
+    """Неавторизованим: 401 для fetch або перехід на вхід."""
     if request.user.is_authenticated:
         return None
     if _wants_json(request):
@@ -454,6 +489,7 @@ def _signed_in_or_401(request):
 @community_view
 @require_POST
 def vote_thread(request, pk):
+    """Голос за тему."""
     refusal = _signed_in_or_401(request)
     if refusal:
         return refusal
@@ -466,6 +502,7 @@ def vote_thread(request, pk):
 @community_view
 @require_POST
 def vote_reply(request, pk):
+    """Голос за відповідь."""
     refusal = _signed_in_or_401(request)
     if refusal:
         return refusal

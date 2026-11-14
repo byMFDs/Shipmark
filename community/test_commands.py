@@ -21,6 +21,7 @@ def run(*args):
 
 
 class PostWelcomeTests(CommunityTestCase):
+    """Команда post_welcome."""
     def test_posts_one_pinned_thread_from_the_system_account(self):
         output = run("post_welcome")
         thread = Thread.objects.get(title=welcome.TITLE)
@@ -84,6 +85,7 @@ class PostWelcomeTests(CommunityTestCase):
 
 
 class SeedCommunityTests(CommunityTestCase):
+    """Команда seed_community."""
     def test_refuses_without_debug(self):
         with override_settings(DEBUG=False), self.assertRaises(CommandError):
             run("seed_community")

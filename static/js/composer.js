@@ -1,3 +1,4 @@
+// Форма допису: картинки перетягуванням або кнопкою, прев'ю з видаленням, вибір стікера.
 // Composer: images by drag and drop or the "Add images" button, previews with a remove button, and the sticker picker.
 // Without this file the form still works: a plain file input and a <select> of stickers.
 // Previews are blob: URLs (the page's own memory, nothing is uploaded until the form is sent); the CSP allows blob:

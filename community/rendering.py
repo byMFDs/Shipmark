@@ -1,4 +1,6 @@
-"""Thread and reply text: the site's one markdown renderer (projects.rendering: raw HTML off, nh3 allowlist,
+"""Текст тем і відповідей через єдиний markdown-рендерер сайту.
+
+Thread and reply text: the site's one markdown renderer (projects.rendering: raw HTML off, nh3 allowlist,
 links get rel="nofollow ugc noopener", no images)."""
 import re
 
@@ -19,7 +21,9 @@ def render_reply_body(text):
 
 
 def count_links(*texts):
-    """How many links a post holds: addresses typed in the text or links after rendering, whichever is more
+    """Скільки посилань у дописі.
+
+    How many links a post holds: addresses typed in the text or links after rendering, whichever is more
     (so `[text](mailto:...)` and a bare address both count)."""
     total = 0
     for text in texts:

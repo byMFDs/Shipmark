@@ -1,4 +1,6 @@
-"""Post the pinned "Welcome and rules" thread from the official system account "shipmark".
+"""Публікує закріплену тему «Вітання й правила» від системного акаунта.
+
+Post the pinned "Welcome and rules" thread from the official system account "shipmark".
 
     python manage.py post_welcome                 # on the first active board
     python manage.py post_welcome --board help
@@ -22,6 +24,7 @@ TITLE = "Welcome and rules"
 
 
 def welcome_body():
+    """Текст вітальної теми."""
     return f"""Welcome to the {branding.SITE_NAME} community: ask for help, show what you shipped, find people to build with, and talk shop with people who build with AI.
 
 **The rules in short**
@@ -49,7 +52,9 @@ def existing_welcome():
 
 
 def post_welcome(board=None, force=False):
-    """Returns (thread, created)."""
+    """Створює вітальну тему; повертає (тема, чи створено).
+
+    Returns (thread, created)."""
     author = system_user()
     old = existing_welcome()
     if old is not None and not force:
@@ -68,6 +73,7 @@ def post_welcome(board=None, force=False):
 
 
 class Command(BaseCommand):
+    """Команда post_welcome."""
     help = 'Post the pinned "Welcome and rules" thread from the system account (once; --force for a new one).'
 
     def add_arguments(self, parser):

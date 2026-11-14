@@ -1,4 +1,4 @@
-{% extends "community/_layout.html" %}
+{# Головна спільноти й сторінка дошки: список тем, сортування, пошук. #}{% extends "community/_layout.html" %}
 {% load i18n static ui %}
 
 {% block title %}{% if board %}{{ board.display_name }} · {% endif %}{% translate "Community" %} · {{ brand.SITE_NAME }}{% endblock %}

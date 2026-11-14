@@ -30,6 +30,7 @@ def comment_snippets():
 
 
 class StrayCommentTests(CommunityTestCase):
+    """Жоден коментар шаблону не друкується як текст."""
     def test_no_multi_line_hash_comments_left(self):
         for name in PARTIALS:
             source = (Path(settings.BASE_DIR) / "templates" / "community" / f"{name}.html").read_text()
@@ -54,7 +55,9 @@ class StrayCommentTests(CommunityTestCase):
 
 
 class CommunityLeakTests(LeakAssertions, CommunityTestCase):
-    """Every community page, for every role, prints no template internals (a view's `block` context
+    """Сторінки спільноти не показують внутрішнощів шаблонів для жодної ролі.
+
+    Every community page, for every role, prints no template internals (a view's `block` context
     variable once printed "<Block Node: community_main ...>" on /community/new/)."""
 
     def setUp(self):

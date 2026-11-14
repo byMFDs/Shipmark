@@ -1,4 +1,4 @@
-{% load i18n static ui %}{% comment %} One reply and its branch. Needs: node (community.tree.Node), thread, voted_replies, may_reply; top for
+{# Одна відповідь з її гілкою. #}{% load i18n static ui %}{% comment %} One reply and its branch. Needs: node (community.tree.Node), thread, voted_replies, may_reply; top for
    the first level (focus target for "Load more"). {% endcomment %}
 {% with reply=node.reply %}
 <li class="reply{% if node.stub %} reply--stub{% endif %}" id="r{{ reply.pk }}"{% if top %} data-feed-item tabindex="-1"{% endif %}>

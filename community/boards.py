@@ -1,4 +1,6 @@
-"""The boards every install starts with (created by migration 0001). Admins can add, rename and hide boards.
+"""Дошки, з якими стартує кожна інсталяція (створює міграція 0001).
+
+The boards every install starts with (created by migration 0001). Admins can add, rename and hide boards.
 
 The names and descriptions are stored in English and marked for translation here; `Board.display_name` looks the
 stored text up in the catalogs, so a default board is shown in the reader's language and an admin-made one as typed.

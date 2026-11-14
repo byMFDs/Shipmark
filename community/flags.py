@@ -1,4 +1,6 @@
-"""The COMMUNITY_ENABLED switch (env). Off: every community route is a 404 and nothing links to it."""
+"""Перемикач COMMUNITY_ENABLED: вимкнено — кожен маршрут спільноти дає 404.
+
+The COMMUNITY_ENABLED switch (env). Off: every community route is a 404 and nothing links to it."""
 from functools import wraps
 
 from django.conf import settings
@@ -10,7 +12,9 @@ def enabled():
 
 
 def community_view(view):
-    """First decorator of every community view (also the report and /mod/ routes for threads and replies)."""
+    """Декоратор кожного view спільноти: 404, коли спільноту вимкнено.
+
+    First decorator of every community view (also the report and /mod/ routes for threads and replies)."""
     @wraps(view)
     def wrapper(request, *args, **kwargs):
         if not enabled():

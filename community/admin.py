@@ -1,4 +1,6 @@
-"""Admin for the community. Boards are managed here. Threads and replies are read-only: removing, locking and
+"""Адмінка спільноти: дошки редагуються, теми й відповіді лише для читання.
+
+Admin for the community. Boards are managed here. Threads and replies are read-only: removing, locking and
 pinning need a reason the author sees, so they happen in /mod/. Superusers can restore removed posts and delete
 rows for good; both are written to the AuditLog. Votes are not registered on purpose (nobody browses who voted)."""
 from django.contrib import admin, messages
@@ -13,6 +15,7 @@ from .models import Board, CommunityImage, Reply, Thread
 
 @admin.register(Board)
 class BoardAdmin(AuditedModelAdmin):
+    """Дошки спільноти в адмінці."""
     list_display = ("name", "slug", "order", "is_active")
     list_editable = ("order", "is_active")
     search_fields = ("name", "slug")
@@ -24,7 +27,9 @@ class BoardAdmin(AuditedModelAdmin):
 
 
 class PostAdmin(AuditedModelAdmin):
-    """Read-only, with "Restore" and delete for superusers."""
+    """Спільна основа для тем і відповідей: лише читання, відновлення й видалення для суперкористувача.
+
+    Read-only, with "Restore" and delete for superusers."""
 
     actions = ["restore"]
 
@@ -40,6 +45,7 @@ class PostAdmin(AuditedModelAdmin):
 
 @admin.register(Thread)
 class ThreadAdmin(PostAdmin):
+    """Теми спільноти в адмінці."""
     list_display = ("title", "board", "author", "status", "pinned", "score", "reply_count", "created_at")
     list_filter = ("status", "pinned", "board", "created_at")
     search_fields = ("title", "body", "author__username")
@@ -54,6 +60,7 @@ class ThreadAdmin(PostAdmin):
 
 @admin.register(Reply)
 class ReplyAdmin(PostAdmin):
+    """Відповіді спільноти в адмінці."""
     list_display = ("__str__", "author", "status", "depth", "score", "created_at")
     list_filter = ("status", "created_at")
     search_fields = ("body", "author__username", "thread__title")
@@ -68,6 +75,7 @@ class ReplyAdmin(PostAdmin):
 
 @admin.register(CommunityImage)
 class CommunityImageAdmin(ReadOnlyModelAdmin):
+    """Картинки спільноти в адмінці (лише перегляд)."""
     list_display = ("image", "uploader", "thread", "reply", "width", "height", "created_at")
     list_select_related = ("uploader", "thread", "reply__thread")
     date_hierarchy = "created_at"

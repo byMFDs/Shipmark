@@ -27,6 +27,7 @@ def tile_attrs(html):
 
 
 class ShellTests(CommunityTestCase):
+    """Каркас сторінок спільноти."""
     def test_every_page_uses_the_three_column_shell_with_boards_and_rules(self):
         self.client.force_login(self.bob)
         reply = services.create_reply(self.ann, self.thread, body="Try the TXT record again.")
@@ -110,6 +111,7 @@ class ShellTests(CommunityTestCase):
 
 
 class LoadMoreTests(CommunityTestCase):
+    """Кнопка «Показати ще»."""
     def test_threads_load_more_returns_html_and_the_next_url(self):
         for n in range(5):
             make_thread(self.bob, title=f"Thread number {n}")
@@ -154,6 +156,7 @@ class LoadMoreTests(CommunityTestCase):
 
 
 class ImageGridTests(CommunityTestCase):
+    """Сітка картинок допису."""
     def thread_with(self, *sizes):
         images = [_clean(size=size, name=f"{n}.png") for n, size in enumerate(sizes)]
         return services.create_thread(self.bob, self.board, "A thread with pictures", "See the pictures.", images)
@@ -217,6 +220,7 @@ class ImageGridTests(CommunityTestCase):
 
 
 class LightboxMarkupTests(CommunityTestCase):
+    """Розмітка переглядача картинок."""
     def test_one_dialog_with_controls_and_scripts_on_every_page(self):
         page = self.client.get(self.thread.get_absolute_url())
         html = page.content.decode()
@@ -243,6 +247,7 @@ class LightboxMarkupTests(CommunityTestCase):
 
 
 class StickerUITests(CommunityTestCase):
+    """Стікери в інтерфейсі."""
     def test_picker_lists_every_sticker_for_people_who_can_reply(self):
         self.client.force_login(self.bob)
         html = self.client.get(self.thread.get_absolute_url()).content.decode()
@@ -297,6 +302,7 @@ class StickerUITests(CommunityTestCase):
 
 
 class PostFormTests(CommunityTestCase):
+    """Форми дописів."""
     def img_src(self, response):
         policy = response.headers.get("Content-Security-Policy", "")
         return re.search(r"img-src ([^;]*)", policy).group(1)
@@ -355,6 +361,7 @@ class PostFormTests(CommunityTestCase):
 
 
 class VisibilityTests(CommunityTestCase):
+    """Хто що бачить."""
     def test_vote_control_is_a_form_for_others_and_static_for_the_author(self):
         reply = services.create_reply(self.bob, self.thread, body="Mine.")
         self.client.force_login(self.bob)
@@ -440,6 +447,7 @@ class VisibilityTests(CommunityTestCase):
 
 
 class ReplyTreeMarkupTests(CommunityTestCase):
+    """Розмітка дерева відповідей."""
     def test_node_counts_every_level_below_it(self):
         top = services.create_reply(self.bob, self.thread, body="Top.")
         child = services.create_reply(self.ann, self.thread, parent=top, body="Child.")
@@ -474,6 +482,7 @@ class ReplyTreeMarkupTests(CommunityTestCase):
 
 
 class CommunityTranslationTests(CommunityTestCase):
+    """Переклади сторінок спільноти."""
     def test_pages_render_in_every_language_without_untranslated_markers(self):
         self.client.force_login(self.bob)
         services.create_reply(self.ann, self.thread, body="A reply.")

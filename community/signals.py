@@ -1,3 +1,4 @@
+"""Сигнали спільноти: прибирання файлів картинок."""
 from django.db import transaction
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
@@ -7,7 +8,9 @@ from .models import CommunityImage
 
 @receiver(post_delete, sender=CommunityImage)
 def delete_image_files(sender, instance, **kwargs):
-    """Remove both files through the storage API when an image row goes away (also by cascade)."""
+    """Видаляє обидва файли картинки, коли зникає її рядок.
+
+    Remove both files through the storage API when an image row goes away (also by cascade)."""
     for field in (instance.image, instance.thumb):
         if field:
             storage, name = field.storage, field.name

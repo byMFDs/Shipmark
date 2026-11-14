@@ -1,4 +1,6 @@
-"""In-app reply notifications: "someone replied to your thread / to your reply". No email, no push.
+"""Сповіщення в застосунку про відповіді.
+
+In-app reply notifications: "someone replied to your thread / to your reply". No email, no push.
 
 The header shows a mark while `User.community_notified_at` is set (no query: the user row is loaded anyway).
 Opening /community/notifications/ lists them, marks them read and clears the mark.
@@ -12,7 +14,9 @@ from .models import ReplyNotification
 
 
 def recipient_for(thread, answered):
-    """Who hears about a reply: the author of the reply being answered, else the thread's author.
+    """Кому сповіщати про відповідь.
+
+    Who hears about a reply: the author of the reply being answered, else the thread's author.
     `answered` is the reply the person clicked "Reply" on (before the depth limit moves it up a level)."""
     if answered is not None:
         return answered.author, ReplyNotification.Kind.REPLY
@@ -20,7 +24,9 @@ def recipient_for(thread, answered):
 
 
 def notify(reply, recipient, kind):
-    """Nobody is told about their own reply, and a deleted or deactivated account is told nothing."""
+    """Створює сповіщення (не собі й не видаленим акаунтам).
+
+    Nobody is told about their own reply, and a deleted or deactivated account is told nothing."""
     if recipient is None or recipient.pk == reply.author_id or not recipient.is_active:
         return None
     now = timezone.now()
@@ -34,6 +40,7 @@ def notify(reply, recipient, kind):
 
 
 def inbox(user):
+    """Сповіщення людини, нові спершу."""
     return (
         ReplyNotification.objects.visible().filter(recipient=user)
         .select_related("reply__author", "reply__thread").order_by("-created_at", "-pk")
@@ -41,6 +48,7 @@ def inbox(user):
 
 
 def mark_all_read(user):
+    """Позначає всі сповіщення прочитаними."""
     now = timezone.now()
     ReplyNotification.objects.filter(recipient=user, read_at__isnull=True).update(read_at=now)
     if user.community_notified_at is not None:
@@ -49,7 +57,9 @@ def mark_all_read(user):
 
 
 def prune(now=None):
-    """Delete notifications older than the retention period. Returns how many."""
+    """Видаляє сповіщення, старші за термін зберігання.
+
+    Delete notifications older than the retention period. Returns how many."""
     cutoff = (now or timezone.now()) - limits.NOTIFICATION_RETENTION
     deleted, _rows = ReplyNotification.objects.filter(created_at__lt=cutoff).delete()
     return deleted

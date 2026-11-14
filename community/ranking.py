@@ -1,4 +1,6 @@
-"""Thread order: Hot, New, Top. Computed in SQL (SQLite and PostgreSQL), no new dependency.
+"""Порядок тем: Hot, New, Top, обчислений у SQL.
+
+Thread order: Hot, New, Top. Computed in SQL (SQLite and PostgreSQL), no new dependency.
 
     hot = (10 * score + 4 * min(reply_count, 50) + 10) * decay
 
@@ -33,6 +35,7 @@ REPLY_SORTS = ("best", "new")
 
 
 def with_hot(queryset, now):
+    """Додає до тем бал «гарячості» з урахуванням віку."""
     decay = Case(
         *[When(created_at__gte=now - age, then=Value(factor)) for age, factor in DECAY_STEPS],
         default=Value(DECAY_OLDEST), output_field=IntegerField(),
@@ -42,7 +45,9 @@ def with_hot(queryset, now):
 
 
 def ordered(queryset, sort, window, now):
-    """`sort` in SORTS, `window` a key of TOP_WINDOWS (used by "top" only)."""
+    """Сортує теми за обраним порядком і вікном.
+
+    `sort` in SORTS, `window` a key of TOP_WINDOWS (used by "top" only)."""
     if sort == "new":
         return queryset.order_by("-created_at", "-pk")
     if sort == "top":

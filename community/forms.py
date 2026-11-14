@@ -1,3 +1,4 @@
+"""Форми спільноти: нова тема, відповідь, редагування."""
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -15,12 +16,15 @@ from .rendering import count_links
 
 
 class BoardChoiceField(forms.ModelChoiceField):
+    """Вибір дошки з її перекладеною назвою."""
     def label_from_instance(self, board):
         return board.display_name
 
 
 class PostFormMixin(StyledFormMixin):
-    """Shared by threads and replies: the images field, and the rules for accounts younger than 24 hours.
+    """Спільне для тем і відповідей: картинки й обмеження для нових акаунтів.
+
+    Shared by threads and replies: the images field, and the rules for accounts younger than 24 hours.
 
     `user` is the author. Nothing here trusts the browser: counts, sizes and types are checked again.
     """
@@ -32,6 +36,7 @@ class PostFormMixin(StyledFormMixin):
         super().__init__(*args, **kwargs)
 
     def clean_images(self):
+        """Нові акаунти (до 24 годин) не можуть додавати картинки."""
         files = self.cleaned_data.get("images") or []
         if not files:
             return []
@@ -64,6 +69,7 @@ class PostFormMixin(StyledFormMixin):
 
 
 def _body(rows, max_length):
+    """Поле тексту допису з markdown-підказкою."""
     return forms.CharField(
         label=_("Text"), required=False, max_length=max_length, strip=True,
         widget=forms.Textarea(attrs={"rows": rows, "maxlength": max_length}),
@@ -72,6 +78,7 @@ def _body(rows, max_length):
 
 
 def _images(max_images):
+    """Поле картинок допису з обмеженням кількості."""
     return ScreenshotsField(
         label=_("Images"), required=False,
         help_text=ngettext(
@@ -81,6 +88,7 @@ def _images(max_images):
 
 
 class ThreadForm(PostFormMixin, forms.Form):
+    """Форма нової теми: дошка, заголовок, текст, картинки."""
     max_images = limits.MAX_THREAD_IMAGES
 
     board = BoardChoiceField(label=_("Board"), queryset=Board.objects.none(), empty_label=_("Choose a board"),
@@ -96,6 +104,7 @@ class ThreadForm(PostFormMixin, forms.Form):
         self.fields["board"].queryset = Board.objects.filter(is_active=True)
 
     def clean(self):
+        """Тема має мати текст або картинку; перевіряє ліміт посилань."""
         data = super().clean()
         if not data.get("body") and not data.get("images") and "images" not in self.errors:
             self.add_error("body", _("Write something or add an image."))
@@ -104,7 +113,9 @@ class ThreadForm(PostFormMixin, forms.Form):
 
 
 class ThreadEditForm(PostFormMixin, forms.Form):
-    """Text only. The title can change during the first 15 minutes (`title_editable`), the board and images never."""
+    """Редагування теми: текст і заголовок у перші 15 хвилин.
+
+    Text only. The title can change during the first 15 minutes (`title_editable`), the board and images never."""
 
     title = forms.CharField(label=_("Title"), min_length=limits.MIN_TITLE, max_length=limits.MAX_TITLE, strip=True,
                             widget=forms.TextInput(attrs={"maxlength": limits.MAX_TITLE}))
@@ -117,6 +128,7 @@ class ThreadEditForm(PostFormMixin, forms.Form):
             del self.fields["title"]
 
     def clean(self):
+        """Тема не може лишитися порожньою; перевіряє посилання."""
         data = super().clean()
         if not data.get("body") and not self.has_images:
             self.add_error("body", _("Write something or add an image."))
@@ -125,6 +137,7 @@ class ThreadEditForm(PostFormMixin, forms.Form):
 
 
 class ReplyForm(PostFormMixin, forms.Form):
+    """Форма відповіді: текст, стікер, картинки."""
     max_images = limits.MAX_REPLY_IMAGES
 
     body = _body(4, limits.MAX_REPLY_BODY)
@@ -138,12 +151,14 @@ class ReplyForm(PostFormMixin, forms.Form):
         self.fields["sticker"].widget.choices = [("", _("No sticker")), *stickers.STICKERS.items()]
 
     def clean_sticker(self):
+        """Стікер має бути з нашого набору."""
         key = self.cleaned_data.get("sticker") or ""
         if key and not stickers.is_sticker(key):
             raise ValidationError(_("This sticker does not exist."), code="bad_sticker")
         return key
 
     def clean(self):
+        """Відповідь має мати текст, стікер або картинку; перевіряє посилання."""
         data = super().clean()
         if not self.errors and not (data.get("body") or data.get("sticker") or data.get("images")):
             self.add_error("body", _("Write something, or add an image or a sticker."))
@@ -152,6 +167,7 @@ class ReplyForm(PostFormMixin, forms.Form):
 
 
 class ReplyEditForm(PostFormMixin, forms.Form):
+    """Редагування відповіді (лише текст)."""
     body = _body(4, limits.MAX_REPLY_BODY)
 
     def __init__(self, *args, has_extras, **kwargs):
@@ -159,6 +175,7 @@ class ReplyEditForm(PostFormMixin, forms.Form):
         self.has_extras = has_extras  # a sticker or images: the text may then be empty
 
     def clean(self):
+        """Відповідь не може лишитися порожньою; перевіряє посилання."""
         data = super().clean()
         if not data.get("body") and not self.has_extras:
             self.add_error("body", _("Write something, or add an image or a sticker."))

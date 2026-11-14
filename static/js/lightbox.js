@@ -1,3 +1,4 @@
+// Переглядач картинок дописів у native dialog.
 // Image viewer for community posts, on the native <dialog>: Escape closes (the browser does it), arrow keys and
 // swipes move between the images of the same post, focus goes back to the tile that opened it.
 // Without this file every tile is a plain link to the image.

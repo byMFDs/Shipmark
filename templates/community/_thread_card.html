@@ -1,4 +1,4 @@
-{% load i18n ui %}{# A thread in a list. Needs: thread (board, author, images prefetched), voted (set of thread ids). #}
+{# Картка теми в списку. #}{% load i18n ui %}{# A thread in a list. Needs: thread (board, author, images prefetched), voted (set of thread ids). #}
 {% with images=thread.images.all %}
 <li class="thread-card{% if thread.pinned %} thread-card--pinned{% endif %}" data-feed-item tabindex="-1">
   <div class="thread-card__vote">{% url 'community:vote_thread' thread.pk as vote_url %}{% if user.is_authenticated and thread.author_id == user.pk %}{% include "community/_vote.html" with action="" voted=False score=thread.score own=True %}{% elif thread.pk in voted %}{% include "community/_vote.html" with action=vote_url voted=True score=thread.score own=False %}{% else %}{% include "community/_vote.html" with action=vote_url voted=False score=thread.score own=False %}{% endif %}</div>

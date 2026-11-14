@@ -1,4 +1,6 @@
-"""Community: boards, threads, replies (three levels), images, upvotes.
+"""Моделі спільноти: дошки, теми, відповіді (три рівні), картинки, голоси, сповіщення.
+
+Community: boards, threads, replies (three levels), images, upvotes.
 
 Nothing is ever hard-deleted by a normal action. An author's delete wipes the text for real and sets `deleted_at`;
 a moderator's removal sets `status = removed` and keeps the text for appeals (the image files go at once).
@@ -22,12 +24,15 @@ from . import limits, stickers
 
 
 def visible_author(queryset, field="author"):
-    """Rows whose author (at the `field` path) is not suspended or banned. A deleted account (NULL) stays visible."""
+    """Рядки, автор яких не призупинений і не забанений.
+
+    Rows whose author (at the `field` path) is not suspended or banned. A deleted account (NULL) stays visible."""
     return queryset.filter(
         Q(**{f"{field}__isnull": True}) | Q(**{f"{field}__is_suspended": False})).filter(~banned(field))
 
 
 class Board(models.Model):
+    """Дошка спільноти."""
     slug = models.SlugField(max_length=40, unique=True)
     name = models.CharField(max_length=80)
     description = models.CharField(max_length=200, blank=True)
@@ -53,14 +58,18 @@ class Board(models.Model):
 
 
 class ThreadQuerySet(models.QuerySet):
+    """Запити до тем."""
     def public(self):
-        """What everyone may read: published or locked, on an active board, the author not hidden.
+        """Теми, які може читати кожен.
+
+        What everyone may read: published or locked, on an active board, the author not hidden.
         A thread its author deleted stays only while it has replies (shown as "[deleted]")."""
         queryset = self.filter(status__in=Thread.PUBLIC_STATES, board__is_active=True)
         return visible_author(queryset.exclude(deleted_at__isnull=False, reply_count=0))
 
 
 class Thread(models.Model):
+    """Тема на дошці."""
     class Status(models.TextChoices):
         PUBLISHED = "published", _("Published")
         LOCKED = "locked", _("Locked")  # readable; only moderators reply
@@ -132,6 +141,7 @@ class Thread(models.Model):
 
 
 class Reply(models.Model):
+    """Відповідь у темі (вкладеність до трьох рівнів)."""
     class Status(models.TextChoices):
         PUBLISHED = "published", _("Published")
         REMOVED = "removed", _("Removed")
@@ -180,7 +190,9 @@ class Reply(models.Model):
 
     @property
     def is_alive(self):
-        """Published and not deleted: it counts in `reply_count`, accepts votes, replies and edits."""
+        """Опублікована й не видалена відповідь.
+
+        Published and not deleted: it counts in `reply_count`, accepts votes, replies and edits."""
         return self.status == self.Status.PUBLISHED and self.deleted_at is None
 
     @property
@@ -200,7 +212,9 @@ def _dated(folder):
 
 
 def image_path(instance, filename):
-    """Random name: the uploaded file name is never used."""
+    """Випадкова назва файлу картинки.
+
+    Random name: the uploaded file name is never used."""
     return _dated("")
 
 
@@ -209,7 +223,9 @@ def thumb_path(instance, filename):
 
 
 class CommunityImage(models.Model):
-    """A picture on a thread or a reply: a display copy (longest side 1600) and a 640 thumbnail, both WebP,
+    """Картинка допису: копія для показу й мініатюра, обидві WebP.
+
+    A picture on a thread or a reply: a display copy (longest side 1600) and a 640 thumbnail, both WebP,
     re-encoded by projects.images (no metadata). The files are deleted with the row (community/signals.py)."""
 
     thread = models.ForeignKey(Thread, null=True, blank=True, on_delete=models.CASCADE, related_name="images")
@@ -241,7 +257,9 @@ class CommunityImage(models.Model):
 
 
 class Vote(models.Model):
-    """An upvote. There are no downvotes. Not shown in the admin: nobody browses who voted for what."""
+    """Голос «за» (голосів «проти» немає).
+
+    An upvote. There are no downvotes. Not shown in the admin: nobody browses who voted for what."""
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="community_votes")
     thread = models.ForeignKey(Thread, null=True, blank=True, on_delete=models.CASCADE, related_name="votes")
@@ -263,8 +281,11 @@ class Vote(models.Model):
 
 
 class ReplyNotificationQuerySet(models.QuerySet):
+    """Запити до сповіщень."""
     def visible(self):
-        """Only about replies that can still be read: published, not deleted, in a public thread, by an author
+        """Лише сповіщення про відповіді, які ще можна прочитати.
+
+        Only about replies that can still be read: published, not deleted, in a public thread, by an author
         who is not hidden. A notification about a reply that was removed later simply stops showing."""
         return visible_author(self.filter(
             reply__status=Reply.Status.PUBLISHED, reply__deleted_at__isnull=True,
@@ -273,7 +294,9 @@ class ReplyNotificationQuerySet(models.QuerySet):
 
 
 class ReplyNotification(models.Model):
-    """In-app only (no email): "someone replied to your thread / your reply". One per recipient and reply."""
+    """Сповіщення в застосунку «вам відповіли» (без пошти).
+
+    In-app only (no email): "someone replied to your thread / your reply". One per recipient and reply."""
 
     class Kind(models.TextChoices):
         THREAD = "thread", _("Reply to your thread")

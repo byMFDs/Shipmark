@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{# Підтвердження видалення своєї теми чи відповіді. #}{% extends "base.html" %}
 {% load i18n static ui %}
 
 {% block title %}{% if reply %}{% translate "Delete this reply?" %}{% else %}{% translate "Delete this thread?" %}{% endif %} · {{ brand.SITE_NAME }}{% endblock %}

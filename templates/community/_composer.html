@@ -1,4 +1,4 @@
-{% load i18n static ui %}{% comment %} The text, image and sticker part of a post form. Needs: form (with body, images; sticker on replies),
+{# Частина форми допису: текст, картинки, стікери. #}{% load i18n static ui %}{% comment %} The text, image and sticker part of a post form. Needs: form (with body, images; sticker on replies),
    max_images, prefix. Works as a plain form without JS (file input and <select>); composer.js adds drag and drop,
    previews (blob: URLs, allowed in the CSP only on these pages), removing a chosen file and the sticker picker. {% endcomment %}
 <div class="composer" data-composer data-max="{{ max_images }}"

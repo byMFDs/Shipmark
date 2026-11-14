@@ -1,4 +1,6 @@
-"""What changes community data: post, edit, delete, vote. Views, commands and tests call these.
+"""Усі зміни даних спільноти: дописи, редагування, видалення, голоси.
+
+What changes community data: post, edit, delete, vote. Views, commands and tests call these.
 
 Counters (`score`, `reply_count`) move with F() inside the same transaction as the row they count.
 """
@@ -21,7 +23,9 @@ def _normalized(text):
 
 
 def claim_text(user, kind, text, window, scope=""):
-    """True when this text is new for the user; False when they posted the same within `window` seconds.
+    """Чи текст новий для людини (захист від дублів).
+
+    True when this text is new for the user; False when they posted the same within `window` seconds.
     cache.add is atomic, so a double submit cannot pass twice."""
     digest = hashlib.sha256(f"{scope}\n{_normalized(text)}".encode()).hexdigest()
     return cache.add(f"community:dup:{kind}:{user.pk}:{digest}", 1, timeout=window)
@@ -32,7 +36,9 @@ def claim_thread_text(user, title, body):
 
 
 def claim_reply_text(user, thread, parent, body):
-    """Empty text (a sticker or an image alone) is never a duplicate. A short text only under the same parent."""
+    """Захист від дубля відповіді під тим самим батьком.
+
+    Empty text (a sticker or an image alone) is never a duplicate. A short text only under the same parent."""
     text = _normalized(body)
     if not text:
         return True
@@ -43,6 +49,7 @@ def claim_reply_text(user, thread, parent, body):
 # ---------- Threads ----------
 
 def create_thread(author, board, title, body, images=()):
+    """Створює тему з картинками в одній транзакції."""
     with transaction.atomic():
         thread = Thread.objects.create(board=board, author=author, title=title, body=body)
         store_images(images, author, thread=thread)
@@ -50,7 +57,9 @@ def create_thread(author, board, title, body, images=()):
 
 
 def _edited_stamp(created_at, now):
-    """None inside the silent window, else the time to show next to "edited"."""
+    """Час для позначки «змінено» або None у тихому вікні.
+
+    None inside the silent window, else the time to show next to "edited"."""
     return now if now - created_at > limits.EDIT_SILENT_WINDOW else None
 
 
@@ -59,6 +68,7 @@ def title_editable(thread, now=None):
 
 
 def edit_thread(thread, body, title=None):
+    """Змінює текст і, якщо ще можна, заголовок теми."""
     now = timezone.now()
     fields = ["body"]
     thread.body = body
@@ -75,7 +85,9 @@ def edit_thread(thread, body, title=None):
 
 
 def delete_thread(thread):
-    """By the author: the text and the images are gone for good. The row stays ("[deleted]") while it has
+    """Видалення автором: текст і картинки зникають, рядок лишається як «[видалено]».
+
+    By the author: the text and the images are gone for good. The row stays ("[deleted]") while it has
     replies; without replies nobody can open it any more (ThreadQuerySet.public)."""
     if thread.is_deleted:
         return False
@@ -90,7 +102,9 @@ def delete_thread(thread):
 # ---------- Replies ----------
 
 def place_reply(parent):
-    """(parent, root, depth) for an answer to `parent` (None = top level). Depth never passes MAX_DEPTH:
+    """Батько, корінь і глибина для нової відповіді.
+
+    (parent, root, depth) for an answer to `parent` (None = top level). Depth never passes MAX_DEPTH:
     an answer to a reply on the last level becomes its sibling."""
     if parent is None:
         return None, None, 1
@@ -100,7 +114,9 @@ def place_reply(parent):
 
 
 def create_reply(author, thread, parent=None, body="", sticker_key="", images=()):
-    """`parent` is the reply being answered (None: the thread). Its author is notified, also when the depth
+    """Створює відповідь і сповіщає того, кому відповіли.
+
+    `parent` is the reply being answered (None: the thread). Its author is notified, also when the depth
     limit attaches the new reply one level higher."""
     if sticker_key and not stickers.is_sticker(sticker_key):
         raise ValueError("unknown sticker")  # forms check this first; never store a key outside the manifest
@@ -119,6 +135,7 @@ def create_reply(author, thread, parent=None, body="", sticker_key="", images=()
 
 
 def edit_reply(reply, body):
+    """Змінює текст відповіді."""
     fields = ["body"]
     reply.body = body
     stamp = _edited_stamp(reply.created_at, timezone.now())
@@ -134,7 +151,9 @@ def uncount_reply(reply):
 
 
 def delete_reply(reply):
-    """By the author: text, sticker and images are gone; the row stays so the answers under it keep their place."""
+    """Видалення автором: зміст зникає, рядок лишається для гілки.
+
+    By the author: text, sticker and images are gone; the row stays so the answers under it keep their place."""
     if reply.is_deleted:
         return False
     with transaction.atomic():
@@ -152,7 +171,9 @@ def delete_reply(reply):
 # ---------- Votes ----------
 
 def set_vote(user, target, on):
-    """Upvote (`on=True`) or take it back. Idempotent. Returns the new score."""
+    """Ставить або знімає голос; повертає новий рахунок.
+
+    Upvote (`on=True`) or take it back. Idempotent. Returns the new score."""
     model = type(target)
     field = "thread" if model is Thread else "reply"
     with transaction.atomic():

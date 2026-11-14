@@ -1,4 +1,6 @@
-"""A page of a thread's replies as a tree, in a fixed number of queries whatever the size of the thread."""
+"""Сторінка відповідей теми як дерево за сталу кількість запитів.
+
+A page of a thread's replies as a tree, in a fixed number of queries whatever the size of the thread."""
 from django.db.models import prefetch_related_objects
 
 from moderation.visibility import banned
@@ -9,7 +11,9 @@ from .ranking import sort_replies
 
 
 class Node:
-    """One reply in the tree. `stub` is "" for a normal reply, or why only a placeholder is shown:
+    """Одна відповідь у дереві (або заглушка з причиною).
+
+    One reply in the tree. `stub` is "" for a normal reply, or why only a placeholder is shown:
     "deleted" (by the author) or "removed" (by moderators, or the author is suspended or banned)."""
 
     def __init__(self, reply):
@@ -25,7 +29,9 @@ class Node:
 
     @property
     def below(self):
-        """How many replies hang under this one (all levels): the "Hide replies (N)" button."""
+        """Скільки відповідей висить під цією на всіх рівнях.
+
+        How many replies hang under this one (all levels): the "Hide replies (N)" button."""
         return sum(1 + child.below for child in self.children)
 
 
@@ -34,7 +40,9 @@ def _rows(queryset):
 
 
 def load_page(thread, sort, page):
-    """(nodes, has_next): top-level replies of this page with their branches, sorted on every level.
+    """Відповіді верхнього рівня цієї сторінки з гілками.
+
+    (nodes, has_next): top-level replies of this page with their branches, sorted on every level.
     A placeholder is kept only while something readable hangs under it."""
     top = _rows(Reply.objects.filter(thread=thread, parent__isnull=True))
     order = ("-created_at", "-pk") if sort == "new" else ("-score", "created_at", "pk")
@@ -62,6 +70,7 @@ def load_page(thread, sort, page):
 
 
 def reply_ids(nodes):
+    """Id усіх відповідей у дереві."""
     out = []
     for node in nodes:
         out.append(node.reply.pk)
