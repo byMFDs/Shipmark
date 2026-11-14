@@ -1,3 +1,4 @@
+"""Маршрути акаунта: налаштування, експорт, видалення, умови, профіль."""
 from django.urls import path
 
 from . import views

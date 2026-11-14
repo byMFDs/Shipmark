@@ -1,3 +1,4 @@
+"""Форми акаунта: підтвердження реєстрації, налаштування, нові умови, видалення."""
 from allauth.socialaccount.forms import SignupForm
 from django import forms
 from django.conf import settings
@@ -23,7 +24,9 @@ MAX_PINNED = 3
 
 
 class StyledFormMixin:
-    """Adds our CSS classes and accessibility attributes to every widget."""
+    """Додає нашим полям CSS-класи та атрибути доступності.
+
+    Adds our CSS classes and accessibility attributes to every widget."""
 
     WIDGET_CLASSES = {"textarea": "textarea", "select": "select", "checkbox": "checkbox"}
 
@@ -38,6 +41,7 @@ class StyledFormMixin:
                 widget.attrs["aria-describedby"] = f"{self[name].auto_id}_hint"
 
     def full_clean(self):
+        """Позначає поля з помилками aria-invalid і зв'язує їх з текстом помилки."""
         super().full_clean()
         for name in self.errors:
             if name in self.fields:
@@ -48,7 +52,9 @@ class StyledFormMixin:
 
 
 class SignupConfirmForm(StyledFormMixin, SignupForm):
-    """The step after the first GitHub login: confirm the username and accept the Terms."""
+    """Крок після першого входу через GitHub: ім'я користувача й згода з умовами.
+
+    The step after the first GitHub login: confirm the username and accept the Terms."""
 
     terms = forms.BooleanField(
         required=True,
@@ -63,6 +69,7 @@ class SignupConfirmForm(StyledFormMixin, SignupForm):
         self.fields["username"].widget.attrs.update({"autocapitalize": "none", "autocorrect": "off", "spellcheck": "false"})
 
     def clean_username(self):
+        """Перевіряє правила й зайнятість імені користувача."""
         value = self.cleaned_data["username"].strip().lower()
         validate_username(value)
         if is_taken(value):
@@ -70,6 +77,7 @@ class SignupConfirmForm(StyledFormMixin, SignupForm):
         return value
 
     def save(self, request):
+        """Зберігає версію прийнятих умов і час згоди."""
         user = self.sociallogin.user
         user.terms_version_accepted = settings.TERMS_VERSION
         user.terms_accepted_at = timezone.now()
@@ -77,7 +85,9 @@ class SignupConfirmForm(StyledFormMixin, SignupForm):
 
 
 class SettingsForm(StyledFormMixin, forms.ModelForm):
-    """Everything on the settings page, saved together with one button (so a chosen picture is never lost).
+    """Уся сторінка налаштувань, яка зберігається однією кнопкою.
+
+    Everything on the settings page, saved together with one button (so a chosen picture is never lost).
 
     Only these fields can be changed. Username and GitHub login are not editable here. Pictures go through
     the Pillow pipeline in projects.images and are stored by accounts.avatars; "use my GitHub picture" is a
@@ -195,13 +205,16 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
         return parse_tag_names(self.cleaned_data["skills_text"], MAX_SKILLS, _("Use at most 10 skills."))
 
     def clean_pinned(self):
+        """Не більше трьох закріплених проєктів."""
         pinned = self.cleaned_data["pinned"]
         if len(pinned) > MAX_PINNED:
             raise ValidationError(_("Pin at most 3 projects."))
         return list(pinned)
 
     def _image(self, field, cleaner, limit_name):
-        """Run an uploaded picture through the pipeline. Returns the ContentFile or None (error added)."""
+        """Пропускає завантажену картинку через спільний конвеєр зображень.
+
+        Run an uploaded picture through the pipeline. Returns the ContentFile or None (error added)."""
         upload = self.cleaned_data.get(field)
         if not upload:
             return None
@@ -215,6 +228,7 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
         return None
 
     def clean(self):
+        """Перевіряє картинки й посилання; приглушеній людині змінює лише мову."""
         data = super().clean()
         user = self.instance
         self.links_clean = []
@@ -251,6 +265,7 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
         return data
 
     def save(self, commit=True):
+        """Зберігає профіль, картинки, посилання й закріплені проєкти в одній транзакції."""
         user = super().save(commit=False)
         data = self.cleaned_data
         if not self.can_edit_profile:
@@ -280,7 +295,9 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
 
 
 class AcceptTermsForm(StyledFormMixin, forms.Form):
-    """Shown after settings.TERMS_VERSION is bumped."""
+    """Згода з новою версією умов після зміни TERMS_VERSION.
+
+    Shown after settings.TERMS_VERSION is bumped."""
 
     terms = forms.BooleanField(
         required=True,
@@ -294,7 +311,9 @@ class AcceptTermsForm(StyledFormMixin, forms.Form):
 
 
 class DeleteAccountForm(StyledFormMixin, forms.Form):
-    """The user types their username to confirm. Case and surrounding spaces do not matter."""
+    """Підтвердження видалення: людина вводить своє ім'я користувача.
+
+    The user types their username to confirm. Case and surrounding spaces do not matter."""
 
     confirm = forms.CharField(label=_("Type your username to confirm"), max_length=60)
 
@@ -305,6 +324,7 @@ class DeleteAccountForm(StyledFormMixin, forms.Form):
         widget.attrs.update({"autocomplete": "off", "autocapitalize": "none", "autocorrect": "off", "spellcheck": "false"})
 
     def clean_confirm(self):
+        """Введене ім'я має збігатися з іменем акаунта."""
         value = self.cleaned_data["confirm"].strip().lower()
         if value != self.user.username:
             raise ValidationError(_("This is not your username. Type it exactly as shown."), code="mismatch")

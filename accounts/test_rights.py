@@ -29,6 +29,7 @@ def make_project(owner, slug, status=Project.Status.PUBLISHED, **extra):
 
 
 class LegalPageTests(TestCase):
+    """Юридичні сторінки."""
     def test_pages_exist_in_both_languages_with_brand_details(self):
         for slug in ("privacy", "terms", "cookies"):
             for lang in ("en", "uk"):
@@ -49,6 +50,7 @@ class LegalPageTests(TestCase):
 
 
 class TermsReacceptanceTests(TestCase):
+    """Повторна згода з новими умовами."""
     def setUp(self):
         self.user = make_user("alice", terms_version_accepted="2000-01-01")
         self.client.force_login(self.user)
@@ -114,6 +116,7 @@ class TermsReacceptanceTests(TestCase):
 
 
 class ExportTests(TestCase):
+    """Експорт даних у JSON."""
     def setUp(self):
         cache.clear()
         self.alice = make_user("alice", email="alice@example.com", display_name="Alice", github_login="alice-gh")
@@ -191,6 +194,7 @@ class ExportTests(TestCase):
 
 
 class DeleteAccountTests(TestCase):
+    """Видалення акаунта."""
     def setUp(self):
         cache.clear()
         self.alice = make_user("alice", email="alice@example.com", github_login="alice-gh")

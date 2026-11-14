@@ -1,4 +1,6 @@
-"""Username rules: validation and generation from a GitHub login.
+"""Правила імені користувача: перевірка й генерація з логіна GitHub.
+
+Username rules: validation and generation from a GitHub login.
 
 Usernames appear in URLs (/u/<username>/), so they are lowercase and URL-safe.
 """
@@ -29,7 +31,9 @@ _ALLOWED = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 
 
 def validate_username(value):
-    """Model/form validator. Does not check uniqueness (the database does)."""
+    """Валідатор імені користувача (без перевірки зайнятості).
+
+    Model/form validator. Does not check uniqueness (the database does)."""
     if not (MIN_LENGTH <= len(value) <= MAX_LENGTH):
         raise ValidationError(
             _("Use %(min)d to %(max)d characters."), code="length",
@@ -45,6 +49,7 @@ def validate_username(value):
 
 
 def is_taken(username, exclude_pk=None):
+    """Чи зайняте ім'я (без урахування регістру)."""
     from django.contrib.auth import get_user_model
 
     qs = get_user_model().objects.filter(username__iexact=username)
@@ -54,6 +59,7 @@ def is_taken(username, exclude_pk=None):
 
 
 def _is_free(candidate):
+    """Чи ім'я коректне й вільне."""
     try:
         validate_username(candidate)
     except ValidationError:
@@ -62,7 +68,9 @@ def _is_free(candidate):
 
 
 def generate_username(github_login):
-    """A valid, free username based on a GitHub login: `name`, then `name-2`, `name-3`, ..."""
+    """Вільне ім'я на основі логіна GitHub: name, name-2, name-3...
+
+    A valid, free username based on a GitHub login: `name`, then `name-2`, `name-3`, ..."""
     base = re.sub(r"[^a-z0-9_-]", "-", (github_login or "").lower()).strip("-_")[:MAX_LENGTH] or "user"
     candidate, n = base, 1
     while not _is_free(candidate):
@@ -78,14 +86,18 @@ def _name_key(value):
 
 
 def looks_official(display_name):
-    """True when the display name would pass for the site's own account."""
+    """Чи схоже відображуване ім'я на офіційний акаунт.
+
+    True when the display name would pass for the site's own account."""
     site = _name_key(branding.SITE_NAME)
     key = _name_key(display_name)
     return bool(key) and any(key in (site + word, word + site) for word in OFFICIAL_NAME_WORDS)
 
 
 def validate_display_name(value, user=None):
-    """Only accounts with the official badge may be called "Shipmark", "Shipmark Team" and so on."""
+    """Офіційні імена дозволено лише акаунтам з бейджем official.
+
+    Only accounts with the official badge may be called "Shipmark", "Shipmark Team" and so on."""
     from .roles import is_official
 
     if looks_official(value) and not (user is not None and is_official(user)):

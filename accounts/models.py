@@ -1,3 +1,4 @@
+"""Моделі акаунтів: User, бейджі, посилання профілю, закріплені проєкти."""
 import uuid
 
 from django.conf import settings
@@ -10,7 +11,9 @@ from .usernames import MAX_LENGTH, validate_username
 
 
 def avatar_path(instance, filename):
-    """Random file name: the uploaded name (which the user controls) is never used."""
+    """Випадкова назва файлу для аватарки чи обкладинки.
+
+    Random file name: the uploaded name (which the user controls) is never used."""
     return f"avatars/{uuid.uuid4().hex}.webp"
 
 
@@ -19,6 +22,7 @@ def cover_path(instance, filename):
 
 
 class User(AbstractUser):
+    """Користувач Shipmark: профіль, мова, згода з умовами, призупинення."""
     class Status(models.TextChoices):
         # The empty value means "no status": nothing is shown on the profile.
         OPEN_TO_WORK = "open_to_work", _("Open to work")
@@ -77,7 +81,9 @@ class User(AbstractUser):
 
 
 class UserBadge(models.Model):
-    """A mark next to a person's name. Granted and revoked only by superusers (admin or `grant_badge`).
+    """Бейдж біля імені (official, moderator); видає лише суперкористувач.
+
+    A mark next to a person's name. Granted and revoked only by superusers (admin or `grant_badge`).
 
     Official: "Official Shipmark account", gives no permissions. Moderator: the only source of the
     moderation permission (`accounts.roles.can_moderate`), never `is_staff`. Every change is in AuditLog.
@@ -106,7 +112,9 @@ class UserBadge(models.Model):
 
 
 class ProfileLink(models.Model):
-    """Up to 6 links on a profile. http(s) only; GitHub, X, LinkedIn and Telegram must point to their own sites
+    """Посилання в профілі (до шести).
+
+    Up to 6 links on a profile. http(s) only; GitHub, X, LinkedIn and Telegram must point to their own sites
     (accounts/links.py), so an icon never leads somewhere else. Shown with rel="nofollow ugc noopener"."""
 
     class Kind(models.TextChoices):
@@ -132,7 +140,9 @@ class ProfileLink(models.Model):
 
 
 class PinnedProject(models.Model):
-    """Up to 3 of a person's own published projects, shown first on the profile."""
+    """Закріплений проєкт у профілі (до трьох).
+
+    Up to 3 of a person's own published projects, shown first on the profile."""
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="pins")
     project = models.ForeignKey("projects.Project", on_delete=models.CASCADE, related_name="pins")

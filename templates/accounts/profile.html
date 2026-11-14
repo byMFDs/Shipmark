@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{# Публічний профіль: шапка, статистика, закріплені проєкти, вкладки. #}{% extends "base.html" %}
 {% load i18n static ui %}
 
 {% block title %}{{ person.display_name|default:person.username }} (@{{ person.username }}) · {{ brand.SITE_NAME }}{% endblock %}

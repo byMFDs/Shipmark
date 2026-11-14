@@ -31,7 +31,9 @@ def _response(status, body):
 
 
 class FakeGitHub:
-    """Stands in for requests.Session: answers the token URL and the two API endpoints."""
+    """Підробний GitHub для тестів входу.
+
+    Stands in for requests.Session: answers the token URL and the two API endpoints."""
 
     def __init__(self, profile):
         self.profile = profile
@@ -56,6 +58,7 @@ class FakeGitHub:
 
 @override_settings(SOCIALACCOUNT_PROVIDERS=FAKE_GITHUB_APP)
 class GitHubLoginFlowTests(TestCase):
+    """Повний вхід через GitHub, зокрема перейменований логін."""
     @contextmanager
     def github(self, uid, login):
         fake = FakeGitHub({"id": uid, "login": login, "name": login, "bio": "", "avatar_url": ""})

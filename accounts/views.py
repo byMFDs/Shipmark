@@ -1,3 +1,4 @@
+"""Сторінки акаунта: вхід, вихід, налаштування, умови, експорт, видалення, профіль."""
 import json
 
 from django.conf import settings
@@ -39,7 +40,9 @@ def _safe_next(request):
 
 
 def login_page(request):
-    """Sign-in page. The button POSTs to allauth's GitHub login (CSRF-protected)."""
+    """Сторінка входу з кнопкою GitHub.
+
+    Sign-in page. The button POSTs to allauth's GitHub login (CSRF-protected)."""
     if request.user.is_authenticated:
         return redirect(settings.LOGIN_REDIRECT_URL)
     return render(request, "accounts/login.html", {
@@ -50,7 +53,9 @@ def login_page(request):
 
 @require_http_methods(["GET", "POST"])
 def logout_page(request):
-    """GET asks "Sign out?", POST signs out. A plain link must never log anyone out."""
+    """GET питає «Вийти?», POST виходить.
+
+    GET asks "Sign out?", POST signs out. A plain link must never log anyone out."""
     if not request.user.is_authenticated:
         return redirect(settings.LOGOUT_REDIRECT_URL)
     if request.method == "POST":
@@ -63,7 +68,9 @@ def logout_page(request):
 @login_required
 @require_http_methods(["GET", "POST"])
 def settings_page(request):
-    """Edit your own settings. There is no user id in the URL, so only request.user can be edited."""
+    """Налаштування поточного користувача.
+
+    Edit your own settings. There is no user id in the URL, so only request.user can be edited."""
     user = request.user
     if request.method == "POST":
         if user.is_suspended:
@@ -85,7 +92,9 @@ def settings_page(request):
 @login_required
 @require_http_methods(["GET", "POST"])
 def accept_terms(request):
-    """Asked after settings.TERMS_VERSION changes (see config.middleware.TermsAcceptanceMiddleware)."""
+    """Згода з новою версією умов.
+
+    Asked after settings.TERMS_VERSION changes (see config.middleware.TermsAcceptanceMiddleware)."""
     user = request.user
     target = _safe_next(request) or settings.LOGIN_REDIRECT_URL
     if user.terms_version_accepted == settings.TERMS_VERSION:
@@ -101,7 +110,9 @@ def accept_terms(request):
 @login_required
 @require_http_methods(["POST"])
 def export_data(request):
-    """JSON file with the signed-in user's data. POST, so a link preview or prefetch never triggers it."""
+    """Віддає JSON з даними користувача (лише POST).
+
+    JSON file with the signed-in user's data. POST, so a link preview or prefetch never triggers it."""
     user = request.user
     if is_limited("export", user.pk, limit=10, window=3600):
         messages.error(request, _("Too many downloads in a short time. Try again later."))
@@ -119,7 +130,9 @@ def export_data(request):
 @login_required
 @require_http_methods(["GET", "POST"])
 def delete_account_page(request):
-    """Explains what happens, then deletes after the user types their username.
+    """Пояснення й підтвердження видалення акаунта.
+
+    Explains what happens, then deletes after the user types their username.
 
     Allowed for suspended users too: deleting your data is a right, not a write to the site.
     """
@@ -137,7 +150,9 @@ def delete_account_page(request):
 
 
 def profile(request, username):
-    """Public profile. Unknown and suspended users give the same 404: no hint that the account exists."""
+    """Публічний профіль; невідомі й призупинені дають однаковий 404.
+
+    Public profile. Unknown and suspended users give the same 404: no hint that the account exists."""
     try:
         person = visible_users(User.objects.all()).get(username__iexact=username)
     except User.DoesNotExist:

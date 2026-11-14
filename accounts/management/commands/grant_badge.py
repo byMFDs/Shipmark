@@ -1,4 +1,6 @@
-"""python manage.py grant_badge <username> <official|moderator> [--note "..."] [--revoke]
+"""Команда grant_badge: видати або зняти бейдж official чи moderator.
+
+python manage.py grant_badge <username> <official|moderator> [--note "..."] [--revoke]
 
 The same as the badge admin (superusers only there); the change is written to AuditLog with no actor
 and via="command".
@@ -11,6 +13,7 @@ from accounts.models import UserBadge
 
 
 class Command(BaseCommand):
+    """Видає або знімає бейдж користувачу з консолі."""
     help = "Grant or revoke the official or moderator badge."
 
     def add_arguments(self, parser):

@@ -1,3 +1,4 @@
+"""Адмінка користувачів і бейджів: ролі, призупинення, журнал змін."""
 from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.db.models import Count, Q
@@ -16,7 +17,9 @@ from .roles import can_manage_badges
 
 
 class BadgePermissions:
-    """Badges: superusers grant, change and revoke; other staff only look (CLAUDE: one source, accounts.roles)."""
+    """Права на бейджі в адмінці: змінює лише суперкористувач, інші лише дивляться.
+
+    Badges: superusers grant, change and revoke; other staff only look (CLAUDE: one source, accounts.roles)."""
 
     def has_view_permission(self, request, obj=None):
         return request.user.is_active and request.user.is_staff
@@ -32,6 +35,7 @@ class BadgePermissions:
 
 
 class UserBadgeInline(BadgePermissions, TabularInline):
+    """Бейджі користувача прямо на його сторінці в адмінці."""
     model = UserBadge
     fk_name = "user"
     extra = 0
@@ -42,6 +46,7 @@ class UserBadgeInline(BadgePermissions, TabularInline):
 
 
 class ProfileLinkInline(TabularInline):
+    """Посилання профілю на сторінці користувача в адмінці."""
     model = ProfileLink
     fk_name = "user"
     extra = 0
@@ -50,6 +55,7 @@ class ProfileLinkInline(TabularInline):
 
 @admin.register(UserBadge)
 class UserBadgeAdmin(BadgePermissions, ModelAdmin):
+    """Окремий список бейджів в адмінці."""
     list_display = ("user", "kind", "granted_by", "granted_at", "note")
     list_filter = ("kind",)
     search_fields = ("user__username", "user__display_name", "note")
@@ -63,6 +69,7 @@ class UserBadgeAdmin(BadgePermissions, ModelAdmin):
         return self.readonly_fields + (("user", "kind") if obj else ())
 
     def save_model(self, request, obj, form, change):
+        """Запам'ятовує, хто видав бейдж, і пише це в AuditLog."""
         if not change:
             obj.granted_by = request.user
         super().save_model(request, obj, form, change)
@@ -78,18 +85,21 @@ class UserBadgeAdmin(BadgePermissions, ModelAdmin):
 
 
 class UserAddForm(UserCreationForm):
+    """Форма створення користувача в адмінці."""
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("username",)
 
 
 class UserEditForm(UserChangeForm):
+    """Форма редагування користувача в адмінці."""
     class Meta(UserChangeForm.Meta):
         model = User
 
 
 @admin.register(User)
 class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
+    """Користувачі в адмінці: пошук, бейджі, призупинення з записом у AuditLog."""
     form = UserEditForm
     add_form = UserAddForm
     change_password_form = AdminPasswordChangeForm
@@ -114,6 +124,7 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
     add_fieldsets = ((None, {"classes": ("wide",), "fields": ("username", "password1", "password2")}),)
 
     def get_readonly_fields(self, request, obj=None):
+        """Не-суперкористувач не може змінювати ролі й права персоналу."""
         # Only superusers change roles. Otherwise staff with "change user" could make themselves superuser
         # and so reach everything that is superuser-only (badges, permanent sanctions).
         fields = super().get_readonly_fields(request, obj)
@@ -131,7 +142,9 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
         return obj._projects
 
     def save_formset(self, request, form, formset, change):
-        """Badge rows from the inline: set who granted them and write AuditLog, like the badge admin does."""
+        """Рядки бейджів з inline: хто видав і запис у AuditLog.
+
+        Badge rows from the inline: set who granted them and write AuditLog, like the badge admin does."""
         if formset.model is not UserBadge:
             return super().save_formset(request, form, formset, change)
         if not can_manage_badges(request.user):  # read-only inline; never save posted rows
@@ -149,6 +162,7 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
         return None
 
     def save_model(self, request, obj, form, change):
+        """Зберігає користувача; зміна «призупинено» йде в AuditLog."""
         # Editing the checkbox in the form is a moderation step too: log it like the actions do.
         super().save_model(request, obj, form, change)
         if change and "is_suspended" in form.changed_data:
@@ -157,6 +171,7 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
 
     @action(description=_("Suspend selected users"), permissions=["change"])
     def suspend(self, request, queryset):
+        """Дія адмінки: призупинити вибраних (крім себе й суперкористувачів)."""
         done = 0
         for user in queryset:
             if user.pk == request.user.pk or user.is_superuser:
@@ -169,6 +184,7 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
 
     @action(description=_("Unsuspend selected users"), permissions=["change"])
     def unsuspend(self, request, queryset):
+        """Дія адмінки: зняти призупинення з вибраних."""
         done = sum(actions.unsuspend_user(user, request.user) for user in queryset)
         message = ngettext("Unsuspended %(count)s user.",
                            "Unsuspended %(count)s users.", done)

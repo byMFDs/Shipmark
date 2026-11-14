@@ -45,6 +45,7 @@ def fetch_result(content=None, status=200):
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA)
 class ProfileTestCase(TestCase):
+    """Спільні дані для тестів профілю."""
     def setUp(self):
         cache.clear()
         self.ana = make_user("ana", display_name="Ana", github_login="ana-gh", avatar_url=GITHUB_PICTURE)
@@ -70,6 +71,7 @@ class ProfileTestCase(TestCase):
 # ---------- Pictures ----------
 
 class AvatarTests(ProfileTestCase):
+    """Аватарки й обкладинки."""
     def test_upload_is_cropped_reencoded_and_shown_everywhere(self):
         buffer = io.BytesIO()
         exif = Image.Exif()
@@ -166,7 +168,9 @@ def one_bit_png(size):
 
 
 class ImageLimitTests(ProfileTestCase):
-    """Avatars and covers use the same pipeline and limits as project screenshots (projects/images.py)."""
+    """Обмеження розміру картинок профілю.
+
+    Avatars and covers use the same pipeline and limits as project screenshots (projects/images.py)."""
 
     CASES = {
         "too many pixels": lambda: SimpleUploadedFile("a.png", one_bit_png((6000, 5000)), content_type="image/png"),
@@ -225,6 +229,7 @@ class ImageLimitTests(ProfileTestCase):
 
 
 class GitHubAvatarTests(ProfileTestCase):
+    """Аватарка з GitHub через safe_fetch."""
     def test_downloaded_once_through_safe_fetch_and_stored_locally(self):
         with mock.patch("accounts.avatars.safe_fetch", return_value=fetch_result()) as fetch:
             response = self.post(use_github_avatar="on")
@@ -283,7 +288,9 @@ class GitHubAvatarTests(ProfileTestCase):
 
 
 class MuteTests(ProfileTestCase):
-    """A muted person keeps the language setting (and export, deletion); every public profile field is frozen."""
+    """Приглушена людина не змінює публічний профіль.
+
+    A muted person keeps the language setting (and export, deletion); every public profile field is frozen."""
 
     def setUp(self):
         super().setUp()
@@ -346,6 +353,7 @@ class MuteTests(ProfileTestCase):
 # ---------- Fields ----------
 
 class FieldTests(ProfileTestCase):
+    """Поля профілю."""
     def test_limits_and_choices(self):
         for data in ({"headline": "x" * 81}, {"about": "x" * 1001}, {"location": "x" * 61}, {"status": "king"},
                      {"display_name": "Shipmark Team"}):
@@ -380,6 +388,7 @@ class FieldTests(ProfileTestCase):
 
 
 class LinkTests(ProfileTestCase):
+    """Посилання профілю."""
     def test_kind_rules(self):
         good = [("github", "https://github.com/ana"), ("github", "https://www.github.com/ana"),
                 ("x", "https://x.com/ana"), ("x", "https://twitter.com/ana"),
@@ -481,6 +490,7 @@ class LinkTests(ProfileTestCase):
 
 
 class SkillTests(ProfileTestCase):
+    """Навички профілю."""
     def test_skills_are_tags_with_a_limit(self):
         self.post(skills_text="Python, django , python, Design")
         self.assertEqual(sorted(t.slug for t in self.ana.skills.all()), ["design", "django", "python"])
@@ -499,6 +509,7 @@ class SkillTests(ProfileTestCase):
 
 
 class PinnedTests(ProfileTestCase):
+    """Закріплені проєкти."""
     def setUp(self):
         super().setUp()
         self.p = [make_project(self.ana, name=f"Thing {n}") for n in range(4)]
@@ -539,6 +550,7 @@ class PinnedTests(ProfileTestCase):
 # ---------- Page ----------
 
 class ProfilePageTests(ProfileTestCase):
+    """Публічна сторінка профілю."""
     def test_tabs_and_unknown_tab(self):
         self.client.logout()
         for tab in ("projects", "log", "about", "nonsense", ""):
@@ -610,6 +622,7 @@ class ProfilePageTests(ProfileTestCase):
 
 
 class SettingsPageTests(ProfileTestCase):
+    """Сторінка налаштувань."""
     def test_has_live_preview_and_one_form_for_everything(self):
         page = self.client.get(self.url)
         html = page.content.decode()
@@ -638,6 +651,7 @@ class SettingsPageTests(ProfileTestCase):
 # ---------- Data rights ----------
 
 class DataRightsTests(ProfileTestCase):
+    """Експорт і видалення даних профілю."""
     def test_export_has_the_new_fields_and_only_mine(self):
         bob = make_user("bob", headline="bob secret headline")
         ProfileLink.objects.create(user=bob, kind="website", url="https://bob-private.example")

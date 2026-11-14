@@ -1,4 +1,6 @@
-"""Profile links: what is accepted, and how a link is shown.
+"""Посилання профілю: що приймаємо і як показуємо.
+
+Profile links: what is accepted, and how a link is shown.
 
 Only http(s) links without a password in them. GitHub, X, LinkedIn and Telegram must point to their own
 site, so a "GitHub" icon cannot lead to a look-alike page. "Website" and "Other" accept any public address.
@@ -32,7 +34,9 @@ def _host_matches(host, allowed):
 
 
 def clean_link(kind, url):
-    """Returns the cleaned URL or raises ValidationError."""
+    """Перевіряє й нормалізує посилання певного типу.
+
+    Returns the cleaned URL or raises ValidationError."""
     url = (url or "").strip()
     parts = urlsplit(url)
     host = (parts.hostname or "").lower()
@@ -53,7 +57,9 @@ def clean_link(kind, url):
 
 
 def safe_links(user):
-    """The user's links, only those that are still valid http(s) (whatever is stored). For display."""
+    """Лише ті збережені посилання, які досі коректні (http/https).
+
+    The user's links, only those that are still valid http(s) (whatever is stored). For display."""
     out = []
     for link in user.links.all():
         if link.url.lower().startswith(("http://", "https://")):
@@ -62,7 +68,9 @@ def safe_links(user):
 
 
 def display_url(url):
-    """"example.com/path" for the link text."""
+    """Короткий текст посилання без протоколу.
+
+    "example.com/path" for the link text."""
     parts = urlsplit(url)
     host = (parts.hostname or "").removeprefix("www.")
     text = host + (parts.path.rstrip("/") if parts.path != "/" else "")

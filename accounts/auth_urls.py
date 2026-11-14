@@ -1,4 +1,6 @@
-"""Sign-in routes. Names are global (no namespace) because allauth looks them up by name."""
+"""Маршрути входу й виходу (глобальні імена, бо allauth шукає їх за назвою).
+
+Sign-in routes. Names are global (no namespace) because allauth looks them up by name."""
 from allauth.socialaccount import views as social_views
 from django.urls import path
 from django.views.generic import RedirectView

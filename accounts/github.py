@@ -1,4 +1,6 @@
-"""The user's GitHub identity.
+"""GitHub-ідентичність користувача: числовий id і поточний логін.
+
+The user's GitHub identity.
 
 The numeric GitHub account id (allauth's `SocialAccount.uid`) is the identity: it never changes.
 The login is only a name. It can be renamed, and the old name can then be taken by another account,
@@ -14,7 +16,9 @@ PROVIDER = "github"
 
 
 def github_id(user):
-    """GitHub's numeric account id from the sign-in, or None (staff accounts made with createsuperuser)."""
+    """Числовий id GitHub-акаунта або None.
+
+    GitHub's numeric account id from the sign-in, or None (staff accounts made with createsuperuser)."""
     if not getattr(user, "pk", None):
         return None
     uid = SocialAccount.objects.filter(user=user, provider=PROVIDER).values_list("uid", flat=True).first()
@@ -22,7 +26,9 @@ def github_id(user):
 
 
 def release_login(login, keep=None):
-    """Clear `login` from every other local user: their value is stale (they renamed on GitHub).
+    """Знімає логін з інших локальних акаунтів, у яких він застарів.
+
+    Clear `login` from every other local user: their value is stale (they renamed on GitHub).
 
     GitHub logins are case-insensitive. Each cleared account gets an AuditLog entry; it gets its
     current login back at its own next sign-in.
@@ -43,7 +49,9 @@ def release_login(login, keep=None):
 
 
 def refresh_login(user, extra_data):
-    """Store the login GitHub reports now. Called at every sign-in of an existing account."""
+    """Зберігає логін, який GitHub повідомив зараз.
+
+    Store the login GitHub reports now. Called at every sign-in of an existing account."""
     login = str((extra_data or {}).get("login") or "")[:39]
     if not login or login == user.github_login:
         return False

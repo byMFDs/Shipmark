@@ -1,4 +1,6 @@
-"""Profile pictures: the only code that stores or removes them.
+"""Аватарки: єдине місце, яке зберігає й видаляє картинки профілю.
+
+Profile pictures: the only code that stores or removes them.
 
 Uploads and the GitHub picture both go through projects.images (Pillow: checked, centre-cropped, re-encoded to
 WebP, metadata dropped, random file name). The GitHub picture is downloaded once, through verification.net.safe_fetch
@@ -21,7 +23,9 @@ GITHUB_AVATAR_SIZE = 512
 
 
 def github_avatar_url(user):
-    """The picture URL GitHub reported at the last sign-in (falls back to the one saved at sign-up), or ""."""
+    """Адреса аватарки з GitHub з останнього входу або порожній рядок.
+
+    The picture URL GitHub reported at the last sign-in (falls back to the one saved at sign-up), or ""."""
     account = SocialAccount.objects.filter(user=user, provider="github").first()
     url = ((account.extra_data or {}).get("avatar_url") if account else "") or user.avatar_url
     parts = urlsplit(url or "")
@@ -31,7 +35,9 @@ def github_avatar_url(user):
 
 
 def download_github_avatar(user):
-    """Returns the cropped WebP ContentFile, or raises ValidationError with a message for the person."""
+    """Завантажує аватарку GitHub через safe_fetch і повертає обрізаний WebP.
+
+    Returns the cropped WebP ContentFile, or raises ValidationError with a message for the person."""
     url = github_avatar_url(user)
     if not url:
         raise ValidationError(_("No GitHub picture is available for this account."), code="no_avatar")
@@ -46,7 +52,9 @@ def download_github_avatar(user):
 
 
 def drop(file_field):
-    """Delete the stored file after the transaction commits (never before: a rollback must keep it).
+    """Видаляє збережений файл після коміту транзакції.
+
+    Delete the stored file after the transaction commits (never before: a rollback must keep it).
 
     Only through the field's storage (Django's storage API), so media can move to S3 by settings alone."""
     if file_field:

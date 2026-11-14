@@ -1,4 +1,4 @@
-{% load i18n ui %}
+{# Кнопка входу через GitHub: POST-форма, яка запускає OAuth. #}{% load i18n ui %}
 {# Starts GitHub OAuth. Must be a POST (CSRF-protected); allauth reads "next" from it. #}
 {% if configured %}
   <form method="post" action="{% url 'github_login' %}">

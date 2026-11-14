@@ -1,4 +1,6 @@
-"""Account deletion (CLAUDE.md section 12). Irreversible.
+"""Видалення акаунта назавжди: проєкти, файли, спільнота, підтримка, запис в AuditLog.
+
+Account deletion (CLAUDE.md section 12). Irreversible.
 
 Deleting the User row cascades to: projects (with screenshots and their files, build log,
 repository link, domain verifications, uptime checks, likes on them), the user's likes and follows,
@@ -24,7 +26,9 @@ from support.models import SupportMessage
 
 
 def _clear_community(user):
-    """Returns the numbers for the AuditLog entry. The rows that stay lose their author when the user row goes
+    """Прибирає дописи людини в спільноті; повертає числа для AuditLog.
+
+    Returns the numbers for the AuditLog entry. The rows that stay lose their author when the user row goes
     (SET_NULL)."""
     images = delete_images(uploader=user)
     Thread.objects.filter(pk__in=Vote.objects.filter(user=user, thread__isnull=False).values("thread")).update(score=F("score") - 1)
@@ -43,7 +47,9 @@ def _clear_community(user):
 
 
 def _clear_support(user):
-    """Deletes the person's support messages (attachment files go with them, support/signals.py). Returns the count."""
+    """Видаляє звернення людини в підтримку разом із вкладеннями.
+
+    Deletes the person's support messages (attachment files go with them, support/signals.py). Returns the count."""
     messages = SupportMessage.objects.filter(user=user)
     if user.email:
         messages = SupportMessage.objects.filter(pk__in=messages.values("pk")) | SupportMessage.objects.filter(
@@ -56,7 +62,9 @@ def _clear_support(user):
 
 
 def delete_account(user):
-    """Delete `user` and everything they own. Returns the AuditLog entry."""
+    """Видаляє користувача й усе, що йому належить; повертає запис AuditLog.
+
+    Delete `user` and everything they own. Returns the AuditLog entry."""
     with transaction.atomic():
         user_id = user.pk
         project_count = user.projects.count()

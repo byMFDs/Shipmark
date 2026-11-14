@@ -33,12 +33,14 @@ def names(response):
 
 
 class PeopleSearchTestCase(TestCase):
+    """Спільні дані для тестів пошуку людей."""
     def setUp(self):
         cache.clear()
         self.boss = User.objects.create_superuser("boss", "boss@example.com", "pw")
 
 
 class RankingTests(PeopleSearchTestCase):
+    """Порядок результатів пошуку людей."""
     def test_prefix_matches_come_first_then_contains_each_alphabetical(self):
         for name in ("joanna", "hannah", "annabel", "anna", "bob"):
             make_user(name)
@@ -55,6 +57,7 @@ class RankingTests(PeopleSearchTestCase):
 
 
 class LimitTests(PeopleSearchTestCase):
+    """Мінімальна довжина запиту й розмір сторінки."""
     def test_minimum_length(self):
         make_user("ab")
         response = find(self.client, "a")
@@ -90,6 +93,7 @@ class LimitTests(PeopleSearchTestCase):
 
 
 class HiddenAccountTests(PeopleSearchTestCase):
+    """Приховані акаунти не знаходяться."""
     def test_hidden_accounts_never_appear(self):
         make_user("ann-visible")
         make_user("ann-suspended", is_suspended=True)
@@ -116,6 +120,7 @@ class HiddenAccountTests(PeopleSearchTestCase):
 
 
 class EscapingTests(PeopleSearchTestCase):
+    """Спецсимволи запиту нічого не ламають."""
     def test_underscore_is_a_literal_not_a_wildcard(self):
         make_user("a_b")
         make_user("axb")
@@ -140,6 +145,7 @@ class EscapingTests(PeopleSearchTestCase):
 
 
 class RowTests(PeopleSearchTestCase):
+    """Рядок людини в результатах."""
     def setUp(self):
         super().setUp()
         self.ann = make_user("ann", display_name="Ann Lee", headline="Builds small tools", email="ann.secret@example.com")
@@ -209,6 +215,7 @@ class RowTests(PeopleSearchTestCase):
 
 
 class QueryCountTests(PeopleSearchTestCase):
+    """Сталий набір запитів до бази."""
     def count(self, q):
         with CaptureQueriesContext(connection) as ctx:
             response = find(self.client, q)
@@ -240,6 +247,7 @@ class QueryCountTests(PeopleSearchTestCase):
 
 @override_settings(CACHES={"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}})
 class RateLimitTests(PeopleSearchTestCase):
+    """Ліміт пошуку."""
     def test_anonymous_visitors_are_limited(self):
         make_user("anna")
         for _ in range(people.RATE_LIMIT_ANON):
@@ -268,6 +276,7 @@ class RateLimitTests(PeopleSearchTestCase):
 
 
 class LogTests(PeopleSearchTestCase):
+    """Що пошук пише в лог."""
     def test_the_query_is_never_logged(self):
         records = []
 
@@ -293,6 +302,7 @@ class LogTests(PeopleSearchTestCase):
 
 
 class PageTests(PeopleSearchTestCase):
+    """Сторінка Discover → People."""
     def test_tabs_and_the_projects_tab_still_works(self):
         owner = make_user("ann")
         make_project(owner, name="Tallyhook")

@@ -1,4 +1,6 @@
-"""Granting and revoking badges. The admin and `manage.py grant_badge` both go through here, so every
+"""Видача й зняття бейджів (official, moderator) з записом у AuditLog.
+
+Granting and revoking badges. The admin and `manage.py grant_badge` both go through here, so every
 change writes the same AuditLog entry ("badge.granted" / "badge.revoked")."""
 from django.db import IntegrityError, transaction
 
@@ -9,7 +11,9 @@ from .roles import forget_badges
 
 
 def grant(user, kind, actor=None, note="", via="admin"):
-    """Returns the new badge, or None when the user already has it."""
+    """Видає бейдж; None, якщо він уже є.
+
+    Returns the new badge, or None when the user already has it."""
     try:
         with transaction.atomic():
             badge = UserBadge.objects.create(user=user, kind=kind, granted_by=actor, note=note)
@@ -21,7 +25,9 @@ def grant(user, kind, actor=None, note="", via="admin"):
 
 
 def revoke(user, kind, actor=None, via="admin"):
-    """Returns True when a badge was removed."""
+    """Знімає бейдж; True, якщо було що знімати.
+
+    Returns True when a badge was removed."""
     deleted, _rows = UserBadge.objects.filter(user=user, kind=kind).delete()
     forget_badges(user)
     if deleted:
@@ -30,7 +36,9 @@ def revoke(user, kind, actor=None, via="admin"):
 
 
 def log_saved(badge, actor, created, via="admin"):
-    """For admin forms that save the row themselves."""
+    """Пише в AuditLog бейдж, який форма адмінки зберегла сама.
+
+    For admin forms that save the row themselves."""
     forget_badges(badge.user)
     audit.log("badge.granted" if created else "badge.changed", badge.user, actor=actor,
               kind=badge.kind, note=badge.note, via=via)

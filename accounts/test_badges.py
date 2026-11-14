@@ -45,6 +45,7 @@ def staff_with_all_badge_perms(username="clerk"):
 
 
 class RoleTests(TestCase):
+    """Ролі: хто може модерувати й видавати бейджі."""
     def setUp(self):
         self.ana = make_user("ana")
 
@@ -90,6 +91,7 @@ class RoleTests(TestCase):
 
 
 class BadgeAdminTests(TestCase):
+    """Бейджі в адмінці: права й записи в AuditLog."""
     def setUp(self):
         self.boss = User.objects.create_superuser("boss", "b@example.com", "pw")
         self.ana = make_user("ana")
@@ -141,6 +143,7 @@ class BadgeAdminTests(TestCase):
 
 
 class GrantBadgeCommandTests(TestCase):
+    """Команда grant_badge."""
     def test_grant_and_revoke(self):
         ana = make_user("ana")
         out = StringIO()
@@ -162,6 +165,7 @@ class GrantBadgeCommandTests(TestCase):
 
 
 class SystemAccountTests(TestCase):
+    """Системний акаунт shipmark."""
     def test_created_by_migration_with_the_official_badge(self):
         account = system_user()
         self.assertEqual(account.username, SYSTEM_USERNAME)
@@ -179,6 +183,7 @@ class SystemAccountTests(TestCase):
 
 
 class NameRuleTests(TestCase):
+    """Зарезервовані імена користувача та відображувані імена."""
     def test_new_reserved_usernames(self):
         for name in ("shipmark", "official", "moderator", "mod", "support", "team", "staff", "news", "admin"):
             self.assertIn(name, RESERVED_USERNAMES)
@@ -218,6 +223,7 @@ class NameRuleTests(TestCase):
 
 
 class BadgeDisplayTests(TestCase):
+    """Показ бейджів біля імен на сторінках."""
     def setUp(self):
         self.ana = make_user("ana", display_name="Ana")
         self.project = make_project(self.ana, name="Quillbox")
@@ -261,7 +267,9 @@ class BadgeDisplayTests(TestCase):
 
 
 class BadgeComponentTests(TestCase):
-    """One component for every badge: a labelled button, a tooltip, and the shared panel with the real date."""
+    """Один компонент бейджа: кнопка, підказка, спільна панель з датою.
+
+    One component for every badge: a labelled button, a tooltip, and the shared panel with the real date."""
 
     def setUp(self):
         self.ana = make_user("ana", display_name="Ana")

@@ -1,4 +1,6 @@
-"""The system account "shipmark": the public author of official news.
+"""Системний акаунт «shipmark», автор офіційних новин.
+
+The system account "shipmark": the public author of official news.
 
 Created by migration accounts/0005 with an unusable password and is_active=False, so nobody can sign in
 as it (no password, no GitHub account linked, and Django refuses inactive users). It carries the

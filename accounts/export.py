@@ -1,4 +1,6 @@
-"""Download my data": everything we store about one user, as JSON (CLAUDE.md section 12).
+"""«Завантажити мої дані»: усе, що ми зберігаємо про людину, у JSON.
+
+Download my data": everything we store about one user, as JSON (CLAUDE.md section 12).
 
 Only the user's own records. Other people appear only by their public username
 (projects you liked, people you follow); nobody else's private data is included.
@@ -24,6 +26,7 @@ def _dt(value):
 
 
 def _profile(user, absolute):
+    """Поля профілю для експорту."""
     return {
         "username": user.username,
         "display_name": user.display_name,
@@ -50,6 +53,7 @@ def _profile(user, absolute):
 
 
 def _github(user):
+    """Дані GitHub-акаунта та адреси пошти для експорту."""
     accounts = SocialAccount.objects.filter(user=user, provider="github")
     return {
         # What GitHub sent at the latest sign-in (allauth keeps it as is).
@@ -65,6 +69,7 @@ def _github(user):
 
 
 def _project(project, absolute):
+    """Один проєкт з перевірками, скриншотами й журналом для експорту."""
     repo = getattr(project, "repo_link", None)
     return {
         "name": project.name,
@@ -117,7 +122,9 @@ def _project(project, absolute):
 
 
 def _community(user, absolute):
-    """The person's threads, replies, images and upvotes. Text they deleted is not stored any more, so it is
+    """Теми, відповіді, картинки й голоси людини в спільноті.
+
+    The person's threads, replies, images and upvotes. Text they deleted is not stored any more, so it is
     not here either; a post removed by moderators is included with the reason."""
     images = {}
     for image in CommunityImage.objects.filter(uploader=user).order_by("order", "id"):
@@ -157,7 +164,9 @@ def _community(user, absolute):
 
 
 def build_export(user, absolute=lambda url: url):
-    """A JSON-ready dict. `absolute` turns site paths into full URLs (config.site.absolute_url: SITE_URL)."""
+    """Збирає повний словник експорту для однієї людини.
+
+    A JSON-ready dict. `absolute` turns site paths into full URLs (config.site.absolute_url: SITE_URL)."""
     projects = (
         Project.objects.filter(owner=user)
         .select_related("owner", "repo_link")

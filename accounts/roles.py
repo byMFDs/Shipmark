@@ -1,4 +1,6 @@
-"""Who may do what. The single source of truth for roles: views, templates and the admin ask here.
+"""Хто що може: єдине джерело ролей для views, шаблонів і адмінки.
+
+Who may do what. The single source of truth for roles: views, templates and the admin ask here.
 
 Badges (UserBadge) are read once per user object: from a prefetch (`prefetch_related("badges")`,
 or "owner__badges" on lists) when there is one, otherwise with one query that is then cached on the object.
@@ -10,7 +12,9 @@ MODERATOR = UserBadge.Kind.MODERATOR
 
 
 def badge_dates(user):
-    """{kind: granted_at} of the user's badges (the real dates, shown as "Official since ..."). Empty for anonymous
+    """Дати видачі бейджів користувача.
+
+    {kind: granted_at} of the user's badges (the real dates, shown as "Official since ..."). Empty for anonymous
     users. Same single read as badge_kinds."""
     if user is None or not getattr(user, "pk", None):
         return {}
@@ -24,12 +28,16 @@ def badge_dates(user):
 
 
 def badge_kinds(user):
-    """frozenset of badge kinds ("official", "moderator"). Empty for anonymous users."""
+    """Набір типів бейджів користувача.
+
+    frozenset of badge kinds ("official", "moderator"). Empty for anonymous users."""
     return frozenset(badge_dates(user))
 
 
 def forget_badges(user):
-    """Call after granting or revoking, so the same object reads the new state."""
+    """Скидає кеш бейджів після видачі чи зняття.
+
+    Call after granting or revoking, so the same object reads the new state."""
     user.__dict__.pop("_badge_dates", None)
     getattr(user, "_prefetched_objects_cache", {}).pop("badges", None)
 
@@ -43,21 +51,27 @@ def has_moderator_badge(user):
 
 
 def can_moderate(user):
-    """The moderator badge, or a superuser. Plain staff (is_staff) cannot moderate on the site."""
+    """Бейдж модератора або суперкористувач.
+
+    The moderator badge, or a superuser. Plain staff (is_staff) cannot moderate on the site."""
     if not getattr(user, "is_authenticated", False) or not user.is_active:
         return False
     return user.is_superuser or has_moderator_badge(user)
 
 
 def can_manage_badges(user):
-    """Only superusers grant or revoke badges, in the admin or with `grant_badge`."""
+    """Видавати бейджі може лише суперкористувач.
+
+    Only superusers grant or revoke badges, in the admin or with `grant_badge`."""
     return bool(getattr(user, "is_authenticated", False) and user.is_active and user.is_superuser)
 
 
 # ---------- Sanctions (moderation.Sanction), evaluated per request ----------
 
 def active_sanctions(user):
-    """Mutes and bans in force now, cached on the user object (one query per request)."""
+    """Чинні mute і ban користувача, закешовані на об'єкті.
+
+    Mutes and bans in force now, cached on the user object (one query per request)."""
     if user is None or not getattr(user, "pk", None):
         return ()
     cached = getattr(user, "_active_sanctions", None)
@@ -74,7 +88,9 @@ def forget_sanctions(user):
 
 
 def _longest(sanctions):
-    """The one that ends last (a permanent one wins)."""
+    """Санкція, яка закінчується найпізніше.
+
+    The one that ends last (a permanent one wins)."""
     if not sanctions:
         return None
     return max(sanctions, key=lambda s: (s.expires_at is None, s.expires_at or s.starts_at))
@@ -89,7 +105,9 @@ def active_mute(user):
 
 
 def can_write(user):
-    """Create, edit, publish, log, like, follow, report, upload. Not: suspended, muted or banned users.
+    """Чи може людина щось створювати (не призупинена, не приглушена, не забанена).
+
+    Create, edit, publish, log, like, follow, report, upload. Not: suspended, muted or banned users.
     Reading, own settings, export and account deletion stay open to muted users."""
     if not getattr(user, "is_authenticated", False) or not user.is_active or user.is_suspended:
         return False
@@ -97,5 +115,7 @@ def can_write(user):
 
 
 def is_protected(target):
-    """Accounts a moderator (who is not a superuser) may never act on."""
+    """Акаунти, на які модератор без прав суперкористувача не може діяти.
+
+    Accounts a moderator (who is not a superuser) may never act on."""
     return bool(target.is_superuser or is_official(target) or has_moderator_badge(target))

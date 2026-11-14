@@ -38,6 +38,7 @@ def make_user(username, **extra):
 
 
 class UsernameRuleTests(TestCase):
+    """Правила імені користувача."""
     def test_every_reserved_name_is_rejected(self):
         for name in RESERVED_USERNAMES:
             if len(name) < 3:  # "u" and "p" fail on length first; both are still rejected
@@ -77,6 +78,7 @@ class UsernameRuleTests(TestCase):
 
 
 class GitHubSignupTests(TestCase):
+    """Реєстрація через GitHub."""
     def setUp(self):
         self.factory = RequestFactory()
 
@@ -156,7 +158,9 @@ class GitHubSignupTests(TestCase):
 
 @override_settings(SOCIALACCOUNT_PROVIDERS=FAKE_GITHUB_APP)
 class SignupViewTests(TestCase):
-    """The real /signup/ page, with a pending GitHub login placed in the session."""
+    """Сторінка підтвердження реєстрації.
+
+    The real /signup/ page, with a pending GitHub login placed in the session."""
 
     def start(self, data=None):
         request = RequestFactory().get("/")
@@ -199,6 +203,7 @@ class SignupViewTests(TestCase):
 
 
 class AuthPageTests(TestCase):
+    """Сторінки входу й виходу."""
     def test_login_page_starts_oauth_with_post(self):
         with self.settings(GITHUB_OAUTH_CONFIGURED=True):
             response = self.client.get(reverse("account_login"))
@@ -234,6 +239,7 @@ class AuthPageTests(TestCase):
 
 
 class SettingsTests(TestCase):
+    """Збереження налаштувань."""
     def setUp(self):
         cache.clear()
         self.alice = make_user("alice", display_name="Alice", about="old")
@@ -326,6 +332,7 @@ class SettingsTests(TestCase):
 
 
 class PublicProfileTests(TestCase):
+    """Публічний профіль і 404 для прихованих."""
     def setUp(self):
         self.alice = make_user(
             "alice", email="alice-private@example.com", display_name="Alice A", headline="I build things",

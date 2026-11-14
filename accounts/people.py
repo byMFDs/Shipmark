@@ -1,4 +1,6 @@
-"""People search on Discover (/explore/?tab=people): find a person by username, open the profile, follow.
+"""Пошук людей на Discover за іменем користувача.
+
+People search on Discover (/explore/?tab=people): find a person by username, open the profile, follow.
 
 Rules (POLISH3 stage 7):
 - Username only, case-insensitive. Prefix matches first, then the ones that contain the text; inside each group
@@ -48,7 +50,9 @@ USERNAME_CHARS = re.compile(r"^[a-z0-9_-]+$")
 
 
 def clean_query(raw):
-    """What the visitor typed, trimmed, without a leading @, lowercased, at most a username long."""
+    """Нормалізує запит: без @, нижній регістр, обрізана довжина.
+
+    What the visitor typed, trimmed, without a leading @, lowercased, at most a username long."""
     text = (raw or "").strip()
     if text.startswith("@"):
         text = text[1:]
@@ -56,7 +60,9 @@ def clean_query(raw):
 
 
 def query_problem(query):
-    """'' when the query can be searched, else 'short' (fewer than MIN_LENGTH) or 'chars' (not a username)."""
+    """Чи можна шукати за запитом: '' або причина ('short', 'chars').
+
+    '' when the query can be searched, else 'short' (fewer than MIN_LENGTH) or 'chars' (not a username)."""
     if len(query) < MIN_LENGTH:
         return "short"
     if len(query) > MAX_LENGTH or not USERNAME_CHARS.match(query):
@@ -71,7 +77,9 @@ def searchable_people():
 
 
 def search(query, page=1):
-    """(people on this page, has_next). Call only when query_problem(query) is ''."""
+    """Сторінка знайдених людей і чи є наступна.
+
+    (people on this page, has_next). Call only when query_problem(query) is ''."""
     start = (page - 1) * PER_PAGE
     people = list(
         searchable_people()
@@ -86,7 +94,9 @@ def search(query, page=1):
 
 
 def attach_counts(people, viewer):
-    """Sets person.project_count, person.hallmark_count and person.followed (by the viewer) on each person.
+    """Додає до людей кількість проєктів, марок і чи стежить глядач.
+
+    Sets person.project_count, person.hallmark_count and person.followed (by the viewer) on each person.
 
     Two queries for any number of people (projects with their proof data, then the viewer's follows), plus the
     prefetch of verified domains. Hallmarks come from compute_hallmarks, the one definition, like on the profile.
@@ -112,7 +122,9 @@ def attach_counts(people, viewer):
 
 
 def visitor_key(request):
-    """The account id, or a salted one-way hash of the address for anonymous visitors (a cache key only)."""
+    """Ключ ліміту: id акаунта або солений хеш адреси.
+
+    The account id, or a salted one-way hash of the address for anonymous visitors (a cache key only)."""
     if request.user.is_authenticated:
         return f"u:{request.user.pk}"
     digest = hmac.new(settings.SECRET_KEY.encode(), f"people-ip:{client_ip(request)}".encode(), hashlib.sha256)
@@ -120,6 +132,8 @@ def visitor_key(request):
 
 
 def search_limited(request):
-    """Counts this search; True once the visitor is over the limit for the window."""
+    """Рахує пошук і каже, чи перевищено ліміт.
+
+    Counts this search; True once the visitor is over the limit for the window."""
     limit = RATE_LIMIT_USER if request.user.is_authenticated else RATE_LIMIT_ANON
     return is_limited("people_search", visitor_key(request), limit=limit, window=RATE_WINDOW)
