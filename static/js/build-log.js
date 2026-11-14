@@ -68,6 +68,7 @@ if (section && form) {
     }
     if (data.ok) {
       list.insertAdjacentHTML("afterbegin", data.html);
+      list.firstElementChild?.classList.add("is-new"); // rises into the list (motion.css)
       form.reset();
       setCanLaunch(data.can_launch);
       if (launched && data.launched_html !== undefined) launched.innerHTML = data.launched_html;

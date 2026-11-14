@@ -26,6 +26,7 @@
 .feed-tabs__list li { flex: 1 0 auto; }
 
 .feed-tabs__link {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +39,8 @@
   white-space: nowrap;
 }
 
-.feed-tabs__link[aria-current="page"] { color: var(--text); border-bottom-color: var(--text); }
+.feed-tabs__link[aria-current="page"] { color: var(--text); } /* the underline is .tab-mark (components.css) */
+.feed-tabs__link .tab-mark { bottom: -2px; } /* on the link's 2px bottom border, where the underline always was */
 
 @media (hover: hover) { .feed-tabs__link:hover { color: var(--text); } }
 

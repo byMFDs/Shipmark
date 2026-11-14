@@ -14,6 +14,7 @@
 {% endblock %}
 
 {% block content %}
+  <div class="read-progress" aria-hidden="true"></div>
   <div class="container shell shell--narrow news">
     <article class="news-post">
       <p><a class="link-arrow" href="{% url 'news:list' %}">{% translate "All news" %}</a></p>

@@ -12,12 +12,12 @@
       <p class="lede">{% blocktranslate count counter=counts.open %}{{ counter }} report needs a decision.{% plural %}{{ counter }} reports need a decision.{% endblocktranslate %}</p>
     </header>
 
-    <nav class="tabs" aria-label="{% translate 'Report status' %}">
+    <nav class="tabs mod-tabs" aria-label="{% translate 'Report status' %}">
       <ul class="tabs__list">
-        <li><a class="tabs__link" href="?status=open"{% if status == "open" %} aria-current="page"{% endif %}>{% translate "Open" %} <span class="mono">{{ counts.open }}</span></a></li>
-        <li><a class="tabs__link" href="?status=resolved"{% if status == "resolved" %} aria-current="page"{% endif %}>{% translate "Resolved" %} <span class="mono">{{ counts.resolved }}</span></a></li>
-        <li><a class="tabs__link" href="?status=dismissed"{% if status == "dismissed" %} aria-current="page"{% endif %}>{% translate "Dismissed" %} <span class="mono">{{ counts.dismissed }}</span></a></li>
-        <li><a class="tabs__link" href="?status=all"{% if status == "all" %} aria-current="page"{% endif %}>{% translate "All" %}</a></li>
+        <li><a class="tabs__link" href="?status=open"{% if status == "open" %} aria-current="page"{% endif %}>{% translate "Open" %} <span class="mono">{{ counts.open }}</span>{% if status == "open" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
+        <li><a class="tabs__link" href="?status=resolved"{% if status == "resolved" %} aria-current="page"{% endif %}>{% translate "Resolved" %} <span class="mono">{{ counts.resolved }}</span>{% if status == "resolved" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
+        <li><a class="tabs__link" href="?status=dismissed"{% if status == "dismissed" %} aria-current="page"{% endif %}>{% translate "Dismissed" %} <span class="mono">{{ counts.dismissed }}</span>{% if status == "dismissed" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
+        <li><a class="tabs__link" href="?status=all"{% if status == "all" %} aria-current="page"{% endif %}>{% translate "All" %}{% if status == "all" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
       </ul>
     </nav>
 

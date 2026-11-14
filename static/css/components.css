@@ -1239,7 +1239,15 @@ a.chip::after {
 }
 
 .site-nav__link[aria-current="page"] { color: var(--text); }
-.site-nav__link[aria-current="page"]::after { transform: scaleX(1); }
+
+/* The current page's bar is an element (.tab-mark), not the ::after, so a page-to-page view transition can slide it to
+   the next link (motion.css). Same place and look as the hover bar. The phone menu marks the page with ::before. */
+.site-nav__link .tab-mark {
+  left: var(--s-3);
+  right: var(--s-3);
+  bottom: 0.45rem;
+  height: 1px;
+}
 
 @media (hover: hover) {
   .site-nav__link:hover { color: var(--text); }
@@ -1304,6 +1312,7 @@ a.chip::after {
 }
 
 .site-menu__panel .site-nav__link::after { content: none; }
+.site-menu__panel .tab-mark { display: none; }
 
 .site-menu__panel .site-nav__link[aria-current="page"]::before {
   content: "";
@@ -1922,6 +1931,7 @@ html:not(.js) .toasts:not(:empty) {
 }
 
 .tabs__link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
@@ -1937,9 +1947,22 @@ html:not(.js) .toasts:not(:empty) {
 .tabs__link:first-child { padding-left: 0; }
 .tabs__link:focus-visible { outline-offset: -2px; }
 
-.tabs__link[aria-current="page"] {
-  color: var(--text);
-  box-shadow: inset 0 -2px 0 var(--text);
+.tabs__link[aria-current="page"] { color: var(--text); }
+
+/* The current tab's underline. An element, not a box-shadow, so a page-to-page view transition can slide it to the
+   new tab (motion.css); without one it is simply drawn. Also used by the header nav and the feed tabs. */
+.tab-mark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--text);
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  .tab-mark { background: CanvasText; forced-color-adjust: none; }
 }
 
 @media (hover: hover) {

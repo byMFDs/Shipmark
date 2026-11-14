@@ -64,9 +64,9 @@
 
     <nav class="tabs profile-tabs" aria-label="{% translate 'Profile sections' %}">
       <ul class="tabs__list">
-        <li><a class="tabs__link" href="?tab=projects"{% if tab == "projects" %} aria-current="page"{% endif %}>{% translate "Projects" %}</a></li>
-        <li><a class="tabs__link" href="?tab=log"{% if tab == "log" %} aria-current="page"{% endif %}>{% translate "Build log" %}</a></li>
-        <li><a class="tabs__link" href="?tab=about"{% if tab == "about" %} aria-current="page"{% endif %}>{% translate "About" context "profile" %}</a></li>
+        <li><a class="tabs__link" href="?tab=projects"{% if tab == "projects" %} aria-current="page"{% endif %}>{% translate "Projects" %}{% if tab == "projects" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
+        <li><a class="tabs__link" href="?tab=log"{% if tab == "log" %} aria-current="page"{% endif %}>{% translate "Build log" %}{% if tab == "log" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
+        <li><a class="tabs__link" href="?tab=about"{% if tab == "about" %} aria-current="page"{% endif %}>{% translate "About" context "profile" %}{% if tab == "about" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
       </ul>
     </nav>
 

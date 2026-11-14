@@ -18,6 +18,23 @@
 /* The header stays put while the page under it changes. */
 ::view-transition-group(site-header) { animation: none; }
 
+/* The current-tab mark slides to the new tab (header nav, Discover, For You, profile, /mod/). One name per tab row, so
+   a mark never flies from one row to another page's row; a row that is only on one side just fades. Names are set
+   only when motion is welcome; a duplicate name would cancel the transition, so the phone menu's copy is hidden. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-nav .tab-mark { view-transition-name: nav-mark; }
+  .explore-tabs .tab-mark { view-transition-name: discover-tab-mark; }
+  .feed-tabs .tab-mark { view-transition-name: feed-tab-mark; }
+  .profile-tabs .tab-mark { view-transition-name: profile-tab-mark; }
+  .mod-tabs .tab-mark { view-transition-name: mod-tab-mark; }
+  .tab-mark { view-transition-class: tab-mark; }
+}
+
+::view-transition-group(*.tab-mark) {
+  animation-duration: 240ms;
+  animation-timing-function: var(--ease-out);
+}
+
 /* ---------- Pause: offscreen and hidden tabs ---------- */
 
 /* Only when JS runs: without it nothing sets .is-inview, and a paused strike would stay frozen at its first frame. */
@@ -273,6 +290,60 @@ html.js.is-paused .cursor[data-loop]::after,
 }
 
 :is(.feed-card, .news-card, .card):has(a:not(.btn):active) { transform: scale(0.995); }
+
+/* ---------- Answers to changes made in place ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Disclosures (hallmark explanation, DNS / meta help, feed filters and community boards on phones): the opened
+     content drops 4px into place, like the menus. */
+  :is(.hallmark-info, .method__help, .feed-filters-fold, .community-boards-fold)[open] > :not(summary) {
+    animation: menu-in var(--t-base) var(--ease-out);
+  }
+
+  /* A build log entry that was just posted (build-log.js adds .is-new) rises into the list. */
+  .log > .is-new { animation: rise 320ms var(--ease-out); }
+
+  /* Domain verification: the status block that "Verify now" brought back (domain-verify.js adds .is-updated). */
+  [data-domain-status].is-updated { animation: rise 260ms var(--ease-out); }
+
+  /* The "new replies" dot on the account button is set down once, after the page has settled. */
+  .user-menu__dot { animation: dot-in 320ms var(--ease-press) 500ms backwards; }
+}
+
+@keyframes dot-in {
+  from { opacity: 0; transform: scale(0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Reading progress (legal and content pages, news posts) ----------
+   A 2px hairline at the top grows with the scroll: a scroll-driven animation, no script, nothing hijacked. Shown only
+   where the browser supports scroll timelines and motion is welcome; on a page too short to scroll it stays at 0. */
+
+.read-progress { display: none; }
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .read-progress {
+      display: block;
+      position: fixed;
+      top: env(safe-area-inset-top, 0);
+      left: 0;
+      right: 0;
+      z-index: 50;
+      height: 2px;
+      background: var(--muted);
+      transform: scaleX(0);
+      transform-origin: left center;
+      pointer-events: none;
+      animation: read-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
+@keyframes read-progress {
+  to { transform: scaleX(1); }
+}
 
 /* ---------- Count-up: a number on a stats row counts up once when it comes into view (motion.js) ---------- */
 /* The real number is in the HTML; the script only animates it, and not at all with reduced motion. */

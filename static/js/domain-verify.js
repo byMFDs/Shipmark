@@ -38,7 +38,13 @@ if (form && status) {
         credentials: "same-origin",
       });
       const data = await response.json(); // the view always answers JSON here, also on 429
-      if (data.html) status.innerHTML = data.html;
+      if (data.html) {
+        status.innerHTML = data.html;
+        // Restart the "rises in place" answer (motion.css); reading offsetWidth lets the class apply again.
+        status.classList.remove("is-updated");
+        void status.offsetWidth;
+        status.classList.add("is-updated");
+      }
       showToast(data.message, { kind: data.ok ? "info" : "error" });
     } catch {
       form.submit(); // network or parsing problem: fall back to the plain POST

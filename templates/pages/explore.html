@@ -23,8 +23,8 @@
 
     <nav class="tabs explore-tabs" aria-label="{% translate 'What to discover' %}">
       <ul class="tabs__list">
-        <li><a class="tabs__link" href="{% url 'pages:explore' %}"{% if tab != "people" %} aria-current="page"{% endif %}>{% translate "Projects" %}</a></li>
-        <li><a class="tabs__link" href="{% url 'pages:explore' %}?tab=people"{% if tab == "people" %} aria-current="page"{% endif %}>{% translate "People" %}</a></li>
+        <li><a class="tabs__link" href="{% url 'pages:explore' %}"{% if tab != "people" %} aria-current="page"{% endif %}>{% translate "Projects" %}{% if tab != "people" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
+        <li><a class="tabs__link" href="{% url 'pages:explore' %}?tab=people"{% if tab == "people" %} aria-current="page"{% endif %}>{% translate "People" %}{% if tab == "people" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
       </ul>
     </nav>
 

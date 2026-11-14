@@ -180,3 +180,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-14: Polish-3 stage 3b (design pass). Layout fixes (tabs, badges, hyphens, thread facts, /mod/ and settings on phones, footer language, main action at 768-1279px, touch target); one spacing + icon scale as tokens; dark theme with three levels (`--raised`) and visible hairlines, AA tested from tokens.css, before/after on /styleguide/; header tagline removed, zero like counts hidden, one accent per page area, landing invite card, "/" for search. 7 languages.
   Next: "GO 4" (motion).
+
+- 2026-11-14: Polish-3 stage 4 (motion). Current-tab mark slides between tabs on navigation (cross-document view transitions, one name per tab row), theme switch cross-fades, scroll-driven reading hairline on legal/content/news pages, disclosures drop in, new build log entry and domain status rise in, "new replies" dot set down once. No new loops; `pages/test_motion.py` guards the rules. 1126 tests green.
+  Next: "GO 5" (support email + bug sweep).

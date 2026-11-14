@@ -133,7 +133,6 @@
 
 .sg-strike { margin-top: 0; }
 .sg-inline { display: inline-flex; }
-.sg-drift { max-width: 22rem; }
 .sg-reveal { display: grid; gap: var(--s-3); }
 
 .sg-band {

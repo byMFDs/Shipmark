@@ -249,12 +249,26 @@ action sits under the text.
 - Page cross-fade is `@view-transition` (180 ms) inside `prefers-reduced-motion: no-preference`. Browsers
   without view transitions ignore the rule and navigate normally; `view-transition-name: site-header` is
   harmless there.
+- Tab marks (Polish-3 stage 4): the current link's underline is an element, `.tab-mark` (header nav, Discover, For You,
+  profile, /mod/ tabs). Each row has its own `view-transition-name` (`nav-mark`, `discover-tab-mark`, ...), so on a
+  page-to-page navigation the mark slides to the new tab in 240 ms while the page cross-fades; a row on one side only
+  just fades. Names are set only with motion welcome; the phone-menu copy is `display: none` (a duplicate name would
+  cancel the transition).
+- Theme switch: the page cross-fades to the new colours (same-document view transition, 180 ms; skipped with reduced
+  motion and where unsupported).
+- Reading progress (legal/content pages, news posts): a 2px `--muted` hairline at the top, scroll-driven
+  (`animation-timeline: scroll()`), no JS; hidden where unsupported, with reduced motion and on pages too short to scroll.
+- Answers in place: opened disclosures (hallmark explanation, DNS/meta help, phone filter and board folds) drop 4px in;
+  a just-posted build log entry rises in (`.is-new`); the domain status after "Verify now" rises in (`.is-updated`); the
+  "new replies" dot is set down once on load.
+- Guard: `pages/test_motion.py` (keyframes move only transform/opacity; `@view-transition` and tab-mark names only with
+  motion welcome; endless animations only in `[data-loop]` or on a hovered/focused/busy button).
 
 ## Performance
 - Self-hosted woff2 only (Latin set per page ~88 KB: Inter 48, Manrope 25, Plex Mono 15; Cyrillic and Latin-ext
   load only when the text needs them, by `unicode-range`). Inter + Manrope Latin (and Cyrillic for `uk`) are
   preloaded. Fallback fonts are size-adjusted, so the swap does not move the layout.
-- Core CSS per page (tokens, base, components, motion): 69 KB raw, 16 KB gzip (2026-11-12); one page file on top. Core JS
+- Core CSS per page (tokens, base, components, motion): 85 KB raw, 21 KB gzip (2026-11-14; about half the raw size is comments); one page file on top. Core JS
   (6 small ES modules, deferred by `type="module"`): 8.7 KB raw, 3.1 KB gzip. Only `theme-init.js` is blocking
   (it sets the theme and `.js` before first paint).
 - Images carry width/height and `loading="lazy"` (the first project screenshot is not lazy). Production

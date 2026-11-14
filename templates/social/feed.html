@@ -30,9 +30,9 @@
       <div class="feed-main">
         <nav class="feed-tabs" aria-label="{% translate 'Sections' %}">
           <ul class="feed-tabs__list">
-            <li><a class="feed-tabs__link" href="{{ foryou_url }}"{% if tab == "foryou" %} aria-current="page"{% endif %}>{% translate "Recommended" %}</a></li>
-            {% if user.is_authenticated %}<li><a class="feed-tabs__link" href="{{ following_url }}"{% if tab == "following" %} aria-current="page"{% endif %}>{% translate "Following" %}</a></li>{% endif %}
-            <li><a class="feed-tabs__link" href="{{ news_url }}"{% if tab == "news" %} aria-current="page"{% endif %}>{% translate "News" %}</a></li>
+            <li><a class="feed-tabs__link" href="{{ foryou_url }}"{% if tab == "foryou" %} aria-current="page"{% endif %}>{% translate "Recommended" %}{% if tab == "foryou" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
+            {% if user.is_authenticated %}<li><a class="feed-tabs__link" href="{{ following_url }}"{% if tab == "following" %} aria-current="page"{% endif %}>{% translate "Following" %}{% if tab == "following" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>{% endif %}
+            <li><a class="feed-tabs__link" href="{{ news_url }}"{% if tab == "news" %} aria-current="page"{% endif %}>{% translate "News" %}{% if tab == "news" %}<span class="tab-mark" aria-hidden="true"></span>{% endif %}</a></li>
           </ul>
         </nav>
 

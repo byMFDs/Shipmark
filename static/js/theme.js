@@ -45,7 +45,10 @@ document.addEventListener("click", (event) => {
   if (!button) return;
   const choice = button.dataset.themeChoice;
   save(choice);
-  apply(choice);
+  // The page cross-fades to the new colours (180 ms, motion.css) where view transitions exist and motion is welcome.
+  const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (document.startViewTransition && !calm) document.startViewTransition(() => apply(choice));
+  else apply(choice);
 });
 
 // Another tab changed the theme.
