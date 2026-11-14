@@ -10,7 +10,7 @@ Branch `polish-3` (from `polish-2`). Brief: one stage per "GO <n>". Order: 0, 1,
 | 2. Button glow | done 2026-11-14 | Halo: visible on the light theme |
 | 3a/3b. Design pass | done 2026-11-14 | Design audit (3a) · Layout fixes from the design audit · One spacing and icon scale · Dark theme: three levels, visible hairlines · Design: add and remove |
 | 4. Motion | done 2026-11-14 | Motion: tab marks, theme fade, reading progress |
-| 5. Support email + bug sweep | | |
+| 5. Support email + bug sweep | done 2026-11-14 | Support email: diagnose, test command, warnings · Deploy check test: complete SMTP values · Tests: own log folder per error-log test class · Remove dead feed code · Route matrix test: every route, seven roles · Tests: green under --parallel |
 | 6. Code comments (only on "GO 6") | | |
 
 ## Stage 0 notes
@@ -98,4 +98,25 @@ only inside `prefers-reduced-motion: no-preference`, infinite animations only on
 - A view transition blocks clicks for its 180-240 ms (browser behaviour), the same as the existing page cross-fade.
 - Not checked in a real browser (no dev server in this session): the slide of the marks (Chrome/Edge 126+, Safari
   18.2+), the reading hairline (Chrome 115+, Safari 26; Firefox shows nothing), the theme fade.
-- Seen: `manage.py test --parallel` crashes with "cannot pickle 'traceback' object"; the serial run is green. Left for stage 5.
+- Seen: `manage.py test --parallel` crashes with "cannot pickle 'traceback' object"; the serial run is green. Fixed in stage 5.
+
+## Stage 5 notes
+
+- 5a cause (not a guess, read from the code and `.env`): `.env` set no `EMAIL_*` and no `SUPPORT_INBOX_EMAIL`, so
+  `notify_inbox` returned before building the email and logged nothing; dev also uses the console backend and
+  `DEFAULT_FROM_EMAIL` fell back to `webmaster@localhost`. Now: the skip is logged (WARNING), a sent notice logs the
+  backend (INFO), `manage.py send_test_email [--to] [--smtp]`, system check `support.W00N` when DEBUG is off, a banner on
+  the admin inbox, Gmail steps in DEPLOY_NOTES. Mock-SMTP tests (`support/test_email.py`). Not done: a real send to
+  shipmark.me@gmail.com (needs the app password in `.env`; the developer runs `send_test_email --smtp`).
+- 5b: full suite green with `--parallel 4` (1140 tests, ~4 min instead of ~10 serial). Route matrix (`pages/test_routes.py`):
+  80 URLs x 7 roles, every status as the rules say. Link crawl of every page per role (test DB) and anonymous on the dev
+  DB: no 404/500 links, no template leaks; images have alt; inputs and icon buttons have names (wrapping labels,
+  `aria-label` on the icon). Templates and Python: no untranslated user-facing string; 0 empty/fuzzy in 6 .po files.
+- Real bugs fixed (each its own commit): parallel test runs crashed (shared log folder, shared media folder, a leaked
+  language between tests; hidden by the missing tblib); deploy-check test after the new email warning.
+- Suspicious, not fixed:
+  - `moderation/sanctions.py::active_for` and `moderation/bans.py::legacy_count` have no caller (moderation code: left).
+  - Django's LocaleMiddleware leaves the last request's language active in the thread; harmless in production (every
+    request activates its own), but an in-process test that reads English after a `uk` request depends on order.
+  - `.page-head__actions` is used by no template (documented part of the page head; kept).
+  - Without `tblib` (not an allowed dependency) a failing test in a parallel run still shows only "cannot pickle".

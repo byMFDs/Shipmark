@@ -318,6 +318,7 @@ python manage.py check_uptime         # cron in production
 python manage.py reverify_domains     # cron in production
 python manage.py community_daily      # cron in production (scores, 90-day notification cleanup)
 python manage.py prune_support        # cron in production (closed support messages older than 12 months)
+python manage.py send_test_email      # support email check (--smtp in dev uses the EMAIL_* values)
 python manage.py post_welcome         # once: pinned welcome thread from the system account
 python manage.py seed_community       # DEBUG only: demo community content (--clear removes it)
 ```

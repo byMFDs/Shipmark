@@ -183,3 +183,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-14: Polish-3 stage 4 (motion). Current-tab mark slides between tabs on navigation (cross-document view transitions, one name per tab row), theme switch cross-fades, scroll-driven reading hairline on legal/content/news pages, disclosures drop in, new build log entry and domain status rise in, "new replies" dot set down once. No new loops; `pages/test_motion.py` guards the rules. 1126 tests green.
   Next: "GO 5" (support email + bug sweep).
+
+- 2026-11-14: Polish-3 stage 5. Support email cause found (no EMAIL_* / SUPPORT_INBOX_EMAIL in .env, silent skip, console backend in dev); `send_test_email`, prod system check, admin inbox banner, logged skip, Gmail steps in DEPLOY_NOTES, mock-SMTP tests. Bug sweep: route matrix for 7 roles, link/alt/label/leak crawl, translations, dead code; parallel test runs fixed. 1140 tests green (--parallel 4).
+  Next: put the Gmail app password in .env and run `python manage.py send_test_email --smtp`; then "GO 6" (code comments).
