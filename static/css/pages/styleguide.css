@@ -90,27 +90,6 @@
 
 /* ---------- Logo options ---------- */
 
-.sg-logos {
-  display: grid;
-  gap: var(--s-5);
-}
-
-@media (min-width: 64em) {
-  .sg-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-.sg-logo-option {
-  display: grid;
-  align-content: start;
-  gap: var(--s-4);
-  margin: 0;
-  padding: var(--s-5);
-  border: 1px solid var(--line);
-  background: var(--surface);
-}
-
-.sg-logo-option.is-chosen { border-color: var(--text); }
-
 .sg-logo-option__sizes {
   display: flex;
   align-items: flex-end;
@@ -118,9 +97,6 @@
   color: var(--text);
 }
 
-.sg-logo-option__name { font-weight: 600; margin-bottom: var(--s-2); }
-.sg-logo-option figcaption p + p { font-size: var(--fs--1); }
-.sg-pick { color: var(--accent-text); margin-left: var(--s-2); }
 
 .sg-logo-l { height: 2.5rem; color: var(--text); }
 
