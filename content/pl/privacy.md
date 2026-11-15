@@ -1,8 +1,8 @@
 # Polityka prywatności
 
-> **Wersja robocza**, ostatnia aktualizacja: 14 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
->
-> Tłumaczenie dla wygody; obowiązuje wersja angielska.
+Ostatnia aktualizacja: 14 listopada 2026.
+
+Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
 Ta strona wyjaśnia, co {{ site_name }} przechowuje o Tobie, po co, jak długo i co możesz w tej sprawie zrobić. Opisuje to, co serwis faktycznie robi.
 
@@ -22,7 +22,7 @@ Prosimy GitHub tylko o dwa uprawnienia: `read:user` i `user:email`. Przez Twoje 
 
 **Twój profil.** Nazwa użytkownika, wyświetlana nazwa, krótki opis, „O mnie”, lokalizacja, status (np. „Szukam pracy”), do 10 umiejętności, do 6 linków, do 3 przypiętych projektów i język. Wszystko poza nazwą użytkownika jest opcjonalne. Wyświetlana nazwa i „O mnie” na początku pochodzą z Twojej nazwy i bio na GitHubie; możesz je zmienić lub usunąć w Ustawieniach. Zapisujemy też adres Twojego obrazu z GitHuba, tylko po to, aby opcja „Użyj mojego obrazu z GitHub” mogła go skopiować; nigdzie go nie pokazujemy. Twoja nazwa użytkownika, wyświetlana nazwa, krótki opis, „O mnie”, lokalizacja, status, umiejętności, linki, przypięte projekty, login GitHub i miesiąc dołączenia są **publiczne**.
 
-**Zdjęcie profilowe i obraz w tle.** Możesz wysłać zdjęcie i szeroki obraz w tle albo raz skopiować swój obraz z GitHuba. Każdy obraz kodujemy na nowo (zdjęcie do 512×512, obraz w tle do 1500×500), co usuwa ukryte metadane, np. lokalizację GPS, nadajemy mu losową nazwę i przechowujemy na własnym serwerze: strony nigdy nie wczytują Twojego zdjęcia z GitHuba. Oba są **publiczne**. Gdy usuniesz lub zastąpisz obraz albo usuniesz konto, plik jest usuwany; kopie zostają w kopiach zapasowych do 14 dni. Bez zdjęcia pokazujemy Twoje inicjały.
+**Zdjęcie profilowe i obraz w tle.** Możesz wysłać zdjęcie i szeroki obraz w tle albo raz skopiować swój obraz z GitHuba. Każdy obraz kodujemy na nowo (zdjęcie do 512×512, obraz w tle do 1500×500), co usuwa ukryte metadane, np. lokalizację GPS, nadajemy mu losową nazwę i przechowujemy w naszym magazynie: strony nigdy nie wczytują Twojego zdjęcia z GitHuba. Oba są **publiczne**. Gdy usuniesz lub zastąpisz obraz albo usuniesz konto, plik jest usuwany; kopie zostają w kopiach zapasowych do 14 dni. Bez zdjęcia pokazujemy Twoje inicjały.
 
 **Twój adres e-mail.** Jest przechowywany przy koncie i widoczny tylko dla naszego zespołu. Nigdy nie jest pokazywany w serwisie. Serwis nie wysyła do Ciebie e-maili (jedyny e-mail, jaki wysyła, to powiadomienie dla naszego zespołu o wiadomości do wsparcia); użyjemy adresu tylko po to, by skontaktować się z Tobą w sprawie konta, zgłoszenia lub wiadomości do wsparcia.
 
@@ -55,12 +55,12 @@ Wyniki są pokazywane na publicznej stronie Twojego projektu.
 **Społeczność.** Gdy piszesz w społeczności, zapisujemy:
 
 - Twoje wątki: dział, tytuł, tekst, daty oraz to, czy wątek był edytowany, przypięty, zamknięty lub usunięty;
-- Twoje odpowiedzi: tekst, wybraną naklejkę i to, na który wpis odpowiadają;
-- dołączone obrazy. Są ponownie kodowane jak zrzuty ekranu: ukryte metadane, takie jak lokalizacja GPS, są usuwane, nazwy plików są losowe, a na naszym serwerze trzymamy kopię do 1600 px i miniaturę 640 px.
+- Twoje odpowiedzi: tekst i to, na który wpis odpowiadają;
+- dołączone obrazy. Są ponownie kodowane jak zrzuty ekranu: ukryte metadane, takie jak lokalizacja GPS, są usuwane, nazwy plików są losowe, a w naszym magazynie przechowujemy kopię do 1600 px i miniaturę 640 px.
 
 Wpisy, ich obrazy, liczba głosów i Twoja nazwa użytkownika przy nich są **publiczne**. Zapisujemy też Twoje głosy; nikt nie widzi, kto na co głosował, ani na stronie, ani w panelu administracyjnym.
 
-Gdy usuwasz wpis, jego tekst, naklejka i obrazy są usuwane od razu. Tytuł wątku zostaje, dopóki są pod nim odpowiedzi innych osób, i jest pokazywany jako „[usunięto]”. Gdy wpis usuwają moderatorzy, jego obrazy są usuwane od razu, a tekst zostaje zachowany z powodem i widzisz go tylko Ty, moderatorzy i zespół. Moderatorzy widzą zgłoszone wpisy razem z historią autora, tak jak przy innych zgłoszeniach.
+Gdy usuwasz wpis, jego tekst i obrazy są usuwane od razu. Tytuł wątku zostaje, dopóki są pod nim odpowiedzi innych osób, i jest pokazywany jako „[usunięto]”. Gdy wpis usuwają moderatorzy, jego obrazy są usuwane od razu, a tekst zostaje zachowany z powodem i widzisz go tylko Ty, moderatorzy i zespół. Moderatorzy widzą zgłoszone wpisy razem z historią autora, tak jak przy innych zgłoszeniach.
 
 **Powiadomienia o odpowiedziach.** Gdy ktoś odpowie na Twój wątek lub Twoją odpowiedź, zapisujemy dla Ciebie powiadomienie (która odpowiedź, kiedy i kiedy otworzyłeś listę) oraz czas najnowszego nieprzeczytanego, aby menu mogło pokazać znacznik. Widzisz je tylko Ty. Są usuwane po **90 dniach** albo razem z kontem. Nigdy nie wysyłamy ich e-mailem.
 
@@ -70,7 +70,7 @@ Gdy usuwasz wpis, jego tekst, naklejka i obrazy są usuwane od razu. Tytuł wąt
 
 **Dziennik audytu.** Prowadzimy wewnętrzny zapis zmian znaków, działań moderacyjnych i usunięć kont, aby decyzje dało się później sprawdzić. Widzi go tylko nasz zespół.
 
-**Adresy IP i dzienniki.** Aplikacja nie zapisuje Twojego adresu IP, a jej własne dzienniki go nie zawierają. Przy każdym żądaniu strony dzienniki zapisują tylko metodę, adres strony (bez tego, co następuje po `?`), status odpowiedzi, rozmiar i czas obsługi oraz błędy. Nie ma w nich danych o Twojej przeglądarce. Adresy stron zawierają nazwy użytkowników (`/u/<username>/`), więc wiersz dziennika może pokazać, który profil otwarto, ale nie kto to zrobił.
+**Dzienniki aplikacji.** Dzienniki naszej aplikacji zawierają metodę żądania, trasę z ukrytymi danymi, status odpowiedzi, rozmiar i czas wykonania oraz oczyszczone komunikaty błędów. Nie zawierają adresów IP, danych przeglądarki, nazw użytkowników, parametrów zapytań ani treści formularzy.
 
 **Dziennik błędów.** Gdy coś się psuje, aplikacja zapisuje krótki wpis w pliku błędów na naszym serwerze. Wpis zawiera:
 
@@ -81,7 +81,7 @@ Gdy usuwasz wpis, jego tekst, naklejka i obrazy są usuwane od razu. Tytuł wąt
 
 Strony, których nie znaleziono, trafiają do osobnego pliku, każdy adres najwyżej raz na minutę. Te pliki nigdy nie zawierają Twojego adresu IP, danych przeglądarki, plików cookie, tego, co wpisano w formularzu, Twojego adresu e-mail ani nazwy użytkownika. Każdy plik jest ograniczony do 5 MB plus 5 starszych kopii; po osiągnięciu limitu najstarsza jest usuwana.
 
-> **TODO przed uruchomieniem:** serwer WWW przed aplikacją prowadzi własny dziennik dostępu, który domyślnie zawiera adresy IP. Co dokładnie zapisuje i jak długo to przechowuje (oraz jak długo przechowywane są dzienniki aplikacji), nie zostało jeszcze ustalone. Trzeba to uzupełnić albo wyłączyć zapisywanie IP, zanim ta strona stanie się publiczna.
+Dzienniki routingu naszego dostawcy hostingu zawierają adresy IP odwiedzających. Dzienniki routingu i dzienniki JSON stdout aplikacji są przechowywane w strumieniu dzienników dostawcy przez okres do około tygodnia. Dostęp do tego strumienia ma tylko właściciel konta hostingowego. Dzienniki aplikacji nie zawierają adresów IP ani danych osobowych. Przy uruchomieniu nie korzystamy z długoterminowego archiwum ani dodatku do dzienników, a dostawca DNS nie pośredniczy w ruchu witryny jako proxy. Przed dodaniem archiwum lub włączeniem proxy ruchu aktualizujemy tę politykę.
 
 **Ochrona przed nadużyciami.** Aby ograniczać nadużycia, liczymy niektóre działania (na przykład polubienia na godzinę) w bazie danych serwisu. Każdy licznik to liczba przypisana do Twojego konta lub projektu, bez adresu IP, obowiązująca najwyżej 24 godziny. Potem nie jest już używany, ale wiersz może zostać w bazie, dopóki nie zostanie wyczyszczony. Jeden wyjątek: gdy szukasz ludzi bez logowania, licznik jest na 10 minut przypisany do solonego, jednokierunkowego skrótu Twojego adresu IP (nigdy do samego adresu). Tego, czego szukasz, nigdy nie zapisujemy.
 
@@ -91,9 +91,9 @@ Strony, których nie znaleziono, trafiają do osobnego pliku, każdy adres najwy
 
 ## Wiadomości do wsparcia {#support}
 
-Gdy piszesz do nas przez [formularz wsparcia](/support/), zapisujemy temat, tytuł, Twoją wiadomość, podany adres e-mail (lub adres konta), konto, z którego pisałeś, numer strony błędu, jeśli z niej przyszedłeś, oraz do 3 załączników. Obrazy są kodowane na nowo jak inne zdjęcia (ukryte metadane, np. lokalizacja GPS, są usuwane); pliki tekstowe są przechowywane jako tekst. Załączniki leżą w prywatnym folderze na naszym serwerze, który nie ma publicznego adresu: pobrać je może tylko personel z dostępem do skrzynki wsparcia. Twojego adresu e-mail używamy tylko do odpowiedzi.
+Gdy piszesz do nas przez [formularz wsparcia](/support/), zapisujemy temat, tytuł, Twoją wiadomość, podany adres e-mail (lub adres konta), konto, z którego pisałeś, numer strony błędu, jeśli z niej przyszedłeś, oraz do 3 załączników. Obrazy są kodowane na nowo jak inne zdjęcia (ukryte metadane, np. lokalizacja GPS, są usuwane); pliki tekstowe są przechowywane jako tekst. Załączniki leżą w prywatnym magazynie, który nie ma publicznego adresu: pobrać je może tylko personel z dostępem do skrzynki wsparcia. Twojego adresu e-mail używamy tylko do odpowiedzi.
 
-Nie zapisujemy razem z wiadomością Twojego adresu IP ani danych przeglądarki. Aby powstrzymać spam, solony jednokierunkowy odcisk Twojego adresu IP jest trzymany w pamięci podręcznej serwera najwyżej 24 godziny, nigdy w bazie danych ani w logach.
+Nie zapisujemy adresu IP ani danych przeglądarki razem z wiadomością. Aby ograniczać spam, pamięć podręczna serwera przechowuje liczniki identyfikowane przez solony jednokierunkowy skrót adresu IP, nigdy przez sam adres. W środowisku produkcyjnym ta pamięć podręczna korzysta z bazy danych. Licznik obowiązuje najwyżej przez 24 godziny. Wygasłe wiersze pamięci podręcznej mogą pozostać w bazie do usunięcia podczas codziennej konserwacji. Skrót nie jest zapisywany z wiadomością do pomocy ani w dziennikach aplikacji.
 
 Gdy wiadomość dotrze, nasz serwer wysyła na skrzynkę zespołu krótkie powiadomienie tekstowe z Twoją wiadomością i adresem e-mail, przez naszego dostawcę poczty (zob. „Kto jeszcze otrzymuje dane”). Personel może dodawać notatki wewnętrzne i ustawiać status (nowa, przeczytana, z odpowiedzią, zamknięta). Czytamy każdą wiadomość, ale nie możemy obiecać odpowiedzi na wszystkie. Zamknięte wiadomości są usuwane 12 miesięcy po wysłaniu; pozostałe zostają, dopóki nie zostaną zamknięte. „Pobierz moje dane” zawiera wiadomości wysłane z Twojego konta, a usunięcie konta je kasuje, także te wysłane bez logowania z adresu e-mail Twojego konta.
 
@@ -113,16 +113,17 @@ Gdy wiadomość dotrze, nasz serwer wysyła na skrzynkę zespołu krótkie powia
 - Liczniki ochrony przed nadużyciami: najwyżej 24 godziny.
 - Kopie zapasowe: 14 dni. Usunięte konto znika z nich w ciągu 14 dni.
 - Pliki dziennika błędów: do zapełnienia (5 MB plus 5 starszych kopii po 5 MB), potem najstarsze wpisy są usuwane.
-- Dzienniki serwera WWW i aplikacji: **TODO**, jeszcze nie ustalono.
+- Dzienniki routingu hostingu i stdout aplikacji: do około tygodnia w strumieniu dzienników hostingu; bez długoterminowego archiwum przy uruchomieniu.
 
 ## Kto jeszcze otrzymuje dane {#recipients}
 
-- **GitHub, Inc.** Logujesz się na github.com, a nasz serwer odczytuje Twój profil i publiczne dane repozytoriów z API GitHuba. Do korzystania z GitHuba stosuje się jego własne oświadczenie o prywatności.
-- **Nasz dostawca poczty** (np. Google, jeśli skrzynka zespołu to Gmail) dostarcza na skrzynkę zespołu powiadomienie o każdej wiadomości do wsparcia, z jej treścią i Twoim adresem e-mail.
-- **Serwery Twojego projektu.** Przy sprawdzeniach Domain verified i Steady nasz serwer łączy się z DNS Twojej domeny i z adresem Twojego projektu. Widzą nasz serwer, nie Ciebie.
-- **Nasz dostawca hostingu**, który prowadzi dla nas serwer i bazę danych.
+- **Dostawcy hostingu i zarządzanej bazy danych** obsługują aplikację i przechowują jej rekordy w naszym imieniu.
+- **Magazyn obiektowy zgodny z S3** przechowuje przesłane obrazy i prywatne załączniki pomocy w naszym imieniu.
+- **GitHub** zapewnia logowanie oraz dane profilu i publicznych repozytoriów do naszych kontroli. Korzystanie z GitHuba podlega jego własnej polityce prywatności.
+- **Usługa pocztowa** dostarcza do skrzynki zespołu powiadomienia pomocy zawierające wiadomość i adres email nadawcy.
+- **Serwery DNS i WWW Twojego projektu** otrzymują nasze żądania weryfikacyjne. Widzą adres naszego serwera, a nie odwiedzającego.
 
-Nie sprzedajemy Twoich danych i nie udostępniamy ich do celów reklamowych.
+Nie sprzedajemy Twoich danych ani nie udostępniamy ich do celów reklamowych.
 
 ## Twoje prawa {#rights}
 

@@ -1,8 +1,8 @@
 # Términos de uso
 
-> **Borrador**, última actualización el 14 de noviembre de 2026 (versión {{ terms_version }}). Este texto aún no ha sido revisado por un abogado.
->
-> Traducción de cortesía; prevalece la versión en inglés.
+Última actualización el 14 de noviembre de 2026 (versión {{ terms_version }}).
+
+Traducción de cortesía; prevalece la versión en inglés.
 
 Estos términos son el acuerdo entre tú y {{ legal_owner_name }}, que gestiona {{ site_name }}. Al crear una cuenta, los aceptas. Preguntas: [{{ contact_email }}](mailto:{{ contact_email }}).
 

@@ -1,6 +1,6 @@
 # Community-Regeln
 
-*Entwurf. Diese Regeln sind Teil der [Nutzungsbedingungen](/legal/terms/) und können sich vor dem Start ändern.*
+Diese Regeln sind Teil der [Nutzungsbedingungen](/legal/terms/).
 
 Die Community ist der Ort, an dem Menschen, die mit KI bauen, um Hilfe bitten, zeigen, was sie veröffentlicht haben, Mitstreiter finden und über ihre Arbeit reden. Schreib so, dass der Thread auch der nächsten Person hilft, die ihn liest.
 
@@ -22,7 +22,7 @@ Die Community ist der Ort, an dem Menschen, die mit KI bauen, um Hilfe bitten, z
 - Es gibt nur Upvotes. Für deinen eigenen Beitrag kannst du nicht stimmen.
 - Du kannst deinen Beitrag bearbeiten. Änderungen in den ersten 15 Minuten bleiben unsichtbar, spätere bekommen den Hinweis „bearbeitet“. Der Titel eines Threads lässt sich nur in diesen ersten 15 Minuten ändern.
 - Du kannst deinen Beitrag löschen. Haben andere schon geantwortet, bleiben ihre Antworten stehen und dein Beitrag erscheint als „[gelöscht]“.
-- Die Sticker sind unser eigenes Set. Bilder werden geprüft und neu kodiert, ihre Metadaten (etwa der Aufnahmeort) werden entfernt.
+- Bilder werden geprüft und neu kodiert, ihre Metadaten (etwa der Aufnahmeort) werden entfernt.
 
 ## Moderation {#moderation}
 

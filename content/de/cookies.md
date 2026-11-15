@@ -1,8 +1,8 @@
 # Cookie-Richtlinie
 
-> **Entwurf**, zuletzt aktualisiert am 12. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
->
-> Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
+Zuletzt aktualisiert am 12. November 2026.
+
+Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
 {{ site_name }} verwendet nur Cookies, die für den Betrieb der Seite nötig sind. Es gibt keine Analyse-, Werbe- oder Drittanbieter-Cookies, deshalb fragen wir nicht per Banner nach deiner Einwilligung.
 

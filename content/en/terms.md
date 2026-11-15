@@ -1,6 +1,6 @@
 # Terms of use
 
-> **Draft**, last updated 14 November 2026 (version {{ terms_version }}). This text has not been reviewed by a lawyer yet.
+Last updated 14 November 2026 (version {{ terms_version }}).
 
 These terms are the agreement between you and {{ legal_owner_name }}, who runs {{ site_name }}. By creating an account you accept them. Questions: [{{ contact_email }}](mailto:{{ contact_email }}).
 

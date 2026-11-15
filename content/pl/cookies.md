@@ -1,8 +1,8 @@
 # Polityka plików cookie
 
-> **Wersja robocza**, ostatnia aktualizacja: 12 listopada 2026. Ten tekst nie został jeszcze sprawdzony przez prawnika.
->
-> Tłumaczenie dla wygody; obowiązuje wersja angielska.
+Ostatnia aktualizacja: 12 listopada 2026.
+
+Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
 {{ site_name }} używa tylko tych plików cookie, które są potrzebne do działania serwisu. Nie ma analityki, reklam ani plików cookie osób trzecich, dlatego nie prosimy o zgodę banerem.
 

@@ -1,6 +1,6 @@
 # Deploy notes
 
-No hosting provider is chosen yet. Everything here works on any Linux server with PostgreSQL, a reverse proxy and cron.
+Launch hosting is Heroku with managed PostgreSQL and S3-compatible object storage. The generic Linux examples below are historical operational references; Heroku steps are in `docs/DEPLOY_CHECKLIST.md` (launch stage 7).
 Paths assume the app lives in `/srv/shipmark` with its virtualenv in `.venv`; change them to yours.
 
 ## Environment variables
@@ -114,8 +114,7 @@ on the allowed list yet, so decide that together first. No model or view changes
 Everything is one JSON object per line on stdout: the app, Django errors (`django.request` for 4xx/5xx), and gunicorn
 (`gunicorn.access`: `METHOD /path STATUS BYTES MILLISECONDS`). The process manager collects it
 (systemd: `journalctl -u shipmark -o cat | jq .`). Client IP addresses and user agents are **not** logged by the app,
-because the privacy page says we do not record IPs. The reverse proxy has its own access log; decide its retention
-(see the checklist).
+because the privacy page says the application does not record raw IPs. Launch policy: Heroku routing logs include visitor IPs; routing and application stdout share the Heroku log stream, kept for up to approximately one week and readable only by the account holder. No long-term log drain or logging add-on is used at launch. Cloudflare is DNS-only: update Privacy before enabling a traffic proxy, drain or log add-on. Daily `prune_support` physically removes expired database-cache rows; stage 6 checks stdout route redaction.
 
 ### Error log files and `show_errors`
 
@@ -313,8 +312,7 @@ DATABASE_URL=postgres://shipmark:PASSWORD@localhost:5432/shipmark_restore python
 dropdb -h localhost -U shipmark shipmark_restore
 ```
 
-Privacy note: a deleted account stays in backups until the last backup containing it is rotated out (14 days here).
-Say so on the privacy page.
+Privacy policy: every backup copy, including off-server copies and object versions, must expire within the existing 14-day retention period. A deleted account remains only until the last containing backup rotates out. Configure and verify the provider retention and a restore before launch.
 
 ## Rotating SECRET_KEY
 
@@ -466,7 +464,7 @@ no community code runs on a request. Export and account deletion handle communit
 4. Post the pinned welcome thread from the official account: `manage.py post_welcome` (once; `--board <slug>` to choose
    the board, `--force` for a new one). It works with the flag still off, so you can check it in the admin first.
 5. Set `COMMUNITY_ENABLED=true` in `.env` and restart gunicorn. Open `/community/`, post a thread with a picture from a
-   second account, reply with a sticker, report it and handle the report in `/mod/`.
+   second account, reply with text or an image, report it and handle the report in `/mod/`.
 6. The proxy's upload limit (`client_max_body_size 25m`) already covers a thread with 4 pictures of 5 MB.
 7. The Terms changed for the community (`TERMS_VERSION` 2026-11-13): signed-in people accept them again on their next
    visit. The texts are drafts: have the community parts of Terms and Privacy reviewed with the rest.
@@ -495,8 +493,8 @@ Accounts and secrets
 
 Content and law
 - [ ] `config/branding.py`: real site name, `CONTACT_EMAIL`, `LEGAL_OWNER_NAME`; logo files in `static/brand/` replaced.
-- [ ] Privacy, terms and cookies texts reviewed by a lawyer. Update them for: proxy access-log retention (decide it; see
-      `docs/DATA_INVENTORY.md`) and backup retention. The texts were updated on 2026-11-12 (profile data, pictures,
+- [ ] Privacy, terms and cookies texts reviewed by a lawyer. Verify the approved proxy access-log retention (see
+      `docs/DATA_INVENTORY.md`): the approved launch policy is the short Heroku log stream (up to approximately one week), no drain/add-on, Cloudflare DNS-only, and 14-day retention for every backup copy. The texts were updated on 2026-11-12 (profile data, pictures,
       moderator access, appeals, language cookie) without bumping `TERMS_VERSION`, because the site is not public yet.
       After launch, bump `TERMS_VERSION` whenever the Terms change.
 - [ ] pl, de, es, fr, pt-br translations reviewed by native speakers, or remove those languages from `LANGUAGES` for now.
@@ -517,3 +515,10 @@ By hand, on the live site (phone and desktop)
 CSP and Permissions-Policy are added by `config/middleware.py`; the policy is `CONTENT_SECURITY_POLICY` in
 `config/settings/base.py`. Pages must not use inline `<script>`, `<style>`, `style="..."` or `onclick="..."` (a test checks this).
 The admin is excluded from the CSP because django-unfold needs inline code.
+
+## Approved launch privacy decisions
+
+- Processors are named generically in Privacy: web hosting, managed database, S3-compatible object storage, GitHub sign-in and public data, and support notification email.
+- Application logs/tables contain no raw IP addresses. Salted IP hashes used for rate limits are stored in the production database cache; counters apply for at most 24 hours, and expired rows are removed by daily `prune_support` (implemented and regression-tested).
+- Closed support messages and attachments are deleted 12 months after sending by that same daily command.
+- Heroku routing logs include visitor IPs. Routing and sanitized JSON stdout share the account-holder-only short log stream, up to approximately one week. No long-term log drain/add-on is enabled; Cloudflare is DNS-only. Update Privacy before adding a drain/add-on or enabling a proxy. The hosting account holder must verify the actual platform retention/access settings before launch.

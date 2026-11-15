@@ -132,9 +132,15 @@ class ContentPagesTests(SimpleTestCase):
             for slug in LEGAL_SLUGS:
                 with self.subTest(code=code, slug=slug):
                     html = self.client_html(code, slug)
-                    quote = re.search(r"<blockquote>(.*?)</blockquote>", html, re.DOTALL)
-                    self.assertIsNotNone(quote)
-                    self.assertEqual(quote.group(1).count("<p>"), 2, "Draft note + translation note")
+                    note = {
+                        "pl": "Tłumaczenie dla wygody; obowiązuje wersja angielska.",
+                        "de": "Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.",
+                        "es": "Traducción de cortesía; prevalece la versión en inglés.",
+                        "fr": "Traduction fournie à titre indicatif ; la version anglaise prévaut.",
+                        "pt-br": "Tradução por conveniência; a versão em inglês prevalece.",
+                    }[code]
+                    self.assertIn(f"<p>{note}</p>", html)
+                    self.assertNotIn(f"<blockquote>\n<p>{note}", html)
 
     def client_html(self, code, slug):
         from pages.content import load_page
@@ -178,10 +184,12 @@ class AboutPageTests(TestCase):
                 html = self.client.get("/about/", headers={"Accept-Language": code}).content.decode()
                 self.assertIn(f'href="mailto:{branding.CONTACT_EMAIL}"', html)  # contact comes from branding.py
                 self.assertIn('href="/how-proof-works/"', html)
-                self.assertTrue("Danylo Rudenko" in html or "Данило Руденко" in html)
-                self.assertIn("TODO", html)  # things the developer must confirm stay visible until edited
-                for anchor in ("problem", "proof", "not-verified", "builders", "who", "next", "contact"):
-                    self.assertIn(f'id="{anchor}"', html)
+                main = re.search(r"<main\b.*?</main>", html, re.S).group()
+                for removed in ("TODO", "Danylo Rudenko", "Данило Руденко", 'id="who"', 'id="next"'):
+                    self.assertNotIn(removed, main)
+                self.assertIn('href="/support/"', main)
+                for anchor in ("proof", "not-verified", "contact"):
+                    self.assertIn(f'id="{anchor}"', main)
                 for leftover in ("This page is a placeholder", "Ta strona jest tymczasowa", "Це тимчасова сторінка", "{{"):
                     self.assertNotIn(leftover, html.split("<main", 1)[1])
 

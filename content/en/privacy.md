@@ -1,6 +1,6 @@
 # Privacy policy
 
-> **Draft**, last updated 14 November 2026. This text has not been reviewed by a lawyer yet.
+Last updated 14 November 2026.
 
 This page explains what {{ site_name }} stores about you, why, for how long, and what you can do about it. It describes what the site actually does.
 
@@ -20,7 +20,7 @@ We ask GitHub for only two permissions, `read:user` and `user:email`. Through yo
 
 **Your profile.** Username, display name, headline, About, location, a status (for example "open to work"), up to 10 skills, up to 6 links, up to 3 pinned projects and your language. Everything except the username is optional. The display name and About start as your GitHub name and bio; you can change or remove them in Settings. We also store the address of your GitHub picture, only so that "Use my GitHub picture" can copy it; it is never shown. Your username, display name, headline, About, location, status, skills, links, pinned projects, GitHub login and the month you joined are **public**.
 
-**Profile picture and cover.** You can upload a picture and a wide cover image, or copy your GitHub picture once with "Use my GitHub picture". Every image is re-encoded (the picture to 512×512, the cover to 1500×500), which removes hidden metadata such as GPS location, gets a random file name and is stored on our own server: pages never load your picture from GitHub. Both are **public**. When you remove or replace one, or delete your account, the file is deleted; copies stay in backups for up to 14 days. Without a picture, your initials are shown.
+**Profile picture and cover.** You can upload a picture and a wide cover image, or copy your GitHub picture once with "Use my GitHub picture". Every image is re-encoded (the picture to 512×512, the cover to 1500×500), which removes hidden metadata such as GPS location, gets a random file name and is stored for us: pages never load your picture from GitHub. Both are **public**. When you remove or replace one, or delete your account, the file is deleted; copies stay in backups for up to 14 days. Without a picture, your initials are shown.
 
 **Your email address.** Stored with your account and visible only to our staff. It is never shown on the site. The site does not send you email (the only email it sends is a notice to our own team about a support message); we would use the address only to contact you about your account, a report or a support message.
 
@@ -53,12 +53,12 @@ The results are shown on your public project page.
 **Community.** When you post in the community we store:
 
 - your threads: board, title, text, dates, and whether a thread was edited, pinned, locked or removed;
-- your replies: text, the sticker you picked, and which post they answer;
-- the images you attach. They are re-encoded like screenshots: hidden metadata such as GPS location is removed, file names are random, and we keep a copy up to 1600 px and a 640 px thumbnail on our own server.
+- your replies: text and which post they answer;
+- the images you attach. They are re-encoded like screenshots: hidden metadata such as GPS location is removed, file names are random, and we keep a copy up to 1600 px and a 640 px thumbnail in our storage.
 
 Posts, their images, their upvote counts and your username on them are **public**. We also store your upvotes; nobody sees who upvoted what, not on the site and not in the admin.
 
-When you delete a post, its text, sticker and images are deleted at once. A thread's title stays while replies of others are under it, shown as "[deleted]". When moderators remove a post, its images are deleted at once, and its text is kept with the reason, visible only to you, moderators and staff. Moderators see reported posts together with the author's history, as for other reports.
+When you delete a post, its text and images are deleted at once. A thread's title stays while replies of others are under it, shown as "[deleted]". When moderators remove a post, its images are deleted at once, and its text is kept with the reason, visible only to you, moderators and staff. Moderators see reported posts together with the author's history, as for other reports.
 
 **Reply notifications.** When someone replies to your thread or to your reply, we store a notification for you (which reply, when, and when you opened the list), plus the time of your newest unread one so that the menu can show a mark. Only you see them. They are deleted after **90 days**, or with your account. We never send them by email.
 
@@ -68,7 +68,7 @@ When you delete a post, its text, sticker and images are deleted at once. A thre
 
 **Audit log.** We keep an internal record of hallmark changes, moderation actions and account deletions, so that decisions can be checked later. Only staff can see it.
 
-**IP addresses and logs.** The application does not store your IP address, and its own logs do not contain it. For each page request the logs record only the method, the page address (without anything after a `?`), the response status, size and time taken, plus errors. They hold no browser details. Page addresses include usernames (`/u/<username>/`), so a log line can show which profile was opened, but not by whom.
+**Application logs.** Our application logs contain the request method, a redacted route, response status, size and duration, and sanitized errors. They do not contain IP addresses, browser details, usernames, query strings or form contents.
 
 **Error log.** When something fails, the application writes a short record to an error file on our server. The record holds:
 
@@ -79,7 +79,7 @@ When you delete a post, its text, sticker and images are deleted at once. A thre
 
 Pages that were not found are written to a separate file, each address at most once a minute. These files never contain your IP address, browser details, cookies, what you typed into a form, your email address or your username. Each file is limited to 5 MB plus 5 older copies; the oldest is deleted when the limit is reached.
 
-> **TODO before launch:** the web server in front of the application keeps its own access log, which by default includes IP addresses. What it records and how long it keeps it (and how long the application logs are kept) has not been decided yet. Fill this in, or switch IP logging off, before this page goes public.
+Our web hosting provider's routing logs include visitors' IP addresses. Routing logs and the application's JSON stdout logs are kept in the provider's log stream for up to approximately one week. Only the hosting account holder can read that stream. The application logs do not include IP addresses or personal data. At launch, we do not use a long-term log archive or logging add-on, and our DNS provider does not proxy website traffic. We update this policy before introducing a log archive or enabling a traffic proxy.
 
 **Abuse protection.** To limit abuse we count some actions (for example, likes per hour) in the site's database. Each counter is a number tied to your account or to a project, without any IP address, and applies for at most 24 hours. After that it is no longer used, but the row may stay in the database until it is cleaned up. One exception: when you search for people without being signed in, the counter is tied to a salted one-way hash of your IP address (never the address itself) for 10 minutes. What you search for is never stored.
 
@@ -89,9 +89,9 @@ Pages that were not found are written to a separate file, each address at most o
 
 ## Messages to support {#support}
 
-When you write to us through the [support form](/support/), we store the topic, the subject, your message, the email address you give (or your account's), the account you were signed in with, the reference number of an error page if you came from one, and up to 3 attachments. Images are re-encoded like other pictures (hidden metadata such as GPS location is removed); text files are kept as text. Attachments are stored in a private folder on our server that has no public address: only staff with access to the support inbox can download them. We use your email address only to reply.
+When you write to us through the [support form](/support/), we store the topic, the subject, your message, the email address you give (or your account's), the account you were signed in with, the reference number of an error page if you came from one, and up to 3 attachments. Images are re-encoded like other pictures (hidden metadata such as GPS location is removed); text files are kept as text. Attachments are stored in private storage that has no public address: only staff with access to the support inbox can download them. We use your email address only to reply.
 
-We do not store your IP address or browser details with the message. To stop spam, a salted one-way fingerprint of your IP address is kept in the server's cache for at most 24 hours, never in the database or the logs.
+We do not store your IP address or browser details with the message. To limit spam, the server cache holds counters identified by a salted one-way hash of your IP address, never the address itself. In production, this cache uses the database. A counter applies for at most 24 hours. Expired database cache rows can remain until they are removed during daily maintenance. The hash is not stored with the support message or in application logs.
 
 When a message arrives, our server sends a short plain-text notice with your message and your email address to the team's mailbox, through our email provider (see "Who else receives data"). Staff can add internal notes and set a status (new, read, answered, closed). We read every message but cannot promise to reply to all. Closed messages are deleted 12 months after they were sent; the others stay until they are closed. "Download my data" includes the messages you sent while signed in, and deleting your account deletes them, also the ones sent while signed out from your account's email address.
 
@@ -111,16 +111,17 @@ When a message arrives, our server sends a short plain-text notice with your mes
 - Abuse-protection counters: at most 24 hours.
 - Backups: 14 days. A deleted account disappears from them within 14 days.
 - Error log files: until they are full (5 MB, plus 5 older copies of 5 MB each), then the oldest entries are deleted.
-- Web server and application logs: **TODO**, not decided yet.
+- Hosting routing logs and application stdout logs: up to approximately one week in the hosting log stream; no long-term log archive at launch.
 
 ## Who else receives data {#recipients}
 
-- **GitHub, Inc.** You sign in on github.com, and our server reads your profile and public repository data from GitHub's API. GitHub's own privacy statement applies to your use of GitHub.
-- **Our email provider** (for example Google, if the team's mailbox is a Gmail account) carries the notice about each support message, with its text and your email address, to the team's mailbox.
-- **The servers of your project.** For the Domain verified and Steady checks our server contacts your domain's DNS and your project's address. They see our server, not you.
-- **Our hosting provider**, which runs the server and the database for us.
+- **Web hosting and managed database providers** operate the application and store its records for us.
+- **S3-compatible object storage** stores uploaded images and private support attachments on our behalf.
+- **GitHub** provides sign-in and the profile and public repository data used by our checks. GitHub's own privacy statement applies to your use of GitHub.
+- **An email service** carries support notifications, including the message and the sender's email address, to our team's mailbox.
+- **Your project's DNS and web servers** receive our verification requests. They see our server's address, not the visitor's.
 
-We do not sell your data and do not share it for advertising.
+We do not sell your data or share it for advertising.
 
 ## Your rights {#rights}
 

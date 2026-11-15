@@ -6,7 +6,8 @@ Spam protection for /support/ without outside services.
 - Fill-time token: the form carries a signed timestamp; a POST less than 3 seconds after the page was made, or
   with a broken or old token, is refused.
 - Rate limits: 3 messages an hour and 10 a day per session, per signed-in account and per salted hash of the
-  IP address. The hash lives only in the cache (never in the database or logs) and expires with the window.
+  IP address. The hash lives only in the cache (database-backed in production), never in message rows or logs.
+  It expires with the window; daily prune_support physically removes expired database cache rows.
 - Duplicates: the same address and text within 24 hours count as one message.
 """
 import hashlib

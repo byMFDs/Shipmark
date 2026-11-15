@@ -1,6 +1,6 @@
 # Regras da comunidade
 
-*Rascunho. Estas regras fazem parte dos [Termos](/legal/terms/) e podem mudar antes do lançamento.*
+Estas regras fazem parte dos [Termos](/legal/terms/).
 
 A comunidade é onde quem constrói com IA pede ajuda, mostra o que lançou, encontra colaboradores e conversa sobre trabalho. Escreva de um jeito que o tópico ajude a próxima pessoa que for lê-lo.
 
@@ -22,7 +22,7 @@ A comunidade é onde quem constrói com IA pede ajuda, mostra o que lançou, enc
 - Só existem votos a favor. Você não pode votar na sua própria publicação.
 - Você pode editar sua publicação. Mudanças nos primeiros 15 minutos não aparecem; as posteriores mostram a marca “editado”. O título de um tópico só pode ser alterado nesses primeiros 15 minutos.
 - Você pode excluir sua publicação. Se outras pessoas já responderam, as respostas delas ficam e a sua aparece como “[excluído]”.
-- As figurinhas são um conjunto próprio. As imagens são verificadas e recodificadas, e os metadados delas (como a localização da câmera) são removidos.
+- As imagens são verificadas e recodificadas, e os metadados delas (como a localização da câmera) são removidos.
 
 ## Moderação {#moderation}
 

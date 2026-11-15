@@ -1,8 +1,8 @@
 # Conditions d’utilisation
 
-> **Brouillon**, dernière mise à jour le 14 novembre 2026 (version {{ terms_version }}). Ce texte n’a pas encore été relu par un juriste.
->
-> Traduction fournie à titre indicatif ; la version anglaise prévaut.
+Dernière mise à jour le 14 novembre 2026 (version {{ terms_version }}).
+
+Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
 Ces conditions constituent l’accord entre vous et {{ legal_owner_name }}, qui exploite {{ site_name }}. En créant un compte, vous les acceptez. Questions : [{{ contact_email }}](mailto:{{ contact_email }}).
 

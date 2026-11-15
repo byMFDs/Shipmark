@@ -1,8 +1,8 @@
 # Política de cookies
 
-> **Borrador**, última actualización el 12 de noviembre de 2026. Este texto aún no ha sido revisado por un abogado.
->
-> Traducción de cortesía; prevalece la versión en inglés.
+Última actualización el 12 de noviembre de 2026.
+
+Traducción de cortesía; prevalece la versión en inglés.
 
 {{ site_name }} usa solo las cookies que el sitio necesita para funcionar. No hay cookies de analítica, de publicidad ni de terceros, por eso no pedimos consentimiento con un banner.
 

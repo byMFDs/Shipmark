@@ -1,8 +1,8 @@
 # Politique de confidentialité
 
-> **Brouillon**, dernière mise à jour le 14 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
->
-> Traduction fournie à titre indicatif ; la version anglaise prévaut.
+Dernière mise à jour le 14 novembre 2026.
+
+Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
 Cette page explique ce que {{ site_name }} conserve à votre sujet, pourquoi, pendant combien de temps, et ce que vous pouvez faire à ce sujet. Elle décrit ce que le site fait réellement.
 
@@ -22,7 +22,7 @@ Nous ne demandons à GitHub que deux autorisations : `read:user` et `user:email`
 
 **Votre profil.** Nom d’utilisateur, nom affiché, phrase d’accroche, « À propos », localisation, un statut (par exemple « Ouvert aux offres »), jusqu’à 10 compétences, jusqu’à 6 liens, jusqu’à 3 projets épinglés et votre langue. Tout sauf le nom d’utilisateur est facultatif. Le nom affiché et « À propos » reprennent d’abord votre nom et votre bio GitHub ; vous pouvez les modifier ou les retirer dans les Réglages. Nous enregistrons aussi l’adresse de votre image GitHub, uniquement pour que « Utiliser mon image GitHub » puisse la copier ; elle n’est jamais affichée. Votre nom d’utilisateur, nom affiché, phrase d’accroche, « À propos », localisation, statut, compétences, liens, projets épinglés, identifiant GitHub et le mois de votre inscription sont **publics**.
 
-**Photo de profil et couverture.** Vous pouvez envoyer une photo et une image de couverture large, ou copier une fois votre image GitHub. Chaque image est réencodée (la photo en 512×512, la couverture en 1500×500), ce qui supprime les métadonnées cachées comme la position GPS, reçoit un nom de fichier aléatoire et est stockée sur notre propre serveur : les pages ne chargent jamais votre photo depuis GitHub. Les deux sont **publiques**. Quand vous en retirez ou remplacez une, ou supprimez votre compte, le fichier est supprimé ; des copies restent dans les sauvegardes jusqu’à 14 jours. Sans photo, vos initiales sont affichées.
+**Photo de profil et couverture.** Vous pouvez envoyer une photo et une image de couverture large, ou copier une fois votre image GitHub. Chaque image est réencodée (la photo en 512×512, la couverture en 1500×500), ce qui supprime les métadonnées cachées comme la position GPS, reçoit un nom de fichier aléatoire et est stockée dans notre stockage : les pages ne chargent jamais votre photo depuis GitHub. Les deux sont **publiques**. Quand vous en retirez ou remplacez une, ou supprimez votre compte, le fichier est supprimé ; des copies restent dans les sauvegardes jusqu’à 14 jours. Sans photo, vos initiales sont affichées.
 
 **Votre adresse e-mail.** Elle est conservée avec votre compte et n’est visible que par notre équipe. Elle n’est jamais affichée sur le site. Le site ne vous envoie pas d’e-mails (le seul qu’il envoie est un avis à notre équipe au sujet d’un message au support) ; nous n’utiliserions l’adresse que pour vous contacter au sujet de votre compte, d’un signalement ou d’un message au support.
 
@@ -55,12 +55,12 @@ Les résultats sont affichés sur la page publique de votre projet.
 **Communauté.** Quand vous publiez dans la communauté, nous conservons :
 
 - vos fils : rubrique, titre, texte, dates, et si un fil a été modifié, épinglé, verrouillé ou retiré ;
-- vos réponses : texte, l’autocollant choisi, et le message auquel elles répondent ;
-- les images que vous joignez. Elles sont réencodées comme les captures d’écran : les métadonnées cachées comme la position GPS sont supprimées, les noms de fichiers sont aléatoires, et nous gardons une copie jusqu’à 1600 px et une vignette de 640 px sur notre propre serveur.
+- vos réponses : texte et le message auquel elles répondent ;
+- les images que vous joignez. Elles sont réencodées comme les captures d’écran : les métadonnées cachées comme la position GPS sont supprimées, les noms de fichiers sont aléatoires, et nous gardons une copie jusqu’à 1600 px et une vignette de 640 px dans notre stockage.
 
 Les messages, leurs images, leur nombre de votes et votre nom d’utilisateur sur ceux-ci sont **publics**. Nous conservons aussi vos votes ; personne ne voit qui a voté pour quoi, ni sur le site ni dans l’administration.
 
-Quand vous supprimez un message, son texte, son autocollant et ses images sont supprimés aussitôt. Le titre d’un fil reste tant que des réponses d’autres personnes se trouvent dessous, et s’affiche comme « [supprimé] ». Quand les modérateurs retirent un message, ses images sont supprimées aussitôt et son texte est conservé avec le motif, visible seulement par vous, les modérateurs et l’équipe. Les modérateurs voient les messages signalés avec l’historique de leur auteur, comme pour les autres signalements.
+Quand vous supprimez un message, son texte et ses images sont supprimés aussitôt. Le titre d’un fil reste tant que des réponses d’autres personnes se trouvent dessous, et s’affiche comme « [supprimé] ». Quand les modérateurs retirent un message, ses images sont supprimées aussitôt et son texte est conservé avec le motif, visible seulement par vous, les modérateurs et l’équipe. Les modérateurs voient les messages signalés avec l’historique de leur auteur, comme pour les autres signalements.
 
 **Notifications de réponses.** Quand quelqu’un répond à votre fil ou à votre réponse, nous conservons une notification pour vous (quelle réponse, quand, et quand vous avez ouvert la liste), ainsi que l’heure de la plus récente non lue, pour que le menu puisse afficher une marque. Vous seul les voyez. Elles sont supprimées après **90 jours**, ou avec votre compte. Nous ne les envoyons jamais par e-mail.
 
@@ -70,7 +70,7 @@ Quand vous supprimez un message, son texte, son autocollant et ses images sont s
 
 **Journal d’audit.** Nous tenons un registre interne des changements de poinçons, des actions de modération et des suppressions de comptes, afin de pouvoir vérifier les décisions plus tard. Seule notre équipe peut le consulter.
 
-**Adresses IP et journaux.** L’application ne conserve pas votre adresse IP et ses propres journaux ne la contiennent pas. Pour chaque requête de page, les journaux notent seulement la méthode, l’adresse de la page (sans ce qui suit un `?`), le statut de la réponse, la taille et le temps de traitement, ainsi que les erreurs. Ils ne contiennent aucune information sur votre navigateur. Les adresses de page contiennent des noms d’utilisateur (`/u/<username>/`) : une ligne de journal peut donc montrer quel profil a été ouvert, mais pas par qui.
+**Journaux de l’application.** Nos journaux applicatifs contiennent la méthode de requête, une route dont les données sont masquées, le statut, la taille et la durée de réponse, ainsi que des erreurs expurgées. Ils ne contiennent ni adresses IP, ni informations du navigateur, ni noms d’utilisateur, ni paramètres de requête, ni contenu de formulaires.
 
 **Journal des erreurs.** Quand quelque chose échoue, l’application écrit une courte entrée dans un fichier d’erreurs sur notre serveur. L’entrée contient :
 
@@ -81,7 +81,7 @@ Quand vous supprimez un message, son texte, son autocollant et ses images sont s
 
 Les pages introuvables sont écrites dans un fichier séparé, chaque adresse au plus une fois par minute. Ces fichiers ne contiennent jamais votre adresse IP, les informations de votre navigateur, vos cookies, ce que vous avez saisi dans un formulaire, votre adresse e-mail ni votre nom d’utilisateur. Chaque fichier est limité à 5 Mo plus 5 copies plus anciennes ; à la limite, la plus ancienne est supprimée.
 
-> **TODO avant le lancement :** le serveur web placé devant l’application tient son propre journal d’accès, qui contient par défaut des adresses IP. Ce qu’il enregistre et combien de temps il le conserve (ainsi que la durée de conservation des journaux de l’application) n’est pas encore décidé. Il faut le compléter, ou désactiver l’enregistrement des IP, avant que cette page ne devienne publique.
+Les journaux de routage de notre hébergeur web contiennent les adresses IP des visiteurs. Ces journaux et les journaux JSON stdout de l’application sont conservés dans le flux de journaux du fournisseur pendant une durée maximale d’environ une semaine. Seul le titulaire du compte d’hébergement peut lire ce flux. Les journaux de l’application ne contiennent ni adresses IP ni données personnelles. Au lancement, nous n’utilisons ni archive de journaux à long terme ni module de journalisation, et notre fournisseur DNS ne sert pas de proxy pour le trafic du site. Nous mettons cette politique à jour avant d’ajouter une archive de journaux ou d’activer un proxy de trafic.
 
 **Protection contre les abus.** Pour limiter les abus, nous comptons certaines actions (par exemple les mentions J’aime par heure) dans la base de données du site. Chaque compteur est un nombre lié à votre compte ou à un projet, sans adresse IP, valable 24 heures au plus. Ensuite il n’est plus utilisé, mais la ligne peut rester dans la base jusqu’à son nettoyage. Une exception : quand vous cherchez des personnes sans être connecté, le compteur est lié pendant 10 minutes à une empreinte salée à sens unique de votre adresse IP (jamais à l’adresse elle-même). Ce que vous recherchez n’est jamais conservé.
 
@@ -91,9 +91,9 @@ Les pages introuvables sont écrites dans un fichier séparé, chaque adresse au
 
 ## Messages au support {#support}
 
-Quand vous nous écrivez via le [formulaire de support](/support/), nous conservons le sujet, l’objet, votre message, l’adresse e-mail indiquée (ou celle de votre compte), le compte avec lequel vous étiez connecté, le numéro de référence d’une page d’erreur si vous en venez, et jusqu’à 3 pièces jointes. Les images sont réencodées comme les autres (les métadonnées cachées comme la position GPS sont supprimées) ; les fichiers texte sont conservés en texte. Les pièces jointes sont stockées dans un dossier privé de notre serveur sans adresse publique : seule l’équipe ayant accès à la boîte du support peut les télécharger. Nous utilisons votre adresse e-mail uniquement pour vous répondre.
+Quand vous nous écrivez via le [formulaire de support](/support/), nous conservons le sujet, l’objet, votre message, l’adresse e-mail indiquée (ou celle de votre compte), le compte avec lequel vous étiez connecté, le numéro de référence d’une page d’erreur si vous en venez, et jusqu’à 3 pièces jointes. Les images sont réencodées comme les autres (les métadonnées cachées comme la position GPS sont supprimées) ; les fichiers texte sont conservés en texte. Les pièces jointes sont stockées dans un stockage privé sans adresse publique : seule l’équipe ayant accès à la boîte du support peut les télécharger. Nous utilisons votre adresse e-mail uniquement pour vous répondre.
 
-Nous ne conservons ni votre adresse IP ni les informations de votre navigateur avec le message. Pour arrêter le spam, une empreinte salée à sens unique de votre adresse IP est gardée dans le cache du serveur 24 heures au plus, jamais dans la base de données ni dans les journaux.
+Nous ne conservons ni votre adresse IP ni les informations de votre navigateur avec le message. Pour limiter le spam, le cache du serveur contient des compteurs identifiés par un hachage salé à sens unique de votre adresse IP, jamais par l’adresse elle-même. En production, ce cache utilise la base de données. Un compteur s’applique pendant 24 heures au maximum. Les lignes expirées du cache peuvent rester dans la base jusqu’à leur suppression lors de la maintenance quotidienne. Le hachage n’est conservé ni avec le message d’assistance ni dans les journaux de l’application.
 
 Quand un message arrive, notre serveur envoie à la boîte de l’équipe un court avis en texte brut avec votre message et votre adresse e-mail, via notre fournisseur de messagerie (voir « Qui d’autre reçoit des données »). L’équipe peut ajouter des notes internes et indiquer un statut (nouveau, lu, répondu, clos). Nous lisons chaque message mais ne pouvons pas promettre de répondre à tous. Les messages clos sont supprimés 12 mois après leur envoi ; les autres restent jusqu’à leur clôture. « Télécharger mes données » contient les messages envoyés en étant connecté, et la suppression de votre compte les supprime, ainsi que ceux envoyés sans connexion depuis l’adresse e-mail de votre compte.
 
@@ -113,14 +113,15 @@ Quand un message arrive, notre serveur envoie à la boîte de l’équipe un cou
 - Compteurs de protection contre les abus : 24 heures au plus.
 - Sauvegardes : 14 jours. Un compte supprimé en disparaît dans ce délai de 14 jours.
 - Fichiers du journal des erreurs : jusqu’à ce qu’ils soient pleins (5 Mo plus 5 copies de 5 Mo), puis les entrées les plus anciennes sont supprimées.
-- Journaux du serveur web et de l’application : **TODO**, pas encore décidé.
+- Journaux de routage de l’hébergement et stdout de l’application : jusqu’à environ une semaine dans le flux de journaux de l’hébergeur ; aucune archive à long terme au lancement.
 
 ## Qui d’autre reçoit des données {#recipients}
 
-- **GitHub, Inc.** Vous vous connectez sur github.com et notre serveur lit votre profil et les données publiques de dépôts depuis l’API de GitHub. La politique de confidentialité propre à GitHub s’applique à votre usage de GitHub.
-- **Notre fournisseur de messagerie** (par exemple Google, si la boîte de l’équipe est un compte Gmail) achemine vers la boîte de l’équipe l’avis de chaque message au support, avec son texte et votre adresse e-mail.
-- **Les serveurs de votre projet.** Pour les contrôles Domain verified et Steady, notre serveur contacte le DNS de votre domaine et l’adresse de votre projet. Ils voient notre serveur, pas vous.
-- **Notre hébergeur**, qui exploite pour nous le serveur et la base de données.
+- **Les prestataires d’hébergement web et de base de données gérée** exploitent l’application et conservent ses enregistrements pour nous.
+- **Le stockage d’objets compatible S3** conserve les images téléversées et les pièces jointes privées d’assistance pour notre compte.
+- **GitHub** assure la connexion et fournit les données de profil et de dépôts publics utilisées par nos vérifications. Sa propre politique de confidentialité s’applique à votre utilisation de GitHub.
+- **Un service de messagerie** transmet à la boîte de notre équipe les notifications d’assistance, avec le message et l’adresse e-mail de l’expéditeur.
+- **Les serveurs DNS et web de votre projet** reçoivent nos requêtes de vérification. Ils voient l’adresse de notre serveur, pas celle du visiteur.
 
 Nous ne vendons pas vos données et ne les partageons pas à des fins publicitaires.
 

@@ -1,6 +1,6 @@
 # Normas de la comunidad
 
-*Borrador. Estas normas forman parte de los [Términos](/legal/terms/) y pueden cambiar antes del lanzamiento.*
+Estas normas forman parte de los [Términos](/legal/terms/).
 
 La comunidad es el lugar donde quienes construyen con IA piden ayuda, muestran lo que han lanzado, buscan colaboradores y hablan de su trabajo. Escribe de forma que el hilo le sirva a la próxima persona que lo lea.
 
@@ -22,7 +22,7 @@ La comunidad es el lugar donde quienes construyen con IA piden ayuda, muestran l
 - Solo hay votos a favor. No puedes votar tu propia publicación.
 - Puedes editar tu publicación. Los cambios en los primeros 15 minutos no se marcan; los posteriores muestran la marca «editado». El título de un hilo solo se puede cambiar en esos primeros 15 minutos.
 - Puedes eliminar tu publicación. Si otras personas ya respondieron, sus respuestas se quedan y la tuya aparece como «[eliminado]».
-- Los stickers son un conjunto propio. Las imágenes se revisan y se vuelven a codificar, y se eliminan sus metadatos (como la ubicación de la cámara).
+- Las imágenes se revisan y se vuelven a codificar, y se eliminan sus metadatos (como la ubicación de la cámara).
 
 ## Moderación {#moderation}
 

@@ -1,8 +1,8 @@
 # Politique relative aux cookies
 
-> **Brouillon**, dernière mise à jour le 12 novembre 2026. Ce texte n’a pas encore été relu par un juriste.
->
-> Traduction fournie à titre indicatif ; la version anglaise prévaut.
+Dernière mise à jour le 12 novembre 2026.
+
+Traduction fournie à titre indicatif ; la version anglaise prévaut.
 
 {{ site_name }} n’utilise que les cookies nécessaires au fonctionnement du site. Il n’y a ni cookies d’analyse, ni cookies publicitaires, ni cookies tiers, donc nous ne demandons pas de consentement avec un bandeau.
 

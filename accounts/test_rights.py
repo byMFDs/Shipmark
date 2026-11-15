@@ -37,7 +37,7 @@ class LegalPageTests(TestCase):
                 self.assertEqual(response.status_code, 200, (slug, lang))
                 self.assertContains(response, branding.CONTACT_EMAIL)
                 self.assertNotContains(response, "{{")  # every placeholder filled
-                self.assertContains(response, "Draft" if lang == "en" else "Чернетка")
+                self.assertNotContains(response, "Draft" if lang == "en" else "Чернетка")
 
     def test_other_content_pages_are_not_legal_pages(self):
         self.assertEqual(self.client.get("/legal/about/").status_code, 404)

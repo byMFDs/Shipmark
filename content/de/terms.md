@@ -1,8 +1,8 @@
 # Nutzungsbedingungen
 
-> **Entwurf**, zuletzt aktualisiert am 14. November 2026 (Version {{ terms_version }}). Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
->
-> Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
+Zuletzt aktualisiert am 14. November 2026 (Version {{ terms_version }}).
+
+Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
 Diese Bedingungen sind die Vereinbarung zwischen dir und {{ legal_owner_name }}, der {{ site_name }} betreibt. Mit der Erstellung eines Kontos akzeptierst du sie. Fragen: [{{ contact_email }}](mailto:{{ contact_email }}).
 

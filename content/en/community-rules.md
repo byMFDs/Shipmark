@@ -1,6 +1,6 @@
 # Community rules
 
-*Draft. These rules are part of the [Terms](/legal/terms/) and may change before launch.*
+These rules are part of the [Terms](/legal/terms/).
 
 The community is where people who build with AI ask for help, show what they shipped, find collaborators and talk shop. Keep it useful for the next person who reads the thread.
 
@@ -22,7 +22,7 @@ The community is where people who build with AI ask for help, show what they shi
 - There are upvotes only. You cannot upvote your own post.
 - You can edit your post. Edits in the first 15 minutes are silent; later ones show an "edited" mark. A thread's title can only be changed in those first 15 minutes.
 - You can delete your post. If others already replied, their replies stay and yours shows as "[deleted]".
-- Stickers are our own set. Images are checked and re-encoded, and their metadata (such as camera location) is removed.
+- Images are checked and re-encoded, and their metadata (such as camera location) is removed.
 
 ## Moderation {#moderation}
 

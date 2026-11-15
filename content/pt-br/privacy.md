@@ -1,8 +1,8 @@
 # Política de privacidade
 
-> **Rascunho**, última atualização em 14 de novembro de 2026. Este texto ainda não foi revisado por um advogado.
->
-> Tradução por conveniência; a versão em inglês prevalece.
+Última atualização em 14 de novembro de 2026.
+
+Tradução por conveniência; a versão em inglês prevalece.
 
 Esta página explica o que o {{ site_name }} guarda sobre você, por quê, por quanto tempo e o que você pode fazer a respeito. Ela descreve o que o site realmente faz.
 
@@ -22,7 +22,7 @@ Pedimos ao GitHub só duas permissões: `read:user` e `user:email`. Pela sua con
 
 **Seu perfil.** Nome de usuário, nome de exibição, resumo curto, “Sobre”, localização, um status (por exemplo, “Aberto a trabalho”), até 10 habilidades, até 6 links, até 3 projetos fixados e seu idioma. Tudo, exceto o nome de usuário, é opcional. O nome de exibição e o “Sobre” começam com seu nome e sua bio do GitHub; você pode mudá-los ou removê-los em Configurações. Também guardamos o endereço da sua imagem do GitHub, só para que “Usar minha imagem do GitHub” possa copiá-la; ela nunca é exibida. Seu nome de usuário, nome de exibição, resumo curto, “Sobre”, localização, status, habilidades, links, projetos fixados, login do GitHub e o mês em que você entrou são **públicos**.
 
-**Foto de perfil e capa.** Você pode enviar uma foto e uma imagem de capa larga, ou copiar uma vez sua imagem do GitHub. Cada imagem é recodificada (a foto em 512×512, a capa em 1500×500), o que remove metadados ocultos como a localização GPS, recebe um nome de arquivo aleatório e é guardada no nosso próprio servidor: as páginas nunca carregam sua foto do GitHub. As duas são **públicas**. Quando você remove ou substitui uma delas, ou exclui sua conta, o arquivo é apagado; cópias ficam nos backups por até 14 dias. Sem foto, mostramos suas iniciais.
+**Foto de perfil e capa.** Você pode enviar uma foto e uma imagem de capa larga, ou copiar uma vez sua imagem do GitHub. Cada imagem é recodificada (a foto em 512×512, a capa em 1500×500), o que remove metadados ocultos como a localização GPS, recebe um nome de arquivo aleatório e é guardada em nosso armazenamento: as páginas nunca carregam sua foto do GitHub. As duas são **públicas**. Quando você remove ou substitui uma delas, ou exclui sua conta, o arquivo é apagado; cópias ficam nos backups por até 14 dias. Sem foto, mostramos suas iniciais.
 
 **Seu endereço de e-mail.** É guardado com a sua conta e visível apenas para a nossa equipe. Nunca é exibido no site. O site não envia e-mails para você (o único que envia é um aviso para a nossa equipe sobre uma mensagem ao suporte); usaríamos o endereço apenas para falar com você sobre a conta, uma denúncia ou uma mensagem ao suporte.
 
@@ -55,12 +55,12 @@ Os resultados aparecem na página pública do seu projeto.
 **Comunidade.** Quando você publica na comunidade, guardamos:
 
 - seus tópicos: seção, título, texto, datas e se um tópico foi editado, fixado, trancado ou removido;
-- suas respostas: texto, a figurinha que você escolheu e a qual publicação elas respondem;
-- as imagens que você anexa. Elas são recodificadas como as capturas de tela: metadados ocultos, como a localização GPS, são removidos, os nomes dos arquivos são aleatórios e guardamos uma cópia de até 1600 px e uma miniatura de 640 px no nosso próprio servidor.
+- suas respostas: texto e a qual publicação elas respondem;
+- as imagens que você anexa. Elas são recodificadas como as capturas de tela: metadados ocultos, como a localização GPS, são removidos, os nomes dos arquivos são aleatórios e guardamos uma cópia de até 1600 px e uma miniatura de 640 px em nosso armazenamento.
 
 As publicações, suas imagens, o número de votos e seu nome de usuário nelas são **públicos**. Também guardamos seus votos; ninguém vê quem votou em quê, nem no site nem na administração.
 
-Quando você exclui uma publicação, o texto, a figurinha e as imagens são apagados na hora. O título de um tópico fica enquanto houver respostas de outras pessoas embaixo dele, mostrado como “[excluído]”. Quando os moderadores removem uma publicação, as imagens são apagadas na hora e o texto é guardado com o motivo, visível só para você, os moderadores e a equipe. Os moderadores veem as publicações denunciadas junto com o histórico do autor, como nas outras denúncias.
+Quando você exclui uma publicação, o texto e as imagens são apagados na hora. O título de um tópico fica enquanto houver respostas de outras pessoas embaixo dele, mostrado como “[excluído]”. Quando os moderadores removem uma publicação, as imagens são apagadas na hora e o texto é guardado com o motivo, visível só para você, os moderadores e a equipe. Os moderadores veem as publicações denunciadas junto com o histórico do autor, como nas outras denúncias.
 
 **Avisos de respostas.** Quando alguém responde ao seu tópico ou à sua resposta, guardamos um aviso para você (qual resposta, quando e quando você abriu a lista), além do horário do aviso não lido mais recente, para que o menu possa mostrar uma marca. Só você os vê. Eles são excluídos depois de **90 dias** ou junto com a sua conta. Nunca os enviamos por e-mail.
 
@@ -70,7 +70,7 @@ Quando você exclui uma publicação, o texto, a figurinha e as imagens são apa
 
 **Registro de auditoria.** Mantemos um registro interno de mudanças de selos, ações de moderação e exclusões de contas, para que as decisões possam ser conferidas depois. Só a nossa equipe pode vê-lo.
 
-**Endereços IP e registros.** O aplicativo não guarda seu endereço IP, e os registros dele não o contêm. De cada requisição de página, os registros anotam apenas o método, o endereço da página (sem o que vem depois de um `?`), o status da resposta, o tamanho e o tempo gasto, além dos erros. Não há dados do seu navegador. Os endereços de página incluem nomes de usuário (`/u/<username>/`), então uma linha de registro pode mostrar qual perfil foi aberto, mas não por quem.
+**Registros do aplicativo.** Os registros do nosso aplicativo contêm o método da solicitação, uma rota com dados ocultos, o status, tamanho e duração da resposta e erros sanitizados. Não contêm endereços IP, dados do navegador, nomes de usuário, parâmetros de consulta nem conteúdo de formulários.
 
 **Registro de erros.** Quando algo falha, o aplicativo grava uma entrada curta em um arquivo de erros no nosso servidor. A entrada contém:
 
@@ -81,7 +81,7 @@ Quando você exclui uma publicação, o texto, a figurinha e as imagens são apa
 
 Páginas não encontradas vão para um arquivo separado, cada endereço no máximo uma vez por minuto. Esses arquivos nunca contêm seu endereço IP, dados do navegador, cookies, o que você digitou em um formulário, seu e-mail ou seu nome de usuário. Cada arquivo é limitado a 5 MB mais 5 cópias anteriores; ao atingir o limite, a mais antiga é apagada.
 
-> **TODO antes do lançamento:** o servidor web na frente do aplicativo mantém seu próprio registro de acessos, que por padrão inclui endereços IP. O que ele registra e por quanto tempo guarda (e por quanto tempo os registros do aplicativo são guardados) ainda não foi decidido. É preciso preencher isso, ou desativar o registro de IP, antes de esta página se tornar pública.
+Os registros de roteamento do nosso provedor de hospedagem web incluem os endereços IP dos visitantes. Esses registros e os registros JSON de stdout do aplicativo são mantidos no fluxo de registros do provedor por até aproximadamente uma semana. Somente o titular da conta de hospedagem pode ler esse fluxo. Os registros do aplicativo não incluem endereços IP nem dados pessoais. No lançamento, não usamos arquivo de registros de longo prazo nem complemento de registros, e nosso provedor de DNS não atua como proxy do tráfego do site. Atualizamos esta política antes de adicionar um arquivo de registros ou ativar um proxy de tráfego.
 
 **Proteção contra abusos.** Para limitar abusos, contamos algumas ações (por exemplo, curtidas por hora) no banco de dados do site. Cada contador é um número ligado à sua conta ou a um projeto, sem endereço IP, e vale por no máximo 24 horas. Depois disso deixa de ser usado, mas a linha pode ficar no banco até ser limpa. Uma exceção: quando você busca pessoas sem estar conectado, o contador fica ligado por 10 minutos a um hash unidirecional com sal do seu endereço IP (nunca ao próprio endereço). O que você busca nunca é guardado.
 
@@ -91,9 +91,9 @@ Páginas não encontradas vão para um arquivo separado, cada endereço no máxi
 
 ## Mensagens ao suporte {#support}
 
-Quando você nos escreve pelo [formulário de suporte](/support/), guardamos o tema, o assunto, sua mensagem, o e-mail informado (ou o da sua conta), a conta com que você estava conectado, o número de referência de uma página de erro, se veio de uma, e até 3 anexos. As imagens são recodificadas como as outras (metadados ocultos, como a localização GPS, são removidos); arquivos de texto são guardados como texto. Os anexos ficam em uma pasta privada no nosso servidor, sem endereço público: só a equipe com acesso à caixa de suporte pode baixá-los. Usamos seu e-mail apenas para responder.
+Quando você nos escreve pelo [formulário de suporte](/support/), guardamos o tema, o assunto, sua mensagem, o e-mail informado (ou o da sua conta), a conta com que você estava conectado, o número de referência de uma página de erro, se veio de uma, e até 3 anexos. As imagens são recodificadas como as outras (metadados ocultos, como a localização GPS, são removidos); arquivos de texto são guardados como texto. Os anexos ficam em armazenamento privado, sem endereço público: só a equipe com acesso à caixa de suporte pode baixá-los. Usamos seu e-mail apenas para responder.
 
-Não guardamos seu endereço IP nem dados do navegador com a mensagem. Para barrar spam, uma impressão digital unidirecional e com sal do seu endereço IP fica no cache do servidor por no máximo 24 horas, nunca no banco de dados nem nos registros.
+Não guardamos seu endereço IP nem dados do navegador com a mensagem. Para limitar spam, o cache do servidor contém contadores identificados por um hash unidirecional com salt do seu endereço IP, nunca pelo endereço em si. Em produção, esse cache usa o banco de dados. Um contador se aplica por no máximo 24 horas. As linhas expiradas do cache podem permanecer no banco até serem removidas durante a manutenção diária. O hash não é guardado com a mensagem de suporte nem nos registros do aplicativo.
 
 Quando uma mensagem chega, nosso servidor envia para a caixa da equipe um aviso curto em texto simples com sua mensagem e seu e-mail, pelo nosso provedor de e-mail (veja “Quem mais recebe dados”). A equipe pode adicionar notas internas e definir um status (nova, lida, respondida, encerrada). Lemos todas as mensagens, mas não podemos prometer responder a todas. Mensagens encerradas são excluídas 12 meses depois do envio; as demais ficam até serem encerradas. “Baixar meus dados” inclui as mensagens enviadas com a sua conta, e excluir a conta as apaga, inclusive as enviadas sem login a partir do e-mail da sua conta.
 
@@ -113,14 +113,15 @@ Quando uma mensagem chega, nosso servidor envia para a caixa da equipe um aviso 
 - Contadores de proteção contra abusos: no máximo 24 horas.
 - Backups: 14 dias. Uma conta excluída some deles em até 14 dias.
 - Arquivos do registro de erros: até encherem (5 MB mais 5 cópias anteriores de 5 MB), depois as entradas mais antigas são apagadas.
-- Registros do servidor web e do aplicativo: **TODO**, ainda não decidido.
+- Registros de roteamento da hospedagem e stdout do aplicativo: até aproximadamente uma semana no fluxo de registros da hospedagem; sem arquivo de longo prazo no lançamento.
 
 ## Quem mais recebe dados {#recipients}
 
-- **GitHub, Inc.** Você entra em github.com, e o nosso servidor lê seu perfil e dados públicos de repositórios pela API do GitHub. A declaração de privacidade do próprio GitHub vale para o seu uso do GitHub.
-- **Nosso provedor de e-mail** (por exemplo, o Google, se a caixa da equipe for uma conta do Gmail) entrega na caixa da equipe o aviso de cada mensagem ao suporte, com o texto e o seu e-mail.
-- **Os servidores do seu projeto.** Nas verificações de Domain verified e Steady, o nosso servidor acessa o DNS do seu domínio e o endereço do seu projeto. Eles veem o nosso servidor, não você.
-- **Nosso provedor de hospedagem**, que mantém o servidor e o banco de dados para nós.
+- **Os provedores de hospedagem web e banco de dados gerenciado** operam o aplicativo e armazenam seus registros para nós.
+- **O armazenamento de objetos compatível com S3** guarda imagens enviadas e anexos privados de suporte em nosso nome.
+- **O GitHub** fornece o acesso à conta e os dados de perfil e repositórios públicos usados nas verificações. A própria política de privacidade dele se aplica ao seu uso do GitHub.
+- **Um serviço de email** entrega à caixa da equipe os avisos de suporte, com a mensagem e o endereço de email do remetente.
+- **Os servidores DNS e web do seu projeto** recebem nossas solicitações de verificação. Eles veem o endereço do nosso servidor, não o do visitante.
 
 Não vendemos seus dados nem os compartilhamos para publicidade.
 

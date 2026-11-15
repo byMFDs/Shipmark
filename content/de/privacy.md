@@ -1,8 +1,8 @@
 # Datenschutzerklärung
 
-> **Entwurf**, zuletzt aktualisiert am 14. November 2026. Dieser Text wurde noch nicht von einer Juristin oder einem Juristen geprüft.
->
-> Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
+Zuletzt aktualisiert am 14. November 2026.
+
+Übersetzung zur Orientierung; maßgeblich ist die englische Fassung.
 
 Diese Seite erklärt, was {{ site_name }} über dich speichert, warum, wie lange und was du dagegen tun kannst. Sie beschreibt, was die Seite tatsächlich tut.
 
@@ -22,7 +22,7 @@ Wir fragen GitHub nur nach zwei Berechtigungen: `read:user` und `user:email`. Ü
 
 **Dein Profil.** Benutzername, Anzeigename, Kurzbeschreibung, „Über mich“, Ort, ein Status (zum Beispiel „Offen für Jobs“), bis zu 10 Fähigkeiten, bis zu 6 Links, bis zu 3 angeheftete Projekte und deine Sprache. Alles außer dem Benutzernamen ist freiwillig. Anzeigename und „Über mich“ werden anfangs aus deinem GitHub-Namen und deiner GitHub-Bio übernommen; du kannst sie in den Einstellungen ändern oder entfernen. Wir speichern außerdem die Adresse deines GitHub-Bildes, nur damit „Mein GitHub-Bild verwenden“ es kopieren kann; sie wird nirgends angezeigt. Benutzername, Anzeigename, Kurzbeschreibung, „Über mich“, Ort, Status, Fähigkeiten, Links, angeheftete Projekte, GitHub-Login und der Monat deiner Registrierung sind **öffentlich**.
 
-**Profilbild und Titelbild.** Du kannst ein Bild und ein breites Titelbild hochladen oder dein GitHub-Bild einmal kopieren lassen. Jedes Bild wird neu kodiert (das Profilbild auf 512×512, das Titelbild auf 1500×500), was versteckte Metadaten wie den GPS-Standort entfernt, bekommt einen zufälligen Dateinamen und wird auf unserem eigenen Server gespeichert: Die Seiten laden dein Bild nie von GitHub. Beide sind **öffentlich**. Wenn du ein Bild entfernst oder ersetzt oder dein Konto löschst, wird die Datei gelöscht; Kopien bleiben bis zu 14 Tage in den Backups. Ohne Bild werden deine Initialen gezeigt.
+**Profilbild und Titelbild.** Du kannst ein Bild und ein breites Titelbild hochladen oder dein GitHub-Bild einmal kopieren lassen. Jedes Bild wird neu kodiert (das Profilbild auf 512×512, das Titelbild auf 1500×500), was versteckte Metadaten wie den GPS-Standort entfernt, bekommt einen zufälligen Dateinamen und wird in unserem Speicher gespeichert: Die Seiten laden dein Bild nie von GitHub. Beide sind **öffentlich**. Wenn du ein Bild entfernst oder ersetzt oder dein Konto löschst, wird die Datei gelöscht; Kopien bleiben bis zu 14 Tage in den Backups. Ohne Bild werden deine Initialen gezeigt.
 
 **Deine E-Mail-Adresse.** Sie wird mit deinem Konto gespeichert und ist nur für unser Team sichtbar. Sie wird nie auf der Seite angezeigt. Die Seite schickt dir keine E-Mails (die einzige E-Mail, die sie verschickt, ist ein Hinweis an unser Team über eine Support-Nachricht); wir würden die Adresse nur nutzen, um dich zu deinem Konto, einer Meldung oder einer Support-Nachricht zu kontaktieren.
 
@@ -55,12 +55,12 @@ Die Ergebnisse werden auf deiner öffentlichen Projektseite angezeigt.
 **Community.** Wenn du in der Community schreibst, speichern wir:
 
 - deine Threads: Bereich, Titel, Text, Daten und ob ein Thread bearbeitet, angeheftet, gesperrt oder entfernt wurde;
-- deine Antworten: Text, den gewählten Sticker und auf welchen Beitrag sie antworten;
-- die angehängten Bilder. Sie werden wie Screenshots neu kodiert: Versteckte Metadaten wie der GPS-Standort werden entfernt, die Dateinamen sind zufällig, und wir speichern eine Kopie bis 1600 px und eine Vorschau mit 640 px auf unserem eigenen Server.
+- deine Antworten: Text und auf welchen Beitrag sie antworten;
+- die angehängten Bilder. Sie werden wie Screenshots neu kodiert: Versteckte Metadaten wie der GPS-Standort werden entfernt, die Dateinamen sind zufällig, und wir speichern eine Kopie bis 1600 px und eine Vorschau mit 640 px in unserem Speicher.
 
 Beiträge, ihre Bilder, die Zahl ihrer Stimmen und dein Benutzername daran sind **öffentlich**. Wir speichern auch deine Stimmen; niemand sieht, wer wofür gestimmt hat, weder auf der Website noch im Admin-Bereich.
 
-Wenn du einen Beitrag löschst, werden Text, Sticker und Bilder sofort gelöscht. Der Titel eines Threads bleibt, solange darunter Antworten anderer stehen, und wird als „[gelöscht]“ angezeigt. Wenn die Moderation einen Beitrag entfernt, werden seine Bilder sofort gelöscht, und der Text wird mit dem Grund aufbewahrt, sichtbar nur für dich, die Moderation und das Team. Die Moderation sieht gemeldete Beiträge zusammen mit der Geschichte der Autorin oder des Autors, wie bei anderen Meldungen.
+Wenn du einen Beitrag löschst, werden Text und Bilder sofort gelöscht. Der Titel eines Threads bleibt, solange darunter Antworten anderer stehen, und wird als „[gelöscht]“ angezeigt. Wenn die Moderation einen Beitrag entfernt, werden seine Bilder sofort gelöscht, und der Text wird mit dem Grund aufbewahrt, sichtbar nur für dich, die Moderation und das Team. Die Moderation sieht gemeldete Beiträge zusammen mit der Geschichte der Autorin oder des Autors, wie bei anderen Meldungen.
 
 **Benachrichtigungen über Antworten.** Wenn jemand auf deinen Thread oder deine Antwort antwortet, speichern wir eine Benachrichtigung für dich (welche Antwort, wann und wann du die Liste geöffnet hast) sowie den Zeitpunkt der neuesten ungelesenen, damit das Menü einen Hinweis zeigen kann. Nur du siehst sie. Sie werden nach **90 Tagen** gelöscht oder mit deinem Konto. Wir verschicken sie nie per E-Mail.
 
@@ -70,7 +70,7 @@ Wenn du einen Beitrag löschst, werden Text, Sticker und Bilder sofort gelöscht
 
 **Audit-Log.** Wir führen intern Buch über Änderungen an Prüfzeichen, Moderationsmaßnahmen und Kontolöschungen, damit Entscheidungen später nachvollziehbar sind. Nur unser Team kann es sehen.
 
-**IP-Adressen und Logs.** Die Anwendung speichert deine IP-Adresse nicht, und ihre eigenen Logs enthalten sie nicht. Zu jeder Seitenanfrage halten die Logs nur die Methode, die Seitenadresse (ohne alles nach einem `?`), den Antwortstatus, die Größe und die Antwortzeit fest, dazu Fehler. Angaben zu deinem Browser sind nicht darin. Seitenadressen enthalten Benutzernamen (`/u/<username>/`); eine Logzeile kann also zeigen, welches Profil geöffnet wurde, aber nicht von wem.
+**Anwendungslogs.** Unsere Anwendungslogs enthalten die Anfragemethode, eine Route mit ausgeblendeten Daten, Antwortstatus, Größe und Dauer sowie bereinigte Fehlermeldungen. Sie enthalten keine IP-Adressen, Browserangaben, Nutzernamen, Abfrageparameter oder Formularinhalte.
 
 **Fehlerprotokoll.** Wenn etwas schiefgeht, schreibt die Anwendung einen kurzen Eintrag in eine Fehlerdatei auf unserem Server. Der Eintrag enthält:
 
@@ -81,7 +81,7 @@ Wenn du einen Beitrag löschst, werden Text, Sticker und Bilder sofort gelöscht
 
 Nicht gefundene Seiten werden in eine eigene Datei geschrieben, jede Adresse höchstens einmal pro Minute. Diese Dateien enthalten nie deine IP-Adresse, Browserdaten, Cookies, was du in ein Formular eingegeben hast, deine E-Mail-Adresse oder deinen Benutzernamen. Jede Datei ist auf 5 MB plus 5 ältere Kopien begrenzt; ist die Grenze erreicht, wird die älteste gelöscht.
 
-> **TODO vor dem Start:** Der Webserver vor der Anwendung führt ein eigenes Zugriffslog, das standardmäßig IP-Adressen enthält. Was er aufzeichnet und wie lange er es aufbewahrt (und wie lange die Logs der Anwendung aufbewahrt werden), ist noch nicht entschieden. Das muss ergänzt oder die IP-Protokollierung abgeschaltet werden, bevor diese Seite öffentlich wird.
+Die Routing-Logs unseres Webhosting-Anbieters enthalten die IP-Adressen der Besuchenden. Routing-Logs und die JSON-stdout-Logs der Anwendung werden im Log-Stream des Anbieters bis zu etwa einer Woche aufbewahrt. Nur die Person, der das Hosting-Konto gehört, kann diesen Stream lesen. Die Anwendungslogs enthalten keine IP-Adressen oder personenbezogenen Daten. Zum Start nutzen wir weder ein langfristiges Log-Archiv noch ein Logging-Add-on; unser DNS-Anbieter leitet den Website-Verkehr nicht über einen Proxy. Vor dem Einrichten eines Log-Archivs oder eines Verkehrs-Proxys aktualisieren wir diese Erklärung.
 
 **Schutz vor Missbrauch.** Um Missbrauch zu begrenzen, zählen wir einige Aktionen (zum Beispiel Likes pro Stunde) in der Datenbank der Seite. Jeder Zähler ist eine Zahl, die an dein Konto oder an ein Projekt gebunden ist, ohne IP-Adresse, und gilt höchstens 24 Stunden. Danach wird er nicht mehr verwendet, die Zeile kann aber in der Datenbank bleiben, bis sie bereinigt wird. Eine Ausnahme: Wenn du ohne Anmeldung nach Leuten suchst, ist der Zähler 10 Minuten lang an einen gesalzenen Einweg-Hash deiner IP-Adresse gebunden (nie an die Adresse selbst). Wonach du suchst, speichern wir nie.
 
@@ -91,9 +91,9 @@ Nicht gefundene Seiten werden in eine eigene Datei geschrieben, jede Adresse hö
 
 ## Nachrichten an den Support {#support}
 
-Wenn du uns über das [Support-Formular](/support/) schreibst, speichern wir das Thema, den Betreff, deine Nachricht, die angegebene E-Mail-Adresse (oder die deines Kontos), das Konto, mit dem du angemeldet warst, die Referenznummer einer Fehlerseite, falls du von dort kommst, und bis zu 3 Anhänge. Bilder werden wie andere Bilder neu kodiert (versteckte Metadaten wie der GPS-Standort werden entfernt); Textdateien werden als Text gespeichert. Anhänge liegen in einem privaten Ordner auf unserem Server ohne öffentliche Adresse: Nur Teammitglieder mit Zugang zum Support-Postfach können sie herunterladen. Deine E-Mail-Adresse nutzen wir nur, um zu antworten.
+Wenn du uns über das [Support-Formular](/support/) schreibst, speichern wir das Thema, den Betreff, deine Nachricht, die angegebene E-Mail-Adresse (oder die deines Kontos), das Konto, mit dem du angemeldet warst, die Referenznummer einer Fehlerseite, falls du von dort kommst, und bis zu 3 Anhänge. Bilder werden wie andere Bilder neu kodiert (versteckte Metadaten wie der GPS-Standort werden entfernt); Textdateien werden als Text gespeichert. Anhänge liegen in privatem Speicher ohne öffentliche Adresse: Nur Teammitglieder mit Zugang zum Support-Postfach können sie herunterladen. Deine E-Mail-Adresse nutzen wir nur, um zu antworten.
 
-Wir speichern zur Nachricht weder deine IP-Adresse noch Browserdaten. Gegen Spam wird ein gesalzener Einweg-Fingerabdruck deiner IP-Adresse höchstens 24 Stunden im Cache des Servers gehalten, nie in der Datenbank oder in Logs.
+Wir speichern weder deine IP-Adresse noch Browserangaben zusammen mit der Nachricht. Gegen Spam enthält der Server-Cache Zähler, die durch einen gesalzenen Einweg-Hash deiner IP-Adresse gekennzeichnet sind, niemals durch die Adresse selbst. In der Produktionsumgebung nutzt dieser Cache die Datenbank. Ein Zähler gilt höchstens 24 Stunden. Abgelaufene Cache-Zeilen können bis zur täglichen Bereinigung in der Datenbank verbleiben. Der Hash wird weder mit der Support-Nachricht noch in den Anwendungslogs gespeichert.
 
 Wenn eine Nachricht eingeht, schickt unser Server über unseren E-Mail-Anbieter einen kurzen Texthinweis mit deiner Nachricht und deiner E-Mail-Adresse an das Postfach des Teams (siehe „Wer sonst Daten erhält“). Das Team kann interne Notizen hinzufügen und einen Status setzen (neu, gelesen, beantwortet, geschlossen). Wir lesen jede Nachricht, können aber nicht versprechen, auf alle zu antworten. Geschlossene Nachrichten werden 12 Monate nach dem Senden gelöscht; die übrigen bleiben, bis sie geschlossen werden. „Meine Daten herunterladen“ enthält die Nachrichten, die du angemeldet geschickt hast, und wenn du dein Konto löschst, werden sie gelöscht, auch die, die du abgemeldet von der E-Mail-Adresse deines Kontos geschickt hast.
 
@@ -113,14 +113,15 @@ Wenn eine Nachricht eingeht, schickt unser Server über unseren E-Mail-Anbieter 
 - Zähler zum Schutz vor Missbrauch: höchstens 24 Stunden.
 - Backups: 14 Tage. Ein gelöschtes Konto verschwindet innerhalb von 14 Tagen daraus.
 - Fehlerprotokoll-Dateien: bis sie voll sind (5 MB plus 5 ältere Kopien zu je 5 MB), dann werden die ältesten Einträge gelöscht.
-- Logs von Webserver und Anwendung: **TODO**, noch nicht entschieden.
+- Routing-Logs des Hostings und stdout-Logs der Anwendung: bis zu etwa einer Woche im Log-Stream des Hostings; zum Start kein langfristiges Log-Archiv.
 
 ## Wer sonst Daten erhält {#recipients}
 
-- **GitHub, Inc.** Du meldest dich auf github.com an, und unser Server liest dein Profil und öffentliche Repository-Daten über die API von GitHub. Für deine Nutzung von GitHub gilt dessen eigene Datenschutzerklärung.
-- **Unser E-Mail-Anbieter** (zum Beispiel Google, wenn das Postfach des Teams ein Gmail-Konto ist) stellt den Hinweis zu jeder Support-Nachricht mit ihrem Text und deiner E-Mail-Adresse im Postfach des Teams zu.
-- **Die Server deines Projekts.** Für die Prüfungen Domain verified und Steady kontaktiert unser Server das DNS deiner Domain und die Adresse deines Projekts. Sie sehen unseren Server, nicht dich.
-- **Unser Hosting-Anbieter**, der für uns den Server und die Datenbank betreibt.
+- **Anbieter für Webhosting und verwaltete Datenbanken** betreiben die Anwendung und speichern ihre Datensätze für uns.
+- **S3-kompatibler Objektspeicher** speichert hochgeladene Bilder und private Support-Anhänge in unserem Auftrag.
+- **GitHub** ermöglicht die Anmeldung und liefert Profil- und öffentliche Repository-Daten für unsere Prüfungen. Für deine Nutzung von GitHub gilt dessen eigene Datenschutzerklärung.
+- **Ein E-Mail-Dienst** liefert Support-Benachrichtigungen mit Nachricht und E-Mail-Adresse der absendenden Person an unser Team-Postfach.
+- **DNS- und Webserver deines Projekts** erhalten unsere Prüfungsanfragen. Sie sehen die Adresse unseres Servers, nicht die der Besuchenden.
 
 Wir verkaufen deine Daten nicht und geben sie nicht für Werbung weiter.
 

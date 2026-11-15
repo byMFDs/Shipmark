@@ -1,6 +1,6 @@
 # Règles de la communauté
 
-*Brouillon. Ces règles font partie des [Conditions](/legal/terms/) et peuvent changer avant le lancement.*
+Ces règles font partie des [Conditions](/legal/terms/).
 
 La communauté est l’endroit où les personnes qui construisent avec l’IA demandent de l’aide, montrent ce qu’elles ont lancé, trouvent des collaborateurs et parlent de leur travail. Écrivez pour que le fil serve aussi à la prochaine personne qui le lira.
 
@@ -22,7 +22,7 @@ La communauté est l’endroit où les personnes qui construisent avec l’IA de
 - Il n’y a que des votes positifs. Vous ne pouvez pas voter pour votre propre message.
 - Vous pouvez modifier votre message. Les modifications des 15 premières minutes sont discrètes ; les suivantes affichent la mention « modifié ». Le titre d’un fil ne peut être changé que pendant ces 15 premières minutes.
 - Vous pouvez supprimer votre message. Si d’autres ont déjà répondu, leurs réponses restent et le vôtre s’affiche comme « [supprimé] ».
-- Les autocollants sont notre propre collection. Les images sont vérifiées et réencodées, et leurs métadonnées (comme la position de l’appareil) sont supprimées.
+- Les images sont vérifiées et réencodées, et leurs métadonnées (comme la position de l’appareil) sont supprimées.
 
 ## Modération {#moderation}
 

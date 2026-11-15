@@ -1,6 +1,6 @@
 # Zasady społeczności
 
-*Wersja robocza. Te zasady są częścią [Regulaminu](/legal/terms/) i mogą się zmienić przed startem.*
+Te zasady są częścią [Regulaminu](/legal/terms/).
 
 Społeczność to miejsce, w którym osoby budujące z AI proszą o pomoc, pokazują to, co wypuściły, szukają współpracowników i rozmawiają o pracy. Pisz tak, żeby wątek przydał się kolejnej osobie, która go przeczyta.
 
@@ -22,7 +22,7 @@ Społeczność to miejsce, w którym osoby budujące z AI proszą o pomoc, pokaz
 - Są tylko głosy za. Nie możesz głosować na własny post.
 - Możesz edytować swój post. Zmiany w pierwszych 15 minutach są niewidoczne; późniejsze dostają oznaczenie „edytowano”. Tytuł wątku można zmienić tylko w tych pierwszych 15 minutach.
 - Możesz usunąć swój post. Jeśli ktoś już odpowiedział, odpowiedzi zostają, a Twój post jest widoczny jako „[usunięto]”.
-- Naklejki to nasz własny zestaw. Obrazy są sprawdzane i kodowane na nowo, a ich metadane (np. lokalizacja aparatu) są usuwane.
+- Obrazy są sprawdzane i kodowane na nowo, a ich metadane (np. lokalizacja aparatu) są usuwane.
 
 ## Moderacja {#moderation}
 

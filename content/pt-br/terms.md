@@ -1,8 +1,8 @@
 # Termos de uso
 
-> **Rascunho**, última atualização em 14 de novembro de 2026 (versão {{ terms_version }}). Este texto ainda não foi revisado por um advogado.
->
-> Tradução por conveniência; a versão em inglês prevalece.
+Última atualização em 14 de novembro de 2026 (versão {{ terms_version }}).
+
+Tradução por conveniência; a versão em inglês prevalece.
 
 Estes termos são o acordo entre você e {{ legal_owner_name }}, que mantém o {{ site_name }}. Ao criar uma conta, você os aceita. Dúvidas: [{{ contact_email }}](mailto:{{ contact_email }}).
 

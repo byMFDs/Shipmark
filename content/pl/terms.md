@@ -1,8 +1,8 @@
 # Regulamin
 
-> **Wersja robocza**, ostatnia aktualizacja: 14 listopada 2026 (wersja {{ terms_version }}). Ten tekst nie został jeszcze sprawdzony przez prawnika.
->
-> Tłumaczenie dla wygody; obowiązuje wersja angielska.
+Ostatnia aktualizacja: 14 listopada 2026 (wersja {{ terms_version }}).
+
+Tłumaczenie dla wygody; obowiązuje wersja angielska.
 
 Ten regulamin jest umową między Tobą a {{ legal_owner_name }}, który prowadzi {{ site_name }}. Zakładając konto, akceptujesz go. Pytania: [{{ contact_email }}](mailto:{{ contact_email }}).
 

@@ -1,6 +1,6 @@
 # Cookie policy
 
-> **Draft**, last updated 12 November 2026. This text has not been reviewed by a lawyer yet.
+Last updated 12 November 2026.
 
 {{ site_name }} uses only cookies that the site needs to work. There are no analytics, advertising or third-party cookies, so we do not ask for consent with a banner.
 
