@@ -765,10 +765,12 @@
 }
 
 /* ---------- Badges after a name: official account, moderator (one component) ----------
-   A small glyph button about the name's x-height, in ink (official: filled diamond with the logo's slash cut;
-   moderator: a shield with a bar, in muted ink). Not proof (never green) and not an action (never terracotta).
+   The same twelve-point rosette symbol, reference blue for official accounts and red for moderators.
+   These two reference colours are deliberately independent of the site palette.
    Hover or focus: a short mono tooltip. Click or tap: the shared panel (.badge-pop, badges.js). The glyph has a
    fixed em size, so nothing moves when it loads; the hit area grows invisibly around it. */
+
+.badge-symbols { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 .user-mark {
   --mark-size: 0.85em;

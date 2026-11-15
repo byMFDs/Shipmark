@@ -1,5 +1,6 @@
 """Badges and roles: who grants them, what they allow, and how they show next to names."""
 import re
+import xml.etree.ElementTree as ET
 from datetime import datetime
 from io import StringIO
 
@@ -7,6 +8,7 @@ from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.providers.github.provider import GitHubProvider
 
 from django.conf import settings
+from django.contrib.staticfiles import finders
 from django.contrib.admin.sites import site
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import Permission
@@ -283,6 +285,28 @@ class BadgeComponentTests(TestCase):
         return re.findall(r'<button type="button" class="user-mark user-mark--(\w+) user-mark--(\w)" data-badge="(\w+)" '
                           r'data-since="([^"]*)" data-tip="([^"]*)" aria-label="([^"]*)" aria-haspopup="dialog" '
                           r'aria-expanded="false">', html)
+
+    def test_official_and_moderator_reuse_the_same_rosette_with_different_colours(self):
+        icons = []
+        for kind in ("official", "moderator"):
+            with open(finders.find(f"icons/badge-{kind}.svg")) as source:
+                icons.append(ET.fromstring(source.read()))
+        self.assertEqual([icon.get("color") for icon in icons], ["#0096FF", "#E0245E"])
+        self.assertEqual([next(iter(icon)).get("href") for icon in icons],
+                         ["#account-rosette", "#account-rosette"])
+        with open(finders.find("icons/account-rosette.svg")) as source:
+            symbol = ET.fromstring(source.read()).find("{http://www.w3.org/2000/svg}symbol")
+        self.assertEqual(symbol.get("id"), "account-rosette")
+        shape, check = list(symbol)
+        self.assertEqual(shape.get("d").count("Q"), 24)  # 12 crests and 12 valleys
+        self.assertEqual(check.get("stroke"), "#FFFFFF")
+        self.assertEqual(check.get("stroke-linecap"), "round")
+        self.grant(UserBadge.Kind.OFFICIAL, timezone.now())
+        self.grant(UserBadge.Kind.MODERATOR, timezone.now())
+        html = self.client.get(reverse("accounts:profile", args=["ana"])).content.decode()
+        self.assertEqual(html.count('id="account-rosette"'), 1)
+        self.assertIn('color="#0096FF"', html)
+        self.assertIn('color="#E0245E"', html)
 
     def test_each_kind_renders_with_its_label_glyph_and_the_real_date(self):
         official = timezone.make_aware(datetime(2025, 3, 3, 12, 0))
