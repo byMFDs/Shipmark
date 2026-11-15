@@ -247,7 +247,7 @@ html.js.is-paused *::after,
 .feed-card,
 .news-card,
 .card {
-  transition: border-color var(--t-base) var(--ease-out), transform var(--t-fast) var(--ease-press);
+  transition: transform var(--t-fast) var(--ease-press);
 }
 
 .feed-card__cover,

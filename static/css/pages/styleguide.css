@@ -233,21 +233,29 @@
 .sg-stickers span { font-family: var(--font-mono); font-size: var(--fs--1); color: var(--muted); }
 
 /* ---------- Dark theme before / after (Polish-3 3b) ----------
-   .sg-dark-before re-creates the old dark values on this page only, for the comparison. */
+   .sg-dark-before uses the current dark palette so every sample stays within the supplied colours. */
 .sg-dark-before {
-  --paper: #141A17;
-  --surface: #1B231F;
-  --raised: #1B231F;
-  --text: #EFEDE4;
-  --muted: #A2AAA1;
-  --line: #2B3530;
-  --line-strong: #6D7771;
-  --accent: #F5803F;
-  --on-accent: #141A17;
-  --accent-text: #EC8E68;
-  --proof-bg: #22362A;
-  --proof: #A9D1B4;
-  --danger: #F08A80;
+  --paper: #071C1E;
+  --surface: #15292B;
+  --raised: #233638;
+  --text: #F3F6F7;
+  --muted: #B1B9BA;
+  --line: #4E6264;
+  --line-strong: #7F8E8F;
+  --accent: #C7F36B;
+  --accent-hover: #79D9D2;
+  --on-accent: #071C1E;
+  --accent-text: #79D9D2;
+  --proof-bg: #C7F36B;
+  --proof: #071C1E;
+  --danger: #79D9D2;
+  --danger-hover: #C7F36B;
+  --on-danger: #071C1E;
+  --focus: #C7F36B;
+  --signal: #79D9D2;
+  --focus-edge: #071C1E;
+  --halo-tint: #79D9D2;
+  --halo-track: #071C1E;
   background: var(--paper);
   color: var(--text);
 }

@@ -1,0 +1,296 @@
+/* Colour and motion overrides for the installed admin theme. No layout/type changes. */
+:root {
+  --color-white: #F3F6F7;
+  --color-black: #071C1E;
+  --sm-paper: #F3F6F7;
+  --sm-surface: #F3F6F7;
+  --sm-raised: #F3F6F7;
+  --sm-text: #071C1E;
+  --sm-muted: #20383A;
+  --sm-line: #20383A;
+  --sm-accent-text: #20383A;
+}
+html.dark {
+  --sm-paper: #071C1E;
+  --sm-surface: #15292B;
+  --sm-raised: #233638;
+  --sm-text: #F3F6F7;
+  --sm-muted: #B1B9BA;
+  --sm-line: #4E6264;
+  --sm-accent-text: #79D9D2;
+}
+/* Override vendor semantic hues as well as base/primary utility colours. */
+:is([class^="bg-base-"], [class*=" bg-base-"]), :is([class^="bg-white"], [class*=" bg-white"]), :is([class^="bg-gray-"], [class*=" bg-gray-"]) { background-color: var(--sm-surface) !important; }
+html body[class] { background-color: var(--sm-paper) !important; color: var(--sm-text) !important; }
+input, select, textarea { background-color: var(--sm-raised) !important; color: var(--sm-text) !important; }
+[class*="text-base-"], [class*="text-gray-"], [class*="text-subtle"], [class*="text-font-subtle"],
+[class*="text-font-default"] { color: var(--sm-muted) !important; }
+[class*="text-font-important"], [class*="text-black"] { color: var(--sm-text) !important; }
+[class*="text-primary-"], [class*="text-red-"], [class*="text-orange-"], [class*="text-yellow-"],
+[class*="text-green-"], [class*="text-blue-"], [class*="text-purple-"] { color: var(--sm-accent-text) !important; }
+[class*="border-base-"], [class*="border-gray-"], [class*="border-primary-"], [class*="border-red-"],
+[class*="border-green-"], [class*="border-blue-"] { border-color: var(--sm-line) !important; }
+:is([class^="bg-red-"], [class*=" bg-red-"]), :is([class^="bg-orange-"], [class*=" bg-orange-"]), :is([class^="bg-yellow-"], [class*=" bg-yellow-"]), :is([class^="bg-green-"], [class*=" bg-green-"]),
+:is([class^="bg-blue-"], [class*=" bg-blue-"]), :is([class^="bg-purple-"], [class*=" bg-purple-"]) { background-color: var(--sm-raised) !important; color: var(--sm-accent-text) !important; }
+:is([class^="bg-primary-"], [class*=" bg-primary-"]) { background-color: #C7F36B !important; color: #071C1E !important; }
+:is([class^="bg-primary-"], [class*=" bg-primary-"]) * { color: #071C1E !important; }
+[class*="text-white"] { color: var(--sm-text) !important; }
+:is([class^="bg-primary-"], [class*=" bg-primary-"])[class*="text-white"], :is([class^="bg-primary-"], [class*=" bg-primary-"]) [class*="text-white"] { color: #071C1E !important; }
+a:hover { text-decoration-color: #79D9D2; }
+:focus-visible { outline-color: #C7F36B !important; box-shadow: 0 0 0 4px #071C1E !important; }
+::selection { background: #C7F36B; color: #071C1E; }
+/* The vendor's colour/layout transitions are outside the compositor-only motion vocabulary. */
+*, *::before, *::after { animation: none !important; transition-property: transform, opacity !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* Vendor hue variables also resolve exclusively to our surface/status roles. */
+:root {
+  --color-red-50: var(--sm-accent-text);
+  --color-red-100: var(--sm-accent-text);
+  --color-red-200: var(--sm-accent-text);
+  --color-red-300: var(--sm-accent-text);
+  --color-red-400: var(--sm-accent-text);
+  --color-red-500: var(--sm-accent-text);
+  --color-red-600: var(--sm-accent-text);
+  --color-red-700: var(--sm-accent-text);
+  --color-red-800: var(--sm-accent-text);
+  --color-red-900: var(--sm-accent-text);
+  --color-red-950: var(--sm-accent-text);
+  --color-orange-50: var(--sm-accent-text);
+  --color-orange-100: var(--sm-accent-text);
+  --color-orange-200: var(--sm-accent-text);
+  --color-orange-300: var(--sm-accent-text);
+  --color-orange-400: var(--sm-accent-text);
+  --color-orange-500: var(--sm-accent-text);
+  --color-orange-600: var(--sm-accent-text);
+  --color-orange-700: var(--sm-accent-text);
+  --color-orange-800: var(--sm-accent-text);
+  --color-orange-900: var(--sm-accent-text);
+  --color-orange-950: var(--sm-accent-text);
+  --color-amber-50: var(--sm-accent-text);
+  --color-amber-100: var(--sm-accent-text);
+  --color-amber-200: var(--sm-accent-text);
+  --color-amber-300: var(--sm-accent-text);
+  --color-amber-400: var(--sm-accent-text);
+  --color-amber-500: var(--sm-accent-text);
+  --color-amber-600: var(--sm-accent-text);
+  --color-amber-700: var(--sm-accent-text);
+  --color-amber-800: var(--sm-accent-text);
+  --color-amber-900: var(--sm-accent-text);
+  --color-amber-950: var(--sm-accent-text);
+  --color-yellow-50: var(--sm-accent-text);
+  --color-yellow-100: var(--sm-accent-text);
+  --color-yellow-200: var(--sm-accent-text);
+  --color-yellow-300: var(--sm-accent-text);
+  --color-yellow-400: var(--sm-accent-text);
+  --color-yellow-500: var(--sm-accent-text);
+  --color-yellow-600: var(--sm-accent-text);
+  --color-yellow-700: var(--sm-accent-text);
+  --color-yellow-800: var(--sm-accent-text);
+  --color-yellow-900: var(--sm-accent-text);
+  --color-yellow-950: var(--sm-accent-text);
+  --color-lime-50: var(--sm-accent-text);
+  --color-lime-100: var(--sm-accent-text);
+  --color-lime-200: var(--sm-accent-text);
+  --color-lime-300: var(--sm-accent-text);
+  --color-lime-400: var(--sm-accent-text);
+  --color-lime-500: var(--sm-accent-text);
+  --color-lime-600: var(--sm-accent-text);
+  --color-lime-700: var(--sm-accent-text);
+  --color-lime-800: var(--sm-accent-text);
+  --color-lime-900: var(--sm-accent-text);
+  --color-lime-950: var(--sm-accent-text);
+  --color-green-50: var(--sm-accent-text);
+  --color-green-100: var(--sm-accent-text);
+  --color-green-200: var(--sm-accent-text);
+  --color-green-300: var(--sm-accent-text);
+  --color-green-400: var(--sm-accent-text);
+  --color-green-500: var(--sm-accent-text);
+  --color-green-600: var(--sm-accent-text);
+  --color-green-700: var(--sm-accent-text);
+  --color-green-800: var(--sm-accent-text);
+  --color-green-900: var(--sm-accent-text);
+  --color-green-950: var(--sm-accent-text);
+  --color-emerald-50: var(--sm-accent-text);
+  --color-emerald-100: var(--sm-accent-text);
+  --color-emerald-200: var(--sm-accent-text);
+  --color-emerald-300: var(--sm-accent-text);
+  --color-emerald-400: var(--sm-accent-text);
+  --color-emerald-500: var(--sm-accent-text);
+  --color-emerald-600: var(--sm-accent-text);
+  --color-emerald-700: var(--sm-accent-text);
+  --color-emerald-800: var(--sm-accent-text);
+  --color-emerald-900: var(--sm-accent-text);
+  --color-emerald-950: var(--sm-accent-text);
+  --color-teal-50: var(--sm-accent-text);
+  --color-teal-100: var(--sm-accent-text);
+  --color-teal-200: var(--sm-accent-text);
+  --color-teal-300: var(--sm-accent-text);
+  --color-teal-400: var(--sm-accent-text);
+  --color-teal-500: var(--sm-accent-text);
+  --color-teal-600: var(--sm-accent-text);
+  --color-teal-700: var(--sm-accent-text);
+  --color-teal-800: var(--sm-accent-text);
+  --color-teal-900: var(--sm-accent-text);
+  --color-teal-950: var(--sm-accent-text);
+  --color-cyan-50: var(--sm-accent-text);
+  --color-cyan-100: var(--sm-accent-text);
+  --color-cyan-200: var(--sm-accent-text);
+  --color-cyan-300: var(--sm-accent-text);
+  --color-cyan-400: var(--sm-accent-text);
+  --color-cyan-500: var(--sm-accent-text);
+  --color-cyan-600: var(--sm-accent-text);
+  --color-cyan-700: var(--sm-accent-text);
+  --color-cyan-800: var(--sm-accent-text);
+  --color-cyan-900: var(--sm-accent-text);
+  --color-cyan-950: var(--sm-accent-text);
+  --color-sky-50: var(--sm-accent-text);
+  --color-sky-100: var(--sm-accent-text);
+  --color-sky-200: var(--sm-accent-text);
+  --color-sky-300: var(--sm-accent-text);
+  --color-sky-400: var(--sm-accent-text);
+  --color-sky-500: var(--sm-accent-text);
+  --color-sky-600: var(--sm-accent-text);
+  --color-sky-700: var(--sm-accent-text);
+  --color-sky-800: var(--sm-accent-text);
+  --color-sky-900: var(--sm-accent-text);
+  --color-sky-950: var(--sm-accent-text);
+  --color-blue-50: var(--sm-accent-text);
+  --color-blue-100: var(--sm-accent-text);
+  --color-blue-200: var(--sm-accent-text);
+  --color-blue-300: var(--sm-accent-text);
+  --color-blue-400: var(--sm-accent-text);
+  --color-blue-500: var(--sm-accent-text);
+  --color-blue-600: var(--sm-accent-text);
+  --color-blue-700: var(--sm-accent-text);
+  --color-blue-800: var(--sm-accent-text);
+  --color-blue-900: var(--sm-accent-text);
+  --color-blue-950: var(--sm-accent-text);
+  --color-indigo-50: var(--sm-accent-text);
+  --color-indigo-100: var(--sm-accent-text);
+  --color-indigo-200: var(--sm-accent-text);
+  --color-indigo-300: var(--sm-accent-text);
+  --color-indigo-400: var(--sm-accent-text);
+  --color-indigo-500: var(--sm-accent-text);
+  --color-indigo-600: var(--sm-accent-text);
+  --color-indigo-700: var(--sm-accent-text);
+  --color-indigo-800: var(--sm-accent-text);
+  --color-indigo-900: var(--sm-accent-text);
+  --color-indigo-950: var(--sm-accent-text);
+  --color-violet-50: var(--sm-accent-text);
+  --color-violet-100: var(--sm-accent-text);
+  --color-violet-200: var(--sm-accent-text);
+  --color-violet-300: var(--sm-accent-text);
+  --color-violet-400: var(--sm-accent-text);
+  --color-violet-500: var(--sm-accent-text);
+  --color-violet-600: var(--sm-accent-text);
+  --color-violet-700: var(--sm-accent-text);
+  --color-violet-800: var(--sm-accent-text);
+  --color-violet-900: var(--sm-accent-text);
+  --color-violet-950: var(--sm-accent-text);
+  --color-purple-50: var(--sm-accent-text);
+  --color-purple-100: var(--sm-accent-text);
+  --color-purple-200: var(--sm-accent-text);
+  --color-purple-300: var(--sm-accent-text);
+  --color-purple-400: var(--sm-accent-text);
+  --color-purple-500: var(--sm-accent-text);
+  --color-purple-600: var(--sm-accent-text);
+  --color-purple-700: var(--sm-accent-text);
+  --color-purple-800: var(--sm-accent-text);
+  --color-purple-900: var(--sm-accent-text);
+  --color-purple-950: var(--sm-accent-text);
+  --color-fuchsia-50: var(--sm-accent-text);
+  --color-fuchsia-100: var(--sm-accent-text);
+  --color-fuchsia-200: var(--sm-accent-text);
+  --color-fuchsia-300: var(--sm-accent-text);
+  --color-fuchsia-400: var(--sm-accent-text);
+  --color-fuchsia-500: var(--sm-accent-text);
+  --color-fuchsia-600: var(--sm-accent-text);
+  --color-fuchsia-700: var(--sm-accent-text);
+  --color-fuchsia-800: var(--sm-accent-text);
+  --color-fuchsia-900: var(--sm-accent-text);
+  --color-fuchsia-950: var(--sm-accent-text);
+  --color-pink-50: var(--sm-accent-text);
+  --color-pink-100: var(--sm-accent-text);
+  --color-pink-200: var(--sm-accent-text);
+  --color-pink-300: var(--sm-accent-text);
+  --color-pink-400: var(--sm-accent-text);
+  --color-pink-500: var(--sm-accent-text);
+  --color-pink-600: var(--sm-accent-text);
+  --color-pink-700: var(--sm-accent-text);
+  --color-pink-800: var(--sm-accent-text);
+  --color-pink-900: var(--sm-accent-text);
+  --color-pink-950: var(--sm-accent-text);
+  --color-rose-50: var(--sm-accent-text);
+  --color-rose-100: var(--sm-accent-text);
+  --color-rose-200: var(--sm-accent-text);
+  --color-rose-300: var(--sm-accent-text);
+  --color-rose-400: var(--sm-accent-text);
+  --color-rose-500: var(--sm-accent-text);
+  --color-rose-600: var(--sm-accent-text);
+  --color-rose-700: var(--sm-accent-text);
+  --color-rose-800: var(--sm-accent-text);
+  --color-rose-900: var(--sm-accent-text);
+  --color-rose-950: var(--sm-accent-text);
+}
+[class*="text-red-"],
+[class*="text-orange-"],
+[class*="text-amber-"],
+[class*="text-yellow-"],
+[class*="text-lime-"],
+[class*="text-green-"],
+[class*="text-emerald-"],
+[class*="text-teal-"],
+[class*="text-cyan-"],
+[class*="text-sky-"],
+[class*="text-blue-"],
+[class*="text-indigo-"],
+[class*="text-violet-"],
+[class*="text-purple-"],
+[class*="text-fuchsia-"],
+[class*="text-pink-"],
+[class*="text-rose-"] { color: var(--sm-accent-text) !important; }
+:is([class^="bg-red-"], [class*=" bg-red-"]),
+:is([class^="bg-orange-"], [class*=" bg-orange-"]),
+:is([class^="bg-amber-"], [class*=" bg-amber-"]),
+:is([class^="bg-yellow-"], [class*=" bg-yellow-"]),
+:is([class^="bg-lime-"], [class*=" bg-lime-"]),
+:is([class^="bg-green-"], [class*=" bg-green-"]),
+:is([class^="bg-emerald-"], [class*=" bg-emerald-"]),
+:is([class^="bg-teal-"], [class*=" bg-teal-"]),
+:is([class^="bg-cyan-"], [class*=" bg-cyan-"]),
+:is([class^="bg-sky-"], [class*=" bg-sky-"]),
+:is([class^="bg-blue-"], [class*=" bg-blue-"]),
+:is([class^="bg-indigo-"], [class*=" bg-indigo-"]),
+:is([class^="bg-violet-"], [class*=" bg-violet-"]),
+:is([class^="bg-purple-"], [class*=" bg-purple-"]),
+:is([class^="bg-fuchsia-"], [class*=" bg-fuchsia-"]),
+:is([class^="bg-pink-"], [class*=" bg-pink-"]),
+:is([class^="bg-rose-"], [class*=" bg-rose-"]) { background-color: var(--sm-raised) !important; color: var(--sm-accent-text) !important; }
+:is([class^="bg-red-"], [class*=" bg-red-"])[class*="text-white"],
+:is([class^="bg-orange-"], [class*=" bg-orange-"])[class*="text-white"],
+:is([class^="bg-amber-"], [class*=" bg-amber-"])[class*="text-white"],
+:is([class^="bg-yellow-"], [class*=" bg-yellow-"])[class*="text-white"],
+:is([class^="bg-lime-"], [class*=" bg-lime-"])[class*="text-white"],
+:is([class^="bg-green-"], [class*=" bg-green-"])[class*="text-white"],
+:is([class^="bg-emerald-"], [class*=" bg-emerald-"])[class*="text-white"],
+:is([class^="bg-teal-"], [class*=" bg-teal-"])[class*="text-white"],
+:is([class^="bg-cyan-"], [class*=" bg-cyan-"])[class*="text-white"],
+:is([class^="bg-sky-"], [class*=" bg-sky-"])[class*="text-white"],
+:is([class^="bg-blue-"], [class*=" bg-blue-"])[class*="text-white"],
+:is([class^="bg-indigo-"], [class*=" bg-indigo-"])[class*="text-white"],
+:is([class^="bg-violet-"], [class*=" bg-violet-"])[class*="text-white"],
+:is([class^="bg-purple-"], [class*=" bg-purple-"])[class*="text-white"],
+:is([class^="bg-fuchsia-"], [class*=" bg-fuchsia-"])[class*="text-white"],
+:is([class^="bg-pink-"], [class*=" bg-pink-"])[class*="text-white"],
+:is([class^="bg-rose-"], [class*=" bg-rose-"])[class*="text-white"] { background-color: #20383A !important; color: #F3F6F7 !important; }
+
+:is([class^="bg-primary-"], [class*=" bg-primary-"]),
+:is([class^="bg-primary-"], [class*=" bg-primary-"]) *,
+html.dark [class*="dark:bg-primary-"], html.dark [class*="dark:bg-primary-"] * { color: #071C1E !important; }
+html.dark [class*="dark:bg-primary-"] { background-color: #C7F36B !important; }
+button:disabled, input:disabled, select:disabled, textarea:disabled, [aria-disabled="true"] { opacity: 1; }
+
+.bg-black { background-color: var(--sm-raised) !important; }

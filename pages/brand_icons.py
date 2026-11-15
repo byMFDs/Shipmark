@@ -15,8 +15,8 @@ from PIL import Image, ImageDraw
 
 from config import branding
 
-INK = "#20251F"  # --text (light theme)
-PAPER = "#F4F3EE"  # --paper (light theme)
+INK = "#071C1E"  # --text (light theme)
+PAPER = "#F3F6F7"  # --paper (light theme)
 ICO_SIZES = (16, 32, 48)
 TOUCH_SIZE = 180
 TOUCH_MARK = 96  # the mark inside the touch icon; the rest is the dark plate around it

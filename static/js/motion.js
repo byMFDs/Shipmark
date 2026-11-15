@@ -17,15 +17,16 @@ if (primary) {
   primary.append(sweep);
 }
 const loops = document.querySelectorAll(".btn[data-loop]");
-// Observe each outer section once. Retain existing reveal hooks on pages without sections.
-const sections = [...document.querySelectorAll("#main section")].filter((el) => !el.parentElement.closest("section"));
-const reveals = [...sections, ...document.querySelectorAll("[data-reveal]")].filter((el, i, all) =>
-  all.indexOf(el) === i && !all.some((parent) => parent !== el && parent.contains(el)));
+// Every section enters once; legacy reveal hooks inside it share that entrance.
+const sections = [...document.querySelectorAll("#main section")];
+const reveals = [...sections, ...[...document.querySelectorAll("[data-reveal]")].filter((el) =>
+  !sections.some((section) => section.contains(el)))];
 reveals.forEach((el) => {
   el.classList.add("motion-reveal");
   const children = el.children.length === 1 && el.firstElementChild.classList.contains("container")
     ? el.firstElementChild.children : el.children;
   [...children].forEach((child, i) => {
+    if (sections.includes(child)) return;
     child.classList.add("motion-child");
     child.style.setProperty("--reveal-at", `${i * 70}ms`);
   });

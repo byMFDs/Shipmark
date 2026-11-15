@@ -140,7 +140,7 @@
   padding: var(--s-4);
   background: var(--surface);
   border: 1px solid var(--line);
-  transition: border-color var(--t-base) var(--ease-out);
+  transition: none;
 }
 
 .thread-card:focus-visible { outline-offset: 2px; }
@@ -245,7 +245,7 @@
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-btn);
   cursor: pointer;
-  transition: color var(--t-fast) var(--ease-out), background-color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out);
+  transition: none;
 }
 
 .vote__button .icon { width: var(--icon-m); height: var(--icon-m); }
@@ -441,12 +441,12 @@
   display: grid;
   background: var(--surface);
   border: 1px solid var(--line-strong);
-  transition: border-color var(--t-fast) var(--ease-out);
+  transition: none;
 }
 
 /* The textarea is the box's first part: it loses its own frame, the box carries it (and the focus ring). */
 .composer__box > .textarea { border: 0; outline: 0; min-height: 7.5rem; resize: vertical; }
-.composer__box:focus-within { border-color: var(--text); outline: 2px solid var(--focus); outline-offset: 1px; }
+.composer__box:focus-within { border-color: var(--text); outline: 2px solid var(--focus); outline-offset: 1px; box-shadow: 0 0 0 4px var(--focus-edge); }
 .composer__box.is-dragging { border-style: dashed; border-color: var(--text); }
 
 .composer__drop-hint {
@@ -564,7 +564,7 @@ html:not(.js) .composer__tool[for] { display: none; }
 }
 
 .sticker-picker__item img { width: 100%; max-width: 2.75rem; height: auto; }
-.sticker-picker__item:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.sticker-picker__item:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; box-shadow: 0 0 0 4px var(--focus-edge); }
 .sticker-picker__item[hidden] { display: none; }
 @media (hover: hover) { .sticker-picker__item:hover { border-color: var(--line-strong); } }
 
@@ -601,12 +601,12 @@ html:not(.js) .composer__tool[for] { display: none; }
   margin: 0;
   padding: 0;
   border: 0;
-  background: #121815; /* always the dark paper, whatever the theme: pictures read best on dark */
-  color: #ECEAE1;
-  --focus: #ECEAE1;
+  background: #071C1E; /* always the dark paper, whatever the theme: pictures read best on dark */
+  color: #F3F6F7;
+  --focus: #C7F36B;
 }
 
-.lightbox::backdrop { background: rgb(20 26 23 / 0.92); }
+.lightbox::backdrop { background: rgb(7 28 30 / 0.92); }
 .lightbox[open] { display: grid; place-items: center; }
 
 .lightbox__figure {
@@ -621,9 +621,9 @@ html:not(.js) .composer__tool[for] { display: none; }
 
 .lightbox__img { place-self: center; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; touch-action: pan-y pinch-zoom; }
 .lightbox__caption { justify-self: center; max-width: 60ch; text-align: center; font-size: var(--fs--1); overflow-wrap: anywhere; }
-.lightbox__caption .label { color: #A7AFA6; }
+.lightbox__caption .label { color: #B1B9BA; }
 
-.lightbox .btn--secondary { --btn-bg: #1C2521; --btn-fg: #ECEAE1; --btn-edge: #76817A; }
+.lightbox .btn--secondary { --btn-bg: #15292B; --btn-fg: #F3F6F7; --btn-edge: #7F8E8F; }
 .lightbox__close { position: absolute; top: calc(var(--s-4) + env(safe-area-inset-top)); right: var(--s-4); }
 .lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); }
 .lightbox__nav--prev { left: var(--s-3); }

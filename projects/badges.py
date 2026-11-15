@@ -32,11 +32,11 @@ FONT_STACK = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue
 
 # Design tokens from static/css/tokens.css (light values, the badge is the same everywhere).
 # Green is proof only, so it is the color of the stamps; the badge has no accent.
-GRAPHITE = "#20251F"
-PLATE = "#FFFEFA"
-STEEL = "#5C635B"
-LINE = "#868A80"
-INK = "#2B5A3F"
+GRAPHITE = "#F3F6F7"
+PLATE = "#071C1E"
+STEEL = "#79D9D2"
+LINE = "#20383A"
+INK = "#C7F36B"
 
 HALLMARK_ORDER = ("authored", "live", "steady")
 HALLMARK_LABELS = {"authored": "Repo owner", "live": "Domain verified", "steady": "Steady"}  # English only, see docs
@@ -219,7 +219,7 @@ def profile_badge(username, hallmark_count):
     x += badge.text(x, fit_text(f"@{username}", MAX_NAME_WIDTH, bold=True), GRAPHITE, bold=True) + PAD
     width = text_width(count_text, bold=True)
     badge.halves.append((x, width + 2 * PAD, INK))
-    badge.text(x + PAD, count_text, "#FFFFFF", bold=True)
+    badge.text(x + PAD, count_text, "#071C1E", bold=True)
     badge.x = x + width + 2 * PAD
     return badge.finish()
 
