@@ -5509,3 +5509,7 @@ msgstr "Os moderadores podem analisar denúncias."
 #: community/forms.py
 msgid "Write a message..."
 msgstr "Escreva uma mensagem..."
+
+#: templates/pages/styleguide.html
+msgid "Logo"
+msgstr "Logotipo"

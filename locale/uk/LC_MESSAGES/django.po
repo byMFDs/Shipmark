@@ -5564,3 +5564,7 @@ msgstr "Модератори можуть розглядати скарги."
 #: community/forms.py
 msgid "Write a message..."
 msgstr "Напишіть повідомлення..."
+
+#: templates/pages/styleguide.html
+msgid "Logo"
+msgstr "Логотип"

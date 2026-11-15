@@ -291,9 +291,20 @@ class BadgeComponentTests(TestCase):
         for kind in ("official", "moderator"):
             with open(finders.find(f"icons/badge-{kind}.svg")) as source:
                 icons.append(ET.fromstring(source.read()))
-        self.assertEqual([icon.get("color") for icon in icons], ["#0096FF", "#E0245E"])
-        self.assertEqual([next(iter(icon)).get("href") for icon in icons],
-                         ["#account-rosette", "#account-rosette"])
+        self.assertEqual(icons[0].get("color"), "#0096FF")
+        self.assertEqual(next(iter(icons[0])).get("href"), "#account-rosette")
+        self.assertNotEqual(ET.tostring(icons[0]), ET.tostring(icons[1]))
+        self.assertEqual(icons[1].get("viewBox"), "72.5 82 228 228")
+        shield, bar = list(icons[1])
+        self.assertEqual(shield.tag, "{http://www.w3.org/2000/svg}path")
+        self.assertEqual(shield.get("fill"), "#FF3131")
+        self.assertEqual(shield.get("d"),
+                         "M184.5 82.5Q186.5 81.5 188.5 82.5C212.6 96.2 246.1 104.1 277.4 109.2"
+                         "Q281 109.8 281 114V195C281 247 238 286 188.2 309.5Q186.5 310.3 184.8 309.5"
+                         "C135 286 92 247 92 195V114Q92 109.8 95.6 109.2C126.9 104.1 160.4 96.2 184.5 82.5Z")
+        self.assertEqual(bar.tag, "{http://www.w3.org/2000/svg}rect")
+        self.assertEqual(bar.attrib, {"x": "125", "y": "173", "width": "125", "height": "23", "rx": "10",
+                                    "fill": "#FFFFFF"})
         with open(finders.find("icons/account-rosette.svg")) as source:
             symbol = ET.fromstring(source.read()).find("{http://www.w3.org/2000/svg}symbol")
         self.assertEqual(symbol.get("id"), "account-rosette")
@@ -306,7 +317,11 @@ class BadgeComponentTests(TestCase):
         html = self.client.get(reverse("accounts:profile", args=["ana"])).content.decode()
         self.assertEqual(html.count('id="account-rosette"'), 1)
         self.assertIn('color="#0096FF"', html)
-        self.assertIn('color="#E0245E"', html)
+        moderator_button = re.search(r'<button[^>]*data-badge="moderator".*?</button>', html, re.S).group()
+        self.assertIn('fill="#FF3131"', moderator_button)
+        self.assertIn('fill="#FFFFFF"', moderator_button)
+        self.assertNotIn('<use', moderator_button)
+        self.assertNotIn('color="#E0245E"', moderator_button)
 
     def test_each_kind_renders_with_its_label_glyph_and_the_real_date(self):
         official = timezone.make_aware(datetime(2025, 3, 3, 12, 0))

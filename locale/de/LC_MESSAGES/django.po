@@ -5584,3 +5584,7 @@ msgstr "Moderatoren können Meldungen prüfen."
 #: community/forms.py
 msgid "Write a message..."
 msgstr "Nachricht schreiben..."
+
+#: templates/pages/styleguide.html
+msgid "Logo"
+msgstr "Logo"

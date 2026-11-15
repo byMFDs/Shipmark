@@ -19,7 +19,8 @@
   <link rel="stylesheet" href="{% static 'css/components.css' %}">
   <link rel="stylesheet" href="{% static 'css/motion.css' %}">
   {% block styles %}{% endblock %}
-  {# Icons: all drawn from logo C. static_v changes the URL when a file changes (browsers cache icons separately). #}
+  {# Icons: all drawn from the S mark. static_v changes the URL when a file changes (browsers cache icons separately). #}
+  <link rel="icon" href="{% static_v 'brand/favicon.png' %}" type="image/png" sizes="32x32">
   <link rel="icon" href="{% static_v brand.FAVICON_ICO %}" sizes="32x32">
   <link rel="icon" href="{% static_v brand.FAVICON %}" type="image/svg+xml">
   <link rel="apple-touch-icon" href="{% static_v brand.APPLE_TOUCH_ICON %}">

@@ -5549,3 +5549,7 @@ msgstr "Moderatorzy mogą rozpatrywać zgłoszenia."
 #: community/forms.py
 msgid "Write a message..."
 msgstr "Napisz wiadomość..."
+
+#: templates/pages/styleguide.html
+msgid "Logo"
+msgstr "Logo"
