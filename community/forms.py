@@ -72,7 +72,7 @@ def _body(rows, max_length):
     """Поле тексту допису з markdown-підказкою."""
     return forms.CharField(
         label=_("Text"), required=False, max_length=max_length, strip=True,
-        widget=forms.Textarea(attrs={"rows": rows, "maxlength": max_length}),
+        widget=forms.Textarea(attrs={"rows": rows, "maxlength": max_length, "placeholder": _("Write a message...")}),
         help_text=_("Markdown works. Links, lists, bold and code are allowed; HTML is not."),
     )
 

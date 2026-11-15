@@ -347,6 +347,12 @@ class PostFormTests(CommunityTestCase):
         page = self.client.get(self.thread.get_absolute_url())
         self.assertContains(page, 'data-max="2"')
         self.assertContains(page, "data-picker-open")
+        bar = re.search(r'<div class="composer__bar">(.*?)</div>', page.content.decode(), re.S).group(1)
+        self.assertLess(bar.index('for="id_images"'), bar.index("<textarea"))
+        self.assertLess(bar.index("<textarea"), bar.index("data-picker-open"))
+        self.assertIn('placeholder="Write a message..."', bar)
+        for hook in ("data-drop", "data-file-input", "data-previews", "data-sticker-chosen"):
+            self.assertContains(page, hook)
 
     def test_reply_to_query_moves_the_form_without_js(self):
         reply = services.create_reply(self.ann, self.thread, body="Which record exactly?")

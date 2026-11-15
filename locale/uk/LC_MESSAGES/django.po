@@ -5730,7 +5730,6 @@ msgstr "Цей акаунт підтверджений і керується к�
 msgid "Moderators can review reports."
 msgstr "Модератори можуть розглядати скарги."
 
-
 #: community/stickers.py
 msgid "Grinning face with big eyes"
 msgstr "Усміхнене обличчя з великими очима"
@@ -6054,3 +6053,8 @@ msgstr "Механічна нога"
 #: community/stickers.py
 msgid "Lipstick"
 msgstr "Помада"
+
+
+#: community/forms.py
+msgid "Write a message..."
+msgstr "Напишіть повідомлення..."

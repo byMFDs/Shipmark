@@ -7,7 +7,12 @@
   <div class="field">
     <label class="field__label" for="{{ form.body.id_for_label }}">{{ form.body.label }}</label>
     <div class="composer__box" data-drop>
-      {{ form.body }}
+      <input class="composer__file" type="file" name="{{ form.images.html_name }}" id="{{ form.images.id_for_label }}" accept="image/png,image/jpeg,image/webp" multiple data-file-input aria-describedby="{{ prefix }}-images-hint">
+      <div class="composer__bar">
+        <label class="btn btn--quiet btn--icon composer__tool" for="{{ form.images.id_for_label }}" title="{% translate 'Add images' %}">{% icon "paperclip" %}<span class="visually-hidden">{% translate "Add images" %}</span></label>
+        {{ form.body }}
+        {% if form.sticker %}<button class="btn btn--quiet btn--icon composer__tool" type="button" hidden data-picker-open aria-expanded="false" aria-haspopup="dialog" title="{% translate 'Sticker' %}">{% icon "smile" %}<span class="visually-hidden">{% translate "Sticker" %}</span></button>{% endif %}
+      </div>
       <p class="composer__drop-hint" aria-hidden="true">{% icon "image" %}{% translate "Drop images here" %}</p>
       <ul class="composer__previews" data-previews aria-label="{% translate 'Chosen images' %}" data-remove="{% translate 'Remove image' %}"></ul>
       <template data-close-icon>{% icon "close" %}</template>
@@ -15,14 +20,9 @@
         <img src="" width="64" height="64" alt="" data-sticker-img>
         <button class="btn btn--quiet btn--icon" type="button" data-sticker-clear aria-label="{% translate 'Remove sticker' %}">{% icon "close" %}</button>
       </div>
-      <div class="composer__tools">
-        <input class="composer__file" type="file" name="{{ form.images.html_name }}" id="{{ form.images.id_for_label }}" accept="image/png,image/jpeg,image/webp" multiple data-file-input aria-describedby="{{ prefix }}-images-hint">
-        <label class="btn btn--quiet composer__tool" for="{{ form.images.id_for_label }}">{% icon "image" %}<span>{% translate "Add images" %}</span></label>
-        {% if form.sticker %}<button class="btn btn--quiet composer__tool" type="button" hidden data-picker-open aria-expanded="false" aria-haspopup="dialog">{% icon "sticker" %}<span>{% translate "Sticker" %}</span></button>{% endif %}
-        <span class="composer__hint muted" id="{{ prefix }}-images-hint">{{ form.images.help_text }}</span>
-      </div>
       {% if form.sticker %}{% include "community/_picker.html" %}{% endif %}
     </div>
+    <p class="composer__hint muted" id="{{ prefix }}-images-hint">{{ form.images.help_text }}</p>
     <p class="field__hint" id="{{ form.body.auto_id }}_hint">{{ form.body.help_text }}</p>
     {% if form.body.errors %}<div id="{{ form.body.auto_id }}_error">{% endif %}{% for error in form.body.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}{% if form.body.errors %}</div>{% endif %}
     {% for error in form.images.errors %}<p class="field__error">{% icon "alert" %}<span>{{ error }}</span></p>{% endfor %}

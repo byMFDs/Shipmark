@@ -5715,7 +5715,6 @@ msgstr "To konto jest zweryfikowane i prowadzone przez zespół %(site)s."
 msgid "Moderators can review reports."
 msgstr "Moderatorzy mogą rozpatrywać zgłoszenia."
 
-
 #: community/stickers.py
 msgid "Grinning face with big eyes"
 msgstr "Uśmiechnięta twarz z dużymi oczami"
@@ -6039,3 +6038,8 @@ msgstr "Mechaniczna noga"
 #: community/stickers.py
 msgid "Lipstick"
 msgstr "Szminka"
+
+
+#: community/forms.py
+msgid "Write a message..."
+msgstr "Napisz wiadomość..."
