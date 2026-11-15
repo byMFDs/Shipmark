@@ -276,11 +276,6 @@
   pointer-events: none;
 }
 
-.js [data-loop].is-inview .uptime-strip__head {
-  opacity: 1;
-  animation: tick 6s steps(30, jump-none) infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .uptime-strip__head { display: none; }
 }

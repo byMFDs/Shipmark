@@ -137,15 +137,15 @@
 }
 
 /* ---------- Product illustrations (made-up screens, decorative) ---------- */
-/* Fixed pastel colors, the same in both themes, like a screenshot would be. Every text pair
-   inside is at least 4.9:1 (measured 2026-11-11). Text inside is at least 12px. */
+/* Palette-based mock surfaces inherit the active theme. Every text pair
+   inside is measured for both themes in docs/PALETTE.md. */
 
 .mock {
-  --mock-bg: #DCD9EA;
-  --mock-ink: #34324A;
-  --mock-soft: #5A5873;
-  --mock-card: #EFEDF7;
-  --mock-item: #FFFEFA;
+  --mock-bg: var(--paper);
+  --mock-ink: var(--text);
+  --mock-soft: var(--muted);
+  --mock-card: var(--raised);
+  --mock-item: var(--surface);
   display: flex;
   flex-direction: column;
   gap: var(--s-3);
@@ -193,7 +193,7 @@
   margin: 0;
   padding: 0 var(--s-4) 0 0;
   list-style: none;
-  border-right: 1px solid rgb(52 50 74 / 0.25);
+  border-right: 1px solid var(--line);
 }
 
 .mock__side li + li { margin-top: var(--s-1); }
@@ -240,9 +240,9 @@
 .card__media .mock__title { font-size: var(--fs-1); }
 
 .mock--plotline {
-  --mock-bg: #E3E4CB;
-  --mock-ink: #3A3D27;
-  --mock-soft: #575A3F;
+  --mock-bg: var(--paper);
+  --mock-ink: var(--text);
+  --mock-soft: var(--muted);
 }
 
 .mock__books {
@@ -267,15 +267,15 @@
 
 .mock__book span { font-family: var(--font-mono); font-weight: 400; }
 
-/* Book colors with their text: white on the dark two (5.3:1 and 7.1:1), ink on the yellow (7.4:1). */
-.mock__book--1 { background: #A9512F; color: #FFFEFA; }
-.mock__book--2 { background: #35604A; color: #FFFEFA; }
-.mock__book--3 { background: #D3B24F; color: #2B2610; }
+/* Books: paper on rule/ink, ink on proof; measured in docs/PALETTE.md. */
+.mock__book--1 { background: #20383A; color: #F3F6F7; }
+.mock__book--2 { background: #071C1E; color: #F3F6F7; }
+.mock__book--3 { background: #C7F36B; color: #071C1E; }
 
 .mock--forma {
-  --mock-bg: #EBD5C8;
-  --mock-ink: #4E2F22;
-  --mock-soft: #6B4A3C;
+  --mock-bg: var(--paper);
+  --mock-ink: var(--text);
+  --mock-soft: var(--muted);
 }
 
 .mock__form {
@@ -287,19 +287,19 @@
   background: var(--mock-item);
 }
 
-.mock__form .mock__title { color: #6B3E2C; }
+.mock__form .mock__title { color: var(--text); }
 
 .mock__field {
   padding: var(--s-2);
-  border: 1px solid #C9BDB4;
-  background: #F4F1EC;
-  color: #6B625C;
+  border: 1px solid var(--line);
+  background: #F3F6F7;
+  color: #20383A;
 }
 
 .mock__button {
   padding: var(--s-2);
-  background: #6B3E2C;
-  color: #FFFEFA;
+  background: #071C1E;
+  color: #F3F6F7;
   text-align: center;
 }
 
@@ -471,7 +471,7 @@
   align-items: center;
   padding: var(--s-2) var(--s-3);
   background: var(--band-bg);
-  color: #ECEAE1; /* the dark theme's text on the always-dark band */
+  color: #F3F6F7; /* the dark theme's text on the always-dark band */
 }
 
 .badge-preview__logo { height: 1rem; width: auto; }

@@ -46,3 +46,8 @@ Lime fills primary actions, earned hallmark chips, proof notes and focus rings; 
 ## Verification log
 
 Existing colour assertions are updated only for the new token roles: lime primary/focus are measured against their ink backing, and the perimeter light against both its track and surrounding surface. AA thresholds remain unchanged.
+
+## Motion
+
+- Marks: 8px drop with 2px / −1px overshoot, 420ms each, 120ms stagger, once on load.
+- Uptime: 180ms fill per cell, 30ms stagger, starts at 660ms after all three marks; once. Existing uptime head and live/cursor ambient loops are now static.
