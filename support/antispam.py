@@ -51,7 +51,10 @@ def client_ip(request):
 
     The visitor's address as the trusted proxy reports it (settings.CLIENT_IP_HEADER), else REMOTE_ADDR."""
     header = getattr(settings, "CLIENT_IP_HEADER", "") or "REMOTE_ADDR"
-    return (request.META.get(header) or request.META.get("REMOTE_ADDR") or "").split(",")[0].strip()
+    value = request.META.get(header) or request.META.get("REMOTE_ADDR") or ""
+    # At launch the directly trusted router appends the client address. An incoming prefix is untrusted.
+    index = -1 if header == "HTTP_X_FORWARDED_FOR" else 0
+    return value.split(",")[index].strip()
 
 
 def ip_key(ip):

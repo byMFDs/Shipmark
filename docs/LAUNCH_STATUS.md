@@ -159,3 +159,19 @@
 - `check --deploy` з prod settings і явно синтетичними env (SQLite, без зовнішніх підключень): без зауважень. `check` і `diff --check` чисті; 105 тестів `config support` OK (8,3 с). Далі повний набір.
 - Повний прогін 1: 1153 тести, шість FAIL subtests — старий `moderation.tests.AdminUrlTests` передавав SECRET_KEY=`x`×50, який нова перевірка правильно відхиляє до ADMIN_URL. У межах винятку security stage 6 змінено лише синтетичний ключ fixture на довгий різноманітний; усі admin URL assertions збережено, moderation rules не змінено. Повний прогін 2: усі 1153 тести OK (70,7 с), TESTING і тестовий MD5.
 - Групу L1 закомічено окремо. Група C1 — окремий наступний коміт: prod startup validation + `config/test_launch_secrets.py` + лише синтетичний ключ admin URL fixture. Всі 1153 тести, check/deploy check і diff check зелені; до широкого запуску потрібні незалежний огляд і перевірка конкурентних лімітів.
+
+### Додаткова security-група під час Heroku preparation
+
+- Коміти етапу 6: `a730a80` (L1), `9cf2c74` (C1). При підготовці CLIENT_IP_HEADER виявлено P1: для моделі прямого довіреного router, який дописує адресу в кінець X-Forwarded-For, поточний вибір першої адреси приймав підставлений prefix. Новий тест спочатку FAIL.
+- Для явно налаштованого HTTP_X_FORWARDED_FOR беремо праву адресу; X-Real-IP/REMOTE_ADDR без змін. Тест охоплює ключі підтримки й анонімного people search та ігнорування недовіреного forwarded header. Реальний Heroku header chain до deploy перевірити вручну; Cloudflare DNS-only. Це необхідний security-виняток, без зміни permissions, моделей, міграцій, moderation або URLs.
+
+### Етап 7 — Heroku preparation
+
+- Production: обов'язкові п'ять S3 env, HTTPS endpoint, приватні `media/` і `support/`; зображення signed URL на 3600 с, support storage відхиляє browser URL. Для ACL-disabled сумісності не надсилаємо ACL; приватність визначається забороною public bucket policy, яку власник мусить перевірити. Локальний storage не змінено; secrets не зберігаються.
+- `Procfile`: web gunicorn config.wsgi; release migrate --noinput. PORT має пріоритет для bind 0.0.0.0; без PORT локально 127.0.0.1. Додано root requirements shim для виявлення Python buildpack і .python-version 3.12. Залежності лише погоджені django-storages[s3]==1.14.6, boto3==1.44.3; у CLAUDE.md змінено тільки allowed-dependencies list.
+- Тестові helper-и config/tests.py та moderation/tests.py отримали синтетичні S3 env для вже наявних production-startup перевірок. Усі assertions/permissions/moderation rules збережено. Це необхідна адаптація fixtures до обов'язкового storage, не зміна бізнес-логіки.
+- Перша цільова спроба: 15 тестів, 6 FAIL subtests — manage.py shell дозволяє виконувати довільний code без налаштованого Django, тому print-only probe не перевіряв startup. Probe змінено на справжній WSGI import; production validation уже працював. Повтор: усі 15 тестів OK (8,5 с).
+- `check --deploy` з prod settings/synthetic env: без зауважень. collectstatic успішний, compressed manifest 248 entries. На ізольованій SQLite застосовано всі міграції й створено cache table; DEBUG=False smoke: hashed CSS 200 з immutable caching, Privacy/About 200, кастомна 404 — 404. Нічого не підключалося до S3/SMTP/GitHub.
+- Повтор pip-audit із S3: 36 production-залежностей, 0 відомих вразливостей. psql/pg_isready й доступної PostgreSQL немає: postgres:// parsing перевірено без з'єднання, PostgreSQL migrations не перевірено.
+- `docs/DEPLOY_CHECKLIST.md`: Heroku/Postgres/Scheduler, тільки порожні env placeholders у dotenv-блоці, production OAuth callback, DNS-only і apex flattening, jobs 10 min/daily, createcachetable до відкриття app, backup/retention/restore й ручний smoke. reverify_repos вже має due_links/7 днів — поведінку не змінювали.
+- P1: `support accounts.test_people` — усі 84 тести OK (6,0 с); check/diff check чисті. Виправлення йде окремим security-комітом перед фінальним Heroku preparation commit.
