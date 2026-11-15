@@ -257,10 +257,10 @@
   border: 1px solid var(--line-strong);
 }
 
-.uptime-strip__day.is-up { background: var(--proof); border-color: var(--proof); }
+.uptime-strip__day.is-up { background: var(--signal); border-color: var(--accent-text); }
 .uptime-strip__day.is-partial {
-  border-color: var(--proof);
-  background: linear-gradient(var(--proof), var(--proof)) bottom / 100% 50% no-repeat;
+  border-color: var(--accent-text);
+  background: linear-gradient(var(--signal), var(--signal)) bottom / 100% 50% no-repeat;
 }
 .uptime-strip__day.is-down { background: var(--danger); border-color: var(--danger); }
 .uptime-strip__day.is-none { border-color: var(--line-strong); }
@@ -340,7 +340,7 @@
   border: 1px solid var(--line-strong);
 }
 
-.owner-bar__state.is-published::before { background: var(--proof); border-color: var(--proof); }
+.owner-bar__state.is-published::before { background: var(--signal); border-color: var(--accent-text); }
 
 .owner-bar__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 
@@ -524,7 +524,7 @@
 }
 
 .domain-status .icon { flex: none; margin-top: 0.2em; }
-.domain-status.is-ok .icon { color: var(--proof); }
+.domain-status.is-ok .icon { color: var(--accent-text); }
 .domain-status.is-error .icon { color: var(--danger); }
 
 .method {

@@ -74,91 +74,97 @@
   :root { --pad: 2rem; }
 }
 
-/* Light theme: the default, and any element with data-theme="light". */
+/* Palette roles and every derivation: docs/PALETTE.md. */
 :root,
 [data-theme="light"] {
   color-scheme: light;
-  --paper: #F4F3EE;
-  --surface: #FFFEFA;
-  --raised: #FFFEFA;   /* fields, menus, popovers, toasts; in the light theme hairlines give the depth */
-  --text: #20251F;
-  --muted: #5C635B;
-  --line: #D9D8D0;
-  --line-strong: #868A80;
-  --accent: #BD4B27;
-  --accent-hover: #A13D1C;
-  --on-accent: #FFFEFA;
-  --accent-text: #AE411D;
-  --proof-bg: #E3EBDA;
-  --proof: #2B5A3F;
-  --danger: #A8322D;
-  --danger-hover: #8E2622;
-  --on-danger: #FFFEFA;
-  --tint: rgb(32 37 31 / 0.05);
-  --danger-tint: rgb(168 50 45 / 0.08);
-  --focus: #20251F;
-  --shadow-pop: 0 1px 0 rgb(32 37 31 / 0.04), 0 8px 24px -12px rgb(32 37 31 / 0.25);
+  --paper: #F3F6F7;
+  --surface: #F3F6F7;
+  --raised: #F3F6F7;
+  --text: #071C1E;
+  --muted: #20383A;
+  --line: #20383A;
+  --line-strong: #6A7A7C;
+  --accent: #C7F36B;
+  --accent-hover: #79D9D2;
+  --on-accent: #071C1E;
+  --accent-text: #20383A;
+  --proof-bg: #C7F36B;
+  --proof: #071C1E;
+  --danger: #20383A;
+  --danger-hover: #071C1E;
+  --on-danger: #F3F6F7;
+  --focus: #C7F36B;
+  --signal: #79D9D2;
+  --focus-edge: #071C1E;
+  --halo-tint: #527049;
+  --halo-track: #071C1E;
+  --tint: rgb(7 28 30 / 0.05);
+  --danger-tint: var(--tint);
+  --shadow-pop: 0 1px 0 rgb(7 28 30 / 0.04), 0 8px 24px -12px rgb(7 28 30 / 0.25);
 }
 
-/* Dark theme. The same values appear twice: keep both blocks in sync.
-   1) chosen with the toggle (or on any element with data-theme="dark"). .band (the dark
-      statement strips) always uses these values, on its own background (see below). */
 [data-theme="dark"],
 .band {
   color-scheme: dark;
-  --paper: #121815;
-  --surface: #1C2521;
-  --raised: #242E29;
-  --text: #ECEAE1;
-  --muted: #A7AFA6;
-  --line: #35413B;
-  --line-strong: #76817A;
-  --accent: #EE7A3B;
-  --accent-hover: #FA9A63;
-  --on-accent: #121815;
-  --accent-text: #EE936E;
-  --proof-bg: #233A2C;
-  --proof: #ADD5B8;
-  --danger: #F2918A;
-  --danger-hover: #FB9E94;
-  --on-danger: #121815;
-  --tint: rgb(255 255 255 / 0.06);
-  --danger-tint: rgb(240 138 128 / 0.1);
-  --focus: #ECEAE1;
-  --shadow-pop: 0 1px 0 rgb(0 0 0 / 0.3), 0 10px 28px -12px rgb(0 0 0 / 0.7);
+  --paper: #071C1E;
+  --surface: #15292B;
+  --raised: #233638;
+  --text: #F3F6F7;
+  --muted: #B1B9BA;
+  --line: #4E6264;
+  --line-strong: #7F8E8F;
+  --accent: #C7F36B;
+  --accent-hover: #79D9D2;
+  --on-accent: #071C1E;
+  --accent-text: #79D9D2;
+  --proof-bg: #C7F36B;
+  --proof: #071C1E;
+  --danger: #79D9D2;
+  --danger-hover: #C7F36B;
+  --on-danger: #071C1E;
+  --focus: #C7F36B;
+  --signal: #79D9D2;
+  --focus-edge: #071C1E;
+  --halo-tint: #79D9D2;
+  --halo-track: #071C1E;
+  --tint: rgb(243 246 247 / 0.06);
+  --danger-tint: var(--tint);
+  --shadow-pop: 0 1px 0 rgb(7 28 30 / 0.04), 0 8px 24px -12px rgb(7 28 30 / 0.25);
 }
 
-/* 2) from the operating system, unless the person chose light. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --paper: #121815;
-    --surface: #1C2521;
-    --raised: #242E29;
-    --text: #ECEAE1;
-    --muted: #A7AFA6;
-    --line: #35413B;
-    --line-strong: #76817A;
-    --accent: #EE7A3B;
-    --accent-hover: #FA9A63;
-    --on-accent: #121815;
-    --accent-text: #EE936E;
-    --proof-bg: #233A2C;
-    --proof: #ADD5B8;
-    --danger: #F2918A;
-    --danger-hover: #FB9E94;
-    --on-danger: #121815;
-    --tint: rgb(255 255 255 / 0.06);
-    --danger-tint: rgb(240 138 128 / 0.1);
-    --focus: #ECEAE1;
-    --shadow-pop: 0 1px 0 rgb(0 0 0 / 0.3), 0 10px 28px -12px rgb(0 0 0 / 0.7);
+    --paper: #071C1E;
+    --surface: #15292B;
+    --raised: #233638;
+    --text: #F3F6F7;
+    --muted: #B1B9BA;
+    --line: #4E6264;
+    --line-strong: #7F8E8F;
+    --accent: #C7F36B;
+    --accent-hover: #79D9D2;
+    --on-accent: #071C1E;
+    --accent-text: #79D9D2;
+    --proof-bg: #C7F36B;
+    --proof: #071C1E;
+    --danger: #79D9D2;
+    --danger-hover: #C7F36B;
+    --on-danger: #071C1E;
+    --focus: #C7F36B;
+    --signal: #79D9D2;
+    --focus-edge: #071C1E;
+    --halo-tint: #79D9D2;
+    --halo-track: #071C1E;
+    --tint: rgb(243 246 247 / 0.06);
+    --danger-tint: var(--tint);
+    --shadow-pop: 0 1px 0 rgb(7 28 30 / 0.04), 0 8px 24px -12px rgb(7 28 30 / 0.25);
   }
 }
 
-/* Background of the dark statement strips. Not in the blocks above on purpose: .band takes
-   the dark values from them and this one from the page theme. */
-:root, [data-theme="light"] { --band-bg: #212721; }
-[data-theme="dark"] { --band-bg: #0D1310; }
+:root, [data-theme="light"] { --band-bg: #071C1E; }
+[data-theme="dark"] { --band-bg: #071C1E; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --band-bg: #0D1310; }
+  :root:not([data-theme="light"]) { --band-bg: #071C1E; }
 }

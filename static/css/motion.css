@@ -157,7 +157,7 @@ html.js.is-paused .cursor[data-loop]::after,
 }
 
 .tick-strip__cell {
-  background: var(--proof);
+  background: var(--signal);
   opacity: 0.55;
 }
 
@@ -169,7 +169,7 @@ html.js.is-paused .cursor[data-loop]::after,
   bottom: -3px;
   left: 0;
   width: calc((100% - (var(--cells) - 1) * 2px) / var(--cells));
-  background: var(--proof);
+  background: var(--signal);
   opacity: 0;
 }
 

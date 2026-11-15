@@ -59,24 +59,24 @@ class HaloTests(SimpleTestCase):
             for kind in ("secondary", "primary"):
                 for background in ("paper", "surface"):
                     with self.subTest(theme=theme, button=kind, background=background):
-                        worst = min(contrast(c, t[background]) for c in self.ring(t, kind))
+                        worst = contrast(t["halo-tint"], t[background])
                         self.assertGreaterEqual(worst, 3.0)
 
     def test_the_light_stands_out_from_the_resting_ring(self):
         """The bug: on the light theme hover turned the whole ring ink, so the ink light could not be seen."""
         for theme, t in self.themes.items():
             with self.subTest(theme=theme):
-                self.assertGreaterEqual(contrast(t["text"], t["line-strong"]), 3.0)
+                self.assertGreaterEqual(contrast(t["halo-tint"], t["halo-track"]), 3.0)
 
     def test_the_css_uses_these_colours_and_keeps_the_ring_on_hover(self):
         halo = block(self.components, ".btn--halo {")
         self.assertIn("background: var(--halo-base)", halo)
-        self.assertIn("--halo-base: var(--line-strong)", halo)
-        self.assertIn("--halo-light: var(--text)", halo)
-        self.assertIn("--halo-spark: var(--accent)", halo)
+        self.assertIn("--halo-base: var(--halo-track)", halo)
+        self.assertIn("--halo-light: var(--halo-tint)", halo)
+        self.assertIn("--halo-spark: var(--halo-tint)", halo)
         primary = block(self.components, ".btn--halo.btn--primary {")
-        self.assertIn("--halo-base: var(--accent)", primary)
-        self.assertIn("--halo-spark: var(--accent-hover)", primary)
+        self.assertIn("--halo-base: var(--halo-track)", primary)
+        self.assertIn("--halo-spark: var(--halo-tint)", primary)
         gradient = block(self.components, ".btn--halo::before {")
         self.assertNotIn("transparent", gradient)  # would show the page through the ring
         self.assertNotIn("--paper", gradient)  # paper on a paper page is invisible

@@ -120,7 +120,7 @@
 
 .sg-logo-option__name { font-weight: 600; margin-bottom: var(--s-2); }
 .sg-logo-option figcaption p + p { font-size: var(--fs--1); }
-.sg-pick { color: var(--proof); margin-left: var(--s-2); }
+.sg-pick { color: var(--accent-text); margin-left: var(--s-2); }
 
 .sg-logo-l { height: 2.5rem; color: var(--text); }
 

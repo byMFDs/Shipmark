@@ -65,7 +65,7 @@
 /* The arrow sits at the right edge of wide buttons, like the hero action in the sketches. */
 .btn--lg .arrow { margin-left: var(--s-3); }
 
-.btn--primary { --btn-bg: var(--accent); --btn-fg: var(--on-accent); --btn-edge: var(--accent); }
+.btn--primary { --btn-bg: var(--accent); --btn-fg: var(--on-accent); --btn-edge: var(--focus-edge); }
 .btn--secondary { --btn-bg: var(--surface); --btn-fg: var(--text); --btn-edge: var(--line-strong); }
 .btn--quiet { padding-inline: var(--s-3); }
 .btn--danger { --btn-fg: var(--danger); --btn-edge: var(--danger); }
@@ -74,7 +74,7 @@
 .btn--danger-solid { --btn-bg: var(--danger); --btn-fg: var(--on-danger); --btn-edge: var(--danger); }
 
 @media (hover: hover) {
-  .btn--primary:hover { --btn-bg: var(--accent-hover); --btn-edge: var(--accent-hover); }
+  .btn--primary:hover { --btn-bg: var(--accent-hover); --btn-edge: var(--focus-edge); }
   .btn--secondary:hover { --btn-edge: var(--text); }
   .btn--quiet:hover { --btn-bg: var(--tint); }
   .btn--danger:hover { --btn-bg: var(--danger-tint); }
@@ -82,7 +82,7 @@
 }
 
 /* Press: a small scale (above) plus the hover colour, so touch screens get an answer too. */
-.btn--primary:active { --btn-bg: var(--accent-hover); --btn-edge: var(--accent-hover); }
+.btn--primary:active { --btn-bg: var(--accent-hover); --btn-edge: var(--focus-edge); }
 .btn--secondary:active { --btn-bg: var(--tint); --btn-edge: var(--text); }
 .btn--quiet:active { --btn-bg: var(--tint); }
 
@@ -91,7 +91,7 @@
 
 .btn:disabled,
 .btn[aria-disabled="true"] {
-  opacity: 0.45;
+  opacity: 1;
   cursor: not-allowed;
   transform: none;
 }
@@ -142,9 +142,9 @@
 
 .btn--halo {
   --halo-w: 2px;
-  --halo-base: var(--line-strong);
-  --halo-light: var(--text);
-  --halo-spark: var(--accent);
+  --halo-base: var(--halo-track);
+  --halo-light: var(--halo-tint);
+  --halo-spark: var(--halo-tint);
   isolation: isolate;
   overflow: hidden;
   border: 0;
@@ -152,8 +152,8 @@
 }
 
 .btn--halo.btn--primary {
-  --halo-base: var(--accent);
-  --halo-spark: var(--accent-hover);
+  --halo-base: var(--halo-track);
+  --halo-spark: var(--halo-tint);
 }
 
 .btn--halo::before,
@@ -240,7 +240,7 @@
 }
 
 @media (hover: hover) {
-  .link-arrow:hover > span { text-decoration-color: currentColor; }
+  .link-arrow:hover > span { text-decoration-color: var(--signal); }
 }
 
 /* ---------- Fields ---------- */
@@ -282,7 +282,7 @@
 }
 
 .form-errors__list { margin: 0; padding-left: var(--s-5); display: grid; gap: var(--s-1); color: var(--danger); font-size: var(--fs--1); }
-.form-errors__list a { color: inherit; text-decoration-color: currentColor; }
+.form-errors__list a { color: inherit; text-decoration-color: var(--signal); }
 
 .input,
 .textarea,

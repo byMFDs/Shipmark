@@ -82,19 +82,19 @@ def people_view(request):
 
 # Shown on the styleguide. Values must match static/css/tokens.css.
 STYLEGUIDE_TOKENS = [
-    ("paper", "#F4F3EE", "#121815", "Page background"),
-    ("surface", "#FFFEFA", "#1C2521", "Records, cards, panels"),
-    ("raised", "#FFFEFA", "#242E29", "Fields, menus, popovers, toasts"),
-    ("text", "#20251F", "#ECEAE1", "Text, focus ring"),
-    ("muted", "#5C635B", "#A7AFA6", "Secondary text"),
-    ("line", "#D9D8D0", "#35413B", "Hairlines, frames"),
-    ("line-strong", "#868A80", "#76817A", "Borders of controls (3:1)"),
-    ("accent", "#BD4B27", "#EE7A3B", "The one primary action (dark: dark text on it)"),
-    ("accent-text", "#AE411D", "#EE936E", "Eyebrows, numbers"),
-    ("proof-bg", "#E3EBDA", "#233A2C", "Earned marks, proof notes"),
-    ("proof", "#2B5A3F", "#ADD5B8", "Text on proof"),
-    ("band-bg", "#212721", "#0D1310", "Dark statement strips"),
-    ("danger", "#A8322D", "#F2918A", "Errors, destructive actions"),
+    ("paper", "#F3F6F7", "#071C1E", "Page background"),
+    ("surface", "#F3F6F7", "#15292B", "Records, cards, panels"),
+    ("raised", "#F3F6F7", "#233638", "Fields, menus, popovers, toasts"),
+    ("text", "#071C1E", "#F3F6F7", "Text, focus ring"),
+    ("muted", "#20383A", "#B1B9BA", "Secondary text"),
+    ("line", "#20383A", "#4E6264", "Hairlines, frames"),
+    ("line-strong", "#6A7A7C", "#7F8E8F", "Borders of controls (3:1)"),
+    ("accent", "#C7F36B", "#C7F36B", "The one primary action (dark: dark text on it)"),
+    ("accent-text", "#20383A", "#79D9D2", "Eyebrows, numbers"),
+    ("proof-bg", "#C7F36B", "#C7F36B", "Earned marks, proof notes"),
+    ("proof", "#071C1E", "#071C1E", "Text on proof"),
+    ("band-bg", "#071C1E", "#071C1E", "Dark statement strips"),
+    ("danger", "#20383A", "#79D9D2", "Errors, destructive actions"),
 ]
 
 

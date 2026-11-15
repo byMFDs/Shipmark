@@ -207,7 +207,7 @@ a {
 }
 
 @media (hover: hover) {
-  a:hover { text-decoration-color: currentColor; }
+  a:hover { text-decoration-color: var(--signal); }
 }
 
 strong, b { font-weight: 600; }
@@ -248,6 +248,7 @@ hr {
 
 :focus-visible {
   outline: 2px solid var(--focus);
+  box-shadow: 0 0 0 5px var(--focus-edge);
   outline-offset: 2px;
 }
 

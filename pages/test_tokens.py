@@ -50,9 +50,14 @@ class TokenTests(SimpleTestCase):
     def test_control_edges_and_focus_are_at_least_3_to_1(self):
         for theme, t in THEMES.items():
             for bg in ("paper", "surface", "raised"):
-                for fg in ("line-strong", "focus", "accent"):
+                for fg in ("line-strong", "focus-edge" if theme == "light" else "focus"):
                     with self.subTest(theme=theme, pair=f"{fg} on {bg}"):
                         self.assertGreaterEqual(contrast(t[fg], t[bg]), 3.0)
+
+    def test_lime_focus_and_primary_fill_contrast_with_the_ink_edge(self):
+        for t in THEMES.values():
+            self.assertGreaterEqual(contrast(t["focus"], t["focus-edge"]), 3.0)
+            self.assertGreaterEqual(contrast(t["accent"], t["focus-edge"]), 3.0)
 
     def test_dark_levels_stand_apart(self):
         """The old dark surface sat at 1.10:1 on the page and its hairlines at 1.27:1: cards melted into the page."""

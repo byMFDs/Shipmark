@@ -87,7 +87,7 @@
 
 .specimen__declared { margin-top: var(--s-4); }
 
-.specimen__checked { color: var(--proof); }
+.specimen__checked { color: var(--accent-text); }
 
 /* "Repo ownership ✓   Domain control ✓ / 30-day uptime 99.9%   ● relay.example" */
 .checks {
@@ -120,8 +120,8 @@
   overflow-wrap: anywhere;
 }
 
-.checks__ok { width: 1rem; height: 1rem; color: var(--proof); }
-.checks .pulse-dot { color: var(--proof); }
+.checks__ok { width: 1rem; height: 1rem; color: var(--accent-text); }
+.checks .pulse-dot { color: var(--accent-text); }
 
 .specimen__ticks { margin-top: var(--s-4); height: 0.875rem; }
 
@@ -368,7 +368,7 @@
   margin-top: var(--s-4);
 }
 
-.standard__check { width: 1.5rem; height: 1.5rem; color: var(--proof); }
+.standard__check { width: 1.5rem; height: 1.5rem; color: var(--accent-text); }
 
 .standard__name { font-size: var(--fs-3); }
 
@@ -379,7 +379,7 @@
 .standard__meta {
   margin-top: auto;
   padding-top: var(--s-4);
-  color: var(--proof);
+  color: var(--accent-text);
 }
 
 .standard__note { margin-top: var(--s-7); }
@@ -421,7 +421,7 @@
 
 .work__note {
   margin-top: var(--s-2);
-  color: var(--proof);
+  color: var(--accent-text);
   font-size: var(--fs--1);
 }
 
