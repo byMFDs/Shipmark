@@ -11,7 +11,7 @@
 | 2 | Векторний логотип і знак модератора з локальних зразків | Завершено |
 | 3 | Завершені тексти сімома мовами та журнал юридичних змін | Завершено; коміт цієї сесії |
 | 4 | Перевірити посилання, видалити зайві файли, виміряти CSS/JS | Завершено |
-| 5 | Перевірити сторінки у Firefox, шість ширин, дві теми | Очікує |
+| 5 | Перевірити сторінки у Firefox, шість ширин, дві теми | Завершено |
 | 6 | Аудит безпеки, виправлення з регресійними тестами та звіт | Очікує |
 | 7 | Підготувати Heroku, S3, статичні файли та інструкцію без деплою | Очікує |
 
@@ -131,3 +131,20 @@
 - Збережено `scripts/trace_sticker_sheets.py`: на нього посилається історичний `docs/REFERENCE_UI.md`. Збережено вісім `docs/new_design/` PNG: їх використовує `docs/REDESIGN_PLAN.md`. `docs/design_v3/` і prompts не чіпати. Scratch, whl, pyc, backups у tracked файлах немає; локальні ігноровані файли не видалялися.
 - Розмір до: CSS 187883 байти (19 файлів), JS 55470 байтів (22 файли).
 - Після: CSS 187163 байти (−720), JS 55470 (без змін); шість SVG видалено через `git rm`. `check` і `diff --check` чисті; 212 тестів `pages accounts.test_badges community.test_ui` OK (28,0 с, тестовий MD5, TESTING увімкнено).
+
+### Етап 5 — Firefox, макети й пристрої
+
+- Етап 4: `fa1d2a9`. Додатковий штатний прогін етапу 3 без заміни хешера завершено: усі 515 тестів OK (329,9 с).
+- Ізольована SQLite/сховища із синтетичними даними у `logs/launch/`; основну dev-базу не змінено. Headless Firefox, тільки localhost; кожен запуск зі свіжим профілем `/tmp/shipmark-launch-firefox-*`. Ні на GitHub, ні на інші сайти браузер не переходив. Зовнішній HTTP(S) заблоковано через недоступний локальний proxy, localhost виключено; prefetch/telemetry вимкнено.
+- Матриця: 360, 390, 768, 1024, 1440, 1920 CSS px × light/dark. Ширини перевіряються через innerWidth; touch pointer на ширинах до 1024, fine pointer на desktop. Мінімальну ширину Firefox chrome вимкнено лише у новому профілі. Перші налагоджувальні запуски з min-width=500, неповним OAuth fixture або недійсною сесією не зараховано.
+- Перевіряються 59 сторінок/станів: landing; Discover/projects/people; About/Privacy/Terms/Cookies/Proof; support/sent; login/signup/GitHub confirmation/error/cancelled; profile/projects/log/about; public project/draft/edit/new/delete; feed/following/news; news/list/detail; community/board/rules/thread/new/edit/delete/reply edit/delete/notifications; account settings/logout/delete/Terms reacceptance; 400/403/404/500/CSRF; ban template із синтетичним контекстом; сім /mod/ екранів. OAuth перевіряється тільки локальним pending signup; зовнішній flow не перевірено.
+
+| Сторінка | Ширина | Тема | Дефект | Виправлення |
+|---|---|---|---|---|
+| News/detail та всі user marks | 360/390, touch; також решта матриці | обидві | Невидима зона бейджа близько 38×38 px на touch (ще менша на fine) | Псевдоелемент мінімум 44×44 px; сам SVG, розмір і кольори не змінено |
+| Settings → theme | усі шість | обидві | Кнопки близько 20 px заввишки: footer-only custom property не задана в Settings | Додано fallback 52px-control для спільного switch, внутрішні кнопки ≥44 px |
+| Footer → theme/language | 768/1024/1440/1920 fine | обидві | Внутрішні theme-кнопки 36–38,75 px | Усі footer-controls спільно 52px-scale, внутрішні theme-кнопки ≥44 px, select і track однакової висоти |
+
+- Останній повний передфінальний прохід: 708 знімків, нуль горизонтального прокручування. Checkbox 20px усередині label ≥44px і прихований file input усередині upload label не є малими зонами натискання; фінальний вимір враховує label і badge pseudo-element. Margin/grid/overflow перевіряються DOM-виміром і монтажами скриншотів. Safe area є в CSS; реальні iPhone/Android та Safari не перевірено.
+- Фінальний незалежний прохід після всіх CSS-виправлень: `logs/launch/final.json`, 708 PNG у `logs/launch/final/`; 59×6×2, фактичні innerWidth рівно 360/390/768/1024/1440/1920. Нуль горизонтального scroll і нуль зон controls <44px з урахуванням clickable labels/pseudo-elements; нуль зламаних видимих зображень. У фінальному fixture справжні signup, Settings, Terms reacceptance і draft; проєкт зі скриншотом, community grid із чотирма різними пропорціями. Візуально переглянуто монтажі mobile/desktop, обидві теми. Виправлено три дефекти; нових UI-рядків немає.
+- Додатково 48 viewport-знімків: відкрите меню, відкрита панель бейджа, feed після scroll, footer Settings — усі шість ширин/дві теми; horizontal scroll і малі controls: 0. Після остаточних CSS-змін: 212 тестів `pages accounts.test_badges community.test_ui` OK (21,9 с), `check` і `diff --check` чисті. Файли screenshot/profile/fixture не комітяться.
