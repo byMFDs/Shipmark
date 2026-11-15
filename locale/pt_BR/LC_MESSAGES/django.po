@@ -5659,7 +5659,6 @@ msgstr ""
 msgid "This repository is already linked to another project."
 msgstr "Este repositório já está vinculado a outro projeto."
 
-
 #: templates/includes/badge_popover.html pages/templatetags/ui.py
 msgid "Verified account"
 msgstr "Conta verificada"
@@ -5675,3 +5674,328 @@ msgstr "Esta conta é verificada e administrada pela equipe do %(site)s."
 #: templates/includes/badge_popover.html pages/templatetags/ui.py
 msgid "Moderators can review reports."
 msgstr "Os moderadores podem analisar denúncias."
+
+
+#: community/stickers.py
+msgid "Grinning face with big eyes"
+msgstr "Rosto sorridente com olhos grandes"
+
+#: community/stickers.py
+msgid "Grinning face with smiling eyes"
+msgstr "Rosto sorridente com olhos sorridentes"
+
+#: community/stickers.py
+msgid "Beaming face with smiling eyes"
+msgstr "Rosto radiante com olhos sorridentes"
+
+#: community/stickers.py
+msgid "Face holding back tears"
+msgstr "Rosto segurando as lágrimas"
+
+#: community/stickers.py
+msgid "Grinning face with sweat"
+msgstr "Rosto sorridente com suor"
+
+#: community/stickers.py
+msgid "Face with tears of joy"
+msgstr "Rosto com lágrimas de alegria"
+
+#: community/stickers.py
+msgid "Rolling on the floor laughing"
+msgstr "Rolando de rir"
+
+#: community/stickers.py
+msgid "Smiling face with tear"
+msgstr "Rosto sorridente com lágrima"
+
+#: community/stickers.py
+msgid "Smiling face"
+msgstr "Rosto sorridente"
+
+#: community/stickers.py
+msgid "Smiling face with smiling eyes"
+msgstr "Rosto feliz com olhos sorridentes"
+
+#: community/stickers.py
+msgid "Smiling face with halo"
+msgstr "Rosto sorridente com auréola"
+
+#: community/stickers.py
+msgid "Slightly smiling face"
+msgstr "Rosto levemente sorridente"
+
+#: community/stickers.py
+msgid "Upside-down face"
+msgstr "Rosto de cabeça para baixo"
+
+#: community/stickers.py
+msgid "Relieved face"
+msgstr "Rosto aliviado"
+
+#: community/stickers.py
+msgid "Smiling face with hearts"
+msgstr "Rosto sorridente com corações"
+
+#: community/stickers.py
+msgid "Face blowing a kiss"
+msgstr "Rosto mandando um beijo"
+
+#: community/stickers.py
+msgid "Kissing face"
+msgstr "Rosto beijando"
+
+#: community/stickers.py
+msgid "Kissing face with smiling eyes"
+msgstr "Rosto beijando com olhos sorridentes"
+
+#: community/stickers.py
+msgid "Kissing face with closed eyes"
+msgstr "Rosto beijando de olhos fechados"
+
+#: community/stickers.py
+msgid "Face savoring food"
+msgstr "Rosto saboreando comida"
+
+#: community/stickers.py
+msgid "Face with tongue"
+msgstr "Rosto com a língua de fora"
+
+#: community/stickers.py
+msgid "Squinting face with tongue"
+msgstr "Rosto com olhos apertados e língua de fora"
+
+#: community/stickers.py
+msgid "Winking face with tongue"
+msgstr "Rosto piscando com a língua de fora"
+
+#: community/stickers.py
+msgid "Zany face"
+msgstr "Rosto maluco"
+
+#: community/stickers.py
+msgid "Face with raised eyebrow"
+msgstr "Rosto com sobrancelha levantada"
+
+#: community/stickers.py
+msgid "Face with monocle"
+msgstr "Rosto com monóculo"
+
+#: community/stickers.py
+msgid "Nerd face"
+msgstr "Rosto de nerd"
+
+#: community/stickers.py
+msgid "Disguised face"
+msgstr "Rosto disfarçado"
+
+#: community/stickers.py
+msgid "Star-struck face"
+msgstr "Rosto com estrelas nos olhos"
+
+#: community/stickers.py
+msgid "Melting face"
+msgstr "Rosto derretendo"
+
+#: community/stickers.py
+msgid "Smirking face"
+msgstr "Rosto com sorriso de canto"
+
+#: community/stickers.py
+msgid "Unamused face"
+msgstr "Rosto descontente"
+
+#: community/stickers.py
+msgid "Face exhaling"
+msgstr "Rosto exalando"
+
+#: community/stickers.py
+msgid "Pensive face"
+msgstr "Rosto pensativo"
+
+#: community/stickers.py
+msgid "Disappointed face"
+msgstr "Rosto decepcionado"
+
+#: community/stickers.py
+msgid "Worried face"
+msgstr "Rosto preocupado"
+
+#: community/stickers.py
+msgid "Confused face"
+msgstr "Rosto confuso"
+
+#: community/stickers.py
+msgid "Slightly frowning face"
+msgstr "Rosto levemente franzido"
+
+#: community/stickers.py
+msgid "Frowning face"
+msgstr "Rosto franzido"
+
+#: community/stickers.py
+msgid "Persevering face"
+msgstr "Rosto perseverante"
+
+#: community/stickers.py
+msgid "Confounded face"
+msgstr "Rosto transtornado"
+
+#: community/stickers.py
+msgid "Tired face"
+msgstr "Rosto cansado"
+
+#: community/stickers.py
+msgid "Pouting cat"
+msgstr "Gato emburrado"
+
+#: community/stickers.py
+msgid "Heart hands"
+msgstr "Mãos em coração"
+
+#: community/stickers.py
+msgid "Palms up together"
+msgstr "Palmas juntas para cima"
+
+#: community/stickers.py
+msgid "Open hands"
+msgstr "Mãos abertas"
+
+#: community/stickers.py
+msgid "Raising hands"
+msgstr "Mãos levantadas"
+
+#: community/stickers.py
+msgid "Thumbs down"
+msgstr "Polegar para baixo"
+
+#: community/stickers.py
+msgid "Oncoming fist"
+msgstr "Punho de frente"
+
+#: community/stickers.py
+msgid "Raised fist"
+msgstr "Punho erguido"
+
+#: community/stickers.py
+msgid "Left-facing fist"
+msgstr "Punho para a esquerda"
+
+#: community/stickers.py
+msgid "Right-facing fist"
+msgstr "Punho para a direita"
+
+#: community/stickers.py
+msgid "Leftwards pushing hand"
+msgstr "Mão empurrando para a esquerda"
+
+#: community/stickers.py
+msgid "Rightwards pushing hand"
+msgstr "Mão empurrando para a direita"
+
+#: community/stickers.py
+msgid "Victory hand"
+msgstr "Sinal de vitória"
+
+#: community/stickers.py
+msgid "Hand with index finger and thumb crossed"
+msgstr "Coração com o indicador e o polegar"
+
+#: community/stickers.py
+msgid "Love-you gesture"
+msgstr "Gesto de eu te amo"
+
+#: community/stickers.py
+msgid "Sign of the horns"
+msgstr "Sinal dos chifres"
+
+#: community/stickers.py
+msgid "Pinched fingers"
+msgstr "Dedos unidos"
+
+#: community/stickers.py
+msgid "Pinching hand"
+msgstr "Mão beliscando"
+
+#: community/stickers.py
+msgid "Palm down hand"
+msgstr "Mão com a palma para baixo"
+
+#: community/stickers.py
+msgid "Palm up hand"
+msgstr "Mão com a palma para cima"
+
+#: community/stickers.py
+msgid "Backhand index pointing left"
+msgstr "Indicador apontando para a esquerda"
+
+#: community/stickers.py
+msgid "Backhand index pointing right"
+msgstr "Indicador apontando para a direita"
+
+#: community/stickers.py
+msgid "Backhand index pointing up"
+msgstr "Indicador apontando para cima"
+
+#: community/stickers.py
+msgid "Backhand index pointing down"
+msgstr "Indicador apontando para baixo"
+
+#: community/stickers.py
+msgid "Index pointing up"
+msgstr "Indicador para cima"
+
+#: community/stickers.py
+msgid "Raised back of hand"
+msgstr "Dorso da mão levantado"
+
+#: community/stickers.py
+msgid "Hand with fingers splayed"
+msgstr "Mão com dedos abertos"
+
+#: community/stickers.py
+msgid "Vulcan salute"
+msgstr "Saudação vulcana"
+
+#: community/stickers.py
+msgid "Call me hand"
+msgstr "Gesto de me liga"
+
+#: community/stickers.py
+msgid "Rightwards hand"
+msgstr "Mão para a direita"
+
+#: community/stickers.py
+msgid "Leftwards hand"
+msgstr "Mão para a esquerda"
+
+#: community/stickers.py
+msgid "Mechanical arm"
+msgstr "Braço mecânico"
+
+#: community/stickers.py
+msgid "Middle finger"
+msgstr "Dedo do meio"
+
+#: community/stickers.py
+msgid "Writing hand"
+msgstr "Mão escrevendo"
+
+#: community/stickers.py
+msgid "Index pointing at the viewer"
+msgstr "Indicador apontando para o observador"
+
+#: community/stickers.py
+msgid "Foot"
+msgstr "Pé"
+
+#: community/stickers.py
+msgid "Leg"
+msgstr "Perna"
+
+#: community/stickers.py
+msgid "Mechanical leg"
+msgstr "Perna mecânica"
+
+#: community/stickers.py
+msgid "Lipstick"
+msgstr "Batom"

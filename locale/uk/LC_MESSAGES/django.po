@@ -5714,7 +5714,6 @@ msgstr "Цей репозиторій приватний. Перевіряти �
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."
 
-
 #: templates/includes/badge_popover.html pages/templatetags/ui.py
 msgid "Verified account"
 msgstr "Підтверджений акаунт"
@@ -5730,3 +5729,328 @@ msgstr "Цей акаунт підтверджений і керується к�
 #: templates/includes/badge_popover.html pages/templatetags/ui.py
 msgid "Moderators can review reports."
 msgstr "Модератори можуть розглядати скарги."
+
+
+#: community/stickers.py
+msgid "Grinning face with big eyes"
+msgstr "Усміхнене обличчя з великими очима"
+
+#: community/stickers.py
+msgid "Grinning face with smiling eyes"
+msgstr "Усміхнене обличчя з усміхненими очима"
+
+#: community/stickers.py
+msgid "Beaming face with smiling eyes"
+msgstr "Сяюче обличчя з усміхненими очима"
+
+#: community/stickers.py
+msgid "Face holding back tears"
+msgstr "Обличчя, що стримує сльози"
+
+#: community/stickers.py
+msgid "Grinning face with sweat"
+msgstr "Усміхнене обличчя з краплею поту"
+
+#: community/stickers.py
+msgid "Face with tears of joy"
+msgstr "Обличчя зі сльозами радості"
+
+#: community/stickers.py
+msgid "Rolling on the floor laughing"
+msgstr "Катається по підлозі від сміху"
+
+#: community/stickers.py
+msgid "Smiling face with tear"
+msgstr "Усміхнене обличчя зі сльозою"
+
+#: community/stickers.py
+msgid "Smiling face"
+msgstr "Усміхнене обличчя"
+
+#: community/stickers.py
+msgid "Smiling face with smiling eyes"
+msgstr "Усміхнене обличчя з примруженими очима"
+
+#: community/stickers.py
+msgid "Smiling face with halo"
+msgstr "Усміхнене обличчя з німбом"
+
+#: community/stickers.py
+msgid "Slightly smiling face"
+msgstr "Легка усмішка"
+
+#: community/stickers.py
+msgid "Upside-down face"
+msgstr "Перевернуте обличчя"
+
+#: community/stickers.py
+msgid "Relieved face"
+msgstr "Полегшення"
+
+#: community/stickers.py
+msgid "Smiling face with hearts"
+msgstr "Усміхнене обличчя з сердечками"
+
+#: community/stickers.py
+msgid "Face blowing a kiss"
+msgstr "Обличчя, що надсилає поцілунок"
+
+#: community/stickers.py
+msgid "Kissing face"
+msgstr "Обличчя, що цілує"
+
+#: community/stickers.py
+msgid "Kissing face with smiling eyes"
+msgstr "Поцілунок з усміхненими очима"
+
+#: community/stickers.py
+msgid "Kissing face with closed eyes"
+msgstr "Поцілунок із заплющеними очима"
+
+#: community/stickers.py
+msgid "Face savoring food"
+msgstr "Обличчя, що смакує їжу"
+
+#: community/stickers.py
+msgid "Face with tongue"
+msgstr "Обличчя з висунутим язиком"
+
+#: community/stickers.py
+msgid "Squinting face with tongue"
+msgstr "Примружене обличчя з язиком"
+
+#: community/stickers.py
+msgid "Winking face with tongue"
+msgstr "Підморгування з язиком"
+
+#: community/stickers.py
+msgid "Zany face"
+msgstr "Кумедне обличчя"
+
+#: community/stickers.py
+msgid "Face with raised eyebrow"
+msgstr "Обличчя з піднятою бровою"
+
+#: community/stickers.py
+msgid "Face with monocle"
+msgstr "Обличчя з моноклем"
+
+#: community/stickers.py
+msgid "Nerd face"
+msgstr "Обличчя розумника"
+
+#: community/stickers.py
+msgid "Disguised face"
+msgstr "Замасковане обличчя"
+
+#: community/stickers.py
+msgid "Star-struck face"
+msgstr "Обличчя із зірками в очах"
+
+#: community/stickers.py
+msgid "Melting face"
+msgstr "Обличчя, що тане"
+
+#: community/stickers.py
+msgid "Smirking face"
+msgstr "Самовдоволене обличчя"
+
+#: community/stickers.py
+msgid "Unamused face"
+msgstr "Невдоволене обличчя"
+
+#: community/stickers.py
+msgid "Face exhaling"
+msgstr "Обличчя, що видихає"
+
+#: community/stickers.py
+msgid "Pensive face"
+msgstr "Задумливе обличчя"
+
+#: community/stickers.py
+msgid "Disappointed face"
+msgstr "Розчароване обличчя"
+
+#: community/stickers.py
+msgid "Worried face"
+msgstr "Стурбоване обличчя"
+
+#: community/stickers.py
+msgid "Confused face"
+msgstr "Спантеличене обличчя"
+
+#: community/stickers.py
+msgid "Slightly frowning face"
+msgstr "Ледь насуплене обличчя"
+
+#: community/stickers.py
+msgid "Frowning face"
+msgstr "Насуплене обличчя"
+
+#: community/stickers.py
+msgid "Persevering face"
+msgstr "Напружене обличчя"
+
+#: community/stickers.py
+msgid "Confounded face"
+msgstr "Збентежене обличчя"
+
+#: community/stickers.py
+msgid "Tired face"
+msgstr "Втомлене обличчя"
+
+#: community/stickers.py
+msgid "Pouting cat"
+msgstr "Невдоволений кіт"
+
+#: community/stickers.py
+msgid "Heart hands"
+msgstr "Серце руками"
+
+#: community/stickers.py
+msgid "Palms up together"
+msgstr "Долоні разом догори"
+
+#: community/stickers.py
+msgid "Open hands"
+msgstr "Розкриті долоні"
+
+#: community/stickers.py
+msgid "Raising hands"
+msgstr "Підняті руки"
+
+#: community/stickers.py
+msgid "Thumbs down"
+msgstr "Палець униз"
+
+#: community/stickers.py
+msgid "Oncoming fist"
+msgstr "Кулак уперед"
+
+#: community/stickers.py
+msgid "Raised fist"
+msgstr "Піднятий кулак"
+
+#: community/stickers.py
+msgid "Left-facing fist"
+msgstr "Кулак ліворуч"
+
+#: community/stickers.py
+msgid "Right-facing fist"
+msgstr "Кулак праворуч"
+
+#: community/stickers.py
+msgid "Leftwards pushing hand"
+msgstr "Рука штовхає ліворуч"
+
+#: community/stickers.py
+msgid "Rightwards pushing hand"
+msgstr "Рука штовхає праворуч"
+
+#: community/stickers.py
+msgid "Victory hand"
+msgstr "Знак перемоги"
+
+#: community/stickers.py
+msgid "Hand with index finger and thumb crossed"
+msgstr "Серце вказівним і великим пальцями"
+
+#: community/stickers.py
+msgid "Love-you gesture"
+msgstr "Жест «люблю тебе»"
+
+#: community/stickers.py
+msgid "Sign of the horns"
+msgstr "Жест «роги»"
+
+#: community/stickers.py
+msgid "Pinched fingers"
+msgstr "Пальці щіпкою"
+
+#: community/stickers.py
+msgid "Pinching hand"
+msgstr "Рука зі щипком"
+
+#: community/stickers.py
+msgid "Palm down hand"
+msgstr "Долоня донизу"
+
+#: community/stickers.py
+msgid "Palm up hand"
+msgstr "Долоня догори"
+
+#: community/stickers.py
+msgid "Backhand index pointing left"
+msgstr "Вказівний палець ліворуч"
+
+#: community/stickers.py
+msgid "Backhand index pointing right"
+msgstr "Вказівний палець праворуч"
+
+#: community/stickers.py
+msgid "Backhand index pointing up"
+msgstr "Вказівний палець догори"
+
+#: community/stickers.py
+msgid "Backhand index pointing down"
+msgstr "Вказівний палець донизу"
+
+#: community/stickers.py
+msgid "Index pointing up"
+msgstr "Піднятий вказівний палець"
+
+#: community/stickers.py
+msgid "Raised back of hand"
+msgstr "Піднятий тильний бік долоні"
+
+#: community/stickers.py
+msgid "Hand with fingers splayed"
+msgstr "Долоня з розчепіреними пальцями"
+
+#: community/stickers.py
+msgid "Vulcan salute"
+msgstr "Вулканське вітання"
+
+#: community/stickers.py
+msgid "Call me hand"
+msgstr "Жест «подзвони мені»"
+
+#: community/stickers.py
+msgid "Rightwards hand"
+msgstr "Рука праворуч"
+
+#: community/stickers.py
+msgid "Leftwards hand"
+msgstr "Рука ліворуч"
+
+#: community/stickers.py
+msgid "Mechanical arm"
+msgstr "Механічна рука"
+
+#: community/stickers.py
+msgid "Middle finger"
+msgstr "Середній палець"
+
+#: community/stickers.py
+msgid "Writing hand"
+msgstr "Рука, що пише"
+
+#: community/stickers.py
+msgid "Index pointing at the viewer"
+msgstr "Вказівний палець на глядача"
+
+#: community/stickers.py
+msgid "Foot"
+msgstr "Стопа"
+
+#: community/stickers.py
+msgid "Leg"
+msgstr "Нога"
+
+#: community/stickers.py
+msgid "Mechanical leg"
+msgstr "Механічна нога"
+
+#: community/stickers.py
+msgid "Lipstick"
+msgstr "Помада"

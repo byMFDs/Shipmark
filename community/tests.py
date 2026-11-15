@@ -432,8 +432,8 @@ class PostingTests(CommunityTestCase):
         self.assertEqual(self.reply(self.bob, body="Thanks!").status_code, 302)
         self.assertEqual(self.reply(self.bob, body="Thanks!").status_code, 400)
         self.assertEqual(self.reply(self.bob, body="Thanks!", thread=other).status_code, 302)
-        self.assertEqual(self.reply(self.bob, sticker="rocket").status_code, 302)
-        self.assertEqual(self.reply(self.bob, sticker="rocket").status_code, 302)
+        self.assertEqual(self.reply(self.bob, sticker="thumbs-up").status_code, 302)
+        self.assertEqual(self.reply(self.bob, sticker="thumbs-up").status_code, 302)
 
 
 class ReplyTests(CommunityTestCase):
@@ -470,14 +470,14 @@ class ReplyTests(CommunityTestCase):
         self.assertEqual(Reply.objects.filter(author=self.bob).count(), 0)
 
     def test_stickers(self):
-        self.assertEqual(self.reply(self.bob, sticker="rocket").status_code, 302)  # a sticker alone is a reply
-        self.assertEqual(Reply.objects.get().sticker_key, "rocket")
-        for bad in ("nope", "../rocket", "<svg onload=alert(1)>", "rocket.svg", "x" * 60):
+        self.assertEqual(self.reply(self.bob, sticker="thumbs-up").status_code, 302)  # a sticker alone is a reply
+        self.assertEqual(Reply.objects.get().sticker_key, "thumbs-up")
+        for bad in ("nope", "../rocket", "<svg onload=alert(1)>", "thumbs-up.svg", "x" * 60):
             with self.subTest(sticker=bad):
                 self.assertEqual(self.reply(self.bob, body="With a sticker", sticker=bad).status_code, 400)
         self.assertEqual(Reply.objects.count(), 1)
-        self.assertEqual(len(STICKERS), 32)
-        self.assertContains(self.client.get(self.thread.get_absolute_url()), 'stickers/rocket.svg" width="96" height="96" alt="Rocket"')
+        self.assertEqual(len(STICKERS), 96)
+        self.assertContains(self.client.get(self.thread.get_absolute_url()), 'stickers/thumbs-up.svg" width="96" height="96" alt="Thumbs up"')
 
     def test_reply_validation(self):
         self.assertEqual(self.reply(self.bob).status_code, 400)  # nothing at all
@@ -937,7 +937,7 @@ class AccountTests(CommunityTestCase):
         self.assertIsNone(self.thread.author)
 
     def test_export_has_community_content(self):
-        reply = services.create_reply(self.ann, self.thread, body="My reply.", sticker_key="rocket", images=[_clean()])
+        reply = services.create_reply(self.ann, self.thread, body="My reply.", sticker_key="thumbs-up", images=[_clean()])
         other = make_thread(self.bob, title="A thread by Bob somewhere")
         services.set_vote(self.ann, other, True)
         services.create_reply(self.bob, self.thread, body="Bob's private business.")
@@ -945,7 +945,7 @@ class AccountTests(CommunityTestCase):
         data = build_export(self.ann)["community"]
         self.assertEqual([t["title"] for t in data["threads"]], ["How do I verify a domain?"])
         self.assertEqual([(r["text"], r["sticker"], r["status"], r["removed_reason"]) for r in data["replies"]],
-                         [("My reply.", "rocket", "removed", REASON)])
+                         [("My reply.", "thumbs-up", "removed", REASON)])
         self.assertEqual([v["url"] for v in data["upvotes"]], [other.get_absolute_url()])
         self.assertNotIn("Bob's private business.", str(data))
 
@@ -1118,8 +1118,7 @@ class StickerFileTests(TestCase):
     def test_manifest_and_files_match(self):
         files = sticker_files()
         self.assertEqual(sorted(files), sorted(STICKERS))
-        self.assertGreaterEqual(len(STICKERS), 30)
-        self.assertLessEqual(len(STICKERS), 40)
+        self.assertEqual(len(STICKERS), 96)
         for key in STICKERS:
             self.assertRegex(key, r"^[a-z]+(-[a-z]+)*$")
 
@@ -1128,7 +1127,7 @@ class StickerFileTests(TestCase):
         for key, path in sticker_files().items():
             with self.subTest(sticker=key):
                 raw = path.read_text(encoding="utf-8")
-                self.assertLess(len(raw), 8000)
+                self.assertLess(len(raw), 65536)  # source-colour vector traces preserve the PNG shading
                 self.assertNotRegex(raw.lower(), r"<script|<foreignobject|<image|<use|href|url\(|@import|<style|<!entity|<!doctype")
                 root = ET.fromstring(raw)
                 self.assertEqual(root.get("viewBox"), "0 0 96 96")
@@ -1140,24 +1139,47 @@ class StickerFileTests(TestCase):
                         self.assertFalse(name.lower().startswith("on"))
 
     def test_every_label_is_translated(self):
+        import gettext
+        from pathlib import Path
+
         from django.utils import translation
+        from django.utils.translation import to_locale
 
         for code, _name in settings.LANGUAGES:
-            if code == "en":
-                continue
             with translation.override(code):
                 for key, label in STICKERS.items():
                     with self.subTest(code=code, sticker=key):
                         self.assertTrue(str(label))
+            if code != "en":
+                path = Path(settings.BASE_DIR) / "locale" / to_locale(code) / "LC_MESSAGES/django.mo"
+                with path.open("rb") as source:
+                    catalog = gettext.GNUTranslations(source)
+                with translation.override("en"):
+                    for key, label in STICKERS.items():
+                        with self.subTest(code=code, sticker=key):
+                            self.assertIn(str(label), catalog._catalog)
+                            self.assertTrue(catalog._catalog[str(label)])
             with translation.override("uk"):
-                self.assertEqual(str(STICKERS["rocket"]), "Ракета")
+                self.assertEqual(str(STICKERS["thumbs-up"]), "Палець угору")
+
+    def test_files_follow_the_order_of_every_reference_cell(self):
+        from .stickers import FACES, GESTURES
+
+        self.assertEqual(len(settings.LANGUAGES), 7)
+        self.assertEqual(list(STICKERS), [*FACES, *GESTURES])
+        for sheet, group in (("img_2.png", FACES), ("img_3.png", GESTURES)):
+            self.assertEqual(len(group), 48)
+            for index, key in enumerate(group):
+                row, column = divmod(index, 8)
+                expected = f"docs/new/{sheet}; row {row + 1}, column {column + 1}; SHA256"
+                self.assertIn(expected, sticker_files()[key].read_text())
 
 
 class StickerPostingTests(CommunityTestCase):
     """Відповіді зі стікерами."""
     def test_one_sticker_per_reply_even_when_two_are_sent(self):
-        self.login(self.bob).post(reverse("community:reply", args=[self.thread.pk]), {"sticker": ["rocket", "fire"]})
-        self.assertEqual(list(Reply.objects.values_list("sticker_key", flat=True)), ["fire"])
+        self.login(self.bob).post(reverse("community:reply", args=[self.thread.pk]), {"sticker": ["thumbs-up", "flex"]})
+        self.assertEqual(list(Reply.objects.values_list("sticker_key", flat=True)), ["flex"])
 
     def test_service_refuses_an_unknown_key(self):
         with self.assertRaises(ValueError):
@@ -1165,7 +1187,7 @@ class StickerPostingTests(CommunityTestCase):
         self.assertEqual(Reply.objects.count(), 0)
 
     def test_a_retired_sticker_is_not_rendered(self):
-        reply = services.create_reply(self.bob, self.thread, body="With an old sticker.", sticker_key="rocket")
+        reply = services.create_reply(self.bob, self.thread, body="With an old sticker.", sticker_key="thumbs-up")
         Reply.objects.filter(pk=reply.pk).update(sticker_key="retired")
         html = self.client.get(self.thread.get_absolute_url()).content.decode()
         self.assertIn("With an old sticker.", html)

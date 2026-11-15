@@ -193,7 +193,7 @@ class RenderedPagesTests(TestCase):
         User.objects.filter(pk__in=[cls.ann.pk, cls.bob.pk]).update(date_joined=timezone.now() - timedelta(days=30))
         cls.thread = Thread.objects.create(board=Board.objects.get(slug="help"), author=cls.ann, title="Tallyhook DNS",
                                            body="TXT record", pinned=True)
-        services.create_reply(cls.bob, cls.thread, body="TTL", sticker_key="rocket")
+        services.create_reply(cls.bob, cls.thread, body="TTL", sticker_key="thumbs-up")
 
     def pages(self):
         p = self.project

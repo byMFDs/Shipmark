@@ -33,6 +33,6 @@
     {% endif %}
   {% else %}
     {% translate "No replies yet" as title %}{% translate "Start a thread or answer someone, and replies to you will appear here." as text %}{% translate "Go to the community" as label %}{% url 'community:home' as home_url %}
-    {% include "community/_empty.html" with sticker="sleepy" title=title text=text action_url=home_url action_label=label %}
+    {% include "community/_empty.html" with sticker="relieved" title=title text=text action_url=home_url action_label=label %}
   {% endif %}
 {% endblock %}

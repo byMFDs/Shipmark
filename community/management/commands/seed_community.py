@@ -52,7 +52,7 @@ THREADS = [
                  (4, "Nice!", "thumbs-up", [], []),
              ]),
          ]),
-         (5, "", "rocket", [], []),
+         (5, "", "thumbs-up", [], []),
          (1, "How do you handle VAT numbers for EU clients?", "", [], []),
      ]),
     ("collab", 3, "Looking for a designer for an open-source habit tracker",
@@ -73,9 +73,9 @@ THREADS = [
     ("off-topic", 5, "What are you listening to while you build?",
      "Long focus sessions need something without words. Share your playlists.",
      [], [
-         (1, "Rain sounds and a lot of coffee.", "coffee", [], []),
+         (1, "Rain sounds and a lot of coffee.", "wave", [], []),
          (2, "Film soundtracks. Anything by the same composer for three hours.", "", [], []),
-         (3, "", "sleepy", [], []),
+         (3, "", "relieved", [], []),
      ]),
     ("help", 1, "How do you keep API keys out of the code the model writes?",
      "My assistant keeps putting keys straight into the source. I use a `.env` file and tell it so, "

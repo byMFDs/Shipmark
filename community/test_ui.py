@@ -101,13 +101,13 @@ class ShellTests(CommunityTestCase):
         Thread.objects.all().delete()
         anonymous = self.client.get(reverse("community:home"))
         self.assertContains(anonymous, "community-empty")
-        self.assertContains(anonymous, "stickers/coffee.svg")
+        self.assertContains(anonymous, "stickers/wave.svg")
         self.assertContains(anonymous, reverse("account_login"))
         self.client.force_login(self.bob)
         self.assertContains(self.client.get(reverse("community:home")), reverse("community:new"))
-        self.assertContains(self.client.get(reverse("community:notifications")), "stickers/sleepy.svg")
+        self.assertContains(self.client.get(reverse("community:notifications")), "stickers/relieved.svg")
         searched = self.client.get(reverse("community:home"), {"q": "nothing"})
-        self.assertContains(searched, "stickers/eyes.svg")
+        self.assertContains(searched, "stickers/raised-eyebrow.svg")
 
 
 class LoadMoreTests(CommunityTestCase):
@@ -262,10 +262,10 @@ class StickerUITests(CommunityTestCase):
         self.client.force_login(self.bob)
         self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = "uk"
         html = self.client.get(self.thread.get_absolute_url()).content.decode()
-        label = re.search(r'data-sticker="rocket" data-label="([^"]+)"', html).group(1)
-        self.assertIn("rocket", label)  # the key stays searchable in every language
+        label = re.search(r'data-sticker="thumbs-up" data-label="([^"]+)"', html).group(1)
+        self.assertIn("thumbs-up", label)  # the key stays searchable in every language
         with translation.override("uk"):
-            self.assertIn(str(STICKERS["rocket"]).lower(), label)
+            self.assertIn(str(STICKERS["thumbs-up"]).lower(), label)
 
     def test_without_js_a_select_offers_the_same_stickers(self):
         self.client.force_login(self.bob)
@@ -285,16 +285,16 @@ class StickerUITests(CommunityTestCase):
         self.assertNotContains(muted, "data-reply-form")
 
     def test_sticker_in_a_reply_is_an_image_with_the_translated_label_as_alt(self):
-        reply = services.create_reply(self.bob, self.thread, sticker_key="rocket")
+        reply = services.create_reply(self.bob, self.thread, sticker_key="thumbs-up")
         html = self.client.get(self.thread.get_absolute_url()).content.decode()
-        self.assertRegex(html, rf'(?s)id="r{reply.pk}".*?<img src="[^"]*stickers/rocket\.svg" width="96" height="96" alt="Rocket"')
+        self.assertRegex(html, rf'(?s)id="r{reply.pk}".*?<img src="[^"]*stickers/thumbs-up\.svg" width="96" height="96" alt="Thumbs up"')
         # a key that left the manifest renders nothing instead of a broken image
         type(reply).objects.filter(pk=reply.pk).update(sticker_key="not-a-sticker")
         self.assertNotContains(self.client.get(self.thread.get_absolute_url()), "not-a-sticker")
 
     def test_a_forged_sticker_value_is_refused_by_the_form(self):
         before = self.thread.replies.count()
-        for value in ("../../etc/passwd", "rocket.svg", "<svg onload=alert(1)>", "ROCKET"):
+        for value in ("../../etc/passwd", "thumbs-up.svg", "<svg onload=alert(1)>", "ROCKET"):
             response = self.reply(self.bob, body="x", sticker=value)
             with self.subTest(value=value):
                 self.assertEqual(response.status_code, 400)
