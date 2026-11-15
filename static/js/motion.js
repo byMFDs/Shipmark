@@ -6,15 +6,26 @@
 // Without this script nothing loops and nothing is hidden.
 
 const root = document.documentElement;
-const loops = document.querySelectorAll("[data-loop]");
+// Apply the existing halo style to every button using the site's inline GitHub icon.
+document.querySelectorAll('.btn:has(svg path[d^="M6.766 11.328"])').forEach((el) => el.classList.add("btn--halo"));
+const primary = document.querySelector(".btn--halo-idle.btn--primary") || document.querySelector("#main .btn--primary");
+if (primary) {
+  primary.setAttribute("data-loop", "");
+  const sweep = document.createElement("span");
+  sweep.className = "motion-shimmer";
+  sweep.setAttribute("aria-hidden", "true");
+  primary.append(sweep);
+}
+const loops = document.querySelectorAll(".btn[data-loop]");
 const reveals = document.querySelectorAll("[data-reveal]");
 
+root.classList.toggle("is-paused", document.hidden);
 document.addEventListener("visibilitychange", () => {
   root.classList.toggle("is-paused", document.hidden);
 });
 
 if (!("IntersectionObserver" in window)) {
-  loops.forEach((el) => el.classList.add("is-inview"));
+  // No observer: leave the shimmer static.
   reveals.forEach((el) => el.classList.add("is-revealed"));
 } else {
   const loopObserver = new IntersectionObserver((entries) => {

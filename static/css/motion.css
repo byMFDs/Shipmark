@@ -38,17 +38,11 @@
 
 /* ---------- Pause: offscreen and hidden tabs ---------- */
 
-/* Only when JS runs: without it nothing sets .is-inview, and a paused strike would stay frozen at its first frame. */
-html.js.is-paused [data-loop],
-html.js.is-paused [data-loop] *,
-html.js.is-paused [data-loop] *::before,
-html.js.is-paused [data-loop] *::after,
-html.js.is-paused .cursor[data-loop]::after,
-.js [data-loop]:not(.is-inview),
-.js [data-loop]:not(.is-inview) *,
-.js [data-loop]:not(.is-inview) *::before,
-.js [data-loop]:not(.is-inview) *::after,
-.js .cursor[data-loop]:not(.is-inview)::after {
+/* Pause only loops, not the one-shot marks inside the old data-loop example wrapper. */
+html.js.is-paused *,
+html.js.is-paused *::before,
+html.js.is-paused *::after,
+.js .btn[data-loop]:not(.is-inview) > .motion-shimmer::before {
   animation-play-state: paused !important;
 }
 

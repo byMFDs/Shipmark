@@ -114,7 +114,7 @@
   border: 2px solid var(--btn-fg);
   border-right-color: transparent;
   border-radius: 50%;
-  animation: btn-spin 700ms linear infinite;
+  animation: btn-spin 700ms linear 1;
 }
 
 @keyframes btn-spin { to { transform: rotate(1turn); } }
@@ -128,17 +128,9 @@
 
 .btn--block { width: 100%; }
 
-/* ---------- Halo: a light that runs around the edge (sign-in buttons and one or two main actions) ----------
-   ::before is an oversized conic gradient behind the button, turned with transform: rotate only and clipped by the
-   rounded button; ::after is the fill, 2px smaller, so only a thin ring of the gradient shows. Hover (mouse),
-   keyboard focus and loading turn the light on and spin it; .btn--halo-idle (the hero button only) keeps a faint,
-   very slow turn while it is on screen (one of the three loops). Reduced motion: the same ring, standing still.
-
-   Colours (POLISH3 stage 2): the ring keeps its resting colour (--halo-base: grey edge, or the accent on a primary
-   button) also on hover, and the light that runs over it is the text colour with one accent spark: dark ink on the
-   light theme, near-white on the dark one. Before, hover turned the whole ring ink on the light theme, so an ink
-   light on an ink ring could not be seen, and the primary ring ran paper white on a paper page. Every colour on the
-   ring, blends included, is >= 3:1 against the page and the surface in both themes (table in docs/DESIGN.md). */
+/* ---------- GitHub perimeter light ----------
+   An ink track keeps the proof-tinted (light) / signal (dark) sweep visible.
+   Only transform and opacity animate; hover and focus make one 900ms turn. */
 
 .btn--halo {
   --halo-w: 2px;
@@ -187,21 +179,14 @@
 .btn--halo:focus-visible::before,
 .btn--halo[aria-busy="true"]::before {
   opacity: 1;
-  animation: halo-spin 2.4s linear infinite;
+  animation: halo-spin 900ms linear 1;
 }
 
 @media (hover: hover) {
   .btn--halo:hover::before {
     opacity: 1;
-    animation: halo-spin 2.4s linear infinite;
+    animation: halo-spin 900ms linear 1;
   }
-}
-
-/* The hero button: a faint ring that turns once every 12 seconds, only while it is on screen. */
-.btn--halo-idle::before { opacity: 0.6; }
-
-.js [data-loop].is-inview .btn--halo-idle:not(:hover, :focus-visible, [aria-busy="true"])::before {
-  animation: halo-spin 12s linear infinite;
 }
 
 @keyframes halo-spin {
@@ -211,13 +196,46 @@
 
 /* Reduced motion: no turning, but the ring still lights up as a static gradient on hover and focus. */
 @media (prefers-reduced-motion: reduce) {
-  .btn--halo::before { transform: translate(-50%, -50%) rotate(-40deg); }
+  .btn--halo::before { transform: translate(-50%, -50%) rotate(0deg); }
 }
 
 @media (forced-colors: active) {
   .btn--halo { border: 1px solid ButtonText; }
   .btn--halo::before,
   .btn--halo::after { display: none; }
+}
+
+/* One primary button per page; no markup templates are changed. */
+.motion-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.motion-shimmer::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 18%;
+  background: linear-gradient(100deg, transparent, rgb(243 246 247 / 0.5), transparent);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js .btn[data-loop].is-inview > .motion-shimmer::before {
+    animation: primary-shimmer 3.6s linear infinite;
+  }
+}
+@keyframes primary-shimmer {
+  0%, 65% { transform: translateX(-110%) skewX(-12deg); opacity: 0; }
+  68% { transform: translateX(-110%) skewX(-12deg); opacity: 0.5; }
+  94% { transform: translateX(660%) skewX(-12deg); opacity: 0.5; }
+  100% { transform: translateX(660%) skewX(-12deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-shimmer::before { animation: none !important; opacity: 0; transform: none; }
+  .btn--halo::before { animation: none !important; }
+  .btn[data-busy-ring]::after { animation: none !important; transform: none; }
 }
 
 /* A text link with an arrow, used for "Explore projects ↗" and similar. */

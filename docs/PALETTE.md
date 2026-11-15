@@ -51,3 +51,5 @@ Existing colour assertions are updated only for the new token roles: lime primar
 
 - Marks: 8px drop with 2px / −1px overshoot, 420ms each, 120ms stagger, once on load.
 - Uptime: 180ms fill per cell, 30ms stagger, starts at 660ms after all three marks; once. Existing uptime head and live/cursor ambient loops are now static.
+- Primary idle shimmer: narrow paper-alpha sweep, 3.6s loop, one primary action per page; pauses offscreen and in hidden tabs. One decorative `aria-hidden` span is inserted by motion-only JS; templates are unchanged. Without IntersectionObserver it stays static. Paper at 50% alpha is the only additional derived colour (composited over proof/signal).
+- GitHub perimeter light: one 900ms turn on hover/focus, including GitHub forms; static lit border for reduced motion. Existing busy spinner now turns once, 700ms. Only shimmer loops, so at most one loop is visible.
