@@ -46,27 +46,17 @@ html.js.is-paused *::after,
   animation-play-state: paused !important;
 }
 
-/* ---------- Reveal on scroll: a few sections only, once ---------- */
-/* Hidden only when JS runs and motion is welcome, so content never depends on the script. */
-
+/* ---------- Sections: 18px rise, 520ms, 70ms child stagger; once on entry ---------- */
 @media (prefers-reduced-motion: no-preference) {
-  .js [data-reveal]:not(.is-revealed) > * {
-    opacity: 0;
-    transform: translateY(12px);
+  .motion-reveal { transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out); }
+  .motion-reveal:not(.is-revealed) { opacity: 0; transform: translateY(18px); }
+  .motion-reveal .motion-child {
+    transition: opacity 520ms var(--ease-out) var(--reveal-at, 0ms);
   }
-
-  .js [data-reveal] > * {
-    transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
-  }
-
-  .js [data-reveal].is-revealed > :nth-child(2) { transition-delay: 60ms; }
-  .js [data-reveal].is-revealed > :nth-child(3) { transition-delay: 120ms; }
-  .js [data-reveal].is-revealed > :nth-child(4) { transition-delay: 180ms; }
-  .js [data-reveal].is-revealed > :nth-child(n + 5) { transition-delay: 240ms; }
-
-  /* A hairline in a revealed block draws itself from the left. */
-  .js [data-reveal]:not(.is-revealed) .rule { transform: scaleX(0); }
-  .js [data-reveal] .rule { transition: transform 700ms var(--ease-out) 120ms; }
+  .motion-reveal:not(.is-revealed) .motion-child { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-reveal, .motion-child { animation: none !important; transition: none !important; opacity: 1; transform: none; }
 }
 
 /* ---------- The strike: earned marks pressed in one after another, once ---------- */
@@ -190,7 +180,7 @@ html.js.is-paused *::after,
 
 @media (prefers-reduced-motion: no-preference) {
   /* Page enter: the head, then the content, rise a few pixels into place. */
-  .shell > * { animation: rise 420ms var(--ease-out) backwards; }
+  .shell > :not(.motion-reveal) { animation: rise 420ms var(--ease-out) backwards; }
   .shell > :nth-child(2) { animation-delay: 60ms; }
   .shell > :nth-child(3) { animation-delay: 120ms; }
   .shell > :nth-child(n + 4) { animation-delay: 160ms; }

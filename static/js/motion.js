@@ -17,7 +17,19 @@ if (primary) {
   primary.append(sweep);
 }
 const loops = document.querySelectorAll(".btn[data-loop]");
-const reveals = document.querySelectorAll("[data-reveal]");
+// Observe each outer section once. Retain existing reveal hooks on pages without sections.
+const sections = [...document.querySelectorAll("#main section")].filter((el) => !el.parentElement.closest("section"));
+const reveals = [...sections, ...document.querySelectorAll("[data-reveal]")].filter((el, i, all) =>
+  all.indexOf(el) === i && !all.some((parent) => parent !== el && parent.contains(el)));
+reveals.forEach((el) => {
+  el.classList.add("motion-reveal");
+  const children = el.children.length === 1 && el.firstElementChild.classList.contains("container")
+    ? el.firstElementChild.children : el.children;
+  [...children].forEach((child, i) => {
+    child.classList.add("motion-child");
+    child.style.setProperty("--reveal-at", `${i * 70}ms`);
+  });
+});
 
 root.classList.toggle("is-paused", document.hidden);
 document.addEventListener("visibilitychange", () => {
@@ -46,15 +58,15 @@ if (!("IntersectionObserver" in window)) {
 // Count-up: [data-count] numbers (profile stats) count from 0 to the number already in the HTML, once, when
 // they come into view. Skipped with reduced motion and for numbers that are not plain integers ("1,204").
 const counters = document.querySelectorAll("[data-count]");
-const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function countUp(el) {
   const target = Number.parseInt(el.textContent.trim(), 10);
   if (!Number.isInteger(target) || target <= 0 || String(target) !== el.textContent.trim()) return;
   const start = performance.now();
-  const duration = Math.min(900, 400 + target * 40);
+  const duration = 700;
   const step = (now) => {
-    const t = Math.min(1, (now - start) / duration);
+    const t = calm.matches ? 1 : Math.min(1, (now - start) / duration);
     const eased = 1 - (1 - t) ** 3;
     // A script elsewhere (follow button) may have changed the number meanwhile: then stop and leave it.
     if (el.dataset.countAt !== undefined && el.textContent !== el.dataset.countAt) return;
@@ -65,7 +77,7 @@ function countUp(el) {
   requestAnimationFrame(step);
 }
 
-if (!calm && counters.length && "IntersectionObserver" in window) {
+if (!calm.matches && counters.length && "IntersectionObserver" in window) {
   const countObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
