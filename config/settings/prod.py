@@ -11,13 +11,16 @@ DEBUG = False
 
 # Both are required in production: a missing value raises ImproperlyConfigured at startup.
 SECRET_KEY = env.str("SECRET_KEY")  # noqa: F405
+if (len(SECRET_KEY) < 50 or len(set(SECRET_KEY)) < 5
+        or SECRET_KEY.startswith(("django-insecure-", "dev-insecure-"))):
+    raise ImproperlyConfigured("SECRET_KEY must be a strong production secret (50+ characters), not a development key.")
 # Old keys that are still accepted for verifying signatures (sessions, CSRF) while a new SECRET_KEY rolls out.
 # Empty normally. See "Rotating SECRET_KEY" in docs/DEPLOY_NOTES.md.
 SECRET_KEY_FALLBACKS = env.list("SECRET_KEY_FALLBACKS", default=[])  # noqa: F405
 
 # Ban-evasion hash key: required, long, and not the SECRET_KEY. A missing value stops the start (see DEPLOY_NOTES).
 BAN_HASH_KEY = env.str("BAN_HASH_KEY")  # noqa: F405
-if len(BAN_HASH_KEY) < 32 or BAN_HASH_KEY == SECRET_KEY:
+if len(BAN_HASH_KEY) < 32 or BAN_HASH_KEY == SECRET_KEY or BAN_HASH_KEY.startswith("dev-insecure-"):
     raise ImproperlyConfigured(
         "BAN_HASH_KEY must be at least 32 characters and different from SECRET_KEY. "
         'Generate one: python -c "import secrets; print(secrets.token_urlsafe(50))"'
