@@ -5747,3 +5747,20 @@ msgstr "Ce dépôt est privé. Seuls les dépôts publics peuvent être contrôl
 #: verification/repo.py:310 verification/repo.py:516
 msgid "This repository is already linked to another project."
 msgstr "Ce dépôt est déjà lié à un autre projet."
+
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "Verified account"
+msgstr "Compte vérifié"
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "Verified since %(date)s"
+msgstr "Vérifié depuis le %(date)s"
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "This account is verified and operated by the %(site)s team."
+msgstr "Ce compte est vérifié et géré par l’équipe %(site)s."
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "Moderators can review reports."
+msgstr "Les modérateurs peuvent examiner les signalements."

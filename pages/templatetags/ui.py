@@ -93,8 +93,8 @@ def user_marks(person, size="m"):
     dates = badge_dates(person) if person is not None and not isinstance(person, dict) else {}
     marks = []
     for kind, glyph, label, since in (
-        (OFFICIAL, "badge-official", gettext("Official account"), gettext("Official since %(date)s")),
-        (MODERATOR, "badge-moderator", gettext("Moderator"), gettext("Moderator since %(date)s")),
+        (OFFICIAL, "badge-official", gettext("Verified account"), gettext("Verified since %(date)s")),
+        (MODERATOR, "badge-moderator", gettext("Moderator"), gettext("Verified since %(date)s")),
     ):
         if kind in dates:
             day = date_format(timezone.localtime(dates[kind]), "DATE_FORMAT")

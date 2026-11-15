@@ -238,7 +238,7 @@ class BadgeDisplayTests(TestCase):
                 response = self.client.get(url)
                 self.assertContains(response, "user-mark--official")
                 self.assertContains(response, 'data-badge="official"')
-                self.assertContains(response, 'aria-label="Official account"')
+                self.assertContains(response, 'aria-label="Verified account"')
 
     def test_moderator_label_and_nothing_for_others(self):
         badges.grant(self.ana, UserBadge.Kind.MODERATOR)
@@ -315,9 +315,9 @@ class BadgeComponentTests(TestCase):
         self.grant(UserBadge.Kind.MODERATOR, moderator)
         html = self.client.get(reverse("accounts:profile", args=["ana"])).content.decode()
         found = {kind: (since, tip, label) for _c, _s, kind, since, tip, label in self.buttons(html)}
-        self.assertEqual(found["official"], (f"Official since {date_format(official, 'DATE_FORMAT')}", "Official account",
-                                             "Official account"))
-        self.assertEqual(found["moderator"], (f"Moderator since {date_format(moderator, 'DATE_FORMAT')}", "Moderator",
+        self.assertEqual(found["official"], (f"Verified since {date_format(official, 'DATE_FORMAT')}", "Verified account",
+                                             "Verified account"))
+        self.assertEqual(found["moderator"], (f"Verified since {date_format(moderator, 'DATE_FORMAT')}", "Moderator",
                                               "Moderator"))
         self.assertIn("March 3, 2025", found["official"][0])  # the date it was granted, not today
         self.assertIn('class="icon"', html)
@@ -329,7 +329,7 @@ class BadgeComponentTests(TestCase):
         since = self.buttons(html)[0][3]
         self.assertIn("2025", since)
         self.assertIn("березня", since)
-        self.assertNotIn("Official since", since)
+        self.assertNotIn("Verified since", since)
 
     def test_one_shared_panel_per_page_with_both_texts_and_the_how_link(self):
         self.grant(UserBadge.Kind.OFFICIAL, timezone.now())
@@ -337,9 +337,9 @@ class BadgeComponentTests(TestCase):
         self.assertEqual(html.count("data-badge-pop>"), 1)
         self.assertIn('id="badge-tpl-official"', html)
         self.assertIn('id="badge-tpl-moderator"', html)
-        self.assertIn("This account is operated by the Shipmark team.", html)
+        self.assertIn("This account is verified and operated by the Shipmark team.", html)
         self.assertIn("Affiliated with Shipmark", html)
-        self.assertIn("This person helps moderate Shipmark. Moderators can review reports.", html)
+        self.assertIn("Moderators can review reports.", html)
         self.assertIn(f'href="{reverse("pages:how_proof_works")}#badges"', html)
         self.assertIn("js/badges.js", html)
         self.assertIn('role="dialog"', html)

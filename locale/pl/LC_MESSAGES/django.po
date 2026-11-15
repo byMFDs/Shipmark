@@ -5698,3 +5698,20 @@ msgstr ""
 #: verification/repo.py:310 verification/repo.py:516
 msgid "This repository is already linked to another project."
 msgstr "To repozytorium jest już powiązane z innym projektem."
+
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "Verified account"
+msgstr "Konto zweryfikowane"
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "Verified since %(date)s"
+msgstr "Zweryfikowano %(date)s"
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "This account is verified and operated by the %(site)s team."
+msgstr "To konto jest zweryfikowane i prowadzone przez zespół %(site)s."
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "Moderators can review reports."
+msgstr "Moderatorzy mogą rozpatrywać zgłoszenia."

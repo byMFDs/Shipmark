@@ -1,6 +1,6 @@
 // Бейджі official і moderator: підказка й спільна панель з датою.
 // Official and moderator badges (one component: templates/includes/user_marks.html + badge_popover.html).
-// Hover or focus shows a short tooltip (CSS). A click or tap opens one shared panel filled from the badge's
+// Hover, keyboard focus and tap open one shared panel filled from the badge's
 // <template>: a popover next to the badge, a bottom sheet on small screens. Escape, the close button and a click
 // outside close it, and focus goes back to the badge. Without this file the badge is a labelled button with the
 // same tooltip.
@@ -11,7 +11,23 @@ if (panel) {
   const body = panel.querySelector("[data-badge-pop-body]");
   const closeButton = panel.querySelector("[data-badge-pop-close]");
   const sheet = window.matchMedia("(max-width: 47.99em)");
+  const hover = window.matchMedia("(hover: hover)");
   let opener = null;
+  let closeTimer = null;
+  let returningFocus = false;
+  let pointerType = "";
+
+  function cancelClose() {
+    window.clearTimeout(closeTimer);
+  }
+
+  function leave() {
+    cancelClose();
+    closeTimer = window.setTimeout(() => {
+      if (opener === document.activeElement || panel.contains(document.activeElement)) return;
+      close(false);
+    }, 100); // Allow the pointer to cross the existing gap between the badge and panel.
+  }
 
   function place(button) {
     panel.classList.toggle("is-sheet", sheet.matches);
@@ -32,7 +48,12 @@ if (panel) {
     panel.style.setProperty("--pop-y", `${Math.round(y)}px`);
   }
 
-  function open(button) {
+  function open(button, focusPanel = false) {
+    cancelClose();
+    if (opener === button && !panel.hidden) {
+      if (focusPanel) panel.focus();
+      return;
+    }
     const source = document.getElementById(`badge-tpl-${button.dataset.badge}`);
     if (!source) return;
     if (opener && opener !== button) close(false);
@@ -49,27 +70,55 @@ if (panel) {
     panel.classList.remove("is-open");
     void panel.offsetWidth; // restart the open animation
     panel.classList.add("is-open");
-    panel.focus();
+    if (focusPanel) panel.focus();
   }
 
   function close(returnFocus = true) {
+    cancelClose();
     if (panel.hidden) return;
     panel.hidden = true;
     panel.classList.remove("is-open");
     if (opener) {
       opener.setAttribute("aria-expanded", "false");
-      if (returnFocus) opener.focus();
+      if (returnFocus) {
+        returningFocus = true;
+        opener.focus();
+        returningFocus = false;
+      }
     }
     opener = null;
   }
+
+  document.addEventListener("pointerdown", (event) => { pointerType = event.pointerType; });
+  document.addEventListener("pointerover", (event) => {
+    if (!hover.matches || event.pointerType === "touch") return;
+    const button = event.target.closest?.("[data-badge]");
+    if (button) open(button);
+    else if (panel.contains(event.target)) cancelClose();
+  });
+  document.addEventListener("pointerout", (event) => {
+    if (!opener || event.pointerType === "touch") return;
+    if (opener.contains(event.relatedTarget) || panel.contains(event.relatedTarget)) return;
+    if (opener.contains(event.target) || panel.contains(event.target)) leave();
+  });
+  document.addEventListener("focusin", (event) => {
+    if (returningFocus) return;
+    const button = event.target.closest?.("[data-badge]");
+    if (button && (pointerType !== "touch" || button.matches(":focus-visible"))) open(button);
+    else if (panel.contains(event.target)) cancelClose();
+  });
+  document.addEventListener("focusout", (event) => {
+    if (!opener || opener.contains(event.relatedTarget) || panel.contains(event.relatedTarget)) return;
+    leave();
+  });
 
   document.addEventListener("click", (event) => {
     const button = event.target.closest?.("[data-badge]");
     if (button) {
       event.preventDefault();
       event.stopPropagation();
-      if (opener === button) close();
-      else open(button);
+      if (opener === button && pointerType === "touch") close();
+      else open(button, true);
       return;
     }
     if (!panel.hidden && !panel.contains(event.target)) close(false);

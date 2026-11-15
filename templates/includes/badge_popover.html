@@ -8,10 +8,9 @@ carries its real date; the texts live once here, in a <template> per kind. Needs
 
 <template id="badge-tpl-official">
   <div class="badge-pop__head">
-    <span class="badge-pop__glyph badge-pop__glyph--official" aria-hidden="true">{% icon "badge-official" %}</span>
-    <h2 class="badge-pop__title" id="badge-pop-title">{% translate "Official account" %}</h2>
+    <h2 class="badge-pop__title" id="badge-pop-title">{% translate "Verified account" %}</h2>
   </div>
-  <p class="badge-pop__text">{% blocktranslate with site=brand.SITE_NAME %}This account is operated by the {{ site }} team.{% endblocktranslate %}</p>
+  <p class="badge-pop__text"><span class="badge-pop__glyph badge-pop__glyph--official" aria-hidden="true">{% icon "badge-official" %}</span><span>{% blocktranslate with site=brand.SITE_NAME %}This account is verified and operated by the {{ site }} team.{% endblocktranslate %}</span></p>
   <ul class="badge-pop__facts">
     <li>{% inline_svg brand.LOGO_MARK "badge-pop__logo" %}<span>{% blocktranslate with site=brand.SITE_NAME %}Affiliated with {{ site }}{% endblocktranslate %}</span></li>
     <li data-badge-since-row>{% icon "calendar" %}<span data-badge-since></span></li>
@@ -21,10 +20,9 @@ carries its real date; the texts live once here, in a <template> per kind. Needs
 
 <template id="badge-tpl-moderator">
   <div class="badge-pop__head">
-    <span class="badge-pop__glyph badge-pop__glyph--moderator" aria-hidden="true">{% icon "badge-moderator" %}</span>
     <h2 class="badge-pop__title" id="badge-pop-title">{% translate "Moderator" %}</h2>
   </div>
-  <p class="badge-pop__text">{% blocktranslate with site=brand.SITE_NAME %}This person helps moderate {{ site }}. Moderators can review reports.{% endblocktranslate %}</p>
+  <p class="badge-pop__text"><span class="badge-pop__glyph badge-pop__glyph--moderator" aria-hidden="true">{% icon "badge-moderator" %}</span><span>{% translate "Moderators can review reports." %}</span></p>
   <ul class="badge-pop__facts">
     <li data-badge-since-row>{% icon "calendar" %}<span data-badge-since></span></li>
   </ul>

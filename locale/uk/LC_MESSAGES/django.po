@@ -5713,3 +5713,20 @@ msgstr "Цей репозиторій приватний. Перевіряти �
 #: verification/repo.py:310 verification/repo.py:516
 msgid "This repository is already linked to another project."
 msgstr "Цей репозиторій уже прив'язано до іншого проєкту."
+
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "Verified account"
+msgstr "Підтверджений акаунт"
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "Verified since %(date)s"
+msgstr "Підтверджено %(date)s"
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "This account is verified and operated by the %(site)s team."
+msgstr "Цей акаунт підтверджений і керується командою %(site)s."
+
+#: templates/includes/badge_popover.html pages/templatetags/ui.py
+msgid "Moderators can review reports."
+msgstr "Модератори можуть розглядати скарги."
