@@ -327,3 +327,16 @@ html.js.is-paused *::after,
 /* ---------- Count-up: a number on a stats row counts up once when it comes into view (motion.js) ---------- */
 /* The real number is in the HTML; the script only animates it, and not at all with reduced motion. */
 [data-count] { font-variant-numeric: tabular-nums; }
+
+/* Existing filled launch nodes are the live nodes in the project's changelog. */
+.log-entry--launch::before { background: var(--signal); border-color: var(--signal); }
+@media (prefers-reduced-motion: no-preference) {
+  .log-entry--launch.motion-node-seen::before { animation: timeline-pulse 600ms var(--ease-out) 1; }
+}
+@keyframes timeline-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  45% { transform: scale(1.6); opacity: 0.45; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .log-entry--launch.motion-node-seen::before { animation: none !important; transform: none; opacity: 1; }
+}

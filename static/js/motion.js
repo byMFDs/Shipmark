@@ -109,3 +109,19 @@ document.addEventListener("click", (event) => {
   const next = links.indexOf(link);
   try { sessionStorage.setItem("motion-direction", current >= 0 && next < current ? "back" : "forward"); } catch (e) {}
 });
+
+// Existing launch nodes pulse once; watch only inserted timeline nodes after an inline post.
+const timelineObserver = "IntersectionObserver" in window ? new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("motion-node-seen");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.5 }) : null;
+function observeTimeline(scope) {
+  if (!timelineObserver) return;
+  scope.querySelectorAll(".log-entry--launch:not(.motion-node-seen)").forEach((node) => timelineObserver.observe(node));
+}
+observeTimeline(document);
+const timeline = document.querySelector(".build-log .log");
+if (timeline) new MutationObserver(() => observeTimeline(timeline)).observe(timeline, { childList: true });
