@@ -87,3 +87,25 @@ if (!calm.matches && counters.length && "IntersectionObserver" in window) {
   }, { threshold: 0.6 });
   counters.forEach((el) => countObserver.observe(el));
 }
+
+// Direction is presentation-only: never intercept links, submit forms, or fetch anything.
+try {
+  const direction = sessionStorage.getItem("motion-direction");
+  sessionStorage.removeItem("motion-direction");
+  if (direction) {
+    root.classList.toggle("motion-back", direction === "back");
+    root.classList.add("motion-arrival");
+  }
+} catch (e) {}
+document.addEventListener("click", (event) => {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const link = event.target.closest("a[href]");
+  if (!link || link.target || link.hasAttribute("download")) return;
+  const destination = new URL(link.href, location.href);
+  if (destination.origin !== location.origin || (destination.pathname === location.pathname && destination.search === location.search)) return;
+  const nav = link.closest("nav");
+  const links = nav ? [...nav.querySelectorAll("a[href]")] : [];
+  const current = links.findIndex((item) => item.getAttribute("aria-current") === "page");
+  const next = links.indexOf(link);
+  try { sessionStorage.setItem("motion-direction", current >= 0 && next < current ? "back" : "forward"); } catch (e) {}
+});
