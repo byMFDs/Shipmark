@@ -100,7 +100,7 @@ class SeedCommunityTests(CommunityTestCase):
         self.assertTrue(all(person.email.endswith("@example.invalid") for person in people))
         self.assertEqual(Thread.objects.filter(author__in=people).count(), len(THREADS))
         self.assertTrue(Reply.objects.filter(author__in=people, depth=3).exists())
-        self.assertTrue(Reply.objects.filter(author__in=people).exclude(sticker_key="").exists())
+        self.assertFalse(Reply.objects.filter(author__in=people).exclude(sticker_key="").exists())
         self.assertTrue(CommunityImage.objects.filter(uploader__in=people).exists())
         self.assertFalse(Vote.objects.filter(thread__author=self.ann).exists())
         for vote in Vote.objects.select_related("thread", "reply"):

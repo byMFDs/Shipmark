@@ -8,7 +8,7 @@ from accounts.forms import StyledFormMixin
 from config.ratelimit import is_limited
 from projects.forms import ScreenshotsField
 
-from . import limits, stickers
+from . import limits
 from .images import clean_upload
 from .models import Board
 from .permissions import is_young
@@ -137,31 +137,17 @@ class ThreadEditForm(PostFormMixin, forms.Form):
 
 
 class ReplyForm(PostFormMixin, forms.Form):
-    """Форма відповіді: текст, стікер, картинки."""
+    """Форма відповіді: текст і картинки."""
     max_images = limits.MAX_REPLY_IMAGES
 
     body = _body(4, limits.MAX_REPLY_BODY)
-    # One key from community/stickers.py or nothing. A reply may be a sticker alone. A plain <select> without JS;
-    # with JS the picker sets its value. The choices are only the widget's: clean_sticker checks the manifest.
-    sticker = forms.CharField(label=_("Sticker"), required=False, max_length=40, widget=forms.Select)
     images = _images(limits.MAX_REPLY_IMAGES)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["sticker"].widget.choices = [("", _("No sticker")), *stickers.STICKERS.items()]
-
-    def clean_sticker(self):
-        """Стікер має бути з нашого набору."""
-        key = self.cleaned_data.get("sticker") or ""
-        if key and not stickers.is_sticker(key):
-            raise ValidationError(_("This sticker does not exist."), code="bad_sticker")
-        return key
-
     def clean(self):
-        """Відповідь має мати текст, стікер або картинку; перевіряє посилання."""
+        """Відповідь має мати текст або картинку; перевіряє посилання."""
         data = super().clean()
-        if not self.errors and not (data.get("body") or data.get("sticker") or data.get("images")):
-            self.add_error("body", _("Write something, or add an image or a sticker."))
+        if not self.errors and not (data.get("body") or data.get("images")):
+            self.add_error("body", _("Write something or add an image."))
         self.check_links(data.get("body"))
         return data
 
@@ -172,12 +158,12 @@ class ReplyEditForm(PostFormMixin, forms.Form):
 
     def __init__(self, *args, has_extras, **kwargs):
         super().__init__(*args, **kwargs)
-        self.has_extras = has_extras  # a sticker or images: the text may then be empty
+        self.has_extras = has_extras  # images: the text may then be empty
 
     def clean(self):
         """Відповідь не може лишитися порожньою; перевіряє посилання."""
         data = super().clean()
         if not data.get("body") and not self.has_extras:
-            self.add_error("body", _("Write something, or add an image or a sticker."))
+            self.add_error("body", _("Write something or add an image."))
         self.check_links(data.get("body"))
         return data

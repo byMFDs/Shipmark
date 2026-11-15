@@ -13,7 +13,6 @@
         {% if reply.edited_at %}<span class="muted reply__edited">{% translate "edited" %}</span>{% endif %}
       </header>
       {% if reply.body %}<div class="prose reply__text">{{ reply.body_html|safe }}</div>{% endif %}
-      {% if reply.sticker_key and reply.sticker_label %}<p class="reply__sticker"><img src="{% static 'stickers/'|add:reply.sticker_key|add:'.svg' %}" width="96" height="96" alt="{{ reply.sticker_label }}" loading="lazy"></p>{% endif %}
       {% include "community/_media.html" with images=reply.images.all %}
       <footer class="reply__actions">
         {% url 'community:vote_reply' reply.pk as vote_url %}

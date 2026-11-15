@@ -60,12 +60,12 @@
       {% endif %}
     {% elif query %}
       {% translate "No threads match this search" as title %}{% translate "Try another word from the title." as text %}{% translate "Clear search" as label %}
-      {% include "community/_empty.html" with sticker="raised-eyebrow" title=title text=text action_url=sort_urls.hot action_label=label %}
+      {% include "community/_empty.html" with title=title text=text action_url=sort_urls.hot action_label=label %}
     {% elif pinned %}
     {% else %}
       {% translate "No threads here yet" as title %}{% translate "Start the first one." as text %}{% translate "New thread" as label %}
       {% if user.is_authenticated %}{% url 'community:new' as new_url %}{% else %}{% url 'account_login' as new_url %}{% endif %}
-      {% include "community/_empty.html" with sticker="wave" title=title text=text action_url=new_url action_label=label action_primary=True %}
+      {% include "community/_empty.html" with title=title text=text action_url=new_url action_label=label action_primary=True %}
     {% endif %}
   </section>
 {% endblock %}

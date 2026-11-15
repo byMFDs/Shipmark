@@ -1,6 +1,5 @@
-{# Порожній стан спільноти: стікер, заголовок, рядок, дія. #}{% load i18n static %}{# A designed empty state: one of our stickers, a title, a line, an optional action. Needs: sticker, title, text. #}
+{# Порожній стан спільноти: заголовок, рядок, дія. #}{% load i18n static %}{# A designed empty state: a title, a line, an optional action. Needs: title, text. #}
 <section class="community-empty">
-  <img class="community-empty__sticker" src="{% static 'stickers/'|add:sticker|add:'.svg' %}" width="96" height="96" alt="">
   <h2 class="community-empty__title">{{ title }}</h2>
   <p class="community-empty__text">{{ text }}</p>
   {% if action_url %}<a class="btn {% if action_primary %}btn--primary{% else %}btn--secondary{% endif %}" href="{{ action_url }}">{{ action_label }}</a>{% endif %}

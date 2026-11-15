@@ -1,8 +1,8 @@
-/* Стилі сторінок спільноти: дошки, картки тем, відповіді, форма допису, стікери, переглядач. */
-/* Community: boards, thread lists, a thread with nested replies, the composer, image grids, the sticker picker and the
+/* Стилі сторінок спільноти: дошки, картки тем, відповіді, форма допису, переглядач. */
+/* Community: boards, thread lists, a thread with nested replies, the composer, image grids, the
    lightbox. The three-column frame is feed.css (.feed-layout, .feed-nav, .feed-side); everything here is community's own.
    Same rules as the rest of the site: hairlines and surface colour, square records, 10px buttons, terracotta for the
-   primary action only, no shadow except on floating things (picker, lightbox controls). */
+   primary action only, no shadow except on floating things (lightbox controls). */
 
 /* ---------- Frame ---------- */
 
@@ -350,8 +350,6 @@
 .reply__time { text-decoration: none; }
 .reply__time:hover { text-decoration: underline; }
 .reply__text { overflow-wrap: anywhere; }
-.reply__sticker { margin: 0; }
-.reply__sticker img { display: block; width: 6rem; height: 6rem; }
 
 /* Collapse a branch (community.js shows the button; without JS everything is open). */
 .reply__collapse {
@@ -517,91 +515,6 @@ html:not(.js) .composer__tool[for] { display: none; }
   .composer__preview { animation: rise 260ms var(--ease-out); }
 }
 
-.composer__sticker { display: flex; align-items: center; gap: var(--s-2); padding: var(--s-2) var(--s-2) 0; }
-.composer__sticker[hidden] { display: none; }
-.composer__sticker img { width: 4rem; height: 4rem; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .composer__sticker.is-popping img { animation: sticker-pop 360ms var(--ease-press); }
-}
-
-@keyframes sticker-pop {
-  0% { transform: scale(0.6); opacity: 0; }
-  60% { transform: scale(1.1); opacity: 1; }
-  100% { transform: none; }
-}
-
-/* With JS the picker replaces the <select>. */
-.js .composer__sticker-select { display: none; }
-
-/* ---------- Sticker picker: a popover under the composer; a bottom sheet on phones ---------- */
-
-.sticker-picker {
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + var(--s-1));
-  left: 0;
-  width: min(22rem, 100%);
-  max-height: 22rem;
-  display: grid;
-  grid-template-rows: auto auto auto auto auto minmax(0, 1fr) auto;
-  gap: var(--s-2);
-  padding: var(--s-3);
-  overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  box-shadow: var(--shadow-pop);
-}
-
-.sticker-picker[hidden] { display: none; }
-.sticker-picker__head { display: flex; align-items: center; justify-content: space-between; }
-.sticker-picker__head .label { margin: 0; }
-.sticker-picker__group { margin: 0; color: var(--muted); }
-.sticker-picker__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr)); gap: var(--s-1); overflow-y: auto; }
-.sticker-picker__grid[data-picker-recent] { overflow: visible; }
-.sticker-picker__grid[data-picker-recent]:empty { display: none; }
-.sticker-picker__none { margin: 0; }
-
-.sticker-picker__item {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1 / 1;
-  min-height: var(--control-h);
-  padding: 2px;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: var(--radius-btn);
-  cursor: pointer;
-}
-
-.sticker-picker__item img { width: 100%; max-width: 2.75rem; height: auto; }
-.sticker-picker__item:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; box-shadow: 0 0 0 4px var(--focus-edge); }
-.sticker-picker__item[hidden] { display: none; }
-@media (hover: hover) { .sticker-picker__item:hover { border-color: var(--line-strong); } }
-
-@media (max-width: 47.99em) {
-  .sticker-picker {
-    position: fixed;
-    top: auto;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: auto;
-    max-height: min(70dvh, 28rem);
-    padding-bottom: calc(var(--s-3) + env(safe-area-inset-bottom));
-    border-width: 1px 0 0;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .sticker-picker:not([hidden]) { animation: sheet-up 220ms var(--ease-out); }
-  }
-}
-
-@keyframes sheet-up {
-  from { transform: translateY(24px); opacity: 0; }
-  to { transform: none; opacity: 1; }
-}
-
 /* ---------- Lightbox (native <dialog>) ---------- */
 
 .lightbox {
@@ -660,9 +573,6 @@ html:not(.js) .composer__tool[for] { display: none; }
 .community-empty__title { font-size: var(--fs-2); }
 .community-empty__text { color: var(--muted); max-width: 46ch; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .community-empty__sticker { animation: sticker-pop 520ms var(--ease-press) 200ms backwards; }
-}
 
 .notification {
   display: grid;

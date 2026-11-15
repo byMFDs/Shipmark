@@ -20,7 +20,7 @@
           <div class="notification__body">
             <p class="label">{% if not item.read_at %}<span class="thread-chip">{% translate "New" %}</span> · {% endif %}<time datetime="{{ item.created_at|date:'c' }}" title="{{ item.created_at|date:'DATETIME_FORMAT' }}">{{ item.created_at|ago }}</time></p>
               <p class="notification__title"><a href="{{ reply.get_absolute_url }}">{% if reply.author %}{% if item.kind == "thread" %}{% blocktranslate with name=reply.author.username title=reply.thread.title %}@{{ name }} replied to your thread “{{ title }}”{% endblocktranslate %}{% else %}{% blocktranslate with name=reply.author.username title=reply.thread.title %}@{{ name }} replied to you in “{{ title }}”{% endblocktranslate %}{% endif %}{% else %}{% if item.kind == "thread" %}{% blocktranslate with title=reply.thread.title %}A deleted account replied to your thread “{{ title }}”{% endblocktranslate %}{% else %}{% blocktranslate with title=reply.thread.title %}A deleted account replied to you in “{{ title }}”{% endblocktranslate %}{% endif %}{% endif %}</a></p>
-            <p class="muted notification__excerpt">{% if reply.body %}{{ reply.body|truncatechars:140 }}{% elif reply.sticker_key %}{% blocktranslate with name=reply.sticker_label %}Sticker: {{ name }}{% endblocktranslate %}{% else %}{% translate "Images" %}{% endif %}</p>
+            <p class="muted notification__excerpt">{% if reply.body %}{{ reply.body|truncatechars:140 }}{% else %}{% translate "Images" %}{% endif %}</p>
           </div>
         </li>
       {% endwith %}{% endfor %}
@@ -33,6 +33,6 @@
     {% endif %}
   {% else %}
     {% translate "No replies yet" as title %}{% translate "Start a thread or answer someone, and replies to you will appear here." as text %}{% translate "Go to the community" as label %}{% url 'community:home' as home_url %}
-    {% include "community/_empty.html" with sticker="relieved" title=title text=text action_url=home_url action_label=label %}
+    {% include "community/_empty.html" with title=title text=text action_url=home_url action_label=label %}
   {% endif %}
 {% endblock %}

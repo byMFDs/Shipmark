@@ -369,7 +369,7 @@ def reply_create(request, pk):
         elif not services.claim_reply_text(user, thread, parent, data["body"]):
             form.add_error(None, _("You already posted this."))
         else:
-            reply = services.create_reply(user, thread, parent, data["body"], data["sticker"], data["images"])
+            reply = services.create_reply(user, thread, parent, data["body"], images=data["images"])
             return redirect(reply.get_absolute_url())
     return _render_thread(request, thread, form=form, parent=parent, status=400)
 
@@ -395,7 +395,7 @@ def reply_edit(request, pk):
     if request.method == "POST" and block:
         return _blocked(request, block)
     form = ReplyEditForm(request.POST or None, user=user, initial={"body": reply.body},
-                         has_extras=bool(reply.sticker_key) or reply.images.exists())
+                         has_extras=reply.images.exists())
     if request.method == "POST" and form.is_valid():
         if is_limited("community_edit", user.pk, limits.EDITS_PER_HOUR, limits.HOUR):
             form.add_error(None, TOO_MANY)

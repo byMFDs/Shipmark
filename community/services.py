@@ -11,7 +11,7 @@ from django.db import IntegrityError, transaction
 from django.db.models import F
 from django.utils import timezone
 
-from . import limits, notifications, stickers
+from . import limits, notifications
 from .images import delete_images, store_images
 from .models import Reply, Thread, Vote
 
@@ -38,7 +38,7 @@ def claim_thread_text(user, title, body):
 def claim_reply_text(user, thread, parent, body):
     """Захист від дубля відповіді під тим самим батьком.
 
-    Empty text (a sticker or an image alone) is never a duplicate. A short text only under the same parent."""
+    Empty text (an image alone) is never a duplicate. A short text only under the same parent."""
     text = _normalized(body)
     if not text:
         return True
@@ -118,14 +118,14 @@ def create_reply(author, thread, parent=None, body="", sticker_key="", images=()
 
     `parent` is the reply being answered (None: the thread). Its author is notified, also when the depth
     limit attaches the new reply one level higher."""
-    if sticker_key and not stickers.is_sticker(sticker_key):
-        raise ValueError("unknown sticker")  # forms check this first; never store a key outside the manifest
+    if sticker_key:
+        raise ValueError("stickers are disabled")
     recipient, kind = notifications.recipient_for(thread, parent)
     parent, root, depth = place_reply(parent)
     now = timezone.now()
     with transaction.atomic():
         reply = Reply.objects.create(
-            thread=thread, parent=parent, root=root, depth=depth, author=author, body=body, sticker_key=sticker_key,
+            thread=thread, parent=parent, root=root, depth=depth, author=author, body=body,
             created_at=now,
         )
         store_images(images, author, reply=reply)

@@ -9,13 +9,11 @@ from django.conf import settings
 from django.contrib.staticfiles import finders
 from django.test import override_settings
 from django.urls import reverse
-from django.utils import translation
 
 from moderation.models import Sanction
 
 from . import limits, services
 from .models import Thread
-from .stickers import STICKERS
 from .tests import REASON, CommunityTestCase, _clean, make_thread
 
 
@@ -101,13 +99,13 @@ class ShellTests(CommunityTestCase):
         Thread.objects.all().delete()
         anonymous = self.client.get(reverse("community:home"))
         self.assertContains(anonymous, "community-empty")
-        self.assertContains(anonymous, "stickers/wave.svg")
+        self.assertNotContains(anonymous, "stickers/")
         self.assertContains(anonymous, reverse("account_login"))
         self.client.force_login(self.bob)
         self.assertContains(self.client.get(reverse("community:home")), reverse("community:new"))
-        self.assertContains(self.client.get(reverse("community:notifications")), "stickers/relieved.svg")
+        self.assertNotContains(self.client.get(reverse("community:notifications")), "stickers/")
         searched = self.client.get(reverse("community:home"), {"q": "nothing"})
-        self.assertContains(searched, "stickers/raised-eyebrow.svg")
+        self.assertContains(searched, "No threads match this search")
 
 
 class LoadMoreTests(CommunityTestCase):
@@ -246,59 +244,20 @@ class LightboxMarkupTests(CommunityTestCase):
         self.assertIn("Nächstes Bild", html)
 
 
-class StickerUITests(CommunityTestCase):
-    """Стікери в інтерфейсі."""
-    def test_picker_lists_every_sticker_for_people_who_can_reply(self):
+class RetiredStickerUITests(CommunityTestCase):
+    """Форма відповіді більше не містить вибору стікерів."""
+    def test_signed_in_composer_has_no_sticker_controls(self):
         self.client.force_login(self.bob)
-        html = self.client.get(self.thread.get_absolute_url()).content.decode()
-        self.assertEqual(len(re.findall(r'<button class="sticker-picker__item"', html)), len(STICKERS))
-        self.assertIn("data-picker-search", html)
-        self.assertIn("data-picker-recent", html)
-        for key in STICKERS:
-            self.assertIn(f'data-sticker="{key}"', html)
-            self.assertTrue(finders.find(f"stickers/{key}.svg"), key)
+        page = self.client.get(self.thread.get_absolute_url())
+        for marker in ("data-picker", "data-sticker", 'name="sticker"', "stickers/"):
+            self.assertNotContains(page, marker)
+        self.assertContains(page, "data-composer")
 
-    def test_picker_labels_are_searchable_and_translated(self):
-        self.client.force_login(self.bob)
-        self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = "uk"
-        html = self.client.get(self.thread.get_absolute_url()).content.decode()
-        label = re.search(r'data-sticker="thumbs-up" data-label="([^"]+)"', html).group(1)
-        self.assertIn("thumbs-up", label)  # the key stays searchable in every language
-        with translation.override("uk"):
-            self.assertIn(str(STICKERS["thumbs-up"]).lower(), label)
-
-    def test_without_js_a_select_offers_the_same_stickers(self):
-        self.client.force_login(self.bob)
-        html = self.client.get(self.thread.get_absolute_url()).content.decode()
-        select = re.search(r'<select name="sticker".*?</select>', html, re.S).group(0)
-        self.assertEqual(select.count("<option"), len(STICKERS) + 1)  # + "No sticker"
-        self.assertIn("composer__sticker-select", html)
-
-    def test_visitors_and_blocked_people_get_no_composer(self):
-        visitor = self.client.get(self.thread.get_absolute_url())
-        self.assertNotContains(visitor, "data-picker")
-        self.assertContains(visitor, "Sign in to reply and vote.")
+    def test_visitors_and_muted_people_get_no_composer(self):
+        self.assertNotContains(self.client.get(self.thread.get_absolute_url()), "data-reply-form")
         self.ban(self.bob, kind=Sanction.Kind.MUTE)
         self.client.force_login(self.bob)
-        muted = self.client.get(self.thread.get_absolute_url())
-        self.assertNotContains(muted, "data-picker")
-        self.assertNotContains(muted, "data-reply-form")
-
-    def test_sticker_in_a_reply_is_an_image_with_the_translated_label_as_alt(self):
-        reply = services.create_reply(self.bob, self.thread, sticker_key="thumbs-up")
-        html = self.client.get(self.thread.get_absolute_url()).content.decode()
-        self.assertRegex(html, rf'(?s)id="r{reply.pk}".*?<img src="[^"]*stickers/thumbs-up\.svg" width="96" height="96" alt="Thumbs up"')
-        # a key that left the manifest renders nothing instead of a broken image
-        type(reply).objects.filter(pk=reply.pk).update(sticker_key="not-a-sticker")
-        self.assertNotContains(self.client.get(self.thread.get_absolute_url()), "not-a-sticker")
-
-    def test_a_forged_sticker_value_is_refused_by_the_form(self):
-        before = self.thread.replies.count()
-        for value in ("../../etc/passwd", "thumbs-up.svg", "<svg onload=alert(1)>", "ROCKET"):
-            response = self.reply(self.bob, body="x", sticker=value)
-            with self.subTest(value=value):
-                self.assertEqual(response.status_code, 400)
-        self.assertEqual(self.thread.replies.count(), before)
+        self.assertNotContains(self.client.get(self.thread.get_absolute_url()), "data-reply-form")
 
 
 class PostFormTests(CommunityTestCase):
@@ -340,18 +299,17 @@ class PostFormTests(CommunityTestCase):
         self.assertContains(page, 'data-max="4"')
         self.assertContains(page, 'enctype="multipart/form-data"')
         self.assertContains(page, "Before you post")
-        self.assertNotContains(page, "data-picker-open")  # stickers are for replies only
+        self.assertNotContains(page, "data-picker-open")  # no retired controls
 
-    def test_reply_form_allows_two_images_and_the_picker(self):
+    def test_reply_form_allows_two_images_without_sticker_controls(self):
         self.client.force_login(self.bob)
         page = self.client.get(self.thread.get_absolute_url())
         self.assertContains(page, 'data-max="2"')
-        self.assertContains(page, "data-picker-open")
+        self.assertNotContains(page, "data-picker-open")
         bar = re.search(r'<div class="composer__bar">(.*?)</div>', page.content.decode(), re.S).group(1)
         self.assertLess(bar.index('for="id_images"'), bar.index("<textarea"))
-        self.assertLess(bar.index("<textarea"), bar.index("data-picker-open"))
         self.assertIn('placeholder="Write a message..."', bar)
-        for hook in ("data-drop", "data-file-input", "data-previews", "data-sticker-chosen"):
+        for hook in ("data-drop", "data-file-input", "data-previews"):
             self.assertContains(page, hook)
 
     def test_reply_to_query_moves_the_form_without_js(self):
