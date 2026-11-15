@@ -53,8 +53,8 @@ _RULES = [
     # Long random-looking strings (keys, signed values): letters and digits mixed, 32+ characters.
     (re.compile(r"\b(?=[A-Za-z0-9_-]*\d)(?=[A-Za-z0-9_-]*[A-Za-z])[A-Za-z0-9_-]{32,}\b"), "[redacted]"),
 ]
-# Profile and badge paths name a person: /u/<username>/..., /badge/<username>.svg
-_USER_PATH = re.compile(r"(/(?:u|badge)/)[^/\s?#.\"']+")
+# These routes name a person. Mask them in messages as well as structured path fields.
+_USER_PATH = re.compile(r"(/(?:u|badge|follow|unfollow|like|unlike|report/(?:user|project|log)|mod/act/user)/)[^/\s?#.\"']+")
 
 
 def mask_path(path):
@@ -92,7 +92,7 @@ def _fields(record, with_traceback=True):
         "request_id": getattr(request, "request_id", "") if request is not None else "",
         # request.path never contains the query string.
         "method": getattr(request, "method", "") or "" if request is not None else "",
-        "path": mask_path(getattr(request, "path", "")) if request is not None else "",
+        "path": scrub(getattr(request, "path", "")) if request is not None else "",
         "status": getattr(record, "status_code", None),
         "view": (match.view_name or "") if match else "",
         "exception": _exception_name(exc_info[0]) if exc_info else "",

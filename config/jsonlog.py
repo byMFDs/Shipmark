@@ -9,6 +9,8 @@ import json
 import logging
 from datetime import datetime, timezone
 
+from config.errorlog import MAX_TRACEBACK, scrub
+
 
 class JsonFormatter(logging.Formatter):
     """Форматує запис журналу як один рядок JSON."""
@@ -18,14 +20,14 @@ class JsonFormatter(logging.Formatter):
             "time": datetime.fromtimestamp(record.created, tz=timezone.utc).isoformat(timespec="milliseconds"),
             "level": record.levelname,
             "logger": record.name,
-            "message": record.getMessage(),
+            "message": scrub(record.getMessage()),
         }
         # Set by django.request on 4xx/5xx responses.
         status_code = getattr(record, "status_code", None)
         if status_code is not None:
             data["status"] = status_code
         if record.exc_info:
-            data["exception"] = self.formatException(record.exc_info)
+            data["exception"] = scrub(self.formatException(record.exc_info), MAX_TRACEBACK)
         # json.dumps escapes quotes and newlines, so text a visitor controls (a request path)
         # cannot break out of its field or forge a second log line.
         return json.dumps(data, ensure_ascii=False, default=str)
