@@ -120,9 +120,11 @@ class AdminUrlTests(TestCase):
         self.assertEqual(reverse("admin:index"), "/" + settings.ADMIN_URL)
 
     def _import_prod(self, admin_url):
+        from config.tests import S3_ENV
+
         env = {k: v for k, v in os.environ.items() if k != "ADMIN_URL"}
         env.update({"DJANGO_SETTINGS_MODULE": "config.settings.prod", "SECRET_KEY": "admin-test-only-" + "abcdefghijklmnopqrstuvwxyz0123456789" * 2,
-                    "BAN_HASH_KEY": "b" * 50, "DATABASE_URL": "sqlite:////tmp/unused.sqlite3"})
+                    "BAN_HASH_KEY": "b" * 50, "DATABASE_URL": "sqlite:////tmp/unused.sqlite3", **S3_ENV})
         if admin_url is not None:
             env["ADMIN_URL"] = admin_url
         return subprocess.run(

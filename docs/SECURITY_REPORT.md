@@ -49,3 +49,10 @@
 - Реальна PostgreSQL, S3/IAM/bucket policy, SMTP, відновлення backup, DNS/TLS: ресурсів і credentials тут немає; вони не створювалися.
 
 Перед широким публічним запуском рекомендовано незалежний security review і перевірку відкритого ризику конкурентних rate limits під навантаженням. Локальна підготовка не замінює ці роботи.
+
+## Підсумок після Heroku preparation
+
+- Фінальний повний набір: **1162 тести OK** (107,6 с; штатний TESTING, MD5 тільки для тестових паролів). Production deploy check без зауважень; міграції на ізольованій SQLite, cache table й collectstatic успішні. PostgreSQL не було.
+- Після погоджених S3-залежностей: 36 production пакетів і 47 dev, відомих вразливостей 0/0. Dependency audit не покриває bucket policy, IAM або приватність фактичного провайдера.
+- Production S3 і підписування URL перевірені без мережі; staff-only download тести збережені. Unsigned доступ до фактичного bucket і uploads після перезапуску dyno власник перевіряє вручну.
+- Знахідки виправлено комітами `267c27f` (R1), `a730a80` (L1), `9cf2c74` (C1), `5587e3e` (P1). Відкриті межі: конкурентні rate limits, live pentest/OAuth/load review і зовнішня інфраструктура; див. Not covered.

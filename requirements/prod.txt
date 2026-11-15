@@ -1,3 +1,5 @@
 -r base.txt
 gunicorn==27.0.0
 psycopg[binary]==3.3.8
+django-storages[s3]==1.14.6
+boto3==1.44.3

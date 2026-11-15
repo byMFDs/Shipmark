@@ -126,6 +126,11 @@ PROD_SECRET = "tést-only-" + "abcdefghijklmnopqrstuvwxyz0123456789" * 2  # modu
 SMTP_ENV = {"EMAIL_HOST": "smtp.example.com", "EMAIL_HOST_USER": "sender@example.com", "EMAIL_HOST_PASSWORD": "placeholder",
             "DEFAULT_FROM_EMAIL": "sender@example.com", "SUPPORT_INBOX_EMAIL": "inbox@example.com"}
 
+# Synthetic storage credentials: settings/presigning tests never contact this host.
+S3_ENV = {"AWS_STORAGE_BUCKET_NAME": "test-bucket", "AWS_S3_REGION_NAME": "test-region",
+          "AWS_S3_ENDPOINT_URL": "https://objects.example.invalid", "AWS_ACCESS_KEY_ID": "test-only-access",
+          "AWS_SECRET_ACCESS_KEY": "test-only-storage-secret"}
+
 
 class ProductionSettingsTests(SimpleTestCase):
     """Prod-налаштування й check --deploy."""
@@ -134,7 +139,7 @@ class ProductionSettingsTests(SimpleTestCase):
         env.update({"DJANGO_SETTINGS_MODULE": "config.settings.prod", "SECRET_KEY": PROD_SECRET,
                     "BAN_HASH_KEY": "ban-only-" + "zyxwvutsrqponmlkjihgfedcba9876543210" * 2,
                     "DATABASE_URL": "sqlite:////tmp/unused.sqlite3", "ADMIN_URL": "staff-4f8k2/",
-                    "ALLOWED_HOSTS": "example.com", "LOG_DIR": str(settings.LOG_DIR), **extra})
+                    "ALLOWED_HOSTS": "example.com", "LOG_DIR": str(settings.LOG_DIR), **S3_ENV, **extra})
         env = {k: v for k, v in env.items() if v is not None}  # a None value removes the variable
         return subprocess.run([sys.executable, "manage.py", *args], cwd=Path(settings.BASE_DIR), env=env,
                               capture_output=True, text=True)

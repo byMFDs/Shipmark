@@ -101,7 +101,7 @@ Anti-gaming:
 
 Allowed dependencies: `django`, `django-environ`, `django-allauth`, `django-unfold`,
 `Pillow`, `markdown`, `nh3`, `dnspython`, `httpx`, `whitenoise`;
-prod only: `gunicorn`, `psycopg[binary]`. Dev only: `pip-audit`.
+prod only: `gunicorn`, `psycopg[binary]`, `django-storages[s3]`, `boto3`. Dev only: `pip-audit`.
 
 ---
 

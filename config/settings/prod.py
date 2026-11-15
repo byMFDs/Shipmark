@@ -1,5 +1,5 @@
 """Налаштування production: обов'язкові секрети, HTTPS, SMTP, журнали."""
-from pathlib import Path
+from urllib.parse import urlsplit
 
 from django.core.exceptions import ImproperlyConfigured
 
@@ -38,34 +38,52 @@ SITE_URL = (SITE_URL or f"https://{branding.SITE_DOMAIN}").rstrip("/")  # noqa: 
 if not SITE_URL.startswith("https://"):
     raise ImproperlyConfigured(f"SITE_URL must start with https:// in production (got {SITE_URL!r}).")
 
+ALLOWED_HOSTS = list(dict.fromkeys(["shipmark.me", "www.shipmark.me", *ALLOWED_HOSTS]))  # noqa: F405
+CSRF_TRUSTED_ORIGINS = list(dict.fromkeys([
+    "https://shipmark.me", "https://www.shipmark.me", *CSRF_TRUSTED_ORIGINS,  # noqa: F405
+]))
+
 # The admin must not sit at the guessable /admin/. Set ADMIN_URL in the environment to something private.
 if ADMIN_URL.lower() in ("", "admin/"):  # noqa: F405
     raise ImproperlyConfigured(
         'ADMIN_URL is missing or is "admin/". Set a private address in the environment, e.g. ADMIN_URL=staff-4f8k2/'
     )
 
-# Static files: `collectstatic` copies them to STATIC_ROOT (staticfiles/) with a content hash in the name
-# (app.3f2a1c.css) plus .gz/.br copies. WhiteNoise serves them from there with far-future caching.
-# A template that references a static file that does not exist fails loudly, which is what we want.
-#
-# Uploaded files (project screenshots) are written to MEDIA_ROOT on the server's own disk. The reverse proxy
-# must serve MEDIA_URL (/media/) from that folder, and the folder must be included in backups.
-# Moving to S3-compatible storage later (Backblaze B2, Cloudflare R2, Hetzner, MinIO, ...):
-#   1. Allowed-dependency check: this needs `django-storages[s3]`, which is NOT in the CLAUDE.md list; decide first.
-#   2. Change only STORAGES["default"] below (BACKEND "storages.backends.s3.S3Storage" + bucket options from env).
-#      The code reads files through Django's storage API (image.url, storage.delete in projects/signals.py),
-#      so no model or view changes are needed.
-#   3. Add the bucket/CDN host to img-src in CONTENT_SECURITY_POLICY (base.py), or screenshots will be blocked.
-#   4. Copy the existing media/ folder into the bucket once (same paths), then remove the /media/ proxy rule.
-MEDIA_ROOT = Path(env.str("MEDIA_ROOT", default=str(BASE_DIR / "media")))  # noqa: F405
-STORAGES = {
-    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
-    # Private: support attachments in SUPPORT_ROOT (outside MEDIA_ROOT, no URL). For S3 use a private bucket or prefix:
-    # {"BACKEND": "storages.backends.s3.S3Storage", "OPTIONS": {"location": "support", "default_acl": "private",
-    #  "querystring_auth": True, ...}} (needs django-storages, see the note above).
-    "support": {"BACKEND": "support.storage.PrivateStorage"},
+# Heroku's filesystem is temporary. Refuse startup without durable upload storage.
+# Explicit credentials prevent boto3 from trying instance metadata or unrelated credential files.
+_s3_required = ("AWS_STORAGE_BUCKET_NAME", "AWS_S3_REGION_NAME", "AWS_S3_ENDPOINT_URL",
+                "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY")
+_s3_values = {name: env.str(name, default="").strip() for name in _s3_required}  # noqa: F405
+_s3_missing = [name for name, value in _s3_values.items() if not value]
+if _s3_missing:
+    raise ImproperlyConfigured("Production S3 storage requires: " + ", ".join(_s3_missing))
+_s3_endpoint = urlsplit(_s3_values["AWS_S3_ENDPOINT_URL"])
+if (_s3_endpoint.scheme != "https" or not _s3_endpoint.hostname
+        or _s3_endpoint.username or _s3_endpoint.password or _s3_endpoint.query or _s3_endpoint.fragment
+        or _s3_endpoint.path not in ("", "/") or any(char.isspace() for char in _s3_endpoint.netloc)):
+    raise ImproperlyConfigured("AWS_S3_ENDPOINT_URL must be an HTTPS origin without credentials, path or query.")
+_s3_options = {
+    "bucket_name": _s3_values["AWS_STORAGE_BUCKET_NAME"],
+    "region_name": _s3_values["AWS_S3_REGION_NAME"],
+    "endpoint_url": _s3_values["AWS_S3_ENDPOINT_URL"].rstrip("/"),
+    "access_key": _s3_values["AWS_ACCESS_KEY_ID"],
+    "secret_key": _s3_values["AWS_SECRET_ACCESS_KEY"],
+    "addressing_style": "path",  # one exact HTTPS origin in CSP, including S3-compatible providers
+    "signature_version": "s3v4",
+    "default_acl": None,  # private bucket, no public policy; also supports providers with ACLs disabled
+    "querystring_auth": True,
+    "querystring_expire": 3600,
+    "file_overwrite": False,
 }
+# Media URLs are signed. The bucket and both prefixes must deny anonymous access.
+STORAGES = {
+    "default": {"BACKEND": "storages.backends.s3.S3Storage", "OPTIONS": {**_s3_options, "location": "media"}},
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+    "support": {"BACKEND": "support.s3_storage.PrivateS3Storage", "OPTIONS": {**_s3_options, "location": "support"}},
+}
+CONTENT_SECURITY_POLICY = CONTENT_SECURITY_POLICY.replace(  # noqa: F405
+    "img-src 'self' data:", f"img-src 'self' data: https://{_s3_endpoint.netloc}",
+)
 # SMTP for the support notification (base.py reads EMAIL_HOST etc. from env); the console backend is dev only.
 EMAIL_BACKEND = env.str("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")  # noqa: F405
 

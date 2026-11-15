@@ -8,8 +8,9 @@ import os
 
 from config.jsonlog import logging_config
 
-# Listen on localhost only: the reverse proxy (nginx, Caddy, ...) is the one facing the internet.
-bind = os.environ.get("GUNICORN_BIND", "127.0.0.1:8000")
+# Heroku supplies PORT. Local development keeps its loopback-only default.
+heroku_port = os.environ.get("PORT")
+bind = f"0.0.0.0:{int(heroku_port)}" if heroku_port else os.environ.get("GUNICORN_BIND", "127.0.0.1:8000")
 
 # Rule of thumb is 2 x CPU cores + 1. Each worker holds one DB connection (CONN_MAX_AGE in prod.py),
 # so keep workers well below PostgreSQL's max_connections (default 100).

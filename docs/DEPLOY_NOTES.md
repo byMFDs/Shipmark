@@ -1,6 +1,6 @@
 # Deploy notes
 
-Launch hosting is Heroku with managed PostgreSQL and S3-compatible object storage. The generic Linux examples below are historical operational references; Heroku steps are in `docs/DEPLOY_CHECKLIST.md` (launch stage 7).
+Launch hosting is Heroku with managed PostgreSQL and S3-compatible object storage. The generic Linux examples below are historical operational references; Heroku steps are in `docs/DEPLOY_CHECKLIST.md`. Production uploads use S3; the disk/nginx examples below apply only to historical single-server deployments.
 Paths assume the app lives in `/srv/shipmark` with its virtualenv in `.venv`; change them to yours.
 
 ## Environment variables
@@ -21,18 +21,20 @@ Set them in the real environment or in `/srv/shipmark/.env` (gitignored; real va
 | `ADMIN_URL` | yes | Private admin address, e.g. `staff-4f8k2/`. `admin/` is refused at startup |
 | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | yes | OAuth App. Callback URL: `https://YOUR.DOMAIN/accounts/github/login/callback/` |
 | `GITHUB_API_TOKEN` | **yes** (for `reverify_repos`) | Fine-grained or classic token with **no scopes** (public data only). Lifts GitHub's limit from 60 to 5000 requests/hour. One repo check costs up to ~10 requests, so without it the weekly re-check of repositories stops at the limit after a handful of repos (nothing breaks: it continues next run) |
-| `MEDIA_ROOT` | no | Folder for uploads. Default `<project>/media` |
+| `AWS_STORAGE_BUCKET_NAME`, `AWS_S3_REGION_NAME`, `AWS_S3_ENDPOINT_URL` | yes | Private S3-compatible bucket, region, HTTPS origin; no disk fallback in production |
+| `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` | yes | Bucket-scoped credentials; not committed. Both media and support prefixes deny anonymous access |
+| `MEDIA_ROOT` | dev only | Local uploads; production uses the required S3 configuration below |
 | `SUPPORT_INBOX_EMAIL` | no | Where the notice about each support message goes. Empty: no email, messages wait in the admin inbox |
 | `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `EMAIL_USE_TLS`, `DEFAULT_FROM_EMAIL` | with `SUPPORT_INBOX_EMAIL` | SMTP for that notice (Gmail: see "Support inbox"). Prod uses the SMTP backend; dev prints emails in the terminal |
-| `SUPPORT_ROOT` | no | Private folder for support attachments, **outside** `MEDIA_ROOT`, never served. Default `<project>/private/support` |
-| `CLIENT_IP_HEADER` | recommended | `HTTP_X_REAL_IP` when nginx sets `proxy_set_header X-Real-IP $remote_addr;`. Without it every visitor looks like the proxy and shares one support rate limit |
+| `SUPPORT_ROOT` | dev only | Private local attachments, outside MEDIA_ROOT; production uses the private S3 `support/` prefix |
+| `CLIENT_IP_HEADER` | recommended | Direct trusted Heroku router: `HTTP_X_FORWARDED_FOR` (rightmost appended address, verify the chain). Historical nginx: overwritten `HTTP_X_REAL_IP`. Without explicit trust only REMOTE_ADDR is used |
 | `PUBLIC_USER_COUNT_MIN` | no | Hide "<n> people joined" in the header until there are more accounts than this. Default 0 |
 | `COMMUNITY_ENABLED` | no | `true` switches the community on (`/community/`, the header link). Default **false** in prod: every community route is 404. See "Community: switching it on" |
 | `SECURE_HSTS_SECONDS` | no | Default 3600. Raise to 31536000 after HTTPS has worked for a few days |
 | `SECURE_HSTS_INCLUDE_SUBDOMAINS`, `SECURE_HSTS_PRELOAD` | no | Default true |
 | `LOG_LEVEL` | no | Default `INFO` |
 | `LOG_DIR` | no | Folder for `errors.jsonl` and `notfound.jsonl`. Default `<project>/logs`. Must be writable by the gunicorn user |
-| `GUNICORN_BIND`, `WEB_CONCURRENCY` | no | Default `127.0.0.1:8000`, 3 workers |
+| `GUNICORN_BIND`, `WEB_CONCURRENCY` | no | Without PORT: loopback default. With Heroku PORT: `0.0.0.0` on that port, overriding GUNICORN_BIND; 3 workers by default |
 | `DEBUG` | no | Ignored in prod (always off) |
 
 ## Each release
@@ -106,15 +108,14 @@ of the data: back it up (below), and it does not follow you if the app runs on m
   is kept for appeals) and when the uploader deletes the account.
 - Limits: 5 MB per upload, 20 profile-picture or cover uploads and 5 GitHub downloads per person per hour; community:
   10 pictures per person per hour, 4 per thread, 2 per reply, none in the first 24 hours of an account.
-`config/settings/prod.py` has a 4-step note for moving to S3-compatible storage. It needs `django-storages`, which is not
-on the allowed list yet, so decide that together first. No model or view changes are needed.
+Production now uses S3-compatible storage with required environment variables (table above). `media/` objects have signed image URLs; `support/` attachments have no browser URL and are streamed only by the permission-checked staff view. Both prefixes and the bucket are private; keep anonymous access blocked. Missing variables stop startup. Dev storage is unchanged. Root `requirements.txt` selects production dependencies, `.python-version` selects Python 3.12, and the Python buildpack runs collectstatic unless explicitly disabled. See `docs/DEPLOY_CHECKLIST.md` for Heroku, backup and migration steps.
 
 ### Logs
 
 Everything is one JSON object per line on stdout: the app, Django errors (`django.request` for 4xx/5xx), and gunicorn
 (`gunicorn.access`: `METHOD /path STATUS BYTES MILLISECONDS`). The process manager collects it
 (systemd: `journalctl -u shipmark -o cat | jq .`). Client IP addresses and user agents are **not** logged by the app,
-because the privacy page says the application does not record raw IPs. Launch policy: Heroku routing logs include visitor IPs; routing and application stdout share the Heroku log stream, kept for up to approximately one week and readable only by the account holder. No long-term log drain or logging add-on is used at launch. Cloudflare is DNS-only: update Privacy before enabling a traffic proxy, drain or log add-on. Daily `prune_support` physically removes expired database-cache rows; stage 6 checks stdout route redaction.
+because the privacy page says the application does not record raw IPs. Launch policy: Heroku routing logs include visitor IPs; routing and application stdout share the Heroku log stream, kept for up to approximately one week and readable only by the account holder. No long-term log drain or logging add-on is used at launch. Cloudflare is DNS-only: update Privacy before enabling a traffic proxy, drain or log add-on. Daily `prune_support` physically removes expired database-cache rows; stdout route redaction is regression-tested.
 
 ### Error log files and `show_errors`
 
@@ -372,8 +373,7 @@ with bans any more. **Do not roll the migration back after `rehash_bans`:** conv
 **Вкладення лежать приватно.** Папка `SUPPORT_ROOT` (типово `/srv/shipmark/private/support`) — поза `MEDIA_ROOT`,
 nginx її **не** роздає (не додавай для неї `location`). Права: власник — користувач, від якого працює gunicorn,
 `chmod 700`. Резервна копія — окремим рядком cron (розділ Backups). Перенесення в S3: у `config/settings/prod.py`
-зміни лише `STORAGES["support"]` на приватний бакет або префікс (`default_acl: private`), потрібен `django-storages`
-(його немає в дозволеному списку, спершу погодь).
+у production вже налаштовано приватний префікс `support/` через дозволений django-storages; staff view і заборона browser URL збережені. Бакет має забороняти anonymous доступ; див. DEPLOY_CHECKLIST.
 
 **IP для ліміту.** У nginx: `proxy_set_header X-Real-IP $remote_addr;` і в `.env`: `CLIENT_IP_HEADER=HTTP_X_REAL_IP`.
 Адреса не зберігається: з неї рахується солений хеш, який живе в кеші до 24 годин.
@@ -467,7 +467,7 @@ no community code runs on a request. Export and account deletion handle communit
    second account, reply with text or an image, report it and handle the report in `/mod/`.
 6. The proxy's upload limit (`client_max_body_size 25m`) already covers a thread with 4 pictures of 5 MB.
 7. The Terms changed for the community (`TERMS_VERSION` 2026-11-13): signed-in people accept them again on their next
-   visit. The texts are drafts: have the community parts of Terms and Privacy reviewed with the rest.
+   visit. Have the community parts of Terms and Privacy reviewed with the rest before enabling the feature.
 
 To switch it off again, unset the variable and restart: posts stay in the database and come back when it is on.
 `seed_community` (demo content) refuses to run without `DEBUG`; never copy a development database with demo

@@ -13,7 +13,7 @@
 | 4 | Перевірити посилання, видалити зайві файли, виміряти CSS/JS | Завершено |
 | 5 | Перевірити сторінки у Firefox, шість ширин, дві теми | Завершено |
 | 6 | Аудит безпеки, виправлення з регресійними тестами та звіт | Завершено |
-| 7 | Підготувати Heroku, S3, статичні файли та інструкцію без деплою | Очікує |
+| 7 | Підготувати Heroku, S3, статичні файли та інструкцію без деплою | Завершено |
 
 Після кожного етапу: Django check, тести змінених застосунків, оновлення цього журналу, коміт і короткий український звіт.
 Зупинка: тести не проходять після двох чесних спроб; потрібна зміна поза проєктом; потрібні секрети; потрібне рішення, що змінює юридичний зміст.
@@ -175,3 +175,28 @@
 - Повтор pip-audit із S3: 36 production-залежностей, 0 відомих вразливостей. psql/pg_isready й доступної PostgreSQL немає: postgres:// parsing перевірено без з'єднання, PostgreSQL migrations не перевірено.
 - `docs/DEPLOY_CHECKLIST.md`: Heroku/Postgres/Scheduler, тільки порожні env placeholders у dotenv-блоці, production OAuth callback, DNS-only і apex flattening, jobs 10 min/daily, createcachetable до відкриття app, backup/retention/restore й ручний smoke. reverify_repos вже має due_links/7 днів — поведінку не змінювали.
 - P1: `support accounts.test_people` — усі 84 тести OK (6,0 с); check/diff check чисті. Виправлення йде окремим security-комітом перед фінальним Heroku preparation commit.
+
+## Остаточний стан — ALL STAGES DONE
+
+| Етап | Коміт |
+|---|---|
+| 0 | `711197b` |
+| 1 | `b541bed` |
+| 2 | `ab893da` |
+| 3 | `267c27f` |
+| 4 | `fa1d2a9` |
+| 5 | `c4e823e` |
+| 6 | `a730a80`, `9cf2c74`; додаткова група `5587e3e` |
+| 7 | Цей коміт — `Launch: Heroku preparation` |
+
+- Фінальні тести: 1162/1162 OK (107,6 с, TESTING + MD5 лише тестових паролів), check/deploy check/diff check чисті. Штатний етап-3 набір без MD5 також пройшов: 515/515.
+- Підготовка: 96 SVG-стікерів, picker/controls/manifest прибрано; legacy field і migrations збережені. Логотип S перевірено у 16px, moderator — червоний щит, official — незмінена синя розетка. Юридичні тексти сімома мовами та журнал before/after в одному коміті.
+- Cleanup: шість додаткових невживаних SVG; на етапі 4 CSS 187883 → 187163 байти, JS 55470 → 55470. Після трьох layout-виправлень кінцевий CSS 187239, JS 55470. Firefox: 708 сторінкових + 48 interaction screenshots, обидві теми й усі шість ширин; final overflow/broken images/small targets 0.
+
+| Безпека | High | Medium | Low | Відкриті межі |
+|---|---|---|---|---|
+| Підтверджені знахідки | 0 | 3 виправлено | 1 виправлено | Конкурентні rate limits потребують навантажувального огляду; live pentest/OAuth/інфраструктура не перевірені |
+
+- pip-audit: production із S3 36 пакетів / dev 47; 0 відомих вразливостей. WhiteNoise compressed manifest 248 entries, DEBUG=False CSS 200; SQLite migrations і postgres:// parsing перевірено, PostgreSQL migrations — ні.
+- Власник вручну: вибрати S3 й створити private bucket/credentials, перевірити IAM/unsigned access/видалення та 14-day backup retention+restore; створити Heroku app, Postgres/Scheduler і production GitHub OAuth App; встановити env, DNS-only/HTTPS і Scheduler; пройти юридичний/незалежний security огляд, реальні sign-in/upload/support smoke та iPhone/Android. Докладно — DEPLOY_CHECKLIST і SECURITY_REPORT.
+- Не виконано push/merge/deploy або створення зовнішніх ресурсів; не змінено моделі/міграції/permissions/hallmark rules/URLs. Старі записи зупинок у цьому файлі збережені як історія; актуальний стан — ця таблиця й таблиця на початку.
