@@ -117,22 +117,7 @@
                 {% if uptime.last_checked_at %}
                   <p class="uptime__last">{% blocktranslate with time=uptime.last_checked_at|timesince trimmed %}Last checked {{ time }} ago{% endblocktranslate %}</p>
                 {% endif %}
-                <div class="uptime-strip">
-                  <ol class="uptime-strip__days" aria-label="{% translate 'Daily results, last 30 days' %}">
-                    {% for day in uptime.days %}
-                      <li class="uptime-strip__day is-{{ day.state }}"><span class="visually-hidden">{{ day.date|date:"j M" }}:
-                        {% if not day.total %}{% translate "no checks" %}{% else %}{% blocktranslate with ok=day.ok total=day.total trimmed %}{{ ok }} of {{ total }} checks up{% endblocktranslate %}{% endif %}</span></li>
-                    {% endfor %}
-                  </ol>
-                  <span class="uptime-strip__head" aria-hidden="true"></span>
-                </div>
-                <div class="uptime-strip__axis label" aria-hidden="true"><span>{% translate "30 days ago" %}</span><span>{% translate "Today" context "uptime" %}</span></div>
-                <ul class="uptime-legend" aria-hidden="true">
-                  <li><span class="uptime-strip__day is-up"></span>{% translate "Up" context "uptime" %}</li>
-                  <li><span class="uptime-strip__day is-partial"></span>{% translate "Some checks failed" %}</li>
-                  <li><span class="uptime-strip__day is-down"></span>{% translate "Down" context "uptime" %}</li>
-                  <li><span class="uptime-strip__day is-none"></span>{% translate "No checks" %}</li>
-                </ul>
+                {% include "projects/_uptime_bars.html" with summary=uptime %}
               </section>
             {% endif %}
           </div>
@@ -178,4 +163,4 @@
     </article>
   </div>
 {% endblock %}
-{% block scripts %}{% if embed %}<script type="module" src="{% static 'js/copy.js' %}"></script>{% endif %}{% if log_form %}<script type="module" src="{% static 'js/build-log.js' %}"></script>{% endif %}<script type="module" src="{% static 'js/social.js' %}"></script>{% endblock %}
+{% block scripts %}{% if embed %}<script type="module" src="{% static 'js/copy.js' %}"></script>{% endif %}{% if log_form %}<script type="module" src="{% static 'js/build-log.js' %}"></script>{% endif %}<script type="module" src="{% static 'js/social.js' %}"></script><script type="module" src="{% static 'js/uptime.js' %}"></script>{% endblock %}

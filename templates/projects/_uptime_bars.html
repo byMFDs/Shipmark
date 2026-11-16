@@ -1,0 +1,25 @@
+{# Стовпчики аптайму за 30 днів: висота = відсоток дня. Параметри: summary, example (прапорець), compact (без підписів і легенди). #}
+{% load i18n %}
+{% with counts=summary.day_counts %}
+<div class="uptime-bars{% if compact %} uptime-bars--compact{% endif %}" data-uptime-bars>
+  <p class="visually-hidden">{% if example %}{% translate "Example data" %}. {% endif %}{% if summary.total %}{% blocktranslate with percent=summary.percent|floatformat:"-1" total=summary.total up=counts.up partial=counts.partial down=counts.down none=counts.none trimmed %}Uptime over the last 30 days: {{ percent }}% across {{ total }} checks. Days fully up: {{ up }}. Days with some failed checks: {{ partial }}. Days down: {{ down }}. Days without checks: {{ none }}.{% endblocktranslate %}{% else %}{% translate "No checks" %}.{% endif %}</p>
+  <ol class="uptime-bars__days" aria-label="{% translate 'Daily results, last 30 days' %}">
+    {% for day in summary.days %}
+      <li class="uptime-bar is-{{ day.state }} uptime-bar--h{{ day.step }}" tabindex="0">
+        <span class="uptime-bar__fill" aria-hidden="true"></span>
+        <span class="uptime-bar__tip" aria-hidden="true">{% if example %}{% translate "Example data" %}{% else %}{{ day.date|date:"j M" }}{% endif %} · {% if day.total %}{{ day.percent|floatformat:"-1" }}%{% else %}{% translate "no checks" %}{% endif %}</span>
+        <span class="visually-hidden">{% if not example %}{{ day.date|date:"j M" }}: {% endif %}{% if not day.total %}{% translate "no checks" %}{% else %}{% blocktranslate with ok=day.ok total=day.total trimmed %}{{ ok }} of {{ total }} checks up{% endblocktranslate %}{% endif %}</span>
+      </li>
+    {% endfor %}
+  </ol>
+  {% if not compact %}
+    <div class="uptime-bars__axis label" aria-hidden="true"><span>{% translate "30 days ago" %}</span><span>{% translate "Today" context "uptime" %}</span></div>
+    <ul class="uptime-legend" aria-hidden="true">
+      <li><span class="uptime-bar uptime-bar--swatch is-up"></span>{% translate "Up" context "uptime" %}</li>
+      <li><span class="uptime-bar uptime-bar--swatch is-partial"></span>{% translate "Some checks failed" %}</li>
+      <li><span class="uptime-bar uptime-bar--swatch is-down"></span>{% translate "Down" context "uptime" %}</li>
+      <li><span class="uptime-bar uptime-bar--swatch is-none"></span>{% translate "No checks" %}</li>
+    </ul>
+  {% endif %}
+</div>
+{% endwith %}

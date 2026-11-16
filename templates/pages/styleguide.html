@@ -57,11 +57,8 @@
             <p class="sg-label">Loop · live pulse, 2.4 s</p>
             <p class="hallmark__chip sg-inline"><span class="pulse-dot" aria-hidden="true"></span>Live</p>
 
-            <p class="sg-label">Loop · uptime cells ticking, 6 s</p>
-            <div class="tick-strip" aria-hidden="true">
-              {% for i in "012345678901234567890123456789" %}<span class="tick-strip__cell{% if forloop.counter == 12 %} is-miss{% endif %}"></span>{% endfor %}
-              <span class="tick-strip__head"></span>
-            </div>
+            <p class="sg-label">Uptime bars · rise once on scroll, example data</p>
+            {% include "projects/_uptime_bars.html" with summary=example_uptime example=True %}
 
             <p class="sg-label">Loop · blinking cursor on a mono label, 1.1 s</p>
             <p class="label cursor">Less talk. More receipts.</p>

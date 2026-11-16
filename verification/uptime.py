@@ -28,6 +28,9 @@ WINDOW = timedelta(days=30)
 WINDOW_DAYS = 30
 STEADY_MIN_CHECKS = 40
 STEADY_MIN_PERCENT = 95
+BAR_FLOOR = 90      # a day at or below this percent is drawn as the shortest bar
+BAR_MIN = 15        # shortest visible bar, in percent of the track height (days with no data share it)
+BAR_STEP = 5        # bar heights are rounded up to whole steps: CSS classes carry them (the CSP forbids inline style)
 NO_GET_RETRY = ("timeout",)  # a site that timed out on HEAD will time out on GET too; do not wait twice
 
 
@@ -182,12 +185,37 @@ def is_steady(project, now=None):
 
 # ---------- Project page ----------
 
+def bar_height(percent):
+    """Висота стовпчика дня у відсотках висоти доріжки.
+
+    Bar height for a day's uptime percent: 90-100% is stretched over the whole track, so 99% and 100% differ
+    visibly. At or below 90% (and with no data) the bar keeps a minimum height, so it never disappears."""
+    if percent is None:
+        return BAR_MIN
+    share = min(max((percent - BAR_FLOOR) / (100 - BAR_FLOOR), 0), 1)
+    return round(BAR_MIN + (100 - BAR_MIN) * share)
+
+
 @dataclass
 class Day:
-    """Один день у смужці аптайму."""
+    """Один день у стовпчиках аптайму."""
     date: object
     total: int = 0
     ok: int = 0
+
+    @property
+    def percent(self):
+        """Відсоток успішних перевірок за день або None, якщо перевірок не було."""
+        return percent(self.ok, self.total)
+
+    @property
+    def height(self):
+        return bar_height(self.percent)
+
+    @property
+    def step(self):
+        """Висота у кроках по 5%: ім'я CSS-класу `uptime-bar--h<step>`."""
+        return -(-self.height // BAR_STEP)
 
     @property
     def state(self):
@@ -210,6 +238,14 @@ class Summary:
     @property
     def percent(self):
         return percent(self.ok, self.total)
+
+    @property
+    def day_counts(self):
+        """Скільки днів у кожному стані: для текстового опису стовпчиків."""
+        counts = {"up": 0, "partial": 0, "down": 0, "none": 0}
+        for day in self.days:
+            counts[day.state] += 1
+        return counts
 
 
 def uptime_summary(project, now=None):

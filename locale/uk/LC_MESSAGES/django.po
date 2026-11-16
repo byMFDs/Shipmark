@@ -5556,3 +5556,12 @@ msgstr "Напишіть повідомлення..."
 #: templates/pages/styleguide.html
 msgid "Logo"
 msgstr "Логотип"
+
+#: templates/projects/_uptime_bars.html
+msgid "Example data"
+msgstr "Приклад даних"
+
+#: templates/projects/_uptime_bars.html
+#, python-format
+msgid "Uptime over the last 30 days: %(percent)s%% across %(total)s checks. Days fully up: %(up)s. Days with some failed checks: %(partial)s. Days down: %(down)s. Days without checks: %(none)s."
+msgstr "Аптайм за останні 30 днів: %(percent)s%% на основі %(total)s перевірок. Днів без збоїв: %(up)s. Днів із частковими збоями: %(partial)s. Днів без доступу: %(down)s. Днів без перевірок: %(none)s."

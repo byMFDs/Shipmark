@@ -39,7 +39,7 @@ class PaletteMotionTests(SimpleTestCase):
     def test_new_animation_classes_explicitly_define_the_static_state(self):
         css = Path(settings.BASE_DIR) / "static/css"
         expected = {
-            "motion.css": (".strike .hallmark__chip", ".tick-strip__cell", ".uptime-strip__day",
+            "motion.css": (".strike .hallmark__chip", ".uptime-bar__fill",
                            ".motion-reveal", ".motion-child", "html.motion-arrival body::before",
                            "html.motion-arrival .site-main", ".log-entry--launch.motion-node-seen::before"),
             "components.css": (".motion-shimmer::before", ".btn--halo::before",

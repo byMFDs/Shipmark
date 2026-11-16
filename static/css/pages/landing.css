@@ -123,7 +123,7 @@
 .checks__ok { width: 1rem; height: 1rem; color: var(--accent-text); }
 .checks .pulse-dot { color: var(--accent-text); }
 
-.specimen__ticks { margin-top: var(--s-4); height: 0.875rem; }
+.specimen__ticks { margin-top: var(--s-4); }
 
 @media (min-width: 64em) {
   .hero { padding-top: var(--s-8); }

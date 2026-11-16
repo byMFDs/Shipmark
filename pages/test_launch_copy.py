@@ -44,3 +44,20 @@ class NumberedLabelTests(TestCase):
                 html = self.client.get("/", headers={"Accept-Language": lang}).content.decode()
                 self.assertNotRegex(html, r">\s*0\d\s*/\s*\S")
                 self.assertNotIn('class="eyebrow numeric"', html)
+
+
+class LandingUptimeExampleTests(TestCase):
+    """Лендинг показує стовпчики лише як позначений приклад, а реальні проєкти не отримують вигаданих даних."""
+    def test_landing_example_is_labelled_and_compact(self):
+        html = self.client.get("/").content.decode()
+        self.assertIn("data-uptime-bars", html)
+        self.assertIn("Example data", html)
+        self.assertIn("Illustrative project", html)
+        self.assertIn("uptime-bars--compact", html)
+        self.assertIn("js/uptime.js", html)
+
+    def test_example_summary_is_not_a_real_project(self):
+        from pages.views import example_uptime
+        summary = example_uptime()
+        self.assertEqual(len(summary.days), 30)
+        self.assertTrue(all(day.date is None for day in summary.days))

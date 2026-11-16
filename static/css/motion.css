@@ -89,7 +89,6 @@ html.js.is-paused *::after,
 /* ---------- The strike: earned marks pressed in one after another, once ---------- */
 /* Put .strike on any block with hallmarks. The base styles are the final state. */
 
-/* The last mark settles at 660ms; uptime starts immediately afterwards. */
 .strike .hallmark.is-earned:nth-child(1) { --strike-at: 0ms; }
 .strike .hallmark.is-earned:nth-child(2) { --strike-at: 120ms; }
 .strike .hallmark.is-earned:nth-child(3) { --strike-at: 240ms; }
@@ -116,65 +115,54 @@ html.js.is-paused *::after,
   background: var(--signal);
 }
 
-.tick-strip {
-  --cells: 30;
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(var(--cells), minmax(0, 1fr));
-  gap: 2px;
-  height: 1.25rem;
-}
-.tick-strip__cell { background: var(--signal); }
-.tick-strip__cell.is-miss { background: var(--line-strong); }
-.tick-strip__head { opacity: 0; }
-
+/* Uptime bars rise once when they scroll into view (uptime.js adds .is-in). Without JS, or with reduced motion,
+   the bars are simply there. Transform only; the bottom edge stays put. */
 @media (prefers-reduced-motion: no-preference) {
-  :is(.tick-strip__cell, .uptime-strip__day) {
-    animation: uptime-fill 180ms var(--ease-out) calc(660ms + var(--cell, 0) * 30ms) both;
-    transform-origin: bottom;
+  .js .uptime-bars:not(.is-in) .uptime-bar__fill { transform: scaleY(0); }
+  .js .uptime-bars.is-in .uptime-bar__fill {
+    animation: uptime-rise 420ms var(--ease-out) calc(var(--cell, 0) * 24ms) both;
   }
 }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(1) { --cell: 0; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(2) { --cell: 1; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(3) { --cell: 2; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(4) { --cell: 3; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(5) { --cell: 4; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(6) { --cell: 5; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(7) { --cell: 6; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(8) { --cell: 7; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(9) { --cell: 8; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(10) { --cell: 9; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(11) { --cell: 10; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(12) { --cell: 11; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(13) { --cell: 12; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(14) { --cell: 13; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(15) { --cell: 14; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(16) { --cell: 15; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(17) { --cell: 16; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(18) { --cell: 17; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(19) { --cell: 18; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(20) { --cell: 19; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(21) { --cell: 20; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(22) { --cell: 21; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(23) { --cell: 22; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(24) { --cell: 23; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(25) { --cell: 24; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(26) { --cell: 25; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(27) { --cell: 26; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(28) { --cell: 27; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(29) { --cell: 28; }
-:is(.tick-strip__cell, .uptime-strip__day):nth-child(30) { --cell: 29; }
-@keyframes uptime-fill {
-  from { opacity: 0; transform: scaleY(0); }
-  to { opacity: 1; transform: none; }
+.uptime-bars__days > .uptime-bar:nth-child(1) { --cell: 0; }
+.uptime-bars__days > .uptime-bar:nth-child(2) { --cell: 1; }
+.uptime-bars__days > .uptime-bar:nth-child(3) { --cell: 2; }
+.uptime-bars__days > .uptime-bar:nth-child(4) { --cell: 3; }
+.uptime-bars__days > .uptime-bar:nth-child(5) { --cell: 4; }
+.uptime-bars__days > .uptime-bar:nth-child(6) { --cell: 5; }
+.uptime-bars__days > .uptime-bar:nth-child(7) { --cell: 6; }
+.uptime-bars__days > .uptime-bar:nth-child(8) { --cell: 7; }
+.uptime-bars__days > .uptime-bar:nth-child(9) { --cell: 8; }
+.uptime-bars__days > .uptime-bar:nth-child(10) { --cell: 9; }
+.uptime-bars__days > .uptime-bar:nth-child(11) { --cell: 10; }
+.uptime-bars__days > .uptime-bar:nth-child(12) { --cell: 11; }
+.uptime-bars__days > .uptime-bar:nth-child(13) { --cell: 12; }
+.uptime-bars__days > .uptime-bar:nth-child(14) { --cell: 13; }
+.uptime-bars__days > .uptime-bar:nth-child(15) { --cell: 14; }
+.uptime-bars__days > .uptime-bar:nth-child(16) { --cell: 15; }
+.uptime-bars__days > .uptime-bar:nth-child(17) { --cell: 16; }
+.uptime-bars__days > .uptime-bar:nth-child(18) { --cell: 17; }
+.uptime-bars__days > .uptime-bar:nth-child(19) { --cell: 18; }
+.uptime-bars__days > .uptime-bar:nth-child(20) { --cell: 19; }
+.uptime-bars__days > .uptime-bar:nth-child(21) { --cell: 20; }
+.uptime-bars__days > .uptime-bar:nth-child(22) { --cell: 21; }
+.uptime-bars__days > .uptime-bar:nth-child(23) { --cell: 22; }
+.uptime-bars__days > .uptime-bar:nth-child(24) { --cell: 23; }
+.uptime-bars__days > .uptime-bar:nth-child(25) { --cell: 24; }
+.uptime-bars__days > .uptime-bar:nth-child(26) { --cell: 25; }
+.uptime-bars__days > .uptime-bar:nth-child(27) { --cell: 26; }
+.uptime-bars__days > .uptime-bar:nth-child(28) { --cell: 27; }
+.uptime-bars__days > .uptime-bar:nth-child(29) { --cell: 28; }
+.uptime-bars__days > .uptime-bar:nth-child(30) { --cell: 29; }
+@keyframes uptime-rise {
+  from { transform: scaleY(0); opacity: 0; }
+  to { transform: none; opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .strike .hallmark__chip, .tick-strip__cell, .uptime-strip__day {
+  .strike .hallmark__chip, .uptime-bar__fill {
     animation: none !important;
     transform: none;
     opacity: 1;
   }
-  .tick-strip__head, .uptime-strip__head { opacity: 0; }
 }
 
 /* ---------- Blinking cursor after a mono label ---------- */

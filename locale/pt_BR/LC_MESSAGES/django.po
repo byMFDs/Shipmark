@@ -5501,3 +5501,12 @@ msgstr "Escreva uma mensagem..."
 #: templates/pages/styleguide.html
 msgid "Logo"
 msgstr "Logotipo"
+
+#: templates/projects/_uptime_bars.html
+msgid "Example data"
+msgstr "Dados de exemplo"
+
+#: templates/projects/_uptime_bars.html
+#, python-format
+msgid "Uptime over the last 30 days: %(percent)s%% across %(total)s checks. Days fully up: %(up)s. Days with some failed checks: %(partial)s. Days down: %(down)s. Days without checks: %(none)s."
+msgstr "Disponibilidade nos últimos 30 dias: %(percent)s%% em %(total)s verificações. Dias sem falhas: %(up)s. Dias com falhas parciais: %(partial)s. Dias fora do ar: %(down)s. Dias sem verificações: %(none)s."

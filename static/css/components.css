@@ -2021,3 +2021,120 @@ html:not(.js) .toasts:not(:empty) {
 .social-btn[aria-busy="true"] { cursor: progress; }
 .social-btn__count { font-family: var(--font-mono); font-size: var(--fs--1); font-variant-numeric: tabular-nums; color: var(--muted); }
 .social-note { margin: 0; }
+
+
+/* ---------- Uptime bars (project page, landing example) ---------- */
+/* One bar per day for 30 days; its height is that day's uptime (90-100% fills the track, see bar_height() in
+   verification/uptime.py). The height arrives as a class (uptime-bar--h3 ... h20, steps of 5%): the CSP has no
+   inline styles. State is never colour alone: up = solid, partial = striped, down = solid ink at the minimum
+   height (in this palette danger and signal are the same colour in the dark theme, so ink keeps it apart), no checks = hollow at the minimum height. */
+.uptime-bars { --bar-track: 3.5rem; margin-top: var(--s-4); }
+.uptime-bars--compact { --bar-track: 2.25rem; }
+
+.uptime-bars__days {
+  display: grid;
+  grid-template-columns: repeat(30, minmax(0, 1fr));
+  gap: 2px;
+  height: var(--bar-track);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.uptime-bar {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-width: 0;
+  height: 100%;
+}
+
+.uptime-bar__fill {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--h, 100%);
+  border: 1px solid var(--line-strong);
+  transform-origin: bottom;
+}
+
+.uptime-bar.is-up .uptime-bar__fill { background: var(--signal); border-color: var(--accent-text); }
+.uptime-bar.is-partial .uptime-bar__fill {
+  background: repeating-linear-gradient(135deg, var(--signal) 0 2px, transparent 2px 4px);
+  border-color: var(--accent-text);
+}
+.uptime-bar.is-down .uptime-bar__fill { background: var(--text); border-color: var(--text); }
+.uptime-bar.is-none .uptime-bar__fill { background: transparent; border-color: var(--line-strong); }
+
+.uptime-bar--h3 { --h: 15%; }
+.uptime-bar--h4 { --h: 20%; }
+.uptime-bar--h5 { --h: 25%; }
+.uptime-bar--h6 { --h: 30%; }
+.uptime-bar--h7 { --h: 35%; }
+.uptime-bar--h8 { --h: 40%; }
+.uptime-bar--h9 { --h: 45%; }
+.uptime-bar--h10 { --h: 50%; }
+.uptime-bar--h11 { --h: 55%; }
+.uptime-bar--h12 { --h: 60%; }
+.uptime-bar--h13 { --h: 65%; }
+.uptime-bar--h14 { --h: 70%; }
+.uptime-bar--h15 { --h: 75%; }
+.uptime-bar--h16 { --h: 80%; }
+.uptime-bar--h17 { --h: 85%; }
+.uptime-bar--h18 { --h: 90%; }
+.uptime-bar--h19 { --h: 95%; }
+.uptime-bar--h20 { --h: 100%; }
+
+/* Tooltip: date and percent. Opens on hover and on keyboard focus; the text alternative is in the item itself. */
+.uptime-bar__tip {
+  position: absolute;
+  bottom: calc(100% + var(--s-2));
+  left: 50%;
+  z-index: 5;
+  padding: var(--s-1) var(--s-2);
+  background: var(--raised);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-pop);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--fs--2);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity var(--t-fast) var(--ease-out);
+}
+
+.uptime-bar:nth-child(-n+4) .uptime-bar__tip { left: 0; transform: none; }
+.uptime-bar:nth-last-child(-n+4) .uptime-bar__tip { right: 0; left: auto; transform: none; }
+
+.uptime-bar:hover .uptime-bar__tip,
+.uptime-bar:focus-visible .uptime-bar__tip { opacity: 1; }
+
+.uptime-bars__axis {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: var(--s-2);
+}
+
+.uptime-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  margin: var(--s-4) 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: var(--fs--1);
+}
+
+.uptime-legend li { display: inline-flex; align-items: center; gap: var(--s-2); }
+.uptime-bar--swatch { display: block; width: 0.625rem; height: 0.875rem; }
+.uptime-bar--swatch.is-up { background: var(--signal); border: 1px solid var(--accent-text); }
+.uptime-bar--swatch.is-partial {
+  background: repeating-linear-gradient(135deg, var(--signal) 0 2px, transparent 2px 4px);
+  border: 1px solid var(--accent-text);
+}
+.uptime-bar--swatch.is-down { background: var(--text); border: 1px solid var(--text); }
+.uptime-bar--swatch.is-none { border: 1px solid var(--line-strong); }

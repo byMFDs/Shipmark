@@ -71,13 +71,10 @@
             <dl class="checks">
               <div class="checks__row"><dt>{% translate "Repo ownership" %}</dt><dd>{% icon "check" "checks__ok" %}<span class="visually-hidden">{% translate "confirmed" %}</span></dd></div>
               <div class="checks__row"><dt>{% translate "Domain control" %}</dt><dd>{% icon "check" "checks__ok" %}<span class="visually-hidden">{% translate "confirmed" %}</span></dd></div>
-              <div class="checks__row"><dt>{% translate "30-day uptime" %}</dt><dd class="numeric">99.9%</dd></div>
+              <div class="checks__row"><dt>{% translate "30-day uptime" %}</dt><dd class="numeric">{{ example_uptime.percent|floatformat:"-1" }}%</dd></div>
               <div class="checks__row"><dt class="visually-hidden">{% translate "Domain" %}</dt><dd><span class="pulse-dot" aria-hidden="true"></span>relay.example</dd></div>
             </dl>
-            <div class="tick-strip specimen__ticks" aria-hidden="true">
-              {% for i in "012345678901234567890123456789" %}<span class="tick-strip__cell{% if forloop.counter == 19 %} is-miss{% endif %}"></span>{% endfor %}
-              <span class="tick-strip__head"></span>
-            </div>
+            <div class="specimen__ticks">{% include "projects/_uptime_bars.html" with summary=example_uptime example=True compact=True %}</div>
           </div>
         </article>
         <figcaption class="label hero__caption" id="specimen-caption">{% translate "Illustrative project · real verification rules" %}</figcaption>
@@ -310,5 +307,7 @@
     </div>
   </section>
 {% endblock %}
+
+{% block scripts %}<script type="module" src="{% static 'js/uptime.js' %}"></script>{% endblock %}
 
 {% block footer %}{% site_footer flush=True %}{% endblock %}

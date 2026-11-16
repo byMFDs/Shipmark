@@ -17,7 +17,7 @@ from . import uptime
 from .domain import verification_for
 from .models import DomainVerification, UptimeCheck
 from .net import BlockedURL, FetchError, FetchResult
-from .uptime import percent, probe, steady_rule, uptime_summary, with_uptime
+from .uptime import BAR_MIN, Day, bar_height, percent, probe, steady_rule, uptime_summary, with_uptime
 
 V = DomainVerification
 
@@ -279,7 +279,7 @@ class ProjectPageTests(UptimeTestCase):
         self.assertContains(response, "97.5%")
         self.assertContains(response, "of 40 checks in the last 30 days")
         self.assertContains(response, "Last checked")
-        self.assertContains(response, 'class="uptime-strip__day is-partial"')
+        self.assertContains(response, 'class="uptime-bar is-partial uptime-bar--h')
         self.assertContains(response, "39 of 40 checks up")
 
     def test_live_without_checks_says_so(self):
@@ -323,3 +323,67 @@ class FinalHostTests(UptimeTestCase):
     def test_probe_without_expected_domain_keeps_old_behaviour(self):
         with self.fetch_to("https://elsewhere.com/"):
             self.assertTrue(probe("https://example.com/").ok)
+
+
+class BarScaleTests(UptimeTestCase):
+    """Висота стовпчиків: шкала 90-100% і порожній день."""
+    def test_scale_maps_90_to_100_percent_onto_the_track(self):
+        self.assertEqual(bar_height(100.0), 100)
+        self.assertEqual(bar_height(90.0), BAR_MIN)
+        self.assertEqual(bar_height(95.0), round(BAR_MIN + (100 - BAR_MIN) / 2))
+        self.assertGreater(bar_height(99.0), bar_height(98.0))
+
+    def test_low_and_missing_values_keep_a_visible_minimum(self):
+        for value in (89.9, 50.0, 0.0, None):
+            with self.subTest(value=value):
+                self.assertEqual(bar_height(value), BAR_MIN)
+        self.assertGreater(BAR_MIN, 0)
+
+    def test_day_height_step_and_state(self):
+        self.assertEqual((Day(None, 4, 4).height, Day(None, 4, 4).step, Day(None, 4, 4).state), (100, 20, "up"))
+        partial = Day(None, 40, 39)  # 97.5%
+        self.assertEqual((partial.percent, partial.state), (97.5, "partial"))
+        self.assertTrue(BAR_MIN < partial.height < 100)
+        down = Day(None, 3, 0)
+        self.assertEqual((down.percent, down.height, down.state), (0.0, BAR_MIN, "down"))
+        empty = Day(None)
+        self.assertEqual((empty.percent, empty.height, empty.state), (None, BAR_MIN, "none"))
+        self.assertEqual(empty.step, 3)
+
+    def test_summary_day_counts(self):
+        self.add_checks(ok=2, days_ago=1)
+        self.add_checks(ok=1, failed=1, days_ago=2)
+        self.add_checks(ok=0, failed=2, days_ago=3)
+        counts = uptime_summary(self.project, now=self.now).day_counts
+        self.assertEqual(counts, {"up": 1, "partial": 1, "down": 1, "none": 27})
+
+
+class BarsPageTests(UptimeTestCase):
+    """Стовпчики на сторінці проєкту: лише реальні дані, стан «немає даних», підписи."""
+    def page(self):
+        return self.client.get(reverse("projects:detail", args=[self.owner.username, self.project.slug])).content.decode()
+
+    def test_real_page_with_no_checks_shows_only_empty_bars_and_no_example(self):
+        html = self.page()
+        self.assertEqual(html.count('class="uptime-bar is-none uptime-bar--h3"'), 30)
+        self.assertNotIn("Example data", html)
+        self.assertNotIn("is-up uptime-bar", html.split('data-uptime-bars')[1].split("uptime-legend")[0])
+
+    def test_real_page_bars_follow_the_stored_checks(self):
+        self.add_checks(ok=2, days_ago=1)
+        self.add_checks(ok=39, failed=1, days_ago=2)
+        html = self.page()
+        self.assertIn('class="uptime-bar is-up uptime-bar--h20"', html)
+        self.assertIn(f'class="uptime-bar is-partial uptime-bar--h{Day(None, 40, 39).step}"', html)
+        self.assertEqual(html.count("uptime-bar__fill"), 30)
+        self.assertIn("Days fully up: 1.", html)
+        self.assertIn("Days with some failed checks: 1.", html)
+        self.assertIn("Days without checks: 28.", html)
+        self.assertIn('<span class="uptime-bar__tip" aria-hidden="true">', html)
+        self.assertIn("97.5%", html)
+
+    def test_markup_has_no_inline_style_and_loads_the_script(self):
+        self.add_checks(ok=3)
+        html = self.page()
+        self.assertNotIn("style=", html.split('data-uptime-bars')[1].split("</section>")[0])
+        self.assertIn("js/uptime.js", html)

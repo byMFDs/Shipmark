@@ -7,11 +7,23 @@ from accounts import people
 from projects.models import Tool
 from projects.proof import RULES
 from social.queries import project_rows, published_projects
+from verification.uptime import Day, Summary
 
 from .content import load_page
 from .explore import HALLMARK_CHOICES, SORTS, ExploreForm, explore, tag_options
 
 RECENT_ON_LANDING = 6
+
+
+def example_uptime():
+    """Вигадані дані аптайму для прикладу на лендингу.
+
+    Example data for the illustrative project on the landing page only (it is labelled "Example data" there).
+    Never used for a real project: real pages read UptimeCheck rows through uptime_summary()."""
+    days = [Day(None, total=8, ok=8) for _ in range(30)]
+    days[0], days[1] = Day(None), Day(None)   # no data yet: shows the empty bar
+    days[18] = Day(None, total=8, ok=7)       # one day with a failed check
+    return Summary(ok=sum(d.ok for d in days), total=sum(d.total for d in days), last_checked_at=None, days=days)
 
 
 def landing(request):
@@ -24,6 +36,7 @@ def landing(request):
     proof = [{"kind": kind, "rule": RULES[kind]} for kind in ("authored", "live", "steady")]
     return render(request, "pages/landing.html", {
         "recent": recent, "proof": proof, "github_configured": settings.GITHUB_OAUTH_CONFIGURED,
+        "example_uptime": example_uptime(),
     })
 
 
@@ -106,7 +119,8 @@ def styleguide(request):
         raise Http404
 
     tokens = [{"name": n, "light": light, "dark": dark, "use": use} for n, light, dark, use in STYLEGUIDE_TOKENS]
-    return render(request, "pages/styleguide.html", {"themes": ["light", "dark"], "tokens": tokens})
+    return render(request, "pages/styleguide.html", {"themes": ["light", "dark"], "tokens": tokens,
+                                                          "example_uptime": example_uptime()})
 
 
 def content_page(request, slug):
