@@ -1,5 +1,7 @@
 """Адмінка користувачів і бейджів: ролі, призупинення, журнал змін."""
+from django import forms
 from django.contrib import admin, messages
+from django.core.exceptions import ValidationError
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.db.models import Count, Q
 from django.utils.translation import gettext_lazy as _
@@ -11,9 +13,15 @@ from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationFo
 from moderation import actions, audit
 from moderation.adminbase import AuditedModelAdmin
 
-from . import badges
+from projects.images import clean_avatar, clean_cover
+
+from . import avatars, badges
 from .models import ProfileLink, User, UserBadge
-from .roles import can_manage_badges
+from .roles import can_manage_badges, can_set_official_pictures
+from .usernames import RESERVED_USERNAMES
+
+PICTURE_FIELDS = ("avatar_upload", "remove_avatar", "cover_upload", "remove_cover")
+RAW_PICTURE_FIELDS = ("avatar", "avatar_source", "cover", "avatar_url")  # never edited as raw values: see UserAdmin
 
 
 class BadgePermissions:
@@ -92,9 +100,42 @@ class UserAddForm(UserCreationForm):
 
 
 class UserEditForm(UserChangeForm):
-    """Форма редагування користувача в адмінці."""
+    """Форма редагування користувача в адмінці.
+
+    Besides the usual fields: picture uploads for official and system accounts. UserAdmin.get_form removes them
+    for everyone who may not use them; the pictures pass through the same pipeline as Settings uploads."""
+    avatar_upload = forms.FileField(
+        required=False, label=_("Upload a picture"),
+        widget=forms.FileInput(attrs={"accept": "image/png,image/jpeg,image/webp"}),
+        help_text=_("PNG, JPEG or WebP, up to 5 MB. It is cropped to a square."),
+    )
+    remove_avatar = forms.BooleanField(required=False, label=_("Remove the avatar (show initials)"))
+    cover_upload = forms.FileField(
+        required=False, label=_("Cover image"),
+        widget=forms.FileInput(attrs={"accept": "image/png,image/jpeg,image/webp"}),
+        help_text=_("Optional. PNG, JPEG or WebP, up to 5 MB. It is cropped to a wide banner (3:1)."),
+    )
+    remove_cover = forms.BooleanField(required=False, label=_("Remove the cover image"))
+
     class Meta(UserChangeForm.Meta):
         model = User
+
+    def _picture(self, field, cleaner):
+        upload = self.cleaned_data.get(field)
+        if not upload:
+            return None
+        try:
+            return cleaner(upload)
+        except ValidationError as error:
+            self.add_error(field, error)
+        return None
+
+    def clean(self):
+        """Прогоняє завантажені картинки через спільний конвеєр зображень."""
+        data = super().clean()
+        self.avatar_content = self._picture("avatar_upload", clean_avatar) if "avatar_upload" in self.fields else None
+        self.cover_content = self._picture("cover_upload", clean_cover) if "cover_upload" in self.fields else None
+        return data
 
 
 @admin.register(User)
@@ -116,7 +157,7 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (_("Profile"), {"fields": ("display_name", "headline", "about", "location", "status", "github_login", "preferred_language", "email")}),
-        (_("Pictures"), {"fields": ("avatar", "avatar_source", "cover", "avatar_url")}),
+        (_("Pictures"), {"fields": ("avatar", "avatar_source", "cover", "avatar_url", *PICTURE_FIELDS)}),
         (_("Moderation"), {"fields": ("is_suspended",)}),
         (_("Permissions"), {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
         (_("Terms and dates"), {"fields": ("terms_version_accepted", "terms_accepted_at", "last_login", "date_joined")}),
@@ -127,10 +168,34 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
         """Не-суперкористувач не може змінювати ролі й права персоналу."""
         # Only superusers change roles. Otherwise staff with "change user" could make themselves superuser
         # and so reach everything that is superuser-only (badges, permanent sanctions).
-        fields = super().get_readonly_fields(request, obj)
+        # The stored picture values are read-only for everyone: they change only through the upload fields below
+        # (the image pipeline), never as raw text.
+        fields = tuple(super().get_readonly_fields(request, obj)) + RAW_PICTURE_FIELDS
+        if obj is not None and obj.username in RESERVED_USERNAMES:
+            # The system account ("shipmark") has a reserved name that the username validator refuses, so its
+            # form could never be saved; the name of a reserved account is not editable anyway.
+            fields += ("username",)
         if not request.user.is_superuser:
             fields = tuple(fields) + ("is_staff", "is_superuser", "groups", "user_permissions")
         return fields
+
+    def get_fieldsets(self, request, obj=None):
+        """Поля завантаження картинок показуються лише суперкористувачу на офіційному чи системному акаунті."""
+        fieldsets = super().get_fieldsets(request, obj)
+        if obj is not None and can_set_official_pictures(request.user, obj):
+            return fieldsets
+        return [(name, {**options, "fields": tuple(f for f in options["fields"] if f not in PICTURE_FIELDS)})
+                for name, options in fieldsets]
+
+    def get_form(self, request, obj=None, **kwargs):
+        """Прибирає поля завантаження картинок, якщо їх не можна використовувати.
+
+        Removing them from the class means a hand-made POST cannot use them either."""
+        form = super().get_form(request, obj, **kwargs)
+        if obj is None or not can_set_official_pictures(request.user, obj):
+            for name in PICTURE_FIELDS:
+                form.base_fields.pop(name, None)
+        return form
 
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
@@ -148,6 +213,8 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
         if formset.model is not UserBadge:
             return super().save_formset(request, form, formset, change)
         if not can_manage_badges(request.user):  # read-only inline; never save posted rows
+            # The admin reads these lists to write its change message; without them every save by staff 500s.
+            formset.new_objects, formset.changed_objects, formset.deleted_objects = [], [], []
             return None
         instances = formset.save(commit=False)
         for badge in formset.deleted_objects:
@@ -164,10 +231,34 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
     def save_model(self, request, obj, form, change):
         """Зберігає користувача; зміна «призупинено» йде в AuditLog."""
         # Editing the checkbox in the form is a moderation step too: log it like the actions do.
+        changed = []
+        if change and can_set_official_pictures(request.user, obj):
+            changed = self._save_pictures(obj, form)
         super().save_model(request, obj, form, change)
+        if changed:
+            audit.log("accounts.official_pictures", obj, actor=request.user, via="admin", changed=changed)
         if change and "is_suspended" in form.changed_data:
             audit.log("moderation.user.suspended" if obj.is_suspended else "moderation.user.unsuspended",
                       obj, actor=request.user, via="form")
+
+    def _save_pictures(self, obj, form):
+        """Застосовує завантажену чи видалену картинку; повертає, що змінено.
+
+        Same storage code as Settings (accounts.avatars): random file name, old file removed after commit."""
+        changed = []
+        if form.avatar_content is not None:
+            avatars.set_avatar(obj, form.avatar_content, User.AvatarSource.UPLOAD)
+            changed.append("avatar")
+        elif form.cleaned_data.get("remove_avatar") and obj.avatar:
+            avatars.remove_avatar(obj)
+            changed.append("avatar_removed")
+        if form.cover_content is not None:
+            avatars.set_cover(obj, form.cover_content)
+            changed.append("cover")
+        elif form.cleaned_data.get("remove_cover") and obj.cover:
+            avatars.remove_cover(obj)
+            changed.append("cover_removed")
+        return changed
 
     @action(description=_("Suspend selected users"), permissions=["change"])
     def suspend(self, request, queryset):

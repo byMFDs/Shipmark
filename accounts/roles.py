@@ -66,6 +66,15 @@ def can_manage_badges(user):
     return bool(getattr(user, "is_authenticated", False) and user.is_active and user.is_superuser)
 
 
+def can_set_official_pictures(actor, target):
+    """Змінювати аватарку й обкладинку офіційного чи системного акаунта може лише суперкористувач.
+
+    Only a superuser sets the avatar and cover of an official or system account (the "shipmark" account has no
+    sign-in, so its picture cannot be changed any other way). Ordinary accounts change theirs in Settings."""
+    from .system import is_system
+    return bool(can_manage_badges(actor) and getattr(target, "pk", None) and (is_system(target) or is_official(target)))
+
+
 # ---------- Sanctions (moderation.Sanction), evaluated per request ----------
 
 def active_sanctions(user):

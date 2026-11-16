@@ -5565,3 +5565,7 @@ msgstr "Приклад даних"
 #, python-format
 msgid "Uptime over the last 30 days: %(percent)s%% across %(total)s checks. Days fully up: %(up)s. Days with some failed checks: %(partial)s. Days down: %(down)s. Days without checks: %(none)s."
 msgstr "Аптайм за останні 30 днів: %(percent)s%% на основі %(total)s перевірок. Днів без збоїв: %(up)s. Днів із частковими збоями: %(partial)s. Днів без доступу: %(down)s. Днів без перевірок: %(none)s."
+
+#: accounts/admin.py
+msgid "Remove the avatar (show initials)"
+msgstr "Прибрати аватарку (показувати ініціали)"

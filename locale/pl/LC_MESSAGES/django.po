@@ -5550,3 +5550,7 @@ msgstr "Dane przykładowe"
 #, python-format
 msgid "Uptime over the last 30 days: %(percent)s%% across %(total)s checks. Days fully up: %(up)s. Days with some failed checks: %(partial)s. Days down: %(down)s. Days without checks: %(none)s."
 msgstr "Dostępność w ciągu ostatnich 30 dni: %(percent)s%% z %(total)s kontroli. Dni bez awarii: %(up)s. Dni z częściowymi awariami: %(partial)s. Dni niedostępności: %(down)s. Dni bez kontroli: %(none)s."
+
+#: accounts/admin.py
+msgid "Remove the avatar (show initials)"
+msgstr "Usuń awatar (pokazuj inicjały)"
