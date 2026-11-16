@@ -4110,10 +4110,6 @@ msgstr "As verificações continuam."
 msgid "Proof can expire."
 msgstr "A prova pode expirar."
 
-#: templates/pages/landing.html:101
-msgid "01 / The standard"
-msgstr "01 / O padrão"
-
 #: templates/pages/landing.html:102
 msgid "Three marks. Zero shortcuts."
 msgstr "Três selos. Nenhum atalho."
@@ -4156,10 +4152,6 @@ msgstr ""
 #: templates/pages/landing.html:134
 msgid "Read the full rules"
 msgstr "Ler as regras completas"
-
-#: templates/pages/landing.html:143
-msgid "02 / Out in the world"
-msgstr "02 / Já no mundo"
 
 #: templates/pages/landing.html:144
 msgid "Less pitch. More product."
@@ -4270,10 +4262,6 @@ msgstr "Um pequeno criador de formulários. Sem assinatura cara."
 #: templates/pages/landing.html:257
 msgid "Illustrative projects"
 msgstr "Projetos ilustrativos"
-
-#: templates/pages/landing.html:270
-msgid "03 / The work behind the mark"
-msgstr "03 / O trabalho por trás do selo"
 
 #: templates/pages/landing.html:271
 msgid "Show your work."

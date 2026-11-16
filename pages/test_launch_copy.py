@@ -1,7 +1,7 @@
 """Завершені редакційні тексти та погоджена політика запуску всіма мовами."""
 
 from django.conf import settings
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, TestCase
 
 from config import branding
 from pages.content import load_page
@@ -34,3 +34,13 @@ class LaunchCopyTests(SimpleTestCase):
                 self.assertNotIn("TODO", source)
                 self.assertNotIn("/u/<username>/", source)
                 self.assertNotRegex(source, r"(?i)\bsticker\b|вибраний стікер")
+
+
+class NumberedLabelTests(TestCase):
+    """Лендинг не має нумерованих ярликів на кшталт «01 / The standard» в жодній мові."""
+    def test_landing_has_no_numbered_section_labels(self):
+        for lang in ("en", "uk", "pl", "de", "es", "fr", "pt-br"):
+            with self.subTest(lang=lang):
+                html = self.client.get("/", headers={"Accept-Language": lang}).content.decode()
+                self.assertNotRegex(html, r">\s*0\d\s*/\s*\S")
+                self.assertNotIn('class="eyebrow numeric"', html)

@@ -4175,10 +4175,6 @@ msgstr "Les vérifications continuent."
 msgid "Proof can expire."
 msgstr "La preuve peut expirer."
 
-#: templates/pages/landing.html:101
-msgid "01 / The standard"
-msgstr "01 / La norme"
-
 #: templates/pages/landing.html:102
 msgid "Three marks. Zero shortcuts."
 msgstr "Trois poinçons. Aucun raccourci."
@@ -4221,10 +4217,6 @@ msgstr ""
 #: templates/pages/landing.html:134
 msgid "Read the full rules"
 msgstr "Lire toutes les règles"
-
-#: templates/pages/landing.html:143
-msgid "02 / Out in the world"
-msgstr "02 / Dans le monde réel"
 
 #: templates/pages/landing.html:144
 msgid "Less pitch. More product."
@@ -4335,10 +4327,6 @@ msgstr "Un petit créateur de formulaires. Sans gros abonnement."
 #: templates/pages/landing.html:257
 msgid "Illustrative projects"
 msgstr "Projets fictifs"
-
-#: templates/pages/landing.html:270
-msgid "03 / The work behind the mark"
-msgstr "03 / Le travail derrière le poinçon"
 
 #: templates/pages/landing.html:271
 msgid "Show your work."

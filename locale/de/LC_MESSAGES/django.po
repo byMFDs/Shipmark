@@ -4159,10 +4159,6 @@ msgstr "Die Prüfungen laufen weiter."
 msgid "Proof can expire."
 msgstr "Nachweise können ablaufen."
 
-#: templates/pages/landing.html:101
-msgid "01 / The standard"
-msgstr "01 / Der Standard"
-
 #: templates/pages/landing.html:102
 msgid "Three marks. Zero shortcuts."
 msgstr "Drei Zeichen. Keine Abkürzungen."
@@ -4205,10 +4201,6 @@ msgstr ""
 #: templates/pages/landing.html:134
 msgid "Read the full rules"
 msgstr "Alle Regeln lesen"
-
-#: templates/pages/landing.html:143
-msgid "02 / Out in the world"
-msgstr "02 / Draußen in der Welt"
 
 #: templates/pages/landing.html:144
 msgid "Less pitch. More product."
@@ -4319,10 +4311,6 @@ msgstr "Ein kleiner Formular-Baukasten. Kein teures Abo."
 #: templates/pages/landing.html:257
 msgid "Illustrative projects"
 msgstr "Beispielprojekte"
-
-#: templates/pages/landing.html:270
-msgid "03 / The work behind the mark"
-msgstr "03 / Die Arbeit hinter dem Zeichen"
 
 #: templates/pages/landing.html:271
 msgid "Show your work."

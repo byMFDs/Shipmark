@@ -349,7 +349,7 @@
   .landing-section h2 { font-size: var(--fs-5); }
 }
 
-/* 01 The standard: three marks, side by side from 48em. */
+/* The standard: three marks, side by side from 48em. */
 .standard {
   display: grid;
   gap: var(--s-7);
@@ -371,7 +371,6 @@
 .standard__top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-top: var(--s-4);
 }
 

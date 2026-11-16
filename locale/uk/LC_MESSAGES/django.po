@@ -4168,10 +4168,6 @@ msgstr "Перевірки не зупиняються."
 msgid "Proof can expire."
 msgstr "Докази мають термін дії."
 
-#: templates/pages/landing.html:101
-msgid "01 / The standard"
-msgstr "01 / Стандарт"
-
 #: templates/pages/landing.html:102
 msgid "Three marks. Zero shortcuts."
 msgstr "Три позначки. Без поблажок."
@@ -4214,10 +4210,6 @@ msgstr ""
 #: templates/pages/landing.html:134
 msgid "Read the full rules"
 msgstr "Усі правила"
-
-#: templates/pages/landing.html:143
-msgid "02 / Out in the world"
-msgstr "02 / Уже в мережі"
 
 #: templates/pages/landing.html:144
 msgid "Less pitch. More product."
@@ -4328,10 +4320,6 @@ msgstr "Маленький конструктор форм. Без велико�
 #: templates/pages/landing.html:257
 msgid "Illustrative projects"
 msgstr "Вигадані проєкти"
-
-#: templates/pages/landing.html:270
-msgid "03 / The work behind the mark"
-msgstr "03 / Робота за позначкою"
 
 #: templates/pages/landing.html:271
 msgid "Show your work."

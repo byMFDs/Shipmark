@@ -94,22 +94,20 @@
     </ul>
   </section>
 
-  {# ---------- 01 The standard ---------- #}
+  {# ---------- The standard ---------- #}
   <section class="landing-section" aria-labelledby="standard-title">
     <div class="container">
       <header class="section-head" data-reveal>
-        <p class="eyebrow">{% translate "01 / The standard" %}</p>
         <h2 id="standard-title">{% translate "Three marks. Zero shortcuts." %}</h2>
         <p class="lede">{% translate "A mark is earned by a check, not a checkbox." %}</p>
       </header>
 
       {# Rule text comes from projects/proof.py RULES, so this page cannot drift from the code. #}
-      <ol class="standard" data-reveal>
+      <ul class="standard" data-reveal>
         {% for step in proof %}
           <li class="standard__item">
             <hr class="rule">
             <div class="standard__top">
-              <span class="eyebrow numeric">0{{ forloop.counter }}</span>
               {% icon "check" "standard__check" %}
             </div>
             <h3 class="standard__name">{% hallmark_label step.kind %}</h3>
@@ -126,7 +124,7 @@
             </p>
           </li>
         {% endfor %}
-      </ol>
+      </ul>
 
       <div class="proof-note standard__note">{% icon "return" %}<span>{% translate "Marks are never permanent. If checks start failing, the marks come off." %}</span></div>
       <div class="standard__foot">
@@ -136,11 +134,10 @@
     </div>
   </section>
 
-  {# ---------- 02 Out in the world ---------- #}
+  {# ---------- Out in the world ---------- #}
   <section class="landing-section" aria-labelledby="recent-title">
     <div class="container">
       <header class="section-head" data-reveal>
-        <p class="eyebrow">{% translate "02 / Out in the world" %}</p>
         <h2 id="recent-title">{% translate "Less pitch. More product." %}</h2>
         <p class="lede">{% translate "A few things people actually put on the internet." %}</p>
         <a class="link-arrow section-head__aside" href="{{ explore_url }}"><span>{% translate "Discover projects" %}</span>{% icon "arrow-up-right" "arrow" %}</a>
@@ -260,14 +257,13 @@
     </div>
   </section>
 
-  {# ---------- 03 The work behind the mark ---------- #}
+  {# ---------- The work behind the mark ---------- #}
   <section class="landing-section" aria-labelledby="work-title">
     <div class="container">
       <hr class="rule work__rule">
       <div class="work" data-reveal>
         <div class="work__text">
-          <p class="eyebrow">{% translate "03 / The work behind the mark" %}</p>
-          <h2 id="work-title"><span>{% translate "Show your work." %}</span> <span>{% translate "Take your proof with you." %}</span></h2>
+            <h2 id="work-title"><span>{% translate "Show your work." %}</span> <span>{% translate "Take your proof with you." %}</span></h2>
           <p class="lede">{% blocktranslate with name=brand.SITE_NAME trimmed %}Keep a short public build log. Then put a live {{ name }} badge right in your GitHub README.{% endblocktranslate %}</p>
           <p class="mono work__note">{% translate "Small updates. A visible track record." %}</p>
         </div>
