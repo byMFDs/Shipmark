@@ -325,5 +325,6 @@ python manage.py prune_support        # cron in production (closed support messa
 python manage.py send_test_email      # support email check (--smtp in dev uses the EMAIL_* values)
 python scripts/check_comment_only.py [BASE]   # proves a change touched comments only
 python manage.py post_welcome         # once: pinned welcome thread from the system account
-python manage.py seed_community       # DEBUG only: demo community content (--clear removes it)
+python manage.py seed_launch_content  # production-safe, idempotent: discussion starters from the system account
+python manage.py seed_community       # DEBUG + non-production settings only: demo community content (--clear removes it)
 ```

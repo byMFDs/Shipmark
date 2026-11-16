@@ -8,9 +8,12 @@ Demo content for the community, for looking at the pages in development. DEBUG o
 Demo people are accounts named `demo-…` with an `@example.invalid` address and an unusable password (nobody can
 sign in as them). Their threads, replies, images and upvotes are made through community.services, the same code the
 pages use, then spread over the last two weeks so Hot, New and Top differ. Images are drawn here with Pillow and go
-through the normal image pipeline. Refuses to run unless DEBUG is on, so it never touches a production database.
+through the normal image pipeline. Refuses to run unless DEBUG is on and the settings are not production ones (see `refuse_in_production`), so it
+never touches a production database. Demo accounts are not counted in the "people joined" number and are not listed
+in the sitemap or in people search.
 """
 import io
+import os
 import random
 from datetime import timedelta
 
@@ -171,6 +174,17 @@ def seed():
     return threads, replies
 
 
+def refuse_in_production():
+    """Зупиняє команду поза розробкою.
+
+    Two independent checks: DEBUG must be on, and the settings must not be the production ones (production needs
+    an https SITE_URL and the prod settings module). Either one failing is enough to refuse."""
+    if not settings.DEBUG:
+        raise CommandError("seed_community runs only with DEBUG on (development).")
+    if os.environ.get("DJANGO_SETTINGS_MODULE", "").endswith(".prod") or settings.SITE_URL.startswith("https://"):
+        raise CommandError("seed_community refuses to run with production settings.")
+
+
 class Command(BaseCommand):
     """Команда seed_community."""
     help = "Create demo community content (DEBUG only). Removes the previous demo content first."
@@ -180,8 +194,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """Прибирає старий демо-вміст і створює новий (лише з DEBUG)."""
-        if not settings.DEBUG:
-            raise CommandError("seed_community runs only with DEBUG on (development).")
+        refuse_in_production()
         with transaction.atomic():
             removed = clear()
             if options["clear"]:

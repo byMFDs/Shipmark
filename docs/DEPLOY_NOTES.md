@@ -463,6 +463,8 @@ no community code runs on a request. Export and account deletion handle communit
 3. Add the `community_daily` cron line (section "Cron jobs") and run it once by hand.
 4. Post the pinned welcome thread from the official account: `manage.py post_welcome` (once; `--board <slug>` to choose
    the board, `--force` for a new one). It works with the flag still off, so you can check it in the admin first.
+   Optionally `manage.py seed_launch_content` (idempotent, `--dry-run` to preview): five discussion starters from the
+   same official account, written as the team, so the first visitors do not meet an empty forum. No other account is used.
 5. Set `COMMUNITY_ENABLED=true` in `.env` and restart gunicorn. Open `/community/`, post a thread with a picture from a
    second account, reply with text or an image, report it and handle the report in `/mod/`.
 6. The proxy's upload limit (`client_max_body_size 25m`) already covers a thread with 4 pictures of 5 MB.

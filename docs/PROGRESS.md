@@ -193,3 +193,6 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 - 2026-11-14: Polish-3 follow-ups. polib wheel untracked, CLAUDE.md comment rule, unused moderation helpers removed, tabs fix (every tab had lost its left padding; own test), a request no longer leaves its language active in the thread (flaky parallel tests; own test). 1142 tests green twice.
   Next: review the branch; real-browser check of tabs and motion; Gmail app password + `send_test_email --smtp`; then merge.
 
+
+- 2026-11-16: Launch-2 (branch `launch-2`, journal in `docs/LAUNCH2_STATUS.md`). A domain shipmark.org + contact shipmark.org@gmail.com; B light-theme edges on landing previews; C numbered labels removed; D uptime bars; E official-account avatar in admin; F SEO basics (sitemap, robots, canonical, noindex, JSON-LD; `docs/SEO_NOTES.md`); G `seed_launch_content`, demo accounts out of the people counter.
+  Next: buy/confirm shipmark.org, create the Gmail and app password, Search Console + Bing verification, set PUBLIC_USER_COUNT_MIN; then the manual launch checklist (`docs/DEPLOY_CHECKLIST.md`).
