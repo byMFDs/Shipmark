@@ -243,7 +243,7 @@ Layout: left-aligned text, max width 1200px. Every page uses the shell: `.contai
 `--card` 32rem for single cards, both centred) + `.page-head` header block (eyebrow, h1, lede, actions, hairline) or a
 `.sheet` (head/aside 4 + panels 8, both to the edges). Pages declare their own 12-column grids from 64em; one column on phones.
 Logo: mark C "struck slash" + lowercase wordmark "shipmark" (Manrope 700, outlined);
-`SITE_NAME` stays "Shipmark" in running text, `SITE_DOMAIN` is `shipmark.me`.
+`SITE_NAME` stays "Shipmark" in running text, `SITE_DOMAIN` is `shipmark.org`.
 
 Motion (`motion.css`, `motion.js`): animations are transform and opacity only (plus hover colour/border fades, no
 layout); loops run only while on screen and pause in a hidden tab (pause rules need `.js`, so without JS nothing

@@ -659,14 +659,14 @@ class DataRightsTests(ProfileTestCase):
         self.post({"avatar_file": image_file()}, headline="Builds tools", about="About me", location="Kyiv",
                   status="hiring", skills_text="python", link0_kind="website", link0_url="https://ana.example",
                   pinned=[Project.objects.get(owner=self.ana).pk])
-        data = build_export(self.fresh(), absolute=lambda url: f"https://shipmark.me{url}")
+        data = build_export(self.fresh(), absolute=lambda url: f"https://shipmark.org{url}")
         profile = data["profile"]
         self.assertEqual((profile["headline"], profile["about"], profile["location"], profile["status"]),
                          ("Builds tools", "About me", "Kyiv", "hiring"))
         self.assertEqual(profile["skills"], ["python"])
         self.assertEqual(profile["links"], [{"kind": "website", "url": "https://ana.example"}])
         self.assertEqual(profile["pinned_projects"], ["pinned-one"])
-        self.assertTrue(profile["avatar"].startswith("https://shipmark.me/media/avatars/"))
+        self.assertTrue(profile["avatar"].startswith("https://shipmark.org/media/avatars/"))
         self.assertNotIn("bio", profile)  # the deprecated columns are not exported (nothing to duplicate)
         self.assertNotIn("website", profile)
         text = str(data)

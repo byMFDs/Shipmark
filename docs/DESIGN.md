@@ -303,7 +303,7 @@ white/proof 7.96, line/plate 3.49 (border).
   mark under `prefers-color-scheme: dark`. Icon links use `{% static_v %}` (content hash), so a new logo is a new URL. Options A and B live in `static/brand/options/` (styleguide only).
 - Wordmark: lowercase "shipmark" in Manrope 700 as outlines. Header and footer inline the SVG so it follows the theme.
   `SITE_NAME` stays "Shipmark" (capitalised in running text and page titles); only the logo files and the OG image spell
-  it lowercase. `SITE_DOMAIN = "shipmark.me"` is shown in the footer, badges and embed snippets. The OG image
+  it lowercase. `SITE_DOMAIN = "shipmark.org"` is shown in the footer, badges and embed snippets. The OG image
   (`og-default.png`) has the headline and the three marks baked in, with "Repo owner" as the first mark.
 
 ## Admin

@@ -17,7 +17,7 @@ Set them in the real environment or in `/srv/shipmark/.env` (gitignored; real va
 | `DATABASE_URL` | yes | `postgres://USER:PASSWORD@HOST:5432/DBNAME` (percent-encode special characters in the password) |
 | `ALLOWED_HOSTS` | yes | Comma-separated host names, e.g. `example.com,www.example.com` |
 | `CSRF_TRUSTED_ORIGINS` | yes | With scheme, e.g. `https://example.com` |
-| `SITE_URL` | no | Public address used in embed snippets, Open Graph, canonical links and the data export. Default `https://shipmark.me` (from `SITE_DOMAIN`); must be https. Dev default `http://localhost:8000` |
+| `SITE_URL` | no | Public address used in embed snippets, Open Graph, canonical links and the data export. Default `https://shipmark.org` (from `SITE_DOMAIN`); must be https. Dev default `http://localhost:8000` |
 | `ADMIN_URL` | yes | Private admin address, e.g. `staff-4f8k2/`. `admin/` is refused at startup |
 | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | yes | OAuth App. Callback URL: `https://YOUR.DOMAIN/accounts/github/login/callback/` |
 | `GITHUB_API_TOKEN` | **yes** (for `reverify_repos`) | Fine-grained or classic token with **no scopes** (public data only). Lifts GitHub's limit from 60 to 5000 requests/hour. One repo check costs up to ~10 requests, so without it the weekly re-check of repositories stops at the limit after a handful of repos (nothing breaks: it continues next run) |
@@ -406,7 +406,7 @@ nginx її **не** роздає (не додавай для неї `location`).
 Нічого з цього не треба нікому пересилати: пароль застосунку живе лише у файлі `.env` на сервері (і на твоєму
 ноутбуці, якщо перевіряєш звідти).
 
-1. Акаунт Gmail, **з якого** сайт надсилає листи. Можна саму скриньку підтримки (`shipmark.me@gmail.com`), можна
+1. Акаунт Gmail, **з якого** сайт надсилає листи. Можна саму скриньку підтримки (`shipmark.org@gmail.com`), можна
    окремий акаунт. Особисту пошту не використовуй.
 2. Увімкни **двоетапну перевірку** в цьому акаунті: myaccount.google.com → «Безпека» → «Двоетапна перевірка».
    Без неї пункт «Паролі застосунків» не з'явиться.
@@ -422,7 +422,7 @@ nginx її **не** роздає (не додавай для неї `location`).
    EMAIL_HOST_USER=<акаунт-відправник>@gmail.com
    EMAIL_HOST_PASSWORD=<16-літер-пароль-застосунку-без-пробілів>
    DEFAULT_FROM_EMAIL=Shipmark <<акаунт-відправник>@gmail.com>
-   SUPPORT_INBOX_EMAIL=shipmark.me@gmail.com
+   SUPPORT_INBOX_EMAIL=shipmark.org@gmail.com
    ```
 
    `DEFAULT_FROM_EMAIL` — та сама адреса, що `EMAIL_HOST_USER` (Gmail все одно підставляє свій акаунт у «Від»).
@@ -434,7 +434,7 @@ nginx її **не** роздає (не додавай для неї `location`).
    DJANGO_SETTINGS_MODULE=config.settings.prod python manage.py send_test_email
    ```
 
-   Має бути `Sent to shipmark.me@gmail.com`. Лист може прийти за хвилину, перший — інколи в «Спам» (познач «Не спам»).
+   Має бути `Sent to shipmark.org@gmail.com`. Лист може прийти за хвилину, перший — інколи в «Спам» (познач «Не спам»).
    З ноутбука (dev друкує листи в термінал): заповни ті самі рядки в локальному `.env` і запусти
    `python manage.py send_test_email --smtp` — тоді лист піде через Gmail.
 6. Перезапусти gunicorn (так, як він у тебе запущений, наприклад `sudo systemctl restart <назва-сервісу>`), щоб воркери прочитали новий `.env`, і надішли

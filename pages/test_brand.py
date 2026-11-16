@@ -86,8 +86,8 @@ class IconLinksTests(TestCase):
         from config.tests import ProductionSettingsTests
 
         result = ProductionSettingsTests._manage(self, "shell", "-c", "from django.conf import settings as s; print(s.SITE_URL)")
-        self.assertIn("https://shipmark.me", result.stdout, result.stderr)
-        result = ProductionSettingsTests._manage(self, "check", SITE_URL="http://shipmark.me")
+        self.assertIn("https://shipmark.org", result.stdout, result.stderr)
+        result = ProductionSettingsTests._manage(self, "check", SITE_URL="http://shipmark.org")
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("SITE_URL must start with https://", result.stderr)
 

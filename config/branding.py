@@ -10,9 +10,9 @@ from django.utils.translation import gettext_lazy as _
 # SITE_NAME is used in running text ("Shipmark"). The logo files spell it lowercase ("shipmark").
 SITE_NAME = "Shipmark"
 # Shown where a URL is natural: footer, badges, profile URL, embed snippets. No scheme, no slash.
-SITE_DOMAIN = "shipmark.me"
+SITE_DOMAIN = "shipmark.org"
 TAGLINE = _("Proof, not promises.")
-CONTACT_EMAIL = "shipmark@gmail.com"
+CONTACT_EMAIL = "shipmark.org@gmail.com"
 LEGAL_OWNER_NAME = "Shipmark. A Danylo Rudenko production."
 
 # Label -> URL. Shown in the footer once the design exists. Empty for now.

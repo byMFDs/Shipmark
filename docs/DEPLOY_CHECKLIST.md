@@ -55,13 +55,14 @@ WEB_CONCURRENCY=
 LOG_LEVEL=
 ```
 
-- `DJANGO_SETTINGS_MODULE`: `config.settings.prod`. `SITE_URL`: `https://shipmark.me`.
+- `DJANGO_SETTINGS_MODULE`: `config.settings.prod`. `SITE_URL`: `https://shipmark.org`.
 - `SECRET_KEY`: власний випадковий production key, мінімум 50 символів, не dev key. `BAN_HASH_KEY`: інший випадковий ключ, мінімум 32 символи. Зберігай їх у захищеному сховищі; BAN_HASH_KEY не обертай, поки діють бани. Startup відхиляє слабкий SECRET_KEY, відомі dev keys та відсутній S3.
 - `ADMIN_URL`: власний непублічний шлях; `admin/` відхиляється. Це додатковий бар'єр, а не пароль.
-- `ALLOWED_HOSTS`: `shipmark.me`, `www.shipmark.me` і **точний фактичний** Heroku app hostname зі сторінки app, через кому, без схем. Не використовуй `*` або всі `herokuapp.com`. `CSRF_TRUSTED_ORIGINS`: ті самі три адреси зі схемою `https://`. Canonical домени є також у production defaults; hostname app потрібно додати вручну.
+- `ALLOWED_HOSTS`: `shipmark.org`, `www.shipmark.org` і **точний фактичний** Heroku app hostname зі сторінки app, через кому, без схем. Не використовуй `*` або всі `herokuapp.com`. `CSRF_TRUSTED_ORIGINS`: ті самі три адреси зі схемою `https://`. Canonical домени є також у production defaults; hostname app потрібно додати вручну.
 - П'ять `AWS_*` змінних із переліку — обов'язкові; default disk fallback у production відсутній. `AWS_S3_REGION_NAME` — значення, яке вимагає обраний провайдер. Endpoint, bucket і credentials мають належати одному сховищу.
 - `DATABASE_URL` і `PORT` задає Heroku; не замінюй їх порожніми ручними значеннями. Схема `postgres://` підтримується.
 - `GITHUB_API_TOKEN`: для публічних repo checks, без доступу до приватних репозиторіїв. OAuth scopes — лише `read:user` і `user:email`; токен OAuth користувача не зберігається.
+- Контактна адреса сайту — `shipmark.org@gmail.com` (`CONTACT_EMAIL` у `config/branding.py`). Створи цю скриньку й пароль застосунку; потім встанови **`SUPPORT_INBOX_EMAIL=shipmark.org@gmail.com`** і `EMAIL_HOST_USER`/`DEFAULT_FROM_EMAIL` з цією адресою у Heroku config vars і в локальному `.env` (код `.env` не змінює).
 - SMTP потрібен для сповіщень команді про support messages. Налаштуй TLS/порт за документацією свого поштового провайдера. Звернення зберігається й при помилці SMTP; перед запуском перевір доставку.
 - Для Heroku використовуй `CLIENT_IP_HEADER` = `HTTP_X_FORWARDED_FOR` тільки за прямого трафіку через довірений Heroku router. Cloudflare при запуску — DNS-only. Перевір фактичний порядок адрес і неможливість підмінити адресу в заголовку; не довіряй такому заголовку при прямому доступі до Gunicorn.
 - `COMMUNITY_ENABLED` залиш unset або false: production default false перевірено тестом. Не вмикай спільноту до її ручного checklist у DEPLOY_NOTES.
@@ -71,15 +72,15 @@ LOG_LEVEL=
 ## 4. Production GitHub OAuth App
 
 1. У своєму GitHub акаунті створи окремий production OAuth App.
-2. Homepage — `https://shipmark.me`; callback **точно** `https://shipmark.me/accounts/github/login/callback/`.
+2. Homepage — `https://shipmark.org`; callback **точно** `https://shipmark.org/accounts/github/login/callback/`.
 3. Client id і client secret встанови в Heroku config vars. Не використовуй production secret у локальних fixture.
 4. Перший реальний sign-in перевір після HTTPS і DNS. Локальні тести не замінюють перевірку consent/state/callback незалежною людиною.
 
 ## 5. Домени й DNS
 
-1. Додай обидва домени до Heroku app: `heroku domains:add shipmark.me -a APP_NAME` і `heroku domains:add www.shipmark.me -a APP_NAME`.
+1. Додай обидва домени до Heroku app: `heroku domains:add shipmark.org -a APP_NAME` і `heroku domains:add www.shipmark.org -a APP_NAME`.
 2. Через `heroku domains -a APP_NAME` скопіюй **Heroku DNS target** для кожного домену. Це ціль для DNS, а не IP і не звичайна адреса app.
-3. У DNS-провайдера створи CNAME для `www` на його target. Для кореня `shipmark.me` використовуй CNAME flattening / ALIAS / ANAME за можливостями провайдера; не вигадуй A record із мінливим Heroku IP. У Cloudflare apex CNAME працює через flattening.
+3. У DNS-провайдера створи CNAME для `www` на його target. Для кореня `shipmark.org` використовуй CNAME flattening / ALIAS / ANAME за можливостями провайдера; не вигадуй A record із мінливим Heroku IP. У Cloudflare apex CNAME працює через flattening.
 4. У Cloudflare обидва записи залиш **DNS-only**, без proxy. Збережи MX/TXT записи пошти й перевірок.
 5. Налаштуй сертифікат/керований HTTPS для обох доменів у Heroku. Перевір сертифікат, canonical links і HTTPS redirect, перш ніж відкривати сайт.
 

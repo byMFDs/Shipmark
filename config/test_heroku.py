@@ -64,10 +64,10 @@ class HerokuSettingsTests(SimpleTestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         community, hosts, origins, site_url, csp = json.loads(result.stdout.splitlines()[-1])
         self.assertFalse(community)
-        for host in ("shipmark.me", "www.shipmark.me", "launch-test.herokuapp.com"):
+        for host in ("shipmark.org", "www.shipmark.org", "launch-test.herokuapp.com"):
             self.assertIn(host, hosts)
             self.assertIn("https://" + host, origins)
-        self.assertEqual(site_url, "https://shipmark.me")
+        self.assertEqual(site_url, "https://shipmark.org")
         self.assertIn("img-src 'self' data: https://objects.example.invalid", csp)
         self.assertNotIn("unsafe-inline", csp)
 

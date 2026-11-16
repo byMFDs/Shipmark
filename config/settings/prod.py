@@ -38,9 +38,9 @@ SITE_URL = (SITE_URL or f"https://{branding.SITE_DOMAIN}").rstrip("/")  # noqa: 
 if not SITE_URL.startswith("https://"):
     raise ImproperlyConfigured(f"SITE_URL must start with https:// in production (got {SITE_URL!r}).")
 
-ALLOWED_HOSTS = list(dict.fromkeys(["shipmark.me", "www.shipmark.me", *ALLOWED_HOSTS]))  # noqa: F405
+ALLOWED_HOSTS = list(dict.fromkeys(["shipmark.org", "www.shipmark.org", *ALLOWED_HOSTS]))  # noqa: F405
 CSRF_TRUSTED_ORIGINS = list(dict.fromkeys([
-    "https://shipmark.me", "https://www.shipmark.me", *CSRF_TRUSTED_ORIGINS,  # noqa: F405
+    "https://shipmark.org", "https://www.shipmark.org", *CSRF_TRUSTED_ORIGINS,  # noqa: F405
 ]))
 
 # The admin must not sit at the guessable /admin/. Set ADMIN_URL in the environment to something private.

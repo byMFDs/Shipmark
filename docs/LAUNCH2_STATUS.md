@@ -1,0 +1,21 @@
+# Launch-2: журнал
+
+Гілка `launch-2`. Початок: 2026-11-16. Без push, merge, deploy. Етапи A–G по черзі.
+
+| Етап | Робота | Стан |
+|---|---|---|
+| A | Домен shipmark.org і пошта shipmark.org@gmail.com | Завершено |
+| B | Світла/темна тема: картки, аудит сторінок | — |
+| C | Прибрати нумеровані ярлики | — |
+| D | Стовпчики аптайму | — |
+| E | Аватар офіційних акаунтів в адмінці | — |
+| F | SEO | — |
+| G | Чесний стартовий контент | — |
+
+## A — домен і пошта
+
+- `shipmark.me` → `shipmark.org` (`SITE_DOMAIN`, prod-defaults `ALLOWED_HOSTS`/`CSRF_TRUSTED_ORIGINS`/`SITE_URL`, `.env.example`, CLAUDE.md, docs, OAuth callback у DEPLOY_CHECKLIST, тести). `shipmark@gmail.com` і `shipmark.me@gmail.com` → `shipmark.org@gmail.com` (`CONTACT_EMAIL` в `config/branding.py` — єдине джерело; markdown-сторінки беруть його через `{{ contact_email }}` у тексті й href).
+- У `.po` і `content/` старих значень не було. Растри (`og-default.png`, іконки) домену не містять — перемальовувати нічого.
+- DEPLOY_CHECKLIST: додано, що `SUPPORT_INBOX_EMAIL` і SMTP-користувач мають бути `shipmark.org@gmail.com` у Heroku і локальному `.env` (`.env` не чіпав).
+- Тести `config/test_domain.py`: старі домен/адреси не зустрічаються в tracked templates/content/locale/код; кожен mailto у 7 мовах дорівнює `CONTACT_EMAIL`. `check` чисто; 88 тестів (domain, heroku, brand, badges, profiles) OK.
+- Історичні записи в PROGRESS/POLISH3_STATUS/REDESIGN_PLAN з `.me` лишено як історію.
