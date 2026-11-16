@@ -2,7 +2,8 @@
 {% load i18n static ui %}
 
 {% block title %}{% translate "Support" %} · {{ brand.SITE_NAME }}{% endblock %}
-{% block meta %}<meta name="description" content="{% translate 'Report a bug, suggest an idea or ask about your account.' %}">{% if form.initial.reference or form.is_bound %}<meta name="robots" content="noindex">{% endif %}{% endblock %}
+{% block meta_description %}{% translate 'Report a bug, suggest an idea or ask about your account.' %}{% endblock %}
+{% block meta %}{% if form.initial.reference or form.is_bound %}<meta name="robots" content="noindex">{% endif %}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/support.css' %}">{% endblock %}
 
 {% block content %}

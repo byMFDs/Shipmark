@@ -5,9 +5,9 @@
 {% block og_title %}{% translate "Discover" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_description %}{% translate "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark." %}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}"><link rel="stylesheet" href="{% static 'css/pages/explore.css' %}">{% endblock %}
+{% block meta_description %}{% if tab == "people" %}{% translate "Find people by their username, open their profile and follow them." %}{% else %}{% translate "Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark." %}{% endif %}{% endblock %}
 {% block meta %}
-  <meta name="description" content="{% translate 'Projects people shipped with AI tools, with verified hallmarks. Search by name, or filter by tag, tool and hallmark.' %}">
-  {% if tab == "people" or params.q or params.page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}
+  {% if tab == "people" or params.q or params.page > 1 or filtered or not projects %}<meta name="robots" content="noindex, follow">{% endif %}
 {% endblock %}
 
 {% block content %}

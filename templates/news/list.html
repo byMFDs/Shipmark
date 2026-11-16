@@ -5,7 +5,8 @@
 {% block og_title %}{% translate "News" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_description %}{% blocktranslate with name=brand.SITE_NAME %}Official news from {{ name }}.{% endblocktranslate %}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/news.css' %}">{% endblock %}
-{% block meta %}<meta name="description" content="{% blocktranslate with name=brand.SITE_NAME %}Official news from {{ name }}.{% endblocktranslate %}">{% if page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}<link rel="canonical" href="{% canonical_url %}">{% endblock %}
+{% block meta_description %}{% blocktranslate with name=brand.SITE_NAME %}Official news from {{ name }}.{% endblocktranslate %}{% endblock %}
+{% block meta %}{% if page > 1 %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
 
 {% block content %}
   <div class="container shell shell--narrow news">

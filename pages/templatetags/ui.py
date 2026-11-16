@@ -365,6 +365,36 @@ def absolute_url(url):
     return site_absolute_url(url)
 
 
+@register.simple_tag
+def og_media_url(file_field):
+    """Повна адреса картинки для Open Graph або "".
+
+    {% og_media_url person.avatar as image %}: the picture's absolute URL, or "" when it is missing or the storage
+    gives a signed, expiring URL (a query string, as private S3 does): a link preview cached for longer than the
+    signature would show a broken image, so the page falls back to the default image instead."""
+    if not file_field:
+        return ""
+    url = file_field.url
+    if "?" in url:
+        return ""
+    return site_absolute_url(url)
+
+
+@register.simple_tag
+def home_ld():
+    """JSON-LD Organization і WebSite для головної."""
+    from pages import seo
+    return mark_safe('<script type="application/ld+json">' + seo.json_ld(seo.home_graph()) + "</script>")
+
+
+@register.simple_tag
+def breadcrumbs_ld(*pairs):
+    """JSON-LD BreadcrumbList: {% breadcrumbs_ld "Home" "/" "Name" url ... %} (назва, шлях, назва, шлях)."""
+    from pages import seo
+    crumbs = list(zip(pairs[0::2], pairs[1::2]))
+    return mark_safe('<script type="application/ld+json">' + seo.json_ld(seo.breadcrumb_ld(crumbs)) + "</script>")
+
+
 @register.simple_tag(takes_context=True)
 def canonical_url(context):
     """Канонічна адреса поточної сторінки.

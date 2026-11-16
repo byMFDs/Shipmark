@@ -6,11 +6,10 @@
 {% block og_type %}article{% endblock %}
 {% block og_description %}{{ post.excerpt }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/news.css' %}">{% endblock %}
+{% block meta_description %}{{ post.excerpt }}{% endblock %}
 {% block meta %}
-  <meta name="description" content="{{ post.excerpt }}">
   <meta property="article:published_time" content="{{ post.published_at|date:'c' }}">
   <meta property="article:author" content="{{ brand.SITE_NAME }}">
-  <link rel="canonical" href="{% canonical_url %}">
 {% endblock %}
 
 {% block content %}

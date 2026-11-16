@@ -6,13 +6,15 @@
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/profile.css' %}">{% if embed %}<link rel="stylesheet" href="{% static 'css/pages/embed.css' %}">{% endif %}{% endblock %}
 {% block og_type %}profile{% endblock %}
 {% block og_description %}{% if person.headline %}{{ person.headline }}{% elif person.about %}{{ about_text|truncatechars:160 }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}{% endblock %}
-{% block og_image %}{% if person.avatar %}<meta property="og:image" content="{% absolute_url person.avatar.url %}">
+{% block og_image %}{% og_media_url person.avatar as og_avatar %}{% if og_avatar %}<meta property="og:image" content="{{ og_avatar }}">
   <meta property="og:image:width" content="512">
   <meta property="og:image:height" content="512">{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block meta_description %}{% if person.headline %}{{ person.headline }}{% elif person.about %}{{ about_text|truncatechars:160 }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}{% endblock %}
 {% block meta %}
-  <meta name="description" content="{% if person.headline %}{{ person.headline }}{% elif person.about %}{{ about_text|truncatechars:160 }}{% else %}{% translate "Projects shipped and verified on" %} {{ brand.SITE_NAME }}.{% endif %}">
   <meta property="profile:username" content="{{ person.username }}">
-  <link rel="canonical" href="{% canonical_url %}">
+  {% if not projects %}<meta name="robots" content="noindex, follow">{% endif %}
+  {% url 'accounts:profile' person.username as profile_url %}
+  {% breadcrumbs_ld brand.SITE_NAME "/" person.display_name|default:person.username profile_url %}
 {% endblock %}
 
 {% block content %}

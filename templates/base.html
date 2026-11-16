@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{% block title %}{{ brand.SITE_NAME }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns marks from facts we check: who owns the repository, who controls the domain, and whether the site stays up.{% endblocktranslate %}{% endblock %}">
+  {# Canonical address on SITE_URL, without the query string. Pages that must not be indexed also say noindex. #}
+  {% block canonical %}<link rel="canonical" href="{% canonical_url %}">{% endblock %}
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#F3F6F7" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#071C1E" media="(prefers-color-scheme: dark)">

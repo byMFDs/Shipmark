@@ -5,9 +5,8 @@
 {% block og_title %}{{ brand.SITE_NAME }}: {{ brand.TAGLINE }}{% endblock %}
 {% block og_description %}{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns marks from facts we check: who owns the repository, who controls the domain, and whether the site stays up.{% endblocktranslate %}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/landing.css' %}">{% endblock %}
-{% block meta %}
-  <meta name="description" content="{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns marks from facts we check: who owns the repository, who controls the domain, and whether the site stays up.{% endblocktranslate %}">
-{% endblock %}
+{% block meta_description %}{% blocktranslate with name=brand.SITE_NAME trimmed %}{{ name }} is a public record of projects built with AI tools and actually shipped. Each project earns marks from facts we check: who owns the repository, who controls the domain, and whether the site stays up.{% endblocktranslate %}{% endblock %}
+{% block meta %}{% home_ld %}{% endblock %}
 
 {% block content %}
   {% url 'pages:explore' as explore_url %}

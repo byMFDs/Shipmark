@@ -2,6 +2,8 @@
 {% load i18n static ui %}
 
 {% block title %}{% translate "Settings" %} · {{ brand.SITE_NAME }}{% endblock %}
+{% block canonical %}{% endblock %}
+{% block meta %}<meta name="robots" content="noindex">{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">{% endblock %}
 {% block scripts %}<script type="module" src="{% static 'js/profile-preview.js' %}"></script>{% endblock %}
 

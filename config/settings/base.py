@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # sitemap.xml (pages/sitemaps.py). Needs no database table and not the "sites" app: URLs come from SITE_URL.
+    "django.contrib.sitemaps",
     # GitHub sign-in (django-allauth). No "sites" app: the host comes from the request.
     "allauth",
     "allauth.account",
@@ -57,6 +59,8 @@ MIDDLEWARE = [
     # Before sessions and CSRF: a flood of admin login attempts is refused early.
     "config.middleware.AdminLoginThrottleMiddleware",
     "config.middleware.SecurityHeadersMiddleware",
+    # X-Robots-Tag: noindex for private pages, the admin and every error response.
+    "config.robots.RobotsHeaderMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",

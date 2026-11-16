@@ -5,15 +5,18 @@
 {% block og_title %}{{ project.name }} · {{ brand.SITE_NAME }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/project.css' %}">{% if embed %}<link rel="stylesheet" href="{% static 'css/pages/embed.css' %}">{% endif %}{% endblock %}
 {% block og_description %}{{ project.tagline }}{% endblock %}
-{% block og_image %}{% with cover=project.cover %}{% if cover %}
-  <meta property="og:image" content="{% absolute_url cover.image.url %}">
+{% block og_image %}{% with cover=project.cover %}{% og_media_url cover.image as og_cover %}{% if cover and og_cover %}
+  <meta property="og:image" content="{{ og_cover }}">
   {% if cover.width and cover.height %}<meta property="og:image:width" content="{{ cover.width }}">
   <meta property="og:image:height" content="{{ cover.height }}">{% endif %}
   <meta property="og:image:alt" content="{% blocktranslate with name=project.name %}Screenshot of {{ name }}{% endblocktranslate %}">
 {% else %}{{ block.super }}{% endif %}{% endwith %}{% endblock %}
+{% block meta_description %}{{ project.tagline }}{% endblock %}
 {% block meta %}
-  <meta name="description" content="{{ project.tagline }}">
-  {% if project.status != "published" %}<meta name="robots" content="noindex">{% else %}<link rel="canonical" href="{% canonical_url %}">{% endif %}
+  {% if project.status != "published" %}<meta name="robots" content="noindex">{% else %}
+    {% url 'accounts:profile' person.username as profile_url %}
+    {% breadcrumbs_ld brand.SITE_NAME "/" person.display_name|default:person.username profile_url project.name project.get_absolute_url %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}

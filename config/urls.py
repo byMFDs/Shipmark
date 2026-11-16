@@ -16,6 +16,8 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path("i18n/set-language/", views.set_language, name="set_language"),
     path("favicon.ico", views.favicon, name="favicon"),
+    path("apple-touch-icon.png", views.apple_touch_icon, name="apple_touch_icon"),
+    path("apple-touch-icon-precomposed.png", views.apple_touch_icon),
     path("", include("accounts.auth_urls")),
     # Only GitHub's OAuth routes (not allauth.urls: that would add email/password pages).
     # Callback: /accounts/github/login/callback/

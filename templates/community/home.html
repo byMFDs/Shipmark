@@ -3,7 +3,8 @@
 
 {% block title %}{% if board %}{{ board.display_name }} · {% endif %}{% translate "Community" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_title %}{% if board %}{{ board.display_name }} · {% endif %}{% translate "Community" %} · {{ brand.SITE_NAME }}{% endblock %}
-{% block meta %}<meta name="description" content="{% translate 'Ask for help, show what you shipped, find people to build with.' %}">{% if page > 1 or query or sort != "hot" %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
+{% block meta_description %}{% if board %}{{ board.display_description|default:board.display_name }}{% else %}{% translate 'Ask for help, show what you shipped, find people to build with.' %}{% endif %}{% endblock %}
+{% block meta %}{% if page > 1 or query or sort != "hot" or not threads and not pinned %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
 
 {% block community_main %}
   <header class="community-head">

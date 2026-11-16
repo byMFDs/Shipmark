@@ -2,6 +2,7 @@
 {% load i18n static %}
 {% block title %}{% translate "You cannot open this page" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/error.css' %}">{% endblock %}
+{% block canonical %}{% endblock %}
 {% block meta %}<meta name="robots" content="noindex">{% endblock %}
 {% block content %}
   {% translate "You cannot open this page" as title %}

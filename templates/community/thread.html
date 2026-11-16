@@ -4,6 +4,7 @@
 {% block title %}{{ thread.title }} · {% translate "Community" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_title %}{{ thread.title }} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_description %}{% if thread.is_deleted %}{{ brand.TAGLINE }}{% else %}{{ thread.body_html|striptags|truncatechars:160 }}{% endif %}{% endblock %}
+{% block meta_description %}{% if thread.is_deleted %}{{ brand.TAGLINE }}{% else %}{{ thread.body_html|striptags|truncatechars:160 }}{% endif %}{% endblock %}
 {% block meta %}{% if thread.is_removed or page > 1 or sort != "best" %}<meta name="robots" content="noindex">{% endif %}{% endblock %}
 
 {% block community_main %}

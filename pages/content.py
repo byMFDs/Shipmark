@@ -6,6 +6,7 @@ Editing the .md file changes the page; no code or restart needed.
 Placeholders like {{ contact_email }} are filled from config/branding.py (see PLACEHOLDERS).
 """
 import re
+from html import unescape
 
 import markdown
 import nh3
@@ -59,6 +60,20 @@ def render_markdown(text):
     )
 
 
+def description_from(html):
+    """Перший абзац сторінки як короткий опис для meta description (до 160 символів).
+
+    The first paragraph of the page as plain text, cut at a word boundary."""
+    match = re.search(r"<p>(.*?)</p>", html, re.S)
+    if not match:
+        return ""
+    text = " ".join(re.sub(r"<[^>]+>", "", match.group(1)).split())
+    text = unescape(text)
+    if len(text) <= 160:
+        return text
+    return text[:157].rsplit(" ", 1)[0].rstrip(" ,;:.") + "…"
+
+
 def load_page(slug, language=None):
     """Заголовок і HTML сторінки або None.
 
@@ -75,5 +90,7 @@ def load_page(slug, language=None):
         if path.is_file():
             text = fill_placeholders(path.read_text(encoding="utf-8"))
             match = H1_RE.search(text)
-            return {"title": match.group(1) if match else "", "html": render_markdown(text), "language": lang}
+            html = render_markdown(text)
+            return {"title": match.group(1) if match else "", "html": html, "language": lang,
+                    "description": description_from(html)}
     return None

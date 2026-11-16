@@ -18,6 +18,18 @@ def favicon(request):
     return response
 
 
+def apple_touch_icon(request):
+    """/apple-touch-icon.png і -precomposed.png: те саме тимчасове перенаправлення, що й для favicon.
+
+    Safari and some crawlers request these two paths without reading the page. Same temporary redirect as
+    /favicon.ico, to the 180x180 file."""
+    from config import branding
+
+    response = HttpResponseRedirect(static(branding.APPLE_TOUCH_ICON))
+    response["Cache-Control"] = "public, max-age=86400"
+    return response
+
+
 @require_POST
 def set_language(request):
     """Перемикає мову й запам'ятовує її в акаунті.

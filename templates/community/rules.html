@@ -2,6 +2,7 @@
 {% load i18n static %}
 
 {% block title %}{% if page.title %}{{ page.title }} · {% endif %}{{ brand.SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ page.description|default:brand.TAGLINE }}{% endblock %}
 {% block styles %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/pages/content.css' %}">{% endblock %}
 
 {% block community_main %}

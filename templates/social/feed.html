@@ -4,7 +4,8 @@
 {% block title %}{% translate "For You Page" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block og_title %}{% translate "For You Page" %} · {{ brand.SITE_NAME }}{% endblock %}
 {% block styles %}<link rel="stylesheet" href="{% static 'css/pages/feed.css' %}">{% if tab == "news" %}<link rel="stylesheet" href="{% static 'css/pages/news.css' %}">{% endif %}{% endblock %}
-{% block meta %}<meta name="description" content="{% translate 'Projects people shipped with verified proof, and official news.' %}">{% if page > 1 or has_filters or tab != "foryou" %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
+{% block meta_description %}{% translate 'Projects people shipped with verified proof, and official news.' %}{% endblock %}
+{% block meta %}{% if page > 1 or has_filters or tab != "foryou" %}<meta name="robots" content="noindex, follow">{% endif %}{% endblock %}
 
 {% block content %}
   <div class="container shell feed">

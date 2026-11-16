@@ -81,7 +81,10 @@ class SecurityHeadersTests(TestCase):
                     "/settings/", "/new/", "/feed/"):
             with self.subTest(url=url):
                 html = self.client.get(url, follow=True).content.decode()
-                self.assertFalse(re.search(r"<script(?![^>]*\ssrc=)", html), "inline <script>")
+                # A JSON-LD block (type="application/ld+json") is data: the browser never runs it, and the CSP
+                # does not apply to it. Every other <script> must load a file.
+                self.assertFalse(re.search(r'<script(?![^>]*\ssrc=)(?![^>]*type="application/ld\+json")', html),
+                                 "inline <script>")
                 self.assertNotIn("<style", html)
                 self.assertFalse(re.search(r"\sstyle\s*=", html), "style attribute")
                 self.assertFalse(re.search(r"\son[a-z]+\s*=", html, re.I), "inline event handler")

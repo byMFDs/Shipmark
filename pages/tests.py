@@ -59,6 +59,7 @@ class NoExternalResourcesTests(TestCase):
     def test_pages_load_nothing_from_other_sites(self):
         for url in ("/", "/styleguide/"):
             html = self.client.get(url).content.decode()
+            html = re.sub(r'<link rel="canonical"[^>]*>', "", html)  # a canonical link names the page itself; nothing is loaded
             self.assertIsNone(EXTERNAL_RESOURCE.search(html), url)
             self.assertIsNone(EXTERNAL_CSS.search(html), url)
 
