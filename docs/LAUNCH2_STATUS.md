@@ -76,3 +76,27 @@
 - `seed_community` тепер відмовляється не лише без `DEBUG`, а й з production-налаштуваннями (модуль `.prod` або https `SITE_URL`). Демо-акаунти (`demo-…` + `@example.invalid`) раніше **рахувалися** в лічильнику «people joined»: виправлено в `count_people`; у sitemap їх немає (етап F), у пошуку людей не було.
 - `docs/EDITING.md` (укр.): `PUBLIC_USER_COUNT_MIN` — лічильник прихований, доки людей не більше за це число; `seed_launch_content`; безпека демо. `DEPLOY_NOTES` і `CLAUDE.md` оновлено рядком про команду.
 - Тести `community/test_launch_content.py`: лише system-автор, ідемпотентність, видалена модератором тема не повертається, dry-run, неактивна дошка, прапорець вимкнено → 404, англійський текст від команди без контактів, відмова seed_community у production, демо не рахуються.
+
+## Остаточний стан
+
+| Етап | Коміт |
+|---|---|
+| A | `29a18f6` Domain shipmark.org and contact email |
+| B | `60cbbf9` Light theme: clear edges for landing preview cards |
+| C | `2490b39` Remove numbered section labels |
+| D | `37ee531` Uptime bars |
+| E | `95a39a8` Admin: official account avatar |
+| F | `bd61f8f` SEO basics |
+| G | `a880022` Launch content and counter notes |
+
+- Фінальний прогін: усі 1233 тести OK (120 с; тестовий MD5-хешер паролів лише в тимчасовому settings поза проєктом), `manage.py check` чисто.
+- Тести пройшли після двох виправлень старих перевірок під нові вимоги: `pages/tests.py` (canonical-посилання не ресурс) і `config/tests.py` (дозволено лише JSON-LD як inline-блок даних; виконувані inline-скрипти заборонені, як і було).
+- Не перевірено: Heroku/PostgreSQL/S3/SMTP/OAuth, реальні Search Console і Bing, відображення Google «сайтлінків», реальні пристрої; `check --deploy` на prod-налаштуваннях не перезапускався (змінено `INSTALLED_APPS`, `MIDDLEWARE`, URL).
+- Не виконано push/merge/deploy, зовнішніх ресурсів не створено, `.env` не чіпали.
+
+### Пропозиції (не робив)
+
+- `docs/EDITING.md` ще згадує стікери (їх прибрано в launch-1): прибрати абзац.
+- Підписані S3-URL на 1 год роблять превʼю картинок проєктів нестабільними: вирішити публічний префікс/CDN для `media/`, тоді `og_media_url` почне віддавати обкладинки.
+- Мови в URL (`/uk/…` + hreflang): описано у `docs/SEO_NOTES.md`.
+- Sitemap: при >50 000 адрес розбити на індекс.
