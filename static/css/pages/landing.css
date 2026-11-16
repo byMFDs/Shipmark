@@ -77,7 +77,7 @@
 
 .specimen .record__body { display: grid; }
 
-.specimen__shot { margin-bottom: var(--s-5); }
+.specimen__shot { margin-bottom: var(--s-5); border: 1px solid var(--line-strong); }
 
 .specimen__name { font-size: var(--fs-3); }
 
@@ -141,11 +141,13 @@
    inside is measured for both themes in docs/PALETTE.md. */
 
 .mock {
-  --mock-bg: var(--paper);
+  /* In the light theme paper, surface and raised are one colour, so the screen gets its own tinted surface
+     (ink mixed into paper) and every inner block gets a hairline edge: nothing floats edgeless in either theme. */
+  --mock-bg: var(--preview-bg);
   --mock-ink: var(--text);
   --mock-soft: var(--muted);
-  --mock-card: var(--raised);
-  --mock-item: var(--surface);
+  --mock-card: color-mix(in srgb, var(--text) 4%, var(--paper));
+  --mock-item: var(--paper);
   display: flex;
   flex-direction: column;
   gap: var(--s-3);
@@ -214,12 +216,14 @@
   min-width: 0;
   padding: var(--s-2);
   background: var(--mock-card);
+  border: 1px solid var(--line-strong);
 }
 
 .mock .mock__item {
   white-space: normal;
   padding: var(--s-1) var(--s-2);
   background: var(--mock-item);
+  border: 1px solid var(--line-strong);
 }
 
 /* Phones: two board columns instead of three, so the cards stay readable. */
@@ -240,7 +244,7 @@
 .card__media .mock__title { font-size: var(--fs-1); }
 
 .mock--plotline {
-  --mock-bg: var(--paper);
+  --mock-bg: var(--preview-bg);
   --mock-ink: var(--text);
   --mock-soft: var(--muted);
 }
@@ -258,6 +262,7 @@
   gap: var(--s-3);
   aspect-ratio: 5 / 6;
   padding: var(--s-2);
+  border: 1px solid var(--line-strong);
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.1;
@@ -273,7 +278,7 @@
 .mock__book--3 { background: #C7F36B; color: #071C1E; }
 
 .mock--forma {
-  --mock-bg: var(--paper);
+  --mock-bg: var(--preview-bg);
   --mock-ink: var(--text);
   --mock-soft: var(--muted);
 }
@@ -285,13 +290,14 @@
   width: min(100%, 17rem);
   padding: var(--s-4);
   background: var(--mock-item);
+  border: 1px solid var(--line-strong);
 }
 
 .mock__form .mock__title { color: var(--text); }
 
 .mock__field {
   padding: var(--s-2);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   background: #F3F6F7;
   color: #20383A;
 }
@@ -301,6 +307,7 @@
   background: #071C1E;
   color: #F3F6F7;
   text-align: center;
+  border: 1px solid var(--line-strong);
 }
 
 /* Cover letter for a real project without screenshots. */

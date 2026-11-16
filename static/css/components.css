@@ -609,10 +609,17 @@
   transition: none;
 }
 
+.card__media,
+.mock {
+  /* A preview area is a tinted surface (ink mixed into paper), so it reads as an object in the light theme, where
+     paper, surface and raised are the same colour. Resolved here so it follows .band and data-theme. */
+  --preview-bg: color-mix(in srgb, var(--text) 5%, var(--paper));
+}
+
 .card__media {
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: var(--paper);
+  background: var(--preview-bg);
   border-bottom: 1px solid var(--line);
 }
 
