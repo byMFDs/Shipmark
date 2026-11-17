@@ -92,33 +92,8 @@ class SeedCommunityTests(CommunityTestCase):
         self.assertFalse(User.objects.filter(username__startswith="demo-").exists())
 
     @override_settings(DEBUG=True)
-    def test_creates_demo_content_through_the_services(self):
-        run("seed_community")
-        people = User.objects.filter(username__in=PEOPLE)
-        self.assertEqual(people.count(), len(PEOPLE))
-        self.assertFalse(any(person.has_usable_password() for person in people))
-        self.assertTrue(all(person.email.endswith("@example.invalid") for person in people))
-        self.assertEqual(Thread.objects.filter(author__in=people).count(), len(THREADS))
-        self.assertTrue(Reply.objects.filter(author__in=people, depth=3).exists())
-        self.assertFalse(Reply.objects.filter(author__in=people).exclude(sticker_key="").exists())
-        self.assertTrue(CommunityImage.objects.filter(uploader__in=people).exists())
-        self.assertFalse(Vote.objects.filter(thread__author=self.ann).exists())
-        for vote in Vote.objects.select_related("thread", "reply"):
-            self.assertNotEqual(vote.user_id, (vote.thread or vote.reply).author_id)  # nobody upvotes their own post
-        self.assertEqual(self.client.get("/community/").status_code, 200)
-
-    @override_settings(DEBUG=True)
-    def test_running_again_replaces_the_demo_content_and_clear_removes_it(self):
-        real = old_user("demo-real")  # a real account that only looks like a demo one stays
-        run("seed_community")
-        threads = Thread.objects.count()
-        images = CommunityImage.objects.count()
-        run("seed_community")
-        self.assertEqual(Thread.objects.count(), threads)
-        self.assertEqual(CommunityImage.objects.count(), images)
-        output = run("seed_community", "--clear")
-        self.assertIn(f"Removed {len(PEOPLE)} demo people", output)
+    def test_legacy_generation_and_clear_are_disabled(self):
+        for args in ((), ("--clear",)):
+            with self.assertRaisesMessage(CommandError, "retired"):
+                run("seed_community", *args)
         self.assertFalse(User.objects.filter(username__in=PEOPLE).exists())
-        self.assertEqual(Thread.objects.count(), 1)  # the thread from setUp
-        self.assertFalse(CommunityImage.objects.exists())
-        self.assertTrue(User.objects.filter(pk=real.pk).exists())

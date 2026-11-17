@@ -65,6 +65,9 @@ class User(AbstractUser):
     # Set when someone replies to this person in the community; cleared when they open their notifications.
     # Read from request.user, so the "new replies" mark in the header costs no query on any page.
     community_notified_at = models.DateTimeField(null=True, blank=True, editable=False)
+    # The one system account (the official "shipmark" author of news and community notices), set by migration
+    # 0008. A stable mark, not the username: it has no public profile, cannot be followed and is not counted.
+    is_system_account = models.BooleanField(default=False, editable=False)
 
     class Meta:
         constraints = [
@@ -73,6 +76,9 @@ class User(AbstractUser):
                 fields=["github_login"],
                 condition=~Q(github_login=""),
                 name="unique_github_login_when_set",
+            ),
+            models.UniqueConstraint(
+                fields=["is_system_account"], condition=Q(is_system_account=True), name="one_system_account",
             ),
         ]
 

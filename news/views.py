@@ -10,8 +10,6 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_GET
 
-from accounts.system import SYSTEM_USERNAME
-
 from .models import NewsPost
 
 PAGE_SIZE = 10
@@ -22,7 +20,7 @@ def news_author():
     """Системний акаунт з бейджами, автор новин.
 
     The system account, with its badges loaded (one query for the badge)."""
-    return get_user_model().objects.prefetch_related("badges").get(username=SYSTEM_USERNAME)
+    return get_user_model().objects.prefetch_related("badges").get(is_system_account=True)
 
 
 @require_GET

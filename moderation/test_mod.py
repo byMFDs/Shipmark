@@ -88,7 +88,7 @@ class AccessTests(ModTestCase):
         self.client.force_login(self.mira)
         response = self.client.get(reverse("pages:explore"))
         self.assertContains(response, reverse("moderation:queue"))
-        self.assertContains(response, '<span class="mono">1</span>', html=True)
+        self.assertContains(response, '<span class="mod-count mono">1<span class="visually-hidden"> open reports</span></span>', html=True)
         self.client.force_login(self.bob)
         self.assertNotContains(self.client.get(reverse("pages:explore")), reverse("moderation:queue"))
 

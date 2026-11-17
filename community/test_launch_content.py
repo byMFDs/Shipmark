@@ -134,12 +134,11 @@ class DemoSafetyTests(TestCase):
                 self.seed()
         self.assertFalse(User.objects.filter(username__startswith="demo-").exists())
 
-    def test_runs_in_development_and_the_demo_people_do_not_count(self):
-        make_user("real")
+    def test_old_seed_is_retired_in_development(self):
         before = count_people()
-        with override_settings(DEBUG=True):
+        with override_settings(DEBUG=True), self.assertRaisesMessage(CommandError, "retired"):
             self.seed()
-        self.assertEqual(User.objects.filter(username__startswith="demo-").count(), 6)
+        self.assertFalse(User.objects.filter(username__startswith="demo-").exists())
         self.assertEqual(count_people(), before)
 
     def test_demo_accounts_are_not_in_the_counter_but_a_similar_real_name_is(self):

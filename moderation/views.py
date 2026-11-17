@@ -88,7 +88,8 @@ def report_user(request, username):
     """Скарга на профіль.
 
     A profile: picture, cover, headline, About, links."""
-    person = get_object_or_404(visible_users(User.objects.all()), username__iexact=username)
+    # The system account has no profile to report (its posts can still be reported one by one).
+    person = get_object_or_404(visible_users(User.objects.filter(is_system_account=False)), username__iexact=username)
     back = reverse("accounts:profile", args=[person.username])
     if person.pk == request.user.pk:
         messages.error(request, _("You cannot report yourself."))

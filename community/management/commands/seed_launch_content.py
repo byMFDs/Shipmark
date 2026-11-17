@@ -88,7 +88,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, dry_run=False, **options):
         """Створює стартові теми або лише показує їх."""
-        if not User.objects.filter(username=SYSTEM_USERNAME).exists():
+        if not User.objects.filter(is_system_account=True).exists():
             raise CommandError(f"The system account {SYSTEM_USERNAME!r} does not exist (run migrate first).")
         if dry_run:
             rows = plan()

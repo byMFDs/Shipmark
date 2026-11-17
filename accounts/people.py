@@ -34,7 +34,6 @@ from social.models import Follow
 from support.antispam import client_ip
 from verification.uptime import with_uptime
 
-from .system import SYSTEM_USERNAME
 from .usernames import MAX_LENGTH
 
 MIN_LENGTH = 2
@@ -72,7 +71,7 @@ def query_problem(query):
 
 def searchable_people():
     User = get_user_model()
-    people = visible_users(User.objects.filter(is_active=True)).exclude(username=SYSTEM_USERNAME)
+    people = visible_users(User.objects.filter(is_active=True)).exclude(is_system_account=True)
     return people.exclude(username__startswith=DEMO_PREFIX, email__endswith=DEMO_DOMAIN)
 
 

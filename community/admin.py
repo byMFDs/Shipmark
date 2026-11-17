@@ -82,3 +82,6 @@ class CommunityImageAdmin(ReadOnlyModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+from . import admin_testdata  # noqa: E402,F401  (the "Test data" section registers itself)

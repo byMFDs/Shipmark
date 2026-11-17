@@ -10,7 +10,6 @@ from django.utils.formats import number_format
 from django.utils.translation import gettext, ngettext
 
 from accounts.people import DEMO_DOMAIN, DEMO_PREFIX
-from accounts.system import SYSTEM_USERNAME
 
 CACHE_KEY = "stats:public_user_count"
 CACHE_SECONDS = 60
@@ -24,11 +23,11 @@ def count_people():
 
     Counted: every account row that exists (a deleted account is gone from the table) and is active
     (`is_active`; Django's flag for an account that may sign in). Not counted: system accounts that are not
-    people, today the official "shipmark" account that publishes news, and the demo accounts of seed_community
+    people (`is_system_account`, today the official account that publishes news), and the demo accounts of seed_community
     (`demo-…` with an @example.invalid address). Suspended and banned people still count: they did join. Nothing
     is added or estimated; the number moves only when accounts are created or deleted.
     """
-    people = get_user_model().objects.filter(is_active=True).exclude(username=SYSTEM_USERNAME)
+    people = get_user_model().objects.filter(is_active=True).exclude(is_system_account=True)
     return people.exclude(username__startswith=DEMO_PREFIX, email__endswith=DEMO_DOMAIN).count()
 
 

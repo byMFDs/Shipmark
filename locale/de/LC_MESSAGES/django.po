@@ -5589,3 +5589,78 @@ msgstr "Erreichbarkeit in den letzten 30 Tagen: %(percent)s%% bei %(total)s Prü
 #: accounts/admin.py
 msgid "Remove the avatar (show initials)"
 msgstr "Avatar entfernen (Initialen anzeigen)"
+
+msgid "Example data only. Not a real user or project."
+msgstr "Nur Beispieldaten. Kein echter Nutzer und kein echtes Projekt."
+
+msgid "Test data"
+msgstr "Testdaten"
+
+msgid "Test users"
+msgstr "Testnutzer"
+
+msgid "Test threads"
+msgstr "Test-Threads"
+
+msgid "Test replies"
+msgstr "Test-Antworten"
+
+msgid "test user"
+msgstr "Testnutzer"
+
+msgid "test users"
+msgstr "Testnutzer"
+
+msgid "test thread"
+msgstr "Test-Thread"
+
+msgid "test threads"
+msgstr "Test-Threads"
+
+msgid "test reply"
+msgstr "Test-Antwort"
+
+msgid "test replies"
+msgstr "Test-Antworten"
+
+msgid "Skills and links"
+msgstr "Fähigkeiten und Links"
+
+msgid "Public profile"
+msgstr "Öffentliches Profil"
+
+msgid "The profile will be at /u/username/. Use small letters, numbers, - and _."
+msgstr "Das Profil liegt unter /u/username/. Kleinbuchstaben, Ziffern, - und _."
+
+msgid "Author (test account)"
+msgstr "Autor (Testkonto)"
+
+msgid "Thread (test thread)"
+msgstr "Thread (Test-Thread)"
+
+msgid "Answer to (test reply, optional)"
+msgstr "Antwort auf (Test-Antwort, optional)"
+
+msgid "Leave empty to answer the thread. Replies nest up to three levels; deeper answers attach one level up."
+msgstr "Leer lassen, um auf den Thread zu antworten. Antworten verschachteln sich bis zu drei Ebenen; tiefere hängen eine Ebene höher."
+
+msgid "Choose a reply from the same thread."
+msgstr "Wähle eine Antwort aus demselben Thread."
+
+msgid "Too many images."
+msgstr "Zu viele Bilder."
+
+msgid "Only registered test accounts can be used here."
+msgstr "Hier sind nur registrierte Testkonten möglich."
+
+msgid "This account is protected and cannot be used as a test account."
+msgstr "Dieses Konto ist geschützt und kann kein Testkonto sein."
+
+msgid "Only test posts can be changed here."
+msgstr "Hier lassen sich nur Test-Beiträge ändern."
+
+msgid "This test account cannot write (suspended, muted or banned)."
+msgstr "Dieses Testkonto kann nicht schreiben (gesperrt, stummgeschaltet oder gebannt)."
+
+msgid "This thread does not accept replies."
+msgstr "Dieser Thread nimmt keine Antworten an."

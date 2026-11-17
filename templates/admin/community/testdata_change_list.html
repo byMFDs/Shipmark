@@ -1,0 +1,5 @@
+{% extends "admin/change_list.html" %}
+{% block object-tools-items %}
+{{ block.super }}
+<a class="border border-base-200 rounded-default px-3 py-2 dark:border-base-700" href="{{ testdata_cleanup_url }}">Очистити весь тестовий набір…</a>
+{% endblock %}

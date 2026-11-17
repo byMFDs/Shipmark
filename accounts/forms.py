@@ -154,7 +154,9 @@ class SettingsForm(StyledFormMixin, forms.ModelForm):
             self.fields[name].widget.attrs["class"] = "checkbox"
         self.fields["pinned"].widget.attrs["class"] = "checkbox"
         self.fields["skills_text"].widget.attrs["class"] = "input"
-        self.fields["pinned"].queryset = Project.objects.filter(owner=user, status=Project.Status.PUBLISHED).order_by("name")
+        # A new, unsaved account (the admin's test-user form) owns nothing yet; Django refuses to filter by it.
+        self.fields["pinned"].queryset = (Project.objects.filter(owner=user, status=Project.Status.PUBLISHED).order_by("name")
+                                          if user.pk else Project.objects.none())
         self.fields["pinned"].label_from_instance = lambda project: project.name
         self.has_github_picture = bool(github_avatar_url(user)) if user.pk else False
         if not self.has_github_picture:

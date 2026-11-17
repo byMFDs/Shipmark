@@ -136,7 +136,8 @@ moderator, mod, team, staff, news.
 
 - **User**: username, display_name, headline (≤80), about (markdown ≤1000), location, status, skills (M2M Tag ≤10),
   avatar, avatar_source, cover, github_login, avatar_url (never shown), preferred_language, terms_version_accepted,
-  terms_accepted_at, is_suspended. `bio` and `website` are deprecated (not editable, to be dropped).
+  terms_accepted_at, is_suspended, is_system_account (the official "shipmark" author: no public profile, never counted).
+  `bio` and `website` are deprecated (not editable, to be dropped). Local test accounts: admin "Test data" (`docs/TEST_DATA.md`).
   **ProfileLink** (≤6), **PinnedProject** (≤3), **UserBadge** (official / moderator; `can_moderate` comes from it).
 - **Project**: owner, name, slug (unique per owner), tagline (≤120),
   description (markdown), live_url, repo_full_name, tags (M2M Tag),
@@ -326,5 +327,5 @@ python manage.py send_test_email      # support email check (--smtp in dev uses 
 python scripts/check_comment_only.py [BASE]   # proves a change touched comments only
 python manage.py post_welcome         # once: pinned welcome thread from the system account
 python manage.py seed_launch_content  # production-safe, idempotent: discussion starters from the system account
-python manage.py seed_community       # DEBUG + non-production settings only: demo community content (--clear removes it)
+python manage.py community_testdata seed  # local dev SQLite only; users/activity/list/clean/legacy-clean: docs/TEST_DATA.md
 ```

@@ -197,6 +197,26 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
                 form.base_fields.pop(name, None)
         return form
 
+    def has_change_permission(self, request, obj=None):
+        """Системний акаунт змінює лише суперкористувач.
+
+        The system account (official author of news and notices) is changed by superusers only; other staff see it
+        read-only, whatever their model permissions say."""
+        if obj is not None and obj.is_system_account and not request.user.is_superuser:
+            return False
+        return super().has_change_permission(request, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        """Системний акаунт не видаляє ніхто."""
+        # Nobody deletes the system account: news and community notices keep their author.
+        if obj is not None and obj.is_system_account:
+            return False
+        return super().has_delete_permission(request, obj)
+
+    def delete_queryset(self, request, queryset):
+        # "Delete selected" checks the permission without an object; keep the system account out of it too.
+        super().delete_queryset(request, queryset.exclude(is_system_account=True))
+
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
             _projects=Count("projects", filter=Q(projects__status="published"), distinct=True),
@@ -265,7 +285,7 @@ class UserAdmin(AuditedModelAdmin, BaseUserAdmin):
         """Дія адмінки: призупинити вибраних (крім себе й суперкористувачів)."""
         done = 0
         for user in queryset:
-            if user.pk == request.user.pk or user.is_superuser:
+            if user.pk == request.user.pk or user.is_superuser or user.is_system_account:
                 messages.warning(request, _("Skipped %(name)s: staff cannot suspend themselves or a superuser.") % {"name": user})
                 continue
             done += actions.suspend_user(user, request.user)

@@ -15,15 +15,38 @@ from .explore import HALLMARK_CHOICES, SORTS, ExploreForm, explore, tag_options
 RECENT_ON_LANDING = 6
 
 
+EXAMPLE_CHECKS_PER_DAY = 96  # one check every 15 minutes
+EXAMPLE_INCIDENT_DAY = 12
+
+
 def example_uptime():
     """Вигадані дані аптайму для прикладу на лендингу.
 
     Example data for the illustrative project on the landing page only (it is labelled "Example data" there).
-    Never used for a real project: real pages read UptimeCheck rows through uptime_summary()."""
-    days = [Day(None, total=8, ok=8) for _ in range(30)]
-    days[0], days[1] = Day(None), Day(None)   # no data yet: shows the empty bar
-    days[18] = Day(None, total=8, ok=7)       # one day with a failed check
+    Never used for a real project: real pages read UptimeCheck rows through uptime_summary().
+    29 days with every check up and one day with a single failed check: 2,879 of 2,880, shown as 99.9% by the
+    real rule (percent() rounds down to one decimal)."""
+    days = [Day(None, total=EXAMPLE_CHECKS_PER_DAY, ok=EXAMPLE_CHECKS_PER_DAY) for _ in range(30)]
+    days[EXAMPLE_INCIDENT_DAY] = Day(None, total=EXAMPLE_CHECKS_PER_DAY, ok=EXAMPLE_CHECKS_PER_DAY - 1)
     return Summary(ok=sum(d.ok for d in days), total=sum(d.total for d in days), last_checked_at=None, days=days)
+
+
+def example_bars(summary):
+    """Стовпчики прикладу на лендингу: стан із даних, висота — візуальний ритм.
+
+    The landing example only (pages/_example_uptime.html), drawn after the reference in docs/details: the colour
+    is the day's real state in the example data (lime: every check up, teal: some checks failed); the height is
+    a fixed rhythm (two full, one shorter) with the incident day lowest. The heights are not presented as
+    numbers anywhere: no tooltips, no axis. Real project pages keep projects/_uptime_bars.html, where the height
+    is the day's uptime."""
+    bars = []
+    for index, day in enumerate(summary.days):
+        if day.state != "up":
+            size = "low"
+        else:
+            size = "short" if index % 3 == 2 else "full"
+        bars.append({"state": day.state, "size": size})
+    return bars
 
 
 def landing(request):
@@ -34,9 +57,10 @@ def landing(request):
         return redirect("social:feed")
     recent = list(project_rows(published_projects(), request.user).order_by("-event_at", "-pk")[:RECENT_ON_LANDING])
     proof = [{"kind": kind, "rule": RULES[kind]} for kind in ("authored", "live", "steady")]
+    summary = example_uptime()
     return render(request, "pages/landing.html", {
         "recent": recent, "proof": proof, "github_configured": settings.GITHUB_OAUTH_CONFIGURED,
-        "example_uptime": example_uptime(),
+        "example_uptime": summary, "example_bars": example_bars(summary),
     })
 
 

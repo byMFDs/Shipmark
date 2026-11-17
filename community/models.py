@@ -18,9 +18,44 @@ from django.utils.text import slugify
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
+from accounts.models import User
 from moderation.visibility import banned
 
 from . import limits, stickers
+
+
+class TestDataSet(models.Model):
+    """Ідентифікатор приватного тестового набору й позиція в локальному корпусі."""
+    name = models.SlugField(max_length=60, unique=True)
+    seed = models.IntegerField(default=7)
+    profile_cursor = models.PositiveIntegerField(default=0)
+    thread_cursor = models.PositiveIntegerField(default=0)
+
+
+class TestDataRun(models.Model):
+    """Окремий явний запуск генератора, збережений для звіту."""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    dataset = models.ForeignKey(TestDataSet, on_delete=models.CASCADE, related_name="runs")
+    mode = models.CharField(max_length=20)
+    created_at = models.DateTimeField(default=timezone.now)
+
+
+class TestDataObject(models.Model):
+    """Реєстр точних ID; префікси імен не визначають належність до набору."""
+    run = models.ForeignKey(TestDataRun, on_delete=models.CASCADE, related_name="records")
+    model_label = models.CharField(max_length=100)
+    object_id = models.PositiveBigIntegerField()
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["model_label", "object_id"], name="test_data_object_once")]
+
+
+class TestDataFile(models.Model):
+    """Файли генератора з контрольними сумами та чергою повторного видалення."""
+    run = models.ForeignKey(TestDataRun, on_delete=models.CASCADE, related_name="files")
+    name = models.CharField(max_length=300, unique=True)
+    sha256 = models.CharField(max_length=64)
+    pending_delete = models.BooleanField(default=False)
 
 
 def visible_author(queryset, field="author"):
@@ -322,3 +357,30 @@ class ReplyNotification(models.Model):
     def __str__(self):
         return f"{self.recipient_id}: {self.kind} {self.reply_id}"
 
+
+
+# ---------- Admin proxies for hand-made test data (community/admin_testdata.py) ----------
+# No tables: the same rows as User, Thread and Reply. Each admin lists only rows in the test-data registry.
+
+class TestAccount(User):
+    """Тестовий акаунт у розділі адмінки «Тестові дані»."""
+    class Meta:
+        proxy = True
+        verbose_name = _("test user")
+        verbose_name_plural = _("test users")
+
+
+class TestThread(Thread):
+    """Тестова тема в розділі адмінки «Тестові дані»."""
+    class Meta:
+        proxy = True
+        verbose_name = _("test thread")
+        verbose_name_plural = _("test threads")
+
+
+class TestReply(Reply):
+    """Тестова відповідь у розділі адмінки «Тестові дані»."""
+    class Meta:
+        proxy = True
+        verbose_name = _("test reply")
+        verbose_name_plural = _("test replies")

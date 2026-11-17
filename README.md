@@ -26,6 +26,8 @@ static files are sent with `Cache-Control: no-cache`, so CSS and JS edits show o
 
 ## Everyday commands
 
+Private community test data, safe cleanup and recovery: [docs/TEST_DATA.md](docs/TEST_DATA.md).
+
 ```bash
 source .venv/bin/activate
 python manage.py check

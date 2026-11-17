@@ -5534,3 +5534,78 @@ msgstr "Disponibilidad en los últimos 30 días: %(percent)s%% en %(total)s comp
 #: accounts/admin.py
 msgid "Remove the avatar (show initials)"
 msgstr "Quitar el avatar (mostrar iniciales)"
+
+msgid "Example data only. Not a real user or project."
+msgstr "Solo datos de ejemplo. No es un usuario ni un proyecto real."
+
+msgid "Test data"
+msgstr "Datos de prueba"
+
+msgid "Test users"
+msgstr "Usuarios de prueba"
+
+msgid "Test threads"
+msgstr "Hilos de prueba"
+
+msgid "Test replies"
+msgstr "Respuestas de prueba"
+
+msgid "test user"
+msgstr "usuario de prueba"
+
+msgid "test users"
+msgstr "usuarios de prueba"
+
+msgid "test thread"
+msgstr "hilo de prueba"
+
+msgid "test threads"
+msgstr "hilos de prueba"
+
+msgid "test reply"
+msgstr "respuesta de prueba"
+
+msgid "test replies"
+msgstr "respuestas de prueba"
+
+msgid "Skills and links"
+msgstr "Habilidades y enlaces"
+
+msgid "Public profile"
+msgstr "Perfil público"
+
+msgid "The profile will be at /u/username/. Use small letters, numbers, - and _."
+msgstr "El perfil estará en /u/username/. Minúsculas, números, - y _."
+
+msgid "Author (test account)"
+msgstr "Autor (cuenta de prueba)"
+
+msgid "Thread (test thread)"
+msgstr "Hilo (hilo de prueba)"
+
+msgid "Answer to (test reply, optional)"
+msgstr "Respuesta a (respuesta de prueba, opcional)"
+
+msgid "Leave empty to answer the thread. Replies nest up to three levels; deeper answers attach one level up."
+msgstr "Déjalo vacío para responder al hilo. Las respuestas se anidan hasta tres niveles; las más profundas se colocan un nivel arriba."
+
+msgid "Choose a reply from the same thread."
+msgstr "Elige una respuesta del mismo hilo."
+
+msgid "Too many images."
+msgstr "Demasiadas imágenes."
+
+msgid "Only registered test accounts can be used here."
+msgstr "Aquí solo se pueden usar cuentas de prueba registradas."
+
+msgid "This account is protected and cannot be used as a test account."
+msgstr "Esta cuenta está protegida y no puede ser una cuenta de prueba."
+
+msgid "Only test posts can be changed here."
+msgstr "Aquí solo se pueden cambiar publicaciones de prueba."
+
+msgid "This test account cannot write (suspended, muted or banned)."
+msgstr "Esta cuenta de prueba no puede escribir (suspendida, silenciada o bloqueada)."
+
+msgid "This thread does not accept replies."
+msgstr "Este hilo no acepta respuestas."

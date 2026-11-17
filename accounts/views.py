@@ -152,9 +152,11 @@ def delete_account_page(request):
 def profile(request, username):
     """Публічний профіль; невідомі й призупинені дають однаковий 404.
 
-    Public profile. Unknown and suspended users give the same 404: no hint that the account exists."""
+    Public profile. Unknown and suspended users give the same 404: no hint that the account exists.
+    The system account (the official author of news and notices) has no profile page for anyone, also not for
+    superusers: it is edited in the admin."""
     try:
-        person = visible_users(User.objects.all()).get(username__iexact=username)
+        person = visible_users(User.objects.filter(is_system_account=False)).get(username__iexact=username)
     except User.DoesNotExist:
         raise Http404
     if person.username != username:  # /u/Danylo/ -> /u/danylo/

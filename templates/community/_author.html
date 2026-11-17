@@ -1,2 +1,2 @@
-{# Автор допису; у видаленого акаунта немає імені, картинки й посилання. #}{% load i18n ui %}{# Who wrote a post. A deleted account has no name, picture or link. Needs: author (User or None). #}
-{% if author %}<a href="{% url 'accounts:profile' author.username %}">@{{ author.username }}</a>{% user_marks author %}{% else %}<span class="muted">{% translate "[deleted]" %}</span>{% endif %}
+{# Автор допису; у видаленого акаунта немає імені, картинки й посилання. #}{% load i18n ui %}{# Who wrote a post. A deleted account has no name, picture or link; the system account has a name and its badge but no profile link. Needs: author (User or None). #}
+{% if author %}{% if author.is_system_account %}<span>@{{ author.username }}</span>{% else %}<a href="{% url 'accounts:profile' author.username %}">@{{ author.username }}</a>{% endif %}{% user_marks author %}{% else %}<span class="muted">{% translate "[deleted]" %}</span>{% endif %}

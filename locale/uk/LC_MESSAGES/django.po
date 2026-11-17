@@ -5569,3 +5569,78 @@ msgstr "Аптайм за останні 30 днів: %(percent)s%% на осн�
 #: accounts/admin.py
 msgid "Remove the avatar (show initials)"
 msgstr "Прибрати аватарку (показувати ініціали)"
+
+msgid "Example data only. Not a real user or project."
+msgstr "Лише приклад даних. Це не справжній користувач і не справжній проєкт."
+
+msgid "Test data"
+msgstr "Тестові дані"
+
+msgid "Test users"
+msgstr "Тестові користувачі"
+
+msgid "Test threads"
+msgstr "Тестові теми"
+
+msgid "Test replies"
+msgstr "Тестові відповіді"
+
+msgid "test user"
+msgstr "тестовий користувач"
+
+msgid "test users"
+msgstr "тестові користувачі"
+
+msgid "test thread"
+msgstr "тестова тема"
+
+msgid "test threads"
+msgstr "тестові теми"
+
+msgid "test reply"
+msgstr "тестова відповідь"
+
+msgid "test replies"
+msgstr "тестові відповіді"
+
+msgid "Skills and links"
+msgstr "Навички й посилання"
+
+msgid "Public profile"
+msgstr "Публічний профіль"
+
+msgid "The profile will be at /u/username/. Use small letters, numbers, - and _."
+msgstr "Профіль буде за адресою /u/username/. Малі літери, цифри, - і _."
+
+msgid "Author (test account)"
+msgstr "Автор (тестовий акаунт)"
+
+msgid "Thread (test thread)"
+msgstr "Тема (тестова тема)"
+
+msgid "Answer to (test reply, optional)"
+msgstr "Відповідь на (тестову відповідь, необов'язково)"
+
+msgid "Leave empty to answer the thread. Replies nest up to three levels; deeper answers attach one level up."
+msgstr "Залиште порожнім, щоб відповісти на тему. Вкладеність до трьох рівнів; глибша відповідь прикріплюється на рівень вище."
+
+msgid "Choose a reply from the same thread."
+msgstr "Виберіть відповідь із цієї ж теми."
+
+msgid "Too many images."
+msgstr "Забагато зображень."
+
+msgid "Only registered test accounts can be used here."
+msgstr "Тут можна використовувати лише зареєстровані тестові акаунти."
+
+msgid "This account is protected and cannot be used as a test account."
+msgstr "Цей акаунт захищений і не може бути тестовим."
+
+msgid "Only test posts can be changed here."
+msgstr "Тут можна змінювати лише тестові дописи."
+
+msgid "This test account cannot write (suspended, muted or banned)."
+msgstr "Цей тестовий акаунт не може писати (призупинений, приглушений або заблокований)."
+
+msgid "This thread does not accept replies."
+msgstr "Ця тема не приймає відповідей."

@@ -8,7 +8,6 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from accounts.system import SYSTEM_USERNAME
 from projects.models import Project
 from verification.uptime import with_uptime
 
@@ -44,7 +43,7 @@ def hallmark_counts():
 
 def dashboard_callback(request, context):
     """Дані головної сторінки адмінки: люди, проєкти, марки, скарги."""
-    people = get_user_model().objects.exclude(username=SYSTEM_USERNAME)  # the system account is not a person
+    people = get_user_model().objects.exclude(is_system_account=True)  # the system account is not a person
     week_ago = timezone.now() - timedelta(days=7)
     marks = hallmark_counts()
     open_reports = Report.objects.filter(status=Report.Status.OPEN)

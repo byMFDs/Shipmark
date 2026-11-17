@@ -47,7 +47,7 @@ def project_badge(request, username, slug):
 @require_safe
 def profile_badge(request, username):
     """Бейдж профілю з кількістю марок."""
-    person = visible_users(get_user_model().objects.all()).filter(username__iexact=username).first()
+    person = visible_users(get_user_model().objects.filter(is_system_account=False)).filter(username__iexact=username).first()
     if person is None:
         return _svg(badges.not_found_badge(), NOT_FOUND_MAX_AGE)
     count = sum(project.hallmarks.earned_count for project in profile_projects(person))

@@ -555,3 +555,58 @@
 .card--invite { background: transparent; border-style: dashed; border-color: var(--line-strong); }
 .card--invite .card__media { display: grid; place-items: center; background: transparent; border-bottom-style: dashed; }
 .card--invite .card__placeholder .icon { width: var(--icon-l); height: var(--icon-l); color: var(--muted); }
+
+/* ---------- Example uptime in the Relay card (pages/_example_uptime.html) ----------
+   Drawn after the reference in docs/details: flat lime bars of one width with small equal gaps, no outline, one
+   shared bottom edge; the day with a failed check is teal and lowest. Landing only: the real project bars
+   (components.css, .uptime-bars) keep their own look and meaning. The track keeps the reference's proportion
+   (about 15:1), so the density stays the same at every card width. */
+.example-uptime__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin: 0 0 var(--s-3);
+}
+
+.example-uptime__label {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs--1);
+}
+
+.example-uptime__value {
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-0);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.example-uptime__bars {
+  display: grid;
+  grid-template-columns: repeat(30, minmax(0, 1fr));
+  align-items: end;
+  gap: clamp(2px, 0.9%, 6px);
+  aspect-ratio: 10 / 1; /* phones: a little taller than the reference, so the bars stay readable */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* No min-height here: with aspect-ratio it would become a minimum width and push the card wider than a phone. */
+@media (min-width: 30em) {
+  .example-uptime__bars { aspect-ratio: 15 / 1; }
+}
+
+.example-uptime__bar { height: 100%; background: var(--accent); }
+.example-uptime__bar--short { height: 84%; }
+.example-uptime__bar--low { height: 43%; }
+.example-uptime__bar.is-partial { background: var(--signal); }
+.example-uptime__bar.is-down { background: var(--text); }
+.example-uptime__bar.is-none { background: var(--line); }
+
+.example-uptime__note {
+  margin: var(--s-4) 0 0;
+  color: var(--muted);
+}

@@ -404,6 +404,18 @@ UNFOLD = {
                 ],
             },
             {
+                # Local development only, superusers only (community/testdata_tools.py): hidden everywhere else.
+                "title": _("Test data"),
+                "items": [
+                    {"title": _("Test users"), "icon": "science", "link": reverse_lazy("admin:community_testaccount_changelist"),
+                     "permission": "community.testdata_tools.sidebar_permission"},
+                    {"title": _("Test threads"), "icon": "chat", "link": reverse_lazy("admin:community_testthread_changelist"),
+                     "permission": "community.testdata_tools.sidebar_permission"},
+                    {"title": _("Test replies"), "icon": "reply", "link": reverse_lazy("admin:community_testreply_changelist"),
+                     "permission": "community.testdata_tools.sidebar_permission"},
+                ],
+            },
+            {
                 "title": _("Support"),
                 "items": [
                     {"title": _("Inbox"), "icon": "mail", "link": reverse_lazy("admin:support_supportmessage_changelist"),
@@ -425,3 +437,6 @@ UNFOLD = {
         ],
     },
 }
+
+# Explicit opt-in for superuser-only synthetic data administration, including production.
+TEST_DATA_ADMIN_ENABLED = env.bool("TEST_DATA_ADMIN_ENABLED", default=False)

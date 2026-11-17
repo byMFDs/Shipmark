@@ -50,14 +50,31 @@ class LandingUptimeExampleTests(TestCase):
     """Лендинг показує стовпчики лише як позначений приклад, а реальні проєкти не отримують вигаданих даних."""
     def test_landing_example_is_labelled_and_compact(self):
         html = self.client.get("/").content.decode()
-        self.assertIn("data-uptime-bars", html)
+        self.assertIn('class="example-uptime"', html)
         self.assertIn("Example data", html)
+        self.assertIn("Example data only. Not a real user or project.", html)
         self.assertIn("Illustrative project", html)
-        self.assertIn("uptime-bars--compact", html)
-        self.assertIn("js/uptime.js", html)
+        self.assertEqual(html.count('class="example-uptime__bar '), 30)
+        self.assertNotIn("data-uptime-bars", html)  # the real project component is not used for the example
+        uk = self.client.get("/", headers={"Accept-Language": "uk"}).content.decode()
+        self.assertIn("Це не справжній користувач і не справжній проєкт.", uk)
 
     def test_example_summary_is_not_a_real_project(self):
         from pages.views import example_uptime
         summary = example_uptime()
         self.assertEqual(len(summary.days), 30)
         self.assertTrue(all(day.date is None for day in summary.days))
+
+    def test_example_number_and_bars_agree(self):
+        """29 днів без збоїв (салатові) і один день з одним збоєм (бірюзовий) — 99.9% за правилом сайту."""
+        from pages.views import example_bars, example_uptime
+        summary = example_uptime()
+        bars = example_bars(summary)
+        self.assertEqual((summary.ok, summary.total, summary.percent), (2879, 2880, 99.9))
+        self.assertEqual([bar["state"] for bar in bars].count("up"), 29)
+        self.assertEqual([i for i, bar in enumerate(bars) if bar["state"] == "partial"], [12])
+        self.assertEqual(bars[12]["size"], "low")
+        self.assertTrue(all(bar["size"] in {"full", "short"} for bar in bars if bar["state"] == "up"))
+        html = self.client.get("/").content.decode()
+        self.assertIn('example-uptime__value numeric">99.9%</span>', html)
+        self.assertEqual(html.count("example-uptime__bar is-partial"), 1)

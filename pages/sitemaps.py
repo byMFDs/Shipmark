@@ -19,7 +19,6 @@ from django.urls import reverse
 
 from accounts.models import User
 from accounts.people import DEMO_DOMAIN, DEMO_PREFIX
-from accounts.system import SYSTEM_USERNAME
 from moderation.visibility import visible_users
 from news.models import NewsPost
 from social.queries import published_projects
@@ -32,7 +31,7 @@ def not_demo(prefix=""):
 
 def real_people(queryset):
     """Люди, яких можна показувати публічно: активні, не призупинені, не забанені, не системні й не демо."""
-    return (visible_users(queryset.filter(is_active=True)).exclude(username=SYSTEM_USERNAME)
+    return (visible_users(queryset.filter(is_active=True)).exclude(is_system_account=True)
             .filter(not_demo()))
 
 
@@ -82,7 +81,7 @@ class ProjectSitemap(CanonicalSitemap):
     priority = 0.8
 
     def items(self):
-        return (published_projects().filter(owner__is_active=True).exclude(owner__username=SYSTEM_USERNAME)
+        return (published_projects().filter(owner__is_active=True).exclude(owner__is_system_account=True)
                 .filter(not_demo("owner__")).select_related("owner").order_by("-updated_at", "-pk"))
 
     def lastmod(self, item):

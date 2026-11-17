@@ -1393,25 +1393,41 @@ a.chip::after {
 }
 
 /* ---------- "<n> people joined" (header stat) ----------
-   A quiet fact, not a live counter: mono number, muted words, no dot and no pulse. In the bar from 80em; inside the menu
-   below that. The number counts up once over a hidden copy of the
-   final text (same grid cell), so the width never changes while it runs. */
+   A quiet fact, not a live counter: a small static lime dot with a soft halo (no pulse, no blink), the number in
+   the text colour and a little heavier, the words in muted mono. In the bar from 80em; inside the menu below that.
+   The number counts up once over a hidden copy of the final text (same grid cell), so the width never changes. */
 
 .site-count {
   display: none;
-  align-items: baseline;
-  gap: var(--s-1);
+  align-items: center;
+  gap: var(--s-2);
   margin: 0;
   color: var(--muted);
+  font-family: var(--font-mono);
   font-size: var(--fs--1);
+  line-height: 1.2;
   white-space: nowrap;
   cursor: default;
 }
 
+/* The halo is a ring of the same lime at low opacity: decorative only, the words carry the meaning. */
+.site-count__dot {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0.1875rem color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.site-count__text { min-width: 0; }
+
 .site-count__n {
   display: inline-grid;
+  margin-right: 0.15em; /* mono words already carry their own space; this keeps the number from crowding them */
   color: var(--text);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 .site-count__n > * { grid-area: 1 / 1; text-align: end; }
@@ -1538,6 +1554,14 @@ a.chip::after {
   padding: 0 var(--s-4);
   color: var(--text);
   text-decoration: none;
+}
+
+.mod-count {
+  margin-inline-start: var(--s-2);
+  padding-inline: var(--s-2);
+  background: var(--tint);
+  border: 1px solid var(--line);
+  font-size: var(--fs--2);
 }
 
 @media (hover: hover) {

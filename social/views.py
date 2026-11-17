@@ -86,8 +86,8 @@ def social_action(name, limit, window):
 # ---------- Follow ----------
 
 def _person(username):
-    # Suspended and banned users look the same as missing ones.
-    return get_object_or_404(visible_users(User.objects.all()), username__iexact=username)
+    # Suspended and banned users look the same as missing ones; the system account cannot be followed.
+    return get_object_or_404(visible_users(User.objects.filter(is_system_account=False)), username__iexact=username)
 
 
 def _follow_change(request, username, follow):

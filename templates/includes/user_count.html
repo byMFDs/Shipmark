@@ -1,7 +1,8 @@
-{# «<n> людей приєдналося» в хедері. #}{% load i18n %}{% comment %}"<n> people joined" (pages/stats.py). Registered accounts, not people online: no live dot, no pulse.
+{# «<n> людей приєдналося» в хедері. #}{% load i18n %}{% comment %}"<n> people joined" (pages/stats.py). Registered accounts, not people online: the dot is a static mark (no pulse, no blink).
 The visible number counts up once (count.js) over a hidden copy of the final text that keeps the width, so nothing
 moves; screen readers get the sentence with the exact number instead.{% endcomment %}
 <p class="site-count" title="{% translate 'Registered accounts' %}">
   <span class="visually-hidden">{{ user_stat.exact }}</span>
+  <span class="site-count__dot" aria-hidden="true"></span>
   <span class="site-count__text" aria-hidden="true">{{ user_stat.before }}<span class="site-count__n"><span class="site-count__ghost">{{ user_stat.text }}</span><span class="site-count__value"{% if user_stat.animate %} data-count-to="{{ user_stat.value }}"{% endif %}>{{ user_stat.text }}</span></span>{{ user_stat.after }}</span>
 </p>

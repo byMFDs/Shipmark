@@ -1,0 +1,12 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<p>{% if all_test_data %}Очищення всіх зареєстрованих тестових наборів.{% else %}Видалення вибраних об’єктів та їхніх зареєстрованих залежностей.{% endif %}</p>
+{% if error %}<p role="alert">Очищення заблоковано: {{ error }}</p>{% else %}
+<p>Після підтвердження ці записи та їхні файли будуть видалені. Перевірка залежностей виконається повторно.</p>
+<ul>{% for model, count in result.counts.items %}<li>{{ model }}: {{ count }}</li>{% empty %}<li>Немає записів для видалення.</li>{% endfor %}</ul>
+<ul>{% for obj in result.objects %}<li>{{ obj.model }} #{{ obj.id }} — {{ obj.text }}</li>{% endfor %}</ul>
+<ul>{% for file in result.files %}<li>Файл: {{ file }}</li>{% endfor %}</ul>
+<form method="post">{% csrf_token %}<input type="hidden" name="selection" value="{{ selection }}"><button class="bg-primary-600 text-white rounded-default px-3 py-2 my-4" type="submit" name="confirm" value="yes">Підтвердити видалення</button></form>
+{% endif %}
+<a href="../">Повернутися</a>
+{% endblock %}

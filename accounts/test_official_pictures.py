@@ -150,7 +150,7 @@ class OfficialPicturesTests(TestCase):
     def test_staff_without_superuser_cannot_set_pictures_even_by_a_hand_made_post(self):
         response = self.post(self.system, as_boss=False, avatar_upload=upload(), cover_upload=upload(),
                              avatar="avatars/evil.webp")
-        self.assertIn(response.status_code, (200, 302))
+        self.assertIn(response.status_code, (200, 302, 403))  # the system account: read-only for staff (403)
         system = self.fresh(self.system)
         self.assertFalse(system.avatar)
         self.assertFalse(system.cover)
@@ -169,9 +169,8 @@ class OfficialPicturesTests(TestCase):
     def test_picture_shows_on_profile_og_and_news_byline(self):
         self.post(self.system, avatar_upload=upload())
         system = self.fresh(self.system)
-        profile = self.client.get(reverse("accounts:profile", args=[system.username])).content.decode()
-        self.assertIn(system.avatar.url, profile)
-        self.assertRegex(profile, r'<meta property="og:image" content="[^"]*' + re.escape(system.avatar.url))
+        # The system account has no public profile page (404 for everyone); its picture shows where it writes.
+        self.assertEqual(self.client.get(reverse("accounts:profile", args=[system.username])).status_code, 404)
         post = NewsPost.objects.create(title="Hello", slug="hello", body="Body", published_at=timezone.now())
         news = self.client.get(post.get_absolute_url()).content.decode()
         self.assertIn(system.avatar.url, news)

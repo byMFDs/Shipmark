@@ -1,0 +1,14 @@
+{# Приклад аптайму в картці Relay на головній: вигадані дані з чесним підписом. #}{% load i18n %}{% comment %}
+Landing only (pages.views.example_uptime / example_bars). Colour = the day's state in the example data, height = a
+fixed visual rhythm (not a number, so no tooltips or axis). Real projects use projects/_uptime_bars.html.
+Needs: summary, bars.{% endcomment %}
+{% with counts=summary.day_counts %}
+<div class="example-uptime">
+  <p class="example-uptime__head" aria-hidden="true"><span class="example-uptime__label">{% translate "30-day uptime" %}</span><span class="example-uptime__value numeric">{{ summary.percent|floatformat:"-1" }}%</span></p>
+  <p class="visually-hidden">{% translate "Example data" %}. {% blocktranslate with percent=summary.percent|floatformat:"-1" total=summary.total up=counts.up partial=counts.partial down=counts.down none=counts.none trimmed %}Uptime over the last 30 days: {{ percent }}% across {{ total }} checks. Days fully up: {{ up }}. Days with some failed checks: {{ partial }}. Days down: {{ down }}. Days without checks: {{ none }}.{% endblocktranslate %}</p>
+  <ol class="example-uptime__bars" aria-hidden="true">
+    {% for bar in bars %}<li class="example-uptime__bar is-{{ bar.state }} example-uptime__bar--{{ bar.size }}"></li>{% endfor %}
+  </ol>
+  <p class="label example-uptime__note">{% translate "Example data only. Not a real user or project." %}</p>
+</div>
+{% endwith %}

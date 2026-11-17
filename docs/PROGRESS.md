@@ -196,3 +196,10 @@ Before merging: look at the final manual checklist (real phone, keyboard, reduce
 
 - 2026-11-16: Launch-2 (branch `launch-2`, journal in `docs/LAUNCH2_STATUS.md`). A domain shipmark.org + contact shipmark.org@gmail.com; B light-theme edges on landing previews; C numbered labels removed; D uptime bars; E official-account avatar in admin; F SEO basics (sitemap, robots, canonical, noindex, JSON-LD; `docs/SEO_NOTES.md`); G `seed_launch_content`, demo accounts out of the people counter.
   Next: buy/confirm shipmark.org, create the Gmail and app password, Search Console + Bing verification, set PUBLIC_USER_COUNT_MIN; then the manual launch checklist (`docs/DEPLOY_CHECKLIST.md`).
+
+- 2026-11-17: Hide zero moderation count in both menus; share the positive badge. Add local-only community_testdata with run/object/file registry, finite Ukrainian corpus, verified backups and dependency-safe cleanup; retire seed_community.
+  Local preview: 25 users, 8 threads, 12 replies, 6 votes. Legacy cleanup blocked by genuine replies #20/#21 in thread #6; original content and 101 existing media/private files preserved. Recovery and commands: docs/TEST_DATA.md.
+  Validation: 1253 tests pass with spawn; check/migration drift/collectstatic, isolated backup+restore and Firefox desktop/mobile zero/positive menus pass. Final comparison retained the current user #1 language preference and operational session state (see TEST_DATA.md).
+
+- 2026-11-17 (2): Admin section "Test data" (superuser, local dev only): test users with full profile/avatar, threads and replies as them through community.services; everything registered for `community_testdata clean`. Header counter: real count, cache dropped on signup/delete, lime dot. Landing Relay uptime: own example partial (lime bars, one teal incident day, 99.9%). System account: stable `is_system_account` flag, no public profile (404), no follow/report/badge, admin change superuser-only.
+  Next: run `migrate` (accounts 0008, community 0005); check the admin section by hand; see "Пропозиції".

@@ -1,33 +1,8 @@
-"""Демо-вміст спільноти для розробки (лише з DEBUG).
-
-Demo content for the community, for looking at the pages in development. DEBUG only.
-
-    python manage.py seed_community           # remove the previous demo content, then create it again
-    python manage.py seed_community --clear   # only remove it
-
-Demo people are accounts named `demo-…` with an `@example.invalid` address and an unusable password (nobody can
-sign in as them). Their threads, replies, images and upvotes are made through community.services, the same code the
-pages use, then spread over the last two weeks so Hot, New and Top differ. Images are drawn here with Pillow and go
-through the normal image pipeline. Refuses to run unless DEBUG is on and the settings are not production ones (see `refuse_in_production`), so it
-never touches a production database. Demo accounts are not counted in the "people joined" number and are not listed
-in the sitemap or in people search.
-"""
-import io
+"""Архів старого demo-корпусу для перевірки походження; створення вимкнено."""
 import os
-import random
-from datetime import timedelta
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management.base import BaseCommand, CommandError
-from django.db import transaction
-from django.utils import timezone
-from PIL import Image, ImageDraw
-
-from community import services
-from community.images import clean_upload
-from community.models import Board, Reply, Thread
 
 PREFIX = "demo-"
 DOMAIN = "@example.invalid"
@@ -99,81 +74,6 @@ THREADS = [
 ]
 
 
-def picture(width, height, seed):
-    """Проста абстрактна картинка для демо-дописів.
-
-    A simple abstract picture: paper background, hairline frame, a few flat blocks in the brand colours."""
-    rng = random.Random(seed)
-    image = Image.new("RGB", (width, height), "#F4F3EE")
-    draw = ImageDraw.Draw(image)
-    colours = ["#BD4B27", "#2B5A3F", "#E3EBDA", "#20251F", "#D9D8D0"]
-    for _ in range(6):
-        x0, y0 = rng.randrange(0, width), rng.randrange(0, height)
-        x1 = min(width, x0 + rng.randrange(width // 6 + 1, width // 2 + 2))
-        y1 = min(height, y0 + rng.randrange(height // 6 + 1, height // 2 + 2))
-        draw.rectangle([x0, y0, x1, y1], fill=rng.choice(colours))
-    draw.rectangle([0, 0, width - 1, height - 1], outline="#868A80", width=max(1, min(width, height) // 200))
-    buffer = io.BytesIO()
-    image.save(buffer, format="PNG")
-    return clean_upload(SimpleUploadedFile(f"demo-{seed}.png", buffer.getvalue(), content_type="image/png"))
-
-
-def clear():
-    """Видаляє демо-людей і все, що вони написали.
-
-    Removes the demo people and everything they wrote. Returns how many people were removed."""
-    people = get_user_model().objects.filter(username__startswith=PREFIX, email__endswith=DOMAIN)
-    Thread.objects.filter(author__in=people).delete()  # replies, votes and images go with them (files too)
-    Reply.objects.filter(author__in=people).delete()
-    count = people.count()
-    people.delete()
-    return count
-
-
-def seed():
-    """Створює демо-вміст; повертає кількість тем і відповідей.
-
-    Creates the demo content. Returns (threads, replies)."""
-    User = get_user_model()
-    now = timezone.now()
-    people = []
-    for name in PEOPLE:
-        user = User.objects.create_user(username=name, email=f"{name}{DOMAIN}", date_joined=now - timedelta(days=90))
-        user.set_unusable_password()
-        user.display_name = name.removeprefix(PREFIX).title()
-        user.save()
-        people.append(user)
-    rng = random.Random(7)
-    threads = replies = 0
-    for index, (slug, author, title, body, sizes, answers) in enumerate(THREADS):
-        board = Board.objects.get(slug=slug)
-        images = [picture(w, h, f"{index}-{n}") for n, (w, h) in enumerate(sizes)]
-        thread = services.create_thread(people[author], board, title, body, images)
-        threads += 1
-        started = now - timedelta(days=rng.randrange(0, 14), hours=rng.randrange(0, 23))
-        made = [thread]
-
-        def add(items, parent, at):
-            nonlocal replies
-            for who, text, shapes, children in items:
-                at = at + timedelta(minutes=rng.randrange(5, 240))
-                pictures = [picture(w, h, f"{index}-r{replies}-{n}") for n, (w, h) in enumerate(shapes)]
-                reply = services.create_reply(people[who], thread, parent=parent, body=text, images=pictures)
-                Reply.objects.filter(pk=reply.pk).update(created_at=min(at, now))
-                replies += 1
-                made.append(reply)
-                at = add(children, reply, at)
-            return at
-
-        last = add(answers, None, started)
-        Thread.objects.filter(pk=thread.pk).update(created_at=started, last_activity_at=min(last, now))
-        for target in made:  # a few upvotes from the others, never on their own post
-            voters = [p for p in people if p.pk != target.author_id]
-            for voter in rng.sample(voters, rng.randrange(0, len(voters))):
-                services.set_vote(voter, target, True)
-    return threads, replies
-
-
 def refuse_in_production():
     """Зупиняє команду поза розробкою.
 
@@ -186,21 +86,12 @@ def refuse_in_production():
 
 
 class Command(BaseCommand):
-    """Команда seed_community."""
-    help = "Create demo community content (DEBUG only). Removes the previous demo content first."
+    """Відмовляє у створенні та небезпечному старому очищенні demo-даних."""
+    help = "Retired: use community_testdata; legacy-clean validates and backs up old demo data."
 
     def add_arguments(self, parser):
-        parser.add_argument("--clear", action="store_true", help="Only remove the demo content.")
+        parser.add_argument("--clear", action="store_true")
 
     def handle(self, *args, **options):
-        """Прибирає старий демо-вміст і створює новий (лише з DEBUG)."""
         refuse_in_production()
-        with transaction.atomic():
-            removed = clear()
-            if options["clear"]:
-                self.stdout.write(f"Removed {removed} demo people and their posts.")
-                return
-            threads, replies = seed()
-        self.stdout.write(self.style.SUCCESS(
-            f"Created {len(PEOPLE)} demo people, {threads} threads and {replies} replies. "
-            "Run `python manage.py post_welcome` for the pinned welcome thread."))
+        raise CommandError("seed_community is retired. Use community_testdata seed, or community_testdata legacy-clean --dry-run.")
