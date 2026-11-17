@@ -5664,3 +5664,6 @@ msgstr "Dieses Testkonto kann nicht schreiben (gesperrt, stummgeschaltet oder ge
 
 msgid "This thread does not accept replies."
 msgstr "Dieser Thread nimmt keine Antworten an."
+
+msgid "Pinned threads are protected."
+msgstr "Angeheftete Themen sind geschützt."

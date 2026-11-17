@@ -5609,3 +5609,6 @@ msgstr "Esta cuenta de prueba no puede escribir (suspendida, silenciada o bloque
 
 msgid "This thread does not accept replies."
 msgstr "Este hilo no acepta respuestas."
+
+msgid "Pinned threads are protected."
+msgstr "Los hilos fijados están protegidos."

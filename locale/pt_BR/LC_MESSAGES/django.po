@@ -5589,3 +5589,6 @@ msgstr "Esta conta de teste não pode escrever (suspensa, silenciada ou banida).
 
 msgid "This thread does not accept replies."
 msgstr "Este tópico não aceita respostas."
+
+msgid "Pinned threads are protected."
+msgstr "Tópicos fixados são protegidos."

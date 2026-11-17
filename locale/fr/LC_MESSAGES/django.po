@@ -5678,3 +5678,6 @@ msgstr "Ce compte de test ne peut pas écrire (suspendu, réduit au silence ou b
 
 msgid "This thread does not accept replies."
 msgstr "Ce fil n’accepte pas de réponses."
+
+msgid "Pinned threads are protected."
+msgstr "Les sujets épinglés sont protégés."

@@ -5644,3 +5644,6 @@ msgstr "Цей тестовий акаунт не може писати (при�
 
 msgid "This thread does not accept replies."
 msgstr "Ця тема не приймає відповідей."
+
+msgid "Pinned threads are protected."
+msgstr "Закріплені теми захищені."

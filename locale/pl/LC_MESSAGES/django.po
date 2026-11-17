@@ -5629,3 +5629,6 @@ msgstr "To konto testowe nie może pisać (zawieszone, wyciszone lub zbanowane).
 
 msgid "This thread does not accept replies."
 msgstr "Ten wątek nie przyjmuje odpowiedzi."
+
+msgid "Pinned threads are protected."
+msgstr "Przypięte wątki są chronione."
