@@ -39,14 +39,17 @@ class BrandFilesTests(SimpleTestCase):
         svg = read(branding.FAVICON)
         self.assertIn("prefers-color-scheme:dark", svg.replace(" ", ""))
 
-    def test_raster_sizes_and_paper_colour(self):
+    def test_raster_sizes_and_corner_colour(self):
         for name, expected in (("brand/favicon.png", (32, 32)), (branding.APPLE_TOUCH_ICON, (180, 180)),
                                (branding.OG_DEFAULT_IMAGE, (1200, 630))):
             with self.subTest(name=name):
                 image = Image.open(io.BytesIO(read(name, "rb")))
                 self.assertEqual(image.size, expected)
-                if name != "brand/favicon.png":
-                    self.assertEqual(image.convert("RGB").getpixel((0, 0)), (244, 243, 238))
+                corner = image.convert("RGBA").getpixel((0, 0))
+                if name == branding.OG_DEFAULT_IMAGE:
+                    self.assertEqual(corner, (182, 255, 59, 255))
+                else:
+                    self.assertLess(corner[3], 255)  # rounded: at 32 px the corner pixel is only partly covered
 
     def test_overlapping_outlined_letters_use_nonzero_fill(self):
         # Two overlapping contours with the same winding stay filled (e.g. the h stem and shoulder).

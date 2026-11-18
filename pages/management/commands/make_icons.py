@@ -1,11 +1,10 @@
-"""Команда make_icons: перемальовує растрові іконки з logo-mark.svg.
+"""Команда make_icons: перемальовує растрові іконки й картинку поширення.
 
-Redraw the raster icons from static/brand/logo-mark.svg (S mark).
+Redraw the raster icons from docs/new_logo/logo.png and the share image from static/brand/logo.svg.
 
     python manage.py make_icons
 
 Writes favicon.ico (16/32/48 px), favicon.png (32 px), apple-touch-icon.png (180 px), and og-default.png (1200×630).
-The SVG mark and outlined wordmark are the source for every raster export.
 """
 from django.conf import settings
 from django.core.management.base import BaseCommand
@@ -16,7 +15,7 @@ from pages.brand_icons import apple_touch_icon, favicon_ico, favicon_png, og_def
 
 class Command(BaseCommand):
     """Команда make_icons."""
-    help = "Redraw favicon.ico and apple-touch-icon.png from the logo mark."
+    help = "Redraw the tab and touch icons from docs/new_logo/logo.png and the share image from the logo."
 
     def handle(self, *args, **options):
         """Записує favicon.ico і apple-touch-icon."""
