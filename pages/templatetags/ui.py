@@ -408,7 +408,7 @@ def canonical_url(context):
 def static_v(path):
     """Статична адреса, що змінюється разом з файлом.
 
-    {% static_v brand.FAVICON %}: a static URL that changes when the file changes.
+    {% static_v brand.FAVICON_ICO %}: a static URL that changes when the file changes.
 
     In production the name is already hashed (favicon.3f2a1c.svg). Without the manifest storage (development,
     tests) "?v=<content hash>" is added, so browsers that keep icons in their own cache fetch the new file.

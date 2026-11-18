@@ -9,6 +9,7 @@ from PIL import Image
 from django.conf import settings
 from django.contrib.staticfiles import finders
 from django.test import SimpleTestCase, TestCase
+from django.urls import reverse
 
 from config import branding
 from pages.brand_icons import apple_touch_icon, favicon_ico, favicon_png, mark_path, path_mask
@@ -25,7 +26,7 @@ class BrandFilesTests(SimpleTestCase):
     """Файли бренду на місці й узгоджені."""
     def test_every_svg_uses_the_traced_s(self):
         self.assertEqual(hashlib.sha256(mark_path().encode()).hexdigest(), S_PATH_SHA256)
-        for path in (branding.LOGO, branding.LOGO_MARK, branding.LOGO_DARK, branding.LOGO_MARK_DARK, branding.FAVICON):
+        for path in (branding.LOGO, branding.LOGO_MARK, branding.LOGO_DARK, branding.LOGO_MARK_DARK):
             with self.subTest(path=path):
                 self.assertIn(f'd="{mark_path()}"', read(path))
 
@@ -34,10 +35,6 @@ class BrandFilesTests(SimpleTestCase):
         self.assertEqual(read(branding.FAVICON_ICO, "rb"), favicon_ico())
         self.assertEqual(read(branding.APPLE_TOUCH_ICON, "rb"), apple_touch_icon())
         self.assertEqual(read("brand/favicon.png", "rb"), favicon_png())
-
-    def test_favicon_svg_follows_the_browser_theme(self):
-        svg = read(branding.FAVICON)
-        self.assertIn("prefers-color-scheme:dark", svg.replace(" ", ""))
 
     def test_raster_sizes_and_corner_colour(self):
         for name, expected in (("brand/favicon.png", (32, 32)), (branding.APPLE_TOUCH_ICON, (180, 180)),
@@ -74,10 +71,16 @@ class IconLinksTests(TestCase):
     """Посилання на іконки в head."""
     def test_pages_link_icons_with_a_content_version(self):
         html = self.client.get("/").content.decode()
-        for path in (branding.FAVICON, branding.FAVICON_ICO, branding.APPLE_TOUCH_ICON, "brand/favicon.png"):
+        for path in (branding.FAVICON_ICO, branding.APPLE_TOUCH_ICON, "brand/favicon.png"):
             with self.subTest(path=path):
                 self.assertRegex(html, re.escape(f"/static/{path}?v=") + r"[0-9a-f]{10}\"")
         self.assertNotIn("corner", html)
+        self.assertNotIn("favicon.svg", html)
+
+    def test_admin_tab_icon_is_the_png(self):
+        response = self.client.get(reverse("admin:login"))
+        self.assertContains(response, "brand/favicon.png")
+        self.assertNotContains(response, "favicon.svg")
 
     def test_favicon_ico_redirects_to_the_static_file(self):
         response = self.client.get("/favicon.ico")

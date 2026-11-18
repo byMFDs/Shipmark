@@ -23,8 +23,7 @@ LOGO_MARK = "brand/logo-mark.svg"
 # Light-colored copies for dark backgrounds (the admin in dark mode). Same shapes: change both together.
 LOGO_DARK = "brand/logo-dark.svg"
 LOGO_MARK_DARK = "brand/logo-mark-dark.svg"
-FAVICON = "brand/favicon.svg"
-# For browsers without SVG icons (older Safari) and for /favicon.ico. Made from logo C by `python manage.py make_icons` (pages/brand_icons.py).
+# Tab icon, also served at /favicon.ico. Made from docs/new_logo/logo.png by `python manage.py make_icons` (pages/brand_icons.py).
 FAVICON_ICO = "brand/favicon.ico"
 APPLE_TOUCH_ICON = "brand/apple-touch-icon.png"
 OG_DEFAULT_IMAGE = "brand/og-default.png"

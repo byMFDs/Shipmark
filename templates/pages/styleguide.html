@@ -30,7 +30,7 @@
         <p class="sg-label">In use: logo, favicon, Apple touch icon, Open Graph image</p>
         <div class="sg-row sg-row--wide">
           {% inline_svg brand.LOGO "site-logo sg-logo-l" %}
-          <img src="{% static brand.FAVICON %}" alt="Favicon" width="32" height="32">
+          <img src="{% static 'brand/favicon.png' %}" alt="Favicon" width="32" height="32">
           <img src="{% static brand.APPLE_TOUCH_ICON %}" alt="Apple touch icon" width="60" height="60">
         </div>
         {% if theme == "light" %}<img class="sg-og" src="{% static brand.OG_DEFAULT_IMAGE %}" alt="Default sharing image" width="1200" height="630" loading="lazy">{% endif %}

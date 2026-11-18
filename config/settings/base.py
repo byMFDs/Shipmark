@@ -315,7 +315,7 @@ UNFOLD = {
         "light": lambda request: static(branding.LOGO),
         "dark": lambda request: static(branding.LOGO_DARK),
     },
-    "SITE_FAVICONS": [{"rel": "icon", "sizes": "any", "type": "image/svg+xml", "href": lambda request: static(branding.FAVICON)}],
+    "SITE_FAVICONS": [{"rel": "icon", "sizes": "32x32", "type": "image/png", "href": lambda request: static("brand/favicon.png")}],
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
     "BORDER_RADIUS": "0px",  # square corners, as on the site (tokens.css --radius)
